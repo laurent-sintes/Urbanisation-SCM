@@ -12,6 +12,7 @@ import {
   useSyncExternalStore,
 } from 'react';
 import { inlineParts, plainInlineText } from '../inlineLinks';
+import { MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import { childrenOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
 import type { RouteState } from '../navigation';
@@ -70,15 +71,27 @@ function useAnchoredTooltip<T extends HTMLElement>() {
       (reference.current as HTMLElement | null)?.focus();
     };
     window.addEventListener('keydown', onEscape, true);
+    window.addEventListener(MAP_PANEL_EVENT, close);
     window.addEventListener('scroll', close, true);
     window.addEventListener('resize', close);
     return () => {
       window.removeEventListener('keydown', onEscape, true);
+      window.removeEventListener(MAP_PANEL_EVENT, close);
       window.removeEventListener('scroll', close, true);
       window.removeEventListener('resize', close);
     };
   }, [open, reference]);
-  return { id, anchor: refs.setReference, tooltip: refs.setFloating, open, setOpen, host, position: floatingStyles };
+  return {
+    id,
+    anchor: refs.setReference,
+    tooltip: refs.setFloating,
+    open,
+    setOpen: (next: boolean) => {
+      if (!next || !document.querySelector('.map-overlay-panel')) setOpen(next);
+    },
+    host,
+    position: floatingStyles,
+  };
 }
 
 export function readingViewport(root: HTMLElement | null = document.querySelector('.workspace-content')) {
@@ -382,7 +395,7 @@ export function ReferenceLink({
   };
   const show = () => {
     clear();
-    if (dismissed.current) return;
+    if (dismissed.current || document.querySelector('.map-overlay-panel')) return;
     setOpen(true);
   };
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -406,10 +419,12 @@ export function ReferenceLink({
       if (tooltip.current?.matches(':hover')) return;
       if (document.activeElement !== link.current) close();
     };
+    window.addEventListener(MAP_PANEL_EVENT, close);
     window.addEventListener('scroll', scroll, true);
     window.addEventListener('resize', close);
     return () => {
       window.removeEventListener('keydown', onEscape, true);
+      window.removeEventListener(MAP_PANEL_EVENT, close);
       window.removeEventListener('scroll', scroll, true);
       window.removeEventListener('resize', close);
     };

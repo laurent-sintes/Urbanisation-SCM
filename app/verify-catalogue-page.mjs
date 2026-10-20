@@ -149,7 +149,6 @@ try {
         const markers = [...viewport.querySelectorAll('.hotspot-map-marker')]
           .filter((element) => element.getBoundingClientRect().width)
           .map(rect);
-        const legend = viewport.querySelector('.hotspot-legend-shell');
         let nativeRange;
         {
           const left = viewport.scrollLeft,
@@ -203,7 +202,6 @@ try {
           height: viewport.clientHeight,
           scrollWidth: viewport.scrollWidth,
           scrollHeight: viewport.scrollHeight,
-          legend: legend && rect(legend),
           cards,
           markers,
           overflowX: getComputedStyle(viewport).overflowX,
@@ -368,13 +366,72 @@ try {
         'The selected hierarchy level is actually rendered',
       );
     await page.keyboard.press('Escape');
-    const legendToggle = page.locator('.hotspot-legend-toggle');
+    const legendToggle = page.getByRole('button', { name: 'Légende', exact: true });
     if (item.layer.hotspots && (await legendToggle.isVisible())) {
+      const toggleBounds = await legendToggle.boundingBox();
+      const beforeLegend = await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((e) => ({
+        width: e.clientWidth,
+        height: e.clientHeight,
+        left: e.scrollLeft,
+        top: e.scrollTop,
+        world: e.querySelector('.react-flow__viewport,.urbanisation-overview')?.getAttribute('style'),
+      }));
       if ((await legendToggle.getAttribute('aria-expanded')) !== 'true') await legendToggle.click();
+      await page.getByRole('dialog', { name: 'Légende', exact: true }).waitFor();
+      assert.deepEqual(
+        await legendToggle.boundingBox(),
+        toggleBounds,
+        'The legend trigger stays still when the navigator folds',
+      );
       await verify('expanded-legend');
+      const withLegend = await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((e) => ({
+        width: e.clientWidth,
+        height: e.clientHeight,
+        left: e.scrollLeft,
+        top: e.scrollTop,
+        world: e.querySelector('.react-flow__viewport,.urbanisation-overview')?.getAttribute('style'),
+      }));
+      assert.deepEqual(
+        withLegend,
+        beforeLegend,
+        'The floating legend does not change map dimensions, scrolling or camera',
+      );
       await page.keyboard.press('Escape');
-      assert.equal(await legendToggle.getAttribute('aria-expanded'), 'false', 'Escape folds the short-screen legend');
+      await page.getByRole('dialog', { name: 'Légende', exact: true }).waitFor({ state: 'detached' });
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Légende');
+      assert.equal(
+        await legendToggle.getAttribute('aria-expanded'),
+        'false',
+        'Escape folds the floating legend at every screen size',
+      );
       await verify('legend-return');
+    }
+    if (item.screen.name === 'desktop' && item.depth === 0 && item.layer.name === 'both') {
+      const surface = page.locator('.map-scroll-viewport,.overview-map-scroll');
+      const state = () =>
+        surface.evaluate((element) => ({
+          top: element.scrollTop,
+          range: element.scrollHeight - element.clientHeight,
+          transform: element.querySelector('.react-flow__viewport,.urbanisation-overview')?.getAttribute('style'),
+        }));
+      const before = await state();
+      const bounds = await surface.boundingBox();
+      await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+      const delta = before.top > 60 ? -120 : 120;
+      await page.mouse.wheel(0, delta);
+      if (widthMode && before.range > 1)
+        await page.waitForFunction(
+          ({ top }) =>
+            Math.abs(document.querySelector('.map-scroll-viewport,.overview-map-scroll').scrollTop - top) > 1,
+          before,
+        );
+      else await page.waitForTimeout(100);
+      const after = await state();
+      assert.equal(after.transform, before.transform, 'Ordinary wheel never changes Catalogue zoom');
+      if (!widthMode) assert.equal(after.top, 0, 'Whole-page Catalogue keeps the entire map visible');
+      await surface.evaluate((element, top) => {
+        element.scrollTop = top;
+      }, before.top);
     }
     if (!widthMode && item.layer.name === 'both' && item.screen.name === 'desktop' && item.depth === 0) {
       await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();

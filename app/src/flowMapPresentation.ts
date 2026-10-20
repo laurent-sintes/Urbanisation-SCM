@@ -1,13 +1,10 @@
-import { flowMapDetailBoxes } from './flowMapDetail.ts';
 import type { FlowMapBox } from './flowMapLayout.ts';
-import { descendantsOf, lineageOf, visibleAncestorId } from './model.ts';
+import { lineageOf, visibleAncestorId } from './model.ts';
 import type { AtlasRelation, PublishedModel } from './types.ts';
 
 export interface FlowMapPresentationOptions {
   zoom: number;
   scopeId?: string;
-  selectedId?: string;
-  mode?: 'main' | 'all';
   types?: readonly string[];
 }
 
@@ -16,8 +13,7 @@ export interface FlowMapPresentation {
   boxes: FlowMapBox[];
   /** Original published relations, including the details supporting a retained principal exchange. */
   relations: AtlasRelation[];
-  mode: 'main' | 'all' | 'focus';
-  focusId?: string;
+  mode: 'main';
   /** Original, BA-projectable relations inside this world that the chosen presentation leaves aside. */
   omittedRelationCount: number;
 }
@@ -82,48 +78,6 @@ export function flowMapPresentation(
   const eligible = model.relations.filter(
     (relation) => FLOW_TYPES.has(relation.type) && types.has(relation.type) && projectRelation(model, relation, allIds),
   );
-  const detailBoxes = flowMapDetailBoxes(territories, options.zoom);
-  const detailIds = new Set(detailBoxes.map((box) => box.id));
-  const finish = (
-    anchors: FlowMapBox[],
-    relations: AtlasRelation[],
-    mode: FlowMapPresentation['mode'],
-    focusId?: string,
-  ): FlowMapPresentation => ({
-    boxes: anchors,
-    relations,
-    mode,
-    ...(focusId ? { focusId } : {}),
-    omittedRelationCount: eligible.length - relations.length,
-  });
-
-  if (options.mode === 'all')
-    return finish(
-      detailBoxes,
-      eligible.filter((relation) => projectRelation(model, relation, detailIds)),
-      'all',
-    );
-
-  const selected = options.selectedId ? model.nodeById.get(options.selectedId) : undefined;
-  if (
-    selected &&
-    selected.kind !== 'universe' &&
-    selected.id !== options.scopeId &&
-    visibleAncestorId(model, selected.id, allIds)
-  ) {
-    const incident = new Set([selected.id, ...descendantsOf(model, selected.id).map((node) => node.id)]);
-    return finish(
-      detailBoxes,
-      eligible.filter(
-        (relation) =>
-          (incident.has(relation.sourceId) || incident.has(relation.targetId)) &&
-          projectRelation(model, relation, detailIds),
-      ),
-      'focus',
-      selected.id,
-    );
-  }
-
   const roots = territories.filter((box) => !box.parentId || !allIds.has(box.parentId));
   const scopedChildren =
     roots.length === 1 && roots[0].id === options.scopeId
@@ -141,9 +95,10 @@ export function flowMapPresentation(
   }
   // A native summary names its own directed pair and type. Other pairs keep their documented detail.
   const retained = new Set([...groups.values()].flatMap((group) => group.map((relation) => relation.id)));
-  return finish(
-    frontier,
-    eligible.filter((relation) => retained.has(relation.id)),
-    'main',
-  );
+  return {
+    boxes: frontier,
+    relations: eligible.filter((relation) => retained.has(relation.id)),
+    mode: 'main',
+    omittedRelationCount: eligible.length - retained.size,
+  };
 }

@@ -1,25 +1,15 @@
 import { MiniMap, type Node, type NodeProps, ReactFlow, type ReactFlowInstance, type Viewport } from '@xyflow/react';
-import {
-  ArrowRight,
-  Focus,
-  Map as MapIcon,
-  Maximize2,
-  Minimize2,
-  Minus,
-  Move,
-  MoveHorizontal,
-  Plus,
-  Ruler,
-  Scan,
-  X,
-} from 'lucide-react';
+import { ArrowRight, Focus, Map as MapIcon, Maximize2, Minimize2, Minus, Plus, X } from 'lucide-react';
 import { type CSSProperties, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
+import { type FlowRectangle, placeFlowAnnotations } from '../flowMapCaptions';
 import { flowExchangeContract, flowMapBoundaryRelations, flowMapDetailBoxes } from '../flowMapDetail';
-import { buildFlowMap, type FlowMapBox } from '../flowMapLayout';
+import type { FlowMapBox } from '../flowMapLayout';
 import { flowMapBoundaryDestinations, flowMapPresentation } from '../flowMapPresentation';
 import { flowRibbonPath, roundedFlowPath } from '../flowMapRouting';
+import { type FlowScrollExtent, flowScrollContent, flowScrollGeometry, scrollFlowCamera } from '../flowMapScroll';
+import { fitFlowText } from '../flowMapText';
 import {
   fitFlowCamera,
   flowRouteInViewport,
@@ -30,13 +20,18 @@ import {
 } from '../flowMapViewport';
 import { filterMapHotspots, hotspotsInScope } from '../hotspotMap';
 import { layoutHotspots } from '../hotspotPlacement';
+import { announceMapPanel, MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import { childrenOf, visibleAncestorId } from '../model';
 import { kindLabel } from '../presentation';
 import type { AtlasRelation, PublishedModel } from '../types';
+import { savedFlowMap, useFlowMapLayout } from '../useFlowMapLayout';
+import { FlowScrollbars } from './FlowScrollbars';
 import { COMPACT_HOTSPOT_DIAMETER, COMPACT_HOTSPOT_TOUCH_DIAMETER, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { FLOW_TYPES, type FlowType, MapFlowPicker } from './MapFlowPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
+import { MapLegend } from './MapLegend';
+import { MapOverlayPanel } from './MapOverlayPanel';
 import type { MapPanelProps } from './MapPanel';
 import { MetaTypeLabel, ModelText, ReferenceLink } from './ModelLinks';
 import '@xyflow/react/dist/style.css';
@@ -62,58 +57,38 @@ type SpatialNode = Node<
     applicationName?: string;
     headerHeight: number;
     hasChildren: boolean;
+    title: ReturnType<typeof titleTypography>;
+    externalTitle: boolean;
     onSelect: (id: string) => void;
-    onCenter: (id: string) => void;
   },
   'spatial'
 >;
 
-function SpatialObject({ data }: NodeProps<SpatialNode>) {
-  const { box, zoom, expanded, active, application } = data;
+function titleTypography(box: FlowMapBox, zoom: number, hasChildren: boolean) {
   const screenWidth = box.width * zoom;
   const screenHeight = box.height * zoom;
-  const header = expanded ? data.headerHeight * zoom : screenHeight;
-  const maxLines =
-    box.node.kind === 'business_area'
-      ? box.height >= 72
-        ? 3
-        : 2
-      : expanded
-        ? header >= 26
-          ? 2
-          : 1
-        : header >= 64
-          ? 3
-          : 2;
+  const header = screenHeight;
   const padding = Math.min(box.node.kind === 'business_area' ? 8 : 10, header * 0.14, Math.max(1, (header - 25) / 2));
   const horizontalPadding = Math.min(12, screenWidth * 0.07);
   const textWidth = Math.max(1, screenWidth - 2 - horizontalPadding * 2);
   titleMeasure ||= document.createElement('canvas').getContext('2d');
   const fontFamily = getComputedStyle(document.body).fontFamily;
-  const fontWeight = data.hasChildren && !expanded ? 650 : 600;
-  const lineCount = (font: number) => {
+  const fontWeight = hasChildren ? 650 : 600;
+  const measure = (text: string, font: number) => {
     if (titleMeasure) titleMeasure.font = `${fontWeight} ${font}px ${fontFamily}`;
-    const space = titleMeasure?.measureText(' ').width ?? font * 0.28;
-    let count = 1;
-    let width = 0;
-    for (const word of box.node.name.split(/\s+/)) {
-      const next = titleMeasure?.measureText(word).width ?? word.length * font * 0.54;
-      if (width && width + next + space > textWidth) {
-        count++;
-        width = 0;
-      }
-      count += Math.max(0, Math.ceil(next / Math.max(1, textWidth)) - 1);
-      width += next + space;
-    }
-    return count;
+    return titleMeasure?.measureText(text).width ?? text.length * font * 0.54;
   };
-  let labelSize = box.node.kind === 'business_area' ? 14 : box.depth === 0 ? 20 : box.node.kind === 'domain' ? 17 : 14;
-  while (
-    labelSize > 10 &&
-    (lineCount(labelSize) > maxLines || lineCount(labelSize) * labelSize * 1.25 + padding * 2 > header)
-  )
-    labelSize -= 0.5;
-  const lines = Math.max(1, Math.min(maxLines, Math.floor((header - padding * 2) / (labelSize * 1.25))));
+  const preferred =
+    box.node.kind === 'business_area' ? 14 : box.depth === 0 ? 20 : box.node.kind === 'domain' ? 17 : 14;
+  const fitted = fitFlowText(box.node.name, textWidth, Math.max(1, header - padding * 2 - 2), preferred, measure);
+  return { fitted, padding, horizontalPadding, fontFamily, fontWeight };
+}
+function SpatialObject({ data }: NodeProps<SpatialNode>) {
+  const { box, zoom, expanded, active, application } = data;
+  const screenWidth = box.width * zoom;
+  const screenHeight = box.height * zoom;
+  const { fitted, padding, horizontalPadding, fontFamily, fontWeight } = data.title;
+  const labelSize = fitted.font;
   return (
     <div
       className={`spatial-map-object kind-${box.node.kind}${expanded ? ' is-expanded' : ' is-collapsed'}${data.hasChildren && !expanded ? ' is-collapsed-territory' : ''}${active ? ' is-active' : ''}${application ? ' spatial-application-mark' : ''}`}
@@ -126,7 +101,8 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
     >
       <button
         type="button"
-        className="spatial-object-title nodrag"
+        className={data.externalTitle ? 'spatial-object-hit nodrag' : 'spatial-object-title nodrag'}
+        tabIndex={data.externalTitle ? -1 : 0}
         aria-pressed={active}
         aria-label={`Ouvrir ${box.node.name}`}
         onClick={(event) => {
@@ -137,15 +113,16 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
         style={{
           fontSize: labelSize / zoom,
           padding: `${padding / zoom}px ${horizontalPadding / zoom}px`,
-          maxHeight: header / zoom,
+          maxHeight: screenHeight / zoom,
+          fontWeight,
+          fontFamily,
         }}
       >
-        <span
-          className="spatial-object-name"
-          style={{ WebkitLineClamp: lines, maxHeight: (lines * labelSize * 1.25) / zoom }}
-        >
-          {box.node.name}
-        </span>
+        {!data.externalTitle && (
+          <span className="spatial-object-name" style={{ whiteSpace: 'pre', overflow: 'visible' }}>
+            {fitted.lines.join('\n')}
+          </span>
+        )}
       </button>
       {application && data.applicationName && screenWidth >= 135 && screenHeight >= 32 && (
         <span className="spatial-application-badge" style={{ fontSize: 10 / zoom }}>
@@ -250,6 +227,16 @@ export function FlowMapPanel(props: MapPanelProps) {
   const [framing, setFraming] = useState<FlowFraming>(() => cameraFramings.get(key) || 'standard');
   const [expanded, setExpanded] = useState(false);
   const [showMiniMap, setShowMiniMap] = useState(true);
+  const navigatorOwner = useId();
+  useEffect(() => {
+    const element = panel.current;
+    const close = (event: Event) => {
+      if ((event as CustomEvent<string>).detail !== navigatorOwner) setShowMiniMap(false);
+    };
+    element?.addEventListener(MAP_PANEL_EVENT, close);
+    return () => element?.removeEventListener(MAP_PANEL_EVENT, close);
+  }, [navigatorOwner]);
+
   const [shortScreen, setShortScreen] = useState(() => matchMedia('(max-height: 500px)').matches);
   const [coarsePointer, setCoarsePointer] = useState(() => matchMedia('(pointer: coarse)').matches);
   const [arrows, setArrows] = useState(() => arrowChoices.get(key) ?? true);
@@ -259,7 +246,19 @@ export function FlowMapPanel(props: MapPanelProps) {
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
   const exchangeTrigger = useRef<{ element: HTMLElement | SVGElement; relationIds: string[] } | null>(null);
   const paintId = useId().replaceAll(':', '');
-  const layout = useMemo(() => buildFlowMap(model, scopeId, { overviewDepth: 0 }), [model, scopeId]);
+  const { layout, pending: layoutPending, error: layoutError } = useFlowMapLayout(model, scopeId);
+  const scrollContent = useMemo(() => flowScrollContent(layout), [layout]);
+  const scrollEnvelope = useRef<{ layout: typeof layout; key: string; extent: FlowScrollExtent } | null>(null);
+  const scrollKey = `${key}/${viewport.zoom}/${size.width}/${size.height}/${framing}`;
+  const scrollGeometry = flowScrollGeometry(
+    scrollContent,
+    viewport,
+    size,
+    scrollEnvelope.current?.layout === layout && scrollEnvelope.current.key === scrollKey
+      ? scrollEnvelope.current.extent
+      : undefined,
+  );
+  scrollEnvelope.current = { layout, key: scrollKey, extent: scrollGeometry.extent };
   const resizeCamera = useCallback(
     (current: Viewport, previous: { width: number; height: number }, next: { width: number; height: number }) => {
       const choice = cameraFramings.get(key);
@@ -283,14 +282,10 @@ export function FlowMapPanel(props: MapPanelProps) {
     );
     arrowChoices.set(destinationKey, true);
     cameraFramings.set(destinationKey, 'standard');
-    cameras.set(
-      destinationKey,
-      standardFlowCamera(
-        buildFlowMap(model, destination.scopeId || undefined, { overviewDepth: 0 }).boxes,
-        size,
-        destination.scopeId || undefined,
-      ),
-    );
+    const destinationLayout = savedFlowMap(model, destination.scopeId || undefined);
+    if (destinationLayout)
+      cameras.set(destinationKey, standardFlowCamera(destinationLayout.boxes, size, destination.scopeId || undefined));
+    else cameras.delete(destinationKey);
     cameraSizes.set(destinationKey, size);
     cameraSelections.set(
       destinationKey,
@@ -353,7 +348,6 @@ export function FlowMapPanel(props: MapPanelProps) {
       flowMapPresentation(model, layout.boxes, {
         scopeId,
         zoom: viewport.zoom,
-        mode: 'main',
         types: flowTypes,
       }),
     [model, layout.boxes, scopeId, viewport.zoom, flowTypes],
@@ -427,6 +421,73 @@ export function FlowMapPanel(props: MapPanelProps) {
     },
     [key],
   );
+  const liveScrollGeometry = useCallback(
+    (current: Viewport) => {
+      const previous = scrollEnvelope.current;
+      const geometry = flowScrollGeometry(
+        scrollContent,
+        current,
+        size,
+        previous?.layout === layout && current.zoom === viewport.zoom ? previous.extent : undefined,
+      );
+      scrollEnvelope.current = { layout, key: scrollKey, extent: geometry.extent };
+      return geometry;
+    },
+    [scrollContent, size, layout, viewport.zoom, scrollKey],
+  );
+  const scrollCamera = useCallback(
+    (dx: number, dy: number) => {
+      const flow = instance.current;
+      if (!flow || layoutPending) return;
+      const current = flow.getViewport();
+      const geometry = liveScrollGeometry(current);
+      if (!geometry.vertical.visible && geometry.horizontal.visible && !dx) {
+        dx = dy;
+        dy = 0;
+      }
+      const next = scrollFlowCamera(current, geometry, dx, dy);
+      if (next.x === current.x && next.y === current.y) return;
+      if (cameraFramings.get(key) !== 'width' || next.x !== current.x) rememberFraming('custom');
+      void flow.setViewport(next);
+    },
+    [key, layoutPending, liveScrollGeometry, rememberFraming],
+  );
+  useEffect(() => {
+    const surface = canvas.current;
+    if (!surface) return;
+    const wheel = (event: WheelEvent) => {
+      if (
+        (event.target as Element).closest(
+          '.flow-camera-tools, .map-overlay-tools, .flow-scrollbar, .flow-exchange-detail',
+        )
+      )
+        return;
+      const flow = instance.current;
+      if (!flow || layoutPending) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const factor = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? size.height : 1;
+      if (event.ctrlKey || event.metaKey) {
+        const current = flow.getViewport();
+        const zoom = Math.max(0.003, Math.min(2.5, current.zoom * Math.exp(-event.deltaY * factor * 0.002)));
+        const bounds = surface.getBoundingClientRect();
+        const x = event.clientX - bounds.left,
+          y = event.clientY - bounds.top;
+        rememberFraming('custom');
+        void flow.setViewport({
+          zoom,
+          x: x - ((x - current.x) * zoom) / current.zoom,
+          y: y - ((y - current.y) * zoom) / current.zoom,
+        });
+      } else
+        scrollCamera(
+          (event.deltaX + (event.shiftKey ? event.deltaY : 0)) * factor,
+          event.shiftKey ? 0 : event.deltaY * factor,
+        );
+    };
+    surface.addEventListener('wheel', wheel, { capture: true, passive: false });
+    return () => surface.removeEventListener('wheel', wheel, true);
+  }, [layoutPending, size.height, scrollCamera, rememberFraming]);
   const standard = useCallback(
     (duration = 250) => {
       const bounds = canvas.current ? { width: canvas.current.clientWidth, height: canvas.current.clientHeight } : size;
@@ -518,6 +579,76 @@ export function FlowMapPanel(props: MapPanelProps) {
     media.addEventListener('change', changed);
     return () => media.removeEventListener('change', changed);
   }, []);
+  const lastAnnotationFraming = useRef(framing);
+  if (framing !== 'custom') lastAnnotationFraming.current = framing;
+  const annotationFraming = lastAnnotationFraming.current;
+  const [annotationHud, setAnnotationHud] = useState<FlowRectangle[]>([]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Remeasure actual floating controls after changes to their geometry or visibility.
+  useLayoutEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const surface = canvas.current;
+      if (!surface) return;
+      const bounds = surface.getBoundingClientRect();
+      const rectangles = [
+        ...surface.querySelectorAll('.flow-camera-tools, .map-overlay-tools, .react-flow__minimap, .flow-scrollbar'),
+      ].map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          x: rect.left - bounds.left - 4,
+          y: rect.top - bounds.top - 4,
+          width: rect.width + 8,
+          height: rect.height + 8,
+        };
+      });
+      setAnnotationHud((previous) => (JSON.stringify(previous) === JSON.stringify(rectangles) ? previous : rectangles));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [size, showMiniMap, shortScreen, layoutPending, annotationFraming, viewport.zoom]);
+  const titleMetrics = useMemo(
+    () => new Map(visibleBoxes.map((box) => [box.id, titleTypography(box, viewport.zoom, parentIds.has(box.id))])),
+    [visibleBoxes, viewport.zoom, parentIds],
+  );
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Capture a camera only when zoom, framing or available space changes; panning translates the same annotations.
+  const annotationCamera = useMemo(
+    () =>
+      annotationFraming === 'all' || annotationFraming === 'width'
+        ? fitFlowCamera(layout, size, annotationFraming)
+        : { x: viewport.x, y: viewport.y },
+    [layout, size, viewport.zoom, annotationFraming, annotationHud],
+  );
+  const annotations = useMemo(() => {
+    titleMeasure ||= document.createElement('canvas').getContext('2d');
+    const family = getComputedStyle(document.body).fontFamily;
+    const titles = visibleBoxes.flatMap((box) => {
+      if (titleMetrics.get(box.id)?.fitted.fits) return [];
+      const width = 124;
+      const fitted = fitFlowText(box.node.name, width - 12, 100, 11, (text, font) => {
+        if (titleMeasure) titleMeasure.font = `600 ${font}px ${family}`;
+        return titleMeasure?.measureText(text).width ?? text.length * font * 0.55;
+      });
+      return [
+        {
+          id: box.id,
+          text: fitted.lines.join('\n'),
+          shortText: box.node.name
+            .split(/\s+/)
+            .filter((word) => /[A-Za-z]/.test(word))
+            .map((word) => word[0])
+            .join(''),
+          x: (box.x + box.width / 2) * viewport.zoom - width / 2,
+          y: (box.y + box.height / 2) * viewport.zoom - 18,
+          width,
+          height: fitted.lines.length * 13.75 + 10,
+        },
+      ];
+    });
+    return placeFlowAnnotations(layout.routes || [], visibleBoxes, layout, size, viewport.zoom, {
+      camera: annotationCamera,
+      obstacles: annotationHud,
+      titles,
+      overview: annotationFraming === 'all',
+    });
+  }, [layout, visibleBoxes, size, viewport.zoom, titleMetrics, annotationCamera, annotationHud, annotationFraming]);
   const nodes: SpatialNode[] = useMemo(
     () =>
       visibleBoxes.map((box) => ({
@@ -538,7 +669,8 @@ export function FlowMapPanel(props: MapPanelProps) {
           headerHeight: box.headerHeight,
           hasChildren: parentIds.has(box.id),
           onSelect: enterObject,
-          onCenter: center,
+          title: titleMetrics.get(box.id) || titleTypography(box, viewport.zoom, parentIds.has(box.id)),
+          externalTitle: !titleMetrics.get(box.id)?.fitted.fits,
         },
       })),
     [
@@ -550,7 +682,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       appIds,
       product?.name,
       enterObject,
-      center,
+      titleMetrics,
     ],
   );
   const [markerObstacles, setMarkerObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
@@ -597,7 +729,9 @@ export function FlowMapPanel(props: MapPanelProps) {
           if (right > left && bottom > top) add(new DOMRect(left, top, right - left, bottom - top));
         }
       }
-      for (const element of surface.querySelectorAll('.flow-camera-tools, .react-flow__minimap, .flow-map-note'))
+      for (const element of surface.querySelectorAll(
+        '.flow-camera-tools, .map-overlay-tools, .react-flow__minimap, .flow-map-note, .flow-scrollbar, .flow-exchange-label',
+      ))
         add(element.getBoundingClientRect());
       setMarkerObstacles((previous) => (JSON.stringify(previous) === JSON.stringify(obstacles) ? previous : obstacles));
     };
@@ -620,7 +754,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [viewport, size, visibleKey, product?.id, arrows]);
+  }, [viewport, size, visibleKey, product?.id, arrows, annotations]);
   const markerGroups = useMemo(() => {
     const groups = new Map<string, Set<string>>();
     for (const hotspot of hotspots) {
@@ -665,18 +799,46 @@ export function FlowMapPanel(props: MapPanelProps) {
       y: point.y * viewport.zoom,
     });
     const visible = new Map(exchanges.map((exchange) => [exchange.id, exchange]));
-    return (layout.routes || []).flatMap(({ id, points, labelPoint, label: reserved }) => {
+    const captions = annotations.captions;
+    const measure = document.createElement('canvas').getContext('2d');
+    const fontFamily = getComputedStyle(document.body).fontFamily;
+    return (layout.routes || []).flatMap(({ id, points }) => {
       const exchange = visible.get(id);
       if (!exchange) return [];
       const pathPoints = points.map(screen);
-      const anchor = screen(labelPoint);
-      // Captions stay attached to their own segment. At overview scale, keep arrows
-      // accessible without allowing a fixed-size caption to spill into another lane.
-      const width = Math.min(190, (reserved?.width || 0) * viewport.zoom);
-      const label =
-        reserved && width >= 84 && reserved.height * viewport.zoom >= 53
-          ? { x: anchor.x - width / 2, y: anchor.y - 53 / 2, width, height: 53, anchor }
-          : undefined;
+      let label = captions.get(id);
+      let captionFont = 11;
+      let caption = exchange.caption;
+      if (label?.badge) caption = String(label.badge);
+      else if (label?.compact) {
+        const words = caption.split(/\s+/);
+        const maxCharacters = size.width < 500 ? 20 : 38;
+        caption = '';
+        for (const word of words) {
+          if (caption && caption.length + word.length + 1 > maxCharacters) break;
+          caption += (caption ? ' ' : '') + word;
+        }
+      }
+      if (label && !label.badge) {
+        const fitted = fitFlowText(caption, label.width - 14, label.height - 10, captionFont, (text, font) => {
+          if (measure) measure.font = `400 ${font}px ${fontFamily}`;
+          return measure?.measureText(text).width ?? text.length * font * 0.55;
+        });
+        caption = fitted.lines.join('\n');
+        captionFont = fitted.font;
+        if (!fitted.fits) {
+          const badge = [...captions.keys()].sort().indexOf(id) + 1;
+          caption = String(badge);
+          label = {
+            ...label,
+            x: label.x + (label.width - 22) / 2,
+            y: label.y + (label.height - 22) / 2,
+            width: 22,
+            height: 22,
+            badge,
+          };
+        }
+      }
       return [
         {
           exchange,
@@ -684,10 +846,12 @@ export function FlowMapPanel(props: MapPanelProps) {
           path: roundedFlowPath(pathPoints, 10),
           ribbon: flowRibbonPath(pathPoints, 8, 14),
           label,
+          caption,
+          captionFont,
         },
       ];
     });
-  }, [layout.routes, viewport.zoom, exchanges]);
+  }, [layout, viewport.zoom, exchanges, size, annotations]);
 
   const exchangeDetail = selectedExchange && (
     <aside className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`} aria-label="Détail du flux">
@@ -864,23 +1028,34 @@ export function FlowMapPanel(props: MapPanelProps) {
       </div>
       <div
         ref={canvas}
+        id={`${paintId}-canvas`}
         className="flow-map-canvas"
+        style={
+          {
+            '--flow-scroll-x': scrollGeometry.horizontal.visible ? '14px' : '0px',
+            '--flow-scroll-y': scrollGeometry.vertical.visible ? '14px' : '0px',
+          } as CSSProperties
+        }
         role="region"
         aria-label="Exploration spatiale des flux, flèches pour déplacer, plus et moins pour zoomer"
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
           const directions: Record<string, [number, number]> = {
-            ArrowLeft: [80, 0],
-            ArrowRight: [-80, 0],
-            ArrowUp: [0, 80],
-            ArrowDown: [0, -80],
+            ArrowLeft: [-80, 0],
+            ArrowRight: [80, 0],
+            ArrowUp: [0, -80],
+            ArrowDown: [0, 80],
+            PageUp: event.shiftKey ? [-size.width * 0.85, 0] : [0, -size.height * 0.85],
+            PageDown: event.shiftKey ? [size.width * 0.85, 0] : [0, size.height * 0.85],
           };
           const delta = directions[event.key];
           if (delta) {
             event.preventDefault();
-            rememberFraming('custom');
-            void instance.current?.setViewport({ ...viewport, x: viewport.x + delta[0], y: viewport.y + delta[1] });
+            scrollCamera(delta[0], delta[1]);
+          } else if (event.key === 'End') {
+            event.preventDefault();
+            scrollCamera(event.ctrlKey ? Infinity : 0, Infinity);
           } else if (['+', '=', '-'].includes(event.key)) {
             event.preventDefault();
             rememberFraming('custom');
@@ -894,73 +1069,86 @@ export function FlowMapPanel(props: MapPanelProps) {
         data-zoom={viewport.zoom}
         data-framing={framing}
         data-exchange-mode={presentation.mode}
-        data-layout={JSON.stringify(layout.boxes.map(({ id, x, y, width, height }) => ({ id, x, y, width, height })))}
+        aria-busy={layoutPending}
+        data-layout={
+          layoutPending || layoutError
+            ? undefined
+            : JSON.stringify(layout.boxes.map(({ id, x, y, width, height }) => ({ id, x, y, width, height })))
+        }
       >
-        <ReactFlow<SpatialNode>
-          key={key}
-          nodes={nodes}
-          edges={[]}
-          nodeTypes={nodeTypes}
-          nodesDraggable={false}
-          nodesConnectable={false}
-          nodesFocusable={false}
-          edgesFocusable={false}
-          elementsSelectable={false}
-          minZoom={0.003}
-          maxZoom={2.5}
-          panOnDrag
-          zoomOnDoubleClick={false}
-          defaultViewport={cameras.get(key) || viewport}
-          preventScrolling
-          onInit={(flow) => {
-            instance.current = flow;
-            if (!layout.boxes.length) return;
-            const saved = cameras.get(key);
-            const focusSelection = selectedBoxId && selectedId !== scopeId;
-            if (saved && (!focusSelection || cameraSelections.get(key) === selectedId)) {
-              const previous = cameraSizes.get(key);
-              const current = canvas.current && {
-                width: canvas.current.clientWidth,
-                height: canvas.current.clientHeight,
-              };
-              void flow.setViewport(previous && current ? resizeCamera(saved, previous, current) : saved);
-            } else
-              requestAnimationFrame(() => {
-                if (focusSelection) center(selectedId, 0);
-                else standard(0);
-              });
-          }}
-          onMoveStart={(event) => {
-            if (event) rememberFraming('custom');
-          }}
-          onMove={(_, next) => {
-            setViewport(next);
-            cameras.set(key, next);
-            if (canvas.current)
-              cameraSizes.set(key, { width: canvas.current.clientWidth, height: canvas.current.clientHeight });
-          }}
-          onPaneClick={closeExchange}
-          onNodeClick={(_, node) => enterObject(node.id)}
-          proOptions={{ hideAttribution: true }}
-          ariaLabelConfig={{ 'minimap.ariaLabel': 'Vue miniature de la carte spatiale' }}
-        >
-          {showMiniMap && size.width > 700 && !shortScreen && (
-            <MiniMap
-              style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
-              pannable
-              zoomable
-              onClick={(_, point) => {
-                rememberFraming('custom');
-                void instance.current?.setCenter(point.x, point.y, {
-                  zoom: viewport.zoom,
-                  duration: motionDuration(150),
+        {!layoutPending && !layoutError && (
+          <ReactFlow<SpatialNode>
+            key={key}
+            nodes={nodes}
+            edges={[]}
+            nodeTypes={nodeTypes}
+            nodesDraggable={false}
+            nodesConnectable={false}
+            nodesFocusable={false}
+            edgesFocusable={false}
+            elementsSelectable={false}
+            minZoom={0.003}
+            maxZoom={2.5}
+            panOnDrag
+            zoomOnScroll={false}
+            zoomOnDoubleClick={false}
+            defaultViewport={cameras.get(key) || viewport}
+            preventScrolling
+            onInit={(flow) => {
+              instance.current = flow;
+              if (!layout.boxes.length) return;
+              const saved = cameras.get(key);
+              const focusSelection = selectedBoxId && selectedId !== scopeId;
+              if (saved && (!focusSelection || cameraSelections.get(key) === selectedId)) {
+                const previous = cameraSizes.get(key);
+                const current = canvas.current && {
+                  width: canvas.current.clientWidth,
+                  height: canvas.current.clientHeight,
+                };
+                void flow.setViewport(previous && current ? resizeCamera(saved, previous, current) : saved);
+              } else
+                requestAnimationFrame(() => {
+                  if (instance.current !== flow) return;
+                  // A framing selected while React Flow initializes takes priority over the default camera.
+                  const requested = cameraFramings.get(key);
+                  if (requested === 'width') fitWidth();
+                  else if (requested === 'all') overview();
+                  else if (focusSelection) center(selectedId, 0);
+                  else standard(0);
                 });
-              }}
-              nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
-              maskColor="#edf3f0b0"
-            />
-          )}
-        </ReactFlow>
+            }}
+            onMoveStart={(event) => {
+              if (event) rememberFraming('custom');
+            }}
+            onMove={(_, next) => {
+              setViewport(next);
+              cameras.set(key, next);
+              if (canvas.current)
+                cameraSizes.set(key, { width: canvas.current.clientWidth, height: canvas.current.clientHeight });
+            }}
+            onPaneClick={closeExchange}
+            onNodeClick={(_, node) => enterObject(node.id)}
+            proOptions={{ hideAttribution: true }}
+            ariaLabelConfig={{ 'minimap.ariaLabel': 'Vue miniature de la carte spatiale' }}
+          >
+            {showMiniMap && size.width > 700 && !shortScreen && (
+              <MiniMap
+                style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
+                pannable
+                zoomable
+                onClick={(_, point) => {
+                  rememberFraming('custom');
+                  void instance.current?.setCenter(point.x, point.y, {
+                    zoom: viewport.zoom,
+                    duration: motionDuration(150),
+                  });
+                }}
+                nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
+                maskColor="#edf3f0b0"
+              />
+            )}
+          </ReactFlow>
+        )}
         {arrows && (
           <svg
             className="flow-exchanges"
@@ -1031,7 +1219,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                 </g>
               ))}
               {drawings.map(
-                ({ exchange, label }) =>
+                ({ exchange, label, caption, captionFont }) =>
                   label && (
                     <g
                       key={exchange.id}
@@ -1048,7 +1236,19 @@ export function FlowMapPanel(props: MapPanelProps) {
                       <foreignObject x={label.x} y={label.y} width={label.width} height={label.height}>
                         <button
                           type="button"
-                          className="flow-exchange-label"
+                          className={`flow-exchange-label${label.badge ? ' is-numbered' : ''}`}
+                          data-flow-badge={label.badge}
+                          style={{
+                            fontSize: captionFont,
+                            maxHeight: 'none',
+                            height: '100%',
+                            width: '100%',
+                            whiteSpace: 'pre',
+                            lineHeight: 1.25,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
                           tabIndex={-1}
                           title={`${exchange.label} · ${exchange.relations.length} relation${exchange.relations.length > 1 ? 's' : ''}`}
                           aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
@@ -1059,7 +1259,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                           onBlur={() => setHoveredExchangeId('')}
                           onClick={(event) => toggleExchange(exchange, event.currentTarget)}
                         >
-                          {exchange.caption}
+                          {caption}
                         </button>
                       </foreignObject>
                     </g>
@@ -1068,7 +1268,61 @@ export function FlowMapPanel(props: MapPanelProps) {
             </g>
           </svg>
         )}
-        {!layout.boxes.length && (
+        <div className="flow-title-layer" style={{ transform: `translate(${viewport.x}px, ${viewport.y}px)` }}>
+          <svg className="flow-title-leaders" aria-hidden="true" width={size.width} height={size.height}>
+            {[...annotations.titles].map(([id, title]) => (
+              <line
+                key={id}
+                className="flow-caption-leader"
+                x1={title.anchor.x}
+                y1={title.anchor.y}
+                x2={Math.max(title.x, Math.min(title.x + title.width, title.anchor.x))}
+                y2={Math.max(title.y, Math.min(title.y + title.height, title.anchor.y))}
+              />
+            ))}
+          </svg>
+          {[...annotations.titles].map(([id, title]) => {
+            const box = byId.get(id);
+            if (!box) return null;
+            return (
+              <button
+                key={id}
+                type="button"
+                className="spatial-object-title is-external"
+                data-node-id={id}
+                data-title-display={annotations.shortTitles ? 'compact' : 'full'}
+                aria-pressed={displayedSelectionId === id}
+                aria-label={`Ouvrir ${box.node.name}`}
+                title={`${box.node.name} · Ouvrir ce périmètre`}
+                onClick={() => enterObject(id)}
+                style={{
+                  position: 'absolute',
+                  left: title.x,
+                  top: title.y,
+                  width: title.width,
+                  height: title.height,
+                  fontSize: 11,
+                  lineHeight: 1.25,
+                  padding: annotations.shortTitles ? '2px 3px' : '4px 5px',
+                  whiteSpace: 'pre',
+                }}
+              >
+                <span className="spatial-object-name">{title.text}</span>
+              </button>
+            );
+          })}
+        </div>
+        {layoutPending && (
+          <p className="flow-map-note" role="status">
+            Préparation de la carte…
+          </p>
+        )}
+        {layoutError && (
+          <p className="flow-map-note" role="alert">
+            {layoutError}
+          </p>
+        )}
+        {!layoutPending && !layoutError && !layout.boxes.length && (
           <p className="flow-map-note">Aucun périmètre cartographiable dans cette publication.</p>
         )}
         {!!layout.boxes.length && !layout.exchanges.length && (
@@ -1106,144 +1360,116 @@ export function FlowMapPanel(props: MapPanelProps) {
           (shortScreen
             ? createPortal(exchangeDetail, expanded && panel.current ? panel.current : document.body)
             : exchangeDetail)}
-      </div>
-      <div className="flow-camera-tools" role="group" aria-label="Cadrage des flux">
-        <select
-          className="flow-framing-select"
-          aria-label="Cadrage des flux"
-          value={framing}
-          onChange={(event) => {
-            if (event.target.value === 'standard') standard();
-            else if (event.target.value === 'width') fitWidth();
-            else if (event.target.value === 'all') overview();
-          }}
-        >
-          {framing === 'custom' && (
-            <option value="custom" disabled>
-              Libre
-            </option>
-          )}
-          <option value="standard">Standard</option>
-          <option value="width">Largeur</option>
-          <option value="all">Tout cadrer</option>
-        </select>
-        <button
-          className="flow-framing-button"
-          type="button"
-          aria-label="Échelle standard"
-          aria-pressed={framing === 'standard'}
-          title="Échelle de lecture naturelle ; glisser pour parcourir toute la carte"
-          onClick={() => standard()}
-        >
-          <Ruler size={16} />
-          <span>Standard</span>
-        </button>
-        <button
-          className="flow-framing-button"
-          type="button"
-          aria-label="Cadrer la largeur"
-          aria-pressed={framing === 'width'}
-          title="Adapter la largeur de toute la carte"
-          onClick={fitWidth}
-        >
-          <MoveHorizontal size={16} />
-          <span>Largeur</span>
-        </button>
-        <button
-          className="flow-framing-button"
-          type="button"
-          aria-label="Tout cadrer"
-          aria-pressed={framing === 'all'}
-          title="Voir la carte entière"
-          onClick={overview}
-        >
-          <Scan size={16} />
-          <span>Tout cadrer</span>
-        </button>
-        <button
-          type="button"
-          aria-label="Centrer la sélection"
-          title="Centrer la sélection"
-          disabled={!selectedBoxId}
-          onClick={() => center(selectedId)}
-        >
-          <Focus size={16} />
-          <span>Centrer la sélection</span>
-        </button>
-        <div className="flow-zoom-tools">
-          <button
-            type="button"
-            aria-label="Zoom arrière"
-            onClick={() => {
-              rememberFraming('custom');
-              void instance.current?.zoomOut({ duration: motionDuration(150) });
+        {!layoutPending && !layoutError && (
+          <FlowScrollbars
+            geometry={scrollGeometry}
+            size={size}
+            canvasId={`${paintId}-canvas`}
+            onScroll={(axis, value) => {
+              const flow = instance.current;
+              if (!flow) return;
+              const current = flow.getViewport();
+              const geometry = liveScrollGeometry(current);
+              if (Math.abs(geometry[axis].value - value) < 1) return;
+              if (framing !== 'width' || axis === 'horizontal') rememberFraming('custom');
+              void flow.setViewport({ ...current, [axis === 'horizontal' ? 'x' : 'y']: geometry[axis].origin - value });
+            }}
+          />
+        )}
+        <div className="flow-camera-tools" role="group" aria-label="Cadrage des flux">
+          <select
+            className="flow-framing-select"
+            aria-label="Cadrage des flux"
+            value={framing}
+            onChange={(event) => {
+              if (event.target.value === 'standard') standard();
+              else if (event.target.value === 'width') fitWidth();
+              else if (event.target.value === 'all') overview();
             }}
           >
-            <Minus size={16} />
-          </button>
-          <output aria-label="Zoom des flux">{Math.round(viewport.zoom * 100)} %</output>
-          <button
-            type="button"
-            aria-label="Zoom avant"
-            onClick={() => {
-              rememberFraming('custom');
-              void instance.current?.zoomIn({ duration: motionDuration(150) });
-            }}
-          >
-            <Plus size={16} />
-          </button>
+            {framing === 'custom' && (
+              <option value="custom" disabled>
+                Libre
+              </option>
+            )}
+            <option value="standard">Standard</option>
+            <option value="width">Largeur</option>
+            <option value="all">Tout cadrer</option>
+          </select>
+          <div className="flow-zoom-tools">
+            <button
+              type="button"
+              aria-label="Zoom arrière"
+              onClick={() => {
+                rememberFraming('custom');
+                void instance.current?.zoomOut({ duration: motionDuration(150) });
+              }}
+            >
+              <Minus size={16} />
+            </button>
+            <output aria-label="Zoom des flux">{Math.round(viewport.zoom * 100)} %</output>
+            <button
+              type="button"
+              aria-label="Zoom avant"
+              onClick={() => {
+                rememberFraming('custom');
+                void instance.current?.zoomIn({ duration: motionDuration(150) });
+              }}
+            >
+              <Plus size={16} />
+            </button>
+          </div>
+          <MapOverlayPanel label="Options de navigation" icon={<Focus size={16} />}>
+            <div className="map-recenter-actions">
+              {selectedBoxId && (
+                <button type="button" onClick={() => center(selectedId)}>
+                  Centrer la sélection
+                </button>
+              )}
+              {product && (applicationBoxIds.size > 0 || applicationAtScope) && (
+                <button type="button" onClick={centerApplication}>
+                  Centrer l’application
+                </button>
+              )}
+            </div>
+            <p>Glisser pour se déplacer. Cliquer sur un objet pour entrer dans son périmètre.</p>
+            <p>
+              Molette pour se déplacer ; Ctrl ou ⌘ + molette, pincement ou boutons + et − pour zoomer. Au clavier :
+              flèches et Page précédente / suivante pour déplacer, + et − pour zoomer, Début pour tout cadrer.
+            </p>
+          </MapOverlayPanel>
         </div>
-        {size.width > 700 && !shortScreen && (
-          <button
-            type="button"
-            aria-label={showMiniMap ? 'Masquer la miniature' : 'Afficher la miniature'}
-            title={showMiniMap ? 'Masquer la miniature' : 'Afficher la miniature'}
-            aria-pressed={showMiniMap}
-            onClick={() => setShowMiniMap((visible) => !visible)}
-          >
-            <MapIcon size={16} />
-          </button>
-        )}
-        {product && (
-          <button
-            type="button"
-            aria-label="Centrer l’application"
-            title="Centrer l’application"
-            disabled={!applicationBoxIds.size && !applicationAtScope}
-            onClick={centerApplication}
-          >
-            <Focus size={16} />
-            <span>Centrer l’application</span>
-          </button>
-        )}
-      </div>
-      <div className="flow-map-legend">
-        <span>
-          <i />
-          Partage de données
-        </span>
-        <span>
-          <i className="is-knowledge" />
-          Apport de connaissance
-        </span>
-        {product && (
-          <span className="flow-app-legend">
-            {product.name} ·{' '}
-            {selection
-              ? 'couverture documentée dans le SI sélectionné'
-              : 'offre éditeur · usage Beaumanoir non présumé'}
-            {!applicationBoxIds.size &&
-              (applicationAtScope
-                ? ' · rattachement au périmètre courant, sans localisation plus fine'
-                : ' · aucun rattachement documenté dans ce périmètre')}
-          </span>
-        )}
-      </div>
-      <div className="map-footer">
-        <span>
-          <Move size={13} /> Glisser pour se déplacer · Cliquer pour entrer dans un périmètre · Zoomer pour agrandir
-        </span>
-        <span>Lecture seule</span>
+        <div className="map-overlay-tools">
+          <MapLegend
+            model={model}
+            mapRef={canvas}
+            compact
+            hotspots={markerGroups.flatMap((group) => group.items)}
+            flowTypes={arrows ? [...new Set(exchanges.map((exchange) => exchange.type))] : []}
+            flowIdentifiers={arrows && drawings.some((drawing) => drawing.label?.badge)}
+            application={
+              product && (applicationBoxIds.size > 0 || applicationAtScope)
+                ? { name: product.name, documented: !!selection }
+                : undefined
+            }
+          />
+          {size.width > 700 && !shortScreen && (
+            <button
+              type="button"
+              className="map-overlay-toggle flow-navigator-toggle"
+              aria-label={showMiniMap ? 'Réduire le navigateur de carte' : 'Afficher le navigateur de carte'}
+              aria-expanded={showMiniMap}
+              title="Navigateur de carte"
+              onClick={(event) => {
+                if (!showMiniMap) announceMapPanel(event.currentTarget, navigatorOwner);
+                setShowMiniMap((visible) => !visible);
+              }}
+            >
+              <MapIcon size={16} />
+              <span>Navigateur</span>
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );

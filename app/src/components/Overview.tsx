@@ -1,13 +1,14 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
+import { applicationMapIds, productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import {
   CATALOGUE_HOTSPOT_HEADROOM,
   catalogueHotspotDock,
   HOTSPOT_DIAMETERS,
   type HotspotPlacementGroup,
+  hotspotPlacementNeedsSpace,
   layoutHotspots,
 } from '../hotspotPlacement';
 import { NodeIcon } from '../icons';
@@ -17,10 +18,11 @@ import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from
 import type { PublishedModel } from '../types';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { CatalogueNavigator } from './CatalogueNavigator';
-import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
+import { HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
+import { MapLegend } from './MapLegend';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import { OverviewColumns } from './OverviewColumns';
@@ -80,6 +82,7 @@ export function Overview({
     scroll.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [detail, zoomChoice]);
   const [availableWidth, setAvailableWidth] = useState(0);
+  const [availableHeight, setAvailableHeight] = useState(0);
   const compact = effectiveZoomMode === 'width' && availableWidth > 0 && availableWidth < 812;
   const [measurementVersion, setMeasurementVersion] = useState(0);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
@@ -93,6 +96,11 @@ export function Overview({
   }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   const applicationCatalog = model.raw.application_catalog;
+  const legendSelection = applicationCatalog?.selections.find((item) => item.id === applicationSelectionId);
+  const legendProduct =
+    legendSelection && applicationCatalog
+      ? productFor(applicationCatalog, legendSelection)
+      : applicationCatalog?.products.find((item) => item.id === applicationSelectionId);
 
   const applicationMappings = useMemo(
     () => selectionMappings(applicationCatalog, applicationSelectionId, applicationComponentId),
@@ -160,6 +168,7 @@ export function Overview({
     if (!target) return;
     const update = () => {
       setAvailableWidth(target.clientWidth);
+      setAvailableHeight(target.clientHeight);
       setMeasurementVersion((version) => version + 1);
     };
     const observer = new ResizeObserver(update);
@@ -202,7 +211,9 @@ export function Overview({
     () => visibleHotspots.filter((hotspot) => !hotspot.location.node_ids.includes(universe?.id || '')),
     [visibleHotspots, universe],
   );
-  const hotspotHeadroom = cardHotspots.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
+  const reserveContext = `${model.version}:${detail}:${zoomChoice}:${availableWidth}:${availableHeight}:${expanded}:${cardHotspots.map((item) => item.id).join('|')}`;
+  const [reservedContext, setReservedContext] = useState('');
+  const hotspotHeadroom = reservedContext === reserveContext && cardHotspots.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
   const cardHotspotSystems = useMemo(
     () =>
       new Map(
@@ -354,6 +365,7 @@ export function Overview({
         fallbackPositions: catalogueHotspotDock(mapFrame.clientWidth),
       };
       const groups = layoutHotspots(anchors, bounds);
+      if (!hotspotHeadroom && hotspotPlacementNeedsSpace(groups, bounds.obstacles)) setReservedContext(reserveContext);
       for (const group of groups)
         occupied.push({
           x: group.x - group.diameter / 2 - 3,
@@ -382,6 +394,7 @@ export function Overview({
     clusterExpanded,
     scale,
     hotspotHeadroom,
+    reserveContext,
   ]);
   return (
     <section
@@ -449,7 +462,6 @@ export function Overview({
           aria-label="Carte des systèmes métier"
           tabIndex={0}
         >
-          {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
           {rootHotspots.length > 0 && (
             <div
               className="overview-global-hotspots"
@@ -668,11 +680,23 @@ export function Overview({
             </div>
           </div>
         </div>
-        <CatalogueNavigator
-          viewportRef={scroll}
-          geometryKey={`${model.version}:@root:${detail}:${zoomChoice}`}
-          framing={zoomChoice}
-        />
+        <div className="map-overlay-tools">
+          <MapLegend
+            model={model}
+            mapRef={scroll}
+            hotspots={visibleHotspots}
+            application={
+              legendProduct && applicationMappings.length
+                ? { name: legendProduct.name, documented: !!legendSelection }
+                : undefined
+            }
+          />
+          <CatalogueNavigator
+            viewportRef={scroll}
+            geometryKey={`${model.version}:@root:${detail}:${zoomChoice}`}
+            framing={zoomChoice}
+          />
+        </div>
       </div>
     </section>
   );

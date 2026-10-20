@@ -4,6 +4,7 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type RefObject,
+  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -11,6 +12,7 @@ import {
 } from 'react';
 import type { MapZoomChoice } from '../mapZoom';
 import './catalogue-navigator.css';
+import { announceMapPanel, MAP_PANEL_EVENT } from '../mapOverlayEvents';
 
 export interface CatalogueNavigatorProps {
   viewportRef: RefObject<HTMLElement | null>;
@@ -154,6 +156,14 @@ export function CatalogueNavigator({
   const visibilityContext = `${geometryKey ?? ''}:${framing}:${defaultOpen}`;
   const open = visibility?.context === visibilityContext ? visibility.open : defaultOpen;
   const setOpen = (value: boolean) => setVisibility({ context: visibilityContext, open: value });
+  useEffect(() => {
+    const scope = trigger.current?.closest('.map-panel, .universe-overview');
+    const close = (event: Event) => {
+      if ((event as CustomEvent<string>).detail !== id) setVisibility({ context: visibilityContext, open: false });
+    };
+    scope?.addEventListener(MAP_PANEL_EVENT, close);
+    return () => scope?.removeEventListener(MAP_PANEL_EVENT, close);
+  }, [id, visibilityContext]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Context changes intentionally remeasure DOM, not model geometry.
   useLayoutEffect(() => {
@@ -351,7 +361,10 @@ export function CatalogueNavigator({
         aria-controls={open ? `${id}-panel` : undefined}
         aria-label={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
         title={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          if (!open) announceMapPanel(trigger.current, id);
+          setOpen(!open);
+        }}
       >
         <MapIcon size={16} aria-hidden="true" />
         <span>Navigateur</span>

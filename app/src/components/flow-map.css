@@ -20,6 +20,10 @@
   /* React Flow's inline z-index would trap its MiniMap below the external exchange SVG. */
   z-index: auto !important;
 }
+.flow-map-canvas > .map-overlay-tools {
+  right: calc(12px + var(--flow-scroll-y, 0px));
+  bottom: calc(12px + var(--flow-scroll-x, 0px));
+}
 .flow-map-toolbar {
   padding: 12px 18px;
   min-height: 66px;
@@ -45,47 +49,6 @@
   font-size: 12px;
   color: #416757;
   pointer-events: none;
-}
-.flow-tool-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: white;
-  color: #315f53;
-  border: 1px solid #cbdcd4;
-  border-radius: 7px;
-  padding: 8px 10px;
-  font: inherit;
-  font-size: 12px;
-}
-.flow-tool-button[aria-pressed="true"] {
-  background: #d9f2ea;
-  border-color: #88bca9;
-}
-.flow-exchange-mode {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  max-width: 100%;
-  padding: 5px 8px;
-  border: 1px solid #cbdcd4;
-  border-radius: 7px;
-  background: white;
-  color: #315f53;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.25;
-  white-space: nowrap;
-}
-.flow-exchange-mode > select {
-  min-width: 0;
-  max-width: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
 }
 .flow-filter-popover {
   z-index: 3000;
@@ -181,6 +144,9 @@
   background: #f1f7f3;
 }
 @media (pointer: coarse) {
+  .flow-zoom-tools button {
+    min-width: 44px;
+  }
   .flow-filter-popover label,
   .flow-external-destination {
     min-height: 44px;
@@ -275,8 +241,7 @@
   pointer-events: auto;
 }
 .spatial-object-name {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  display: block;
   max-width: 100%;
   overflow: hidden;
   text-align: inherit;
@@ -292,11 +257,6 @@
 }
 .spatial-object-title:hover {
   background: #23615908;
-}
-.spatial-object-hint {
-  display: block;
-  color: #527064;
-  line-height: 1.35;
 }
 .flow-exchanges {
   position: absolute;
@@ -343,16 +303,8 @@
 .flow-exchange.is-knowledge .flow-exchange-halo {
   stroke-width: 5;
 }
-.flow-exchange.is-contextual {
-  opacity: 0.3;
-}
-.flow-exchange.is-contextual.is-emphasized {
-  opacity: 1;
-}
 .flow-exchange-label {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  display: block;
   margin: auto;
   padding: 3px 5px;
   max-width: 100%;
@@ -389,11 +341,6 @@
   stroke: #236159;
   stroke-width: 1.5;
 }
-.flow-exchange-label small {
-  display: block;
-  font-weight: 400;
-  font-size: 10px;
-}
 .flow-caption-leader {
   stroke: #448e81;
   stroke-width: 1;
@@ -402,80 +349,76 @@
   pointer-events: none;
 }
 .flow-camera-tools {
-  position: relative;
-  bottom: auto;
-  left: auto;
-  z-index: auto;
+  position: absolute;
+  bottom: calc(12px + var(--flow-scroll-x, 0px));
+  left: 12px;
+  z-index: 12;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 5px;
-  flex-shrink: 0;
-  max-width: 100%;
-  padding: 8px 14px;
-  border-top: 1px solid #dde7e0;
-  background: white;
-}
-.flow-camera-tools > button,
-.flow-zoom-tools {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: white;
-  border: 1px solid #c8d9cf;
-  border-radius: 7px;
-  box-shadow: 0 2px 8px #234c3610;
-}
-.flow-camera-tools button {
-  min-height: 36px;
-  padding: 7px 9px;
-  color: #285b4f;
-  font:
-    12px Aptos,
-    "Segoe UI",
-    sans-serif;
-  cursor: pointer;
-}
-.flow-camera-tools button:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-.flow-camera-tools .flow-framing-button[aria-pressed="true"] {
-  background: #e6f3ed;
-  border-color: #7ba892;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #bad2c7;
+  border-radius: 9px;
+  background: #fffffff5;
+  box-shadow: 0 3px 12px #25473a14;
 }
 .flow-framing-select {
-  display: none;
+  display: block;
+  width: 110px;
+  min-width: 0;
   min-height: 36px;
-  padding: 5px 24px 5px 8px;
-  border: 1px solid #c8d9cf;
-  border-radius: 7px;
+  padding: 5px;
+  border: 0;
+  border-radius: 5px;
   color: #285b4f;
-  background: white;
+  background: transparent;
   font: inherit;
   font-size: 12px;
 }
-.flow-zoom-tools button {
-  border: 0;
-  background: transparent;
+.flow-zoom-tools {
   display: flex;
   align-items: center;
 }
+.flow-zoom-tools button {
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  min-height: 36px;
+  padding: 4px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #285b4f;
+  cursor: pointer;
+}
 .flow-zoom-tools output {
-  min-width: 42px;
+  min-width: 40px;
   text-align: center;
   font-size: 12px;
   color: #385b4e;
 }
+.flow-camera-tools .map-overlay-toggle {
+  padding: 6px;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.flow-camera-tools .map-overlay-toggle > span {
+  display: none;
+}
+.flow-camera-tools button:hover {
+  background: #edf6f1;
+}
 .flow-map-canvas .react-flow__minimap {
-  z-index: 7;
+  z-index: 12;
   width: 160px;
   height: 100px;
   border: 1px solid #c6d7cd;
   border-radius: 7px;
-  bottom: 50px;
-  left: 0;
-  right: auto;
+  bottom: calc(58px + var(--flow-scroll-x, 0px));
+  left: auto;
+  right: calc(12px + var(--flow-scroll-y, 0px));
+  margin: 0;
   background: white;
 }
 .flow-map-hotspots {
@@ -497,46 +440,13 @@
   stroke-width: 1;
   stroke-dasharray: 3 3;
 }
-.flow-map-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px 18px;
-  padding: 8px 18px;
-  background: #fff;
-  border-top: 1px solid #dde7e0;
-  color: #486456;
-  font-size: 11px;
-  flex-shrink: 0;
-}
-.flow-map-legend > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.flow-map-legend i {
-  width: 24px;
-  border-top: 4px solid #448e81;
-}
-.flow-map-legend i.is-knowledge {
-  border-top-width: 2px;
-  border-top-style: dashed;
-}
-.flow-map-legend .flow-app-legend {
-  color: #6d4488;
-}
-.flow-map-panel .map-footer span {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: #527064;
-}
 .flow-exchange-detail {
   position: absolute;
-  right: 14px;
+  right: calc(14px + var(--flow-scroll-y, 0px));
   top: 14px;
   z-index: 9;
   width: min(390px, calc(100% - 28px));
-  max-height: calc(100% - 28px);
+  max-height: calc(100% - 28px - var(--flow-scroll-x, 0px));
   overflow: auto;
   padding: 14px;
   border: 1px solid #b9d3c5;
@@ -614,49 +524,44 @@
     left: auto;
     margin: 8px;
   }
-  .flow-map-legend {
-    padding: 6px 10px;
-    gap: 5px 10px;
-    font-size: 10px;
-  }
 }
-@media (max-width: 700px), (max-height: 500px) {
-  .flow-camera-tools {
-    max-width: 100%;
-    flex-wrap: nowrap;
-    gap: 4px;
-    padding: 3px 8px;
-  }
+@container flow-map (max-width: 700px) {
   .flow-framing-select {
-    display: block;
     width: 92px;
-    min-width: 0;
-    min-height: 32px;
-    padding: 5px 4px;
     font-size: 11px;
   }
-  .flow-camera-tools > .flow-framing-button,
-  .flow-camera-tools > button span {
-    display: none;
-  }
-  .flow-camera-tools button {
-    min-width: 30px;
-    min-height: 32px;
-    padding: 6px 7px;
-  }
-  .flow-camera-tools > button {
-    min-width: 32px;
-  }
-  .flow-zoom-tools {
-    gap: 0;
+  .flow-camera-tools {
+    bottom: calc(8px + var(--flow-scroll-x, 0px));
+    left: 8px;
+    gap: 1px;
+    padding: 2px;
   }
   .flow-zoom-tools output {
     min-width: 32px;
     font-size: 11px;
   }
-  .flow-map-legend {
-    gap: 3px 10px;
-    line-height: 1.25;
+  .flow-map-canvas > .map-overlay-tools {
+    right: calc(8px + var(--flow-scroll-y, 0px));
+    bottom: calc(8px + var(--flow-scroll-x, 0px));
+    gap: 4px;
+  }
+  .flow-map-canvas .map-overlay-toggle > span {
+    display: none;
+  }
+}
+@container flow-map (max-width: 420px) {
+  .flow-map-canvas > .map-overlay-tools {
+    top: 8px;
+    bottom: auto;
+  }
+  .flow-framing-select {
+    width: 76px;
+  }
+}
+@media (pointer: coarse) {
+  .flow-zoom-tools button,
+  .flow-framing-select {
+    min-height: 44px;
   }
 }
 @media (max-height: 600px) and (max-width: 700px) {
@@ -674,46 +579,6 @@
     right: 12px;
     max-height: calc(100dvh - 24px);
     z-index: 100;
-  }
-}
-
-/* The sidebar can leave a narrow map even in a wide browser window. */
-@container flow-map (max-width: 700px) {
-  .flow-camera-tools {
-    flex-wrap: nowrap;
-    gap: 4px;
-    padding: 3px 8px;
-  }
-  .flow-framing-select {
-    display: block;
-    width: 92px;
-    min-width: 0;
-    min-height: 32px;
-    padding: 5px 4px;
-    font-size: 11px;
-  }
-  .flow-camera-tools > .flow-framing-button,
-  .flow-camera-tools > button span {
-    display: none;
-  }
-  .flow-camera-tools button {
-    min-width: 30px;
-    min-height: 32px;
-    padding: 6px 7px;
-  }
-  .flow-camera-tools > button {
-    min-width: 32px;
-  }
-  .flow-zoom-tools {
-    gap: 0;
-  }
-  .flow-zoom-tools output {
-    min-width: 32px;
-    font-size: 11px;
-  }
-  .flow-map-legend {
-    gap: 3px 10px;
-    line-height: 1.25;
   }
 }
 
@@ -769,4 +634,43 @@
     content: "";
     border-radius: 50%;
   }
+}
+
+.spatial-object-hit {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.flow-title-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.spatial-object-title.is-external {
+  max-width: none;
+  max-height: none;
+  background: #fff;
+  border: 1px solid #a8c9bd;
+  border-radius: 5px;
+  color: #235c54;
+  text-align: center;
+  pointer-events: auto;
+}
+.flow-exchange-label.is-numbered {
+  border: 1px solid #8aafa3;
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 0;
+}
+
+.flow-title-leaders {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
 }

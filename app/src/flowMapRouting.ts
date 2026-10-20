@@ -1,5 +1,5 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
-import { FLOW_LABEL_HEIGHT, FLOW_STUB, FLOW_TRACK, flowFacingSides, flowLabelSize } from './flowMapSpacing.ts';
+import { FLOW_STUB, FLOW_TRACK, flowFacingSides, flowLabelSize } from './flowMapSpacing.ts';
 
 export interface FlowRoutePoint {
   x: number;
@@ -26,10 +26,11 @@ interface RoutingContext {
   target: { point: FlowRoutePoint; side: number; lead?: number };
   segments: readonly RoutedSegment[];
   labels: readonly Rectangle[];
+  crossingPenalty?: number;
+  parallelPenalty?: number;
 }
 type Interval = [number, number];
 const EPSILON = 0.001;
-const CLEARANCE = 16;
 const BEND_COST = 24;
 const SIDE_COST = BEND_COST * 4;
 
@@ -372,7 +373,13 @@ function search(
         Math.abs(xs[nextColumn] - xs[column]) +
         Math.abs(ys[nextRow] - ys[row]) +
         ((current.state & 1) === direction ? 0 : BEND_COST) +
-        congestion({ x: xs[column], y: ys[row] }, { x: xs[nextColumn], y: ys[nextRow] }, context?.segments || []);
+        congestion(
+          { x: xs[column], y: ys[row] },
+          { x: xs[nextColumn], y: ys[nextRow] },
+          context?.segments || [],
+          context?.crossingPenalty,
+          context?.parallelPenalty,
+        );
       if (cost >= costs[nextState]) continue;
       costs[nextState] = cost;
       previous[nextState] = current.state;
@@ -389,7 +396,13 @@ function search(
   return simplify(context ? [context.source.point, ...ordered, context.target.point] : ordered);
 }
 
-function congestion(a: FlowRoutePoint, b: FlowRoutePoint, occupied: readonly RoutedSegment[]): number {
+function congestion(
+  a: FlowRoutePoint,
+  b: FlowRoutePoint,
+  occupied: readonly RoutedSegment[],
+  crossingPenalty = 200,
+  parallelPenalty = 18,
+): number {
   const horizontal = a.y === b.y;
   const low = horizontal ? Math.min(a.x, b.x) : Math.min(a.y, b.y);
   const high = horizontal ? Math.max(a.x, b.x) : Math.max(a.y, b.y);
@@ -402,7 +415,7 @@ function congestion(a: FlowRoutePoint, b: FlowRoutePoint, occupied: readonly Rou
       const overlap =
         Math.min(high, Math.max(horizontal ? segment.a.x : segment.a.y, horizontal ? segment.b.x : segment.b.y)) -
         Math.max(low, Math.min(horizontal ? segment.a.x : segment.a.y, horizontal ? segment.b.x : segment.b.y));
-      if (overlap > 0) cost += overlap * 18 * (1 - distance / FLOW_TRACK);
+      if (overlap > 0) cost += overlap * parallelPenalty * (1 - distance / FLOW_TRACK);
     } else {
       const cross = horizontal ? segment.a.x : segment.a.y;
       const level = horizontal ? a.y : a.x;
@@ -410,7 +423,7 @@ function congestion(a: FlowRoutePoint, b: FlowRoutePoint, occupied: readonly Rou
       const to = Math.max(horizontal ? segment.a.y : segment.a.x, horizontal ? segment.b.y : segment.b.x);
       // Charge half at a grid endpoint, so splitting a crossing cannot avoid its penalty.
       if (cross >= low && cross <= high && level >= from && level <= to)
-        cost += cross === low || cross === high ? 100 : 200;
+        cost += cross === low || cross === high ? crossingPenalty / 2 : crossingPenalty;
     }
   }
   return cost;
@@ -420,6 +433,13 @@ export interface FlowRoutingInput {
   id: string;
   source: FlowMapBox;
   target: FlowMapBox;
+}
+export type FlowPortChoices = ReadonlyMap<string, readonly [number, number]>;
+export interface FlowRoutingPlan {
+  portRanks?: ReadonlyMap<string, readonly [number, number]>;
+  edgeRanks?: ReadonlyMap<string, number>;
+  crossingPenalty?: number;
+  parallelPenalty?: number;
 }
 export interface FlowRoutedExchange extends FlowExchangeRoute {
   id: string;
@@ -462,78 +482,12 @@ export function flowRoutingCongestion(routes: readonly FlowRoutedExchange[]): nu
   return score;
 }
 
-function captionDetour(
-  edge: FlowRoutingInput,
-  boxes: readonly FlowMapBox[],
-  context: RoutingContext,
-  candidates: readonly FlowRoutePoint[],
-  labelSize: { width: number; height: number },
-): FlowExchangeRoute & { label?: FlowRoutedExchange['label'] } {
-  for (const anchor of candidates) {
-    const box = {
-      ...edge.source,
-      id: `@caption/${edge.id}`,
-      x: anchor.x - labelSize.width / 2,
-      y: anchor.y - labelSize.height / 2,
-      width: labelSize.width,
-      height: labelSize.height,
-      headerHeight: 0,
-    };
-    const horizontal = Math.abs(edge.source.x - edge.target.x) > Math.abs(edge.source.y - edge.target.y);
-    const forward = horizontal
-      ? context.source.point.x <= context.target.point.x
-      : context.source.point.y <= context.target.point.y;
-    const sides = horizontal ? (forward ? [1, 0] : [0, 1]) : forward ? [3, 2] : [2, 3];
-    const captionPort = (side: number) => ({
-      side,
-      lead: 32,
-      point:
-        side < 2
-          ? { x: box.x + (side === 0 ? box.width : 0), y: anchor.y }
-          : { x: anchor.x, y: box.y + (side === 2 ? box.height : 0) },
-    });
-    const runway = (port: RoutingContext['source']) =>
-      segmentRectangle(
-        {
-          a: port.point,
-          b: {
-            x:
-              port.point.x +
-              (port.side === 0 ? (port.lead ?? FLOW_STUB) + 16 : port.side === 1 ? -(port.lead ?? FLOW_STUB) - 16 : 0),
-            y:
-              port.point.y +
-              (port.side === 2 ? (port.lead ?? FLOW_STUB) + 16 : port.side === 3 ? -(port.lead ?? FLOW_STUB) - 16 : 0),
-          },
-        },
-        16,
-      );
-    const before = search(edge.source, box, [...boxes, box], 0, FLOW_TRACK, {
-      ...context,
-      target: captionPort(sides[0]),
-      labels: [...context.labels, runway(captionPort(sides[1])), runway(context.target)],
-    });
-    if (!before.length) continue;
-    const after = search(box, edge.target, [...boxes, box], 0, FLOW_TRACK, {
-      ...context,
-      source: captionPort(sides[1]),
-      segments: [...context.segments, ...segmentsOf(before)],
-      // The two halves of the same arrow must not cross or loop back over one another.
-      labels: [...context.labels, ...segmentsOf(before).map((segment) => segmentRectangle(segment, 12))],
-    });
-    if (!after.length) continue;
-    return {
-      points: cleanPoints([...before, ...after]),
-      labelPoint: anchor,
-      label: { x: box.x, y: box.y, width: box.width, height: box.height },
-    };
-  }
-  return { points: [], labelPoint: { x: 0, y: 0 } };
-}
-
 /** Joint port allocation and negotiated orthogonal routing, in stable publication space. */
 export function routeFlowExchanges(
   inputs: readonly FlowRoutingInput[],
   boxes: readonly FlowMapBox[],
+  portChoices?: FlowPortChoices,
+  plan?: FlowRoutingPlan,
 ): FlowRoutedExchange[] {
   const portsByEdge = new Map<string, { source?: RoutingContext['source']; target?: RoutingContext['target'] }>();
   const groups = new Map<
@@ -541,7 +495,7 @@ export function routeFlowExchanges(
     { edge: FlowRoutingInput; end: 'source' | 'target'; side: number; other: FlowMapBox }[]
   >();
   for (const edge of inputs) {
-    const sides = flowFacingSides(edge.source, edge.target);
+    const sides = portChoices?.get(edge.id) || flowFacingSides(edge.source, edge.target);
     for (const [index, end] of (['source', 'target'] as const).entries()) {
       const key = `${edge[end].id}/${sides[index]}`;
       const entries = groups.get(key) || [];
@@ -551,7 +505,11 @@ export function routeFlowExchanges(
   }
   for (const entries of groups.values()) {
     entries.sort(
-      (a, b) => (a.side < 2 ? a.other.y - b.other.y : a.other.x - b.other.x) || a.edge.id.localeCompare(b.edge.id),
+      (a, b) =>
+        (plan?.portRanks?.get(a.edge.id)?.[a.end === 'source' ? 0 : 1] ?? 0) -
+          (plan?.portRanks?.get(b.edge.id)?.[b.end === 'source' ? 0 : 1] ?? 0) ||
+        (a.side < 2 ? a.other.y - b.other.y : a.other.x - b.other.x) ||
+        a.edge.id.localeCompare(b.edge.id),
     );
     for (const [index, { edge, end, side }] of entries.entries()) {
       const box = edge[end];
@@ -567,153 +525,85 @@ export function routeFlowExchanges(
   }
   const length = (edge: FlowRoutingInput) =>
     Math.abs(edge.source.x - edge.target.x) + Math.abs(edge.source.y - edge.target.y);
-  const ordered = [...inputs].sort((a, b) => length(a) - length(b) || a.id.localeCompare(b.id));
-  const planned = new Map<string, Rectangle>();
-  const labelSize = flowLabelSize(boxes);
-  const maxX = Math.max(...boxes.map((box) => box.x + box.width)) + FLOW_STUB + FLOW_LABEL_HEIGHT;
-  const maxY = Math.max(...boxes.map((box) => box.y + box.height)) + FLOW_STUB + FLOW_LABEL_HEIGHT;
-  const runways = [...portsByEdge.values()].flatMap((entry) =>
-    [entry.source, entry.target].flatMap((port) => {
-      if (!port) return [];
-      const b = {
-        x: port.point.x + (port.side === 0 ? FLOW_STUB : port.side === 1 ? -FLOW_STUB : 0),
-        y: port.point.y + (port.side === 2 ? FLOW_STUB : port.side === 3 ? -FLOW_STUB : 0),
-      };
-      return [segmentRectangle({ a: port.point, b }, 16)];
-    }),
+  const ordered = [...inputs].sort(
+    (a, b) =>
+      (plan?.edgeRanks?.get(a.id) ?? length(a)) - (plan?.edgeRanks?.get(b.id) ?? length(b)) || a.id.localeCompare(b.id),
   );
-  // Reserve all text bays before routing any edge. This prevents a late caption from
-  // competing with already drawn arrows and gives every exchange an explicit segment.
-  for (const edge of ordered) {
-    const assigned = portsByEdge.get(edge.id);
-    if (!assigned?.source || !assigned.target) continue;
-    const from = assigned.source.point;
-    const to = assigned.target.point;
-    const xs = new Set<number>([(assigned.source.point.x + assigned.target.point.x) / 2]);
-    const ys = new Set<number>([
-      assigned.source.point.y,
-      assigned.target.point.y,
-      (assigned.source.point.y + assigned.target.point.y) / 2,
-    ]);
-    for (let x = labelSize.width / 2 + 24; x < maxX - labelSize.width / 2 - 24; x += labelSize.width + FLOW_TRACK * 2)
-      xs.add(x);
-    for (
-      let y = labelSize.height / 2 + 24;
-      y < maxY - labelSize.height / 2 - 24;
-      y += labelSize.height + FLOW_TRACK * 2
-    )
-      ys.add(y);
-    const anchors = [...xs].flatMap((x) => [...ys].map((y) => ({ x, y })));
-    const score = (p: FlowRoutePoint) =>
-      Math.abs(p.x - from.x) +
-      Math.abs(p.y - from.y) +
-      Math.abs(p.x - to.x) +
-      Math.abs(p.y - to.y) +
-      0.1 * (Math.abs(p.x - (from.x + to.x) / 2) + Math.abs(p.y - (from.y + to.y) / 2));
-    anchors.sort((a, b) => score(a) - score(b) || a.y - b.y || a.x - b.x);
-    const obstacles = [...boxes.map((box) => rectangle(box, FLOW_STUB)), ...planned.values(), ...runways];
-    for (const anchor of anchors) {
-      const candidate = {
-        left: anchor.x - labelSize.width / 2,
-        top: anchor.y - labelSize.height / 2,
-        right: anchor.x + labelSize.width / 2,
-        bottom: anchor.y + labelSize.height / 2,
-      };
-      if (
-        candidate.left < 12 ||
-        candidate.top < 12 ||
-        candidate.right > maxX - 12 ||
-        candidate.bottom > maxY - 12 ||
-        obstacles.some((obstacle) =>
-          intersects(
-            {
-              left: candidate.left - FLOW_TRACK,
-              top: candidate.top - FLOW_TRACK,
-              right: candidate.right + FLOW_TRACK,
-              bottom: candidate.bottom + FLOW_TRACK,
-            },
-            obstacle,
-          ),
-        )
-      )
-        continue;
-      planned.set(edge.id, {
-        left: candidate.left - FLOW_TRACK,
-        top: candidate.top - FLOW_TRACK,
-        right: candidate.right + FLOW_TRACK,
-        bottom: candidate.bottom + FLOW_TRACK,
-      });
-      break;
-    }
-  }
   const occupied: RoutedSegment[] = [];
-  const result = new Map<string, FlowRoutedExchange>();
-  for (const edge of ordered) {
+  const routes = ordered.map((edge) => {
     const assigned = portsByEdge.get(edge.id);
-    if (!assigned?.source || !assigned.target) continue;
-    const own = planned.get(edge.id);
-    const labels = [...planned.entries()].flatMap(([id, label]) => (id === edge.id ? [] : [label]));
-    const context = { source: assigned.source, target: assigned.target, segments: occupied, labels };
-    const anchor = own ? { x: (own.left + own.right) / 2, y: (own.top + own.bottom) / 2 } : undefined;
-    let route = anchor ? captionDetour(edge, boxes, context, [anchor], labelSize) : undefined;
-    if (!route?.points.length) {
-      const points = search(edge.source, edge.target, boxes, 0, FLOW_TRACK, context);
-      route = {
-        points: points.length
-          ? points
-          : search(edge.source, edge.target, boxes, 0, FLOW_TRACK, { ...context, labels: [] }),
-        labelPoint: anchor || { x: 0, y: 0 },
-      };
-    }
-    occupied.push(...segmentsOf(route.points));
-    result.set(edge.id, { id: edge.id, ...route });
-  }
-  // A fallback route must not invalidate an earlier label. Keep its arrow accessible; omit only the ambiguous caption.
-  return inputs.map((edge) => {
-    const route = result.get(edge.id) || { id: edge.id, points: [], labelPoint: { x: 0, y: 0 } };
-    if (route.label) {
-      const label = {
-        left: route.label.x - 8,
-        top: route.label.y - 8,
-        right: route.label.x + route.label.width + 8,
-        bottom: route.label.y + route.label.height + 8,
-      };
-      if (
-        [...result.values()].some(
-          (other) =>
-            other.id !== edge.id &&
-            segmentsOf(other.points).some((segment) => intersects(label, segmentRectangle(segment, 8))),
-        )
-      )
-        route.label = undefined;
-    }
-    return route;
+    const points =
+      assigned?.source && assigned.target
+        ? search(edge.source, edge.target, boxes, 0, FLOW_TRACK, {
+            source: assigned.source,
+            target: assigned.target,
+            segments: occupied,
+            labels: [],
+            crossingPenalty: plan?.crossingPenalty,
+            parallelPenalty: plan?.parallelPenalty,
+          })
+        : [];
+    occupied.push(...segmentsOf(points));
+    return { id: edge.id, points, labelPoint: { x: 0, y: 0 } } as FlowRoutedExchange;
   });
-}
-
-/** Orthogonal world-space routing. Viewport and layer choices never enter the calculation. */
-export function routeFlowExchange(
-  source: FlowMapBox,
-  target: FlowMapBox,
-  obstacles: readonly FlowMapBox[],
-  laneIndex = 0,
-): FlowExchangeRoute {
-  const lane = Number.isFinite(laneIndex) ? Math.max(0, Math.floor(laneIndex)) : 0;
-  // Distinct ports alone cannot separate opposing routes when both detour around the same obstacle edge.
-  const clearance = CLEARANCE + Math.min(lane, 4) * 12;
-  const points = search(source, target, obstacles, lane, clearance);
-  if (!points.length) points.push(...search(source, target, obstacles, lane, 0));
-  let labelPoint = { x: (source.x + target.x + source.width) / 2, y: (source.y + target.y + source.height) / 2 };
-  let longest = -1;
-  for (let index = 1; index < points.length; index++) {
-    const a = points[index - 1];
-    const b = points[index];
-    const length = Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-    if (length <= longest) continue;
-    longest = length;
-    labelPoint = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  const size = flowLabelSize(boxes);
+  const reserved: Rectangle[] = [];
+  for (const route of routes) {
+    const segments = segmentsOf(route.points).sort(
+      (a, b) => Math.hypot(b.b.x - b.a.x, b.b.y - b.a.y) - Math.hypot(a.b.x - a.a.x, a.b.y - a.a.y),
+    );
+    for (const { a, b } of segments) {
+      const offsets = [
+        [0, 0],
+        ...[1, -1, 2, -2, 3, -3, 4, -4].flatMap((i) => [
+          [0, i * (size.height + 24)],
+          [i * (size.width + 24), 0],
+        ]),
+      ];
+      candidates: for (const [dx, dy] of offsets)
+        for (const fraction of [0.5, 0.35, 0.65, 0.2, 0.8]) {
+          const anchor = { x: a.x + (b.x - a.x) * fraction, y: a.y + (b.y - a.y) * fraction };
+          const label = { x: anchor.x + dx - size.width / 2, y: anchor.y + dy - size.height / 2, ...size };
+          const bounds = rectangle(label as FlowMapBox, 12);
+          const fits =
+            a.y === b.y
+              ? label.x >= Math.min(a.x, b.x) + 16 && label.x + size.width <= Math.max(a.x, b.x) - 16
+              : label.y >= Math.min(a.y, b.y) + 16 && label.y + size.height <= Math.max(a.y, b.y) - 16;
+          if (
+            (!dx && !dy && !fits) ||
+            boxes.some((box) => intersects(bounds, rectangle(box, 16))) ||
+            reserved.some((other) => intersects(bounds, other)) ||
+            routes.some(
+              (other) =>
+                (other.id !== route.id || dx || dy) &&
+                segmentsOf(other.points).some((segment) => intersects(bounds, segmentRectangle(segment, 8))),
+            )
+          )
+            continue;
+          route.label = label;
+          route.labelPoint = anchor;
+          reserved.push(bounds);
+          break candidates;
+        }
+      if (route.label) break;
+    }
+    if (!route.label && route.points.length) {
+      const middle = route.points[Math.floor(route.points.length / 2)];
+      const top = Math.min(
+        ...boxes.map((box) => box.y),
+        ...routes.flatMap((other) => other.points.map((point) => point.y)),
+      );
+      let label = { x: middle.x - size.width / 2, y: top - size.height - 32, ...size };
+      while (reserved.some((other) => intersects(rectangle(label as FlowMapBox, 16), other)))
+        label = { ...label, y: label.y - size.height - 32 };
+      route.label = label;
+      route.labelPoint = middle;
+      reserved.push(rectangle(label as FlowMapBox, 12));
+    }
   }
-  return { points, labelPoint };
+  return inputs.map(
+    (edge) => routes.find((route) => route.id === edge.id) || { id: edge.id, points: [], labelPoint: { x: 0, y: 0 } },
+  );
 }
 
 function cleanPoints(points: readonly FlowRoutePoint[]): FlowRoutePoint[] {

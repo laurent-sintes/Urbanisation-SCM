@@ -4,8 +4,6 @@ import {
   fitFlowCamera,
   flowRouteInViewport,
   flowTargetFocus,
-  initialFlowTerritoryCenter,
-  placeFlowExchangeLabel,
   resizeFlowCamera,
   standardFlowCamera,
   visibleFlowHotspotAnchor,
@@ -239,66 +237,6 @@ test('resizing and fullscreen keep the world point under the center unchanged', 
   assert.equal((previous.height / 2 - camera.y) / camera.zoom, (next.height / 2 - resized.y) / resized.zoom);
   assert.equal(resized.zoom, camera.zoom);
   assert.deepEqual(resizeFlowCamera(resized, next, previous), camera);
-});
-
-test('an expanded territory opens on its heading in a short landscape map', () => {
-  const box = Object.freeze({ x: 200, y: 400, width: 1552, height: 1832 });
-  const bounds = { width: 602, height: 114 };
-  const zoom = 0.35;
-  const center = initialFlowTerritoryCenter(box, bounds, zoom);
-  const screenTop = bounds.height / 2 + (box.y - center.y) * zoom;
-  assert.ok(screenTop >= 0 && screenTop <= bounds.height * 0.1 + 0.01);
-  assert.equal(center.x, box.x + box.width / 2);
-  assert.equal(initialFlowTerritoryCenter(box, bounds, 0.18).y, box.y + box.height / 2);
-});
-
-test('flow captions avoid a system title and preserve their route anchor', () => {
-  const anchor = { x: 220, y: 150 };
-  const title = { x: 180, y: 140, width: 220, height: 40 };
-  const label = placeFlowExchangeLabel([anchor], { width: 600, height: 400 }, { width: 160, height: 52 }, [title]);
-  assert.ok(label);
-  assert.ok(
-    label.x + label.width <= title.x ||
-      label.x >= title.x + title.width ||
-      label.y + label.height <= title.y ||
-      label.y >= title.y + title.height,
-  );
-  assert.deepEqual(label.anchor, anchor);
-});
-
-test('a caption is suppressed when no space exists instead of being forced over content', () => {
-  assert.equal(
-    placeFlowExchangeLabel([{ x: 60, y: 50 }], { width: 120, height: 100 }, { width: 160, height: 52 }, []),
-    undefined,
-  );
-});
-
-test('a caption can use a free diagonal corner when the root corridor and straight alternatives are obstructed', () => {
-  const anchor = { x: 250, y: 160 };
-  const obstacles = [
-    { x: 248, y: 158, width: 4, height: 4 },
-    { x: 292, y: 96, width: 4, height: 4 },
-    { x: 292, y: 192, width: 4, height: 4 },
-    { x: 96, y: 158, width: 4, height: 4 },
-    { x: 396, y: 158, width: 4, height: 4 },
-  ];
-  const label = placeFlowExchangeLabel([anchor], { width: 500, height: 400 }, { width: 100, height: 40 }, obstacles);
-  assert.ok(label);
-  assert.ok(label.x + label.width <= anchor.x && label.y + label.height < anchor.y);
-  for (const obstacle of obstacles)
-    assert.ok(
-      label.x + label.width + 4 <= obstacle.x ||
-        label.x >= obstacle.x + obstacle.width + 4 ||
-        label.y + label.height + 4 <= obstacle.y ||
-        label.y >= obstacle.y + obstacle.height + 4,
-    );
-  assert.deepEqual(label.anchor, anchor);
-  assert.equal(
-    placeFlowExchangeLabel([anchor], { width: 500, height: 400 }, { width: 100, height: 40 }, [
-      { x: 0, y: 0, width: 500, height: 400 },
-    ]),
-    undefined,
-  );
 });
 
 test('a selected Business Area keeps its heading above the controls on a short landscape canvas', () => {

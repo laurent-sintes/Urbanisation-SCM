@@ -1,0 +1,178 @@
+.map-overlay-tools {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 12;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  max-width: calc(100% - 24px);
+  pointer-events: none;
+}
+.map-overlay-tools > * {
+  pointer-events: auto;
+}
+/* Keep this trigger still when opening its panel folds the neighbouring navigator. */
+.map-overlay-tools > .map-legend {
+  order: 2;
+}
+.map-overlay-tools > .catalogue-navigator {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  max-width: none;
+}
+.map-overlay-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 7px 9px;
+  border: 1px solid #bad2c7;
+  border-radius: 8px;
+  background: #fffffff5;
+  color: #285b50;
+  box-shadow: 0 3px 12px #25473a14;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.map-overlay-toggle:hover,
+.map-overlay-toggle[aria-expanded="true"] {
+  background: #edf6f1;
+}
+.map-overlay-toggle:focus-visible,
+.map-overlay-panel button:focus-visible {
+  outline: 2px solid #276c5a;
+  outline-offset: 2px;
+}
+.map-overlay-panel {
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  overflow: hidden;
+  border: 1px solid #bad2c7;
+  border-radius: 9px;
+  background: #fff;
+  color: #315b50;
+  box-shadow: 0 6px 24px #173a3329;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.map-overlay-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px 5px 12px;
+  border-bottom: 1px solid #dce8e1;
+}
+.map-overlay-panel > header button {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.map-overlay-content {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  overscroll-behavior: contain;
+}
+.map-overlay-content p {
+  margin: 6px 0;
+}
+.map-overlay-content button {
+  min-height: 36px;
+}
+.map-legend-section + .map-legend-section {
+  border-top: 1px solid #e2eae6;
+  margin-top: 12px;
+  padding-top: 10px;
+}
+.map-legend-section h3 {
+  font-size: 12px;
+  margin: 0 0 6px;
+}
+.map-legend-section p {
+  color: #526b62;
+}
+.map-legend-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 30px;
+}
+.map-legend-flow {
+  flex: 0 0 28px;
+  border-top: 4px solid #448e81;
+}
+.map-legend-flow.is-knowledge {
+  border-top: 2px dashed #448e81;
+}
+.map-legend-application {
+  width: 28px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 1px solid #9475b9;
+  border-radius: 4px;
+  background: #f5effc;
+}
+.map-legend-hotspot {
+  --flame-size: 7px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: #ac542c;
+}
+.map-legend-hotspot .hotspot-map-flames {
+  position: relative;
+  inset: auto;
+  width: 30px;
+  height: 24px;
+}
+.map-legend-hotspot.is-compact {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #b28b72;
+  border-radius: 50%;
+  background: #fffaf5;
+  font-size: 11px;
+  font-weight: 650;
+}
+.map-overlay-panel .map-recenter-actions {
+  display: grid;
+  gap: 8px;
+}
+.map-recenter-actions button {
+  text-align: left;
+  padding: 6px 10px;
+  border: 1px solid #c8d9cf;
+  border-radius: 6px;
+  background: #f7faf8;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+@media (pointer: coarse) {
+  .map-overlay-toggle,
+  .map-overlay-panel > header button,
+  .map-overlay-content button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+@media (max-width: 700px), (max-height: 500px) {
+  .map-overlay-toggle > span {
+    display: none;
+  }
+}

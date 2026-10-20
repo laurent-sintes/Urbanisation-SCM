@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { HOTSPOT_DIAMETERS, layoutHotspots, placeHotspots } from './src/hotspotPlacement.ts';
+import {
+  HOTSPOT_DIAMETERS,
+  hotspotPlacementNeedsSpace,
+  layoutHotspots,
+  placeHotspots,
+} from './src/hotspotPlacement.ts';
 
 test('dense distant anchors can use reserved headroom without hiding text or losing subjects', () => {
   const items = Array.from({ length: 9 }, (_, index) => ({ id: String(index), x: 55, y: 500, diameter: 48 }));
@@ -176,4 +181,14 @@ test('placement respects a maximum distance from each anchor', () => {
     }),
     null,
   );
+});
+
+test('extra headroom is needed only when markers still overlap text after placement', () => {
+  const bounds = { width: 300, height: 200, obstacles: [{ x: 10, y: 10, width: 100, height: 40 }] };
+  const groups = layoutHotspots([{ id: 'a', x: 50, y: 30, diameter: 48 }], bounds);
+  assert.equal(hotspotPlacementNeedsSpace(groups, bounds.obstacles), false);
+  const filled = { width: 100, height: 100, obstacles: [{ x: 0, y: 0, width: 100, height: 100 }] };
+  const trapped = layoutHotspots([{ id: 'b', x: 50, y: 50, diameter: 48 }], filled);
+  assert.equal(hotspotPlacementNeedsSpace(trapped, filled.obstacles), true);
+  assert.equal(hotspotPlacementNeedsSpace([], filled.obstacles), false);
 });

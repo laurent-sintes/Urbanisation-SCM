@@ -15,7 +15,7 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
-import { Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Info, Pause, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Flame, Info, Pause, X } from 'lucide-react';
 import {
   type ButtonHTMLAttributes,
   type CSSProperties,
@@ -37,6 +37,7 @@ import { hotspotClusterLayout } from '../hotspotClusterLayout';
 import { HOTSPOT_CLUSTER_MOTION_MS, hotspotClusterMotion } from '../hotspotClusterMotion';
 import { framingLabel } from '../hotspotFraming';
 import { isClosedHotspot, isFramingResolved, RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
+import { MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import type { Hotspot, PublishedModel } from '../types';
 import { ModelText } from './ModelLinks';
 
@@ -141,6 +142,15 @@ export function HotspotTooltipButton({
   const escapeDismissed = useRef(false);
   const [touchHint, setTouchHint] = useState(false);
   const id = useId();
+  useEffect(() => {
+    if (!open) return;
+    const close = () => {
+      setOpen(false);
+      setPinned(false);
+    };
+    window.addEventListener(MAP_PANEL_EVENT, close);
+    return () => window.removeEventListener(MAP_PANEL_EVENT, close);
+  }, [open]);
   useEffect(() => {
     if (!pinOnClick) return;
     const closeOtherInfo = (event: Event) => {
@@ -832,64 +842,6 @@ export function HotspotMapMarker({
           </FloatingOverlay>
         </FloatingPortal>
       )}
-    </div>
-  );
-}
-
-export function HotspotLegend({ count }: { count: number }) {
-  const [expanded, setExpanded] = useState(false);
-  const legendId = useId();
-  const shell = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!expanded) return;
-    const dismiss = (event: globalThis.PointerEvent | globalThis.KeyboardEvent) => {
-      if (event instanceof window.KeyboardEvent) {
-        if (event.key !== 'Escape') return;
-        shell.current?.querySelector('button')?.focus({ preventScroll: true });
-      } else if (shell.current?.contains(event.target as Node)) return;
-      setExpanded(false);
-    };
-    document.addEventListener('pointerdown', dismiss);
-    document.addEventListener('keydown', dismiss);
-    return () => {
-      document.removeEventListener('pointerdown', dismiss);
-      document.removeEventListener('keydown', dismiss);
-    };
-  }, [expanded]);
-  return (
-    <div className="hotspot-legend-shell" ref={shell}>
-      <button
-        type="button"
-        className="hotspot-legend-toggle"
-        aria-expanded={expanded}
-        aria-controls={legendId}
-        onClick={() => setExpanded(!expanded)}
-      >
-        <Info size={14} aria-hidden="true" />
-        Légende des points chauds
-        <ChevronDown size={14} aria-hidden="true" />
-      </button>
-      <div
-        id={legendId}
-        className={`hotspot-map-legend${expanded ? ' is-expanded' : ''}`}
-        role="group"
-        aria-label="Légende des points chauds"
-      >
-        <span>
-          Anneau : à explorer / pistes / qualification / option à arbitrer / solution crédible. ✓ : cadrage résolu ;
-          pause : bloqué. Anneau discontinu gris : non renseigné.
-        </span>
-        <span>Criticité</span>
-        {['S', 'M', 'L', 'XL', 'unassessed'].map((severity) => (
-          <span key={severity} className={`hotspot-legend-level severity-${severity}`}>
-            <i aria-hidden="true" />
-            {severityLabel(severity)}
-          </span>
-        ))}
-        <span>
-          {count} fiche{count > 1 ? 's' : ''}
-        </span>
-      </div>
     </div>
   );
 }

@@ -24,6 +24,20 @@ export const HOTSPOT_DIAMETERS: Record<string, number> = {
 
 export const CATALOGUE_HOTSPOT_HEADROOM = 56;
 
+/** Reserve extra map space only when the ordinary placement still covers text. */
+export function hotspotPlacementNeedsSpace(
+  groups: HotspotPlacementGroup[],
+  obstacles: NonNullable<HotspotPlacementBounds['obstacles']>,
+) {
+  return groups.some((group) =>
+    obstacles.some((obstacle) => {
+      const x = Math.max(obstacle.x, Math.min(group.x, obstacle.x + obstacle.width));
+      const y = Math.max(obstacle.y, Math.min(group.y, obstacle.y + obstacle.height));
+      return Math.hypot(group.x - x, group.y - y) < group.diameter / 2 + 2;
+    }),
+  );
+}
+
 /** Safe screen-space alternatives in the empty strip above the Catalogue map. */
 export function catalogueHotspotDock(width: number): { x: number; y: number }[] {
   const positions = [];

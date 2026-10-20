@@ -13,6 +13,10 @@ export function fitFlowCamera(
   bounds: { width: number; height: number },
   framing: 'width' | 'all',
 ): FlowCamera {
+  // Dense, small overviews need a ring of free pixels for readable titles and flow identifiers.
+  const crowdedOverview = framing === 'all' && world.boxes.length >= 6 && (bounds.width < 500 || bounds.height < 220);
+  const insetX = crowdedOverview ? Math.min(80, bounds.width * 0.24) : 16;
+  const insetY = crowdedOverview ? Math.min(70, bounds.height * 0.28) : 16;
   const zoom = Math.min(
     2.5,
     Math.max(
@@ -20,8 +24,8 @@ export function fitFlowCamera(
       framing === 'width'
         ? Math.max(1, bounds.width - 64) / Math.max(1, world.width)
         : Math.min(
-            Math.max(1, bounds.width - 32) / Math.max(1, world.width),
-            Math.max(1, bounds.height - 32) / Math.max(1, world.height),
+            Math.max(1, bounds.width - insetX * 2) / Math.max(1, world.width),
+            Math.max(1, bounds.height - insetY * 2) / Math.max(1, world.height),
           ),
     ),
   );
@@ -33,14 +37,6 @@ export function fitFlowCamera(
         : (bounds.height - world.height * zoom) / 2,
     zoom,
   };
-}
-
-export interface FlowLabelPlacement {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  anchor: FlowRoutePoint;
 }
 
 function positiveMedian(values: readonly number[], fallback = 0): number {
@@ -122,59 +118,6 @@ export function standardFlowCamera(
   return { x: leftInset - originX * zoom, y: topInset - originY * zoom, zoom };
 }
 
-/** A caption may move into a nearby free lane, but must never obscure map names. */
-export function placeFlowExchangeLabel(
-  anchors: readonly FlowRoutePoint[],
-  bounds: { width: number; height: number },
-  size: { width: number; height: number },
-  obstacles: readonly { x: number; y: number; width: number; height: number }[],
-): FlowLabelPlacement | undefined {
-  const { width, height } = size;
-  const offsets = [
-    [0, 0],
-    [0, -height - 8],
-    [0, height + 8],
-    [-width - 12, 0],
-    [width + 12, 0],
-    [-width * 0.5, -height - 8],
-    [width * 0.5, -height - 8],
-    [-width * 0.5, height + 8],
-    [width * 0.5, height + 8],
-    [-width * 0.5, -(height + 8) * 2],
-    [width * 0.5, -(height + 8) * 2],
-    [-width * 0.5, (height + 8) * 2],
-    [width * 0.5, (height + 8) * 2],
-    [0, -(height + 8) * 2],
-    [0, (height + 8) * 2],
-    [0, -(height + 8) * 3],
-    [0, (height + 8) * 3],
-    [0, -(height + 8) * 4],
-    [0, (height + 8) * 4],
-  ];
-  for (const [dx, dy] of offsets)
-    for (const anchor of anchors) {
-      const candidate = { x: anchor.x + dx - width / 2, y: anchor.y + dy - height / 2, width, height, anchor };
-      if (
-        candidate.x < 8 ||
-        candidate.y < 8 ||
-        candidate.x + width > bounds.width - 8 ||
-        candidate.y + height > bounds.height - 66
-      )
-        continue;
-      if (
-        !obstacles.some(
-          (obstacle) =>
-            candidate.x < obstacle.x + obstacle.width + 4 &&
-            candidate.x + width + 4 > obstacle.x &&
-            candidate.y < obstacle.y + obstacle.height + 4 &&
-            candidate.y + height + 4 > obstacle.y,
-        )
-      )
-        return candidate;
-    }
-  return undefined;
-}
-
 /** A resized window keeps the same world point at its center and preserves zoom. */
 export function resizeFlowCamera(
   camera: FlowCamera,
@@ -185,19 +128,6 @@ export function resizeFlowCamera(
     ...camera,
     x: camera.x + (next.width - previous.width) / 2,
     y: camera.y + (next.height - previous.height) / 2,
-  };
-}
-
-/** A short landscape window opens on a large territory's heading before its descendants. */
-export function initialFlowTerritoryCenter(
-  box: FlowMapBox,
-  bounds: { width: number; height: number },
-  zoom: number,
-): FlowRoutePoint {
-  const topInset = Math.min(32, bounds.height * 0.1);
-  return {
-    x: box.x + box.width / 2,
-    y: box.y + (zoom < 0.3 ? box.height / 2 : Math.min(box.height / 2, (bounds.height / 2 - topInset) / zoom)),
   };
 }
 

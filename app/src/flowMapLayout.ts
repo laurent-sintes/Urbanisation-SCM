@@ -1,5 +1,4 @@
-import { type FlowRoutedExchange, flowRoutingCongestion, routeFlowExchanges } from './flowMapRouting.ts';
-import { FLOW_LABEL_HEIGHT, FLOW_STUB, flowConnections, spaceFlowMap } from './flowMapSpacing.ts';
+import type { FlowRoutedExchange } from './flowMapRouting.ts';
 import { type MapSlot, operationsMapSlots, systemMapSlots } from './mapPlacement.ts';
 import { childrenOf, rootsOf, visibleAncestorId } from './model.ts';
 import type { AtlasNode, AtlasRelation, PublishedModel } from './types.ts';
@@ -393,50 +392,10 @@ export function buildFlowMap(
   for (const root of rootLayout.children)
     emit(root.territory, root.x + MARGIN, root.y + MARGIN, root.width, root.height, 0);
   const exchanges = projectFlowMapExchanges(model, new Set(boxes.map((box) => box.id)));
-  let spaced = boxes;
-  let routes: FlowRoutedExchange[] | undefined;
-  if (overview && exchanges.length) {
-    let bestScore = Number.POSITIVE_INFINITY;
-    for (let pass = 0; pass < 3; pass++) {
-      const candidate = spaceFlowMap(boxes, exchanges, 1 + pass * 0.25);
-      const byId = new Map(candidate.map((box) => [box.id, box]));
-      const connections = flowConnections(exchanges).flatMap((edge) => {
-        const source = byId.get(edge.sourceId);
-        const target = byId.get(edge.targetId);
-        return source && target ? [{ id: `${edge.sourceId}/${edge.targetId}/${edge.type}`, source, target }] : [];
-      });
-      const routed = routeFlowExchanges(connections, candidate);
-      const score =
-        routed.filter((route) => route.points.length < 2).length * 1e9 +
-        routed.filter((route) => !route.label).length * 1e7 +
-        flowRoutingCongestion(routed);
-      if (score < bestScore) {
-        spaced = candidate;
-        routes = routed;
-        bestScore = score;
-      }
-      if (!score) break;
-    }
-  }
-  const margin = overview && exchanges.length ? FLOW_LABEL_HEIGHT + FLOW_STUB : MARGIN;
-  const points = routes?.flatMap((route) => route.points) || [];
-  const shiftX = Math.max(0, MARGIN - Math.min(...points.map((point) => point.x), ...spaced.map((box) => box.x)));
-  const shiftY = Math.max(0, MARGIN - Math.min(...points.map((point) => point.y), ...spaced.map((box) => box.y)));
-  if (shiftX || shiftY) {
-    spaced = spaced.map((box) => ({ ...box, x: box.x + shiftX, y: box.y + shiftY }));
-    routes = routes?.map((route) => ({
-      ...route,
-      points: route.points.map((point) => ({ x: point.x + shiftX, y: point.y + shiftY })),
-      labelPoint: { x: route.labelPoint.x + shiftX, y: route.labelPoint.y + shiftY },
-      label: route.label ? { ...route.label, x: route.label.x + shiftX, y: route.label.y + shiftY } : undefined,
-    }));
-  }
-  const routedPoints = routes?.flatMap((route) => route.points) || [];
   return {
-    boxes: spaced,
+    boxes,
     exchanges,
-    width: Math.max(...spaced.map((box) => box.x + box.width), ...routedPoints.map((point) => point.x)) + margin,
-    height: Math.max(...spaced.map((box) => box.y + box.height), ...routedPoints.map((point) => point.y)) + margin,
-    ...(routes ? { routes } : {}),
+    width: Math.max(...boxes.map((box) => box.x + box.width)) + MARGIN,
+    height: Math.max(...boxes.map((box) => box.y + box.height)) + MARGIN,
   };
 }

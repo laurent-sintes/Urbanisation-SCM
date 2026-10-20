@@ -22,6 +22,7 @@ import {
   CATALOGUE_HOTSPOT_HEADROOM,
   catalogueHotspotDock,
   HOTSPOT_DIAMETERS,
+  hotspotPlacementNeedsSpace,
   layoutHotspots,
 } from './hotspotPlacement';
 import { NodeIcon } from './icons';
@@ -107,7 +108,9 @@ function Canvas(props: ReactFlowPaneProps) {
   const viewport = useViewport();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = detail >= 3;
-  const hotspotHeadroom = props.hotspots?.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
+  const reserveContext = `${model.version}:${scopeId}:${detail}:${zoomMode}:${canvasWidth}:${availableHeight}:${fullscreen}:${props.hotspots?.map((item) => item.id).join('|')}`;
+  const [reservedContext, setReservedContext] = useState('');
+  const hotspotHeadroom = reservedContext === reserveContext && props.hotspots?.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
   const minimumHeight = availableHeight
     ? Math.max(60, availableHeight)
     : matchMedia('(max-width: 600px)').matches
@@ -430,7 +433,7 @@ function Canvas(props: ReactFlowPaneProps) {
           1,
           fullscreen ? 0.04 : 0.01,
         );
-        void setViewport({ ...fitted, x: fitted.x + 2, y: fitted.y + hotspotHeadroom + 2 }, { duration });
+        void setViewport({ ...fitted, x: fitted.x + 2, y: Math.min(fitted.y + 2, 32) + hotspotHeadroom }, { duration });
       }
     }, 80);
     return () => clearTimeout(id);
@@ -822,7 +825,7 @@ function Canvas(props: ReactFlowPaneProps) {
         anchor: group.anchor,
       };
     });
-    return { markers };
+    return { markers, needsHeadroom: hotspotPlacementNeedsSpace(groups, visibleTextObstacles) };
   }, [
     hotspotMarkers,
     measuredMarkerPositions,
@@ -836,6 +839,9 @@ function Canvas(props: ReactFlowPaneProps) {
     viewport.y,
     viewport.zoom,
   ]);
+  useEffect(() => {
+    if (!clusterExpanded && !hotspotHeadroom && markerLayout.needsHeadroom) setReservedContext(reserveContext);
+  }, [clusterExpanded, hotspotHeadroom, markerLayout.needsHeadroom, reserveContext]);
   const lastMarkerLayout = useRef<typeof markerLayout | null>(null);
   useLayoutEffect(() => {
     if (!clusterExpanded) lastMarkerLayout.current = markerLayout;
@@ -952,7 +958,8 @@ function Canvas(props: ReactFlowPaneProps) {
           zoomOnDoubleClick={false}
           panOnDrag={false}
           zoomOnPinch={effectiveZoomMode === 'page' && !nativeTouchScroll}
-          zoomOnScroll={effectiveZoomMode === 'page' && !capabilityOverview}
+          zoomOnScroll={false}
+          zoomActivationKeyCode={effectiveZoomMode === 'page' && !capabilityOverview ? ['Control', 'Meta'] : null}
           preventScrolling={effectiveZoomMode === 'page' && !capabilityOverview}
           minZoom={0}
           maxZoom={2}

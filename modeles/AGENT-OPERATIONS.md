@@ -42,6 +42,8 @@ Les recherches marché, les contributions utiles et les arbitrages courants rest
 
 ## Solutions d’environnement éprouvées
 
+- **Éditions Python de fichiers UTF-8 sous Windows — octets CP1252 dans un fichier TSX.** L’encodage implicite peut préserver les anciens octets tout en encodant les caractères nouvellement insérés en CP1252 ; Biome signale alors « stream did not contain valid UTF-8 ». Dans le processus PowerShell, fixer `$env:PYTHONUTF8 = '1'` et employer explicitement `Path.read_text(encoding="utf-8")` puis `Path.write_text(..., encoding="utf-8", newline="\n")` pour les sources frontend. Pour une documentation conservant des fins de ligne mixtes, préférer un remplacement ciblé sur les octets UTF-8 et préserver les autres lignes. Solution confirmée le 2026-10-20 ; portée : éditions techniques locales, sans modifier les variables système ni convertir les archives.
+
 Réutiliser ces solutions dans leur portée autorisée. Enregistrer ici toute nouvelle solution confirmée ; ne pas narrer les incidents résolus à Laurent. Une restriction restante ou un refus d’autorisation demeure un blocage à expliquer.
 
 - **Retrait de dépendances pnpm — création du lien de projet refusée dans le store Windows restreint (`EPERM`).** Pour un retrait explicitement demandé, exécuter `pnpm --dir app remove NOM_DES_PAQUETS --config.offline=true` avec `sandbox_permissions: require_escalated`. Le manifeste et le verrou sont actualisés par pnpm, sans changement des ACL ni du store global. Solution confirmée le 2026-10-16 pour le retrait du moteur de graphe de Relations.

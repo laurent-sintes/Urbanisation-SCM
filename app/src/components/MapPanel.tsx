@@ -1,15 +1,16 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { selectionMappings } from '../applicationCatalog';
+import { productFor, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../hotspotMap';
 import { NodeIcon } from '../icons';
+import { lineageOf } from '../model';
 import type { AtlasNode, PublishedModel } from '../types';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { CatalogueNavigator } from './CatalogueNavigator';
-import { HotspotLegend } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
+import { MapLegend } from './MapLegend';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton } from './ModelLinks';
 import './applications.css';
@@ -78,6 +79,11 @@ export function MapPanel({
   const catalog = model.raw.application_catalog;
   const applicationMappings = selectionMappings(catalog, applicationSelectionId, applicationComponentId);
   const applicationAtScope = applicationMappings.some((mapping) => mapping.node_id === scopeId);
+  const legendSelection = catalog?.selections.find((item) => item.id === applicationSelectionId);
+  const legendProduct =
+    legendSelection && catalog
+      ? productFor(catalog, legendSelection)
+      : catalog?.products.find((item) => item.id === applicationSelectionId);
   const titleNode = scope || model.nodes.find((node) => node.kind === 'universe');
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   useEffect(() => {
@@ -166,7 +172,6 @@ export function MapPanel({
           aria-label="Défilement de la carte"
           tabIndex={0}
         >
-          {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
           <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
             <ReactFlowPane
               model={model}
@@ -186,11 +191,29 @@ export function MapPanel({
             />
           </Suspense>
         </div>
-        <CatalogueNavigator
-          viewportRef={scroll}
-          geometryKey={`${model.version}:${scopeId || '@root'}:${mapDepth}:${zoomChoice}`}
-          framing={zoomChoice}
-        />
+        <div className="map-overlay-tools">
+          <MapLegend
+            model={model}
+            mapRef={scroll}
+            hotspots={visibleHotspots}
+            application={
+              legendProduct &&
+              applicationMappings.some(
+                (mapping) =>
+                  !scopeId ||
+                  mapping.node_id === scopeId ||
+                  lineageOf(model, mapping.node_id).some((node) => node.id === scopeId),
+              )
+                ? { name: legendProduct.name, documented: !!legendSelection }
+                : undefined
+            }
+          />
+          <CatalogueNavigator
+            viewportRef={scroll}
+            geometryKey={`${model.version}:${scopeId || '@root'}:${mapDepth}:${zoomChoice}`}
+            framing={zoomChoice}
+          />
+        </div>
       </div>
     </section>
   );

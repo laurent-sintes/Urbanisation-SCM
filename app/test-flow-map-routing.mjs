@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import ELK from 'elkjs/lib/elk.bundled.js';
+import { layoutElkFlowMap } from './src/flowMapElk.ts';
 import { buildFlowMap } from './src/flowMapLayout.ts';
-import { flowRibbonPath, roundedFlowPath, routeFlowExchange, routeFlowExchanges } from './src/flowMapRouting.ts';
+
+import { flowRibbonPath, roundedFlowPath, routeFlowExchanges } from './src/flowMapRouting.ts';
 import { FLOW_STUB, FLOW_TRACK, flowFacingSides, spaceFlowMap } from './src/flowMapSpacing.ts';
 import { adaptPublication } from './src/model.ts';
 
@@ -177,7 +180,7 @@ function verify(route, source, target, obstacles) {
     }
 }
 
-test('a backward diagonal BA exchange cannot loop across its final lead while passing its caption', () => {
+test('a backward diagonal BA exchange cannot loop across its final lead while passing its caption', async () => {
   const publication = adaptPublication({
     version: 'diagonal-regression',
     space: 'release',
@@ -204,7 +207,7 @@ test('a backward diagonal BA exchange cannot loop across its final lead while pa
       })),
     ],
   });
-  const { boxes, routes } = buildFlowMap(publication, 'scope', { overviewDepth: 0 });
+  const { boxes, routes } = await layoutElkFlowMap(buildFlowMap(publication, 'scope', { overviewDepth: 0 }), new ELK());
   assert.equal(routes.length, 3);
   for (const route of routes) {
     const [source, target] = route.id.split('/');
@@ -215,74 +218,6 @@ test('a backward diagonal BA exchange cannot loop across its final lead while pa
       boxes,
     );
     assert.ok(route.label);
-  }
-});
-
-test('neighbor routes meet horizontal and vertical borders with a directed endpoint', () => {
-  const source = box('source', 0, 0);
-  for (const target of [box('right', 200, 0), box('below', 0, 200), box('left', -200, 0), box('above', 0, -200)]) {
-    const route = routeFlowExchange(source, target, [source, target]);
-    verify(route, source, target, [source, target]);
-    assert.equal(route.points.length, 2);
-  }
-});
-
-test('a central rectangle sends the arrow through an external corridor', () => {
-  const source = box('source', 0, 100);
-  const target = box('target', 500, 100);
-  const obstacle = box('middle', 200, 50, 200, 200);
-  const route = routeFlowExchange(source, target, [source, target, obstacle]);
-  verify(route, source, target, [source, target, obstacle]);
-  assert.ok(route.points.length > 2);
-  assert.ok(route.points.some((point) => point.y <= 34 || point.y >= 266));
-});
-
-test('several staggered obstacles require more than a simple elbow', () => {
-  const source = box('source', 0, 0);
-  const target = box('target', 800, 400);
-  const obstacles = [box('a', 200, -100, 160, 450), box('b', 440, 100, 160, 500), box('c', 680, 200, 80, 200)];
-  const route = routeFlowExchange(source, target, [source, target, ...obstacles]);
-  verify(route, source, target, [source, target, ...obstacles]);
-  assert.deepEqual(routeFlowExchange(source, target, [source, target, ...obstacles]), route);
-});
-
-test('ancestor boundaries are traversable while sibling content stays protected', () => {
-  const source = box('source', 100, 100);
-  const target = box('target', 600, 100);
-  const ancestor = box('parent', 0, 0, 400, 400);
-  const obstacle = box('sibling', 240, 80, 120, 160);
-  const route = routeFlowExchange(source, target, [ancestor, source, target, obstacle]);
-  verify(route, source, target, [source, target, obstacle]);
-});
-
-test('parallel lanes remain deterministic and use distinct endpoint offsets', () => {
-  const source = box('source', 0, 0);
-  const target = box('target', 400, 0);
-  const first = routeFlowExchange(source, target, [source, target], 0);
-  const second = routeFlowExchange(source, target, [source, target], 1);
-  verify(second, source, target, [source, target]);
-  assert.notDeepEqual(first.points, second.points);
-  assert.deepEqual(second, routeFlowExchange(source, target, [source, target], 1));
-});
-
-test('left and right neighbors use facing ports and perpendicular departure and arrival', () => {
-  const left = box('left', 0, 0);
-  const right = box('right', 400, 40);
-  for (const [source, target, sign] of [
-    [left, right, 1],
-    [right, left, -1],
-  ]) {
-    const route = routeFlowExchange(source, target, [source, target]);
-    verify(route, source, target, [source, target]);
-    const [first, second] = route.points;
-    const beforeLast = route.points.at(-2);
-    const last = route.points.at(-1);
-    assert.equal(first.x, sign > 0 ? source.x + source.width : source.x);
-    assert.equal(last.x, sign > 0 ? target.x : target.x + target.width);
-    assert.equal(first.y, second.y, 'Depart horizontally from the source side');
-    assert.equal(beforeLast.y, last.y, 'Arrive horizontally at the target side');
-    assert.ok((second.x - first.x) * sign > 0);
-    assert.ok((last.x - beforeLast.x) * sign > 0);
   }
 });
 
@@ -408,118 +343,4 @@ test('bent ribbon outlines stay simple and finite when an adjacent segment is sh
         'The filled outline must not cross itself',
       );
     }
-});
-
-test('opposite exchanges use distinct directed lanes when their lane indices differ', () => {
-  const left = box('left', 0, 0);
-  const right = box('right', 400, 0);
-  const forward = routeFlowExchange(left, right, [left, right], 0);
-  const reverse = routeFlowExchange(right, left, [left, right], 1);
-  verify(forward, left, right, [left, right]);
-  verify(reverse, right, left, [left, right]);
-  assert.notDeepEqual(forward.points, [...reverse.points].reverse());
-  assert.ok(forward.points[0].x < forward.points.at(-1).x);
-  assert.ok(reverse.points[0].x > reverse.points.at(-1).x);
-});
-
-test('opposing Fulfilment and Service routes keep their published perimeter ports and separate the shared detour', () => {
-  // The nine subdomain rectangles in the published 2026-10-16.4 Supply map.
-  const rectangles = [
-    box('references', 32, 32, 560, 282),
-    box('policies', 732, 32, 288, 210),
-    box('inventory', 1160, 382, 288, 210),
-    box('availability', 1160, 732, 288, 138),
-    box('orders', 1160, 32, 288, 138),
-    box('process', 1588, 32, 288, 354),
-    box('fulfilment', 1588, 526, 288, 354),
-    box('service', 32, 454, 288, 354),
-    box('plan', 732, 382, 288, 354),
-  ];
-  const fulfilment = rectangles.find((item) => item.id === 'fulfilment');
-  const service = rectangles.find((item) => item.id === 'service');
-  const forward = routeFlowExchange(fulfilment, service, rectangles, 0);
-  const reverse = routeFlowExchange(service, fulfilment, rectangles, 1);
-  verify(forward, fulfilment, service, rectangles);
-  verify(reverse, service, fulfilment, rectangles);
-  assert.deepEqual(
-    [forward.points[0], forward.points.at(-1)],
-    [
-      { x: 1588, y: 703 },
-      { x: 320, y: 703 },
-    ],
-  );
-  assert.deepEqual(
-    [reverse.points[0], reverse.points.at(-1)],
-    [
-      { x: 320, y: 665.56 },
-      { x: 1588, y: 665.56 },
-    ],
-  );
-  for (let a = 1; a < forward.points.length; a++) {
-    const fromA = forward.points[a - 1],
-      toA = forward.points[a];
-    for (let b = 1; b < reverse.points.length; b++) {
-      const fromB = reverse.points[b - 1],
-        toB = reverse.points[b];
-      const horizontal = fromA.y === toA.y && fromB.y === toB.y && fromA.y === fromB.y;
-      const vertical = fromA.x === toA.x && fromB.x === toB.x && fromA.x === fromB.x;
-      const axis = horizontal ? 'x' : 'y';
-      if (horizontal || vertical)
-        assert.ok(
-          Math.min(Math.max(fromA[axis], toA[axis]), Math.max(fromB[axis], toB[axis])) <=
-            Math.max(Math.min(fromA[axis], toA[axis]), Math.min(fromB[axis], toB[axis])),
-          'Opposing paths cannot merge into a common corridor segment',
-        );
-    }
-  }
-});
-
-test('a published parent-to-child exchange can cross its parent footprint and avoids sibling content', () => {
-  const parent = box('parent', 0, 0, 600, 400);
-  const child = box('child', 100, 120);
-  const sibling = box('sibling', 280, 90, 200, 200);
-  const route = routeFlowExchange(parent, child, [parent, child, sibling]);
-  verify(route, parent, child, [child, sibling]);
-  const reverse = routeFlowExchange(child, parent, [parent, child, sibling], 1);
-  verify(reverse, child, parent, [child, sibling]);
-});
-
-test('children inset fourteen pixels do not seal the facing side of their parent endpoint', () => {
-  const source = box('inbound', 0, 80, 260, 130);
-  const target = { ...box('plan', 414, 0, 288, 908), headerHeight: 80 };
-  const children = [
-    box('preparation', 428, 80, 260, 186),
-    box('master-planning', 428, 280, 260, 214),
-    box('backlog', 428, 508, 260, 158),
-    box('stock', 428, 680, 260, 214),
-  ];
-  const route = routeFlowExchange(source, target, [source, target, ...children]);
-  verify(route, source, target, [source, target, ...children]);
-  assert.equal(route.points[0].x, source.x + source.width);
-  assert.equal(route.points.at(-1).x, target.x, 'Reach Master Plan from its facing left side');
-  assert.equal(route.points.length, 2, 'Align the contribution with the side of its taller target');
-  assert.ok(
-    route.points.every((point) => point.y >= source.y),
-    'No detour over the Master Plan heading',
-  );
-});
-
-test('a tall knowledge provider aligns with its smaller neighboring target instead of detouring above it', () => {
-  const source = box('planning', 0, 0, 288, 908);
-  const target = box('inventory', 428, 0, 288, 452);
-  const route = routeFlowExchange(source, target, [source, target]);
-  verify(route, source, target, [source, target]);
-  assert.deepEqual(route.points, [
-    { x: 288, y: 226 },
-    { x: 428, y: 226 },
-  ]);
-});
-
-test('an ancestor remains traversable below its reserved heading', () => {
-  const source = box('external', 0, 20);
-  const ancestor = { ...box('parent', 300, 0, 400, 400), headerHeight: 80 };
-  const target = box('child', 400, 100);
-  const route = routeFlowExchange(source, target, [source, ancestor, target]);
-  verify(route, source, target, [source, target, { ...ancestor, height: ancestor.headerHeight }]);
-  assert.equal(route.points.at(-1).x, target.x);
 });

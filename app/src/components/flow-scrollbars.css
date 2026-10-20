@@ -1,0 +1,26 @@
+.flow-scrollbar {
+  position: absolute;
+  z-index: 14;
+  scrollbar-width: thin;
+  scrollbar-color: #9db6a9 #f1f6f3;
+  background: #f1f6f3;
+  overscroll-behavior: contain;
+}
+.flow-scrollbar.is-horizontal {
+  left: 0;
+  bottom: 0;
+  height: 14px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.flow-scrollbar.is-vertical {
+  right: 0;
+  top: 0;
+  width: 14px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.flow-scrollbar:focus-visible {
+  outline: 2px solid #276c5a;
+  outline-offset: -2px;
+}

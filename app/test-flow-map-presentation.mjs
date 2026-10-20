@@ -222,56 +222,6 @@ test('external navigation groups 27 Commerce and Procurement exchanges in their 
   assert.deepEqual(fixture.raw, before, 'Navigation does not modify the publication');
 });
 
-test('type choices apply to All and focused neighborhoods, including an explicitly empty selection', () => {
-  assert.deepEqual(ids(principal({ mode: 'all', types: ['provides-knowledge'] }).relations), [
-    'detail-bc',
-    'reverse-ba',
-    'summary-bc',
-  ]);
-  assert.deepEqual(ids(principal({ selectedId: 'cap-a', types: ['provides-knowledge'] }).relations), ['reverse-ba']);
-  for (const types of [[], ['contains']]) {
-    const plan = principal({ types, mode: 'all' });
-    assert.deepEqual(plan.relations, []);
-    assert.equal(plan.omittedRelationCount, 0);
-  }
-});
-
-test('an explicit capability or Business Area selection reveals only its published incident neighborhood', () => {
-  for (const selectedId of ['cap-a', 'ba-a']) {
-    const plan = principal({ selectedId });
-    assert.equal(plan.mode, 'focus');
-    assert.equal(plan.focusId, selectedId);
-    assert.deepEqual(ids(plan.relations), ['detail-ab', 'detail-ac', 'reverse-ba']);
-    assert.equal(
-      plan.boxes.some((box) => ['capability', 'behavior', 'reference'].includes(box.node.kind)),
-      false,
-    );
-    assert.equal(
-      plan.relations.some((relation) => relation.id === 'summary-ab'),
-      false,
-      'Selecting a BA does not invent that BA as endpoint of a parent-level summary',
-    );
-  }
-});
-
-test('All is explicit, overrides a focused selection and keeps the BA rendering ceiling', () => {
-  const plan = principal({ mode: 'all', selectedId: 'cap-a' });
-  assert.equal(plan.mode, 'all');
-  assert.deepEqual(ids(plan.relations), [
-    'detail-ab',
-    'detail-ac',
-    'detail-bc',
-    'reverse-ba',
-    'summary-ab',
-    'summary-bc',
-  ]);
-  assert.equal(plan.omittedRelationCount, 0);
-  assert.equal(
-    plan.boxes.some((box) => ['capability', 'behavior', 'reference'].includes(box.node.kind)),
-    false,
-  );
-});
-
 test('principal choices are independent of pan, viewport dimensions and overlays, with immutable world geometry', () => {
   const original = structuredClone(supplyBoxes),
     relationSnapshot = structuredClone(model.relations);
@@ -295,7 +245,7 @@ test('principal choices are independent of pan, viewport dimensions and overlays
 
 test('entering a subdomain uses its Business Areas as frontier; an empty historical scope stays empty', () => {
   const boxes = buildFlowMap(model, 'area-a').boxes;
-  const plan = flowMapPresentation(model, boxes, { zoom: 1, scopeId: 'area-a', selectedId: 'area-a' });
+  const plan = flowMapPresentation(model, boxes, { zoom: 1, scopeId: 'area-a' });
   assert.equal(plan.mode, 'main');
   assert.deepEqual(ids(plan.boxes), ['ba-a']);
   assert.deepEqual(plan.relations, []);
