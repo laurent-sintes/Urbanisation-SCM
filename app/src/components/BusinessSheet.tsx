@@ -2,6 +2,7 @@ import { ArrowRight, GitBranch } from 'lucide-react';
 import { Fragment, type ReactNode } from 'react';
 import { behaviorTypeLabel } from '../behaviorTypes';
 import { businessFields, businessQualification } from '../businessContent';
+import { pedagogyOf, resolvePedagogy } from '../pedagogy';
 import { kindLabel } from '../presentation';
 import { publicText } from '../publicText';
 import { revealSection } from '../readerNavigation';
@@ -21,7 +22,8 @@ import {
 } from '../requestMetadata';
 import { catalogOf, pathsForNode, scenariosForNode } from '../scenarioCatalog';
 import { BusinessExamples } from './BusinessExamples';
-import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
+import { BusinessPedagogy } from './BusinessPedagogy';
+import { CatalogLink, MethodLink, ModelText, ReferenceLink, UnderstandLink } from './ModelLinks';
 
 const labels: Record<string, string> = {
   name: 'Libellé',
@@ -107,7 +109,10 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const aspect = behaviorAspect(node);
   const otherChildren = children.filter((child) => child.kind !== 'behavior');
   const fields = businessFields(node.fields);
-  const examples = examplesForNode(model, node);
+  const featuredExamples = resolvePedagogy(model, node).examples;
+  const examples = examplesForNode(model, node).filter(
+    (example) => !featuredExamples.some((featured) => featured.id === example.id),
+  );
   const scenarios = scenariosForNode(model, node.id);
   const scenarioPaths = pathsForNode(model, node.id);
   const scenarioSection =
@@ -115,6 +120,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
   const sections = [
+    pedagogyOf(node) && ['pedagogical_description', 'Comprendre ce périmètre'],
     examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'],
     otherChildren.length > 0 && ['children', 'Explorer ce périmètre'],
     fields.scope && ['scope', 'Périmètre'],
@@ -213,6 +219,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
             <Value value={fields.definition} />
           </div>
         </section>
+        <BusinessPedagogy model={model} node={node} />
         {parents.length > 0 && (
           <div className="sheet-parent">
             {parents.map((relation) => (
@@ -247,6 +254,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
                     </span>
                     <ArrowRight size={18} aria-hidden="true" />
                   </ReferenceLink>
+                  <UnderstandLink node={child} />
                 </Fragment>
               ))}
             </div>

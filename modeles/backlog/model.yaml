@@ -4121,6 +4121,7 @@ nodes:
       concept_name: Supply Chain Management
       scope_summary: Produits, stocks, achats, planification, production, entrepôts et transport.
       approach_summary: Réunir ces fonctions dans une suite logicielle.
+      id: market-supply-chain-orchestration-1
     - vendor: Oracle
       product: Fusion Cloud Supply Chain Orchestration
       element_name: Overview of Supply Chain Orchestration
@@ -4414,6 +4415,7 @@ nodes:
         de formation ne sont pas des frontières imposées au domaine.
       definition_choice: Conserver la gestion des plans, stocks, commandes et engagements au périmètre FLOW, avec coopération
         explicite des autres responsables. Ni production interne ni internalisation de la logistique exigées par ce nom.
+      id: market-supply-chain-orchestration-2
     examples:
     - title: Livrer 100 tee-shirts à un magasin vendredi
       situation: Le magasin attend 100 tee-shirts pour vendredi. Un entrepôt en détient 60 et un fournisseur doit en livrer
@@ -4425,6 +4427,8 @@ nodes:
       source_refs:
       - U470
       - U436
+      - U1125
+      id: illustration-supply-chain-orchestration-U1125
     - title: Recevoir une nouvelle référence produit
       situation: Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’application qui fait autorité sur les
         produits.
@@ -4495,6 +4499,25 @@ nodes:
         source_refs:
         - U626
     modeling_depth: behaviors
+    pedagogical_description:
+      explanation: Ce domaine aide à satisfaire une demande avec les produits et les prestations disponibles ou à obtenir.
+        Il rapproche les besoins, les stocks et les possibilités d’approvisionnement, puis suit les commandes et coordonne
+        les prestations nécessaires. Il permet aussi de revoir une solution lorsqu’un retard ou un manque apparaît.
+      example_refs:
+      - node_id: supply-chain-orchestration
+        example_id: illustration-supply-chain-orchestration-U1125
+        contribution: Vérifier une solution pour les cent tee-shirts, puis coordonner les prestations nécessaires.
+      distinctions:
+      - node_id: D01
+        explanation: Inventory Management établit les faits et les quantités de stock. Ce domaine utilise cette référence
+          avec les commandes, les plans et les prestations pour organiser la satisfaction de la demande.
+      market_comparison_refs:
+      - node_id: supply-chain-orchestration
+        comparison_id: market-supply-chain-orchestration-1
+      - node_id: supply-chain-orchestration
+        comparison_id: market-supply-chain-orchestration-2
+      source_refs:
+      - U1125
   source_refs:
   - C108
   - C78
@@ -5004,6 +5027,7 @@ nodes:
       definition_choice: Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques
         utiles aux opérations.
       term_choice: Product Reference désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+      id: market-d08-1
     - vendor: Oracle
       product: Fusion Cloud Product Hub
       source_title: Overview of Item Batches
@@ -5098,6 +5122,7 @@ nodes:
       term_choice: Product Reference désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
       definition_choice: Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques
         utiles aux opérations.
+      id: market-d08-2
     examples:
     - title: Une variante, plusieurs offres et plusieurs exemplaires
       situation: Un tee-shirt bleu taille M est proposé dans deux catalogues ; deux pièces physiques de cette variante sont
@@ -5110,6 +5135,8 @@ nodes:
       - U202
       - U460
       - U462
+      - U1125
+      id: illustration-d08-U1125
     market_inspiration:
       choice: Permettre de reconnaître et traiter les marchandises demandées ou échangées.
       flow_scope: Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques utiles
@@ -5148,6 +5175,25 @@ nodes:
       Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
 
       Les versions reçues gardent provenance, validité et limites connues. [Reference Ingestion](model:master-data-ingestion) reçoit les apports ; [Operational References](model:business-references) porte la référence locale utilisable. Les maîtres d’entreprise restent externes ; aucune alimentation installée n’est présumée.
+    pedagogical_description:
+      explanation: Ce référentiel permet de parler du même produit dans les commandes et les stocks. Il décrit par exemple
+        une variante de tee-shirt, sa taille, sa couleur et les unités utiles aux opérations. La Supply maintient sa référence
+        locale à partir des sources externes ; cela ne lui transfère pas la maîtrise du produit à l’échelle de l’entreprise.
+      example_refs:
+      - node_id: D08
+        example_id: illustration-d08-U1125
+        contribution: Fournir une référence commune de variante pour relier les offres et les pièces physiques sans les confondre.
+      distinctions:
+      - node_id: D01
+        explanation: '[Product Reference](glossary:TER052) décrit quel produit est désigné. Inventory Management établit combien
+          d’unités de ce produit sont présentes ou engagées.'
+      market_comparison_refs:
+      - node_id: D08
+        comparison_id: market-d08-1
+      - node_id: D08
+        comparison_id: market-d08-2
+      source_refs:
+      - U1125
   source_refs:
   - P81
   - U97
@@ -9430,6 +9476,7 @@ nodes:
       term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
       definition_choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires,
         en explicitant les conditions de faisabilité.
+      id: market-d03-j-1
     - vendor: SAP
       product: S/4HANA aATP / PP/DS
       element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
@@ -9491,6 +9538,7 @@ nodes:
       term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
       definition_choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires,
         en explicitant les conditions de faisabilité.
+      id: market-d03-j-2
     - vendor: SAP
       product: SAP S/4HANA Cloud Public Edition / Backorder Processing
       element_name: Backorder Processing
@@ -9644,6 +9692,38 @@ nodes:
         - ELM417
         - CMP191
     reading_order: 2
+    examples:
+    - id: illustration-d03-j-U1125
+      title: Illustration FLOW — Vérifier un apport conditionnel
+      situation: Une demande ne peut être couverte par les apports déjà attendus. Un apport supplémentaire et une prestation
+        logistique sont envisagés.
+      outcome: Une possibilité datée est proposée avec les conditions de faisabilité et les autorisations restant à obtenir,
+        ou l’absence de solution est explicitée.
+      lesson: Une simple estimation par délai standard ne prouve pas la faisabilité ; aucune fabrication Beaumanoir n’est
+        présumée.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: 'Cette capacité cherche une possibilité de promesse lorsqu’il faut vérifier la faisabilité d’un apport
+        à obtenir ou à constituer. Elle examine les ressources, les capacités et les délais nécessaires, au lieu de supposer
+        que tout sera disponible. Son résultat reste conditionnel : il précise les vérifications et les autorisations encore
+        nécessaires avant un engagement.'
+      example_refs:
+      - node_id: D03.j
+        example_id: illustration-d03-j-U1125
+        contribution: Vérifier les sources et délais de l’apport ainsi que les capacités logistiques pertinentes, sans piloter
+          l’organisation interne de l’exécutant.
+      distinctions:
+      - node_id: BHV004
+        explanation: Projected [ATP](glossary:TER044) utilise des apports futurs déjà attendus et admissibles. Le [CTP](glossary:TER045)
+          vérifie la faisabilité d’un apport à obtenir ou à constituer ; il ne crée pas lui-même l’achat ni l’engagement.
+      market_comparison_refs:
+      - node_id: D03.j
+        comparison_id: market-d03-j-1
+      - node_id: D03.j
+        comparison_id: market-d03-j-2
+      source_refs:
+      - U1125
   source_refs:
   - U148
   - U149
@@ -16877,6 +16957,7 @@ nodes:
       - U733
       - U766
       concept_name: Inventory Visibility Add-in overview
+      id: market-d01-1
     - vendor: Oracle
       product: How You Review Item Supply and Demand
       source_title: How You Review Item Supply and Demand
@@ -16943,6 +17024,7 @@ nodes:
       definition_choice: 'Les mouvements de stock sont enregistrés avec des documents matériels permettant leur traçabilité.
         Frontière conservée : Le document matériel est une réalisation du journal métier, pas sa définition universelle ;
         le journal comptable reste distinct.'
+      id: market-d01-2
     market_inspiration:
       choice: Inventory Management
       flow_scope: Établir et fiabiliser la référence de stock, ses mouvements, sa propriété, ses disponibilités et ses engagements
@@ -16977,6 +17059,33 @@ nodes:
       id: data-state
       display_name: Data & State
     reading_order: 3
+    examples:
+    - id: illustration-d01-U1125
+      title: Illustration FLOW — Recevoir vingt robes
+      situation: Un prestataire confirme la réception de vingt robes.
+      outcome: Le fait reconnu permet d’expliquer la présence de ces vingt unités et de retracer une correction ultérieure.
+      lesson: La réception ne décide pas à elle seule de la propriété ni d’une promesse à un client.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: Ce sous-domaine tient une référence fiable des produits en stock et des faits qui la font évoluer. Il distingue
+        les quantités présentes, les engagements déjà pris et les changements de propriétaire autorisés. On peut ainsi expliquer
+        une quantité et retracer sa correction ; la manipulation physique des colis relève des exécutants logistiques.
+      example_refs:
+      - node_id: D01
+        example_id: illustration-d01-U1125
+        contribution: Mettre à jour la référence de stock à partir du fait reconnu, en conservant son origine et sa date.
+      distinctions:
+      - node_id: ba-inventory-position-management
+        explanation: '[Inventory State Management](glossary:TER131) porte les positions, les faits et les engagements de quantité.
+          Inventory Management couvre aussi les responsabilités distinctes liées à la propriété et aux droits d’usage du stock.'
+      market_comparison_refs:
+      - node_id: D01
+        comparison_id: market-d01-1
+      - node_id: D01
+        comparison_id: market-d01-2
+      source_refs:
+      - U1125
   source_refs:
   - U914
   - P81
@@ -18806,6 +18915,7 @@ nodes:
       - U761
       - U765
       - U767
+      id: market-bhv004-1
     - vendor: SAP
       product: SAP S/4HANA — périmètre du cours cité
       element_name: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
@@ -18839,6 +18949,7 @@ nodes:
       definition_choice: 'L’ATP confronte quantité et date demandées aux disponibilités, puis propose des échéances confirmables.
         Frontière conservée : Le produit enchaîne calcul et confirmation ; FLOW sépare évaluation, sélection de proposition
         et engagement de la commande. Les stocks futurs restent dans le périmètre ATP de référence.'
+      id: market-bhv004-2
     market_inspiration:
       choice: Projected ATP
       flow_scope: Étendre l’évaluation aux réceptions attendues admissibles et aux besoins/engagements sur l’horizon, sans
@@ -18861,6 +18972,37 @@ nodes:
         - U477
         - ELM361
         - CMP191
+    examples:
+    - id: illustration-bhv004-U1125
+      title: Illustration FLOW — Tenir compte d’une réception prévue
+      situation: Soixante unités sont présentes, quarante sont attendues jeudi et vingt sont déjà engagées pour la même échéance.
+      outcome: Sous ces hypothèses, quatre-vingts unités peuvent soutenir une possibilité de promesse pour cette échéance
+        ; une réception incertaine reste signalée.
+      lesson: Ce calcul simplifié illustre le principe ; l’admissibilité des apports et les autres engagements doivent être
+        contrôlés.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: Ce mode de calcul vérifie ce qui pourra être promis à une date future en tenant compte du stock, des réceptions
+        admissibles et des besoins déjà connus. Il rend visibles la date, la provenance et l’incertitude des apports retenus.
+        Une même quantité ne peut pas soutenir plusieurs promesses incompatibles, et le calcul ne réserve aucune ressource
+        à lui seul.
+      example_refs:
+      - node_id: BHV004
+        example_id: illustration-bhv004-U1125
+        contribution: Calculer la quantité promettable à l’échéance sans compter deux fois la réception ni ignorer les engagements
+          concurrents.
+      distinctions:
+      - node_id: D03.j
+        explanation: Projected [ATP](glossary:TER044) exploite les apports déjà attendus. Le [CTP](glossary:TER045) vérifie
+          la faisabilité d’un apport à obtenir ou à constituer lorsque ces ressources ne suffisent pas.
+      market_comparison_refs:
+      - node_id: BHV004
+        comparison_id: market-bhv004-1
+      - node_id: BHV004
+        comparison_id: market-bhv004-2
+      source_refs:
+      - U1125
   source_refs:
   - U261
   - U262
@@ -39334,6 +39476,7 @@ nodes:
       status: proposed
       source_refs:
       - U853
+      id: market-ba-inventory-position-management-1
     - vendor: SAP
       product: SAP S/4HANA
       source_title: Understanding MRP in SAP S/4HANA
@@ -39359,6 +39502,35 @@ nodes:
       status: proposed
       source_refs:
       - U853
+      id: market-ba-inventory-position-management-2
+    examples:
+    - id: illustration-ba-inventory-position-management-U1125
+      title: Illustration FLOW — Corriger une réception
+      situation: Cent unités étaient attendues ; le contrôle à réception n’en reconnaît que quatre-vingts.
+      outcome: La position repose sur les quatre-vingts unités reconnues ; l’écart avec les cent attendues reste explicable.
+      lesson: L’attendu ne doit pas devenir du stock constaté par simple recopie.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: 'Cette responsabilité permet de répondre à une question simple : combien d’unités avons-nous, où sont-elles
+        et quelles quantités sont déjà engagées ? Elle rapproche les faits reconnus, les contrôles et les corrections pour
+        établir des positions explicables. Une quantité disponible ne signifie pas que l’entreprise en est propriétaire.'
+      example_refs:
+      - node_id: ba-inventory-position-management
+        example_id: illustration-ba-inventory-position-management-U1125
+        contribution: Rapprocher l’attendu, le fait de réception et le contrôle, puis conserver les éléments qui justifient
+          la position.
+      distinctions:
+      - node_id: D01
+        explanation: Ce périmètre de responsabilité couvre les positions et les engagements de quantité au sein d’Inventory
+          Management ; les changements de propriété restent dans une responsabilité distincte du même sous-domaine.
+      market_comparison_refs:
+      - node_id: ba-inventory-position-management
+        comparison_id: market-ba-inventory-position-management-1
+      - node_id: ba-inventory-position-management
+        comparison_id: market-ba-inventory-position-management-2
+      source_refs:
+      - U1125
   source_refs:
   - U845
   - U846
@@ -45590,6 +45762,7 @@ nodes:
         native commune.
       definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
         et performances.
+      id: market-process-mining-2
     - vendor: Microsoft
       product: Power Automate
       element_name: Overview of process mining
@@ -45618,6 +45791,7 @@ nodes:
         native commune.
       definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
         et performances.
+      id: market-process-mining-1
     - vendor: Camunda
       product: Camunda Optimize
       element_name: What is Optimize?
@@ -45646,6 +45820,34 @@ nodes:
         native commune.
       definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
         et performances.
+    examples:
+    - id: illustration-process-mining-U1125
+      title: Illustration FLOW — Comprendre une attente répétée
+      situation: Plusieurs dossiers passent par une confirmation externe ; certains attendent longtemps avant de reprendre.
+      outcome: Les parcours avec cette attente et leur durée sont identifiés pour orienter l’examen du problème.
+      lesson: Une corrélation observée ne prouve pas à elle seule la cause du retard.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: Cette capacité montre comment les demandes ont réellement cheminé, à partir des traces conservées dans
+        [Process Ledger](glossary:TER375). Elle compare les parcours suivis, repère les reprises et mesure les temps de travail
+        ou d’attente. Ces constats aident à choisir une amélioration ; ils ne changent pas à eux seuls le parcours d’une demande.
+      example_refs:
+      - node_id: process-mining
+        example_id: illustration-process-mining-U1125
+        contribution: Reconstituer les parcours à partir des traces du [Process Ledger](glossary:TER375), puis comparer les
+          variantes et les temps d’attente.
+      distinctions:
+      - node_id: process-ledger
+        explanation: '[Process Mining](glossary:TER173) lit et analyse les traces. [Process Ledger](glossary:TER375) porte
+          leur conservation durable ; une analyse ne remplace pas ce registre.'
+      market_comparison_refs:
+      - node_id: process-mining
+        comparison_id: market-process-mining-1
+      - node_id: process-mining
+        comparison_id: market-process-mining-2
+      source_refs:
+      - U1125
   source_refs:
   - U881
   - U882
@@ -61079,6 +61281,7 @@ nodes:
       - U1110
       - U1111
       - U1113
+      id: market-process-ledger-1
     - vendor: SAP
       product: SAP Signavio Process Intelligence
       source_title: Introducing to Data Transformation
@@ -61125,6 +61328,33 @@ nodes:
       - U1111
       - U1112
       - U1113
+    examples:
+    - id: illustration-process-ledger-U1125
+      title: Illustration FLOW — Retrouver une demande avant une correction
+      situation: Une demande est reçue lundi. Une confirmation externe est captée mardi, puis corrigée mercredi.
+      outcome: Le dossier peut être relu à la date de mardi sans effacer la correction connue mercredi.
+      lesson: Le moment de l’événement et celui où il est connu doivent rester distinguables.
+      source_refs:
+      - U1125
+    pedagogical_description:
+      explanation: Ce registre conserve les événements métier d’un dossier de traitement, appelé [Case](glossary:TER064).
+        Il réunit les événements internes et les événements externes captés par la [sentinelle](glossary:TER127), avec leurs
+        dates, leurs origines et leurs corrections. Il sert à retrouver ce qui s’est passé et la situation connue d’une demande
+        à un moment donné ; ses traces alimentent aussi l’analyse des parcours.
+      example_refs:
+      - node_id: process-ledger
+        example_id: illustration-process-ledger-U1125
+        contribution: Conserver les événements corrélés au [Case](glossary:TER064), leur origine et leurs corrections pour
+          restituer la situation à la date demandée.
+      distinctions:
+      - node_id: process-mining
+        explanation: '[Process Ledger](glossary:TER375) conserve les traces et permet de reconstituer une situation passée.
+          [Process Mining](glossary:TER173) les analyse pour comprendre les parcours, leurs variantes et leurs délais.'
+      market_comparison_refs:
+      - node_id: process-ledger
+        comparison_id: market-process-ledger-1
+      source_refs:
+      - U1125
   source_refs:
   - U1110
   - U1111

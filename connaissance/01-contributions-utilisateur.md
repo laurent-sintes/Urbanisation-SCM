@@ -25750,3 +25750,48 @@ Date : 2026-10-16. Source : Laurent, autorisation d’appliquer les corrections 
 Verbatim : « Applique les corrections de l'audit »
 
 Portée : appliquer le lot cohérent des corrections proposées dans l’audit U1119 après le renommage U1121, en alignant les définitions, finalités, frontières, exemples et commentaires marché concernés du modèle et du glossaire. Traiter les clarifications documentées dans la mesure où elles précisent les responsabilités existantes ; préserver les lacunes de preuve et les questions non tranchées. Conserver les identités, la structure et les responsabilités métier établies, sans ajouter de périmètre de production, de canal commercial ni de réalisation installée. Capturer les accords sur les champs effectivement corrigés ; aucun commit, release ni push demandé.
+
+## U1123
+
+Date : 2026-10-20. Source : Laurent, demande d’audit des descriptions pédagogiques des objets.
+
+Verbatim :
+
+> Dans le métamodèle, les objets possèdent un attribut description.
+>
+> Je souhaite avoir une description courte (l'actuelle) et une description longue.
+>
+> La description longue s'adresserait à un néophyte de la cartographie et des domaines et on pourrait développer un peu plus la description en :
+>
+> - ajoutant quelques phrases
+> - précisant des exemples
+> - dire à quel outil du marché ça correspond (si pertinent)
+>
+> La description longue ne serait alors pas qu'un texte un peu plus long mais un vrai objet avec des attributs.
+>
+> Je veux un audit sur :
+>
+> - la pertinence des attributs proposés
+> - la pertinence de l'approche pour embarquer plus facilement des débutants (d'autres idées ?)
+> - comment visualiser ces données ? à la place du tooltip actuel ?
+> - Jusqu'à quel niveau c'est interessant d'enrichir le modèle ?
+
+Portée : auditer une description pédagogique structurée, son apport à la compréhension, ses attributs, sa présentation dans Atlas et les niveaux pertinents d’enrichissement. La demande ne valide pas encore un contrat de données, une nouvelle rédaction des fiches ni une modification du frontend ; aucun commit, release ou push demandé.
+
+## U1124
+
+Date : 2026-10-20. Source : Laurent, précision du périmètre de l’audit U1123.
+
+Question de clarification : « Quand tu parles des objets à enrichir, vises-tu les types du métamodèle (Domain, Capability, Relation…), les fiches métier concrètes (Inventory Management, Process Mining…), ou les deux ? Je peux auditer les deux en distinguant leurs contenus. »
+
+Verbatim : « Les fiches métier concrètes »
+
+Portée : centrer l’audit sur les instances métier de la cartographie, à leurs niveaux déclarés. Les définitions des types du métamodèle restent un contexte explicatif distinct ; aucun enrichissement général de ces types n’est demandé.
+
+## U1125
+
+Date : 2026-10-21. Source : Laurent, autorisation d’appliquer les préconisations de l’audit pédagogique U1123/U1124.
+
+Verbatim : « Applique les préconisations de "évolution pour les fiches métier concrètes" »
+
+Portée : appliquer le contrat de description pédagogique structurée, l’homogénéisation des descriptions courtes et la lecture « Comprendre ce périmètre » dans Atlas, en commençant par les huit fiches pilotes proposées. Réutiliser exemples, scénarios, preuves et glossaires, avec références stables et qualifications conservées ; préserver les profondeurs et les publications historiques. Le Go porte sur les préconisations présentées, sans adoption automatique des textes et correspondances rédigés ensuite. Les essais avec des lecteurs restent à organiser ; aucun résultat utilisateur n’est présumé. Aucun commit, release ou push demandé.

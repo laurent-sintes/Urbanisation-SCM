@@ -145,6 +145,11 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
     errors.extend(validate_reference_policy(model))
     errors.extend(validate_information(model))
     try:
+        from .pedagogy import validate_pedagogy
+    except ImportError:
+        from pedagogy import validate_pedagogy
+    errors.extend(validate_pedagogy(model))
+    try:
         from .data_sharing import validate_data_sharing
     except ImportError:
         from data_sharing import validate_data_sharing

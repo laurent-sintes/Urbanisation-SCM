@@ -2402,6 +2402,9 @@
             "name": {
               "type": "string"
             },
+            "pedagogical_description": {
+              "$ref": "#/$defs/pedagogicalDescription"
+            },
             "definition": {
               "type": "string"
             },
@@ -2894,6 +2897,7 @@
       "items": {
         "type": "object",
         "properties": {
+          "id": { "type": "string", "minLength": 1, "pattern": "\\S" },
           "vendor": {
             "type": "string",
             "minLength": 1
@@ -3103,6 +3107,112 @@
         "flow_approach",
         "synthesis",
         "examples"
+      ],
+      "additionalProperties": false
+    },
+    "pedagogicalDescription": {
+      "type": "object",
+      "properties": {
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "example_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "example_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "contribution": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "node_id",
+              "example_id",
+              "contribution"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "distinctions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "node_id",
+              "explanation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "market_comparison_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "comparison_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "node_id",
+              "comparison_id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "required": [
+        "explanation",
+        "source_refs"
       ],
       "additionalProperties": false
     },

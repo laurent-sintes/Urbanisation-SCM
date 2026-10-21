@@ -21,6 +21,7 @@ import { publicText } from '../publicText';
 import type { AtlasNode, PublishedModel } from '../types';
 import './glossary.css';
 import { resolveGlossaryTerm } from '../glossary';
+import { pedagogyOf, shortNodeDescription } from '../pedagogy';
 import { kindLabel } from '../presentation';
 
 type Kind = 'model' | 'glossary' | 'method' | 'guide';
@@ -271,9 +272,7 @@ export function MapNodeButton({
   itemId?: string;
 }) {
   const { id, anchor, tooltip, open, setOpen, host, position } = useAnchoredTooltip<HTMLButtonElement>();
-  const description = plainInlineText(
-    publicText(node.purpose || node.definition || 'Description non renseignée dans cette publication.'),
-  );
+  const description = plainInlineText(publicText(shortNodeDescription(node)));
   return (
     <>
       <button
@@ -299,6 +298,7 @@ export function MapNodeButton({
       >
         {children}
       </button>
+      <UnderstandLink node={node} />
       {open && (
         <FloatingPortal root={host as HTMLElement}>
           <div ref={tooltip} id={id} role="tooltip" className="reference-tooltip map-node-tooltip" style={position}>
@@ -309,6 +309,15 @@ export function MapNodeButton({
         </FloatingPortal>
       )}
     </>
+  );
+}
+
+export function UnderstandLink({ node }: { node: AtlasNode }) {
+  if (!pedagogyOf(node)) return null;
+  return (
+    <ReferenceLink target={node.id} anchor="pedagogical_description" className="understand-link nodrag nopan">
+      Comprendre<span className="sr-only"> {node.name}</span>
+    </ReferenceLink>
   );
 }
 
@@ -452,9 +461,7 @@ export function ReferenceLink({
           ? node.definition
           : term?.short_description ||
             term?.definition ||
-            String(
-              node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.',
-            )),
+            String(node ? shortNodeDescription(node) : 'Description non renseignée.')),
     ),
   );
   const href = routeHash({
@@ -515,6 +522,7 @@ export function ReferenceLink({
           hide();
         }}
         onClick={(event) => {
+          if (anchor === 'pedagogical_description') event.stopPropagation();
           if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.currentTarget.href = routeHash({
             ...readRoute(href),

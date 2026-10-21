@@ -24,7 +24,7 @@ def validate_scenarios(nodes):
                         errors.append(f'{identifier}/examples/steps: duplicate capability {target_id}')
                     contributors.add(target_id)
             if key:
-                if node['kind'] not in LEVELS:
+                if node['kind'] not in LEVELS and (example.get('steps') or example.get('contributions')):
                     errors.append(f'{identifier}/examples: shared scenarios require a domain, subdomain or capability')
                 if key in seen:
                     errors.append(f'{identifier}/examples: duplicate scenario id {key}')

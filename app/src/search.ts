@@ -4,6 +4,7 @@ import { glossaryAliases, isCurrentGlossaryTerm } from './glossary.ts';
 import { plainInlineText } from './inlineLinks.ts';
 import { marketSearchText } from './marketContent.ts';
 import type { ModelingGuide } from './modelingGuide.ts';
+import { pedagogySearchText } from './pedagogy.ts';
 import { publicText } from './publicText.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
 import { catalogOf, scenarioSearchText, valueStreamSearchText } from './scenarioCatalog.ts';
@@ -110,6 +111,7 @@ function index(model: PublishedModel): SearchResult[] {
       name: node.name,
       excerpt: [
         Object.values(businessFields(node.fields)).join('\n'),
+        pedagogySearchText(node),
         requestMetadataSearchText(node),
         ancestry(node.id),
         readerExamplesSearchText(examplesForNode(model, node)),

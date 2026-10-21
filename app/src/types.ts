@@ -2,6 +2,7 @@
 export type JsonRecord = Record<string, unknown>;
 
 export interface MarketComparison {
+  id?: string;
   vendor: string;
   product: string;
   element_name: string;

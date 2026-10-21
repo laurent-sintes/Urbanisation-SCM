@@ -1,5 +1,13 @@
 # Modèles structurés
 
+## Description pédagogique des fiches — U1125
+
+`fields.definition` reste la description courte canonique. L’objet facultatif `fields.pedagogical_description` ajoute une `explanation`, des `example_refs` avec leur `contribution`, des `distinctions` avec le voisin identifié, des `market_comparison_refs` et des `source_refs`. Il décrit la fiche existante sans créer un objet de hiérarchie.
+
+Les exemples restent dans `fields.examples` : une référence utilise `node_id` et `example_id`, avec un résultat explicite dans l’exemple. Les comparaisons restent dans `fields.market_comparisons` : une référence utilise `node_id` et `comparison_id`. Seuls les objets sélectionnés reçoivent un `id` stable ; aucun indice de tableau ne sert de référence. Un exemple identifié sans contribution de scénario reste une illustration, y compris sur un référentiel ou un comportement. Les scénarios autonomes et leur couverture restent distincts.
+
+Le schéma ferme les attributs ; `scripts/pedagogy.py` contrôle les identités uniques, la résolution dans le modèle fourni et les distinctions. Chaque publication transporte ses propres textes et références. L’absence du bloc dans un ancien snapshot reste une absence ; le backlog ne complète jamais cette lecture. Les huit pilotes et leurs limites sont suivis dans `backlog/business-sheet-pedagogy-U1125.yaml`. L’application du contrat ne vaut pas adoption des textes ajoutés après le Go.
+
 ## Participants des parcours Enterprise Architecture — U1115
 
 Les `scenario_catalog.paths[].steps[].contributions` mobilisent des capacités ou références. Le champ facultatif `context_participants` relie séparément les responsabilités de contexte à leur profondeur déclarée : Domain, Subdomain ou Business Area. Chaque participant porte `node_id`, `role`, `conditions` et `source_refs`. Ce lien ne crée ni capacité périphérique ni parent métier ; les contributions restent requises. Atlas affiche les participants dans le parcours et remonte les scénarios vers leurs fiches et ancêtres depuis le même snapshot. Les publications sans ce champ restent lisibles sans complément courant.

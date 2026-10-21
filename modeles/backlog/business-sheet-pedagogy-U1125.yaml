@@ -1,0 +1,228 @@
+id: business-sheet-pedagogy-U1125
+date: '2026-10-21'
+source_refs:
+- U1123
+- U1124
+- U1125
+status: Préconisations appliquées au backlog et au lecteur Atlas ; recette technique passée, textes nouveaux proposés et tests
+  lecteurs à organiser.
+approval_scope: U1125 adopte le contrat, le parcours de lecture et les huit pilotes de U1123/U1124. Aucun accord de champ
+  n’est créé pour les textes rédigés après ce Go.
+contract:
+  short_description: fields.definition, inchangée ; aide homogène carte et liens
+  long_description: 'fields.pedagogical_description : explanation, example_refs avec contribution, distinctions, market_comparison_refs,
+    source_refs'
+  reference_identity: Couple node_id et example_id ou comparison_id, sans indice de tableau. Identité facultative ajoutée
+    aux seuls exemples et comparaisons sélectionnés.
+  optional_fields: Exemples, distinctions et repères marché facultatifs ; aucune obligation artificielle aux niveaux périphériques.
+  publication: Contenu transporté par le snapshot ; aucun repli backlog ni modification des publications historiques.
+editorial_scope: Explication et distinction simples, exemple fictif identifié ; reprise des frontières et des définitions
+  existantes, sans changement de hiérarchie, de flux ou de profondeur.
+glossary_alignment:
+  checked_terms:
+  - TER035
+  - TER044
+  - TER045
+  - TER052
+  - TER064
+  - TER127
+  - TER131
+  - TER173
+  - TER375
+  result: Définitions, exemples et frontières existants conservés. Les nouveaux textes explicitent ces sens et utilisent les
+    liens publiés. Pas de copie du bloc pédagogique dans le glossaire ; identités ajoutées aux exemples et comparaisons sans
+    modifier leur sens.
+market_review:
+  date: '2026-10-21'
+  policy: Correspondances canoniques réutilisées avec leurs limites. Chaque pilote conserve ses appuis Dynamics et S/4HANA
+    ou la lacune explicite. Les repères pédagogiques sont sélectifs et ne prétendent pas couvrir la fiche entière.
+  limitations:
+  - 'Process Ledger : appui SAP S/4HANA toujours manquant ; Signavio est distinct.'
+  - 'Process Mining : Power Automate est un produit distinct de Dynamics ; les tableaux de bord Dynamics et le repère S/4HANA
+    restent partiels. La page SAP Help consultée ne rend aucun corps exploitable ; preuve historique conservée, non reconfirmée.'
+  - 'CTP : page détaillée SAP PP/DS sans corps exploitable ; cours S/4HANA aATP consulté comme repère complémentaire, sans
+    équivalence CTP intégrale ni fabrication Beaumanoir présumée.'
+  sheet_checks:
+  - node_id: supply-chain-orchestration
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Welcome to Dynamics 365 Supply Chain Management
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+    - title: Supply Chain Management | SAP Learning
+      url: https://learning.sap.com/products/supply-chain-management
+    finding_and_limit: Portefeuilles produits plus larges que le domaine FLOW ; production et exécution physique non déduites.
+  - node_id: D01
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Inventory Visibility Add-in overview
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+    - title: Introducing Goods Movements
+      url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de
+    finding_and_limit: Stocks multi-sources et preuve des mouvements ; FLOW conserve les frontières propriété, engagement
+      et réalisation physique.
+  - node_id: ba-inventory-position-management
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Inventory on-hand list
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+    - title: Understanding MRP in SAP S/4HANA
+      url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+    finding_and_limit: 'Consultation de positions et calcul de besoins : appuis partiels, le calcul SAP MRP ne couvre pas
+      toute la tenue du stock.'
+  - node_id: D08
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Product information overview
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+    - title: Introducing the Retail Article Master
+      url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-the-retail-article-master_bd2d9df6-bf54-4612-8fa0-b35c63fbb0d8
+    finding_and_limit: Produit, variante et données communes ; la maîtrise entreprise reste externe au référentiel Supply.
+  - node_id: process-ledger
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: View workflow history
+      url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    finding_and_limit: 'Process Ledger : appui SAP S/4HANA toujours manquant ; Signavio est distinct.'
+  - node_id: process-mining
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Customer Service dashboards
+      url: https://learn.microsoft.com/en-us/dynamics365/customer-service/use/customer-service-analytics-insights-csh
+    - title: Overview of process mining
+      url: https://learn.microsoft.com/en-us/power-automate/process-mining-overview
+    finding_and_limit: 'Process Mining : Power Automate est un produit distinct de Dynamics ; les tableaux de bord Dynamics
+      et le repère S/4HANA restent partiels. La page SAP Help consultée ne rend aucun corps exploitable ; preuve historique
+      conservée, non reconfirmée.'
+  - node_id: D03.j
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Calculate sales order delivery dates using CTP
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+    - title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+      url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
+    finding_and_limit: 'CTP : page détaillée SAP PP/DS sans corps exploitable ; cours S/4HANA aATP consulté comme repère complémentaire,
+      sans équivalence CTP intégrale ni fabrication Beaumanoir présumée.'
+  - node_id: BHV004
+    compared_on: '2026-10-21'
+    sources_consulted:
+    - title: Inventory Visibility on-hand change schedules and ATP
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-available-to-promise
+    - title: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
+      url: https://learning.sap.com/courses/performing-the-availability-check/running-an-available-to-promise-atp-check-in-sap-s-4hana-sales_a2b4c5e3-1618-418d-a4f6-efe5ff43f7f1
+    finding_and_limit: Calcul des disponibilités futures ; FLOW sépare calcul, sélection de promesse, confirmation et réservation.
+reader_test:
+  state: À organiser avec quatre à six lecteurs ; aucun test humain réalisé
+  protocol: Reformuler le service, distinguer le voisin, classer un exemple et un contre-exemple, retrouver un scénario documenté
+    et comprendre la limite du repère logiciel. Mesurer confusions, réussite, temps, aide et retour au point de départ.
+  generalization: Après ce retour, prioriser domaines et sous-domaines, puis capacités difficiles ; comportements sélectifs.
+publication_delivery:
+  state: applied
+  summary: Huit fiches pilotes avec description pédagogique structurée, exemples et références stables ; nouvelle lecture
+    Atlas, sans publication implicite.
+  source_refs:
+  - U1125
+  required_nodes:
+  - id: supply-chain-orchestration
+    kind: domain
+    field_sha256:
+      definition: 0528af4396549cdbf01fdc5c869328d56ac2b5fa330bc215249e6c94195c56ba
+      pedagogical_description: af0ce76e6dd87e8e697016b79dad9a7828721aaf8ad3ff0e47cb7cb7aa4c11e4
+      examples: 926ce255f479e6f2558b594e867cf1f94676c8f1e764ebd7b1f2ea7ef3eb5b4e
+      market_comparisons: ab3cfcf4666b8de22e859c6b903018db51bdaf6cb8b5486e85b4ac5058996ce7
+  - id: D01
+    kind: area
+    field_sha256:
+      definition: eb79272189efeab93b4def8863e211d6cc36d5dc1a7dca48b6ed316c51de6005
+      pedagogical_description: 09c4ab90ae4c584db8f6a13837eb3dad687f6617d86f36b44a033d7279482c2f
+      examples: a05d9dfe663edb7e747dcfab4573e4261e3fb545c6bd07817bd041ed001bed28
+      market_comparisons: 5cac00502cc76b573b0d478b18dff5da91cde46fb46f6479f1930539b1821d53
+  - id: ba-inventory-position-management
+    kind: business_area
+    field_sha256:
+      definition: b37637e8882811189cb63f5d9f9e5f84af0d71d37ac207223cc36d7592679664
+      pedagogical_description: 4a8c5a3e6ec60ea6e7e514c2225db2aac5688d80ebdc84dd27ed4965e827c537
+      examples: 4983be87a78e7d82b7b5cf54db3c6205edf768540762f7b5732d220a335d107c
+      market_comparisons: 68c5b3daef7480b7d01340f262b7bc5e83ed309f7257c74e739374799e4c4ee1
+  - id: D08
+    kind: reference
+    field_sha256:
+      definition: 6575891271fcff7716b9a59fc8ac1b305dbe38a6d0246b4f249a6a2428418c80
+      pedagogical_description: d16c6e352164d8c3196f12d49d09f73f7f18ae269cd3a2bd4edd6faac1622b23
+      examples: b6bdf126f0955edf378179d0312bd5379db8aa71c9ada916e753dbcad87779eb
+      market_comparisons: 6f214bcb243ef0d9bc083d3237700fbdb8dbfa11e29c9a977daf6b9b76967732
+  - id: process-ledger
+    kind: capability
+    field_sha256:
+      definition: 725ee746d55cad5ad231e2eb030b60dd44629a6e761d64d5bfd630d7477b32c0
+      pedagogical_description: 9d6422e9f300ac83b49af77fab4cd2bf3654b113c7b971e4e57178497c1cb22b
+      examples: 6ef6d8a034e5ced0d031464d76d0bd5237668ff86980ec2d7d15f7b67b6a990d
+      market_comparisons: 91f6b0676ee3da1274068befb507acb4b4ddd7bd84f40196ace27ec7687e7c65
+  - id: process-mining
+    kind: capability
+    field_sha256:
+      definition: 1ba76c387e97e11ed9b9971d43045bef6466076d2d52b4c8b4330bf8d7efc2fe
+      pedagogical_description: ed91dd75a2abc40ed49a1519ac8c2114b672f9cbd9c92250eda3be24209f8120
+      examples: a861398f4106480ea77fc8254c068d5caaa3797f3693921f0dbeac76bff054f0
+      market_comparisons: f612a3dd646740887cc8d39475eec7f32318e998bedfc061bb3f0d433f7ea9c7
+  - id: D03.j
+    kind: capability
+    field_sha256:
+      definition: 61d37b4ef82e55b2ede142a9d0525e26d54d9e220bf83cd46dd8030e1cb89de2
+      pedagogical_description: ab8348428d27d3bfa989bf12cd82b7050049e1123cc787d9eaca4c9ed079311f
+      examples: 69d9c2477c312a4b039cedae6661174025859a5516d2afbeba5046011c032b02
+      market_comparisons: ecb5ce397a4303fb78a18404bbf17538db07c7ade0fe9f1b14d45c2279cc1049
+  - id: BHV004
+    kind: behavior
+    field_sha256:
+      definition: f6475e73e7c499806e504642212523c4e95c72f6941517d9ac873d0548efc76e
+      pedagogical_description: af7568023e7880f2546085a816758f501a48148f7fb629345201f012f64816c9
+      examples: b853dbeeb5362563cd06ce30bda581eca5aae7d749ed2925a52c0881d9e344a3
+      market_comparisons: 1467fa645adbd9189075f331aa7bbc5854ba05fabccef9fcdfd8fecd7e2d94e1
+  supersedes_requirements:
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: process-mining
+    fields:
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - market_comparisons
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-inventory-position-management
+    fields:
+    - market_comparisons
+supersession_limit: Les empreintes de comparaisons sont remplacées uniquement pour l’ajout des identités de référence. Leur
+  texte, leurs qualifications et les accords historiques sont conservés ; aucune réadoption globale.
+verification:
+  backlog: 'check_backlog.py --render : zéro erreur, zéro lot pending'
+  contracts: 'validate_models.py : zéro erreur, publications historiques incluses'
+  python_tests: '23 tests ciblés réussis : pédagogie, exemples/scénarios, comparaisons et glossaire'
+  frontend_tests: '20 tests ciblés réussis : pédagogie, exemples, recherche et navigation'
+  frontend_build: TypeScript, Biome ciblé et build Atlas réussis
+  browser_recipe: 'Huit fiches candidates, références, sources qualifiées, clavier, aide courte, retour carte, mobile et absence
+    dans la publication courante : réussis. Recette isolée, aucune publication.'
+  visual_review: Captures bureau et mobile relues ; texte et contrôles lisibles, sans débordement horizontal.
+  human_readers: Non réalisé ; protocole conservé ci-dessus.

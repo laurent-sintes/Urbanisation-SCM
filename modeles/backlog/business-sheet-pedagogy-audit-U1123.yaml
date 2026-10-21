@@ -1,0 +1,322 @@
+id: BUSINESS-SHEET-PEDAGOGY-AUDIT-U1123
+date: '2026-10-20'
+status: audit_and_proposal
+source_refs:
+- U1123
+- U1124
+scope:
+  subject: Fiches métier concrètes ; pas les définitions des types du métamodèle.
+  questions:
+  - Pertinence des attributs
+  - Compréhension par les débutants
+  - Présentation et infobulles
+  - Niveaux et ordre d’enrichissement
+  canonical_changes: false
+  agreement: false
+  publication: false
+  limitations:
+  - Audit documentaire et statique, sans séance d’observation de débutants.
+  - Aucune certification globale d’accessibilité ni audit exhaustif de la pertinence des comparaisons marché existantes.
+  - Le code frontend comporte des travaux extérieurs en cours, préservés. Les constats de code ne sont pas une observation
+    visuelle du site déployé.
+baseline:
+  git_head: 59013f0966d5a52264252408b33d0068b82da5db
+  publication: 2026-10-17.1
+  model_sha256: 0cf230b779700329d93ce62eef60dbdb32b90bc84c3826bb5d1c0f02baeb2111
+  reading: index.json → descripteur courant vérifié par empreinte → snapshot vérifié par empreinte.
+  inventory:
+    nodes: 348
+    kinds:
+      universe: 1
+      business_system: 4
+      domain: 12
+      area: 50
+      reference: 20
+      capability: 116
+      behavior: 74
+      business_area: 71
+    nonempty_fields:
+      definition: 348
+      finality: 323
+      scope: 348
+      examples: 92
+      scenario_refs: 0
+      market_comparisons: 344
+      market_inspiration: 136
+      short_description: 0
+      long_description: 0
+      explanation: 0
+    example_shapes:
+      list: 92
+      NoneType: 256
+    definition_words:
+      min: 6
+      median: 17.0
+      max: 60
+      over_40: 1
+  source_code_sha256:
+    app/src/components/BusinessSheet.tsx: ffc3206be77d535447f05f78873c59df41d17ec331a89012935764f66ba77e83
+    app/src/components/ModelLinks.tsx: d8a46e98b414e5895a58eeeb0ccb0297e31db0d1cfe14e7051ffea144a1417a9
+    app/src/model.ts: 9a8dadd64e67e2a74302971e4d6c5d2d933904b29f7ebb9f17be7440f77fbdd4
+    app/src/examples.ts: f78876aa2129de70709976e58b6a2d3e82fc7a2e6e58c98e4d946fe3c7f3c229
+    modeles/schemas/urbanism.schema.json: 252a447845dc981c6cde3425fe3e61984313dd07fa5ca82cf35e499e891aa12c
+findings:
+- id: F01
+  finding: 'Le socle de description courte existe déjà : fields.definition dans les 348 fiches publiées.'
+  evidence: 6 à 60 mots, médiane 17 ; une seule définition dépasse 40 mots. Aucun champ short_description ou long_description
+    renseigné.
+  recommendation: Conserver les définitions, sans migration ou réécriture générale pour les rebaptiser description courte.
+- id: F02
+  finding: La fiche possède déjà un contenu riche structuré.
+  evidence: 348 périmètres, 323 finalités, 92 listes locales examples représentant 101 exemples, 344 listes market_comparisons
+    et 136 market_inspiration.
+  limit: '92 listes examples ne signifie pas seulement 92 fiches illustrées : le lecteur réutilise aussi des exemples partagés
+    et historiques contenus dans scope ; les scénarios sont autonomes.'
+  recommendation: Assembler une lecture pédagogique à partir de ce socle, en ajoutant seulement le contenu explicatif manquant.
+- id: F03
+  finding: Les exemples existants sont déjà des objets, pas seulement des paragraphes.
+  evidence: ReaderExample accepte titre, situation, résultat, enseignement, contraintes, options et contributions ; les parcours
+    ont leurs étapes et résultats.
+  recommendation: Privilégier un cas concret simple et son résultat ; réutiliser le catalogue de scénarios pour le parcours
+    complet.
+- id: F04
+  finding: Les infobulles métier ne partagent pas un contrat de sélection unique.
+  evidence: MapNodeButton privilégie purpose, issu de finality, puis definition. ReferenceLink peut privilégier short_description,
+    purpose ou definition selon les options. MetaTypeLabel explique le type et non la fiche concrète.
+  recommendation: Unifier à terme la résolution de la définition métier courte, tout en gardant les aides sur les types distinctes.
+    Ce constat de sélection ne constitue pas un audit complet de leur accessibilité.
+- id: F05
+  finding: Une explication en langage courant et des frontières concrètes apportent davantage qu’un allongement uniforme.
+  evidence: Inventory Management distingue déjà dans scope stock, propriété, détention et engagements ; Process Mining renvoie
+    déjà à Process Ledger mais sa définition suppose de comprendre traces corrélées.
+  recommendation: Expliquer les mots et l’effet concret avec un cas. Ajouter un contre-exemple utile pour distinguer un voisin.
+- id: F06
+  finding: Une référence à un logiciel peut aider certains lecteurs mais ne définit pas la responsabilité métier.
+  recommendation: Afficher produit ou composant, partie illustrée, proximité, limites, édition et source. Réutiliser les qualifications
+    du catalogue applicatif et des comparaisons ; ne pas en déduire un usage installé chez Beaumanoir.
+- id: F07
+  finding: Des références stables sont nécessaires pour sélectionner des éléments existants.
+  evidence: 4 des 101 exemples locaux ont un id ; aucune entrée market_comparisons n’a d’id. Les scénarios et parcours possèdent
+    déjà une identité.
+  recommendation: Pour le pilote, identifier seulement les exemples et comparaisons à référencer, ou choisir un objet de catalogue
+    déjà identifié. Ne pas utiliser une position de tableau comme identité ; ne pas recopier la même preuve dans une deuxième
+    liste.
+- id: F08
+  finding: Le schéma actuel ferme fields aux attributs inconnus.
+  evidence: 'urbanism.schema.json : fields.additionalProperties=false ; definition, finality et scope sont des chaînes, examples
+    et market_comparisons ont leur contrat propre.'
+  recommendation: Une éventuelle adoption exigera un contrat explicite pour l’objet pédagogique, validation des références,
+    publication figée et affichage dédié.
+attribute_assessment:
+- attribute: Définition courte
+  priority: core
+  source: fields.definition
+  decision_proposed: Conserver la valeur actuelle ; repère bref dans carte, arbre, lien et tête de fiche.
+- attribute: Explication en langage courant
+  priority: core
+  source: Nouveau texte explicatif
+  decision_proposed: Deux à quatre phrases sur le service concret rendu. Éviter répétition de la définition et jargon non
+    expliqué ; longueur indicative, sans remplissage ni troncature automatique.
+- attribute: À quoi cela sert
+  priority: reuse
+  source: fields.finality
+  decision_proposed: Réutiliser la finalité existante ; une lacune doit être qualifiée, pas comblée par une promesse générique.
+- attribute: Exemple concret
+  priority: core
+  source: fields.examples ou scénario/parcours explicitement lié
+  decision_proposed: Situation → contribution propre de la fiche → résultat observable. Un exemple court visible ; autres
+    cas à la demande. Mention Illustration FLOW pour un cas construit, sans attribution à Beaumanoir.
+- attribute: Frontières et confusions fréquentes
+  priority: core_when_ambiguous
+  source: fields.scope et voisins explicitement documentés
+  decision_proposed: Une ou deux distinctions ciblées avec liens vers les voisins. La formulation doit rester cohérente avec
+    leurs fiches et le glossaire.
+- attribute: Informations reçues et produites
+  priority: optional
+  source: Relations qualifiées et contributions documentées
+  decision_proposed: Montrer seulement si cela éclaire la responsabilité. Ne pas reconstruire automatiquement des flux depuis
+    la hiérarchie.
+- attribute: Repères du marché
+  priority: optional
+  source: market_comparisons, market_inspiration et catalogue applicatif
+  decision_proposed: Un exemple pertinent peut suffire au premier niveau ; conserver les deux familles Microsoft Dynamics
+    et SAP S/4HANA dans le dossier de comparaison, ou leurs lacunes explicites. Le détail reste consultable.
+- attribute: Mots à comprendre
+  priority: reuse
+  source: Glossaires de la même publication
+  decision_proposed: Liens contextuels vers les notions, pas un deuxième glossaire manuel par fiche.
+- attribute: Procédure complète, FAQ exhaustive, produit unique obligatoire
+  priority: not_recommended_as_mandatory
+  source: Sans objet
+  decision_proposed: Ne pas les imposer à toutes les fiches. Une procédure n’est pas une capacité ; une longue liste de champs
+    augmente la rédaction sans garantir la compréhension.
+proposed_logical_object:
+  status: Illustration de contrat à arbitrer ; non inséré dans le schéma ni le modèle.
+  canonical_short_description: fields.definition
+  pedagogical_description:
+    explanation: Texte nouveau, bref et accessible.
+    example_refs: Références optionnelles aux exemples ou scénarios identifiés, rendus sous forme situation/contribution/résultat.
+    distinctions: Distinctions utiles, avec identifiant du voisin et explication ; cohérentes avec scope.
+    market_comparison_refs: Références optionnelles aux preuves qualifiées existantes ; identité des cibles à définir selon
+      F07.
+  assembled_without_duplication:
+  - finality
+  - scope
+  - relations documentées
+  - glossaire
+  - sources et qualifications existantes
+  meaning: Bloc éditorial rattaché à la fiche existante, sans nouveau nœud de hiérarchie, autonomie métier ni parent supplémentaire.
+  not_a_decision: La proposition ne valide aucun nouveau champ, exemple ou rapprochement marché.
+presentation:
+  short_help: Garder une aide courte au survol et au focus ; pas de description longue ni liens interactifs dans un tooltip.
+  recommended_first_delivery: 'Dans la fiche existante, placer Comprendre ce périmètre après la définition : explication,
+    un exemple et une distinction visibles. Conserver détails des frontières et sources dans les rubriques appropriées.'
+  from_map: Action explicite Comprendre ouvrant la même fiche sur ce bloc ; préserver sélection, cadrage, position et publication
+    au retour. Ne pas détourner le clic existant de navigation ou de sélection.
+  optional_later: Un panneau de lecture persistant sur grand écran peut éviter un aller-retour, si les tests montrent ce besoin
+    ; il doit réserver son espace et conserver la carte lisible. Sur mobile, privilégier la fiche lisible avec retour plutôt
+    qu’une petite fenêtre.
+  advanced_material: Références détaillées et variantes à la demande. Ne pas cacher toute l’explication nécessaire à un débutant
+    derrière un accordéon ou un mode débutant à découvrir.
+  accessibility:
+  - Accès au clavier et au tactile
+  - Bouton nommé et état explicite
+  - Fermeture et retour du focus prévisibles pour un panneau
+  - Liens vers les glossaires et sources navigables
+  - Contenu lisible sur écran étroit et zoomé
+depth_policy:
+- levels: Enterprise Architecture et Business System
+  guidance: 'Courte orientation : raison d’être du périmètre, domaines inclus et coopérations utiles. Pas d’équivalent logiciel
+    unique imposé.'
+- levels: Domain et Subdomain
+  guidance: 'Priorité forte : rôle, exemple concret et frontières. Enrichir d’abord les points d’entrée du cœur Supply et
+    ses adhérences Commerce/Procurement.'
+- levels: Business Area
+  guidance: Expliquer la responsabilité et ce qu’elle regroupe. Un périmètre de contexte terminal est éligible à une bonne
+    explication, sans lui inventer de capacités.
+- levels: Capability
+  guidance: Bon niveau pour une explication détaillée et des repères produits précis, selon le besoin et la profondeur déjà
+    déclarée.
+- levels: Business Reference
+  guidance: Expliquer données décrites, autorité locale, sources et usages documentés. Illustration de données plutôt que
+    procédure artificielle.
+- levels: Behavior
+  guidance: Enrichissement sélectif, là où la différence de mode d’action est difficile à comprendre ; bénéfice et cas comparatif.
+    Pas de reprise systématique des 74 comportements ni de sous-comportements.
+- levels: Relations et scénarios
+  guidance: Les mobiliser pour comprendre la coopération et le parcours ; pas un nouveau niveau hiérarchique ni un audit général
+    de ces objets dans ce lot.
+pilot:
+  node_ids:
+  - supply-chain-orchestration
+  - D01
+  - ba-inventory-position-management
+  - D08
+  - process-ledger
+  - process-mining
+  - D03.j
+  - BHV004
+  reason: Huit fiches couvrant domaine, sous-domaine, Business Area, référence, capacités et comportement ; ambiguïtés de
+    stock, de traces et de promesse.
+  test_proposed: Quatre à six lecteurs mêlant novices métier et novices de la cartographie, avec contrôle sémantique par un
+    expert. Comparer les fiches actuelles au prototype sur des tâches identiques.
+  tasks:
+  - Reformuler le service rendu
+  - Classer un exemple et un contre-exemple
+  - Distinguer un voisin
+  - Trouver une contribution dans un scénario documenté
+  - Comprendre la limite d’un rapprochement logiciel
+  measures:
+  - Confusions restantes
+  - Réussite des tâches
+  - Temps et aide nécessaire
+  - Capacité à retrouver son point de départ
+  not_yet_tested: true
+  sequence:
+  - Valider le contrat minimal et le mode de lecture
+  - Rédiger et tester les huit fiches
+  - Généraliser aux domaines et sous-domaines prioritaires
+  - Compléter les capacités et périmètres contextuels selon les difficultés observées
+  - Enrichir les comportements utiles seulement
+inventory_illustration:
+  status: Illustration FLOW proposée, non ajoutée à la fiche et sans nouveau fait Beaumanoir.
+  node_id: D01
+  explanation: Cette responsabilité tient une référence fiable des produits en stock et des faits qui la font évoluer. Elle
+    aide à distinguer les quantités présentes, les engagements déjà pris et les changements de propriétaire autorisés. La
+    manipulation physique des colis est une autre responsabilité.
+  example:
+    situation: Un prestataire confirme la réception de vingt robes.
+    contribution: Le fait reconnu met à jour la référence de stock et conserve son origine et sa date.
+    result: On peut expliquer la présence de ces vingt unités et retracer une correction ultérieure.
+    boundary: Cette confirmation ne décide pas à elle seule de la propriété ni d’une promesse à un client.
+  market_illustrations:
+  - product: Microsoft Dynamics 365 Supply Chain Management
+    element: Inventory transaction details
+    scope: Consultation d’une transaction, dimensions et références physiques/financières.
+    relationship: Exemple partiel de réalisation, pas équivalence du sous-domaine D01.
+    source: MS-INVENTORY
+  - product: SAP S/4HANA Cloud Public Edition
+    element: Inventory Management, Retail and Fashion and Vertical Business
+    scope: Tenue des stocks et preuve des mouvements ; valorisation et intégrations financières dépassent cette seule illustration.
+    relationship: Exemple partiel, sans adoption du découpage SAP ni preuve d’usage installé.
+    source: SAP-INVENTORY
+external_evidence:
+- id: UX-NNG
+  title: Progressive Disclosure
+  url: https://www.nngroup.com/articles/progressive-disclosure/
+  consulted_on: '2026-10-20'
+  passage: Article du 3 décembre 2006, principe et bénéfices.
+  finding: Distinguer le premier niveau utile des détails spécialisés.
+  limit: Recommandation générale de conception, pas preuve d’efficacité dans Atlas ni promesse chiffrée.
+- id: UX-GOVUK
+  title: Details — GOV.UK Design System
+  url: https://design-system.service.gov.uk/components/details/
+  consulted_on: '2026-10-20'
+  passage: When to use / When not to use / Research on this component.
+  finding: Ne pas cacher une information nécessaire à la majorité des utilisateurs ; les aides repliées peuvent être peu découvertes.
+  limit: Contexte de services publics ; adaptation à éprouver sur une cartographie.
+- id: UX-WAI
+  title: Tooltip Pattern — WAI APG
+  url: https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/
+  consulted_on: '2026-10-20'
+  passage: About This Pattern / Keyboard Interaction.
+  finding: Le tooltip ne reçoit pas le focus ; un contenu comportant des contrôles navigables appelle un autre pattern.
+  limit: Pattern en cours de travail, sans consensus du groupe selon son propre avertissement ; ne pas le présenter comme
+    une norme définitive.
+- id: UX-WCAG
+  title: Understanding SC 1.4.13 — Content on Hover or Focus
+  url: https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html
+  consulted_on: '2026-10-20'
+  passage: 'Critère et explications : dismissible, hoverable, persistent.'
+  finding: Un enrichissement au survol doit conserver ces propriétés ; préférer une lecture explicite prévisible pour un contenu
+    long.
+  limit: Le document Understanding est informatif ; cet audit statique ne certifie pas la conformité d’Atlas.
+- id: MS-INVENTORY
+  title: Inventory transaction details
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-transactions-details
+  consulted_on: '2026-10-20'
+  passage: Last updated 2025-11-11 ; Open the Transaction details page / FastTabs overview.
+  finding: Transactions avec références sources et dimensions ; distinction d’éléments physiques et financiers.
+  limit: Documentation produit évolutive, non preuve d’installation ni de couverture intégrale de D01.
+- id: SAP-INVENTORY
+  title: Inventory Management — Retail and Fashion and Vertical Business
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/64609d0ecac54654b0837cba34555b82/2bdcc4530b29b44ce10000000a174cb4.html?locale=en-US
+  consulted_on: '2026-10-20'
+  passage: Version affichée 2608 ; Use / Integration / Features.
+  finding: Gestion des stocks et document pour chaque mouvement ; articulation avec Warehouse Management et la comptabilité.
+  limit: 'Sections consultées dans l’extrait indexé primaire retourné par la recherche ; ouverture HTML directe sans corps
+    exploitable. La note de page mentionne également 2602 : version de l’environnement client non déduite. Blog SAP complémentaire
+    inaccessible (403), non utilisé comme preuve.'
+implementation_if_adopted:
+- Étendre le contrat fermé de fields, les types du lecteur et les validations sans modifier les publications historiques.
+- Définir les identifiants des seules références pédagogiques choisies ; vérifier leur résolution et la qualification des
+  sources.
+- Conserver définition, périmètre, finalité et glossaire cohérents ; aucun accord historique ne s’étend automatiquement au
+  nouveau bloc.
+- Exporter le contenu avec son snapshot ; aucune synthèse à la volée depuis le backlog pour une publication ancienne.
+- Réutiliser le même bloc dans la fiche et tout aperçu éventuel, avec une aide courte homogène dans carte et liens.
+- Tester mobile, clavier, retour à la carte, liens et absence d’enrichissement courant dans l’historique.
+glossary_check:
+  business: Structure et sens existants consultés à travers le snapshot ; pas de modification de termes requise par une demande
+    d’audit.
+  methodological: Descriptions de types distinctes des fiches concrètes ; aucun nouveau type métier ni niveau proposé.
