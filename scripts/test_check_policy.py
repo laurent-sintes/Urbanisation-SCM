@@ -109,7 +109,7 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['matrix'])
         self.assertTrue(plan(['app/src/components/MapPanel.tsx'])['matrix'])
-        for recipe in ('catalogue-geometry.mjs', 'verify-catalogue-page.mjs', 'verify-flow-map.mjs',
+        for recipe in ('catalogue-geometry.mjs', 'recipe-output.mjs', 'verify-catalogue-page.mjs', 'verify-flow-map.mjs',
                        'verify-map-placement.mjs', 'verify-map-hotspot-matrix.mjs', 'verify-hotspot-depths.mjs'):
             self.assertTrue(plan(['app/' + recipe])['matrix'])
         self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])

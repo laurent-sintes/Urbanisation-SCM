@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { assertMapOverlayCorners, catalogueTextIntegrity, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
+import { writeRecipeJson } from './recipe-output.mjs';
 import { mapRouteForNode } from './src/mapNavigation.ts';
 import { mapDepthLimit } from './src/mapProjection.ts';
 import { adaptPublication, childrenOf } from './src/model.ts';
@@ -137,12 +138,10 @@ const expectedVariants = (item) => [
     : []),
 ];
 if (process.argv.includes('--list-cases')) {
-  console.log(
-    JSON.stringify({
-      version: model.version,
-      cases: selected.flatMap((item) => expectedVariants(item).map((variant) => caseId(item, variant))),
-    }),
-  );
+  await writeRecipeJson({
+    version: model.version,
+    cases: selected.flatMap((item) => expectedVariants(item).map((variant) => caseId(item, variant))),
+  });
   process.exit(0);
 }
 const report = { version: model.version, runId: process.env.ATLAS_QA_RUN_ID, cases: [], errors: [] };
