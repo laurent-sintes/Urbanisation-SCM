@@ -12,11 +12,13 @@ class PedagogyTest(unittest.TestCase):
         cls.model = read('modeles/backlog/model.yaml')
         cls.schema = read('modeles/schemas/urbanism.schema.json')['$defs']['pedagogicalDescription']
 
-    def test_pilot_references_and_contract(self):
+    def test_references_contract_and_rollout_coverage(self):
         self.assertEqual(validate_pedagogy(self.model), [])
-        pilots = [n for n in self.model['nodes'] if 'pedagogical_description' in n['fields']]
-        self.assertEqual(len(pilots), 8)
-        for node in pilots:
+        pilots = {'supply-chain-orchestration', 'D01', 'ba-inventory-position-management', 'D08', 'process-ledger', 'process-mining', 'D03.j', 'BHV004'}
+        scoped = {n['id'] for n in self.model['nodes'] if n['kind'] in ('business_system', 'domain', 'area', 'business_area')}
+        enriched = [n for n in self.model['nodes'] if 'pedagogical_description' in n['fields']]
+        self.assertEqual({n['id'] for n in enriched}, scoped | pilots)
+        for node in enriched:
             self.assertEqual(validate(node['fields']['pedagogical_description'], self.schema), [])
 
     def test_absent_editorial_object_preserves_historical_models(self):

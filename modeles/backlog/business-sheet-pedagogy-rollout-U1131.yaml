@@ -1,0 +1,3654 @@
+id: business-sheet-pedagogy-rollout-U1131
+date: '2026-10-21'
+source_refs:
+- U1130
+- U1131
+status: Appliqué au backlog et contrôlé ; textes nouveaux proposés, publication distincte.
+scope:
+  included_kinds:
+  - area
+  - business_area
+  - business_system
+  - domain
+  total_sheets: 137
+  new_descriptions: 134
+  preserved_pilots:
+  - supply-chain-orchestration
+  - D01
+  - ba-inventory-position-management
+  excluded_levels:
+  - Enterprise Architecture
+  - Capability
+  - Behavior
+  - Business Reference
+approval_scope: U1130/U1131 autorisent la généralisation éditoriale à ces niveaux. Les explications, résultats illustratifs
+  et distinctions rédigés ensuite restent proposés ; aucun accord historique ni réalisation installée n’est étendu.
+reading_contract: Définition courte conservée ; explication, exemple concret et distinction dans la fiche. Tooltips simples,
+  aucun lien Comprendre ajouté. Un périmètre de contexte reste terminal à sa profondeur déclarée.
+editorial_review:
+  authorship: 134 explications et distinctions rédigées individuellement à partir des définitions, périmètres, finalités,
+    exemples et frontières canoniques consultés avec inspect_model.py. Aucun texte générique produit à partir du seul nom.
+  examples: Exemples canoniques réutilisés et complétés par un résultat. Les termes spécialisés des illustrations retenues
+    sont reliés au glossaire ; les formulations anglaises non expliquées sont clarifiées en français. Nouveaux cas fictifs
+    seulement en l’absence d’exemple local pertinent. Contribution explicite de la fiche, sans couverture de scénario artificielle.
+  concrete_example_correction:
+  - node_id: subdomain-value-added-returns
+    reason: L’exemple ancien décrivait le traitement d’un retour ; il est remplacé par un réétiquetage, conforme au périmètre
+      distinct des traitements complémentaires. TER236 ne reprenait pas cet exemple et conserve son sens inchangé.
+  business_invariants: Noms, définitions courtes, finalités, périmètres, parents, ordre, relations, niveaux et capacités inchangés.
+glossary_alignment:
+  result: Sens et frontières des termes miroirs contrôlés. Définitions courtes et périmètres du modèle inchangés ; le glossaire
+    reste cohérent sans modification. Pas de copie du bloc pédagogique dans le glossaire. Les liens de jargon utilisent des
+    entrées dont la définition courte existe.
+  linked_terms:
+  - TER003
+  - TER005
+  - TER009
+  - TER010
+  - TER011
+  - TER012
+  - TER013
+  - TER014
+  - TER016
+  - TER017
+  - TER024
+  - TER027
+  - TER030
+  - TER031
+  - TER075
+  - TER077
+  - TER080
+  - TER083
+  - TER108
+  - TER111
+  - TER117
+  - TER121
+  - TER195
+  - TER259
+  - TER260
+  - TER372
+  - TER373
+  changed_terms: []
+market_review:
+  method: Réutilisation des correspondances primaires déjà documentées sur chaque fiche, avec dates, produits, passages, différences
+    et limites conservés à l’identique. Ajout d’identités stables aux seules comparaisons citées. Pas de nouvelle équivalence
+    ni d’étude éditeur générale pour ce lot à périmètre constant.
+  source_dates: Les dates conservées sont celles des preuves canoniques, sans prétendre avoir reconsulté chaque page à la
+    date du lot.
+  no_qualified_comparison:
+  - ba-service-references
+  - subdomain-sampling-product-validation
+  - subdomain-strategy-objectives
+  - subdomain-audit-assurance
+  gaps: Les lacunes Microsoft Dynamics ou SAP S/4HANA existantes restent explicites ; un produit complémentaire ne remplace
+    pas la famille manquante.
+  sheet_checks:
+  - id: system-design-development
+    kind: business_system
+    reused_example: true
+    market_refs:
+    - comparison_id: market-system-design-development-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+      consulted_on: '2026-09-26'
+    - comparison_id: market-system-design-development-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68
+      consulted_on: '2026-09-26'
+    market_gap_families: []
+  - id: system-business-operations
+    kind: business_system
+    reused_example: true
+    market_refs:
+    - comparison_id: market-system-business-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/overview
+      consulted_on: '2026-09-26'
+    - comparison_id: market-system-business-operations-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68
+      consulted_on: '2026-09-26'
+    market_gap_families: []
+  - id: system-enterprise-management-control
+    kind: business_system
+    reused_example: true
+    market_refs:
+    - comparison_id: market-system-enterprise-management-control-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-overview
+      consulted_on: '2026-09-26'
+    - comparison_id: market-system-enterprise-management-control-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68
+      consulted_on: '2026-09-26'
+    market_gap_families: []
+  - id: domain-sales
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-sales-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-sales-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-sourcing-procurement
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-sourcing-procurement-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-domain-sourcing-procurement-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/understanding-the-capabilities-of-the-procure-to-pay-solution_d9d06458-9eec-4938-9678-d7c6659e2f1e
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: domain-plan
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-plan-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+      consulted_on: '2026-10-16'
+    - comparison_id: market-domain-plan-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+      consulted_on: '2026-10-16'
+    market_gap_families: []
+  - id: business-references
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-business-references-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/data-management
+      consulted_on: '2026-09-23'
+    - comparison_id: market-business-references-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: D04
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-d04-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
+      consulted_on: '2026-09-25'
+    - comparison_id: market-d04-U1131-2
+      source_url: https://learning.sap.com/courses/executing-basic-erp-processes-with-sap-s-4hana/executing-sales-order-management
+      consulted_on: '2026-09-25'
+    market_gap_families: []
+  - id: D06
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-d06-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
+      consulted_on: '2026-09-25'
+    - comparison_id: market-d06-U1131-2
+      source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/integrating-into-warehouse-processes_a60ea8b3-d0d8-4c89-be2f-7a4a912240c4
+      consulted_on: '2026-09-25'
+    market_gap_families: []
+  - id: D03
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-d03-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-runs-results
+      consulted_on: '2026-09-23'
+    - comparison_id: market-d03-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+      consulted_on: '2026-09-25'
+    market_gap_families: []
+  - id: subdomain-policies
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-policies-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-rules
+      consulted_on: '2026-09-23'
+    - comparison_id: market-subdomain-policies-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+      consulted_on: '2026-09-23'
+    market_gap_families: []
+  - id: subdomain-service-orders
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-service-orders-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-overview
+      consulted_on: '2026-09-23'
+    - comparison_id: market-subdomain-service-orders-U1131-2
+      source_url: https://learning.sap.com/courses/identifying-business-processes-in-sap-s4hana-service/working-with-service-order-management-external-service-processing_ca8699f0-3870-43c2-bb6e-4c68bddda055
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: domain-logistics-execution
+    kind: business_system
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-logistics-execution-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-domain-logistics-execution-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: domain-finance
+    kind: domain
+    reused_example: false
+    market_refs:
+    - comparison_id: market-domain-finance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/cost-accounting/terms-cost-accounting
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-finance-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-financial-accounting
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-financial-accounting-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-financial-accounting-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef
+      consulted_on: '2026-09-28'
+    market_gap_families: []
+  - id: ba-inventory-ownership-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-inventory-ownership-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-inventory-ownership-management-U1131-2
+      source_url: https://learning.sap.com/courses/inventory-management-and-physical-inventory-in-sap-s-4hana/performing-the-process-of-vendor-consignment
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-master-plan-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-master-plan-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+      consulted_on: '2026-10-16'
+    - comparison_id: market-ba-master-plan-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+      consulted_on: '2026-10-16'
+    market_gap_families: []
+  - id: ba-order-promising
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-order-promising-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-order-promising-U1131-2
+      source_url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-physical-stock-configuration-optimization
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-physical-stock-configuration-optimization-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-replenishment
+      consulted_on: '2026-10-09'
+    - comparison_id: market-ba-physical-stock-configuration-optimization-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+      consulted_on: '2026-10-09'
+    market_gap_families: []
+  - id: ba-order-lifecycle-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-order-lifecycle-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-order-lifecycle-management-U1131-2
+      source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-reactive-workflow-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-reactive-workflow-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-reactive-workflow-management-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-service-planning
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-service-planning-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-service-planning-U1131-2
+      source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-execution-assurance
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-execution-assurance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-execution-assurance-U1131-2
+      source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-execution-coordination
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-execution-coordination-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-execution-coordination-U1131-2
+      source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-goods-processing-order-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-goods-processing-order-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-goods-processing-order-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-transport-order-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-order-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-transport-order-management-U1131-2
+      source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-financial-service-order-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-financial-service-order-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-financial-service-order-management-U1131-2
+      source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-partner-agreement-references
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-partner-agreement-references-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-partner-agreement-references-U1131-2
+      source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-product-references
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-product-references-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-product-references-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-packaging-references
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-packaging-references-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wave-containerization
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-packaging-references-U1131-2
+      source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-internal-supplies-equipment-references
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-internal-supplies-equipment-references-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-creation
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-internal-supplies-equipment-references-U1131-2
+      source_url: https://learning.sap.com/courses/procurement-process-overview/describing-indirect-materials-procurement-process-in-sap-s-4hana
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-service-references
+    kind: business_area
+    reused_example: false
+    market_refs: []
+    market_gap_families:
+    - microsoft_dynamics
+    - sap_s4hana
+  - id: ba-protection-policies
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-protection-policies-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-protection-policies-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-service-provider-controls
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-service-provider-controls-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-agreements
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-service-provider-controls-U1131-2
+      source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-inventory-disposition
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-inventory-disposition-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/specify-how-to-dispose-of-returned-items
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-inventory-disposition-U1131-2
+      source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: ba-customs-services
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-customs-services-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/localizations/russia/rus-work-with-customs-clearance
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-customs-services-U1131-2
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-06'
+    market_gap_families: []
+  - id: subdomain-process-management
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-process-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+      consulted_on: '2026-10-07'
+    - comparison_id: market-subdomain-process-management-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-process-supervision
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-process-supervision-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-process-supervision-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cb2e9495423848a9a7540c11caa81bcd.html
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-human-work-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-human-work-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-human-work-management-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/4c73eda4ebff43a8a53f60bb552992fd.html
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: ba-process-intelligence
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-process-intelligence-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/customer-service/use/customer-service-analytics-insights-csh
+      consulted_on: '2026-10-07'
+    - comparison_id: market-ba-process-intelligence-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
+      consulted_on: '2026-10-07'
+    market_gap_families: []
+  - id: subdomain-sales-b2c-ecommerce
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-sales-b2c-ecommerce-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+      consulted_on: '2026-10-15'
+    - comparison_id: market-subdomain-sales-b2c-ecommerce-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: subdomain-sales-b2c-store
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-sales-b2c-store-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce
+      consulted_on: '2026-10-15'
+    - comparison_id: market-subdomain-sales-b2c-store-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: subdomain-sales-wholesale
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-sales-wholesale-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/set-up-b2b-site
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-sales-wholesale-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-product-portfolio-collection
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-product-portfolio-collection-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-product-portfolio-collection-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-product-strategy-requirements
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-product-strategy-requirements-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-product-strategy-requirements-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-collection-planning
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-collection-planning-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-collection-planning-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-development-planning
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-development-planning-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-development-planning-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-product-development
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-product-development-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-product-development-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-product-design-specification
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-product-design-specification-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-product-design-specification-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-material-component-development
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-material-component-development-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-material-component-development-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-sampling-product-validation
+    kind: area
+    reused_example: true
+    market_refs: []
+    market_gap_families:
+    - sap_s4hana
+    - microsoft_dynamics
+  - id: domain-product-definition-lifecycle
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-product-definition-lifecycle-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-product-definition-lifecycle-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-product-definition-variants
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-product-definition-variants-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-product-definition-variants-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-product-documentation-classification
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-product-documentation-classification-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-product-documentation-classification-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-product-change-release
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-product-change-release-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-product-change-release-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-enterprise-planning-performance
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-enterprise-planning-performance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-enterprise-planning-performance-U1131-2
+      source_url: https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-strategy-objectives
+    kind: area
+    reused_example: true
+    market_refs: []
+    market_gap_families:
+    - sap_s4hana
+    - microsoft_dynamics
+  - id: subdomain-budgeting-forecasting
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-budgeting-forecasting-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-budgeting-forecasting-U1131-2
+      source_url: https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-performance-analysis
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-performance-analysis-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-performance-analysis-U1131-2
+      source_url: https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-governance-risk-compliance
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-governance-risk-compliance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties
+      consulted_on: '2026-10-12'
+    - comparison_id: market-domain-governance-risk-compliance-U1131-2
+      source_url: https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-policy-compliance
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-policy-compliance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-policy-compliance-U1131-2
+      source_url: https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-risk-internal-control
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-risk-internal-control-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-risk-internal-control-U1131-2
+      source_url: https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-audit-assurance
+    kind: area
+    reused_example: true
+    market_refs: []
+    market_gap_families:
+    - sap_s4hana
+    - microsoft_dynamics
+  - id: subdomain-cost-profitability
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-cost-profitability-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/cost-accounting/terms-cost-accounting
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-cost-profitability-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-credit-collections
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-credit-collections-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-credit-and-collections-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-credit-collections-U1131-2
+      source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-treasury-cash
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-treasury-cash-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/cash-bank-management/cash-flow-forecasting
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-treasury-cash-U1131-2
+      source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: domain-warehousing
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-warehousing-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-domain-warehousing-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-inbound-operations
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-inbound-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-inbound-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-receipt
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-storage-inventory-control
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-storage-inventory-control-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-storage-inventory-control-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-outbound-operations
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-outbound-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-outbound-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-for-shipping
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-value-added-returns
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-value-added-returns-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/production-control/report-boms-as-finished
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-value-added-returns-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-value-added-services
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: domain-transportation
+    kind: domain
+    reused_example: true
+    market_refs:
+    - comparison_id: market-domain-transportation-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-domain-transportation-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-transport-planning-dispatch
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-transport-planning-dispatch-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-transport-planning-dispatch-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-transport-execution-tracking
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-transport-execution-tracking-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-transport-execution-tracking-U1131-2
+      source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/monitoring-the-execution-of-the-freight-documents_dc3c1a53-b3d0-4cfa-aa57-5cc76ee06c74
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-transport-exception
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-transport-exception-U1131-1
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+  - id: subdomain-supplier-management
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-supplier-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-supplier-management-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/executing-supplier-management_d8d0367a-5b7f-4d76-93e6-1bf3e0f874da
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-strategic-sourcing
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-strategic-sourcing-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-strategic-sourcing-U1131-2
+      source_url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-purchase-contract-management
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-purchase-contract-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-purchase-contract-management-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/working-with-sourcing-and-contract-management_ba89fc8e-61ad-4afd-9888-70719769699d
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-operational-procurement
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-operational-procurement-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-operational-procurement-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/describing-operational-procurement_cad9fff9-72c7-4830-befd-f1397dba0c51
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-assortment-catalog-management
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-assortment-catalog-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-assortment-catalog-management-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: ba-retail-customer-relationship-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-retail-customer-relationship-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
+      consulted_on: '2026-10-15'
+    - comparison_id: market-ba-retail-customer-relationship-management-U1131-2
+      source_url: https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: subdomain-retail-network-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-retail-network-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-retail-network-management-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-store-backoffice-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-store-backoffice-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce
+      consulted_on: '2026-10-15'
+    - comparison_id: market-subdomain-store-backoffice-operations-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: subdomain-pricing-promotions-management
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-pricing-promotions-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-pricing-promotions-management-U1131-2
+      source_url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-rebates-incentives-management
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-rebates-incentives-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-rebates-incentives-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: subdomain-commercial-settlement-management
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-commercial-settlement-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+      consulted_on: '2026-10-12'
+    - comparison_id: market-subdomain-commercial-settlement-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+      consulted_on: '2026-10-12'
+    market_gap_families: []
+  - id: ba-order-backlog-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-order-backlog-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+      consulted_on: '2026-09-25'
+    - comparison_id: market-ba-order-backlog-management-U1131-2
+      source_url: https://learning.sap.com/courses/optimizing-advanced-logistics-and-analytics-in-sap-s-4hana-cloud-public-edition/exploring-backorder-processing_fed6ddd5-39be-41ab-a977-e41a1c3715fe
+      consulted_on: '2026-09-19'
+    market_gap_families: []
+  - id: subdomain-retail-commerce
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-retail-commerce-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-retail-commerce-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-wholesale-account-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-wholesale-account-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-wholesale-account-management-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-wholesale-sales
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-wholesale-sales-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/b2b-indirect
+      consulted_on: '2026-10-15'
+    - comparison_id: market-ba-wholesale-sales-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: ba-assortment-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-assortment-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-assortment-management-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-catalog-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-catalog-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-catalog-management-U1131-2
+      source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-pricing-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-pricing-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices
+      consulted_on: '2026-10-15'
+    - comparison_id: market-ba-pricing-management-U1131-2
+      source_url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: ba-promotion-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-promotion-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/price-adjustments-discounts
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-promotion-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/planning-a-retail-promotions-637
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-rebate-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-rebate-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-rebate-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-sales-incentive-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-sales-incentive-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/tasks/set-up-sales-commission-rules
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-sales-incentive-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/defining-common-calculation-types_a7354291-1828-476b-bae1-4e89691abc2e
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-supplier-qualification
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-supplier-qualification-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-supplier-qualification-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/executing-supplier-management_d8d0367a-5b7f-4d76-93e6-1bf3e0f874da
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-supplier-performance-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-supplier-performance-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-supplier-performance-management-U1131-2
+      source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/outlining-supplier-evaluation_d7f0d2f8-dc2b-4b19-a377-2bc5d2c70620
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-sourcing-strategy-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-sourcing-strategy-management-U1131-1
+      source_url: https://learning.sap.com/courses/managing-a-category-profile/introducing-the-category-management-dashboard
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+    - sap_s4hana
+  - id: ba-sourcing-event-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-sourcing-event-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations
+      consulted_on: '2026-10-15'
+    - comparison_id: market-ba-sourcing-event-management-U1131-2
+      source_url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+      consulted_on: '2026-10-15'
+    market_gap_families: []
+  - id: ba-purchase-agreement-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-purchase-agreement-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-purchase-agreement-management-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/working-with-sourcing-and-contract-management_ba89fc8e-61ad-4afd-9888-70719769699d
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-supplier-rebate-incentive-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-supplier-rebate-incentive-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-supplier-rebate-incentive-management-U1131-2
+      source_url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-purchase-requisition-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-purchase-requisition-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-purchase-requisition-management-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/executing-self-service-requisitioning-and-requirements-processing_f01a999e-602a-44cf-b379-34ccd2a3ef87
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-purchasing-execution-coordination
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-purchasing-execution-coordination-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-purchasing-execution-coordination-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/describing-operational-procurement_cad9fff9-72c7-4830-befd-f1397dba0c51
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-supplier-delivery-follow-up
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-supplier-delivery-follow-up-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-supplier-delivery-follow-up-U1131-2
+      source_url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/describing-operational-procurement_cad9fff9-72c7-4830-befd-f1397dba0c51
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-receiving-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-receiving-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-receiving-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-receipt
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-putaway-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-putaway-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-putaway-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-receipt
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-storage-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-storage-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-storage-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-physical-inventory-control
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-physical-inventory-control-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/quality-management-for-warehouses-processes
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-physical-inventory-control-U1131-2
+      source_url: https://learning.sap.com/courses/quality-management-in-sap-s-4hana-ewm/using-quality-management-in-sap-ewm
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-picking-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-picking-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-picking-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-for-shipping
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-packing-shipping-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-packing-shipping-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-packing-shipping-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-for-shipping
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-product-preparation-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-product-preparation-operations-U1131-1
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-value-added-services
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+  - id: ba-kitting-operations
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-kitting-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/production-control/report-boms-as-finished
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-kitting-operations-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-value-added-services
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-returns-operations
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-returns-operations-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-returns-operations-U1131-2
+      source_url: https://learning.sap.com/courses/quality-management-in-sap-s-4hana-ewm/using-quality-management-in-sap-ewm
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-returns-receiving-inspection
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-returns-receiving-inspection-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-returns-receiving-inspection-U1131-2
+      source_url: https://learning.sap.com/courses/quality-management-in-sap-s-4hana-ewm/using-quality-management-in-sap-ewm
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-returns-disposition-execution
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-returns-disposition-execution-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-returns-disposition-execution-U1131-2
+      source_url: https://learning.sap.com/courses/quality-management-in-sap-s-4hana-ewm/using-quality-management-in-sap-ewm
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-warehouse-operations-control
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-warehouse-operations-control-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-warehouse-operations-control-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-warehouse-resource-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-warehouse-resource-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-warehouse-resource-management-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-labor-management
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-warehouse-work-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-warehouse-work-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-warehouse-work-management-U1131-2
+      source_url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-transport-planning
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-planning-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-transport-planning-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-carrier-capacity-assignment
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-carrier-capacity-assignment-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-carrier-capacity-assignment-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-transport-dispatch
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-dispatch-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-transport-dispatch-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-transport-execution
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-execution-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-transport-execution-U1131-2
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-transport-event-reporting
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-event-reporting-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-transport-event-reporting-U1131-2
+      source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/monitoring-the-execution-of-the-freight-documents_dc3c1a53-b3d0-4cfa-aa57-5cc76ee06c74
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-transport-incident-assessment
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-incident-assessment-U1131-1
+      source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/monitoring-the-execution-of-the-freight-documents_dc3c1a53-b3d0-4cfa-aa57-5cc76ee06c74
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+  - id: ba-transport-recovery-coordination
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-transport-recovery-coordination-U1131-1
+      source_url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+  - id: domain-customs-management
+    kind: domain
+    reused_example: false
+    market_refs:
+    - comparison_id: market-domain-customs-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+      consulted_on: '2026-10-13'
+    - comparison_id: market-domain-customs-management-U1131-2
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: subdomain-customs-documentation
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-customs-documentation-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-customs-documentation-U1131-2
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-customs-dossier-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-customs-dossier-management-U1131-1
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-13'
+    market_gap_families:
+    - microsoft_dynamics
+  - id: subdomain-customs-clearance
+    kind: area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-subdomain-customs-clearance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+      consulted_on: '2026-10-13'
+    - comparison_id: market-subdomain-customs-clearance-U1131-2
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-customs-procedure-management
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-customs-procedure-management-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+      consulted_on: '2026-10-13'
+    - comparison_id: market-ba-customs-procedure-management-U1131-2
+      source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+  - id: ba-demand-supply-plan-preparation
+    kind: business_area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-ba-demand-supply-plan-preparation-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+      consulted_on: '2026-10-16'
+    - comparison_id: market-ba-demand-supply-plan-preparation-U1131-2
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/d853922bdd584e8e83027e5a0b8122f2/856ebd534f22b44ce10000000a174cb4.html?ai=true
+      consulted_on: '2026-10-16'
+    market_gap_families: []
+  - id: subdomain-demand-supply-forecasting
+    kind: area
+    reused_example: true
+    market_refs:
+    - comparison_id: market-subdomain-demand-supply-forecasting-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+      consulted_on: '2026-10-16'
+    - comparison_id: market-subdomain-demand-supply-forecasting-U1131-2
+      source_url: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/planning-fashion-with-sap-ibp-with-characteristics-based-planning
+      consulted_on: '2026-10-16'
+    market_gap_families: []
+  - id: ba-reference-maintenance
+    kind: business_area
+    reused_example: false
+    market_refs:
+    - comparison_id: market-ba-reference-maintenance-U1131-1
+      source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+      consulted_on: '2026-10-06'
+    - comparison_id: market-ba-reference-maintenance-U1131-2
+      source_url: https://learning.sap.com/courses/commerce-and-s-4hana-integration-foundations/examining-the-functions-of-sap-s-4hana-cloud-apis-for-the-integration_dd7cfbbd-6ff4-450a-9d2d-4cb803aee269
+      consulted_on: '2026-10-13'
+    market_gap_families: []
+reader_testing:
+  state: Recette technique réussie sur les 142 fiches enrichies, dont les 137 du périmètre demandé ; essai avec des débutants
+    non réalisé.
+  human_protocol: Reformuler le service rendu, distinguer un voisin, classer un exemple, retrouver un scénario documenté et
+    comprendre une limite de comparaison logicielle.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1130
+  - U1131
+  summary: 'Descriptions pédagogiques des quatre niveaux de Business System à Business Area : 134 compléments, trois pilotes
+    préservés, sans changement des frontières métier.'
+  required_nodes:
+  - id: system-design-development
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+    field_sha256:
+      definition: 898f6b391e6e97de9fd18f7015bbf439ff97783f439ac6cc24cdeee9e0a40ab9
+      finality: 6005cbcaf7e7423ffbc226ee192b7a6e57aef1e3fc1f29bd7769e632c684e1ed
+      scope: 35b43caa0d8351d0bd9155ecca28e35f8e92dd3bd877bea1ee6bb006ff50eb71
+      pedagogical_description: ae384c41529168104dd14dedabb53516d36021bd47495469e45b4f7cd74e6a50
+      examples: 87e1c4c6f69f0dd4b95ce758ee1f8b97e5cb742550bf9c142fa0755de8468952
+      market_comparisons: 313683a8655627b6bfdc6986678300063313273166ba0edcd4d5913d2cbb3511
+  - id: system-business-operations
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+    field_sha256:
+      definition: ca334981b944fb6e0e2b1d0ae65cc905b728d5aa9f723b5edfc77c9bf598b837
+      finality: 920ea00237ef09ca2edefcd31b7db2600eec8166bd00a62e1100eb7c088f0545
+      scope: cd2d62bc511003a7b471cef75b7cbf762da3d93b850b267dd8a24c0eb27dfa36
+      pedagogical_description: 675f22c1cfdbbb0af70ee20879cfea4ccd11c0108f2513f0747a752355c89547
+      examples: 6f6b8b0ecdb35b5d09b7953355a521be52b2c072c44dd5eaf6da76511e3eb50a
+      market_comparisons: c323fe082077ecda517371ed12b632da95fc428abf915fef6e65678d150badf9
+  - id: system-enterprise-management-control
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+    field_sha256:
+      definition: 0b865056e4e218cd2747e8fcf78c31ba046b85af0d7ea4497814eafee9c5561b
+      finality: 0c969882c67c486bca128133ca5031c924437cddc307727419d9c05e4535d5e8
+      scope: 7d2a5e2dd65a9828317c41413686c5de04e9abec2d4ada3f7303fd32f8f8285e
+      pedagogical_description: 54f7dcbd249fec17873e8b4df015f06c55547c78b733b099f84965279137a35c
+      examples: bd7c715144f20eb08addd39be4a37db6de51f7041a10b250eeaf195d869dff97
+      market_comparisons: a4eab98bca1ec3aa0647cd67e80ef477c4cbbcd298f67b898bdc0dfb26ad17ed
+  - id: domain-sales
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    field_sha256:
+      definition: 89fc24a4c299f4d2196eea504b19a14016d3f93a9e9154abd516ef74382268ca
+      finality: 057e1ea6ef6af5158158e966674fdd3528814ed4793bff6287498bd4f5ce6a2e
+      scope: 3d511457c76bb1e23b7bd108a7055eee8d43bc35f795e62a58e3b220cc75d260
+      pedagogical_description: 1808dbf84d19c3d506898fd70717d5b70303a15afebe530f8751c0dd7df26646
+      examples: f64f49efc98edaf5117fd102c2cfaa471fa8ddf88e44ec31dcdcf84c1350aee1
+      market_comparisons: 09239a9ac4393860d3f6dfa79362133cfdb4a260e6228834d57959fac74f2ad8
+  - id: domain-sourcing-procurement
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    field_sha256:
+      definition: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      finality: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      scope: e1c54a6a149198a9aeb911a3f7cc0f1f9f2d560b6e220c322b054023940a42b6
+      pedagogical_description: 9bc662967ec7fab65dfc7a9202c379d2687853f901129d97cd6cee36948d2c44
+      examples: 6e45607d5f06c5d4e580b71a13758cfd8e3115ef8ade9f7326ff26b96e3a8b6d
+      market_comparisons: 177da8b47ecd0879298e747bbe942ca7c8def73e0c8550b4ee577c6d09316e27
+  - id: domain-plan
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 2b3155b7b43168eba13762e03147834789143ffd562c44282a7cf9a8c8f362d6
+      finality: 6ea4452734a144dd6ba14b83dba9937089197bd753489744f39c2a79710f0c43
+      scope: 6a56b1f1228d4ac6b33439d3879ff4da1c6d5655408a96f17cfb2839662fb3c7
+      pedagogical_description: a9dc0fa6284bd61ef1debe5328d2bf3bc450036a7072fd5434ccf8f83e76cb37
+      examples: e0831ccecca6c78826845803c92476aeb2be9da6dfdf179379fb631d9f01b585
+      market_comparisons: 5ae433d172cafbac35fd02612f234f57a58c4c7af80f4eb17909fe1667b63c68
+  - id: business-references
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
+      finality: abb3a5cf11d05aec01400c0b73fc0e570aa89a3d080d503fcca473b795a270c7
+      scope: edcf99fa84d4323b1806df06f4819556042971b4420072b66cdb95fdff09e1bc
+      pedagogical_description: ca6e624b908989b522b31aed911ea1e2300b8a0fbfb9cc616954ca5e5d53b7e7
+      examples: 1aeb09162795c715bc338e4fee5ef97af8a7436daab261e287efa44b291421de
+      market_comparisons: 8cb6bc89854d8be184ffaa3c92810c26008cd6972fedec322ec08be17381a801
+  - id: D04
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
+      finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
+      scope: dff5e20324e1f6c543243ba92c9b899ec83c892c9df0539223ea9029a87a0b64
+      pedagogical_description: 0482745d1523e48e03898a07792a880dffcb7b1297e2455f303f1abbff4511d5
+      examples: a4ad1b0dea01c59059bbedeb0e0b4d45e7ddcd71abc2c54587ec90d33068d836
+      market_comparisons: 5fd8a242760d7342b6cfc9733bb761f3c0aa12c36a65b65c82b20bb36167a2f5
+  - id: D06
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 3c9658c8472b970c03b27846a0deeaeb45460590836c3c22dec276e9287d0586
+      finality: 0cda94f195c2cfd049e272e8c02306b60c79690f6fb3af285c194eaf279713d7
+      scope: 4eb05376def892fe3ebb9d88c5728f5997218cf010673d2b11868d058f56d3e9
+      pedagogical_description: ba5190328757ffb258f22813f522bc8ec0e2a9858cd87d9c630de23127fb83f3
+      examples: 251c985843271c8ca638a6bd40a9b51c9bf7a4d89ef37447d39947e7f0c225ce
+      market_comparisons: 0a33da5ecf4e3c44f25dcaaa41980770eef0134915d15566d439d258fe8994c7
+  - id: D03
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 3254f23eab9e229e9fce5a0791e73dbd31623da55029f2d57191eacb491faa4a
+      finality: 2f18b7b01645ce8a403d732757b891744c1595e4495b01faf5d11d996c0049ac
+      scope: 5a493d2647b0372f30daad308170ecf29d99b8afceb13f96591060e32c87e234
+      pedagogical_description: 5ef2c43e0dd7b136c67f180f3124ba76f3cde807aa8e956fe50ce0e5f336d43b
+      examples: dde75e47254288b9a408b756e8dacd6f4ac2fff0c051c81f2b27c95a1f1dc33f
+      market_comparisons: db56c80b8176c237a8d54e2fe391cd424bbaac906d3380086b0500b6e90786e0
+  - id: subdomain-policies
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 8081251ed804875cf0169f77fa8f191bf099b2e648488af9956f33d21af94b0a
+      finality: cf8e84f78bb0a71b6469c607f997ced043f85b90d4e059322169bb382b24ef76
+      scope: 1297a75575029ecde7bc8af3fdc10233c0a1fabef3022aef9a0439b3ae481697
+      pedagogical_description: f16757026b3214efce83eb0fa3367c88f7f8a5a618ec03378ff59bc8bd98bd1a
+      examples: ee777a5ce695a7804072b130e586047afd2f6f5b700c1ae45d027a743bd644ea
+      market_comparisons: 77296a8c2d076a93741ea1f09eb220a1099f42a7dd085c3eee8407368f2d1ece
+  - id: subdomain-service-orders
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: 5cf740ce68e7d0de214a5435fc207e6bc545df22fa07485f315bc31b7e4eb62d
+      finality: 3a15bec4735773c85adcde74aa2c8520a0424258b375ce1f4afe2bc27bd70f1c
+      scope: 23cf4085d975f87f837b78f712a1677f15bd0055841fc9ff9f73ac86af2b7eec
+      pedagogical_description: 391077760b04c0698b92c3703d9e26202513f5511c5249c4797f38f43fbe035e
+      examples: 5a989ef0f358e58fc194919c5a028e2622cb46515f0235348ffdb828ded95760
+      market_comparisons: bd7aa815361e994b7d7249aea727345e3eed3267364f8a9aa09ca14bcc08adb5
+  - id: domain-logistics-execution
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+    field_sha256:
+      definition: 0982588fe036183cb55afa50c19173b23fcb918ce2e267127dd555665a25a71a
+      finality: 0982588fe036183cb55afa50c19173b23fcb918ce2e267127dd555665a25a71a
+      scope: 07a561333cf65dbefdaac9c89f282ab437abfdc84c04f24826b9ebf628121ed0
+      pedagogical_description: 466f417dffb537d04894a311291aca1374416d90884c393809bf700e14461578
+      examples: 2f3017e62f3d63faba2d2cc94fb13b81015ad1e6a11cef3b756074489f4da965
+      market_comparisons: 9c08d8325572ad6daf2b3fe004406c361a8dfce94906b38739c285852e094582
+  - id: domain-finance
+    kind: domain
+    parent: system-enterprise-management-control
+    parent_type: presents
+    field_sha256:
+      definition: bb5d1771c72ea5a29c3f3375806146fbf702bca963794717b8eaa10c3eabe1e7
+      finality: 2f657a9a9050a4ab8e7ca5fbec6418407e74f78309a76da70bd0de3cb5e56a7f
+      scope: 46df243c52187189d79b374dc3445bdc48ed9e44eaeaaf2f17910d0ba2436085
+      pedagogical_description: f6812af3b765c02b5b49f88ec1afce0156b6f5e829afb73a63a8322c0eb83f1c
+      examples: c228c786e0bf96589832e6c6af5d7bfa553949f71ed41a77bcef18c0c4087853
+      market_comparisons: 7a13c6ed2ab829a5a742efe5d11ae4ba1ff039d16de41f0537c44bb676ed4b67
+  - id: subdomain-financial-accounting
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      definition: 2b8d0d0de9528434468d422882422043c2aafa4fad61a07aa15c0a467f48719c
+      finality: 2b8d0d0de9528434468d422882422043c2aafa4fad61a07aa15c0a467f48719c
+      scope: 413479bb7da30a65bf641b7585782a74d3ed2e782290a3fea522e8221f2b0c6c
+      pedagogical_description: abb9ca8dceeee21be4241acaa6a34190798d438429931dfa5d9467dfb0f2ead1
+      examples: 23af3e35a2f3d1426b1446470ae5d397c1068f17a8681969a4cc80b2191beac3
+      market_comparisons: a6dbea110477bb778abed7df1bc603ad0317b104b6d1009c4f7f848690c97d54
+  - id: ba-inventory-ownership-management
+    kind: business_area
+    parent: D01
+    parent_type: contains
+    field_sha256:
+      definition: 62f20a136c231a30e95c43a3bf25af44866518e9913afade61a8f4afd1595be8
+      finality: 20a78fe80342fbedf375a9def90f07867e486d2ecab5ffb73566870e6826e611
+      scope: 57336228160a6a93202a60dbf530fd6ff6989858d3264cdcc0d7b3b53c1195da
+      pedagogical_description: 66e4b3ed3845c65b7ec0f71fd56cf6cf78c5d030763635090f2c8b4467763b1f
+      examples: 7837498a0701bae749402bde37b47bda4eacb68ac3a4dc5d0be1eea028b4a0e1
+      market_comparisons: 3cadf324673b2e35ff6e5e8704053625197e0cdd7d342bf9ab3e5472ac7a8c7c
+  - id: ba-master-plan-management
+    kind: business_area
+    parent: domain-plan
+    parent_type: contains
+    field_sha256:
+      definition: b62c26449afb767bb435d69d6fb69d035159c8337bccb2c2620f203c2a18d735
+      finality: 123dcf4d915b0662d786396352e6d29608ffca2659b4a5ce0ce9478b956c7a2d
+      scope: 2a1fe365e3d437ece59fe30c635ab2b5c03b3b14868e794374b95e9f37627c1b
+      pedagogical_description: d59142831d05f43e87819262d4a1743ba70f52c54c62d86a49a9dd948d4d4832
+      examples: db98cb525e319d9a76029f3af91ecb3d1c471ab6ced24ed5a61b65f8870d8ae2
+      market_comparisons: 41fce64f2d15f5e3575225ed61a37a807e24337d13da3a6666f9b3fd182607fe
+  - id: ba-order-promising
+    kind: business_area
+    parent: D03
+    parent_type: contains
+    field_sha256:
+      definition: e49839d1183d6013b0c9b039f7828fb633a1fbccf818965fc708a4e93011360d
+      finality: 998e42e154c4c73d49271c431093d553314cfc6e3af23b7c335c4c2fc411679f
+      scope: 9412ab3ec557e15deb90b523977a3a4e16738f3f86be7f66912399b274a703cf
+      pedagogical_description: 9ccad4d679f4da57de45d052e599330035ee5f290ff33ea2232eca72e013e557
+      examples: 199817bcfd62a6d6a4d27a5c0d9d45a5cd8eb81e83e0f430b2c54bac598d38d8
+      market_comparisons: 82997bf6f26f9713a83e8d47ad51ab27d1a7de6b6cf1d2329c7771a1608451bc
+  - id: ba-physical-stock-configuration-optimization
+    kind: business_area
+    parent: domain-plan
+    parent_type: contains
+    field_sha256:
+      definition: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+      finality: 0aa2f3382e64b4a11df75c491220c4234e86afddf7e38cbd562b3dbd96a88eaa
+      scope: 4ef1f1995654a9b97102797654deff0ed0d71bd0bdd394cd2d167eacd26f520b
+      pedagogical_description: f2aaf38141af2e1b9b5f7c38ba8df55812612087a6b003866526644929ac10c4
+      examples: ae6a725143eac53c84e01a6a24288da9f6df79c147aa316c33120380c843df1c
+      market_comparisons: 18988dc35115da25b26c5b571ea142d535c7c350d35cea95bfd6118ee22f6882
+  - id: ba-order-lifecycle-management
+    kind: business_area
+    parent: D04
+    parent_type: contains
+    field_sha256:
+      definition: e45be25d98e2dab3d53927756ca8470f4901c1df61f852d732c7e98bebb9d048
+      finality: 3ee980e2c9de6389488ed11ad3244c7547083cae64238075ab79868fa21703a4
+      scope: 082ff574a7fdcc5979fa4402a7f680858d3aebd68517932bfaf639fa4b9cb70d
+      pedagogical_description: bc6c7006177a8ae1ee838e6b27d40812b36bf4c0c2eb5f533760e121bdd40e71
+      examples: b75ccdd2336f1bc5434c31a15950b0a61d2665538f3de2da550a13ec81dbdb4d
+      market_comparisons: c40d008df4e4e779834cc098a7d1dde8690561436fcc910ef02b589473952417
+  - id: ba-reactive-workflow-management
+    kind: business_area
+    parent: subdomain-process-management
+    parent_type: contains
+    field_sha256:
+      definition: c5ef48fc1bebc1b691dacfbfc82d6f45ee4d6b79eb1cb71f6f2a399058d60ad2
+      finality: a223df1935094baf8cd5555df1ab0bb84e1bf77bf181d919137e0a957ed3bbbb
+      scope: 7fd9024079431ec742909f3f4627859bb1fd87ffd235eef251fab8132df00cbe
+      pedagogical_description: 65f50d615b77e1087daa870daf6879b441030b0bc0fa2ae56031ba7b3346237d
+      examples: e7e9d112dcd0072122c13037b3100f3cbce3a058017dbbeb738ee230437543d1
+      market_comparisons: cc1797df261e218f57458ab3c1626db8f38bea2ba0df00dcec39c0e938b9198d
+  - id: ba-service-planning
+    kind: business_area
+    parent: D06
+    parent_type: contains
+    field_sha256:
+      definition: 63bc5e6d079de1213861c966948eb5ef9983ff9b658f58fade50d3bb8a87d307
+      finality: 652d81ed80f68d8e82be4f9529f7b72adabb98e10a216d9c4174522f44f1910a
+      scope: af7bd1828f660a5e8b8466d0a54f399c840baf4b5687cc19b18b0187676f1e08
+      pedagogical_description: 0bc52f6c7dbd091d2d268f39b4670a372ba5ea870ff8166a9a74c9d90a8fcd3d
+      examples: 732557f95fd692f18bee9d5c457f6f831eb3e7345713c23d0ab1d472b3b02411
+      market_comparisons: ce71cb7390f5a3023695c39c40b6bcbf5c453e102eb8cba001642358f00a308c
+  - id: ba-execution-assurance
+    kind: business_area
+    parent: D06
+    parent_type: contains
+    field_sha256:
+      definition: 242da5846db4dccb18ed60ec6e5f56265eaadb310bd08433006b3a2e2914042c
+      finality: e4b684bd3307fa23ed19845ad070a96dbcd63f77a74fbc6d08bcc0e9e94f9292
+      scope: 76731bad8e70259f4e913dc72932379e0358938b53c8f8e779b68084982bb8aa
+      pedagogical_description: 60e694b90600a468b3585e71d2fde1b8dd7c9f41530aabe5ee050821c76c672a
+      examples: 192b8382e51e9bee772017ae4c2a062a53f584fa33652e133fa066aa425d8d25
+      market_comparisons: 13b985e521822440525a0e6be9680eb05522903deb2f9b9eb5dcd3c5f64c6fc2
+  - id: ba-execution-coordination
+    kind: business_area
+    parent: D06
+    parent_type: contains
+    field_sha256:
+      definition: 336fa080f8861d534f557781f25203b24a4f84cb3809ea332b6c192daf5d47bf
+      finality: d0e514ffc2bdc406e4ede00ac61bd5892bf0fa460eae2c040a00748cb08e1291
+      scope: 0841a7903fed6def3acc7e818e2a83322a08f0e96f3f7c05ee81a88baaf1165e
+      pedagogical_description: b9d2160a1a3834bd3c3486689cf19ebca498c03069ab3e350ed4689712ae8d70
+      examples: 5d5a59c55b11446f13dafb3aa68256ea047f971660bbaf3364b0193e69e586a2
+      market_comparisons: 813a7f6b2c908d89f0c2ab7609c5d72e04c31ea73202cd17c256ce85f967ac27
+  - id: ba-goods-processing-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    parent_type: contains
+    field_sha256:
+      definition: 4528a75928e36d99133ce64a420e469cf22a20183c2531cd6ca1a47c22e37ed4
+      finality: 05be29e7037f46443bc8d63d75c966fecea6b603b524868857eae5363a6ab6de
+      scope: 4b4fa1f8cae71963177fb798659b3566010377b6836a1c00e98dd835c0f57444
+      pedagogical_description: e70a1c68eef750908f16ab176674a16991c6d1acbd893280b1511b65828750ee
+      examples: eb51a1b1cf0a29bf4a816f058c0afa0ec6267880cab661fc710dfb8e0b4c0c4a
+      market_comparisons: bd129ce2e2f4a95aa8cae214123507320a4e2ed45239872eb6610173366365f4
+  - id: ba-transport-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    parent_type: contains
+    field_sha256:
+      definition: e89a397961d751cbd214632f475d929c0bc1254abaa2a408fa4080500e771977
+      finality: a145a073e60d6b4d54620d1e42435ea9415c5f54c8f6651a883df7b4213af807
+      scope: f7fddcb8906c2a38ff15466e812c0883e1a52c2adbee3b0fbc361eef7453b43f
+      pedagogical_description: 6fbfe58daa718ccc44a70cbbd8dd3e65016b6e19cb29b7aea07beb4c07c12e9f
+      examples: 83de9e452137cf1417e1633155d1ce399e149397d859488ab2d045033fe1960d
+      market_comparisons: fdece603173fc8d0c3c236330f8a9cdaaf426240bf3e8c83add9f04826001e01
+  - id: ba-financial-service-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    parent_type: contains
+    field_sha256:
+      definition: 8913be3a264b6e78e1d97b946ef3db3548aba2a7189cdebae11c1e5b4bf5d6ca
+      finality: 84c2bda3d50f297781095e25ec3c97ce662c805fb495a4251e31441c3e875c4c
+      scope: 27ac20c0e754fb7dc317a65d56465931f0f65c9a38c14ed2f2e73ca7f9de1df5
+      pedagogical_description: 8b9cdee762c737f0c1d792a8fc2946dbe68a117f748c927924c938b14aa97efe
+      examples: e433b70563378e667fab36e7929daa5d4a9c5b6fe65ee133e53cee23726ea85a
+      market_comparisons: 7394daa5575db0087accd33156cc1e345f67436f96f0cac607968606d1c26232
+  - id: ba-partner-agreement-references
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: 2be6e6506061040c26bb8c092ddd06bbc88bfea1dc6941ba55fcf9a3c79ac7b0
+      finality: 2b63cce0cb87a0906a34bef3c4bcb26850511abf846ed36ef0c0b129b96f0c8a
+      scope: 4209e1b7b90eab29e8f88357f162c32d19a38126c8e4b52249e0de5e33660b73
+      pedagogical_description: 66fe53b01ffabb44f05ed180e35d75e977505cbfc1757bb0ca329c6c11a106ec
+      examples: ee67e06ee617af2632f3b3b5acbb8fc9880203319af96e1edddc9f91d4aa147e
+      market_comparisons: b1d41f95fb0c33d157aa45bcf06f056e5914e2653784d501cd5c16048b240416
+  - id: ba-product-references
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: fa0053a0b8333fcbfa1af2b7bfd31532c6648f6d570cdce4718e20da8c88e34a
+      finality: 4083cc564de57d5d83168625bf927de8ee2d459aee869f33d5762ed5cf53baea
+      scope: 216f1833857b4e9eee9c487d14a4e36ee43807a76deb06edb543c912e4c2f489
+      pedagogical_description: 72f20797a333f814ca5a5a6a623b43c7691621f1c7166690a87c0070fa9266b0
+      examples: 9b96e46ca0ae84a111b9dac56e5f80fc21699c58754710a94f5f154edd75af04
+      market_comparisons: 718dcb062e3c851a5f4888f170e3356516eab07ff7ed6c1e1ef32651b72a7f1d
+  - id: ba-packaging-references
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      finality: ad21c53b7f4d98b78d04a90d47eca2d846a9971823875bcda93dc2722c8872f8
+      scope: 83d6fc6fbf9bfbbfe2fc2dd69d358126af8b50b023cc1aec44ba043e87d7e1c1
+      pedagogical_description: 916945b113e48d10fcb6e869b94c4761cc58d4e9a756183fcda46c1a324e14ac
+      examples: 822318ad63acc75a4926aaaf88907270b8c156bb133787ddf5ad0dc736a5f570
+      market_comparisons: 25c3351b93b7887d2ebdcd527703ae096d752c9dba81dab4e927251301da66c8
+  - id: ba-internal-supplies-equipment-references
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: 7aaf400997af15df50bc11a519c87594f73949ae7986b24d18a8ad2db83c2c69
+      finality: 5a825f5542d0a356597b8ecb5a49e9aee37c57cc50d623cda2172f43036b0fc5
+      scope: d8d1894bbea18bdf215ba4f2509f3e08b2f9a3224cbd4bc1f16bbd327c74dd7e
+      pedagogical_description: 017757503d7d380872625e70abbc82508bd72583098ef57f0730a21eb7cfed40
+      examples: 1624c69d98baa902a14a91256949b9c01c98b2375109cc92c81009f686b54a63
+      market_comparisons: f1a78f9c816900e7b0135841c194e415c89c009c2accb7a9777e467614be83ad
+  - id: ba-service-references
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: 58564e238db4c6593e904be2107f0c08d34c4e5722f9a4e98e3e15c96ab0bcb1
+      finality: 351b34552f7db6f0f314cd7a61c557c2edb3a96c846944a671bd84a44d44898d
+      scope: e6238f375281cb3d25dccebfbfcc3b0e9b707ee0f1ac23fa92f1f1b70dffc742
+      pedagogical_description: 0b19b9c5ad727475e8e5bd1ea5585271531f14d2451387ea648e6ffc6c19ce6a
+      examples: 25c44091a8e9cab0547d63ab186d30b4a1456781c25be43889c08326a8c855be
+  - id: ba-protection-policies
+    kind: business_area
+    parent: subdomain-policies
+    parent_type: contains
+    field_sha256:
+      definition: 2d01667149163b4de9317c166220fae23205e001c035a9e57b7fdb3f787a1ac7
+      finality: 033b1152ec099159d99618837b43b485599b8e78712630812724818987a29098
+      scope: 0edef6cc81de6ad0bea7a9c5bbbd9f6c0872de4bd9defd7347fb6ff1e838c7c2
+      pedagogical_description: d180fed381d0148fcb746ab1ad033a54117f09f9edad373528be6293a7eab18b
+      examples: 38671e2844dbc3a0c07ed8fcf2a9f8b114bb6d5f09b5af0416f96c6f2ba7712e
+      market_comparisons: 1590ff45d9feb8a17831b1fccfda880f03a39e765366b0669cd110f78728073c
+  - id: ba-service-provider-controls
+    kind: business_area
+    parent: subdomain-policies
+    parent_type: contains
+    field_sha256:
+      definition: ee3dd5dd9c3af1ae5f7c1f8c5de4fef170518f7252d2761a7c5c3260cbd966e0
+      finality: 07c1e59946a1f261561ba87ae5729862b33c34b89d7f2e7977ab01782d61007d
+      scope: a5a65b7281a3ef07580af04409ab393dd25e6fea6e12347f7dc94868c0927a95
+      pedagogical_description: 6c54b666f5a28bacabcbfd6cee91963c43183c0edb3746ad9359a2a0b319e683
+      examples: 12dfd9d94e5629103386ae76ce56d5346bb3b3b87823fc03b08eb4da0c04fb45
+      market_comparisons: c62fc37b00efa56b4c76b928859fbc00e262db4e9a91cf1106b9d57fc919fcf8
+  - id: ba-inventory-disposition
+    kind: business_area
+    parent: D06
+    parent_type: contains
+    field_sha256:
+      definition: fa7472453b92c62dad964904ed46eac2f474042a7263a7e6dca492a709925028
+      finality: 9eee3bb427fa31d3077bc498fc30bc63bfdc781d6b5439763f7ad234b82b0708
+      scope: 4e7bf2967f79bbdbf829104ef7938a35a50a80fbce2e208ea6b508e1fd2069bf
+      pedagogical_description: b670a70c4981a69c62d7d7dafee482566670b9ac1d393eef26683af5c5a50d28
+      examples: 0b67f3055c5515417b93498ece8535dd4dfbb356904a12ec76d4c8d91bb70123
+      market_comparisons: 5214c8cd5150ecb91ee645d54a1ff769fc50d7c9a3ce2585356ee5d4d4620327
+  - id: ba-customs-services
+    kind: business_area
+    parent: subdomain-service-orders
+    parent_type: contains
+    field_sha256:
+      definition: d01430f4a75070b808c7aaf33aa1de05fc4d758d121f3dabf7677d227e7ea188
+      finality: ccbc1e0d9fdcf9539303dfeeb12d9eac8e4e335c48a04867ae69734f010dd25c
+      scope: 0b18b1d3d6118d36171efcb7899628e998c32b04670c58a1f9082b402d69c3a6
+      pedagogical_description: 1b9e4daac900f0f28313f77e153c8c9ce679abac7fe49d61e367baec2adf46b6
+      examples: 7f0f4ebc6d90787aeb863a9ae8b688c203abdd59402e9f8712af4ea9c4cac46e
+      market_comparisons: c1f48b4e9b9e18f204ebbd5271973d527f20c0dbd0b6ec1b56ded75e45dbefae
+  - id: subdomain-process-management
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      definition: f0c864b767be45f7b8ff5299be133db3201aa230136a967bb7eb4390d1a7c1e7
+      finality: 08153e093738a139bd7bffda1292f2831d9cc08afd8fb1348ae493945504e15b
+      scope: 79c45d6fa095ce7ceaf1441568c0363bf19ecb68a8499acb540d6b0902e45624
+      pedagogical_description: 4be0ee3d98652e292888356ed2cc1b085bee6ae99f301afacb6e1d46f5cabf46
+      examples: 3b2f8411cbc891763b9aa1c10f70a8b33bf56bba419a32ebfa255435eed560c9
+      market_comparisons: f16422ae79e8a0bf0ca24d902ccab3ef701f9eb34a7f50fab2906d3a9b8cf1d3
+  - id: ba-process-supervision
+    kind: business_area
+    parent: subdomain-process-management
+    parent_type: contains
+    field_sha256:
+      definition: f947e1ab43da18fd1a0934fcdc8e060394ab754486f741cfa570c4984579a1e2
+      finality: 1c1194e802c9c8f28ff73e50e39bdbb7413ec2d0753db3bc9411bc4b4f7bcdc2
+      scope: d304106e95702a72d5e879495960f0e4dab4401518c3ed1e756393ec0a8198a7
+      pedagogical_description: 343412b8eb6468959649be2ff06c50fda7e607507fa4e935b5b67958171b22bc
+      examples: 5b5e58b6005b6f812b04e77a8daec4d6cd3312789de8488e92e0a0526a5db2f7
+      market_comparisons: 01164fea27ddd088bde17ec1b9ca050de36f048b94eb1b5e17effb9cf0c217fd
+  - id: ba-human-work-management
+    kind: business_area
+    parent: subdomain-process-management
+    parent_type: contains
+    field_sha256:
+      definition: 9a0cd24f89befbe44adcbbfa9e5e687a19dfce178f221dbdc395dbc80c8e9e24
+      finality: c26ecd6b53cb4fffefc6a268212e3603f2ea8db17599cf65cc7022584d4bb94f
+      scope: 6b5135c9b1843cfd7a5f3fd1501987c75e9a8bfc12996f66e41949190c35fef4
+      pedagogical_description: 147fb3726c90f28dbaa905ec8b600b7bee6554f13dfd420881b1effe03c6964c
+      examples: c78ff03653bbaeb5a0f12549664411bde3d8f15c5cfe1238542b6713f648f55f
+      market_comparisons: 011bf7da32a23f0714bffc988edbd98652cfa7897039cf0d31651989c1f9be0c
+  - id: ba-process-intelligence
+    kind: business_area
+    parent: subdomain-process-management
+    parent_type: contains
+    field_sha256:
+      definition: 2d674ed3af3db6f9d6e0162726cf4eda72abf9c398bc7fa248edc8429f15b42a
+      finality: 5311d236c33303483e1fe3c19a13dcefcfde0a8456b7adc2ae656d5dab7fee7e
+      scope: db55b97e793e3596f8b83c7a5374eac0a9e0550983a9ccb1c90f84967c395bf7
+      pedagogical_description: b08f9be2f09db3fcab6b901a034cf0605ae9071fd326bdbae9875bb9d0e08704
+      examples: 3aed3eea2518537a83d9450841248b2d80d33d4a1db236a5c9a6038afe64aa45
+      market_comparisons: 4b85bc543e9d22b81d0b4061f36120b11c13c69365209c4cdfb44084b2055618
+  - id: subdomain-sales-b2c-ecommerce
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      definition: f99495442269228c2cfd689f66546dcafe9ae7a876f324dee063cd7fa4907388
+      finality: f99495442269228c2cfd689f66546dcafe9ae7a876f324dee063cd7fa4907388
+      scope: 528fc3a3e065d8915db88e1a6482b6d2aecccb5ed93df7bd385b222c6dd70467
+      pedagogical_description: 18c04672a93f5cca580021d40bda31520ebf561290d4f3c6b05322f777be0afd
+      examples: ff2a551f386df2e6c13382099ef0251d4a5a826675f15ef2f96a77c4844987cf
+      market_comparisons: 9d4e1ea2b628df01c06c440e5db58275b6aea54778860da0d82384d5d3ba6d7a
+  - id: subdomain-sales-b2c-store
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      definition: 8095dabce058a844d442811323a3d5ba070e398cdbe50f05e6232543de44f06d
+      finality: 8095dabce058a844d442811323a3d5ba070e398cdbe50f05e6232543de44f06d
+      scope: fb2719a9f20185ad3f93ccc910ab6eb67e4fc47bdc1c7fe8341986620eaf9554
+      pedagogical_description: 62a8d3fdac1c69b6ae5ef3fefa172f51656403f95b2e3c001f0bb4f0149580d9
+      examples: c031d5852e6ec974bf70ecc3a585a92072a640d3b0fd6f08b6dce32ad0e8e53c
+      market_comparisons: 1e15920fe42b927c76bbbe979024a68c11504aeb235a92b13046b2460961980b
+  - id: subdomain-sales-wholesale
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+      finality: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+      scope: a1023633f3effa9d7f9a824faea74fcee7b7ea39648deb222cb2533cac9cd207
+      pedagogical_description: a746212dfb4207eeb9ce37539cac840005e1217ca3807f28dcc19b3e389d7967
+      examples: aee147c45d33b4fb79cfe69bee269146b97d8a19838cc8d7321fac702582eec0
+      market_comparisons: a11a4a28f84cd9e141dd1163be7dac2dcb042807f84dd992759d27f3963968b4
+  - id: domain-product-portfolio-collection
+    kind: domain
+    parent: system-design-development
+    parent_type: presents
+    field_sha256:
+      definition: 6500495b59dfbe7b0e11bae771cfd281d5340d30cedcb5613469a7ed8a6dad12
+      finality: f97d216ece972013ed8794883b0497f03976540f10916e493000cfb4ebace57f
+      scope: c7d328680dca3eedf8fbf390a5350a6abd3fea657a3b1d3e5b79f4fd6fb35273
+      pedagogical_description: d687b365fda8b86f7dbbd2b7f8c080ec28e7593e585ca99945befb5559b0de47
+      examples: 22b6a578c2af9bdc06bc73ba744f3f80cafeb58610e8fb95b9031bc915b2a9c2
+      market_comparisons: 49ecec105df2dc745038d7c18c74937f31fac214cacf3ff5a2b2cc64cac81f21
+  - id: subdomain-product-strategy-requirements
+    kind: area
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+    field_sha256:
+      definition: 3d03040b51baa4f10e9e7a34cc317f712f5dec86856d305bc5c0db5e7ce348a1
+      finality: aa67a8d97d3bb97b03018a03f3f201cd377f643d9189479ca132b5e9c2621afc
+      scope: 8b5a4afd2254d0dd2198e73a5d26cfee2b5785f94d61967106781e406c85b1c5
+      pedagogical_description: 86d41f17f0db556675d34a83c2ffc803ea0c5ae5982a23ad8a5c5ba5282b4021
+      examples: cad5b096e53ed12809a295136ab93a3addcb1c0be28115ade86ceb96c40868ac
+      market_comparisons: 87b541b3fdddefea57993cda06c964d29f0ffa509006c29af047becbb39446b1
+  - id: subdomain-collection-planning
+    kind: area
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+    field_sha256:
+      definition: e31b987eb534f59269d996a50340afe50b4c0fa7d13231fa06ffd7d13c14937a
+      finality: 5d830133b0917f98ff8b66f6a6b0e9696ddaea5372f05268f6a39a506ebe8d38
+      scope: 5d789f94522b971ee6a29ff528af3b8d49af4b43150e45525d4e9348575ee9c9
+      pedagogical_description: f3e489d179c886cd95bd28149d2395eed56582ee2025dd232b7252fe4cb11d8a
+      examples: 3599dd5d49517ce0c328c93b7aa8f15a2c314308bbbfaf8c93610bda7af2c4b3
+      market_comparisons: e4c2546bd60bdfe57a3fe023804a1f9d4f34b06af37bf3b6ade9239a0b4a23ab
+  - id: subdomain-development-planning
+    kind: area
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+    field_sha256:
+      definition: 46a3ec6c57284bec3c7dac82dfc1817c8bf175210a976e8eb8cfe8f3fc08b334
+      finality: 2e51068364a7270b1e0673e50e766c893f71009ad1400fd402c87904ab43e76a
+      scope: c932e1484d0889b22a28f3a82bf039c0aea823441920dbc0d2f1b72eb1dd244d
+      pedagogical_description: 53c5305febc548d2c6d1f9bf016fbb9a20a5aca63ded866f8b5a1621aab87bee
+      examples: 284139b33c7b93751b5958f662990b0eab480bb003e4a838796d531e1e228ee8
+      market_comparisons: 6acf844d18df825c71664903a72cea5b9761aa58f6782e86b55e5a23d8be33b8
+  - id: domain-product-development
+    kind: domain
+    parent: system-design-development
+    parent_type: presents
+    field_sha256:
+      definition: ec628e58769abed6d36fa9fe2553c157b2ff9a4959446390c5f96e09ed135f03
+      finality: c48bcd0f97b3edf2193cf9a90c35fe60b18d60f1692dc8bc06ee6f024305de92
+      scope: 47fd02bde71f6af45992ccfd2a6f9b66a51a0d9b35e569abd5b625051132cdda
+      pedagogical_description: 0792eb5d7a7271f8aa81cd64c1c07b0d09876c723e22d885f2342218ec524273
+      examples: f3f07411d97fe286fa9c73b64bc274b91dfd98c8adc307ed54fc911a391ce146
+      market_comparisons: b334cc883db754df2c739cf47763579b40095b351b532463066919b31f0a719e
+  - id: subdomain-product-design-specification
+    kind: area
+    parent: domain-product-development
+    parent_type: presents
+    field_sha256:
+      definition: d382c8d832a278ea60ce4f3bcdb9e908b2daf1f1501968b66f5a11d02bbfbfd8
+      finality: df66693c8505d33cc6c18b8e096817d95c7a2ee17b4c1f4fa8719ed2896641b0
+      scope: 3b6d326447b8492d132d7bf1433d8ee2cf723b5a34928927b1dfe346ae954a08
+      pedagogical_description: 9d85814fde1ada9cb27242998bdb7e1725cdfa962ed1c0ae110061a3fa3ec58a
+      examples: 26c2fc2ddb66e30e0f7489382e992bc081324ccb594858a0b7869efbf450f75c
+      market_comparisons: e13e188203529f2dbcf22ec3873bf24e59b1ab8b75516bdd3b5b734b3f8d5926
+  - id: subdomain-material-component-development
+    kind: area
+    parent: domain-product-development
+    parent_type: presents
+    field_sha256:
+      definition: c6bddc319c07751dd37f83629a50139dea17b1a88d4db8638b6d2f02ab8b6605
+      finality: 64f294eb9642c8be31fd7732a2d88dfd5898609319c0bcebe92aa121925ba65f
+      scope: 1c93869953c761da3ba33839f1b01b3fec0032e7a2d23ac38c7618f79463b8b6
+      pedagogical_description: 8b7ff5044a0c033e87cdf918ea30d224df1996bc8c0b6674c5f2fa59b6e7710d
+      examples: ff07e59808559d66ce4662faf9b516771cf051dcbc4896b04208bcfff4265153
+      market_comparisons: d4760e1a99e20a5d2d644ba5102268f7d15d321ffeca8a2689786ff246b6671e
+  - id: subdomain-sampling-product-validation
+    kind: area
+    parent: domain-product-development
+    parent_type: presents
+    field_sha256:
+      definition: e971b345654a7d114fedc16998f566dd944b7e782ac3cec9b4854897853011e8
+      finality: f18726322839d9e48428e5457be5bf6a388c7227fc655039bb46635a5dd42ba7
+      scope: 0773d5cbd93fcae8d4c49a2ec40a662d2c788d1b254f2a0039d0345d6612ed8a
+      pedagogical_description: 711a46b0e48ce799debe3e73846bfab8a4780c92abe69310d4bb5e09365b3a40
+      examples: ba3d12bbed47331934e99f4d68619480f3bd1f5cfab767ea265a997a91c7bb1a
+  - id: domain-product-definition-lifecycle
+    kind: domain
+    parent: system-design-development
+    parent_type: presents
+    field_sha256:
+      definition: 53b1daf881f22f7a8b15111dff71c44b13570d02695f996180b92a8e2ee9762c
+      finality: 7c6c846a4c8ac5fc0a93d89f166cd9329ec25fc9a0ca988818efdc7f2cc9fb45
+      scope: 5b720a7ce1e16350878a784084b41ddb5fd4d7228096b967000034e886949571
+      pedagogical_description: d5d25b2593fa90dc99774282531c86c5cc3ea8e9f124ecbc24226d44e22efc8f
+      examples: b1e190be68b1f8ec99ad2429224f4a05b39df87e64e54a8f28e756adcba6f817
+      market_comparisons: 01ed08ddc098ee63c0ab67369998260fbf25f2c06ad8f8f0e25d282c70146429
+  - id: subdomain-product-definition-variants
+    kind: area
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+    field_sha256:
+      definition: f17502b1233e4735a2bf756c9458130d5e7aa2c4471dcf3caba6cd536f3dd8fe
+      finality: a4aee65fb95f75b22a3a8fad90fd0a6aa69f747ec08ba90188df82495a87c0eb
+      scope: e21ee86129ab5255bb29d6bbb0de0a1d74f065820f46298be9d519ae2b0c9a35
+      pedagogical_description: 2c9e27b96c875b8b50b8cae252c90c2ca4e2029f37905363afe8bcb8a932f27f
+      examples: d17100f5e5d94d1114ae5ba23f23098a7ff16f30d5e61760a33a997d47c540f1
+      market_comparisons: bec1f1a3fe3fcef71c6e7a8c12845d088f4ed7d17f90d26c69a93b13ae929238
+  - id: subdomain-product-documentation-classification
+    kind: area
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+    field_sha256:
+      definition: 4c3bdd2989542d3def42c7615d6441df10aefc1cad64f4d5e22af9c9616517bf
+      finality: 50a2ebebe499b7a763b0060246ee6366f0743b44671a126f5139b77652267ec1
+      scope: 8c6e1ff05d32de44f66b4c7c6463947f4efa13ed9385de3c79a86bd303523db9
+      pedagogical_description: 8b68c3751009d804872c715d82abde92567aa01712639e7f8cdfa2922d5ebb8f
+      examples: 74aaaf3856380e5d745f142b07ecf8c6a2b603934309d5cc75e99d134c26624a
+      market_comparisons: 24796d44e52942168a2af85b8b87f647fd45f14a851c6c896e51903bd23dbab9
+  - id: subdomain-product-change-release
+    kind: area
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+    field_sha256:
+      definition: d8c88e7f8171a48d479a9d8e2463f08c2e93ceea98243db511688dbdf237867d
+      finality: d00bfdbc2b5fee64504f7ca2f3ca085cb4c6c8b2fef7c1569877b8a24ff16c98
+      scope: fae60ca6489183f0462aaca7044591b84d6c7b4a3d17985c30572bd59cd1dd7b
+      pedagogical_description: 3bf40afa93799bb96aba47b19a160d1cf4de63dd0bfdd7ed5729124f236fde1d
+      examples: bd21ce8168d12e888ef6f03a7ff6160070d3981c09a014160a819781d6b6f50a
+      market_comparisons: d66b3580b1849fc32ef5da73e1023a8d37a94a774288f1adfc274dff700cd69b
+  - id: domain-enterprise-planning-performance
+    kind: domain
+    parent: system-enterprise-management-control
+    parent_type: presents
+    field_sha256:
+      definition: 4a83e9d267baae5ba5dd11f84feffe4d1fb8adb0ea82b192cc6eb9c18355955c
+      finality: 0984fa0093a76d827ae96fb01448ee131b940724406b7cfd6058ae2ffdf0b73e
+      scope: 50190fea67b7ba6ca8072f1ccaf6b534b7b8d7728c3fb2792d85c8ae9b2f3e49
+      pedagogical_description: 376f3a2a00876ad3e326531fcc0adc9cf5747c3c991ef0de051c3377a8bf24fc
+      examples: fa2d32eca1285035dc7a9f612c35f6cf560a136a6f6b67dceec6558d758a8038
+      market_comparisons: dead7120c6d7e5a68d06a615bff8a337335db6be9b6e80e9ac0b59ca975846b0
+  - id: subdomain-strategy-objectives
+    kind: area
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+    field_sha256:
+      definition: 8bcccfb3a49c466afdeabcfba860d5c18d0fe98aa6d2446f9c5fed83e414e301
+      finality: 2e69123ac55d0167e693be2ed94c3f4de03288c6658d08538a787f4a87cac257
+      scope: 8419cc2908ec00cd6bc98100ed2c6e1b928d27f814fdf5fbe1628991b842f6c0
+      pedagogical_description: 042d60d3786b83dacea1afe01e07f5a8e0f1a6592c413cfe6717a0b3af0bc97a
+      examples: 4d7f557320af7df55360aca757f5b3144d6810e867bdd1510ab1f586abe60573
+  - id: subdomain-budgeting-forecasting
+    kind: area
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+    field_sha256:
+      definition: 84dcb1a09c9e2f6275589448c7139a041c5037e41790b4c0de077a25a0885599
+      finality: c95021b7521a8dd4943d6e67a92d2b03f81a7a58a5dfd1e5b15e7d23630b275b
+      scope: e58805c666e01629dc42762d95c239d1557a5692f25caa055ba80ffde7421952
+      pedagogical_description: 55c1d7cc58166c37786d9c79b834f9c79884a50eb8155e3a77173ed3df5a110b
+      examples: 2d71ca814c549263124d4b7358e405006e9a6f1e2d3eeb9535ac76a02365f3f6
+      market_comparisons: 05c325ab9859d7f5f6522741ac63e30490f88f8c49c181d0454a3d5e3613b787
+  - id: subdomain-performance-analysis
+    kind: area
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+    field_sha256:
+      definition: 8c7c060bf605e164fd30d075f1c04d01bb49d796a4b7225cab143bb301434877
+      finality: 9382a6559058ce64b24b625e93e251a27c38a2a692c0602b540ba9c164a3e666
+      scope: 325d65ea5586d74d47b7c50a8ca979ea8cee22ac2dfdd1427203804eee11bbaf
+      pedagogical_description: 303b8d9733dcb3e764941ce1a6b28f7d722833f1d885eb3ff154e629446d43c1
+      examples: dc514c7eebcf23f92f440be0343bb031622c1033af2f1c0193fecfc63bac3c68
+      market_comparisons: 04b1997ba95a580f14ba46b2c3607a1ee7fd754b19b00a21f50fc3d6608d938f
+  - id: domain-governance-risk-compliance
+    kind: domain
+    parent: system-enterprise-management-control
+    parent_type: presents
+    field_sha256:
+      definition: 5c4ae4241fb3b68803875b4fa97990fdc82b8e7b655dbf975e8469a744300dab
+      finality: 7d7d4af6594c80386f3dccb2008f051194464092fe0553224616476398e2d7e1
+      scope: c1d6480cadfa872bc738bf43ef9b50be34bcadb8c3e0c324d7febf2eed17225f
+      pedagogical_description: 572ef192ee7cb06d453019e9002db2886f852a070869f10b9e5020d87b8b0839
+      examples: 8fb035840ebafbf68c594b47be661e4265a3d9bc79e2e2d288a0d3d71427e4dd
+      market_comparisons: 3f6dad8816ea442930625da4eda0a04747c992037ca5749080f2a5180a97d7d4
+  - id: subdomain-policy-compliance
+    kind: area
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+    field_sha256:
+      definition: b4290ae1ba9bae4bc38e63a4b99693a4c6e0dfad3993d4b6f3abed9569abf002
+      finality: 886cf59d2eea444686b75385178b70ae3bfbb3b66fac827fb557df7c09446ddc
+      scope: 69217d06a23f6c1c40b72c500a34a125d1d6f44e8669336b97df84ba9ae3df8b
+      pedagogical_description: 48358fa76e277f2ddca3d94f0c8e5440ad3e502f4e9ae79624b9399f048d0c3e
+      examples: a222618587d8e134b060961b9b72aa32b3aa33963658208d841bc2b306192b55
+      market_comparisons: 8f8621439baa514f1ece6ff00b2bac6f1e5576eb0073e07f05b03eb0bd6cc4eb
+  - id: subdomain-risk-internal-control
+    kind: area
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+    field_sha256:
+      definition: 7fc4f82d38ef639e098761bf0a17aca1303b7dee58ed1113b9f16a6759b3a63b
+      finality: 751ee2fb5ee1d73de9559a3e27444daf71c0dcdfbc0594e40a81f419bb4efdb0
+      scope: 0ef51f789f3de06e311e4c0a1914db626521c292db01078545f9e5b369953a59
+      pedagogical_description: 0ad13391f0a95c9c2df2921592973c5c3482d299d52aa6b04bafffa5494d8f4e
+      examples: cb0c77ac91f95adf6f2aa359dce6c87a97087bec972004a79b9fe121f04599c4
+      market_comparisons: 94dbf60c601dc869581b1001e2199ebe064f3d7a5a734dbae4ddf82e39b0ca38
+  - id: subdomain-audit-assurance
+    kind: area
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+    field_sha256:
+      definition: cc14a6d3e7711f9bbac4d8f48a1dc669d8d59749eef5b0c5e3436c7900258b06
+      finality: 90a5c88b871126d3bed0e1cccf2455daa9698f068acb67eb7dfc80d6e22ceb38
+      scope: 6a0ad04f30338f2f08f08fbbadf306853f7a737869a853df2647b62b87f39829
+      pedagogical_description: b212af084190346f01c31e8be2393fc31aa5163b670edb6e1a2493b38d6326f5
+      examples: 1ad2e1313704eaa1c10a6a6f27c91412cf04d3549f6eebd09b093c841931a46e
+  - id: subdomain-cost-profitability
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      definition: 9b5562da4fbbedc9986af5907366b076e2fcb6556c6b64f8b8dec7df50ee92d3
+      finality: 9f7e0f98c0510905663d7591e4459c3d1dc21ed1aba34ce0e392242995635bb5
+      scope: d344b3ddb1b6839c1865a4696814c201112d43ade21c5ba83bc07e25b084644b
+      pedagogical_description: a5025d5b6de2f0767ecc298e1203983ebe6741f708e038f1ca4e9a1ab6f24fe7
+      examples: cfec52a0b99de4d0ca526f3f9d40c48908c7a2cc4e32fa8ffb4896b04577c52b
+      market_comparisons: c916c682f63802e4e5ac20db80fee0442e552730ce27b44c027982aa50adf527
+  - id: subdomain-credit-collections
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      definition: 693f02ff041c1e0c507d393c7d09715e2eaee3f06d482fcd467723ca4a895a6f
+      finality: d9ee7e5f691ae1cab1e91d5d7327438c3acc530f7d0141622c94eade08ab7f0f
+      scope: af9bd8b1e18f299dcbccdee19d92fbade7fdb97371ba7d3dc0dfaa381c5014dc
+      pedagogical_description: 6c5f14ebf4d4914a5421b36cd6b2eef70798a1b0f6d05e00a88ad03108222fc0
+      examples: d10fd4c3fb777b57940367cfb68fd326c780be7f16522165853d29f45d24ea23
+      market_comparisons: 85c0d4f10b7eab92ab5fb96be4d984360211e65653606c7b3ef6dd882c231aa5
+  - id: subdomain-treasury-cash
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      definition: 4efa40b59a2b129a9e4907c24ad96f03d6a1a1e050a4fc916748567935d5a8b3
+      finality: a98a146cd1b29a1e0c004523e15a4ec114d7c4bc9ce14bdf9241af5962514c92
+      scope: 7977acce14c1d2f83386bb8e5cef1c9e4dd3ce4266d4507a5cc866a910a3e72f
+      pedagogical_description: 7454821ea5890964bb5cd8e0acc02006114711a43faac51e223a47968218f3f4
+      examples: 86f31bc82ef76024120c8d3c2c3a4d4ce0ab62f134930609cefd9d60f3cb8991
+      market_comparisons: cb7c0f6390d500d68578d161f2da41dd3e05791ec7cf0c01cca25df72702f71c
+  - id: domain-warehousing
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+    field_sha256:
+      definition: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      finality: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      scope: 455077e4ec21bff736e109c8c384f7ffa7977c5e280d2d5a948c24e448ada66a
+      pedagogical_description: 06786f16f7d5d08dc7cb84780a47fc3777a452648fa5bcbd5cae4ff7079cc3cb
+      examples: ba7e641bfe3f9c1457e535f20dc2adc3b4601d63dd3fb609e290c6db9f7b28d0
+      market_comparisons: 385dee50ac9bb786160d59edda803f224b07c4f66d6fd20981a17486a1d97a28
+  - id: subdomain-inbound-operations
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      finality: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      scope: 7a5214f2b128d72d6348f5c0d6fa3a6b35012e2b2ea9b19da4f6cb29aeb38b30
+      pedagogical_description: cf3d00e3a1e5d19b37c6d821f0f903026aeea5c449ea771b47f024e317373f4c
+      examples: 74dcebb52624fd96374c092ed4cebfaf187bfced692583ef2e48509d631af92f
+      market_comparisons: a1444a6d117ced0d2996e613beec2366a3d399edb1adfc92040e208733df56a6
+  - id: subdomain-storage-inventory-control
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      finality: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      scope: 2a4af5cff0112631b5b041631912a31806382c7d91216faeb2b5d1e6553e0fdb
+      pedagogical_description: e539f88f39b77d11bfe1e8ad714cadd4de59b85f55e94efb09ef656c324f7af4
+      examples: da4ea3d3aead278f78ea293ee900287df4b54ac04b39f4e43eba5b6b742d9756
+      market_comparisons: 4ac953120857ce8b779944748435b0ce1572ab1f6cc7d837a6e2f2ddaf370420
+  - id: subdomain-outbound-operations
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      finality: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      scope: 7a3d5d04d7cc3631be1ff2e31ed9a590f3ac20e900da10efe40bacb6b01d72ce
+      pedagogical_description: 0d2431d13041b8fd734a41fac814ff435e2838554f434c84ad98a99a40e4b7ea
+      examples: f6bfa705e9c38e0cd6afcc1f7123b7a2fed6871a093a6593ab250acb31c0c1c2
+      market_comparisons: 0fb4280665eceebe0abcf9bfe4d8f7cf411535911127e27dd2a0bbad6d7f2540
+  - id: subdomain-value-added-returns
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      finality: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      scope: acad06c6e5f0f797ebd9af424ba48a4bfdacdd06acdbf93bf1621a0a997499d0
+      pedagogical_description: 8f4341552b238d21cdccf6074215c86cbaab67e24387ebf93f27d6871ccf2ba8
+      examples: e293191d2bfa8f54c4c9f60084f30cb6251257ef1f27f8d920a29f4e402610bb
+      market_comparisons: 0ab020b088d176987767105b38962bb6602da590156a82e20edf94247f53d4f9
+  - id: domain-transportation
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+    field_sha256:
+      definition: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      finality: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      scope: 7208644abeadd4bc8983a9beb05fd5f12d1084f52d856dfac6be8fe1ca19296f
+      pedagogical_description: 3d61b615bf29c35696f72d0695bc7545c892f5760e999644300a3ae7b843b8cc
+      examples: 6411c051eae3b8fbc8675a7013ea7151c3180d56a0b0f01fb198ddae117f3d76
+      market_comparisons: 8c45432098e099fc08b87f231a3b7df683e1f48cddd67cc09938da3fff6eb8b0
+  - id: subdomain-transport-planning-dispatch
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+    field_sha256:
+      definition: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      finality: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      scope: 5dce563ce55ec14491da06eec4e6a6755c6023bc8a289d81fc2f11afb4a482cc
+      pedagogical_description: 204e0ad5b725c6eda0a5526d248800120edddd3b44ecb80ebde61cf98b8f2380
+      examples: e3e9f02efadf516179a160747b5c36d3d9957eb3880ae4a30747908e4bcfa3f1
+      market_comparisons: aaebad8fbd5cbf605137fef8affc15fe2b9f501af9b241f5cf49c531090fe155
+  - id: subdomain-transport-execution-tracking
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+    field_sha256:
+      definition: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      finality: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      scope: 6cb5c431c9c5c26462e596ea503b233d0208cd74ac69bfa966f86e7d49d6c208
+      pedagogical_description: 291869dbab995f205db47f161c618e8cb6e72756905c271d00499f522633ec7a
+      examples: ec002a8d83f74f86d285b9e4fd8c91c6a69a83f99cb4d64bc095eda06495d4f2
+      market_comparisons: 01aaeafe9fe42080e282e88f9e756ef1c6932edd00b7e80d6acad1077b36cc27
+  - id: subdomain-transport-exception
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+    field_sha256:
+      definition: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      finality: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      scope: 48b5b6d715fcbf87d2fc1d1824831d8653e5f4e0fac802e09ee3e575e0933cc7
+      pedagogical_description: fe6ea5778a2fb0c0b3a9d59fc0ffe7b61d181cbb10634fbb34bdfdb385ee3817
+      examples: 1b666fd7f9eaa98066d18856df73a1fab2924016135d701e30a26f6adfb38579
+      market_comparisons: 7595593e33632d491c2c41883c54a0940c841c83a23982cc83a8b1c6b478eb72
+  - id: subdomain-supplier-management
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    field_sha256:
+      definition: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      finality: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      scope: b29bcc610a8b97e4ba32e7471a45df63e91f4d71a931c0f60a2911d67e7922d1
+      pedagogical_description: 7db844ac660e49f1505b7c02bb6b8bfeab3a4c91c4fa6176ac3af84418a81566
+      examples: f6454fd0d5aff65ac1188b193a405e11456398d7bfadfff2ac635804dd09f179
+      market_comparisons: 8b8843212c2b4d7e92f4803d085476229eb3d8a9f50a962720db4763d77a724b
+  - id: subdomain-strategic-sourcing
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    field_sha256:
+      definition: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      finality: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      scope: 58554c12bd88dd2a7fa4769e03e023c9cc7049ec3cbbe3fa5b5a5145d7e25009
+      pedagogical_description: ac38e850ffa447a9a69ea8200cc3b41752fbcee3299a52019b466d618e6e1c06
+      examples: a5a0eea04230b208055516f20755241bee720904803efb1e6306561c7fca9af1
+      market_comparisons: 5518b8619148927f49e302be1d6d060f7ce8610cb7d6648ddaae91d393e78e47
+  - id: subdomain-purchase-contract-management
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    field_sha256:
+      definition: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      finality: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      scope: 6c9bc6de2bb59f333495463a2818a3c3e8401bca78affce92b8490c39705255e
+      pedagogical_description: 10e7b08d867fa93a6feac1cee1621be6b5b663efc0de5e39df73e4c93a475036
+      examples: febb10f4fb398732b19a3c5afe3bcfe1b0c526865f759885aecbf918da460593
+      market_comparisons: ceb29f36edf6b09e1e2d329150c798a7a447feccffd9a634bd624040c7da44e9
+  - id: subdomain-operational-procurement
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    field_sha256:
+      definition: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      finality: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      scope: 588916b55e44595a4f4b4f5c436f6fe9271d2151acaf4c7f5bb40df1490a64bb
+      pedagogical_description: 4e0cf7b7964254f21e1c3a583d52a05b3acf8470ff7961cd74c4fe19d4cefb29
+      examples: ac76593fe1e1ea7913510a5779828a9c159f969d0623a65879e543aeb5eeb3df
+      market_comparisons: a0086ee74f52e71913d7ac880e47171d6a6990a4518c416364a1e382ddc83db8
+  - id: subdomain-assortment-catalog-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+      finality: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+      scope: 32486ed4a74ea82b84a82c294e7185e3be7dbe18e7113302d8ec3a7a7fccd79f
+      pedagogical_description: 52837d8fe0bf064e527b8e74c1ec71948b1a3a960c1a4c3a04da2e67ef43957f
+      examples: 8edea72a88619326b7b4c1d63ae90ff85be34dd8b017e202991b3c8b0505c52d
+      market_comparisons: c0aff88aef8f44a581c9eb37eeeb35eaa0d205eec023b7520fbac3a7be55349b
+  - id: ba-retail-customer-relationship-management
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      definition: 63b5089dd415ff0b9c039b94577880aedb01bbe0e15de95403f11e6d4df9f5f8
+      finality: 63b5089dd415ff0b9c039b94577880aedb01bbe0e15de95403f11e6d4df9f5f8
+      scope: ce6ca14b122ecaf6ce1c438e5984dbcc7d96919f526a8a34c8ced1bb4372bc05
+      pedagogical_description: 611065a1c40f8347885b037a6311121c768131e42063f33e8f84a2edbae9d179
+      examples: 2b749fff5b2487bba32377f358bf8d0a15c6b8f1a749b51ac3e55adcfd996336
+      market_comparisons: 9162f5377df6c45765b5ad5ed41d42b6ae10a09520f8c780cffae8e246d12d36
+  - id: subdomain-retail-network-management
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      definition: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+      finality: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+      scope: 135306db4df14da6b68a3dc8782f29f6d0bbf07bb163aec099071aa1b0968256
+      pedagogical_description: 67e524f28cf7892efa2f1e9265a812fae7a0e4bd68ae68432b5a0ab6eaee663e
+      examples: 35fb6549e8ee601978cdccc310aba8ca85878d928202b375d5bbbfcd72e659ec
+      market_comparisons: 0f616fb022cc833c2df4a5722b2ea44d2d8140b093b5098aee7ec6b4a715b68f
+  - id: subdomain-store-backoffice-operations
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      definition: f82b297ac052a339048cc6ad44af83255f5337aec04720102279ae11c5a920e5
+      finality: f82b297ac052a339048cc6ad44af83255f5337aec04720102279ae11c5a920e5
+      scope: d4888e24f3cf505294bed7eb04420d8cdd7085e6913202efa42bc2de3a64b8a9
+      pedagogical_description: fb01dda02d4d26882d0858063f5824e263663d4cf976939bb4347efa6b797863
+      examples: e952dbb73486aa36ba7bae4539e5769c983f6cb529b721e40fda2fff2137092a
+      market_comparisons: a272ff7cbd3dffee9e78c05943b008faa98c221cc41ae0e1c33cdfffc53f3ad7
+  - id: subdomain-pricing-promotions-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: 880b0577eaf9df3f6021b70e833b484d043b07030b47408a8213dc5cdaa71b2b
+      finality: 880b0577eaf9df3f6021b70e833b484d043b07030b47408a8213dc5cdaa71b2b
+      scope: 58267d1b8dd0eb339c89442f71ea47ca2bf1dd21e3f663095ae7551758f149cb
+      pedagogical_description: b0b4e1c02eb16db9fe276992276aaa2822485892afc704ebc3c78ab18b2e502d
+      examples: 59e3e614f9ca442fb43c4c9178bff8d4dd2910444dac2ae9f1659aa1271357a8
+      market_comparisons: 038df72e689c595b8da5742d272896da32ac174534af7b6a830e36be4b25abee
+  - id: subdomain-rebates-incentives-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: b2835cd399000c4b9da7196e55b62884b30abd177f17473933ffbf8080c0c435
+      finality: b2835cd399000c4b9da7196e55b62884b30abd177f17473933ffbf8080c0c435
+      scope: 2175bbd2ff490bacfb9090ea5c239877fd994fac06c7cd7e0c14cee1e55b32b2
+      pedagogical_description: 11f0de315002ddba2a59c9b1dada8b649a2dc63339b11a612d31db807c5a30b1
+      examples: 09264392696a243bc6dbb93444e9ca2c04e67bd8927fd828563ffc75e8cce72b
+      market_comparisons: dc0d272ce8910b46e620e8588f31d55010ce8abcfc7482f3fc74459560fff803
+  - id: subdomain-commercial-settlement-management
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      definition: f16acd8131c6626bf20428f10d58094b34a0200d233b34f25b9b4c2547aeaca6
+      finality: f16acd8131c6626bf20428f10d58094b34a0200d233b34f25b9b4c2547aeaca6
+      scope: 29fb5c956344272b22ee22d96396105ba48a80275a6fe116db687fd824dd9f74
+      pedagogical_description: 39ed85153918f1025d4d21ed86568418ce7511e3b87fe46fabd8ced2c882f12a
+      examples: d7d92137ec812aff6d16aef3cb7068fda88896260b5d294bcdf5f06cf9df0d90
+      market_comparisons: 7d5d0f73b3a794cf64cec6f14c6a698849a5e7895542539ba4114160fad236b4
+  - id: ba-order-backlog-management
+    kind: business_area
+    parent: domain-plan
+    parent_type: contains
+    field_sha256:
+      definition: f8783875a81cd8e834bcbb5d04f098ed0d4febbb4841f309ccf34fcedd67c40a
+      finality: 6949bb7d6b11a66ebf1ca7eba2a3a6cdca57c1c4c41a32eaa1ffb3c5b38ba406
+      scope: 62215260637d9905f4e64cdde0e70a47ab0aa1eb0303af7ce9781e43d16b0665
+      pedagogical_description: 6c8319690f27b3010074a709dc9bc8715501c01c62f23842f8f6cbd1fa3e5fe3
+      examples: e02bdd0caacccc025e0222811d363cf0cb37b576b4605a6041837f74d7bab220
+      market_comparisons: 347bd496c499ef7ed8bb8a7e1f06d864df389c96ff56f3c4dc83f162349d8d62
+  - id: subdomain-retail-commerce
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      finality: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      scope: eb93db7009c51b7c929ac28567887394485b0cd16eefb58465a044a30ee906a0
+      pedagogical_description: b47396619930de2e680984976b9d313a260ad9242698a7c12f87066f325e4558
+      examples: c1fc45d3dbd003e319288f104558892d636f1df734f56a9aaad669889bf86b00
+      market_comparisons: 2062888ab1d83fc0ab0a41d42a3a19561c9a76f72fee08397b9139dc20df074f
+  - id: ba-wholesale-account-management
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+    field_sha256:
+      definition: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      finality: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      scope: 651714ded2964af30c4b8acbbb1e99244696ed37cd1dde308c14090cfde75840
+      pedagogical_description: bb7e8b6063a3b962966bba1fdea99d544558603ec9d6b0f99274eb70bcd4fbbd
+      examples: 0c26df919fc2a7c3732e799c3b983c652f82c0d3f9cca93d2c0136eb29db76c4
+      market_comparisons: b70f0a47c3a6409e0754fe95da311e2a68cea4b80f0e480b2bf524986e79033b
+  - id: ba-wholesale-sales
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+    field_sha256:
+      definition: a04a281c4786c80201da48ddf29fc7b8beb15c065bde79056bf050f626e2ab7d
+      finality: a04a281c4786c80201da48ddf29fc7b8beb15c065bde79056bf050f626e2ab7d
+      scope: 770f02d5d8e0aa405e034d785bf26930412937505ec45b5c5bf77f52610ac9fe
+      pedagogical_description: 7ea85adf6a4dd21d2f3026b8a753374b176b35917e0143a24bf3ff8402e1214c
+      examples: 3bd184ddb8dd6ce696d851ae523bbf050e6b07eae0bbbcd27269f2dc5ddfdb61
+      market_comparisons: a1f3bb3a64e0a4784bc1cf521aa4d8c147ca85644d25698e3ae6eedabeb8495e
+  - id: ba-assortment-management
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+    field_sha256:
+      definition: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      finality: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      scope: e29135272cb4e9b6f7d0ab990abb18e187059e55e351eda2a67d3d8fc11d05b4
+      pedagogical_description: 189c654a774156376fecba6d12b54c7b33e4f23a615b470db60f357619cce7e6
+      examples: 8bee8781fa22b79296d03d09d6f7f87bcfa56dd73766c14b2840f5b3f6bbe50b
+      market_comparisons: ba313d163c59e23ccb9e7763eb860c75e8095d7d81fa95be978f12a12cf0fe3d
+  - id: ba-catalog-management
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+    field_sha256:
+      definition: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      finality: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      scope: 59414cb57d7607e2104b7419f315a0786dd0675059b19d341939e9c9ada6c870
+      pedagogical_description: c66d0c85373760e47926545baea3c60a1cf9c2d50389b4f02060da7925edcd37
+      examples: 981b26dfa638d83fdf2a337dbbacfb0b198e3082d67b013312af4c48646b1b4d
+      market_comparisons: 4d333cc1f51599075cb48933c2b091848af231efbb6b6ef4cd58ba8965541b0b
+  - id: ba-pricing-management
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+    field_sha256:
+      definition: 4bac792ed6060a65ee2495ba00ee6d383ca9fcc42d4dc14cfda31063239241af
+      finality: 4bac792ed6060a65ee2495ba00ee6d383ca9fcc42d4dc14cfda31063239241af
+      scope: 7e3c01a4560cb277ffbe60026fb514500b1e56530346570013810dd669a8db71
+      pedagogical_description: 5b4af485e8129c4941963bf0eff76e216448d1ae2c90d632e13f20aa1c6e39b3
+      examples: 155eefba384775a876739a19faa5e9dfce458caa1cfd69137a3c7b145144c105
+      market_comparisons: 28cf59876cda6e75eb1e2bbcfb29851be559743429d97fdc9c8d350d39117a9c
+  - id: ba-promotion-management
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+    field_sha256:
+      definition: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      finality: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      scope: eff1c63e6a0ad0321c730759800bfde09490f5080a4fe7d23e6122297766b726
+      pedagogical_description: 2b8c1b9e2ff982d31a9b6c2ca361b5186122f9cce3619fff6232840135bd3dab
+      examples: ef95559956a8d440be1d11bf69f9e738f345843feac1ebebfb7e0499578f7d88
+      market_comparisons: b7061f8f41199c49cbcc32d6f773399a26f8b717f60c650490f2881df82f2a54
+  - id: ba-rebate-management
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+    field_sha256:
+      definition: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      finality: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      scope: 03e3e4aedc4d2699fabd0fae8571b7da9b459ad97095b6ebf6b2986b60cb2edf
+      pedagogical_description: b4ee7cbacce5213276694fd97023f2894826fbd174daba77c7ddc0b9bd5df395
+      examples: 4a11853dfe22625a5eb56ed9496a16a4efa967fc1e6763bb826979023de1e22e
+      market_comparisons: 7e6282f0f7abcfdf86e16abc1ef1677a76d659a4b0dbe7d3bb56ddaf68bf9cc3
+  - id: ba-sales-incentive-management
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+    field_sha256:
+      definition: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      finality: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      scope: 93bf0bf90e34ec452f9a735e810bc2257fda46945aba744f1adb0c27ba6d7b21
+      pedagogical_description: f028656317d3e32b514964b0b024208baa6e46539b0fdd7508927edf09c2bb9e
+      examples: 586b0b7f6907c67aacc7ffb0f65214d15ec08fc187ef241def259863f0118354
+      market_comparisons: 502ca18ed7325487e3e5d72537f8023781719762bb145a13d97a5f6f67359acc
+  - id: ba-supplier-qualification
+    kind: business_area
+    parent: subdomain-supplier-management
+    parent_type: contains
+    field_sha256:
+      definition: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      finality: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      scope: 672bd9dd3e1ff21a3c0080cfd8ea5f1fb9a47f81a7e8066aac1bc6b394df1bd9
+      pedagogical_description: 54f5f1ec5f3ada0731ac783b4de58735dc6c02a76902a9a24af66ae8a3885d55
+      examples: b9abd531b0cb08883c84285d78ffc26cc10b965126aec9f51b22ba9affeb8471
+      market_comparisons: 5db09f8ed1752713c9f10a77c794927b0a6304d1debd1e71f3ca15d7f10e57f3
+  - id: ba-supplier-performance-management
+    kind: business_area
+    parent: subdomain-supplier-management
+    parent_type: contains
+    field_sha256:
+      definition: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      finality: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      scope: 97f76d2c5962f475ec8f6c033e4f6d0e4fcf7875f42dfe4268679c78f9589be7
+      pedagogical_description: 25616190da738e9bade4147d0b3aa2d604a7c521bcdc99a6fcd5ebdf5524cf86
+      examples: 9be082ddbd2e9d4983cc6ff05b50ad6bf6e03b5af68293a2feea5a2de7d8fa1b
+      market_comparisons: 3565d021d6177e07a2f2a23c82981cf1d9d4c8e070b156e68d8fb0a36eb9f0bb
+  - id: ba-sourcing-strategy-management
+    kind: business_area
+    parent: subdomain-strategic-sourcing
+    parent_type: contains
+    field_sha256:
+      definition: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      finality: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      scope: a944d875044b4233f93d18fa899dfa95e0705ac8409fba7de521224fa6a954dc
+      pedagogical_description: 732a2dc966fa92e8e95f9f508e51ca5a30eadd853337e669cdb8f5b7cb11fd8f
+      examples: 047e823717086b44a5d57973a4948f860a13f99e23825a7d8a6c1e1c039b5526
+      market_comparisons: d7e42ac3b5cb863a74a3061e2128d683c632624540052a64f52f77aa74aa01e6
+  - id: ba-sourcing-event-management
+    kind: business_area
+    parent: subdomain-strategic-sourcing
+    parent_type: contains
+    field_sha256:
+      definition: 4571b2b3b67867adb6e7bf4d1c49a20f83114acc176f761f29099bc307741088
+      finality: 4571b2b3b67867adb6e7bf4d1c49a20f83114acc176f761f29099bc307741088
+      scope: e28147f3c3f26d854ce1b372ff814526b320729931a6b1708592e3d73f162a29
+      pedagogical_description: b63a1d62cc07c068fa6a6c2caf029b86b8042fbc92e2b271f7ab1c7a12d3c1be
+      examples: 92e84fd2210bad362e9d4f2ce0e9bce8bbd39eec8aaa9b4d6d21a1394527adb5
+      market_comparisons: ab90b2cb8eda2b796ab6a7d5812df914c5b7de2b25e96e61517da0efb577afcc
+  - id: ba-purchase-agreement-management
+    kind: business_area
+    parent: subdomain-purchase-contract-management
+    parent_type: contains
+    field_sha256:
+      definition: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      finality: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      scope: 4116ce1adc3e1ae6ff64e21dd989ac5678597d522df456dd7607fa7cf82b11fb
+      pedagogical_description: c37f57c7022c4790c3ad123af5edff3f8f9339df0b015d7e566f227dd458e3d4
+      examples: 9d8f4e5cc8317f4fa1b7fb0051c1f7152904ff254f24785eac022b2f0d5f14de
+      market_comparisons: a7415c3050e385df9acf72e2a53f6990e48f0752ef5bf7ec7d3f22db98d6c7ed
+  - id: ba-supplier-rebate-incentive-management
+    kind: business_area
+    parent: subdomain-purchase-contract-management
+    parent_type: contains
+    field_sha256:
+      definition: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      finality: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      scope: 779dd059549e3bbb541ad61e761ed818d67b580efa478fee30f19c9397be6235
+      pedagogical_description: 306ffe36dae17597dae38bdd780b4eee617fba4204d53fd76a8bf724e1beb302
+      examples: cebcea0ec8ec9ab8d08643c28a0789d055402211461e96d72bc870cd3cea3b69
+      market_comparisons: 1d4fc4dad9803da6d3321e16c06734aafc88069de3f873e3fa3ffb53f61aeadc
+  - id: ba-purchase-requisition-management
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+    field_sha256:
+      definition: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      finality: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      scope: 5125c328259841b01af76b6e2fa21bd056676ebf575da21b2cd4ee14a92a0644
+      pedagogical_description: 1391d16d1bfb810fd1d08baec0c3aef0fefdb08da500a2bb752abfdfe4fa5c4e
+      examples: c5db6fb74732a5f430cd1342822f9810f2eb105e138d7ed7f159851cf05cda6b
+      market_comparisons: 6ec6c07fb56f5c46dbe8d3ca1f93a46993ee0aa2f6e7b6220742acf12e6e6cdd
+  - id: ba-purchasing-execution-coordination
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+    field_sha256:
+      definition: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      finality: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      scope: 80cee8dee15dfbfc662a64ce29df49edffb4528ce0fa6a48246f17ba8576c185
+      pedagogical_description: 29a9d6c717972400df478cdd00fb449d2f533d604736661055be028e80614833
+      examples: 95573a0a386b83abf085d4996d4034257be03589452a9d57388734fdf5424709
+      market_comparisons: 6211da310151788bcd0ece3badcea79377861b530d9e945ad2a6983a7477cffa
+  - id: ba-supplier-delivery-follow-up
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+    field_sha256:
+      definition: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      finality: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      scope: 905797d65bdf704ddb726cfdc744ce9233a00ead5490de615d96550e67b2787c
+      pedagogical_description: 535bfb2c98336a696f93a34b3c2ed93664854f818488a5c44d1fbd8e3206373c
+      examples: 1ab21dca1374be4bb22fa780e422f8e886600613c4e56d4edfc2307140bdba63
+      market_comparisons: af050172b5d258e7818d557e5a9a0562824b845483adff5c9f419b924ffdbc63
+  - id: ba-receiving-operations
+    kind: business_area
+    parent: subdomain-inbound-operations
+    parent_type: contains
+    field_sha256:
+      definition: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      finality: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      scope: 35aa00d381fbbbd10e03221938a369a04d13e9b9d1deaae5d3ad2c000eb08ebb
+      pedagogical_description: 9acfbd7260eb55fdb5c8c66720ce463cb75f074fa34d2ec91360ec20529be6f3
+      examples: dea18b5b268906439ab79289a9143720b0b28bef536ca541ec37e90f370bf1ce
+      market_comparisons: 7dc4a9e2bc147971b2750fb72da38f70d1a006e087d4ca0b2926716cd860707c
+  - id: ba-putaway-operations
+    kind: business_area
+    parent: subdomain-inbound-operations
+    parent_type: contains
+    field_sha256:
+      definition: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      finality: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      scope: 2cf07d580f687e7d9b56c029da2b7daec7433e23535634769d587436f098ac04
+      pedagogical_description: ec73b19d65d1d77d26905a2a2591024abf34fce79d846931e4f988c09a0d4a64
+      examples: 3106b84e6c35705513e6a7321daeeee6f7bcb9ed69a9461102a35f33d8e0650e
+      market_comparisons: 8e9c82335168608675d3433033d2ff1eab8c2c6b4b02c9c2081d766a62ed5ee1
+  - id: ba-storage-operations
+    kind: business_area
+    parent: subdomain-storage-inventory-control
+    parent_type: contains
+    field_sha256:
+      definition: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      finality: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      scope: acb6b8f32e05d5362cfabb52127cbe29980065dea8b339f0135ec9276377b5be
+      pedagogical_description: 49e7e70b9dc492790f36ce63afc975d68bf0ff83140d4a4feae18131450f667b
+      examples: e0d87255a94b7377aab6206379227662dfbb8bb862867988efba8f705ee2e3a8
+      market_comparisons: b0199a3c3e5e3872a62da1b3c9e91b86fc7b9cfe829e465c8b7fef9016e98b01
+  - id: ba-physical-inventory-control
+    kind: business_area
+    parent: subdomain-storage-inventory-control
+    parent_type: contains
+    field_sha256:
+      definition: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      finality: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      scope: 3db9b494d2ef49a9bbdec348622be621d0e9c923b17c7515257cd968630abf99
+      pedagogical_description: ab2a4cfa1de7473f05da17d53b88c18b888c6ec4a80c7e8c43e727ca8f730446
+      examples: a00476fd36318a3d2863484ede41c76807b204e9974f733fc5e4aaa5e2cbf952
+      market_comparisons: b329a7dfb3f4c16a7d5ec38385cd18b8b05428104ec55f9f7058da8e062661ce
+  - id: ba-picking-operations
+    kind: business_area
+    parent: subdomain-outbound-operations
+    parent_type: contains
+    field_sha256:
+      definition: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      finality: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      scope: feb4d8dff06c316783bceaa460bc95ef6d3bbbaa3eb796eee05d7062b14957f2
+      pedagogical_description: b7195d34111f5fbeb128a43e849f4d8ae7809e2a7bfe13162f0ad316cfe31666
+      examples: 7ec1936c87287e61c7131e58aa91b5fcac939f7c6911d712edad418ad8ffc71d
+      market_comparisons: c13ad4a376575a2c51a6854e8a028f3a1d55ebd333c705937f4e8bdf7da322b2
+  - id: ba-packing-shipping-operations
+    kind: business_area
+    parent: subdomain-outbound-operations
+    parent_type: contains
+    field_sha256:
+      definition: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      finality: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      scope: 737e7f7083d60adfc51ecb689f485c60d6ac533c38689a2d281bc3411c8ba765
+      pedagogical_description: b18d45576b5725941d536da4ee44afd055fbdfb7aac588edcc1c752900420b41
+      examples: 5926220d152ae310afeec377c3864f0f2fc9205fa371e2b1049679087bb1f233
+      market_comparisons: 6ae4d7371473b306352e17f97a1ceec4e74a2661a2f56ede231ba2c0f8128da1
+  - id: ba-product-preparation-operations
+    kind: business_area
+    parent: subdomain-value-added-returns
+    parent_type: contains
+    field_sha256:
+      definition: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      finality: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      scope: 7847c067e903cca25b9274dc644451f37528510564a8d4603652b06aab824213
+      pedagogical_description: 9e73224c7d49b106e4e75fc7fdfb8eefba765647e2b10e1ac14d312b48d13376
+      examples: a58bbb5f6b0143e2fb3f98f6df8663148ca7356853d0a5660242aabf95483b01
+      market_comparisons: 200eea4c1c9238e61d92e03214c342e4268b57f54e5dadc40ad22995b378394f
+  - id: ba-kitting-operations
+    kind: business_area
+    parent: subdomain-value-added-returns
+    parent_type: contains
+    field_sha256:
+      definition: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      finality: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      scope: d1a9c519f60fde012add8d2b73bdabe92bc1a8698ff3a7a71dfce5bd2ae5978e
+      pedagogical_description: c37e7064ba4c459a04f3f4479998a6193ff2aff5bcbd73426e16773beb0ce9da
+      examples: d2dcae3eb865792e028892d8d67545a700f1d24021495c30d3df9be100715980
+      market_comparisons: 6f2990aaf227022d369f56f9107759e9e14c25cbea14ce3a443f6aeeec8f81a1
+  - id: subdomain-returns-operations
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      finality: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      scope: 53da7515cfa0079c69a916a330daf9bc554421318956a11abdcb7b681da12850
+      pedagogical_description: 824e5f6e6e3f2c0f5c8f97107c4742c3e8c0e3535e5b244e76fed643f4bc176f
+      examples: d88a128254786dab2ac787a1884ab9fcb056db729cdf30014016b786943e5269
+      market_comparisons: 23b03a7eada65f1f0ebf6668656850eb5082686f9b2a732de322903a24529986
+  - id: ba-returns-receiving-inspection
+    kind: business_area
+    parent: subdomain-returns-operations
+    parent_type: contains
+    field_sha256:
+      definition: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      finality: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      scope: 473b834386ed882a9390b5f6ed251b1ee80a4f94031ea9a3116d82286f9144e2
+      pedagogical_description: ba931e76bb065d8087afc6a468c33b4a4b9aade1ee96abc298bf6694577cef13
+      examples: 57c08cd6b80951d91f759a2116d640e433fd7619e3fed21f7e725a24640eedfb
+      market_comparisons: 3a8f3fb4ed813d4fb6fa7141ce48ac00497c1f28e424300f109741683ea32182
+  - id: ba-returns-disposition-execution
+    kind: business_area
+    parent: subdomain-returns-operations
+    parent_type: contains
+    field_sha256:
+      definition: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      finality: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      scope: 6177fb9e6669cb2ad53dd200c86d79d3af5a10eae6eb8e9a3fc45bd84767b7a2
+      pedagogical_description: c2cb0066df2992db71b6878200ddee6159b96d1d894c872cfc855bd6b8ee4aab
+      examples: 68fa466733d8dc8c32a96bcf7d2832a5e887027a3941a00f355a6714f3cfeb23
+      market_comparisons: 253181d0707576f19ebbfa17ebc51d5d1a67610b0e2480a5f1b8616df33e4950
+  - id: subdomain-warehouse-operations-control
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+    field_sha256:
+      definition: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      finality: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      scope: 686d6245ded94d80a4319a2a867387c83e72e26a0401a24e35caba27f5f24a5b
+      pedagogical_description: 930b6f330cd174b635f4b3710676e84a4a1e97096c74b580f4e0ac1b3957e71b
+      examples: 53c4a4c3c309e680103c6753beb1e8fcd6169c94bb7c57c4e8c4f8f892713c4f
+      market_comparisons: 0935d1d31cd96ecd7a03b3858522bcd2ed10e67371ee4668956af03fd8d0e982
+  - id: ba-warehouse-resource-management
+    kind: business_area
+    parent: subdomain-warehouse-operations-control
+    parent_type: contains
+    field_sha256:
+      definition: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      finality: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      scope: eb0384d37ce109635e6f25a39add02d7c8227a630e8103a49bfc577e9d9d93ee
+      pedagogical_description: b0d189936fc8620d64250e41c2912e6bea3f1753c646524c9db0cf3ed0d987af
+      examples: 6190a6ad78637244e2297670a0103dbd704a9781f7f3a43087c593b9d6667b4b
+      market_comparisons: b01263ac5d4cf1a58202670a582a0d81b2a6c8bce70cb5f51e54873729a41804
+  - id: ba-warehouse-work-management
+    kind: business_area
+    parent: subdomain-warehouse-operations-control
+    parent_type: contains
+    field_sha256:
+      definition: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      finality: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      scope: fa1ac23e83f10e943b9f6b6fafa5691b35df8bb55676691598cb0186a9718db2
+      pedagogical_description: 55b4363a0f8aa63b75c5fa0034b7d846e362180e62c749995d0bb5a48a624f7b
+      examples: 38b1b2e8c8c6ef425c5b6f9c3a429e53ac06ee945261e26f24e8c8b5f5751564
+      market_comparisons: 98462184621b1f4ddcac3e92271acb1e5cd64c5d434082fe70f4eca568fc360b
+  - id: ba-transport-planning
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+    field_sha256:
+      definition: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      finality: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      scope: 7833525f5ad7194d51c56a6fa876555ef1008a6946178f4c404c26266e91879d
+      pedagogical_description: ac8b5d7f7dd5656e39185d9c93c9c7e422789e43f34cee006054f2c6dbd5a6d4
+      examples: 841606afd51621ac184102c4f9bd91d5fa78f758d6ba9f305878adc5df656b35
+      market_comparisons: 7f22b5c13195e00b9643fa6d22c2343240e58d8320d12ad78532388beebe6f26
+  - id: ba-carrier-capacity-assignment
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+    field_sha256:
+      definition: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      finality: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      scope: e1a082302986c30e20da41cc260a08e26aa09692cff7030bab016b906cc0dd3d
+      pedagogical_description: 83828ab57e771db7106e638c12931314576721af3ad6a5c11fe4728c01ca5b6e
+      examples: df3c37b60ef7ec5f25fbabf3c44259bb51565b0df9c665bd69496fd1373502b6
+      market_comparisons: 55ac4aa94933fb512a75d0fe89c0855d7db5fd68d03a4029bc140d975b4c6be7
+  - id: ba-transport-dispatch
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+    field_sha256:
+      definition: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      finality: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      scope: cf6839392e9b281bf0037a8f74879ff333b63c9ee39e8ace63d9d430f16948bb
+      pedagogical_description: fbc0ab09b4d0164e1b4ac2c69d14b2b90b3e5cef94a014a6400d7b63d660d783
+      examples: 07355d0144d23363a52d8d015c592794e655356a125653282589fb174b8c9b6d
+      market_comparisons: 6cf26829cc14b0ff0b4542fcbe178f94baad81f6c792fd6263ffd066804119f9
+  - id: ba-transport-execution
+    kind: business_area
+    parent: subdomain-transport-execution-tracking
+    parent_type: contains
+    field_sha256:
+      definition: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      finality: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      scope: adccffe4f89647a0653c3bcd073d66c75dfdf4ac955e945ffaec9868ab01c5fe
+      pedagogical_description: 91522ef9c51e2eb965b8f6aa5e7a3d4efbd8b26c3d77718513c35b089daf8c5b
+      examples: 389c2ea69ef1a6e81db973937e704a1ce2229f77e7ce90a2e221b2deb1241d21
+      market_comparisons: 2fc96b0db665f6595091bec11afdc32d03a22f7f8e6da69e6a622d6ecb39cd49
+  - id: ba-transport-event-reporting
+    kind: business_area
+    parent: subdomain-transport-execution-tracking
+    parent_type: contains
+    field_sha256:
+      definition: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      finality: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      scope: 0b6f23313ad2ba980c6fd649c257e0e303b3382ae2d0a93a04cb1e2f8bad0465
+      pedagogical_description: c8e860f190996cfaa6e371eb0468c80d64e6455f28ac18634707f2d93db074cf
+      examples: e8f786f1efb77bb9513982cef9c03db477ada98e02b752670ce88bf43225f927
+      market_comparisons: 6216ee4bf3fe5268a8a28d1ebb27f007e1e765847a68da0e02166433259227dc
+  - id: ba-transport-incident-assessment
+    kind: business_area
+    parent: subdomain-transport-exception
+    parent_type: contains
+    field_sha256:
+      definition: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      finality: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      scope: e0eb638080d263e45e3b4bf5773cffe2ab5bf9a7de9af60deb2dd3f27662bcd3
+      pedagogical_description: 85780f19a663cbde4a4d99c71cf2b79efbc60bda64915c32b3eff20fa71ceba8
+      examples: 5ef9dcbbf4967444373349b320eaab76d5f0b5042ccc100c2c56d9b221aa2605
+      market_comparisons: 59b6c9d5d3667b730abecd20031e5d3fd5dcab0c3f400f4afd55419e17fc20e8
+  - id: ba-transport-recovery-coordination
+    kind: business_area
+    parent: subdomain-transport-exception
+    parent_type: contains
+    field_sha256:
+      definition: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      finality: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      scope: e740ecd2027efebdc4b83a353d2ec613f1a1282733f88424e7c1529ffd675a67
+      pedagogical_description: 10834ae6ebf3547e4ddd1c90e9da0e7705e9297230a51cf0f0a300857f425aa3
+      examples: be9fd81739ba35e5ae7c628e944d12902670cdeb6a560e2bfb548b36047e26db
+      market_comparisons: bc3fb1eddb860a5096a610f01085c02d8dd0b1ae5ed2d2625640fe03a97ade45
+  - id: domain-customs-management
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+    field_sha256:
+      definition: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      finality: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      scope: 3e8982f6a2428cd88a1bfa4cad5afc9f26ca967c1f1e6440d81c49348c9c2799
+      pedagogical_description: 0223c4670b7d7643da15e466f944874902553466eb6f33febf5c68dce35e4432
+      examples: 82ce7b10de837b0b42c2d8cba8a6b2a473144d53c4fff20bd7756f58cf4cba6a
+      market_comparisons: d069c23a05c160312b9cdf019793ed0c6a533f11793a04a91090c376fb61b634
+  - id: subdomain-customs-documentation
+    kind: area
+    parent: domain-customs-management
+    parent_type: presents
+    field_sha256:
+      definition: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      finality: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      scope: 34fe3f2217224c244a5fbe5e8f35d340cd7cb7b84a84102c4db06f87ec70e456
+      pedagogical_description: 335efde425846fee60898c35f0f18db52c0e59426ccf2ce382c3d7d5b0df3b8d
+      examples: e1c8276b6ea9fe21bbf9499f216f61346aa366665619318255d7b448110109db
+      market_comparisons: cb4e3cafde636d307a0eb9bf71529712e85793b5203ad635fb882ac13c5c7b06
+  - id: ba-customs-dossier-management
+    kind: business_area
+    parent: subdomain-customs-documentation
+    parent_type: contains
+    field_sha256:
+      definition: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      finality: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      scope: 975267a5e1a682dbd2a270ef7ef8762ccff39cca04bc3c80cb5886c26791fcbe
+      pedagogical_description: 78f6fff008c0da9fd135223535ba3b77c8c3f01231a92e03b95e292080a32914
+      examples: 4a027ae7a0ba7060225a571d7ec2a9d6102bb21fe0f0d3898670df9080dcd6b8
+      market_comparisons: c41c1b6458245493ad1442ab4882ca048e045dbc70bbaedc31231e34756f2fac
+  - id: subdomain-customs-clearance
+    kind: area
+    parent: domain-customs-management
+    parent_type: presents
+    field_sha256:
+      definition: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      finality: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      scope: 5360909bad754241a27e7214e882c55cc71d0511ffb40829e65be8506329ef29
+      pedagogical_description: 5da48beaa3329beac9b6a6c968802074f688cb6df84f4de418a41dc819fe82c7
+      examples: a156cfdeca6776ed57a8dfdcab5c8aeeb4e03b0b616e3305556412a93125db42
+      market_comparisons: a0a51f32e64fdefe047e027dd67064927c32161a955789abdd5da714ff8f4449
+  - id: ba-customs-procedure-management
+    kind: business_area
+    parent: subdomain-customs-clearance
+    parent_type: contains
+    field_sha256:
+      definition: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      finality: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      scope: 0518ba834eb792782949c63d3f1b6d0f86e98e38aff5b83a3089773fa63cb823
+      pedagogical_description: 6ff687418cdfd2c9297816526987ee6677707ff6446fad129275325a08aa8c57
+      examples: d78a256b6392528d787b91416c1d90543a0daf00610051d837207af64193985d
+      market_comparisons: 4de936f38a74f04872d75ff22de95a836ccbd95d4a1531f930ca1b246d4a25ae
+  - id: ba-demand-supply-plan-preparation
+    kind: business_area
+    parent: domain-plan
+    parent_type: contains
+    field_sha256:
+      definition: 0372c817849a79a7ca1d31f1f3721d1725cf0443420001ffdd6f97bb0a131474
+      finality: 42c78f4268620560ffb0911f2ea76dc49d00624d275d515c84c9b4c134b2a1b0
+      scope: 7a40cd2a1f8d0d1c9a80a972c970ffccf432ba5097b9a158a9edb8ccd13f6f94
+      pedagogical_description: e2ecc578815c8a649659eb9042e05f66f16970d92bbadd98d45e58861442ac9e
+      examples: 30f11c80a6a43a3fa58834495bbb2beccf40b40b875904cfac3d94fc80495783
+      market_comparisons: cc02663f0a160ba03a76c1ece42211c8202e984a415baf378d4fae164479ded9
+  - id: subdomain-demand-supply-forecasting
+    kind: area
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+    field_sha256:
+      definition: 67f1f3f01a3fb2e4f102d635cf46976644f505f2bb19d72d576ea8da59035b27
+      finality: 5006eb2ed3b344681915b3cd3a9a75c0095b202ff7c44c87a73ef3b00644bb34
+      scope: c4e2709f88ec17fb6e37edfd6ae5a82de7ad4608981b5a37a7a29b903524ee55
+      pedagogical_description: 02f37f77d639629b80850581c45f5549bf06ae54bedbcff617649f860d785403
+      examples: 4bffa3fa5f1bd48f27c5737142918c76f5fd5152841ecce19a65af3cd3bc4f37
+      market_comparisons: 63c5f276b9c961eaaa0a330e9e8648efc351bbbe4790cc0248f2feccae47b0b4
+  - id: ba-reference-maintenance
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+    field_sha256:
+      definition: 2a31f337eb35828f4ffd54f97b22110efa03b1c95066bc8a0f06730ea4668483
+      finality: 01eefcd1840c66afd0f15d21e3678a09d19f4baa5da3e67bea4d49ecea928070
+      scope: 1121183226c0902d2a24727b8aeb1584fbdc8b339696a680ed266639cd087184
+      pedagogical_description: 555c81497486bae961be706071741a0c6455fb49887cd14ccedd7a8aa6b8cae4
+      examples: 53d392451037176d83382dde96a002c16108e60ba6778f78209685ea074f0369
+      market_comparisons: b44368b9052fef4690578f0ed6d40c491ec4941cfa26740fba97a66a8e989d91
+  required_glossary: []
+  supersedes_requirements:
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - market_comparisons
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-assortment-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-catalog-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-promotion-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-purchase-agreement-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-purchase-requisition-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-purchasing-execution-coordination
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-rebate-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-sales-incentive-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-sourcing-strategy-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supplier-performance-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supplier-qualification
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supplier-rebate-incentive-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-retail-network-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: subdomain-strategic-sourcing
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: ba-supplier-delivery-follow-up
+    fields:
+    - market_comparisons
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: subdomain-product-strategy-requirements
+    fields:
+    - market_comparisons
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-sales-wholesale
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: ba-retail-customer-relationship-management
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: ba-sourcing-event-management
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-sales-wholesale
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-warehousing
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-inbound-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-storage-inventory-control
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-outbound-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-value-added-returns
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-transportation
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-transport-planning-dispatch
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-transport-execution-tracking
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-transport-exception
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-supplier-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-purchase-contract-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-receiving-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-putaway-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-storage-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-physical-inventory-control
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-picking-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-packing-shipping-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-product-preparation-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-kitting-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-returns-operations
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-returns-receiving-inspection
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-returns-disposition-execution
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-warehouse-operations-control
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-warehouse-resource-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-warehouse-work-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-planning
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-carrier-capacity-assignment
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-dispatch
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-execution
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-event-reporting
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-incident-assessment
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-transport-recovery-coordination
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-customs-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-customs-documentation
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-customs-dossier-management
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-customs-clearance
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-customs-procedure-management
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-order-lifecycle-management
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-product-references
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-process-management
+    fields:
+    - market_comparisons
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_comparisons
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: ba-order-lifecycle-management
+    fields:
+    - market_comparisons
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - market_comparisons
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - examples
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - examples
+    - market_comparisons
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: subdomain-demand-supply-forecasting
+    fields:
+    - examples
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: ba-reference-maintenance
+    fields:
+    - market_comparisons
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - market_comparisons
+  - annex: master-plan-preparation-U1103.yaml
+    collection: nodes
+    id: ba-demand-supply-plan-preparation
+    fields:
+    - examples
+    - market_comparisons
+  - annex: master-plan-preparation-U1103.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - examples
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: ba-human-work-management
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: ba-process-intelligence
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: ba-process-supervision
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: ba-reactive-workflow-management
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: subdomain-process-management
+    fields:
+    - market_comparisons
+  - annex: packaging-container-vocabulary-U899.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - market_comparisons
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-product-references
+    fields:
+    - market_comparisons
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - market_comparisons
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - market_comparisons
+  - annex: retail-customer-relationship-U1055.yaml
+    collection: nodes
+    id: subdomain-retail-commerce
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: ba-order-promising
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: ba-execution-assurance
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: ba-order-promising
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: ba-execution-assurance
+    fields:
+    - market_comparisons
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: domain-logistics-execution
+    fields:
+    - market_comparisons
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: D06
+    fields:
+    - market_comparisons
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - market_comparisons
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: ba-protection-policies
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-link-labels-U1121.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-link-labels-U1121.yaml
+    collection: nodes
+    id: subdomain-operational-procurement
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: ba-wholesale-account-management
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: subdomain-pricing-promotions-management
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: subdomain-rebates-incentives-management
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-inventory-ownership-management
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-order-lifecycle-management
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-service-planning
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-execution-coordination
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-goods-processing-order-management
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-transport-order-management
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-financial-service-order-management
+    fields:
+    - market_comparisons
+supersession_scope: Remplacement des seuls contrôles actifs des exemples complétés et des comparaisons munies d’une identité.
+  Les textes et qualifications marché, accords et preuves antérieurs restent conservés ; aucune réadoption de fiche entière.
+verification:
+  state: passed
+  base_model_sha256: bd5473044d00f7147804582a7b0b9b24d6be2680472c73177379c14acc1243a2
+  base_glossary_sha256: 691483bc19a0103beff4687778120e1602d9a92070212d326b44d4b0f0b56e78
+  backlog:
+    errors: 0
+    pending_delivery_lots: 0
+    rendered: true
+  python_tests:
+    passed: 23
+    modules:
+    - scripts.test_pedagogy
+    - scripts.test_business_scenarios
+    - scripts.test_market_comparisons
+    - scripts.test_glossary
+  frontend_tests:
+    passed: 20
+  frontend_build: passed
+  biome: passed
+  browser_recipe:
+    state: passed
+    pilot_sheets: 8
+    scoped_sheets: 137
+    total_enriched_sheets: 142
+    candidate: isolated
+    checks:
+    - examples
+    - boundaries
+    - market evidence and documented gaps
+    - snapshot references
+    - keyboard
+    - short tooltips
+    - map return
+    - mobile
+    - historical absence
+  visual_review: 'Captures bureau et mobile relues : Business Operations, Receiving Operations et Strategy & Objectives ;
+    contenu lisible sans débordement observé.'
+  invariants: 'Comparaison avec HEAD : 134 fiches modifiées, huit pilotes préservés ; noms, définitions, finalités, périmètres,
+    ordre, profondeur, relations et autres catalogues inchangés. Glossaire métier inchangé et cohérent.'
+  sources: 'Index actualisé : 3164 enregistrements ; publications figées inchangées.'
+  publication: Aucune publication créée ; Atlas conserve urbanisation-v085-2026-10-21.1.yaml.

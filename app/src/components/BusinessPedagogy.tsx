@@ -60,12 +60,13 @@ export function BusinessPedagogy({ model, node }: { model: PublishedModel; node:
           ))}
         </div>
       )}
-      {!!comparisons.length && (
+      {(comparisons.length > 0 || !!gaps?.length) && (
         <details>
           <summary>Repères dans les outils du marché</summary>
           <p>
-            Ces rapprochements illustrent une partie du périmètre. Ils ne prouvent ni une équivalence complète ni un
-            outil installé chez Beaumanoir.
+            {comparisons.length > 0
+              ? 'Ces rapprochements illustrent une partie du périmètre. Ils ne prouvent ni une équivalence complète ni un outil installé chez Beaumanoir.'
+              : 'Aucun rapprochement logiciel qualifié n’est documenté pour ce périmètre.'}
           </p>
           {comparisons.map((item) => (
             <article className="pedagogy-market" key={item.id}>
@@ -102,7 +103,7 @@ export function BusinessPedagogy({ model, node }: { model: PublishedModel; node:
           {gaps?.map((gap) => (
             <p key={gap.family}>
               <strong>Appui manquant : {gap.family === 'sap_s4hana' ? 'SAP S/4HANA' : 'Microsoft Dynamics'}. </strong>
-              Les autres repères ne comblent pas cette lacune documentaire.
+              La couverture de ce périmètre reste à documenter.
             </p>
           ))}
         </details>

@@ -25795,3 +25795,21 @@ Date : 2026-10-21. Source : Laurent, autorisation d’appliquer les préconisati
 Verbatim : « Applique les préconisations de "évolution pour les fiches métier concrètes" »
 
 Portée : appliquer le contrat de description pédagogique structurée, l’homogénéisation des descriptions courtes et la lecture « Comprendre ce périmètre » dans Atlas, en commençant par les huit fiches pilotes proposées. Réutiliser exemples, scénarios, preuves et glossaires, avec références stables et qualifications conservées ; préserver les profondeurs et les publications historiques. Le Go porte sur les préconisations présentées, sans adoption automatique des textes et correspondances rédigés ensuite. Les essais avec des lecteurs restent à organiser ; aucun résultat utilisateur n’est présumé. Aucun commit, release ou push demandé.
+
+## U1130
+
+Date : 2026-10-21. Source : Laurent, généralisation des descriptions pédagogiques des fiches métier.
+
+Verbatim : « Go pour généraliser les descriptions pédagogiques aux autres fiches métier, en commençant par les domaines et sous-domaines. »
+
+Portée : poursuivre l’enrichissement structuré initié sous U1125, en priorité sur les domaines et sous-domaines restants. Conserver les définitions courtes et les frontières métier ; exposer les explications, exemples et distinctions dans les fiches, avec des tooltips simples et sans lien « Comprendre » supplémentaire, conformément à la correction d’interface demandée dans ce chat. Réutiliser les preuves et exemples pertinents, signaler leurs limites et préserver les profondeurs de contexte. Le Go autorise le travail éditorial ; il ne donne pas d’accord de champ aux textes rédigés ensuite ni aux correspondances nouvelles. Aucun commit, release ou push demandé.
+
+## U1131
+
+Date : 2026-10-21. Source : Laurent, précision des niveaux de généralisation pédagogique U1130.
+
+Question de clarification : « Pour ce lot, veux-tu enrichir d’abord tous les domaines et sous-domaines, ou poursuivre ensuite les autres niveaux dans la même intervention ? »
+
+Verbatim : « de système à Business Area »
+
+Portée : enrichir les fiches des systèmes métier, domaines, sous-domaines et Business Areas encore dépourvues de description pédagogique, en conservant les pilotes existants. Les capacités, comportements, référentiels et la racine Enterprise Architecture ne sont pas ajoutés au périmètre de ce lot. Aucune nouvelle responsabilité, profondeur de décomposition, preuve d’installation ou validation des textes rédigés ensuite n’en est déduite.

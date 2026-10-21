@@ -74,9 +74,9 @@ try {
     return page.goto(`${base}#/${view}?${new URLSearchParams(query)}`);
   };
 
-  const output = resolve(root, '.runtime/business-sheet-pedagogy-U1125/screenshots');
+  const output = resolve(root, '.runtime/business-sheet-pedagogy-U1131/screenshots');
   await mkdir(output, { recursive: true });
-  const ids = [
+  const pilots = [
     'supply-chain-orchestration',
     'D01',
     'ba-inventory-position-management',
@@ -86,6 +86,11 @@ try {
     'D03.j',
     'BHV004',
   ];
+  const expanded = model.nodes.filter((node) =>
+    ['business_system', 'domain', 'area', 'business_area'].includes(node.kind),
+  );
+  const ids = [...new Set([...pilots, ...expanded.map((node) => node.id)])];
+  assert.equal(expanded.length, 137);
   for (const id of ids) {
     await visit({ node: id, view: 'sheet', section: 'pedagogical_description' });
     const block = page.locator('.business-pedagogy');
@@ -93,14 +98,34 @@ try {
     assert.equal(await block.locator('.pedagogy-example').count(), 1, id);
     assert.ok((await block.innerText()).includes('Contribution de ce périmètre'), id);
     assert.equal(await block.locator('.unresolved-reference').count(), 0, id);
-    await block.locator('summary').click();
-    assert.ok(await block.locator('.pedagogy-market').count(), id);
-    assert.ok((await block.innerText()).includes('équivalence complète'), id);
+    const expectedComparisons =
+      model.nodeById.get(id).fields.pedagogical_description.market_comparison_refs?.length || 0;
+    if (await block.locator('summary').count()) {
+      await block.locator('summary').click();
+      assert.equal(await block.locator('.pedagogy-market').count(), expectedComparisons, id);
+      assert.ok(
+        (await block.innerText()).includes(
+          expectedComparisons ? 'équivalence complète' : 'Aucun rapprochement logiciel qualifié',
+        ),
+        id,
+      );
+    }
     assert.equal(await block.locator('.unresolved-reference').count(), 0, id);
   }
   await visit({ node: 'D01', view: 'sheet', section: 'pedagogical_description' });
   await page.locator('.business-pedagogy').waitFor();
   await page.screenshot({ path: resolve(output, 'desktop.png') });
+  for (const id of [
+    'system-business-operations',
+    'domain-finance',
+    'ba-receiving-operations',
+    'subdomain-strategy-objectives',
+  ]) {
+    await visit({ node: id, view: 'sheet', section: 'pedagogical_description' });
+    await page.locator('.business-pedagogy').waitFor();
+    assert.equal(await page.locator('.understand-link').count(), 0);
+    await page.screenshot({ path: resolve(output, `${id}-desktop.png`) });
+  }
   // Reading uses the usual sheet tab; the map keeps only short help on names.
   await visit({ view: 'map', scope: '@root', mapDepth: '1' });
   const scmName = page.getByRole('button', { name: 'Supply Chain Management', exact: true }).first();
@@ -152,6 +177,12 @@ try {
   assert.ok((await page.locator('.business-pedagogy').innerText()).includes('Appui manquant : SAP S/4HANA'));
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   await page.screenshot({ path: resolve(output, 'mobile.png') });
+  for (const id of ['system-business-operations', 'ba-receiving-operations', 'subdomain-strategy-objectives']) {
+    await visit({ node: id, view: 'sheet', section: 'pedagogical_description' });
+    await page.locator('.business-pedagogy').waitFor();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), id);
+    await page.screenshot({ path: resolve(output, `${id}-mobile.png`) });
+  }
   // The pre-pilot publication stays the reference after a new release becomes current.
   await visit({ version: '2026-10-17.1', view: 'sheet', node: 'D01' });
   await page.getByTestId('business-sheet').waitFor();
@@ -161,7 +192,9 @@ try {
   console.log(
     JSON.stringify({
       status: 'passed',
-      pilotSheets: ids.length,
+      pilotSheets: pilots.length,
+      scopedSheets: expanded.length,
+      totalEnrichedSheets: ids.length,
       checks: [
         'examples',
         'boundaries',
