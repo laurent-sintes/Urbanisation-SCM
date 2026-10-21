@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 from scripts.structured_io import read
 from scripts.plan_checks import plan
-from scripts.verify_atlas import GROUPS, SMOKE, RELEASE
+from scripts.verify_atlas import GROUPS, SMOKE, RELEASE, scheduled_groups, check_catalogue_reports
 from scripts.preflight_push import commands
 from scripts.contract_checks import BACKLOG_MODULES
 from scripts.decision_review import publication_tool_state
@@ -60,6 +60,46 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertIn('scripts/dependency_signature.py', state)
         self.assertIn('scripts/model_index.py', state)
         self.assertFalse(any(Path(name).name.startswith(('test_', 'benchmark_')) for name in state))
+
+    def test_long_recipes_start_first_and_width_keeps_all_three_partitions(self):
+        scheduled = scheduled_groups(GROUPS)
+        self.assertEqual([name for name, _ in scheduled[:3]], ['navigation', 'catalogue-page', 'hotspots'])
+        width = [(name, scripts) for name, scripts in scheduled if name.startswith('catalogue-width')]
+        self.assertEqual(len(width), 3)
+        for index, (name, scripts) in enumerate(width):
+            self.assertEqual(name, f'catalogue-width-{index}')
+            self.assertEqual(scripts, [f'verify-catalogue-page.mjs --width --ci --shard={index} --shards=3'])
+        unchanged = {name: scripts for name, scripts in scheduled if not name.startswith('catalogue-width')}
+        self.assertEqual(unchanged, {name: scripts for name, scripts in GROUPS.items() if name != 'catalogue-width'})
+        self.assertEqual(dict(scheduled_groups(SMOKE)), SMOKE)
+
+    def test_catalogue_aggregation_rejects_missing_duplicate_stale_and_failed_results(self):
+        expected = {'version': 'published', 'cases': ['a', 'b', 'c']}
+        def report(ids, **extra):
+            return {'version': 'published', 'runId': 'run', 'errors': [],
+                    'cases': [{'caseId': item, 'failures': []} for item in ids], **extra}
+        self.assertEqual(check_catalogue_reports([report(['a', 'c']), report(['b'])], expected, 'run'), 3)
+        for reports in ([report(['a', 'b'])], [report(['a', 'b']), report(['b', 'c'])],
+                        [report(['a', 'b', 'c'], runId='old')],
+                        [report(['a', 'b', 'c'], version='old')],
+                        [report(['a', 'b', 'c'], errors=['browser error'])],
+                        [report([], cases=[{'caseId': 'a', 'failures': ['overflow']}])]):
+            with self.subTest(reports=reports), self.assertRaises(ValueError):
+                check_catalogue_reports(reports, expected, 'run')
+
+    def test_operational_docs_do_not_trigger_model_validation(self):
+        docs = ['modeles/AGENT-OPERATIONS.md', 'modeles/README.md']
+        for flag in ('contracts', 'frontend', 'browser', 'matrix'):
+            self.assertFalse(plan(docs)[flag])
+        self.assertEqual(plan(docs)['contract_profile'], 'none')
+        self.assertEqual(plan(docs + ['app/src/components/MapPanel.tsx'])['contract_profile'], 'none')
+        self.assertTrue(plan(docs + ['app/src/components/MapPanel.tsx'])['matrix'])
+        # Published notes, proofs and unknown model documents keep conservative gates.
+        for path in ('modeles/release/notes.md', 'modeles/backlog/evidence.md', 'modeles/unknown.md'):
+            self.assertTrue(plan([path])['contracts'])
+        self.assertTrue(plan(['scripts/verify_atlas.py'])['matrix'])
+        self.assertEqual(plan(['scripts/verify_atlas.py'])['contract_profile'], 'policy')
+        self.assertEqual(plan(['scripts/plan_checks.py'])['contract_profile'], 'policy')
 
     def test_frontend_python_and_global_config_select_conservative_checks(self):
         self.assertTrue(plan(['app/modeling_guide.py'])['contracts'])

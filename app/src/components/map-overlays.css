@@ -12,16 +12,6 @@
 .map-overlay-tools > * {
   pointer-events: auto;
 }
-/* Keep this trigger still when opening its panel folds the neighbouring navigator. */
-.map-overlay-tools > .map-legend {
-  order: 2;
-}
-.map-overlay-tools > .catalogue-navigator {
-  position: relative;
-  right: auto;
-  bottom: auto;
-  max-width: none;
-}
 .map-overlay-toggle {
   display: inline-flex;
   align-items: center;
@@ -31,7 +21,8 @@
   padding: 7px 9px;
   border: 1px solid #bad2c7;
   border-radius: 8px;
-  background: #fffffff5;
+  background: rgb(255 255 255 / 55%);
+  backdrop-filter: blur(3px);
   color: #285b50;
   box-shadow: 0 3px 12px #25473a14;
   font: inherit;
@@ -39,8 +30,9 @@
   cursor: pointer;
 }
 .map-overlay-toggle:hover,
+.map-overlay-toggle:focus-visible,
 .map-overlay-toggle[aria-expanded="true"] {
-  background: #edf6f1;
+  background: rgb(255 255 255 / 70%);
 }
 .map-overlay-toggle:focus-visible,
 .map-overlay-panel button:focus-visible {
@@ -55,11 +47,16 @@
   overflow: hidden;
   border: 1px solid #bad2c7;
   border-radius: 9px;
-  background: #fff;
+  background: rgb(255 255 255 / 55%);
+  backdrop-filter: blur(3px);
   color: #315b50;
   box-shadow: 0 6px 24px #173a3329;
   font-size: 12px;
   line-height: 1.5;
+}
+.map-overlay-panel:hover,
+.map-overlay-panel:focus-within {
+  background: rgb(255 255 255 / 70%);
 }
 .map-overlay-panel > header {
   display: flex;
@@ -174,5 +171,14 @@
 @media (max-width: 700px), (max-height: 500px) {
   .map-overlay-toggle > span {
     display: none;
+  }
+}
+@media (forced-colors: active) {
+  .map-overlay-toggle,
+  .map-overlay-toggle:is(:hover, :focus-visible, [aria-expanded="true"]),
+  .map-overlay-panel,
+  .map-overlay-panel:is(:hover, :focus-within) {
+    background: Canvas;
+    backdrop-filter: none;
   }
 }

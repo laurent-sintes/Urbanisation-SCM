@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
-import { waitForCatalogueGeometry } from './catalogue-geometry.mjs';
+import { assertMapOverlayCorners, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_FLOW_DIST || 'dist');
 const output = resolve(import.meta.dirname, '.runtime/qa-flow-map');
@@ -169,7 +169,9 @@ async function assertMapText(page) {
             );
           };
           const hud = [
-            ...canvas.querySelectorAll('.flow-camera-tools, .map-overlay-tools, .react-flow__minimap, .flow-scrollbar'),
+            ...canvas.querySelectorAll(
+              '.flow-camera-tools, .flow-navigator-tools, .map-overlay-tools, .react-flow__minimap, .flow-scrollbar',
+            ),
           ];
           return [...elements.slice(index + 1), ...hud]
             .filter(overlaps)
@@ -275,6 +277,11 @@ async function selectFraming(page, mode) {
 
 async function assertFloatingTools(page) {
   const canvas = page.locator('.flow-map-canvas');
+  await assertMapOverlayCorners(page);
+  const miniatureBefore = await page.locator('.react-flow__minimap').count();
+  const compact = await canvas.evaluate(
+    (element) => element.clientWidth <= 700 || matchMedia('(max-height: 500px)').matches,
+  );
   const before = { camera: await viewport(page), bounds: await canvas.boundingBox() };
   assert.equal(
     await page.locator('.flow-map-panel > .flow-camera-tools,.flow-map-legend,.flow-map-panel > .map-footer').count(),
@@ -306,7 +313,11 @@ async function assertFloatingTools(page) {
       types.includes(label),
       'The legend follows the displayed flow types',
     );
-  assert.equal(await page.locator('.react-flow__minimap').count(), 0, 'Opening the legend folds the navigator');
+  assert.equal(
+    await page.locator('.react-flow__minimap').count(),
+    compact ? 0 : miniatureBefore,
+    'Only compact windows fold the navigator when opening the legend',
+  );
   assert.deepEqual(
     { camera: await viewport(page), bounds: await canvas.boundingBox() },
     before,
@@ -643,7 +654,6 @@ try {
   await assertWorld(page, baseline, 'Folding the miniature preserves geography');
   checks.push('The desktop miniature folds without changing geography or camera');
   await assertFloatingTools(page);
-  await page.getByRole('button', { name: 'Afficher le navigateur de carte', exact: true }).click();
   checks.push('Floating legend preserves camera, restores focus and follows the displayed flow types');
 
   const beforeZoom = await viewport(page);
@@ -1252,6 +1262,26 @@ try {
     await mobile.setViewportSize(size);
     await selectFraming(mobile, 'all');
     await assertMapText(mobile);
+    await assertMapOverlayCorners(mobile);
+    assert.equal(
+      await mobile.locator('.flow-navigator-tools,.react-flow__minimap').count(),
+      0,
+      'Mobile keeps all map space available without a navigator',
+    );
+    await mobile.getByRole('button', { name: 'Légende', exact: true }).tap();
+    const legend = mobile.getByRole('dialog', { name: 'Légende', exact: true });
+    await legend.waitFor();
+    const legendBounds = await legend.boundingBox();
+    assert.ok(
+      legendBounds.x >= 0 &&
+        legendBounds.y >= 0 &&
+        legendBounds.x + legendBounds.width <= size.width + 1 &&
+        legendBounds.y + legendBounds.height <= size.height + 1,
+      'Touch legend fits the mobile screen',
+    );
+    await mobile.getByRole('button', { name: 'Fermer le panneau légende', exact: true }).tap();
+    await legend.waitFor({ state: 'detached' });
+    await mobile.screenshot({ path: resolve(output, `mobile-docks-${size.width}x${size.height}.png`) });
     for (const scrolled of [false, true]) {
       await mobile.locator('.flow-exchange-label').first().tap();
       const detail = mobile.getByRole('complementary', { name: 'Détail du flux', exact: true });
@@ -1279,16 +1309,17 @@ try {
   });
   await mobile.locator('.business-card').first().waitFor();
   await waitForCatalogueGeometry(mobile);
-  await mobile.locator('.catalogue-navigator.is-closed').waitFor();
-  await mobile.getByRole('button', { name: 'Afficher le navigateur de carte', exact: true }).tap();
-  await mobile.locator('.catalogue-navigator.is-open').waitFor();
-  assert.ok(
-    (await mobile.locator('.catalogue-navigator').boundingBox()).height <= 132,
-    'An explicitly opened mobile navigator stays shallow',
+  await assertMapOverlayCorners(mobile);
+  assert.equal(
+    await mobile.locator('.catalogue-navigator').count(),
+    0,
+    'Catalogue also removes the navigator on mobile',
   );
-  await mobile.getByRole('button', { name: 'Réduire le navigateur de carte', exact: true }).tap();
-  await mobile.locator('.catalogue-navigator.is-closed').waitFor();
-  checks.push('The Catalogue mobile navigator starts folded and supports explicit touch opening and closing');
+  await mobile.getByRole('button', { name: 'Légende', exact: true }).tap();
+  await mobile.getByRole('dialog', { name: 'Légende', exact: true }).waitFor();
+  await mobile.screenshot({ path: resolve(output, 'catalogue-mobile-legend.png') });
+  await mobile.getByRole('button', { name: 'Fermer le panneau légende', exact: true }).tap();
+  checks.push('Mobile Catalogue and Flux omit the navigator and retain a touch-accessible bottom-right legend');
 
   for (const scope of ['@root', 'system-business-operations', domain.id, 'domain-plan']) {
     if (scope !== '@root' && !byId.has(scope)) continue;

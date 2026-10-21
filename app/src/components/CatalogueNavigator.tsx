@@ -4,7 +4,6 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type RefObject,
-  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -12,7 +11,6 @@ import {
 } from 'react';
 import type { MapZoomChoice } from '../mapZoom';
 import './catalogue-navigator.css';
-import { announceMapPanel, MAP_PANEL_EVENT } from '../mapOverlayEvents';
 
 export interface CatalogueNavigatorProps {
   viewportRef: RefObject<HTMLElement | null>;
@@ -156,15 +154,6 @@ export function CatalogueNavigator({
   const visibilityContext = `${geometryKey ?? ''}:${framing}:${defaultOpen}`;
   const open = visibility?.context === visibilityContext ? visibility.open : defaultOpen;
   const setOpen = (value: boolean) => setVisibility({ context: visibilityContext, open: value });
-  useEffect(() => {
-    const scope = trigger.current?.closest('.map-panel, .universe-overview');
-    const close = (event: Event) => {
-      if ((event as CustomEvent<string>).detail !== id) setVisibility({ context: visibilityContext, open: false });
-    };
-    scope?.addEventListener(MAP_PANEL_EVENT, close);
-    return () => scope?.removeEventListener(MAP_PANEL_EVENT, close);
-  }, [id, visibilityContext]);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: Context changes intentionally remeasure DOM, not model geometry.
   useLayoutEffect(() => {
     const viewport = viewportRef.current;
@@ -177,7 +166,10 @@ export function CatalogueNavigator({
       if (!active) return;
       const next = measure(viewport);
       setGeometry((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
-      const small = viewport.clientWidth <= 700;
+      const small =
+        viewport.clientWidth <= 700 ||
+        next.stageHeight <= 260 ||
+        matchMedia('(pointer: coarse) and (max-width: 1000px)').matches;
       setCompact(small);
     };
     const schedule = () => {
@@ -335,12 +327,13 @@ export function CatalogueNavigator({
   const horizontalPosition = Math.round(
     clamp(geometry.left / Math.max(1, geometry.width - geometry.visibleWidth), 1) * 100,
   );
+  if (compact) return null;
   // Opening the overlay leaves the scroll viewport and its geometry unchanged.
-  const previewHeight = Math.max(32, Math.min(compact ? 72 : 112, geometry.stageHeight - 160));
+  const previewHeight = Math.max(32, Math.min(112, geometry.stageHeight - 160));
 
   return (
     <aside
-      className={`catalogue-navigator${open ? ' is-open' : ' is-closed'}${compact ? ' is-compact' : ''} ${className}`.trim()}
+      className={`catalogue-navigator${open ? ' is-open' : ' is-closed'} ${className}`.trim()}
       aria-label={label}
       style={{ '--catalogue-navigator-height': `${previewHeight}px` } as CSSProperties}
       onKeyDown={(event) => {
@@ -362,7 +355,6 @@ export function CatalogueNavigator({
         aria-label={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
         title={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
         onClick={() => {
-          if (!open) announceMapPanel(trigger.current, id);
           setOpen(!open);
         }}
       >

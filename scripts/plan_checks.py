@@ -14,7 +14,11 @@ def plan(paths):
     modules = set()
     for path in paths:
         flags = set()
-        if path == 'modeles/provenance/source-records.json':
+        if path in {'modeles/AGENT-OPERATIONS.md', 'modeles/README.md'}:
+            # Operational documentation is not an input to published snapshots.
+            # Keep this exception narrow: release notes and source evidence matter.
+            flags, profile = set(), 'none'
+        elif path == 'modeles/provenance/source-records.json':
             flags = {'contracts'}
             profile = 'sources'
         elif path.startswith('modeles/backlog/'):
@@ -29,7 +33,11 @@ def plan(paths):
                 flags.add('release_browser')
         elif path.startswith('scripts/') and path.endswith('.py'):
             name = Path(path).stem
-            if name.startswith('test_'):
+            if name == 'verify_atlas':
+                flags, profile = {'contracts', 'frontend', 'browser', 'matrix'}, 'policy'
+            elif name == 'plan_checks':
+                flags, profile = {'contracts'}, 'policy'
+            elif name.startswith('test_'):
                 flags, profile = {'contracts'}, 'tests'
                 modules.add('scripts:' + name)
             elif name.startswith('benchmark_'):

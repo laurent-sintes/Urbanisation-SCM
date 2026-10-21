@@ -304,11 +304,14 @@ test('a four-column Supply map keeps all 26 flow identifiers beside touch-sized 
       height: 38,
     })),
     obstacles: [
-      { x: 4, y: size.height - 56, width: 246, height: 52 },
-      { x: size.width - 56, y: 4, width: 52, height: 52 },
+      { x: 4, y: size.height - 56, width: 232, height: 52 },
+      { x: size.width - 56, y: size.height - 56, width: 52, height: 52 },
     ],
   });
-  assert.ok(result.complete, 'No flow or territory annotation may disappear on the smallest phone');
+  assert.ok(
+    result.complete,
+    `No annotation may disappear on the smallest phone (${result.titles.size}/9 titles, ${result.captions.size}/26 flows)`,
+  );
   assert.equal(result.captions.size, 26);
   assert.equal(result.titles.size, 9);
 });

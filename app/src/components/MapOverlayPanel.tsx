@@ -30,6 +30,7 @@ export function MapOverlayPanel({
   const { refs, context, floatingStyles, host } = useHotspotFloating(open, setOpen, 0.65, {
     preferredMaxWidth: 360,
     reserveToolbar: false,
+    placement: className === 'map-legend' ? 'top-end' : 'bottom-start',
   });
   const click = useClick(context);
   const dismiss = useDismiss(context);

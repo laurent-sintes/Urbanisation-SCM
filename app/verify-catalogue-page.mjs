@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
-import { catalogueTextIntegrity, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
+import { assertMapOverlayCorners, catalogueTextIntegrity, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 import { mapRouteForNode } from './src/mapNavigation.ts';
 import { mapDepthLimit } from './src/mapProjection.ts';
 import { adaptPublication, childrenOf } from './src/model.ts';
@@ -20,6 +20,8 @@ const ci = process.argv.includes('--ci');
 const only = process.argv.filter((arg) => arg.startsWith('--only=')).map((arg) => arg.slice(7));
 const shard = Number(process.argv.find((arg) => arg.startsWith('--shard='))?.slice(8) ?? -1);
 const shards = Number(process.argv.find((arg) => arg.startsWith('--shards='))?.slice(9) ?? 2);
+assert.ok(Number.isInteger(shards) && shards > 0, 'Shard count must be a positive integer');
+assert.ok(Number.isInteger(shard) && shard >= -1 && shard < shards, 'Invalid shard index');
 const output = resolve(
   import.meta.dirname,
   '.runtime/qa-catalogue-page',
@@ -103,7 +105,47 @@ const eligible = cases.filter(
 );
 const selected = eligible.filter((_, index) => shard < 0 || index % shards === shard);
 assert.ok(selected.length, 'The framing recipe must execute at least one case');
-const report = { version: model.version, cases: [], errors: [] };
+const caseId = (item, variant) =>
+  JSON.stringify([
+    item.scope || '@root',
+    item.node || '@root',
+    item.depth,
+    item.focus || '',
+    item.screen.name,
+    item.layer.name,
+    variant,
+  ]);
+const expectedVariants = (item) => [
+  'initial',
+  ...(widthMode
+    ? [
+        'reserved-scrollbar',
+        'after-scrollbar',
+        'fullscreen',
+        'after-fullscreen',
+        'page-roundtrip',
+        'after-page',
+        'resized',
+        'after-resize',
+      ]
+    : ci && item.layer.name === 'both'
+      ? ['landscape-transition', 'fullscreen-transition', 'fullscreen-return-transition', 'resize-return-transition']
+      : []),
+  ...(item.layer.hotspots ? ['expanded-legend', 'legend-return'] : []),
+  ...(!widthMode && item.layer.name === 'both' && item.screen.name === 'desktop' && item.depth === 0
+    ? ['fullscreen']
+    : []),
+];
+if (process.argv.includes('--list-cases')) {
+  console.log(
+    JSON.stringify({
+      version: model.version,
+      cases: selected.flatMap((item) => expectedVariants(item).map((variant) => caseId(item, variant))),
+    }),
+  );
+  process.exit(0);
+}
+const report = { version: model.version, runId: process.env.ATLAS_QA_RUN_ID, cases: [], errors: [] };
 const browser = await chromium.launch(browserOptions);
 const base = 'https://atlas.test/';
 try {
@@ -135,7 +177,7 @@ try {
     await page.locator('.business-card,.overview-system,.graph-canvas.empty-state h2').first().waitFor();
     await page.getByRole('button', { name: widthMode ? 'Pleine largeur' : 'Pleine page', exact: true }).click();
     await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(500);
+    // verify() waits for stable measured geometry and the requested framing below.
     const capture = () =>
       page.evaluate(() => {
         const viewport = document.querySelector('.map-scroll-viewport,.overview-map-scroll');
@@ -247,8 +289,8 @@ try {
       const state = await capture();
       const integrity = await page.evaluate(catalogueTextIntegrity);
       const failures = [];
-      if (variant === 'initial' && state.width <= 700 && state.navigator?.includes('is-open'))
-        failures.push('mobile navigator starts open');
+      if (variant === 'initial' && (state.width <= 700 || state.height <= 260) && state.navigator)
+        failures.push('navigator present on a small mobile canvas');
       if (state.scale < 0.5 && item.layer.hotspots) {
         const markers = await page.locator('.hotspot-map-marker').evaluateAll((elements) =>
           elements.map((element) => ({
@@ -327,10 +369,11 @@ try {
           }),
         );
       }
-      report.cases.push({ ...item, variant, failures, ...state });
+      report.cases.push({ ...item, caseId: caseId(item, variant), variant, failures, ...state });
       return state;
     };
     const baseline = await verify('initial');
+    await assertMapOverlayCorners(page);
     if (index === 0) await page.screenshot({ path: resolve(output, 'initial.png') });
     if (widthMode) {
       // A classic scrollbar reserves horizontal space even when headless Chromium

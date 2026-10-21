@@ -20,7 +20,6 @@ import {
 } from '../flowMapViewport';
 import { filterMapHotspots, hotspotsInScope } from '../hotspotMap';
 import { layoutHotspots } from '../hotspotPlacement';
-import { announceMapPanel, MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import { childrenOf, visibleAncestorId } from '../model';
 import { kindLabel } from '../presentation';
 import type { AtlasRelation, PublishedModel } from '../types';
@@ -226,19 +225,13 @@ export function FlowMapPanel(props: MapPanelProps) {
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [framing, setFraming] = useState<FlowFraming>(() => cameraFramings.get(key) || 'standard');
   const [expanded, setExpanded] = useState(false);
-  const [showMiniMap, setShowMiniMap] = useState(true);
+  const [miniMapChoice, setMiniMapChoice] = useState(true);
   const navigatorOwner = useId();
-  useEffect(() => {
-    const element = panel.current;
-    const close = (event: Event) => {
-      if ((event as CustomEvent<string>).detail !== navigatorOwner) setShowMiniMap(false);
-    };
-    element?.addEventListener(MAP_PANEL_EVENT, close);
-    return () => element?.removeEventListener(MAP_PANEL_EVENT, close);
-  }, [navigatorOwner]);
-
   const [shortScreen, setShortScreen] = useState(() => matchMedia('(max-height: 500px)').matches);
   const [coarsePointer, setCoarsePointer] = useState(() => matchMedia('(pointer: coarse)').matches);
+  const navigatorAvailable =
+    size.width > 700 && size.height > 260 && !shortScreen && !(coarsePointer && size.width <= 1000);
+  const showMiniMap = navigatorAvailable && miniMapChoice;
   const [arrows, setArrows] = useState(() => arrowChoices.get(key) ?? true);
   const [flowTypes, setFlowTypes] = useState<readonly FlowType[]>(() => flowTypeChoices.get(key) || FLOW_TYPES);
   const [openedExchange, setOpenedExchange] = useState<{ key: string; exchange: ExchangeGroup } | null>(null);
@@ -458,7 +451,7 @@ export function FlowMapPanel(props: MapPanelProps) {
     const wheel = (event: WheelEvent) => {
       if (
         (event.target as Element).closest(
-          '.flow-camera-tools, .map-overlay-tools, .flow-scrollbar, .flow-exchange-detail',
+          '.flow-camera-tools, .flow-navigator-tools, .react-flow__minimap, .map-overlay-tools, .flow-scrollbar, .flow-exchange-detail',
         )
       )
         return;
@@ -590,7 +583,9 @@ export function FlowMapPanel(props: MapPanelProps) {
       if (!surface) return;
       const bounds = surface.getBoundingClientRect();
       const rectangles = [
-        ...surface.querySelectorAll('.flow-camera-tools, .map-overlay-tools, .react-flow__minimap, .flow-scrollbar'),
+        ...surface.querySelectorAll(
+          '.flow-camera-tools, .flow-navigator-tools, .map-overlay-tools, .react-flow__minimap, .flow-scrollbar',
+        ),
       ].map((element) => {
         const rect = element.getBoundingClientRect();
         return {
@@ -772,7 +767,7 @@ export function FlowMapPanel(props: MapPanelProps) {
         }
       }
       for (const element of surface.querySelectorAll(
-        '.flow-camera-tools, .map-overlay-tools, .react-flow__minimap, .flow-map-note, .flow-scrollbar, .flow-exchange-label',
+        '.flow-camera-tools, .flow-navigator-tools, .map-overlay-tools, .react-flow__minimap, .flow-map-note, .flow-scrollbar, .flow-exchange-label',
       ))
         add(element.getBoundingClientRect());
       setMarkerObstacles((previous) => (JSON.stringify(previous) === JSON.stringify(obstacles) ? previous : obstacles));
@@ -1168,9 +1163,11 @@ export function FlowMapPanel(props: MapPanelProps) {
             proOptions={{ hideAttribution: true }}
             ariaLabelConfig={{ 'minimap.ariaLabel': 'Vue miniature de la carte spatiale' }}
           >
-            {showMiniMap && size.width > 700 && !shortScreen && (
+            {showMiniMap && (
               <MiniMap
-                style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
+                id={`${navigatorOwner}-preview`}
+                style={{ width: 160, height: 100 }}
+                bgColor="transparent"
                 pannable
                 zoomable
                 onClick={(_, point) => {
@@ -1181,7 +1178,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                   });
                 }}
                 nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
-                maskColor="#edf3f0b0"
+                maskColor="#edf3f01a"
               />
             )}
           </ReactFlow>
@@ -1495,23 +1492,32 @@ export function FlowMapPanel(props: MapPanelProps) {
                 : undefined
             }
           />
-          {size.width > 700 && !shortScreen && (
+        </div>
+        {navigatorAvailable && (
+          <div className="flow-navigator-tools">
             <button
               type="button"
               className="map-overlay-toggle flow-navigator-toggle"
               aria-label={showMiniMap ? 'Réduire le navigateur de carte' : 'Afficher le navigateur de carte'}
               aria-expanded={showMiniMap}
+              aria-controls={showMiniMap ? `${navigatorOwner}-preview` : undefined}
               title="Navigateur de carte"
-              onClick={(event) => {
-                if (!showMiniMap) announceMapPanel(event.currentTarget, navigatorOwner);
-                setShowMiniMap((visible) => !visible);
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && showMiniMap) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setMiniMapChoice(false);
+                }
+              }}
+              onClick={() => {
+                setMiniMapChoice(!showMiniMap);
               }}
             >
               <MapIcon size={16} />
               <span>Navigateur</span>
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

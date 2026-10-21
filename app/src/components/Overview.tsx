@@ -699,12 +699,12 @@ export function Overview({
                 : undefined
             }
           />
-          <CatalogueNavigator
-            viewportRef={scroll}
-            geometryKey={`${model.version}:@root:${detail}:${zoomChoice}`}
-            framing={zoomChoice}
-          />
         </div>
+        <CatalogueNavigator
+          viewportRef={scroll}
+          geometryKey={`${model.version}:@root:${detail}:${zoomChoice}`}
+          framing={zoomChoice}
+        />
       </div>
     </section>
   );

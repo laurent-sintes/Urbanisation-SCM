@@ -208,12 +208,12 @@ export function MapPanel({
                 : undefined
             }
           />
-          <CatalogueNavigator
-            viewportRef={scroll}
-            geometryKey={`${model.version}:${scopeId || '@root'}:${mapDepth}:${zoomChoice}`}
-            framing={zoomChoice}
-          />
         </div>
+        <CatalogueNavigator
+          viewportRef={scroll}
+          geometryKey={`${model.version}:${scopeId || '@root'}:${mapDepth}:${zoomChoice}`}
+          framing={zoomChoice}
+        />
       </div>
     </section>
   );

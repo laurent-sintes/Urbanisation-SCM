@@ -5,6 +5,7 @@ import {
   FloatingPortal,
   flip,
   offset,
+  type Placement,
   safePolygon,
   shift,
   size,
@@ -91,7 +92,7 @@ export function useHotspotFloating(
   open: boolean,
   onOpenChange: (open: boolean) => void,
   maxHeightRatio?: number,
-  options: { preferredMaxWidth?: number; reserveToolbar?: boolean } = {},
+  options: { preferredMaxWidth?: number; reserveToolbar?: boolean; placement?: Placement } = {},
 ) {
   const reserveToolbar = options.reserveToolbar ?? maxHeightRatio !== undefined;
   const host = useFloatingHost();
@@ -99,7 +100,7 @@ export function useHotspotFloating(
     open,
     onOpenChange,
     strategy: 'fixed',
-    placement: 'bottom-start',
+    placement: options.placement ?? 'bottom-start',
     middleware: [
       offset(10),
       flip(() => ({ padding: safePadding(reserveToolbar) })),
