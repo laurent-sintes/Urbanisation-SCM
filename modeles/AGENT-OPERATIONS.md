@@ -42,6 +42,8 @@ Les recherches marché, les contributions utiles et les arbitrages courants rest
 
 ## Solutions d’environnement éprouvées
 
+- **Script Python lancé via l’alias WindowsApps inaccessible.** Si `python scripts/refresh_sources.py` échoue au démarrage sur `C:\Users\laure\AppData\Local\Microsoft\WindowsApps\python.exe`, vérifier `Get-Command python -All`, puis, dans le même processus PowerShell, exécuter `$env:PATH = 'C:\Users\laure\AppData\Local\Python\bin;' + $env:PATH; python --version; python scripts/refresh_sources.py`. Solution confirmée le 2026-10-21 ; portée : scripts Python locaux de ce poste, sans modification du PATH système.
+
 - **Script temporaire Python nommé inspect.py — import standard masqué.** Un script placé à côté du programme exécuté peut masquer le module standard inspect et exécuter ses impressions lors des imports. Renommer uniquement le script temporaire concerné : Rename-Item -LiteralPath .runtime/business-sheet-pedagogy-U1125/inspect.py -NewName inspect_pilots.py. Solution confirmée le 2026-10-21 ; portée : scripts temporaires de cette recette, sans changement des bibliothèques Python.
 
 - **Processus de recette Windows — accès CIM refusé dans le bac à sable.** Pour identifier puis arrêter une recette de ce lot avant un nouveau build, lire `Win32_Process` avec `sandbox_permissions: require_escalated`, vérifier son PID et sa ligne de commande exacte, puis arrêter seulement ce processus et ses descendants avec `Stop-Process`. Ne jamais cibler tous les processus Node ou Chromium : ils peuvent appartenir à d’autres travaux. Solution confirmée le 2026-10-20 ; portée : reprise des navigateurs de test Atlas créés par le lot en cours, sans arrêter le serveur utilisateur.

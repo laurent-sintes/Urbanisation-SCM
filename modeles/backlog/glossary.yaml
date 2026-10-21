@@ -3947,8 +3947,10 @@ terms:
   short_description: Coordination et optimisation métier de la satisfaction des demandes Supply.
   definition: Périmètre métier qui coordonne et optimise la satisfaction des demandes en mobilisant commandes, stocks, engagements
     et services exécutants.
-  context: Sens fonctionnel local porté par [Supply Chain Management](model:supply-chain-orchestration), distinct du côté
-    ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
+  context: |-
+    Sens fonctionnel local porté par [Supply Chain Management](model:supply-chain-orchestration), distinct du côté ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
+
+    Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
   notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
     la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
     toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
@@ -3980,6 +3982,10 @@ terms:
   - U853
   - U1120
   - U1121
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -4130,6 +4136,76 @@ terms:
       formation ne sont pas des frontières imposées au domaine.
     definition_choice: Conserver la gestion des plans, stocks, commandes et engagements au périmètre FLOW, avec coopération
       explicite des autres responsables. Ni production interne ni internalisation de la logistique exigées par ce nom.
+  - id: market-TER035-U1134-ms_proc
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Procurement and sourcing overview
+    concept_name: Procurement and sourcing overview
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Les commandes peuvent avoir plusieurs origines, dont planification, demande et accord ; leurs approbations
+      sont configurables.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en mobilisant
+      faisabilité, économie et cycle d'achat.
+    scope_summary: Les commandes peuvent avoir plusieurs origines, dont planification, demande et accord ; leurs approbations
+      sont configurables.
+    approach_summary: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en mobilisant
+      faisabilité, économie et cycle d'achat.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en
+      mobilisant faisabilité, économie et cycle d'achat.
+    source_title: Procurement and sourcing overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: Identifying a need ; Purchase orders
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER035-U1134-sap_ctp
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01 / PP/DS
+    element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    concept_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en mobilisant
+      faisabilité, économie et cycle d'achat.
+    scope_summary: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    approach_summary: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en mobilisant
+      faisabilité, économie et cycle d'achat.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Permettre au [SCM](glossary:TER035) de décider les appoints dans un cadre autorisé et traçable, en
+      mobilisant faisabilité, économie et cycle d'achat.
+    source_title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
   market_inspiration:
     choice: Nommer le périmètre FLOW qui coordonne la satisfaction des demandes avec commandes, stocks, engagements et services.
       Supply, dans ce sens fonctionnel local, ne désigne ni les seules ressources disponibles ni toute la Supply Chain.
@@ -7603,7 +7679,9 @@ terms:
 
     Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
 
-    La capacité est mobilisable par [Master Planning](model:D05.f) pour le plan collectif sans créer une seconde capacité. Les engagements restent dans les commandes ; MAP conserve son carnet d’achat.
+    La capacité est mobilisable par [Master Planning](model:D05.f) pour le plan collectif sans créer une seconde capacité. Les engagements restent dans les commandes ; dans l’existant documenté, MAP conserve son carnet d’achat. Le mode cible ci-dessous précise les décisions possibles dans le [SCM](glossary:TER035).
+
+    Dans le mode [offshore](glossary:TER382) / [nearshore](glossary:TER383), vérifier dès avant l'engagement initial quelle quantité d'appoint pourrait être obtenue avant la dernière date utile à la vente, puis réévaluer cette possibilité pendant la saison. Examiner produit qualifié, matières, capacité fournisseur disponible ou réservée, minimums, fabrication, transport et contrôle à réception. Une capacité annoncée mais non confirmée reste une hypothèse explicite ; le pays du fournisseur ne garantit pas son délai. Le résultat éclaire le socle initial et la décision d'appoint du [Supply Chain Management](model:supply-chain-orchestration). [Replenishment](model:D05.e) détermine le complément, le [PTP](glossary:TER068) compare sa valeur et [Purchase Order](model:D04.j) porte l'achat autorisé. La faisabilité seule n'autorise ni ne passe la commande.
   notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
     comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
@@ -7630,6 +7708,10 @@ terms:
   - U1008
   - U1009
   - U1080
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   source_locator:
     path: connaissance/33-frontieres-ctp.md
     anchor: ctp
@@ -7698,6 +7780,76 @@ terms:
     term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
     definition_choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires,
       en explicitant les conditions de faisabilité.
+  - id: market-TER045-U1134-ms_ctp
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Calculate sales order delivery dates using CTP
+    concept_name: Calculate sales order delivery dates using CTP
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La vérification des matières, capacités et délais contribue à établir une date réalisable ; les modalités
+      dépendent du moteur de planification.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    scope_summary: La vérification des matières, capacités et délais contribue à établir une date réalisable ; les modalités
+      dépendent du moteur de planification.
+    approach_summary: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    source_title: Calculate sales order delivery dates using CTP
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: How CTP compares to ATP ; Batch CTP
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER045-U1134-sap_ctp
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01 / PP/DS
+    element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    concept_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    scope_summary: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    approach_summary: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Vérifier le recours avant l'engagement initial et pendant la saison ; le résultat ne vaut pas autorisation
+      de commander.
+    source_title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
   market_inspiration:
     choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
       les conditions de faisabilité.
@@ -11765,6 +11917,8 @@ terms:
     Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
 
     La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer. La version affermie remplace la contribution de sa proposition planifiée dans la couverture ; préserver la filiation pour éviter un double compte.
+
+    La décision à l'origine d'un achat peut provenir de plusieurs domaines : socle [offshore](glossary:TER382) préparé dès [Design & Development](model:system-design-development), parcours d'achat, ou appoint [nearshore](glossary:TER383) décidé dans le [Supply Chain Management](model:supply-chain-orchestration). Conserver besoin d'origine, scénario ou plan retenu, résultat [CTP](glossary:TER045), décision, autorité ou règle de délégation, conditions et liens entre propositions et commandes. Le domaine d'origine de la décision ne crée pas un second cycle de commande. La capacité applique les transitions autorisées et tient les réponses et engagements ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve les accords et la conduite des échanges fournisseur. Une vérification [CTP](glossary:TER045) positive reste distincte de l'autorisation, de l'[affermissement](glossary:TER197) et de la confirmation fournisseur. Ce mode possible ne préjuge ni de l'équipe qui saisit la commande ni de l'outil qui la transmet.
   notes: 'Famille gérée par [Purchase Order](model:D04.j). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
     U391 : inclut l’achat de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat
@@ -11790,6 +11944,10 @@ terms:
   - U870
   - U871
   - U877
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -11873,6 +12031,70 @@ terms:
     definition_choice: 'Le purchase order formalise les articles, quantités et conditions de l’achat, éventuellement à partir
       de documents de référence. Frontière conservée : Le document d’achat ne se confond pas avec la prestation logistique
       confiée pour exécuter cet achat.'
+  - id: market-TER070-U1134-ms_firm
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Firm planned orders
+    concept_name: Firm planned orders
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: L'affermissement transforme les propositions en commandes ; il peut être manuel, automatique ou fondé sur
+      une sélection selon des critères.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    scope_summary: L'affermissement transforme les propositions en commandes ; il peut être manuel, automatique ou fondé sur
+      une sélection selon des critères.
+    approach_summary: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    source_title: Firm planned orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/planned-order-firming
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: Introduction ; Manual firming ; Auto-firming
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER070-U1134-sap_proc
+    vendor: SAP
+    product: SAP S/4HANA Sourcing and Procurement
+    element_name: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    concept_name: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La source est affectée à la demande d'achat avant sa conversion en commande ; proposition et commande sont
+      distinctes.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    scope_summary: La source est affectée à la demande d'achat avant sa conversion en commande ; proposition et commande sont
+      distinctes.
+    approach_summary: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Tenir un cycle d'achat unique en conservant l'origine de décisions prises dans plusieurs domaines.
+    source_title: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/af9ef57f504840d2b81be8667206d485/2f81b65334e6b54ce10000000a174cb4.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use ; Prerequisites, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
   market_inspiration:
     choice: Nommer la commande qui exprime ce qui est acheté à un fournisseur. Purchase Order inclut biens et prestations,
       avec leurs conditions applicables.
@@ -12401,7 +12623,9 @@ terms:
 
     Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Master Plan Management](model:ba-master-plan-management) expose ces arbitrages avec priorités, protections et affectations.
 
-    Le [Master Plan Management](model:ba-master-plan-management) pilote la combinaison des décisions ; [Order Backlog Management](model:ba-order-backlog-management) porte les priorités, affectations et libérations du carnet. [Replenishment](model:D05.e) relève de [Stock Optimization](model:ba-physical-stock-configuration-optimization), sans reprendre la planification d’achat MAP.
+    Le [Master Plan Management](model:ba-master-plan-management) pilote la combinaison des décisions ; [Order Backlog Management](model:ba-order-backlog-management) porte les priorités, affectations et libérations du carnet. [Replenishment](model:D05.e) relève de [Stock Optimization](model:ba-physical-stock-configuration-optimization). Dans l’existant documenté, MAP porte la planification et le carnet d’achat ; le mode cible ci-dessous précise la décision d’appoint possible dans le [SCM](glossary:TER035).
+
+    Mode possible de complément saisonnier : à partir du socle [offshore](glossary:TER382) engagé et des besoins révisés, déterminer quantité, source admissible et date de l'appoint [nearshore](glossary:TER383). Mobiliser le [CTP](glossary:TER045) pour vérifier la disponibilité utile et le [PTP](glossary:TER068) pour comparer service, coûts et excédent final. La décision de déclencher cet achat peut être prise dans le [Supply Chain Management](model:supply-chain-orchestration), selon les politiques et délégations applicables ; elle n'est pas réservée par principe à [Sourcing and Procurement](model:domain-sourcing-procurement). Distinguer le résultat du calcul, le choix accepté et son autorisation, humaine ou fondée sur des règles. [Plan Application](model:D02.e) transmet le choix autorisé et [Purchase Order](model:D04.j) porte la commande résultante. Hors des limites de délégation ou des accords, demander l'arbitrage approprié. La recommandation seule ne vaut toujours pas engagement fournisseur.
   notes: |-
     [Replenishment](model:D05.e) intègre les calculs des besoins nets et détermine les quantités et dates à retenir. La décision, la mise à jour transactionnelle, les [Orders](glossary:TER012) nécessaires, leurs promesses et les mouvements physiques restent distincts. Une application automatique est possible ; aucune création directe de [Purchase Order](glossary:TER070) ni validation humaine systématique n’est présumée.
 
@@ -12438,6 +12662,10 @@ terms:
   - U1018
   - U1019
   - U1080
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u221
@@ -12653,6 +12881,75 @@ terms:
     - U891
     term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
     definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+  - id: market-TER074-U1134-ms_trade
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Master planning with purchase trade agreements
+    concept_name: Master planning with purchase trade agreements
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une source.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous délégation,
+      avant application aux commandes.
+    scope_summary: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une
+      source.
+    approach_summary: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous
+      délégation, avant application aux commandes.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous
+      délégation, avant application aux commandes.
+    source_title: Master planning with purchase trade agreements
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/purchase-trade-agreement
+    source_version: Mise à jour du 29 mai 2026
+    source_locator: Prepare your system ; Search criterion
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER074-U1134-sap_ctp
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01 / PP/DS
+    element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    concept_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous délégation,
+      avant application aux commandes.
+    scope_summary: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    approach_summary: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous
+      délégation, avant application aux commandes.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Déterminer les compléments ; leur déclenchement peut être décidé dans le [SCM](glossary:TER035) sous
+      délégation, avant application aux commandes.
+    source_title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
   market_inspiration:
     choice: Déterminer les apports initiaux et successifs nécessaires aux besoins et objectifs de stock. Le lancement et le
       réassort décrivent des situations, sans fusion avec la commande ou la réception.
@@ -16803,15 +17100,19 @@ terms:
   short_description: Préparer l’offre et les produits qui pourront être achetés, vendus et réalisés.
   definition: Préparer ce que l’entreprise proposera et saura réaliser, depuis les études jusqu’au développement de l’offre
     et des produits.
-  context: Concevoir l’offre et les produits, préparer et faire évoluer leurs définitions. [Product Portfolio & Collection
-    Management](glossary:TER206), [Product Development](glossary:TER210) et [Product Definition & Lifecycle Management](glossary:TER214)
-    décrivent les responsabilités utiles aux interfaces. Ce système reste un contexte autour du cœur FLOW ; les sources responsables
-    des définitions sont à établir par objet et aucune application installée n’est présumée.
+  context: |-
+    Concevoir l’offre et les produits, préparer et faire évoluer leurs définitions. [Product Portfolio & Collection Management](glossary:TER206), [Product Development](glossary:TER210) et [Product Definition & Lifecycle Management](glossary:TER214) décrivent les responsabilités utiles aux interfaces. Ce système reste un contexte autour du cœur FLOW ; les sources responsables des définitions sont à établir par objet et aucune application installée n’est présumée.
+
+    Mode possible de préparation des achats : anticiper un socle [offshore](glossary:TER382) dès les choix de collection et de produit. Préciser volumes envisagés, jalons, matières et produits pouvant aussi être fabriqués en [nearshore](glossary:TER383), avec [Sourcing and Procurement](model:domain-sourcing-procurement). Les hypothèses alimentent les plans du [Supply Chain Management](model:supply-chain-orchestration) ; elles ne constituent pas encore une commande ferme. La décision de commander peut être répartie entre domaines selon le besoin et les délégations : préparation du socle très en amont, puis appoint décidé par le [SCM](glossary:TER035) pendant la saison. La tenue de la commande et de ses engagements reste dans [Purchase Order](model:D04.j). Ce mode cible ne décrit pas une réalisation installée.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
   source_refs:
   - U780
   - CMP309
   - U975
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   review:
     state: partial
     adopted_scope: Niveau, composition et frontières du lot U975 ; accords historiques inchangés préservés.
@@ -16876,6 +17177,76 @@ terms:
     - ELM842
     - CMP309
     status: proposed
+  - id: market-TER105-U1134-ms_design
+    vendor: Microsoft
+    product: Dynamics 365
+    element_name: Design to retire end-to-end overview
+    concept_name: Design to retire end-to-end overview
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La préparation produit alimente les achats ; des consultations fournisseur peuvent précéder la définition
+      finale du produit.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours [nearshore](glossary:TER383),
+      sans tenir ici les commandes.
+    scope_summary: La préparation produit alimente les achats ; des consultations fournisseur peuvent précéder la définition
+      finale du produit.
+    approach_summary: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours
+      [nearshore](glossary:TER383), sans tenir ici les commandes.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours
+      [nearshore](glossary:TER383), sans tenir ici les commandes.
+    source_title: Design to retire end-to-end overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: Design to retire process relationship
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER105-U1134-sap_design
+    vendor: SAP
+    product: SAP S/4HANA 2025
+    element_name: Feature Scope Description
+    concept_name: Feature Scope Description
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La préparation et le développement des produits, les collections et la prévision contribuent aux décisions
+      amont. Le parcours mode relie conception, développement, achat et vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours [nearshore](glossary:TER383),
+      sans tenir ici les commandes.
+    scope_summary: La préparation et le développement des produits, les collections et la prévision contribuent aux décisions
+      amont. Le parcours mode relie conception, développement, achat et vente.
+    approach_summary: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours
+      [nearshore](glossary:TER383), sans tenir ici les commandes.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Préparer très en amont les choix qui permettront le socle [offshore](glossary:TER382) et un recours
+      [nearshore](glossary:TER383), sans tenir ici les commandes.
+    source_title: Feature Scope Description
+    source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    source_version: 3.0, 7 octobre 2026, FPS02
+    source_locator: 2.8 R&D/Engineering ; 4.1.3.3 (p.583) ; 4.1.3.1.6 (p.575)
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
 - id: TER106
   name: Business Operations
   short_description: Acheter, vendre, prévoir les besoins et coordonner les engagements des marques.
@@ -17213,6 +17584,8 @@ terms:
     Dans l’existant, MAP porte la planification et le carnet d’achat. [Master Planning](model:D05.f) peut proposer un apport via [CTP](glossary:TER045) ; seuls les choix acceptés et autorisés sont appliqués. [Purchase Order](model:D04.j) conserve identité, engagements et transitions ; [Logistics](model:domain-logistics-execution) réalise les opérations physiques, et Finance les traitements comptables et règlements.
 
     Sourcing and Procurement décrit désormais les Business Areas et leurs capacités ; les comportements restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Management.
+
+    Dans le mode [offshore](glossary:TER382) / [nearshore](glossary:TER383), ce domaine prépare les sources admissibles, négocie les accords, les minimums, les délais et, si nécessaire, les réservations de matières ou de capacité. Il coopère avec [Design & Development](model:system-design-development) pour le socle préparé très en amont. Cela n'impose pas de centraliser ici chaque décision de commander : le [Supply Chain Management](model:supply-chain-orchestration) peut décider d'un appoint dans le cadre négocié et la délégation applicable. Une exception hors de ce cadre appelle l'autorisation ou la renégociation appropriée. Le parcours fournisseur reste coordonné avec les décisions du [SCM](glossary:TER035) et [Purchase Order](model:D04.j) conserve le cycle unique de la commande. Cette répartition possible distingue décision de couvrir un besoin, contrôle de faisabilité, autorisation et engagement fournisseur.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées. U978 complète
     le contexte par quatre sous-domaines ; identité et frontières Core préservées.
   source_refs:
@@ -17232,6 +17605,10 @@ terms:
   - U1027
   - U1079
   - U1080
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   review:
     state: proposed
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
@@ -17302,6 +17679,76 @@ terms:
     term_choice: Sourcing and Procurement nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
     definition_choice: Choisir et qualifier les sources d’achat, tenir les accords et conduire les achats opérationnels de
       biens et prestations. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+  - id: market-TER109-U1134-ms_proc
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Procurement and sourcing overview
+    concept_name: Procurement and sourcing overview
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Les commandes peuvent avoir plusieurs origines, dont planification, demande et accord ; leurs approbations
+      sont configurables.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres domaines
+      selon les délégations.
+    scope_summary: Les commandes peuvent avoir plusieurs origines, dont planification, demande et accord ; leurs approbations
+      sont configurables.
+    approach_summary: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres domaines
+      selon les délégations.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres
+      domaines selon les délégations.
+    source_title: Procurement and sourcing overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: Identifying a need ; Purchase orders
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER109-U1134-sap_proc
+    vendor: SAP
+    product: SAP S/4HANA Sourcing and Procurement
+    element_name: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    concept_name: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La source est affectée à la demande d'achat avant sa conversion en commande ; proposition et commande sont
+      distinctes.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres domaines
+      selon les délégations.
+    scope_summary: La source est affectée à la demande d'achat avant sa conversion en commande ; proposition et commande sont
+      distinctes.
+    approach_summary: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres domaines
+      selon les délégations.
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Tenir les sources et le cadre négocié, avec une décision de déclenchement pouvant relever d'autres
+      domaines selon les délégations.
+    source_title: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/af9ef57f504840d2b81be8667206d485/2f81b65334e6b54ce10000000a174cb4.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use ; Prerequisites, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
   last_modified: '2026-10-15T00:00:00Z'
   market_gaps: []
   revision: 1
@@ -30969,14 +31416,10 @@ terms:
   short_description: Orienter les produits, composer les collections et prévoir demande et supply.
   definition: Choisir les orientations produit, composer les collections et prévoir leur demande et leur supply possibles
     avant la planification opérationnelle.
-  context: Choisir les orientations et les produits à développer. [Product Strategy & Requirements](model:subdomain-product-strategy-requirements)
-    examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les produits
-    et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande future,
-    supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-    définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
-    qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
-    amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
-    conserve les objectifs et budgets financiers.
+  context: |-
+    Choisir les orientations et les produits à développer. [Product Strategy & Requirements](model:subdomain-product-strategy-requirements) examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification) définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221) conserve les objectifs et budgets financiers.
+
+    Mode possible pour une collection : préparer très tôt les volumes du socle [offshore](glossary:TER382) et les lignes susceptibles d'un appoint [nearshore](glossary:TER383). Définition du produit, matières, jalons et hypothèses de demande permettent d'examiner les options avec [Sourcing and Procurement](model:domain-sourcing-procurement). Le [Supply Chain Management](model:supply-chain-orchestration) utilise ces contributions pour dimensionner le socle et le recours possible ; son [CTP](glossary:TER045) vérifie ce que les ressources permettent réellement d'obtenir à temps. Une hypothèse de collection ne constitue ni une capacité fournisseur réservée ni une commande ferme. La décision d'achat peut être portée par différents domaines selon son objet et la délégation applicable.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -30985,6 +31428,10 @@ terms:
   - U1101
   - U974
   - U975
+  - U1132
+  - U1133
+  - U1134
+  - U1135
   review:
     state: partial
     adopted_scope: Nom et rattachement validés U975 ; précisions de contenu U1092–U1093 proposées.
@@ -31061,6 +31508,76 @@ terms:
     - U974
     - U1093
     status: proposed
+  - id: market-TER206-U1134-ms_design
+    vendor: Microsoft
+    product: Dynamics 365
+    element_name: Design to retire end-to-end overview
+    concept_name: Design to retire end-to-end overview
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La préparation produit alimente les achats ; des consultations fournisseur peuvent précéder la définition
+      finale du produit.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    scope_summary: La préparation produit alimente les achats ; des consultations fournisseur peuvent précéder la définition
+      finale du produit.
+    approach_summary: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    source_title: Design to retire end-to-end overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+    source_version: Documentation en ligne consultée le 21 octobre 2026
+    source_locator: Design to retire process relationship
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER206-U1134-sap_design
+    vendor: SAP
+    product: SAP S/4HANA 2025
+    element_name: Feature Scope Description
+    concept_name: Feature Scope Description
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La préparation et le développement des produits, les collections et la prévision contribuent aux décisions
+      amont. Le parcours mode relie conception, développement, achat et vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    scope_summary: La préparation et le développement des produits, les collections et la prévision contribuent aux décisions
+      amont. Le parcours mode relie conception, développement, achat et vente.
+    approach_summary: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    term_choice: Les noms des capacités sont conservés. Les modes de sourcing sont des conditions de fonctionnement, sans
+      créer de nouvelles capacités.
+    definition_choice: Préparer les hypothèses de collection et d'approvisionnement ; le recours réellement faisable est vérifié
+      avec le [SCM](glossary:TER035).
+    source_title: Feature Scope Description
+    source_url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    source_version: 3.0, 7 octobre 2026, FPS02
+    source_locator: 2.8 R&D/Engineering ; 4.1.3.3 (p.583) ; 4.1.3.1.6 (p.575)
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
 - id: TER207
   name: Product Strategy & Requirements
   short_description: Définir les besoins auxquels les produits doivent répondre et les priorités de l’offre.
@@ -41596,6 +42113,222 @@ terms:
       sans en devenir la source métier.
   last_modified: '2026-10-16T00:00:00Z'
   revision: 1
+- id: TER382
+  name: Offshore Sourcing
+  definition: Recours à des fournisseurs situés dans une zone géographique éloignée du marché servi.
+  short_description: Approvisionnement auprès de fournisseurs éloignés du marché servi ; coût et délai restent à vérifier.
+  context: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont, éventuellement
+    dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés ou des délais
+    longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement du pays.
+    La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le stock final.
+  notes: 'Offshore décrit ici un mode d''approvisionnement, pas la délocalisation juridique d''une entreprise ni une liste
+    fixe de pays. Appui lexical : Allon et Van Mieghem, Global Dual Sourcing: Tailored Base-Surge Allocation to Near- and
+    Offshore Production (2010), https://transportation.northwestern.edu/docs/research/core-topics/logistics-and-supply-chain-management/VanMieghem_GlobalDualSourcing.pdf.
+    Le cas étudié est industriel, non une preuve de résultat dans la mode.'
+  source_refs:
+  - U1132
+  - U1133
+  - U1134
+  - U1135
+  review:
+    state: proposed
+    note: Terme explicatif ajouté pour le mode U1134 ; aucun mix ni délai adopté.
+  market_comparisons:
+  - id: market-TER382-U1134-ms_trade
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Master planning with purchase trade agreements
+    concept_name: Master planning with purchase trade agreements
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une source.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont, éventuellement
+      dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés ou des délais
+      longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement du
+      pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le stock
+      final.
+    scope_summary: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une
+      source.
+    approach_summary: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont, éventuellement
+      dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés ou des délais
+      longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement du
+      pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le stock
+      final.
+    term_choice: 'Appui au mécanisme de choix d''approvisionnement seulement : la source éditeur ne définit pas ce terme géographique.
+      Le sens near/[offshore](glossary:TER382) est éclairé par Allon et Van Mieghem (2010), Global Dual Sourcing.'
+    definition_choice: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont,
+      éventuellement dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés
+      ou des délais longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement
+      du pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le
+      stock final.
+    source_title: Master planning with purchase trade agreements
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/purchase-trade-agreement
+    source_version: Mise à jour du 29 mai 2026
+    source_locator: Prepare your system ; Search criterion
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte. Aucun équivalent lexical revendiqué ; aucun pays ou délai prescrit.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER382-U1134-sap_ctp
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01 / PP/DS
+    element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    concept_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont, éventuellement
+      dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés ou des délais
+      longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement du
+      pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le stock
+      final.
+    scope_summary: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    approach_summary: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont, éventuellement
+      dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés ou des délais
+      longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement du
+      pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le stock
+      final.
+    term_choice: 'Appui au mécanisme de choix d''approvisionnement seulement : la source éditeur ne définit pas ce terme géographique.
+      Le sens near/[offshore](glossary:TER382) est éclairé par Allon et Van Mieghem (2010), Global Dual Sourcing.'
+    definition_choice: Dans le mode U1134, les achats [offshore](glossary:TER382) forment un socle préparé très en amont,
+      éventuellement dès [Design & Development](model:system-design-development). Un coût rendu inférieur, des minimums élevés
+      ou des délais longs sont des hypothèses à vérifier par produit, fournisseur et parcours ; ils ne découlent pas automatiquement
+      du pays. La comparaison avec le [nearshore](glossary:TER383) porte sur le service, les coûts, les engagements et le
+      stock final.
+    source_title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte. Aucun équivalent lexical revendiqué ; aucun pays ou délai prescrit.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+- id: TER383
+  name: Nearshore Sourcing
+  definition: Recours à des fournisseurs situés dans une zone géographique proche du marché servi.
+  short_description: Approvisionnement auprès de fournisseurs proches du marché servi ; la proximité ne garantit pas la réactivité.
+  context: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382) après révision
+    des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité utile ; le
+    [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut devoir précéder
+    le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité géographique.
+  notes: 'Proximité relative au marché servi ; Portugal, Égypte et Turquie sont des exemples de Laurent à examiner par produit
+    et fournisseur, pas une classification universelle. Appui lexical : Allon et Van Mieghem, Global Dual Sourcing: Tailored
+    Base-Surge Allocation to Near- and Offshore Production (2010), https://transportation.northwestern.edu/docs/research/core-topics/logistics-and-supply-chain-management/VanMieghem_GlobalDualSourcing.pdf.
+    Le cas étudié est industriel, non une preuve de résultat dans la mode.'
+  source_refs:
+  - U1132
+  - U1133
+  - U1134
+  - U1135
+  review:
+    state: proposed
+    note: Terme explicatif ajouté pour le mode U1134 ; aucun mix ni délai adopté.
+  market_comparisons:
+  - id: market-TER383-U1134-ms_trade
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Master planning with purchase trade agreements
+    concept_name: Master planning with purchase trade agreements
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une source.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    scope_summary: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une
+      source.
+    approach_summary: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    term_choice: 'Appui au mécanisme de choix d''approvisionnement seulement : la source éditeur ne définit pas ce terme géographique.
+      Le sens near/[offshore](glossary:TER382) est éclairé par Allon et Van Mieghem (2010), Global Dual Sourcing.'
+    definition_choice: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    source_title: Master planning with purchase trade agreements
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/purchase-trade-agreement
+    source_version: Mise à jour du 29 mai 2026
+    source_locator: Prepare your system ; Search criterion
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte. Aucun équivalent lexical revendiqué ; aucun pays ou délai prescrit.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
+  - id: market-TER383-U1134-sap_ctp
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01 / PP/DS
+    element_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    concept_name: Supply Creation-Based Confirmation (SBC) in PP/DS
+    element_type: Fonction ou processus documenté dans un produit
+    relationship: Recouvrement fonctionnel partiel
+    similarities: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    differences: Les documents décrivent des mécanismes de produit. Ils n'imposent pas la répartition des décisions [offshore](glossary:TER382)
+      / [nearshore](glossary:TER383) entre domaines retenue comme mode possible dans FLOW.
+    flow_position: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    scope_summary: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles
+      de ressources alimentent la confirmation de vente.
+    approach_summary: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    term_choice: 'Appui au mécanisme de choix d''approvisionnement seulement : la source éditeur ne définit pas ce terme géographique.
+      Le sens near/[offshore](glossary:TER382) est éclairé par Allon et Van Mieghem (2010), Global Dual Sourcing.'
+    definition_choice: Dans le mode U1134, le [nearshore](glossary:TER383) peut compléter le socle [offshore](glossary:TER382)
+      après révision des besoins. Le [CTP](glossary:TER045) vérifie produit qualifié, matières, capacité, délais et disponibilité
+      utile ; le [PTP](glossary:TER068) compare le coût de cette flexibilité à sa valeur. La réservation de capacité peut
+      devoir précéder le constat du manque. Aucune marge, rapidité ou capacité garantie n'est déduite de la seule proximité
+      géographique.
+    source_title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    source_version: 2025 FPS01 (Feb 2026)
+    source_locator: Use, texte primaire indexé
+    consulted_on: '2026-10-21'
+    evidence_limits: Appui primaire partiel ; aucune organisation universelle, gain chiffré ou réalisation Beaumanoir démontrés.
+      Le mode de décision partagé vient de U1134. Les pages SAP Help HTML ont été consultées via leur texte primaire indexé
+      lorsque l'ouverture directe ne rendait aucun texte. Aucun équivalent lexical revendiqué ; aucun pays ou délai prescrit.
+    status: proposed
+    source_refs:
+    - U1132
+    - U1133
+    - U1134
+    - U1135
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

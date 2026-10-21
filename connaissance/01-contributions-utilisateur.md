@@ -25796,6 +25796,44 @@ Verbatim : « Applique les préconisations de "évolution pour les fiches métie
 
 Portée : appliquer le contrat de description pédagogique structurée, l’homogénéisation des descriptions courtes et la lecture « Comprendre ce périmètre » dans Atlas, en commençant par les huit fiches pilotes proposées. Réutiliser exemples, scénarios, preuves et glossaires, avec références stables et qualifications conservées ; préserver les profondeurs et les publications historiques. Le Go porte sur les préconisations présentées, sans adoption automatique des textes et correspondances rédigés ensuite. Les essais avec des lecteurs restent à organiser ; aucun résultat utilisateur n’est présumé. Aucun commit, release ou push demandé.
 
+## U1126
+
+Date : 2026-10-21. Source : Laurent, cadrage de la mesure de performance du domaine Supply Chain Management.
+
+Verbatim : « Moi je vois la supply chain management comme une optimisation des ressources et des flux entre l'offre et la demande. Donc il faut adapter les tailles de "tuyau", ouvrir des vannes, casser les grumeaux etc. Il faut mesurer des indicateurs qui nous permettent de prendre de bonnes décisions de "Policy" SCM. »
+
+Portée : cadrage métier pour discuter des indicateurs de pilotage et des décisions de Policy du domaine. Les images de tuyaux, vannes et grumeaux désignent des pistes d'analyse à interpréter avec Laurent ; elles ne valident ni formule de KPI, ni changement de structure ou de définition du modèle, ni réalisation installée. Aucun commit, release ou push demandé.
+
+## U1127
+
+Date : 2026-10-21. Source : Laurent, exemple d'indicateur pour le mini dossier SCM.
+
+Verbatim : « Je pense par exemple au nombre de transferts inter entrepot préalablables avant de pouvoir préparer une livraison wholesale. L'idée est de les faire baisser. Voir si des entreprises se sont appuyé sur ce type d'indicateur pour mesurer la performance »
+
+Portée : rechercher des cas d'entreprise et examiner le nombre de transferts inter-entrepôts nécessaires avant la préparation d'une livraison wholesale comme indicateur possible de performance et de réglage des règles SCM. La formulation est un exemple à instruire ; ni définition de mesure, ni cible, ni modification du modèle ne sont validées par ce seul apport. Aucun commit, release ou push demandé.
+
+## U1128
+
+Date : 2026-10-21. Source : Laurent, élargissement du mini dossier sur la performance de Supply Chain Management.
+
+Verbatim : « Il faut prendre en compte la gestion des flux des achats jusqu'à vente, service après vente, retour, destockage. C'est l'intéret d'avoir un moteur unifié de la supply chain : une vision par type de flux : Achat vs Vente mais aussi d'un point de vue global. Par exemple, on peut imaginer se poser la question : est-ce qu'on aurait pu lotir différemment les achats afin d'améliorer la promesse de vente ? Est-ce qu'on aurait dû acheter plus cher à un fournisseur local une partie du stock pour améliorer les flux avals ? »
+
+Portée : intégrer à l'étude des indicateurs par type de flux et transversaux, depuis les apports achetés jusqu'aux ventes, au service après-vente, aux retours et au déstockage. Instruire les arbitrages contrefactuels de lotissement des achats et de sourcing local plus coûteux au regard de leurs effets aval. La proposition de « moteur unifié » est un cadrage de réflexion ; elle ne valide pas une architecture technique, un transfert de responsabilités métier, une formule, une cible ni une réalisation installée. Aucun commit, release ou push demandé.
+
+## U1129
+
+Date : 2026-10-21. Source : Laurent, demande de livrable sur la promesse Supply Chain Management.
+
+Verbatim : « Je veux un petit dossier pdf avec :&#x20;
+
+- la problématique que peut résoudre un SCM, focus sur ATP et surtout CTP et PTP
+- les indicateurs possibles&#x20;
+- Les références du marché avec des exemples. »
+
+Complément de mise en forme demandé par Laurent : « Reprends le style, couleurs et logo d'ATLAS. Mise en page professionnelle prête à livrer. »
+
+Portée : produire un court dossier PDF sur la problématique, les angles de promesse ATP, CTP et PTP, les indicateurs proposés et des sources primaires avec exemples, en reprenant l'identité visuelle d'Atlas. Cette demande de restitution ne vaut ni accord sur les formules ou les cibles, ni adoption d'une architecture ou d'une réalisation installée. Aucun commit, release ou push demandé.
+
 ## U1130
 
 Date : 2026-10-21. Source : Laurent, généralisation des descriptions pédagogiques des fiches métier.
@@ -25813,3 +25851,65 @@ Question de clarification : « Pour ce lot, veux-tu enrichir d’abord tous les 
 Verbatim : « de système à Business Area »
 
 Portée : enrichir les fiches des systèmes métier, domaines, sous-domaines et Business Areas encore dépourvues de description pédagogique, en conservant les pilotes existants. Les capacités, comportements, référentiels et la racine Enterprise Architecture ne sont pas ajoutés au périmètre de ce lot. Aucune nouvelle responsabilité, profondeur de décomposition, preuve d’installation ou validation des textes rédigés ensuite n’en est déduite.
+
+## U1132
+
+Date : 2026-10-21. Source : Laurent, discussion avec le contrôle de gestion sur l’arbitrage offshore et nearshore.
+
+Verbatim : « Je viens d'avoir une discussion avec le contrôle de gestion : il y a le sujet de faire fabriquer à bas coût en offshore avec des contrats en volume (par exemple au Bangladesh) à confronter à faire fabriquer certaines lignes produits en nearshore à un cout supérieur : Portugal, Egypte, Turquie. Plusieurs possibilités : soit j'achète le moins cher possible mais pour éviter les pénuries mais j'ai un excédent récurrent et en fin de saison, soit j'achète en "fittant" avec peu de marge sur les estimations et je compense la pénurie occasionnelle en achetant en nearshore mais en margeant moins. Quelles indicateurs sont interessants à avoir pour optimiser ? »
+
+Portée : instruire les indicateurs permettant de comparer un engagement offshore en volume et un engagement initial plus ajusté complété par des achats nearshore, en considérant pénuries, excédents récurrents ou saisonniers, coûts, délais et marge. Les pays cités sont des exemples donnés par Laurent ; leurs conditions de coût, capacité et délai ne sont pas établies par cet apport. La discussion ne valide ni mix de sourcing, ni formule ou cible, ni contrat fournisseur, ni modification canonique du modèle. Aucun commit, release ou push demandé.
+
+## U1133
+
+Date : 2026-10-21. Source : Laurent, question sur le rôle du CTP dans l’arbitrage U1132.
+
+Verbatim : « Donc je pense que la CTP de la SCM doit jouer son rôle, non ? »
+
+Portée : examiner le rôle du Capable-to-Promise dans la faisabilité des compléments nearshore et dans la comparaison des politiques d’approvisionnement. La question n’adopte pas automatiquement une modification de définition, de périmètre ou d’implémentation du CTP, ni un choix économique de sourcing.
+
+## U1134
+
+Date : 2026-10-21. Source : Laurent, intégration du cas offshore / nearshore au dossier et au modèle FLOW.
+
+Verbatim : « Intègre ce cas offshore / nearshore dans le PDF, avec un exemple chiffré montrant le rôle du CTP, les indicateurs et les décisions à prendre, en conservant les six questions de pilotage.
+
+Dans le modèle FLOW des domaines / capacité, on peut préciser qu'un mode de fonctionnement possible est que le offshore est planifié très en avance, voire même dès "Design & Developement" mais que la CTP de la SCM permet de passer des commandes d'appoint en nearshore. La responsabilité de décider de passer des commandes n'est alors plus concentrée dans un seul domaine. »
+
+Portée : intégrer au PDF un exemple chiffré explicitement illustratif, les données, calculs et décisions, en conservant les six questions de pilotage. Préciser dans le modèle et le glossaire ce mode possible : anticipation offshore pouvant commencer dès Design & Development, puis décision de commandes d'appoint nearshore dans Supply Chain Management, éclairée par le CTP et encadrée par les politiques applicables. La décision de commander peut donc relever de plusieurs domaines selon son objet et son horizon. Cet apport ne fixe ni mix, ni délégations détaillées, ni fournisseur, ni règle chiffrée ; il ne prouve aucune réalisation installée et n'adopte pas par avance toutes les rédactions produites. Aucun changement de hiérarchie, publication, commit ou push demandé.
+
+## U1135
+
+Date : 2026-10-21. Source : Laurent, clarification de la planification intégrée et de l'outillage MAP.
+
+Verbatim : « Oui c'est vrai. C'est juste que dans l'esprit de Beaumanoir, la planification c'est un outil externe (Map) alors que logiquement, tout est intégré »
+
+Portée : confirmer la distinction entre la représentation actuelle de la planification comme outil MAP externe et l'intégration logique de la planification aux autres décisions SCM dans la cible. Cette précision accompagne U1134 : planification du socle, révision du besoin, faisabilité CTP et décision d'appoint doivent être reliées. Elle ne prouve ni migration réalisée, ni obligation d'un logiciel unique, ni validation globale des textes ou paramètres produits après la demande. Les constats d'existant MAP restent conservés comme tels.
+
+## U1136
+
+Date : 2026-10-21. Source : Laurent, validation du mode offshore / nearshore et demande de publication Atlas.
+
+Verbatim : « Je valide ces précisions sur l’offshore / nearshore et la planification intégrée à la SCM. Publie la mise à jour du modèle dans Atlas. »
+
+Portée : valider le lot cohérent U1134/U1135 appliqué dans les sept fiches concernées : anticipation du socle offshore dès Design & Development, décision d'appoint possible dans Supply Chain Management selon le cadre négocié et les délégations, rôle du CTP dans la faisabilité avant l'engagement initial et pendant la saison, traçabilité dans Purchase Order, et intégration logique de la planification au SCM distincte de l'outillage MAP actuel. Publier cette mise à jour localement dans Atlas avec le glossaire aligné. La validation ne transforme pas les chiffres illustratifs en politique d'achat, ne valide pas une correspondance marché complète ou une réalisation installée et n'autorise pas par extension commit, push ou déploiement distant.
+
+## U1137
+
+Date : 2026-10-21. Source : Laurent, recentrage du dossier PDF sur les indicateurs de pilotage SCM.
+
+Verbatim : « Le pdf mérite une page de garde et un sommaire.
+
+J'ai l'impression qu'on a oublié la liste des KPI.
+
+En fait on a :&#x20;
+
+- KPI mesure d'indicateur
+- OKR : objectif sur cet indicateur
+- Décision : indicateurs qui amènent à l'action
+
+Je crois que le document s'est déplacé des KPI aux décisions.
+
+Qu'ne penses-tu ? »
+
+Portée : revoir la structure du dossier, ajouter une page de garde et un sommaire, rendre la liste des indicateurs directement accessible et clarifier le lien entre mesure, objectif et action. La distinction proposée par Laurent est à préciser pédagogiquement : un OKR associe un objectif à des résultats clés mesurables et datés ; la décision désigne l'action choisie à partir des mesures. Les six questions de pilotage et les exemples déjà demandés restent conservés. Cette correction éditoriale ne modifie pas le modèle canonique, ne fixe aucune cible Beaumanoir et ne demande ni nouvelle publication Atlas, ni commit ou push.

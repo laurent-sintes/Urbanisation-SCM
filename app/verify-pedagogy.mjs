@@ -95,7 +95,24 @@ try {
     await visit({ node: id, view: 'sheet', section: 'pedagogical_description' });
     const block = page.locator('.business-pedagogy');
     await block.waitFor();
-    assert.equal(await block.locator('.pedagogy-example').count(), 1, id);
+    const refs = model.nodeById.get(id).fields.pedagogical_description.example_refs || [];
+    assert.ok(refs.length > 0, `${id}: exemples déclarés`);
+    const expectedTitles = refs.map((ref) => {
+      const source = model.nodeById.get(ref.node_id);
+      assert.ok(source, `${id}: source ${ref.node_id}`);
+      const matches = (source.fields.examples || []).filter(
+        (example) => example && typeof example === 'object' && example.id === ref.example_id,
+      );
+      assert.equal(matches.length, 1, `${id}: référence unique ${ref.node_id}/${ref.example_id}`);
+      assert.ok(ref.contribution?.trim(), `${id}: contribution ${ref.example_id}`);
+      return matches[0].title.trim();
+    });
+    assert.equal(await block.locator('.pedagogy-example').count(), refs.length, `${id}: nombre d’exemples`);
+    assert.deepEqual(
+      (await block.locator('.pedagogy-example > h3').allTextContents()).map((title) => title.trim()),
+      expectedTitles,
+      `${id}: titres et ordre des exemples`,
+    );
     assert.ok((await block.innerText()).includes('Contribution de ce périmètre'), id);
     assert.equal(await block.locator('.unresolved-reference').count(), 0, id);
     const expectedComparisons =

@@ -1,0 +1,407 @@
+id: offshore-nearshore-operating-mode-U1134
+date: '2026-10-21'
+source_refs:
+- U1132
+- U1133
+- U1134
+- U1135
+- U1136
+status: Mode métier validé par Laurent sous U1136 ; publication locale demandée.
+approval_scope: 'U1136 valide le lot cohérent U1134/U1135 : anticipation offshore possible dès Design & Development, décision
+  d''appoint nearshore dans SCM selon accords et délégations, CTP avant engagement initial et pendant la saison, cycle d''achat
+  unique et planification logiquement intégrée au SCM. Le mode est possible, pas universel ; l''existant MAP ne prouve ni
+  migration ni logiciel unique. Les exemples numériques restent illustratifs ; ni politique chiffrée, correspondance marché
+  complète ou paragraphes historiques non discutés ne sont adoptés.'
+rationale: 'La décision d''acheter est répartie selon besoin et horizon. Les capacités existantes suffisent : préparation
+  de collection, Replenishment, CTP, comparaison PTP, Plan Application et Purchase Order. Aucun déplacement, relation, scénario
+  autonome ou nouveau comportement.'
+boundaries:
+- CTP vérifie la faisabilité et peut éclairer l'engagement initial ; il n'autorise ni ne crée seul l'achat.
+- Le SCM peut décider l'appoint dans le cadre négocié et les délégations applicables ; Sourcing and Procurement ne monopolise
+  pas la décision de commander.
+- La commande appartient déjà au SCM ; les accords et échanges fournisseur restent articulés avec Sourcing and Procurement.
+- L'existant MAP est conservé comme constat ; le mode possible ne prouve aucune installation ou bascule.
+- Glossaire aligné dans le même lot ; termes offshore/nearshore explicités sans conclusion géographique automatique.
+market_evidence:
+- vendor: Microsoft
+  product: Dynamics 365
+  title: Design to retire end-to-end overview
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+  version: Documentation en ligne consultée le 21 octobre 2026
+  locator: Design to retire process relationship
+  support: La préparation produit alimente les achats ; des consultations fournisseur peuvent précéder la définition finale
+    du produit.
+- vendor: SAP
+  product: SAP S/4HANA 2025
+  title: Feature Scope Description
+  url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  version: 3.0, 7 octobre 2026, FPS02
+  locator: 2.8 R&D/Engineering ; 4.1.3.3 (p.583) ; 4.1.3.1.6 (p.575)
+  support: La préparation et le développement des produits, les collections et la prévision contribuent aux décisions amont.
+    Le parcours mode relie conception, développement, achat et vente.
+- vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Calculate sales order delivery dates using CTP
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+  version: Documentation en ligne consultée le 21 octobre 2026
+  locator: How CTP compares to ATP ; Batch CTP
+  support: La vérification des matières, capacités et délais contribue à établir une date réalisable ; les modalités dépendent
+    du moteur de planification.
+- vendor: SAP
+  product: SAP S/4HANA 2025 FPS01 / PP/DS
+  title: Supply Creation-Based Confirmation (SBC) in PP/DS
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+  version: 2025 FPS01 (Feb 2026)
+  locator: Use, texte primaire indexé
+  support: Une quantité manquante peut conduire à créer une proposition d'approvisionnement ; les dates et contrôles de ressources
+    alimentent la confirmation de vente.
+- vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Procurement and sourcing overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  version: Documentation en ligne consultée le 21 octobre 2026
+  locator: Identifying a need ; Purchase orders
+  support: Les commandes peuvent avoir plusieurs origines, dont planification, demande et accord ; leurs approbations sont
+    configurables.
+- vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Firm planned orders
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/planned-order-firming
+  version: Documentation en ligne consultée le 21 octobre 2026
+  locator: Introduction ; Manual firming ; Auto-firming
+  support: L'affermissement transforme les propositions en commandes ; il peut être manuel, automatique ou fondé sur une sélection
+    selon des critères.
+- vendor: SAP
+  product: SAP S/4HANA Sourcing and Procurement
+  title: Purchase Requisition - Creating Purchase Orders (Single-Screen Transaction)
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/af9ef57f504840d2b81be8667206d485/2f81b65334e6b54ce10000000a174cb4.html
+  version: 2025 FPS01 (Feb 2026)
+  locator: Use ; Prerequisites, texte primaire indexé
+  support: La source est affectée à la demande d'achat avant sa conversion en commande ; proposition et commande sont distinctes.
+- vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Master planning with purchase trade agreements
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/purchase-trade-agreement
+  version: Mise à jour du 29 mai 2026
+  locator: Prepare your system ; Search criterion
+  support: La planification peut comparer les accords d'achat selon le prix unitaire ou le délai pour retenir une source.
+numeric_example:
+  status: Fictitious, not adopted policy or measured gain
+  demand:
+  - 800
+  - 1200
+  probabilities:
+  - 0.5
+  - 0.5
+  sale_price: 30
+  offshore_landed_cost: 10
+  nearshore_landed_cost: 14
+  net_residual_recovery: 4
+  expected_contributions:
+    offshore_1200: 18800
+    offshore_800_nearshore_400: 19200
+    offshore_800_nearshore_250: 18000
+    offshore_950_nearshore_250: 19050
+  limitations: Signal supposé identifier le scénario suffisamment tôt ; toutes les dates et capacités utiles doivent être
+    vérifiées. Coûts de réservation exclus et à retrancher ; aucun gain projet extrapolé.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1132
+  - U1133
+  - U1134
+  - U1135
+  - U1136
+  summary: Mode possible offshore anticipé et appoint nearshore décidé dans SCM, éclairé par CTP ; modèle et glossaire alignés.
+  required_nodes:
+  - id: system-design-development
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+    field_sha256:
+      scope: 74120854773ceca56045e0331075381341501e18534fc5277c6351a42f1228a6
+      examples: a9444130d8734f302406d429583a35df8090567e51c08526fc0fd634d84e3f5e
+      market_comparisons: 271b34af489b56354d7bcfa78fefafbe99f7f9ffd8af5a9b82f4a7e0c2a88daa
+      pedagogical_description: ecaa55481396a63983543c8b1b829844f23f58c3b93a5a659f2bad5a07c4c779
+  - id: domain-product-portfolio-collection
+    kind: domain
+    parent: system-design-development
+    parent_type: presents
+    field_sha256:
+      scope: 5fcfc33347a75cc1ad673c5d2881a0671d71a6347167ed2d7bd2d071412b3067
+      examples: 67b400f4540b85eb5231628a2d4316ff67e168f5f7b1fda1e774942c06c29552
+      market_comparisons: 23da284d2fdd8de37b89c7ba50a9cf53bbbd72c840e1b4797277bb7f1da4faf8
+      pedagogical_description: 8c8237770dc49b18cfc62656d601ddd835c419007328354d444d32f613c939df
+  - id: supply-chain-orchestration
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    field_sha256:
+      market_comparisons: 3cfd5d0578d4ee162ba482f5b8721a44c5c2b7ec053e92688f0c1e1ccbbd8fb7
+      examples: 23af2e9d1c9bdf9f126aaa7afd852c295edeb8e5586bb5d5ca7b6d8c532f1dc0
+      scope: b9edb7b25275f8bf62eab527c4aaf3c40543b76fea8e9d710138c8dc15a1820f
+      pedagogical_description: 42df590414f9937181f94978fbea65b0f520cf6f94b9c8785fcd0f2ef7d877d1
+  - id: domain-sourcing-procurement
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    field_sha256:
+      scope: de379e1af6cc7f30f5b6bdf775f74605871982946722c204254c91e326c0b3b0
+      examples: a7448f89112cd7ea203ad6893fa8d7d7a2349cfc91ac0e45a8f33b9b4b55fa23
+      market_comparisons: 35aa4907e60e42df29110c44f43a6a9de17550c96d7e4c8533b5faa35b7a437e
+      pedagogical_description: 7115311465a03e874dd76bfee4dcf537b0c2bb7ceea3598ce4f387f0be977f1f
+  - id: D03.j
+    kind: capability
+    parent: ba-order-promising
+    parent_type: contains
+    field_sha256:
+      scope: 37e91eed6a72c149f2a0b6cfa687b06129a4e5fbfeb3b8b86076a10818fbca3d
+      market_comparisons: d92512c3f7f1e810357644caac9bba24c6d5d2c16e6cebaa767770262313cbd3
+      examples: da933d7c39dace5a3dbb82f7c92f2c49403cf915d2db41f7f1211eae87a935cd
+      pedagogical_description: 69c13eead1b2820be94ab86b6b877409937cb65578244fc38c70ce612dfec3cc
+  - id: D05.e
+    kind: capability
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+    field_sha256:
+      scope: 80ba92736e0e0dbcf5eca19426cf3f2bf5068613aa8784a08ee6003812775586
+      market_comparisons: 5575dc199b55bec68c5a0029f47410ae5a244ca4808aa3aa5bf784d591853a92
+      examples: 458896be96e9003b98103bf61c144ac552032191f55a6375129a49efeb4ea5e6
+  - id: D04.j
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      scope: 57c0a0812e13e4a873e7961ad1e99002b46ec0d43e30274b25a121e43e98da46
+      market_comparisons: 8612ee7ef1dcfe462466d2110e395c1cb15414e9426e703bd5ffaaef8e3b86ca
+      examples: ffaa475ddda771e95ac80025c44afabfb3d2b1708fd48c2d19420d2a53b93a95
+  required_glossary:
+  - id: TER035
+    field_sha256:
+      context: d9d675e5967a7b25b137a7a2a1c70b91e612072d1f4f74fa3dc321dfd31f158b
+      market_comparisons: 7def03d5d0e8c2c151019e38c0b8e9dcae595d77c5bff50df2eb66c16c65a8eb
+  - id: TER045
+    field_sha256:
+      context: c5b871a59e7051377cd4b6677db0ffea814a1726ad5f36cbde5563c288910f50
+      market_comparisons: 1cc2d13468d290326ae97251e2d96b9892025d34f26b27afcd87c59ce2ae601c
+  - id: TER070
+    field_sha256:
+      context: a71f8fc882716b6f41ccb0c19a7154cf310854eb3ac1d52351f819bcefb36088
+      market_comparisons: a013314841e7cd088fba464f25ac20a97cfc7235afa7fac0be439ed0afa7e22f
+  - id: TER074
+    field_sha256:
+      context: 038743367f47d20155eaa515a7334473dbdbaa5878a73a072306f93c438d02d6
+      market_comparisons: 9d1b6e2266c852b07cdc6588cc9f8463f830ed7390b70a244176a1301618fa68
+  - id: TER105
+    field_sha256:
+      context: 74120854773ceca56045e0331075381341501e18534fc5277c6351a42f1228a6
+      market_comparisons: 2364383a50a0574e9340720ed829df094bbe536a0c6f1ba35eaaaab655d6d0db
+  - id: TER109
+    field_sha256:
+      context: de379e1af6cc7f30f5b6bdf775f74605871982946722c204254c91e326c0b3b0
+      market_comparisons: 853da3230e66794fab7a5ee01f51d267b7d0038da359ab2dbc34b76cd8b14b0f
+  - id: TER206
+    field_sha256:
+      context: 5fcfc33347a75cc1ad673c5d2881a0671d71a6347167ed2d7bd2d071412b3067
+      market_comparisons: eb2330e487e887cf545f090cad2a394a11cf143ccb1ca72b60588703cfaa63da
+  - id: TER382
+    field_sha256:
+      id: f9dd6964fb3e21c8cadad74bdf2f92516c12d4683e3ec1315c04cd6f7ed1b6c4
+      name: 6e5be6efefd4e7c3564879afb8ef023135d69f798c93aafe8a2f39af606309bd
+      definition: 1a4ed2a62eee8158e031d85616c04864f7289419f09a41eb049d24a90f441348
+      short_description: d61bad316e70ba29df06c18a96476281b5682776768ffa0b59acfd6c4785d007
+      context: 9911eb0959a73faa88719f810500989551dda64d9b5ec037c97ffbfef97847ed
+      notes: 19ad7cb4f57fe83528e5ae16abb7126ef7a628c16dd0527cfd9cb1b3afbd028b
+      market_comparisons: f4a4b35d206a9af7a285657287e3c8c8198b16a885844774c71adfe1730099f2
+  - id: TER383
+    field_sha256:
+      id: 0c01022e8e5bd3fb93682c66386393da96956554f5c1440b02081ca0e0dbd0e0
+      name: 301de98414297bd6a149b2d4aa852c27e77d28122d1db73ec1a77d2bd4f1a3c0
+      definition: a3f13a3884565ae6ca97bdf17a99225f4d259618f84f39454cec3ae8d21690e0
+      short_description: a803a0d3d7b98b98d97031dcb18fd7496eab71863e52d0a8d7e4c78fb49151d3
+      context: d268119156f6d63d5092787e4cde3aceff43f3f3da42462752cc70812abb5392
+      notes: dbd752c210c4d460a41a82f66a86c40e723ba455aebff129678c415a85be5668
+      market_comparisons: 949773f5d8944aa54f3fb2d3a4fffe5b1be27f238dff0324e5046ae62c20d78b
+  supersedes_requirements:
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: system-design-development
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER105
+    fields:
+    - context
+  - annex: master-plan-preparation-U1103.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - scope
+  - annex: master-plan-preparation-U1103.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - context
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER045
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER070
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER074
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - context
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - scope
+  - annex: supply-domain-rename-U1121.yaml
+    collection: terms
+    id: TER035
+    fields:
+    - context
+  - annex: supply-domain-rename-U1121.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - market_comparisons
+scoped_agreement:
+  source_refs:
+  - U1136
+  author: Laurent
+  decided_at: '2026-10-21'
+  interpretation: explicit
+  approved_passages:
+  - collection: nodes
+    id: system-design-development
+    field: scope
+    start_marker: Mode possible de préparation
+    extent: from_marker_to_end
+    passage_sha256: 041757b8781a192424d95ae13d3d83ead98c2da182df5e5ede8de0c3f43d48bd
+  - collection: nodes
+    id: domain-product-portfolio-collection
+    field: scope
+    start_marker: Mode possible pour une collection
+    extent: from_marker_to_end
+    passage_sha256: 36fe8c6308482e179fa5998ce3be80aa9cb22e9e7c8b3b1cfc850c2fb12a10fc
+  - collection: nodes
+    id: supply-chain-orchestration
+    field: scope
+    start_marker: Mode possible pour les achats saisonniers
+    extent: from_marker_to_end
+    passage_sha256: 61820275c90c84a1779f52c6c723f9d6c1632110c16d183f6dafcb9f28a9c364
+  - collection: nodes
+    id: domain-sourcing-procurement
+    field: scope
+    start_marker: Dans le mode [offshore]
+    extent: from_marker_to_end
+    passage_sha256: 92a14c936c4a06135521daa1732c79c8b246160e134ff5a8cc77828b92275b5c
+  - collection: nodes
+    id: D03.j
+    field: scope
+    start_marker: Dans le mode [offshore]
+    extent: from_marker_to_end
+    passage_sha256: 56798064dbffc04b710fa53648157ef888a1ca888dcc0c79bff87a14f52fb575
+  - collection: nodes
+    id: D05.e
+    field: scope
+    start_marker: Mode possible de complément saisonnier
+    extent: from_marker_to_end
+    passage_sha256: 0b444c6574c7b6624936257587f9f9a37ebee823a3fd543ec18a9e7f9abeef87
+  - collection: nodes
+    id: D04.j
+    field: scope
+    start_marker: La décision à l'origine d'un achat
+    extent: from_marker_to_end
+    passage_sha256: 450d76d2d9832f849a8db392f3e777043210ba37375d31f85a83c4c194d0192a
+  glossary_alignment:
+  - TER035
+  - TER045
+  - TER070
+  - TER074
+  - TER105
+  - TER109
+  - TER206
+  - TER382
+  - TER383
+  capture_boundary: L'accord porte sur ces précisions, pas sur les champs complets. Le mécanisme record_intents ne sélectionne
+    que des champs entiers de nœuds/relations ; les scopes antérieurs de ces sept fiches ne sont pas approuvés dans v086.
+    Aucune intention sur scope, examples ou pedagogical_description entiers n'est donc créée. Cet enregistrement conserve
+    la preuve de l'accord ciblé sans lui substituer une approbation globale de champ.
