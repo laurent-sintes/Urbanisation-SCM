@@ -23,7 +23,7 @@ import {
 import { catalogOf, pathsForNode, scenariosForNode } from '../scenarioCatalog';
 import { BusinessExamples } from './BusinessExamples';
 import { BusinessPedagogy } from './BusinessPedagogy';
-import { CatalogLink, MethodLink, ModelText, ReferenceLink, UnderstandLink } from './ModelLinks';
+import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
 
 const labels: Record<string, string> = {
   name: 'Libellé',
@@ -254,7 +254,6 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
                     </span>
                     <ArrowRight size={18} aria-hidden="true" />
                   </ReferenceLink>
-                  <UnderstandLink node={child} />
                 </Fragment>
               ))}
             </div>

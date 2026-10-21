@@ -101,21 +101,38 @@ try {
   await visit({ node: 'D01', view: 'sheet', section: 'pedagogical_description' });
   await page.locator('.business-pedagogy').waitFor();
   await page.screenshot({ path: resolve(output, 'desktop.png') });
-  // A map action must keep the existing navigation and preserve the fixed publication.
-  await visit({ view: 'map', scope: 'supply-chain-orchestration', node: 'D01', mapDepth: '1' });
-  const action = page.getByRole('link', { name: 'Comprendre Inventory Management', exact: true }).first();
-  await action.waitFor();
-  const href = await action.getAttribute('href');
-  assert.ok(href.includes('pedagogical_description'));
-  assert.ok(href.includes('returnTo='));
-  assert.ok(href.includes(version));
-  await action.focus();
+  // Reading uses the usual sheet tab; the map keeps only short help on names.
+  await visit({ view: 'map', scope: '@root', mapDepth: '1' });
+  const scmName = page.getByRole('button', { name: 'Supply Chain Management', exact: true }).first();
+  assert.equal(await page.locator('.understand-link').count(), 0);
+  await scmName.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
+  await scmName.hover();
+  const scmHelp = page.locator('.map-node-tooltip');
+  await scmHelp.waitFor();
+  assert.ok(
+    (await scmHelp.innerText()).includes(plainInlineText(model.nodeById.get('supply-chain-orchestration').definition)),
+  );
+  await scmName.focus();
+  await page.keyboard.press('Escape');
+  await scmHelp.waitFor({ state: 'hidden' });
+  await scmName.focus();
   await page.keyboard.press('Enter');
-  await page.locator('.business-pedagogy').waitFor();
-  await page.locator('.context-return a').click();
-  await action.waitFor();
+  await page.getByRole('tab', { name: 'Fiche', exact: true }).click();
+  const scmBlock = page.locator('.business-pedagogy');
+  await scmBlock.waitFor();
+  assert.ok((await scmBlock.innerText()).includes('cent tee-shirts'));
+  assert.equal(await scmBlock.locator('.pedagogy-boundaries').count(), 1);
+  assert.notEqual(
+    await scmBlock.locator(':scope > p').first().innerText(),
+    plainInlineText(model.nodeById.get('supply-chain-orchestration').definition),
+  );
+  await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
   assert.ok(page.url().includes('/map?'));
-  assert.ok(page.url().includes('scope=supply-chain-orchestration'));
+  assert.ok(page.url().includes(version));
+  await visit({ view: 'map', scope: 'supply-chain-orchestration', node: 'D01', mapDepth: '1' });
+  await page.getByRole('button', { name: 'Inventory Management', exact: true }).first().waitFor();
+  assert.equal(await page.locator('.understand-link').count(), 0);
   // Short model help is the definition, never the long explanation.
   const name = page.getByRole('button', { name: 'Inventory Management', exact: true }).first();
   await name.scrollIntoViewIfNeeded();

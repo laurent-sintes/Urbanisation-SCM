@@ -2,7 +2,7 @@
 
 ## Comprendre une fiche métier
 
-Les fiches portant `pedagogical_description` affichent « Comprendre ce périmètre » après la définition : explication, exemple fictif avec situation/contribution/résultat et distinction avec un voisin. Les repères logiciels détaillés sont repliables et conservent différences, limites et sources. La carte propose une action « Comprendre » distincte du clic existant ; elle ouvre cette même fiche à son ancre en conservant publication et contexte de retour. Les aides courtes des noms du modèle utilisent toutes la définition.
+Les fiches portant `pedagogical_description` affichent « Comprendre ce périmètre » après la définition : explication, exemple fictif avec situation/contribution/résultat et distinction avec un voisin. Les repères logiciels détaillés sont repliables et conservent différences, limites et sources. L’ouverture habituelle de la fiche donne accès à ce contenu ; aucun lien « Comprendre » supplémentaire n’est affiché sur la carte ou les listes. Les tooltips des noms du modèle restent limités à la définition courte.
 
 Le lecteur résout les références uniquement dans le snapshot chargé. Le contenu pédagogique est recherchable ; provenance et statuts internes ne le sont pas. Les anciennes publications ne reçoivent pas les nouveaux textes par repli. `node verify-pedagogy.mjs` teste les huit fiches du backlog dans une candidate isolée interceptée par Playwright, puis vérifie l’absence du bloc dans la publication antérieure aux pilotes (2026-10-17.1). Ce test ne publie aucun modèle. Les essais de compréhension avec des lecteurs restent distincts de cette recette technique.
 
