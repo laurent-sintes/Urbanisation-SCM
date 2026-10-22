@@ -1,4 +1,4 @@
-"""Editorial layout for the FLOW SCM dossier (25 pages).
+"""Editorial layout for the FLOW SCM dossier (27 pages).
 
 The two preserved pages are the vendor documentation and its bibliography.
 All other pages are rebuilt from the accompanying authoring sources.
@@ -16,7 +16,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph, Table, TableStyle
 
-EDITION = 'director-guide-2026-10-22-v7'
+EDITION = 'director-guide-2026-10-22-v8'
 AUTHOR = 'Laurent Sintès'
 PEACH = colors.HexColor('#FFD8B2')
 ORANGE = colors.HexColor('#D47735')
@@ -84,10 +84,10 @@ def cover():
         para(c,body,x+12,top-36,w-24,'small')
     para(c,'<b>7 indicateurs clés de performance (KPI)</b> • 6 questions de pilotage<br/>'
          '18 fiches de mesure, 8 cas d’entreprises et un premier pilote proposé.',M,220,style='small')
-    para(c,'Trois illustrations chiffrées : préparer une vente ; ajuster les achats lointains (offshore) '
-         'ou proches du marché (nearshore) ; valoriser un retour.',M,165,style='small')
+    para(c,'Quatre illustrations : préparer une vente ; ajuster les achats lointains (offshore) '
+         'ou proches (nearshore) ; valoriser un retour ; choisir un conditionnement.',M,165,style='small')
     para(c,f'<b>{AUTHOR}</b>  •  22 octobre 2026',M,111,style='small')
-    para(c,'Lecture dirigeant : page 2 • Mesure et calculs : pages 7 à 13 • Impacts sur FLOW : page 21',M,86,style='tiny')
+    para(c,'Lecture dirigeant : page 2 • Mesure et calculs : pages 7 à 13 • Impacts sur FLOW : page 22',M,86,style='tiny')
     c.showPage();return finish(s,c)
 
 
@@ -102,14 +102,14 @@ def executive():
     w=(CW-20)/3;top=y
     for i,(title,body) in enumerate([
         ('ATP / Disponible ?', 'Available-to-Promise : stock libre et arrivages déjà prévus.'),
-        ('CTP / Quel apport ?', 'Capable-to-Promise : apport à obtenir à temps, ressources et délais vérifiés.'),
+        ('CTP / Réalisable ?', 'Capable-to-Promise : apport ou opération à réaliser à temps, ressources vérifiées.'),
         ('PTP / Quel résultat ?', 'Profitable-to-Promise : comparaison économique des options réalisables.'),
     ]):
         x=M+i*(w+10);rect(c,x,top,w,77,PAPER,LINE)
         para(c,title,x+10,top-10,w-20,'cardhead')
         para(c,body,x+10,top-30,w-20,'micro')
     y=top-87
-    para(c,'Puis : décision autorisée → exécution → résultat mesuré. Les outils de planification et d’exécution contribuent à cet ensemble.',M,y,style='tiny')
+    para(c,'Information exploitable → décision autorisée → action réalisée : mesurer aussi les attentes entre ces étapes.',M,y,style='tiny')
     y-=34
     # Six questions, seven priority indicators; the full formulas stay in the dossier.
     cards=[
@@ -128,14 +128,14 @@ def executive():
         para(c,f'<b>{kpi}</b><br/>{action}',x+11,top-28,w-22,'micro')
         links.append((1,(x,top-73,x+w,top),dst))
     y-=3*83+3
-    y=banner(c,'Trois illustrations, une même démarche',
+    y=banner(c,'Quatre illustrations, une même démarche',
              'Comparer les options réalisables avant de décider : <b>vente et transferts</b> (page 14), '
-             '<b>achats de saison</b> (page 15), <b>retours et déstockage</b> (page 16). '
-             'Les gains de ces exemples sont fictifs ; les résultats d’entreprises sont pages 18-19.',y)
+             '<b>achats de saison</b> (page 15), <b>retours</b> (page 16), <b>conditionnements</b> (page 17). '
+             'Exemples fictifs ; résultats d’entreprises pages 19-20.',y)
     bottom=para(c,'<b>Première étape proposée :</b> cadrer un pilote sur les transferts avant préparation des ventes aux revendeurs '
-         '(wholesale). Mesurer ensemble transferts, promesse tenue et coût par livraison. Périmètre, livrables et critères : page 20.',M,y,style='small')
+         '(wholesale). Mesurer ensemble transferts, promesse tenue et coût par livraison. Périmètre, livrables et critères : page 21.',M,y,style='small')
     if bottom<58:raise ValueError(('Executive overflow',bottom))
-    links.extend([(1,(M,y-43,W-M,y+2),19)])
+    links.extend([(1,(M,y-43,W-M,y+2),20)])
     c.showPage();return finish(s,c),links
 
 
@@ -143,12 +143,12 @@ def contents():
     s,c=start();links=[]
     y=heading(c,'DEUX PARCOURS DE LECTURE','Sommaire',
               'Pour décider : fiche dirigeant, cas concrets et pilote. Pour préparer la mesure : tableau, fiches et catalogue.')
-    chip(c,'DÉCIDER : 2 → 14–16 → 20–21',M,y,238)
-    chip(c,'MESURER : 6–13 → 22–25',M+253,y,250)
+    chip(c,'DÉCIDER : 2 → 14–17 → 21–22',M,y,238)
+    chip(c,'MESURER : 6–13 → 23–27',M+253,y,250)
     y-=42
     rows=[
         ('La fiche dirigeant',1,'2',0),
-        ('La plomberie : piloter un réseau de flux',3,'4',0),
+        ('La plomberie : flux, lots et délais de décision',3,'4',0),
         ('Lean et optimisation : du diagnostic à la décision',4,'5',0),
         ('KPI, objectifs et résultats clés (OKR), décisions',5,'6',0),
         ('Sept KPI : objectifs et décisions détaillés',6,'7',0),
@@ -159,12 +159,13 @@ def contents():
         'Où le temps s’accumule-t-il ?','Quelle valeur récupère-t-on des retours et excédents ?'])]
     rows += [
         ('Illustrations : vente, achats, retours et déstockage',13,'14–16',0),
-        ('Ce que montrent les offres du marché',16,'17',0),
-        ('Les entreprises reliées aux sept KPI',17,'18–19',0),
-        ('Le premier pilote proposé',19,'20',0),
-        ('Impacts de l’étude sur FLOW',20,'21',0),
-        ('Annexe : sept KPI et onze compléments',21,'22–23',0),
-        ('Sources et conventions',23,'24–25',0),
+        ('Conditionnements : le CTP éclaire le choix du grain',16,'17',12),
+        ('Ce que montrent les offres du marché',17,'18',0),
+        ('Les entreprises reliées aux sept KPI',18,'19–20',0),
+        ('Le premier pilote proposé',20,'21',0),
+        ('Impacts de l’étude sur FLOW',21,'22',0),
+        ('Annexe : sept KPI et onze compléments',22,'23–24',0),
+        ('Sources et conventions',24,'25–27',0),
     ]
     for title,dst,label,indent in rows:
         top=y
@@ -393,7 +394,7 @@ def market_cases():
             y=para(c,company,M,y,style='head')-3
             top=y;y=para(c,kpis,M,y,style='tiny')-7
             for k,(dst,code) in enumerate(dests):
-                x=M+k*195;links.append((17+gi,(x,top-12,x+190,top+2),dst))
+                x=M+k*195;links.append((18+gi,(x,top-12,x+190,top+2),dst))
             y=para(c,f'<b>Changement.</b> {change}',M,y,style='metric')-6
             p=Paragraph(f'<b>{result}</b>',styles['small']);_,h=p.wrap(CW-20,H)
             rect(c,M,y,CW,h+12,MINT,r=7);p.drawOn(c,M+10,y-6-h);y-=h+18
@@ -409,7 +410,7 @@ def market_cases():
             'sans période précisée pour ce second montant. Étude de 2025 ; résultat global, sans excédent projeté ni coût par livraison publiés.')
         y=para(c,extra,M,y,style='tiny')-8
         y=para(c,'Un chiffre sur une mesure voisine ne chiffre pas le gain du KPI FLOW. « Non chiffré » décrit la preuve disponible, '
-               'pas une absence d’effet. Intitulés cliquables vers les fiches ; sources pages 24-25.',M,y,style='tiny')
+               'pas une absence d’effet. Intitulés cliquables vers les fiches ; sources pages 25-27.',M,y,style='tiny')
         if y<60:raise ValueError(('Market overflow',gi,y))
         c.showPage()
     return finish(s,c),links
@@ -424,56 +425,59 @@ def rebuild(api):
         vendor=source.pages[15];bibliography=source.pages[19]
     elif len(source.pages)==21 and source.metadata.get('/FLOWMeasurementEdition') in ('director-guide-2026-10-21-v6','director-guide-2026-10-21-v5','director-guide-2026-10-21-v4'):
         vendor=source.pages[14];bibliography=source.pages[20]
-    elif len(source.pages)==25 and source.metadata.get('/FLOWMeasurementEdition')==EDITION:
+    elif len(source.pages)==25 and source.metadata.get('/FLOWMeasurementEdition')=='director-guide-2026-10-22-v7':
         vendor=source.pages[16];bibliography=source.pages[23]
+    elif len(source.pages)==27 and source.metadata.get('/FLOWMeasurementEdition')==EDITION:
+        vendor=source.pages[17];bibliography=source.pages[24]
     else:raise ValueError('Unexpected source dossier edition')
     # Existing data-rich guide, table and index are regenerated from their source.
     front,oldlinks=api.make_front()
     executive_pdf,links=executive();toc,toclinks=contents();links+=toclinks
     questions,qlinks=make_questions(api)
     markets,mlinks=market_cases();links+=mlinks
-    plumbing,lean,impacts,extra_sources=make_additions(globals())
+    plumbing,lean,packaging,impacts,extra_sources=make_additions(globals())
     writer=PdfWriter()
     ordered=[cover().pages[0],executive_pdf.pages[0],toc.pages[0],plumbing.pages[0],lean.pages[0],front.pages[2],front.pages[5],
-             *questions.pages,wholesale_case().pages[0],offshore_case().pages[0],returns_case().pages[0],vendor,
-             *markets.pages,pilot().pages[0],impacts.pages[0],front.pages[3],front.pages[4],bibliography,extra_sources.pages[0]]
-    assert len(ordered)==25
+             *questions.pages,wholesale_case().pages[0],offshore_case().pages[0],returns_case().pages[0],packaging.pages[0],vendor,
+             *markets.pages,pilot().pages[0],impacts.pages[0],front.pages[3],front.pages[4],bibliography,*extra_sources.pages]
+    assert len(ordered)==27
     for old in ordered:writer.add_page(old)
     # Old links are generated with the former 20-page layout; retain only table and index.
     for src,rectangle,dst in oldlinks:
-        if src in (3,4,5):links.append(({3:21,4:22,5:6}[src],rectangle,dst+1))
+        if src in (3,4,5):links.append(({3:22,4:23,5:6}[src],rectangle,dst+1))
     links += [(src+7,rectangle,dst) for src,rectangle,dst in qlinks]
-    for i in (5,16,23):
+    for i in (5,17,24):
         api.strip_text_blocks(writer.pages[i],writer,api.is_footer)
     sections=['Dossier de pilotage','Fiche dirigeant','Sommaire','Plomberie des flux','Lean et optimisation','KPI, OKR et décisions','Tableau de référence',
               'Question 1 / service','Question 2 / risque','Question 3 / coût','Question 4 / stock','Question 5 / temps','Question 6 / retours',
-              'Illustrations / vente','Illustrations / achats','Illustrations / retours','Fonctions du marché','Entreprises / 1','Entreprises / 2',
-              'Le premier pilote','Impacts sur FLOW','Catalogue / 1','Catalogue / 2','Sources / 1','Sources / 2']
+              'Illustrations / vente','Illustrations / achats','Illustrations / retours','Illustrations / conditionnements',
+              'Fonctions du marché','Entreprises / 1','Entreprises / 2',
+              'Le premier pilote','Impacts sur FLOW','Catalogue / 1','Catalogue / 2','Sources / 1','Sources / 2','Sources / 3']
     for i,page in enumerate(writer.pages):
-        page.merge_page(api.overlay_page(lambda c,i=i: footer(c,i+1,25,sections[i])))
+        page.merge_page(api.overlay_page(lambda c,i=i: footer(c,i+1,27,sections[i])))
         writer.add_outline_item(sections[i],i)
     for src,rectangle,dst in links:
         a=writer.add_annotation(src,Link(rect=rectangle,target_page_index=dst));a['/Dest'][0]=writer.pages[dst].indirect_reference
     writer.add_metadata({'/Title':'FLOW - Piloter la supply chain : indicateurs, objectifs et décisions',
-                         '/Author':AUTHOR,'/Subject':'Plomberie, Lean et optimisation ; sept KPI, six questions de pilotage et impacts sur FLOW',
+                         '/Author':AUTHOR,'/Subject':'Plomberie, décision et conditionnements ; sept KPI, six questions de pilotage et impacts sur FLOW',
                          '/FLOWMeasurementEdition':EDITION})
     writer.compress_identical_objects(remove_identicals=True,remove_orphans=True)
     for page in writer.pages:page.compress_content_streams()
     candidate=TMP/'FLOW-scm-redesign-candidate.pdf'
     with candidate.open('wb') as f:writer.write(f)
     check=PdfReader(candidate)
-    assert len(check.pages)==25 and len(check.outline)==25
+    assert len(check.pages)==27 and len(check.outline)==27
     for i,p in enumerate(check.pages):
         t=p.extract_text()
         assert t.count('Dossier de pilotage  /')==1,(i+1,'footer')
-        assert f'{i+1} / 25' in t,(i+1,'pagination')
+        assert f'{i+1} / 27' in t,(i+1,'pagination')
         assert not re.search(r'\bM\d{2}\b',t),(i+1,'visible internal code')
     assert AUTHOR in check.pages[0].extract_text() and '22 octobre 2026' in check.pages[0].extract_text()
     for label in ('OTIF','Commandes à risque','Coût de service','Transferts','Excédent projeté','Délai commande-livraison','Valeur nette récupérée'):
         assert label in ' '.join(check.pages[6].extract_text().split()),label
     assert sum(len(q['metrics']) for q in __import__('flow_scm_questions').QUESTION_PAGES)==18
     for name in ('Electrolux Professional','Veseris','Howdens','Europris','Prinsel','Tuckernuck','JBS','JD.com'):
-        assert name in check.pages[17].extract_text()+check.pages[18].extract_text()
+        assert name in check.pages[18].extract_text()+check.pages[19].extract_text()
     assert '92,5 %' in check.pages[14].extract_text() and '19 050' in check.pages[14].extract_text()
     assert '80 € par livraison' in check.pages[13].extract_text()
     assert '620 € nets de plus' in check.pages[15].extract_text()
@@ -484,7 +488,7 @@ def rebuild(api):
             a=ref.get_object()
             if '/URI' in a.get('/A',{}):external.append(a['/A']['/URI'])
             if '/Dest' in a:internal.append(a['/Dest'])
-    assert len(set(external))==33,(len(set(external)),'distinct sources')
+    assert len(set(external))==40,(len(set(external)),'distinct sources')
     assert len(internal)==len(links),(len(internal),len(links))
     candidate.replace(PDF)
-    print(f'Rebuilt: 25 pages; {len(set(external))} distinct source links; {len(internal)} internal links; author {AUTHOR}.')
+    print(f'Rebuilt: 27 pages; {len(set(external))} distinct source links; {len(internal)} internal links; author {AUTHOR}.')

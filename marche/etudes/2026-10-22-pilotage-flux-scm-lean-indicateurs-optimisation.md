@@ -2,6 +2,14 @@
 
 Étude documentaire du 22 octobre 2026 — demandes [U1138 à U1140](../../connaissance/01-contributions-utilisateur.md#u1138).
 
+Complément du même jour : examen critique des termes « fuites » et « grumeaux », à la demande [U1141](../../connaissance/01-contributions-utilisateur.md#u1141), en section 8. Ces précisions sont intégrées au PDF sur demande [U1144](../../connaissance/01-contributions-utilisateur.md#u1144).
+
+Précision [U1142](../../connaissance/01-contributions-utilisateur.md#u1142) : Laurent ajoute explicitement le délai de décision à cette réflexion ; distinction proposée en section 9.
+
+Piste [U1143](../../connaissance/01-contributions-utilisateur.md#u1143) : les résultats du CTP pourraient éclairer le choix du conditionnement ; comparaison documentaire et proposition en section 10.
+
+Livraison documentaire U1144 : vocabulaire et trois délais page 4 ; calculs de décision dans la question 5 page 12 ; illustration des conditionnements page 17 ; impacts sur FLOW page 22 ; références complémentaires page 27. Les sept KPI, les six questions et les onze fiches complémentaires sont conservés. Le même PDF alimente les deux entrées de téléchargement Atlas. Aucun changement du modèle canonique ni release métier.
+
 Statut : étude intégrée le 22 octobre 2026 au [dossier de pilotage SCM](../../output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf), avec une introduction plomberie, Lean et optimisation, des intitulés lisibles et un chapitre sur les impacts pour FLOW. Cette intégration documentaire ne modifie pas le modèle ni les glossaires canoniques. Les rapprochements ci-dessous ne prouvent aucune réalisation installée chez Beaumanoir.
 
 ## 1. Conclusions
@@ -159,3 +167,78 @@ Sources consultées le **22 octobre 2026**. Les liens accompagnent les constats 
 - **ASCM / APQC** : définitions et extraits publics consultés ; bases complètes de benchmarking non acquises. Aucun taux cible n'est déduit des populations de benchmark.
 - **Microsoft** : documentation publique consultée. **SAP** : contenu de la page spécifique consulté par l'extraction du moteur de recherche ; ouverture directe sans texte. **Oracle** : contenu indexé de la page spécifique consulté ; ouverture directe en échec. Ces modes d'accès limitent la profondeur de vérification mais n'autorisent pas à inventer une couverture.
 - Les rapprochements FLOW sont des recommandations locales explicitement séparées des faits documentaires. L'absence de sigle commun dans le corpus ne prouve pas qu'aucune organisation n'en utilise.
+
+## 8. Fuites et grumeaux : examen critique du vocabulaire (U1141)
+
+### Fuites : une image trop étroite pour la qualité du flux d'information
+
+Le lexique du Lean Enterprise Institute définit le flux d'information par son acheminement vers les opérations qu'il doit orienter. Il décrit aussi la simplification des circuits d'information. Le texte de NC State cité en section 2 utilise la visibilité et la réduction des **frictions**, notamment les délais d'approbation et de décision. Ces références soutiennent l'importance de l'information pour agir ; elles ne désignent pas ces problèmes par le terme « fuites ». [LEI, Information Flow](https://www.lean.org/lexicon-terms/information-flow/) ; [NC State, 29 juillet 2017](https://scm.ncsu.edu/scm-articles/article/managerial-practice-will-need-to-catch-up-with-the-emergence-of-real-time-supply-chains).
+
+Notre appréciation rédactionnelle : « fuite » évoque une perte, voire une divulgation de données. Le besoin FLOW couvre aussi une donnée reçue trop tard, erronée ou reçue sans prise en compte dans la décision. Exemple hypothétique : une réception à 9 heures visible seulement le lendemain peut empêcher une promesse aujourd'hui ; l'information n'a pas disparu. Intitulé conseillé : **Fiabiliser la circulation de l'information**, avec la précision « une information correcte, disponible et utilisée à temps pour décider ». « Frictions » peut désigner plus largement les délais du processus de décision, sans remplacer exactement « fuites ».
+
+### Grumeaux : une intuition appuyée, mais plusieurs causes à distinguer
+
+Bartholdi et Hackman précisent au §2.2 que les produits ressemblent à un mélange de grains et de blocs : ils restent indivisibles à certaines échelles et passent notamment de palettes à des cartons puis des pièces. Leur granularité rejoint l'intuition de Laurent ; elle ne rend pas tout regroupement indésirable. Le §1.1 justifie également des regroupements par les coûts fixes du transport et l'organisation des réceptions. [Warehouse & Distribution Science, §§1.1 et 2.2](https://www2.isye.gatech.edu/~jjb/wh/book/editions/wh-sci-0.98.1.pdf).
+
+Pour le pilotage FLOW, notre traduction opérationnelle distingue :
+
+| Situation | Décision à examiner |
+| --- | --- |
+| Lot trop volumineux ou attente de regroupement | Adapter la taille et le calendrier des lots ; comparer fractionnement et regroupement. |
+| Accumulation de travail devant une opération | Réguler les lancements et la charge engagée. |
+| Capacité qui limite le flux | Adapter cette capacité ou réorienter une partie du parcours. |
+| Commande retenue pour une ligne manquante | Comparer attente, autre source, substitution et livraison partielle autorisée. |
+
+Womack distingue capacité, flexibilité, circulation, déclenchement par l'aval et lissage. Le LEI définit le lissage des quantités et des types de produits ; il associe les petits lots à des conditions de fonctionnement adaptées, dont la réduction des changements de série. Il envisage un stock tampon. Les seuils d'entrepôt constituent donc un levier parmi d'autres. [Jim Womack, 14 juillet 2003](https://www.lean.org/the-lean-post/articles/jim-womack-on-how-lean-compares-with-six-sigma-re-engineering-toc-tpm-etc-etc/) ; [LEI, Heijunka](https://www.lean.org/lexicon-terms/heijunka/).
+
+### Recommandation éditoriale, intégrée au dossier par U1144
+
+Conserver la plomberie pour l'introduction visuelle et employer des actions explicites dans les intitulés :
+
+- « Éviter les fuites » → **Fiabiliser la circulation de l'information**.
+- « Casser les grumeaux » → **Adapter les lots et lever les blocages**.
+- « Empêcher les grumeaux » → **Lisser les flux et prévenir les engorgements**.
+
+Le terme « grumeaux » peut rester une image orale, immédiatement traduite. « Goulet d'étranglement » décrit une capacité limitante et ne remplace pas toutes ces situations. Fractionner un lot de préparation, fractionner une expédition et modifier un engagement commercial sont des décisions distinctes. Conserver la demande et la promesse initiales pour mesurer le service, même si le découpage technique change.
+
+Ces intitulés et rapprochements sont nos recommandations pour FLOW, pas une terminologie normalisée attribuée aux auteurs. U1144 demande leur intégration au PDF ; les intitulés sont adaptés à sa mise en page. Les sept KPI, les six questions et les référentiels canoniques sont conservés.
+
+## 9. Décider à temps : un délai distinct de l'information et de l'exécution (U1142)
+
+L'article de NC State décrit explicitement les attentes d'approbation, la réaction tardive à une prévision modifiée et l'absence de réponse à une perturbation. L'information visible ne suffit donc pas à assurer une décision prise à temps. [NC State, 29 juillet 2017](https://scm.ncsu.edu/scm-articles/article/managerial-practice-will-need-to-catch-up-with-the-emergence-of-real-time-supply-chains).
+
+Traduction pédagogique proposée pour FLOW : le capteur signale un problème ; il reste à décider quelle vanne ouvrir, puis à l'ouvrir. Pour un cas nécessitant une réaction, suivre trois intervalles avec des bornes explicites :
+
+| Intervalle | Début et fin proposés |
+| --- | --- |
+| Délai d'information | Événement réel → signal exploitable par le décideur ou le moteur. |
+| Délai de décision | Signal exploitable → décision autorisée. Il inclut analyse, comparaison, attente et approbation. |
+| Délai d'exécution | Décision autorisée → action effectivement réalisée, avec un jalon défini pour le parcours. |
+
+Il faut aussi conserver la date limite à laquelle une décision peut encore produire l'effet souhaité. La part de cas décidés avant cette échéance complète utilement le délai médian et les cas les plus longs. Inclure les cas toujours en attente dans le suivi ; mesurer uniquement les décisions terminées masquerait les blocages. Ces mesures sont des propositions de diagnostic, sans modification des sept KPI prioritaires ni des six questions.
+
+Conséquence proposée pour FLOW : exposer les exceptions et leur échéance, comparer les options, rendre explicites le décideur et ses délégations, puis déclencher ou faire approuver l'action selon les règles autorisées. La décision rapide reste soumise aux engagements et au coût total ; l'absence d'action peut elle-même résulter d'une décision motivée. Ce raisonnement décrit une cible à examiner et ne prouve pas une réalisation installée.
+
+## 10. Le CTP comme appui au choix du conditionnement (U1143)
+
+### Ce que les références établissent
+
+- **Microsoft Dynamics 365** : le calcul CTP prend en compte matières, capacités et délais pour établir une date de promesse. La planification utilise séparément des quantités minimales, maximales et multiples. La gestion d'entrepôt représente une hiérarchie d'unités, par exemple pièce, carton et palette, explicitement distincte des paramètres de quantité des commandes. [Calcul CTP](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp) ; [Méthodes de réapprovisionnement et quantités](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification) ; [Unités et hiérarchie de conditionnement](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/unit-measure-stocking-policies).
+- **SAP S/4HANA** : la présentation de PP/DS distingue l'optimisation des tailles de lots sous contraintes de capacité et la confirmation CTP selon les contraintes de production et d'ordonnancement. Le cours sur l'optimisation discrète mentionne notamment les lots entiers et minimums de production ou de transport. [Fonctions de planification et CTP](https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning) ; [Optimisation discrète et tailles de lots](https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/understanding-cost-based-discrete-mixed-integer-optimization).
+
+Points communs documentés : contraintes de quantité, ressources et délais peuvent influencer la faisabilité ; les unités physiques et les lots de planification demandent des paramètres explicites. Limite : ces pages ne démontrent pas une fonction CTP qui conçoit automatiquement l'emballage physique ou détermine un conditionnement universellement optimal. Leur profondeur sur la production ne prouve pas la couverture identique de tous les flux envisagés pour FLOW.
+
+### Proposition FLOW : évaluer plusieurs grains admissibles
+
+Le « grain » peut désigner une quantité d'achat, un lot de fabrication, un carton, un assortiment de tailles, un lot de préparation ou une quantité livrée. Ces objets ne sont pas équivalents. Un lot de fabrication de 1 200 pièces peut, par exemple, être conditionné en cartons de 12 et préparé en lots de plusieurs cartons. Une décomposition informatique ne réalise pas le déconditionnement physique.
+
+Le CTP pourrait tester la faisabilité de scénarios autorisés, puis une comparaison économique pourrait recommander le plus adapté : quantités et dates confirmables, opérations supplémentaires, charge, reliquats et coût total. Les données nécessaires comprennent les conversions d'unités, la composition des assortiments, les contraintes de commande, les opérations et autorisations de déconditionnement, leurs temps et coûts, les capacités et calendriers, la demande par canal et les engagements existants. Une option physiquement indisponible aujourd'hui ne devient pas une promesse réalisable ; elle peut alimenter le choix du prochain approvisionnement.
+
+**Exemple purement illustratif :** une demande de 18 pièces pour vendredi, avec stock et transport suffisants. Des cartons de 12 non ouvrables ne permettent pas de servir exactement 18 ; livrer 24 exigerait un accord. Si l'ouverture est autorisée mais que le premier créneau de reconditionnement disponible est lundi, le délai bloque le service du vendredi. Trois packs de 6 déjà disponibles et acceptés permettent de servir exactement 18 sans cette opération. Le choix futur de packs de 6 demande encore de comparer leur coût à la manutention et aux retards évités sur un ensemble représentatif de commandes.
+
+Deux horizons proposés :
+
+1. **Décision courante** : choisir parmi les conditionnements et opérations réellement accessibles pour tenir l'engagement.
+2. **Révision des règles** : rejouer plusieurs scénarios de demande pour recommander des tailles de lots, compositions d'assortiments ou conditionnements futurs par produit et canal. Cette analyse peut nourrir Design & Development, les achats et l'organisation logistique, dans leurs responsabilités respectives.
+
+L'expression recommandée est **« conditionnement le plus adapté au flux »**, ou **« taille de lot recommandée pour ce scénario »**. « Grain » reste une image pédagogique cohérente avec Georgia Tech ; « grumeau » suggère à tort que tout regroupement serait à supprimer. Les résultats du CTP alimenteraient l'optimisation des politiques de regroupement : il s'agit d'une proposition à éprouver, sans modification canonique ni réalisation présumée.

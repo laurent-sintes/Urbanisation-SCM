@@ -25954,3 +25954,35 @@ Date : 2026-10-22. Source : Laurent, piste Lean dans l'étude des approches de p
 Verbatim : « Je pense qu'il y a des recherches autour de la Lean Stream Value qui s'applique à la SCM »
 
 Portée : examiner la piste exprimée, identifier les termes établis et les travaux Lean sur les flux de valeur applicables à la supply chain, notamment au-delà d'un seul atelier. Distinguer le vocabulaire exact de la source, notre interprétation et les prolongements possibles pour FLOW. Cette piste prolonge l'étude U1138/U1139 sans modification du PDF, du modèle ou des glossaires, sans validation d'une méthode de transformation et sans publication.
+
+## U1141
+
+Date : 2026-10-22. Source : Laurent, examen critique du vocabulaire pédagogique de la plomberie SCM.
+
+Verbatim : « Je voudrais que tu challenges ma proposition sur les fuites et les grumeaux vis à vis des références (recherche) que tu as trouvé. On garde ces termes un peu familiers ou on trouve autre chose ? »
+
+Portée : confronter les deux images aux références effectivement consultées, en distinguer le pouvoir pédagogique, les ambiguïtés et les mécanismes métier, puis recommander un vocabulaire pour le dossier. Cette demande porte sur une étude et une recommandation ; elle ne choisit pas encore les intitulés et ne demande pas de modification ou de republication du PDF ni du modèle.
+
+## U1142
+
+Date : 2026-10-22. Source : Laurent, précision du pilotage dans la métaphore de la plomberie SCM.
+
+Verbatim : « Dans ma métaphore j'ai oublié la notion de délai de décision en effet »
+
+Portée : reconnaître explicitement le délai de décision parmi les phénomènes à expliquer dans l'étude U1141. Distinguer transmission de l'information, décision et exécution ; aucune cible, automatisation générale, modification du PDF ou publication n'est demandée par cette précision.
+
+## U1143
+
+Date : 2026-10-22. Source : Laurent, apport sur le rôle du CTP dans le choix des conditionnements.
+
+Verbatim : « Il y a aussi l'idée que la CTP pourrait aussi donner des indices, des information sur la taille du grain idéal (packaging) »
+
+Portée : examiner comment les résultats du CTP peuvent éclairer la taille des lots et les conditionnements, en distinguant faisabilité de la promesse, comparaison de scénarios et recommandation de paramètres. Cette piste ne valide ni un optimum universel, ni une réalisation installée, ni une modification du PDF ou du modèle.
+
+## U1144
+
+Date : 2026-10-22. Source : Laurent, intégration documentaire et synchronisation du dossier SCM dans Atlas.
+
+Verbatim : « Intègre ces précisions dans le PDF : vocabulaire de la plomberie, délai de décision et rôle du CTP dans le choix des conditionnements. Conserve les sept KPI et les six questions, et mets à jour le PDF téléchargeable dans Atlas. »
+
+Portée : intégrer les précisions discutées en U1141-U1143 au dossier de pilotage, en préserver les sept KPI, les six questions et les indicateurs complémentaires ; régénérer le PDF et synchroniser son téléchargement dans Atlas local et distant selon la consigne permanente. L'intégration documentaire conserve les limites des références et distingue cible proposée, confirmation CTP et optimisation. Elle ne demande pas de modification du modèle canonique ni de release métier.

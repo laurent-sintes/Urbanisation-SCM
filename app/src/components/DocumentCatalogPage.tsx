@@ -76,7 +76,7 @@ export function DocumentCatalogPage({
               <h3>Piloter la supply chain : indicateurs et décisions</h3>
               <p>
                 Sept indicateurs prioritaires, six questions de pilotage et des cas concrets, des achats aux retours et
-                au déstockage. Plomberie, Lean, optimisation et impacts pour FLOW.
+                au déstockage. Plomberie, délais de décision, CTP et conditionnements, Lean et impacts pour FLOW.
               </p>
               <p className="documents-study-author">Laurent Sintès</p>
               <a className="documents-download" href={scmStudyUrl} download={scmStudyFilename}>

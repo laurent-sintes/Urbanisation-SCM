@@ -43,16 +43,16 @@ QUESTION_PAGES = [
         'action': 'Comparer réaffectation, complément vérifié ou réception accélérée.',
         'result': 'Risque, service des autres groupes et coût.',
         'cadence': 'Proposition pour le pilote, à confirmer : recalcul aux événements, tri quotidien par l’équipe supply ; responsables des flux concernés et décideurs habilités arbitrent stock, capacités et priorités.',
-        'note': '<b>Règles de calcul.</b> Une même unité de stock ou capacité ne couvre pas plusieurs demandes simultanément. Afficher les effectifs évaluables et inconnus pour l’ATP comme pour le CTP ; sans dénominateur, afficher « non applicable ». Une nouvelle simulation ne constitue pas un engagement. Les règles d’autorisation de la décision restent à définir. Illustration marché : Electrolux Professional et JD.com, pages 18-19.',
+        'note': '<b>Règles de calcul.</b> Une même unité de stock ou capacité ne couvre pas plusieurs demandes simultanément. Afficher les effectifs évaluables et inconnus pour l’ATP comme pour le CTP ; sans dénominateur, afficher « non applicable ». Une nouvelle simulation ne constitue pas un engagement. Les règles d’autorisation de la décision restent à définir. Illustration marché : Electrolux Professional et JD.com, pages 19-20.',
         'metrics': [
             ('M04', 'Commandes à risque',
              'Promesse initiale, quantité restante, stock utilisable et droits d’accès, apports datés, temps de préparation et transport, capacités. Sources : carnet, entrepôt, achats et plans.',
              '100 × lignes ouvertes en retard prévisible ou sans solution réalisable / lignes ouvertes évaluables dues sur l’horizon. Retard prévisible : date réalisable après la promesse initiale. Afficher à part les lignes non calculables faute de données / toutes les lignes du périmètre.',
              'Trier les engagements à traiter, puis tester réallocation, réception accélérée ou autre parcours avant de modifier la promesse. L’absence de solution réalisable constitue un risque.'),
             ('M05', 'Couverture ATP et manques résolus par CTP',
-             'Demandes avec date cible, stock libre et apports déjà prévus pour l’ATP ; fournisseurs, lots, délais, composants et capacités pour le complément CTP.',
+             'Demande datée, stock libre et apports prévus pour l’ATP ; sources, lots, unités par pack, délais et capacités pour le CTP. Inclure les opérations de reconditionnement autorisées et leurs ressources.',
              'ATP : 100 × lignes entièrement servables à la date cible / lignes évaluables. CTP : 100 × lignes non couvertes par ATP qu’un apport supplémentaire vérifié rend servables / lignes non couvertes par ATP et évaluables par CTP.',
-             'Confirmer ce qui est couvert ; pour le reste, proposer un achat, une fabrication ou un transfert planifié. Si 12 des 20 manques évalués sont résolus, le complément CTP est de 60 %.'),
+             'Comparer achat, fabrication, transfert ou reconditionnement réalisables. Le CTP éclaire le choix des lots ; l’optimisation compare leurs coûts et effets. Illustration des conditionnements page 17.'),
             ('M06', 'Effet d’une protection de stock',
              'Stock physique, quantités protégées, bénéficiaires, échéances, priorités et demandes de chaque groupe, dont le SAV. Conserver les deux versions de la règle.',
              'Pour chaque groupe, compter les lignes devenues servables et celles devenues non servables entre deux simulations ; mêmes demandes, dates et ressources, seule la protection change.',
@@ -67,10 +67,10 @@ QUESTION_PAGES = [
         'action': 'Comparer site préparateur, placement du stock et regroupement.',
         'result': 'Moins de transferts, promesse tenue et coût complet maîtrisé.',
         'cadence': 'Proposition pour le pilote, à confirmer : supply et logistique analysent les causes chaque semaine ; Finance valide les coûts, puis les responsables habilités arbitrent les règles.',
-        'note': '<b>Éviter le double compte.</b> Un transfert partagé compte comme dépendance pour chaque livraison concernée ; son mouvement physique et son coût ne sont enregistrés qu’une fois, puis répartis. Le réassort (réapprovisionnement) anticipé est suivi séparément. Une baisse de transferts doit rester compatible avec le service et le coût complet. Cas Howdens et Veseris : page 18 ; JD.com : page 19.',
+        'note': '<b>Éviter le double compte.</b> Un transfert partagé compte comme dépendance pour chaque livraison concernée ; son mouvement physique et son coût ne sont enregistrés qu’une fois, puis répartis. Le réassort (réapprovisionnement) anticipé est suivi séparément. Une baisse de transferts doit rester compatible avec le service et le coût complet. Cas Howdens et Veseris : page 19 ; JD.com : page 20.',
         'metrics': [
             ('M07', 'Coût de service par livraison (CTS)',
-             'Unités servies et coût d’achat ; manutention, stockage, transferts et transport attribuables. Sources : commandes, mouvements, factures et coûts de référence validés par Finance.',
+             'Unités servies et coût d’achat ; manutention, conditionnement, stockage, transferts et transport attribuables. Sources : commandes, mouvements, factures et coûts de référence validés par Finance.',
              'Somme des coûts attribués aux unités servies / nombre de livraisons servies. Garder la même règle de répartition des coûts partagés et comparer des produits et canaux comparables.',
              'Comparer sites préparateurs, regroupements et fréquences d’expédition. Par exemple, vérifier si regrouper deux départs réduit le coût sans faire manquer un engagement.'),
             ('M09', 'Transferts avant préparation wholesale',
@@ -91,7 +91,7 @@ QUESTION_PAGES = [
         'action': 'Réaffecter le stock, ajuster les entrées ou préparer le déstockage.',
         'result': 'Excédent réduit sans menacer les ventes.',
         'cadence': 'Proposition pour le pilote, à confirmer : supply et achats révisent les projections chaque semaine et avant les engagements de saison ; Finance valide la valorisation.',
-        'note': '<b>Pour une comparaison juste.</b> Ne pas soustraire deux fois une commande déjà comprise dans la prévision. Ne pas additionner stock vieillissant, bloqué et mal localisé si les catégories se recoupent. Des ventes observées en rupture ne mesurent pas toute la demande : isoler l’estimation. Les unités hétérogènes ne s’additionnent pas sans règle commune. Cas Europris et JD.com : page 19.',
+        'note': '<b>Pour une comparaison juste.</b> Ne pas soustraire deux fois une commande déjà comprise dans la prévision. Ne pas additionner stock vieillissant, bloqué et mal localisé si les catégories se recoupent. Des ventes observées en rupture ne mesurent pas toute la demande : isoler l’estimation. Les unités hétérogènes ne s’additionnent pas sans règle commune. Cas Europris et JD.com : page 20.',
         'metrics': [
             ('M11', 'Excédent projeté',
              'Stock physiquement présent, entrées et sorties prévues, commandes et prévisions rapprochées sans double compte, cible par article-site et coût unitaire. Compter le transit une fois, à réception ; le stock bloqué ne couvre une sortie qu’après sa libération prévue.',
@@ -109,20 +109,20 @@ QUESTION_PAGES = [
     },
     {
         'title': 'Où le temps s’accumule-t-il ?',
-        'subtitle': 'Mesurer les opérations terminées et la file encore ouverte. La moyenne globale ne dit ni où agir, ni quelles commandes risquent d’attendre longtemps.',
+        'subtitle': 'Mesurer le parcours terminé et les dossiers encore ouverts. Distinguer le temps pour être informé, pour décider et pour exécuter la décision.',
         'priority': ('M13',),
         'signal': 'L’attente ou l’âge des dossiers augmente.',
-        'action': 'Agir sur l’étape bloquante et contrôler la capacité aval.',
+        'action': 'Traiter l’attente d’information, d’arbitrage ou d’exécution.',
         'result': 'Délais, dossiers ouverts et charge des étapes.',
         'cadence': 'Proposition pour le pilote, à confirmer : les responsables d’étapes traitent les alertes au fil des événements ; supply et logistique arbitrent les moyens et règles chaque semaine.',
-        'note': '<b>Cadence proposée.</b> Actualiser les alertes lors des événements qui changent la faisabilité ; revoir les causes et les règles en comité hebdomadaire. Les seuils sont fixés à partir du besoin de service et de la situation initiale. Les retours suivent leurs propres bornes page 13. Le cas Prinsel, page 19, illustre la réduction du temps de traitement dans l’entrepôt ; ce gain relève aussi de l’exécution logistique.',
+        'note': '<b>Décider avant qu’il soit trop tard.</b> Sur les cas dont l’échéance utile est atteinte, mesurer la part décidée avant cette échéance ; inclure les cas restés sans décision. Une décision de ne pas agir peut être motivée. Ces diagnostics expliquent le KPI global, sans ajouter une priorité. NC State décrit les délais d’approbation [34]. Prinsel (page 20) illustre un gain d’exécution en entrepôt ; retours : page 13.',
         'metrics': [
             ('M13', 'Délai commande-livraison',
-             'Événements datés par demande : acceptation, prêt à traiter, début et fin d’opération, livraison. Même calendrier, fuseau et unité de durée pour chaque comparaison.',
-             'Délai vente = livraison - acceptation. Attente d’une étape = début de traitement - prêt à traiter. Présenter la médiane (délai couvrant 50 % des dossiers terminés) et le délai couvrant 90 %, par flux et étape.',
-             'Agir sur l’étape qui explique l’attente : fractionner les lots, lisser les arrivées ou accélérer une décision. Un délai long peut venir du stock ou d’une règle, pas seulement d’un manque de personnel.'),
+             'Par demande : acceptation, livraison ; événement réel, signal exploitable, décision autorisée, action réalisée. Pour chaque réaction : mêmes bornes, calendrier, fuseau et échéance utile.',
+             'Délai global = livraison - acceptation. Information = signal - événement ; décision = autorisation - signal ; exécution = action - autorisation. Présenter médiane (50 %) et délai couvrant 90 %. Ne pas sommer des réactions qui se chevauchent.',
+             'Selon la cause, fiabiliser le signal, clarifier la délégation, adapter les lots ou déplacer une opération. Contrôler l’effet sur le délai global et les engagements, pas seulement la vitesse de décision.'),
             ('M14', 'Nombre et âge des dossiers encore ouverts',
-             'Identifiant de demande, étape courante, date d’entrée dans cette étape, motif de blocage, date promise et date de mesure.',
+             'Demande, étape et date d’entrée, motif de blocage, responsable d’arbitrage, date promise, échéance utile pour décider et date de mesure.',
              'Nombre de dossiers ouverts ; âge de chacun = date de mesure - entrée dans l’étape. Compter ceux au-delà d’un seuil fixé avant l’analyse et afficher les plus anciens.',
              'Former une liste d’actions : libérer un contrôle, obtenir un accord, traiter une rupture ou arbitrer une priorité. Cela empêche un bon délai moyen de masquer les dossiers jamais terminés.'),
             ('M15', 'Charge rapportée à la capacité disponible',
@@ -139,7 +139,7 @@ QUESTION_PAGES = [
         'action': 'Comparer remise en vente, réparation, retour fournisseur et déstockage.',
         'result': 'Valeur nette, délai et unités restant à traiter.',
         'cadence': 'Proposition pour le pilote, à confirmer : retours et logistique suivent les files chaque semaine ; commerce et Finance valident conditions et valeur, selon les délégations applicables.',
-        'note': '<b>Lecture économique.</b> La valeur nette récupérée n’est pas la marge complète : elle n’a pas déduit le coût initial du bien. Un transfert ne crée pas une sortie du stock global. Éviter de compter deux fois un avoir fournisseur et la valeur du bien retourné. Les options futures restent des estimations jusqu’à réalisation. Cas Tuckernuck : page 19.',
+        'note': '<b>Lecture économique.</b> La valeur nette récupérée n’est pas la marge complète : elle n’a pas déduit le coût initial du bien. Un transfert ne crée pas une sortie du stock global. Éviter de compter deux fois un avoir fournisseur et la valeur du bien retourné. Les options futures restent des estimations jusqu’à réalisation. Cas Tuckernuck : page 20.',
         'metrics': [
             ('M18', 'Valeur nette récupérée',
              'Quantités effectivement sorties, recettes ou avoirs obtenus, frais supplémentaires de tri, réparation, transfert, transport et vente, coût du stock sorti.',
@@ -212,7 +212,7 @@ def make_questions(api):
 
     for qi,question in enumerate(QUESTION_PAGES):
         y = api.heading(c,f'QUESTION DE PILOTAGE {qi+1:02d}',question['title'],question['subtitle'])
-        market_page = 18 if qi<3 else 19
+        market_page = 19 if qi<3 else 20
         c.setFont('Segoe',8)
         c.setFillColor(api.GREEN)
         c.drawRightString(api.W-api.M,733,f'Cas d’entreprises : page {market_page}')

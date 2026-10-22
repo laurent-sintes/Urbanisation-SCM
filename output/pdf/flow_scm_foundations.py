@@ -6,16 +6,16 @@ def make_additions(layout):
     for name in ('start','finish','heading','para','banner','rect','chip','W','H','M','CW',
                  'GREEN','MINT','PAPER','INK','MUTED','LINE','PEACH'):
         globals()[name] = layout[name]
-    return plumbing(), lean(), impacts(), sources()
+    return plumbing(), lean(), packaging(), impacts(), sources()
 
 
 def plumbing():
     s,c=start()
     y=heading(c,'COMPRENDRE / LA PLOMBERIE DES FLUX','Piloter un réseau de flux',
               'Des produits circulent, attendent et changent de destination ; l’information permet de décider où, quand et combien.')
-    y=para(c,'Dans <i>Warehouse &amp; Distribution Science</i>, <b>John J. Bartholdi III et Steven T. Hackman, '
-           'chercheurs à Georgia Tech</b>, décrivent les produits comme un flux traversant des conduites et des réservoirs. '
-           'Cette analogie aide à voir les accumulations et les contraintes. Les six leviers ci-dessous sont notre adaptation pour FLOW. [22]',M,y,style='small')-16
+    y=para(c,'<b>Bartholdi et Hackman, chercheurs à Georgia Tech</b>, comparent les flux à des conduites et réservoirs. '
+           'Ils rappellent que les produits circulent par grains : palettes, cartons, pièces. '
+           'Les six leviers ci-dessous adaptent cette image à FLOW ; ils ne constituent pas une méthode normalisée. [22]',M,y,style='small')-12
     top=y;w=110;gap=(CW-4*w)/3
     labels=['Approvisionner','Stocker','Préparer / livrer','Servir le client']
     for i,label in enumerate(labels):
@@ -28,33 +28,37 @@ def plumbing():
             c.line(x+w+gap-7,top-21,x+w+gap-3,top-18)
             c.line(x+w+gap-7,top-15,x+w+gap-3,top-18)
     c.setStrokeColor(GREEN);c.setLineWidth(.9)
-    c.line(W-M-w/2,top-39,W-M-w/2,top-56)
-    c.line(W-M-w/2,top-56,M+w+gap+w/2,top-56)
-    c.line(M+w+gap+w/2,top-56,M+w+gap+w/2,top-40)
-    para(c,'Retours → contrôle, remise en état, réemploi ou déstockage',M+10,top-67,CW-20,'tiny')
-    y=top-97
+    c.line(W-M-w/2,top-39,W-M-w/2,top-50)
+    c.line(W-M-w/2,top-50,M+w+gap+w/2,top-50)
+    c.line(M+w+gap+w/2,top-50,M+w+gap+w/2,top-40)
+    para(c,'Retours → contrôle, remise en état, réemploi ou déstockage',M+10,top-58,CW-20,'tiny')
+    y=top-83
     rows=[
-        ('Éviter les fuites','Une réception ou une capacité modifiée arrive trop tard dans la décision.',
-         'Rapprocher les événements et vérifier leur délai d’utilisation ; recalculer les promesses concernées. [31]'),
-        ('Régler le débit','Les dossiers s’accumulent avant une étape limitante.',
-         'Comparer charge, capacité et attente ; ajuster les lancements ou le parcours pour servir davantage à temps.'),
-        ('Ouvrir une dérivation','Du stock est protégé pour un flux alors qu’un autre manque.',
-         'Simuler une réallocation, puis l’autoriser selon son effet sur chaque groupe. Le droit d’usage peut changer sans déplacement physique.'),
-        ('Casser les grumeaux','Une ligne manquante bloque un lot ou une commande entière.',
-         'Séparer les lots ou livrer partiellement si le client l’accepte ; vérifier surcoût et promesse initiale.'),
-        ('Prévenir les grumeaux','Seuils et tailles de lots provoquent des arrivées irrégulières.',
-         'Revoir les seuils, lots et lancements selon consommation, délais et capacités ; mesurer stock et attente.'),
-        ('Vidanger en fin de saison','Des entrées alimentent encore un stock sans débouché.',
-         'Réduire les entrées modifiables, réaffecter ou déstocker ; conserver les quantités nécessaires aux engagements et au SAV.'),
+        ('Fiabiliser l’information',
+         'Rendre les événements corrects, disponibles et utilisés à temps. Une réception tardivement connue peut fausser la promesse. [31, 35]'),
+        ('Régler le débit',
+         'Repérer l’étape qui limite les sorties ; ajuster lancements, capacité ou parcours selon les attentes et les engagements.'),
+        ('Ouvrir une dérivation',
+         'Réallouer du stock protégé après examen des autres demandes. Le droit d’usage peut changer sans déplacement physique.'),
+        ('Adapter les lots et lever les blocages',
+         'Comparer regroupement, fractionnement et autre source. Un lot trop grand et une ligne manquante demandent des réponses différentes.'),
+        ('Lisser les flux',
+         'Prévenir les engorgements en réglant lots, seuils et calendriers selon la capacité. Les seuils d’entrepôt ne suffisent pas. [36]'),
+        ('Préparer la fin de saison',
+         'Réduire les entrées modifiables, réaffecter ou déstocker ; conserver le reliquat nécessaire aux engagements et au SAV.'),
     ]
-    for title,problem,action in rows:
+    for title,action in rows:
         top=y
-        para(c,title,M,top,125,'head')
-        y=para(c,f'{problem}<br/><b>Décision FLOW :</b> {action}',M+141,top,CW-141,'small')-10
+        title_bottom=para(c,title,M,top,135,'head')
+        body_bottom=para(c,action,M+150,top,CW-150,'small')
+        y=min(title_bottom,body_bottom)-9
         c.setStrokeColor(LINE);c.line(M,y+3,W-M,y+3)
-    y=para(c,'<b>Limite de l’image.</b> Les produits circulent par unités et par lots. Chez les auteurs, une conduite plus large '
-           'peut représenter davantage d’encours (quantités présentes dans le périmètre) à débit égal. Le schéma n’encode aucune capacité par sa largeur. '
-           'Il ne s’agit pas d’une méthode normalisée en six étapes.',M,y-4,style='tiny')
+    y=para(c,'Décider à temps : trois délais distincts [34]',M,y-3,style='head')-5
+    y=para(c,'<b>Information :</b> événement → signal exploitable. <b>Décision :</b> signal → choix autorisé. '
+           '<b>Exécution :</b> choix → action réalisée. Le capteur peut alerter alors que l’on attend encore de décider quelle vanne ouvrir. '
+           'Données et calculs : question 5, page 12.',M,y,style='small')-9
+    y=para(c,'<b>Limite de l’image.</b> Un gros lot peut être économique. Chez les auteurs, une conduite plus large peut représenter '
+           'davantage d’encours (quantités présentes) à débit égal ; le schéma n’encode aucune capacité par sa largeur.',M,y,style='tiny')
     if y<58:raise ValueError(('Plumbing overflow',y))
     c.showPage();return finish(s,c)
 
@@ -80,7 +84,7 @@ def lean():
     y=para(c,'Quatre façons de comparer les options',M,y,style='head')-10
     cards=[
         ('Parcours et affectations [27]','Répartir les quantités entre sources, sites et clients selon coûts, disponibilités et capacités.'),
-        ('Lots et engagements [32]','Choisir des quantités indivisibles, un site ou un fractionnement en tenant compte des coûts fixes et des règles client.'),
+        ('Lots et engagements [32, 40]','Adapter les regroupements et les quantités indivisibles selon coûts fixes, capacité et règles client. Cas des conditionnements : page 17.'),
         ('Attente et saturation [33]','Simuler les arrivées irrégulières pour voir leur effet sur le délai ; une capacité moyenne ne garantit pas une date.'),
         ('Demande incertaine [20, 28]','Comparer plusieurs niveaux de demande et de capacité pour dimensionner stock et combinaison offshore/nearshore.'),
     ]
@@ -92,11 +96,59 @@ def lean():
         para(c,body,x+11,t-31,w-22,'small')
     y=top-211
     y=para(c,'<b>La règle avant le calcul.</b> Définir l’objectif économique, les engagements et protections à respecter. '
-           'Le CTP vérifie la faisabilité d’un apport à obtenir ; le PTP compare les conséquences économiques des options. '
-           'Un optimum dépend du modèle et des hypothèses, et ne découle pas du seul sigle CTP. [2-5]',M,y,style='small')-10
+           'Le CTP teste la faisabilité ; ses résultats peuvent éclairer les lots et conditionnements. '
+           'La comparaison économique, dans la logique PTP, aide à choisir parmi les options. Un optimum dépend des hypothèses. [2-5, 37-40]',M,y,style='small')-10
     y=para(c,'<b>Mesurer sans déplacer le problème :</b> réduire les transferts avec OTIF et coût comme garde-fous ; '
            'fractionner une commande sans effacer sa promesse initiale. Les sept KPI et les six questions gardent ce rôle commun.',M,y,style='small')
     if y<58:raise ValueError(('Lean overflow',y))
+    c.showPage();return finish(s,c)
+
+
+def packaging():
+    s,c=start()
+    y=heading(c,'ILLUSTRATION / CONDITIONNEMENTS ET PROMESSE','Choisir le bon grain du flux',
+              'Le CTP peut révéler l’effet d’un conditionnement sur la promesse. La comparaison des options éclaire le choix du lot.')
+    y=para(c,'<b>Exemple fictif.</b> Un client demande exactement <b>18 pièces pour vendredi</b>. '
+           'Stock et transport sont suffisants. Les trois scénarios diffèrent par le conditionnement et les opérations nécessaires. '
+           'Un pack désigne ici un paquet de plusieurs pièces.',M,y,style='small')-15
+    top=y
+    para(c,'CONDITIONNEMENT',M+10,top-3,155,'tiny')
+    para(c,'CONSÉQUENCE SUR LA PROMESSE',M+180,top-3,CW-190,'tiny')
+    y-=25
+    scenarios=[
+        ('Cartons de 12\nnon ouvrables',
+         '<b>18 pièces exactes impossibles.</b> Un carton fournit 12 pièces ; deux en fournissent 24. '
+         'Livrer 24 demanderait un accord du client.',False),
+        ('Cartons de 12\nouvrables',
+         '<b>Reconditionnement disponible lundi.</b> Le stock permet de servir 18, mais l’opération nécessaire '
+         'empêche la livraison du vendredi.',False),
+        ('Packs de 6\ndéjà disponibles',
+         '<b>3 packs = 18 pièces.</b> Si le client accepte ce conditionnement, la livraison du vendredi '
+         'est réalisable sans reconditionnement.',True),
+    ]
+    for title,body,highlight in scenarios:
+        top=y
+        if highlight:rect(c,M,top,CW,67,MINT,r=8)
+        a=para(c,title.replace('\n','<br/>'),M+10,top-10,153,'head')
+        b=para(c,body,M+180,top-10,CW-190,'small')
+        y=min(top-67,a-10,b-10)-6
+        if not highlight:
+            c.setStrokeColor(LINE);c.line(M,y+3,W-M,y+3)
+    y-=6
+    y=para(c,'Ce que FLOW doit comparer',M,y,style='head')-5
+    y=para(c,'<b>Le CTP teste quantités et dates réalisables</b> si les contraintes de conditionnement et de ressources sont représentées. '
+           'Comparer ensuite le coût des emballages, de la manutention et du transport, les reliquats et les retards évités. '
+           'Des packs plus petits ne sont pas toujours plus économiques. [37-40]',M,y,style='small')-12
+    y=para(c,'<b>Données nécessaires :</b> pièces par pack et composition des assortiments de tailles ; unités et conversions ; '
+           'droit d’ouvrir les colis ; opérations, temps, coûts et créneaux de reconditionnement ; règles client et engagements.',M,y,style='small')-12
+    y=para(c,'Deux horizons de décision',M,y,style='head')-5
+    y=para(c,'<b>Aujourd’hui :</b> choisir parmi les conditionnements et opérations réellement disponibles.<br/>'
+           '<b>Pour les prochains flux :</b> rejouer plusieurs demandes pour recommander un conditionnement par produit et canal. '
+           'Ces résultats peuvent éclairer conception produit, achats et organisation logistique, selon leurs responsabilités.',M,y,style='small')-12
+    y=para(c,'<b>Mesurer :</b> promesses réalisables, coût de service, attente et excédent ; isoler les manipulations dues au conditionnement. '
+           'Un lot de fabrication, un colis et une quantité livrée peuvent différer. Les références documentent lots et faisabilité ; '
+           'elles ne prouvent pas un CTP qui conçoit automatiquement l’emballage physique.',M,y,style='tiny')
+    if y<58:raise ValueError(('Packaging overflow',y))
     c.showPage();return finish(s,c)
 
 
@@ -108,15 +160,16 @@ def impacts():
              'La plomberie aide à comprendre les flux ; le Lean révèle leurs attentes ; l’optimisation compare les actions sous contraintes. '
              'Ces lectures confortent la cible documentée dans Atlas : relier planification, engagements, décisions et exécution.',y,MINT)
     rows=[
-        ('1 / Partager les faits','Rapprocher besoins, stock, apports attendus, capacités et exécution, avec provenance et incertitudes. '
-         'Une commande à risque doit conduire à une cause et une action possibles. La fiabilité des données conditionne celle des sept KPI.'),
+        ('1 / Partager les faits utiles à temps','Rapprocher besoins, stock, apports attendus, capacités et exécution, avec provenance et incertitudes. '
+         'Mesurer quand un événement devient exploitable. La fiabilité des données conditionne celle des sept KPI.'),
         ('2 / Ajuster les vannes','Réviser protections, priorités et affectations selon les délégations. Exemple : libérer une quantité protégée '
          'pour une commande urgente après examen des autres demandes. Suivre OTIF, commandes à risque et excédent projeté.'),
         ('3 / Construire une promesse réalisable','L’ATP évalue les disponibilités admissibles ; le CTP vérifie l’apport à obtenir ; '
-         'le PTP compare ses conséquences économiques. Expliciter quantité, date, conditions et coût avant engagement ; '
-         'une option faisable doit encore être autorisée.'),
-        ('4 / Réduire attentes et mouvements','Comparer affectations et scénarios de plan, puis coordonner l’exécution et ses adaptations. '
-         'En wholesale, examiner placement du stock et site préparateur. Suivre transferts, délai commande-livraison et coût de service.'),
+         'le PTP compare les conséquences économiques. Les résultats du CTP peuvent aussi éclairer les tailles de lots et conditionnements. '
+         'Quantité, date, coût et autorisation restent explicites.'),
+        ('4 / Décider à temps, puis coordonner','Distinguer attente d’information, délai d’arbitrage et délai d’exécution. '
+         'Exposer échéance, responsable et options réalisables. En wholesale, comparer site préparateur et placement du stock ; '
+         'suivre transferts, délai et coût de service.'),
         ('5 / Récupérer la valeur','Orienter les retours vers remise en stock, réparation, reconditionnement ou retour fournisseur. '
          'Coordonner le déstockage selon les décisions commerciales autorisées. Suivre excédent et valeur nette récupérée ; '
          'prix et remboursements gardent leurs responsables.'),
@@ -129,11 +182,11 @@ def impacts():
            'le recours au CTP et la décision d’appoint possible dans la SCM selon délégation, suivie d’une commande traçable. '
            'La planification appartient au même ensemble métier, même si plusieurs outils y contribuent.',M,y,style='small')-12
     y=para(c,'Ce que le projet doit maintenant démontrer',M,y,style='head')-5
-    y=para(c,'Les sept KPI et les six questions forment le cadre de mesure proposé. Le pilote doit fixer données, responsabilités, '
-           'règles d’arbitrage, objectif économique et moteur de calcul, puis mesurer les effets réels. '
+    y=para(c,'Les sept KPI et les six questions restent le cadre de mesure. La réduction des délais de décision et la recommandation '
+           'de conditionnements sont des propositions à éprouver : fixer données, délégations, critères et moteur, puis mesurer les effets. '
            'La cible publiée ne prouve ni installation actuelle ni gain garanti.',M,y,style='small')-8
     y=para(c,'Appui interne : cible Atlas v087 du 21 octobre 2026 ; précisions offshore/nearshore publiées. '
-           'Appuis méthodologiques : [22-28, 32-33]. Les priorités de réalisation restent à cadrer.',M,y,style='tiny')
+           'Appuis méthodologiques et fonctionnels : [22-28, 32-40]. Les priorités de réalisation restent à cadrer.',M,y,style='tiny')
     if y<58:raise ValueError(('Impacts overflow',y))
     c.showPage();return finish(s,c)
 
@@ -175,21 +228,48 @@ REFERENCES=[
     (33,'Charles R. Standridge — How Factory Physics Helps Simulation',
      '2004 : variabilité, attente et simulation des opérations. Ne fournit pas de gain spécifique pour FLOW.',
      'https://www.informs-sim.org/wsc04papers/141.pdf'),
+    (34,'NC State — Visibilité et vitesse de décision',
+     '29 juillet 2017 : attentes d’approbation et réactions tardives décrites comme des frictions. Article autour des travaux de Handfield et Linton.',
+     'https://scm.ncsu.edu/scm-articles/article/managerial-practice-will-need-to-catch-up-with-the-emergence-of-real-time-supply-chains'),
+    (35,'Lean Enterprise Institute — Information Flow',
+     'Information qui oriente les opérations et simplification de ses circuits. N’emploie pas « fuites » pour ces défauts.',
+     'https://www.lean.org/lexicon-terms/information-flow/'),
+    (36,'Lean Enterprise Institute — Heijunka',
+     'Lissage des quantités et des types de produits. Petits lots, changements de série et stock tampon : des choix à articuler.',
+     'https://www.lean.org/lexicon-terms/heijunka/'),
+    (37,'Microsoft Dynamics 365 — Calcul des dates par CTP',
+     'Matières, capacités et délais pour une date réalisable. Le calcul ne prescrit pas un conditionnement optimal.',
+     'https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp'),
+    (38,'Microsoft Dynamics 365 — Unités et conditionnements',
+     'Hiérarchie pièce, carton, palette et conversions ; distinction explicite avec les quantités paramétrées pour les commandes.',
+     'https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/unit-measure-stocking-policies'),
+    (39,'SAP S/4HANA — Planification et confirmation CTP',
+     'Distingue optimisation des lots sous contraintes de capacité et confirmation selon production et ordonnancement.',
+     'https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning'),
+    (40,'SAP S/4HANA — Optimisation discrète',
+     'Lots entiers ou minimums de production et transport, consommations fixes de ressources et de matières.',
+     'https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/understanding-cost-based-discrete-mixed-integer-optimization'),
 ]
 
 
 def sources():
     s,c=start()
-    y=heading(c,'POUR VÉRIFIER ET APPROFONDIR / SUITE','Plomberie, Lean et optimisation',
-              'Sources consultées le 22 octobre 2026. Les titres sont cliquables ; la page précédente conserve les références [1] à [21].')
-    y=para(c,'Les références étayent des concepts, des méthodes ou des intitulés. Leur application à FLOW, '
-           'les exemples chiffrés et le cadre de pilotage du dossier sont des propositions à éprouver. '
-           'Les six images de plomberie sont une adaptation pédagogique, pas une méthode normalisée attribuée aux auteurs.',M,y,style='small')-20
-    top=y;w=(CW-22)/2
-    for i,(n,title,body,url) in enumerate(REFERENCES):
-        if i==6:y=top
-        x=M+(w+22 if i>=6 else 0)
-        y=para(c,f'<link href="{url}" color="#236159"><b>[{n}] {title}</b></link>',x,y,w,'source')-5
-        y=para(c,body,x,y,w,'tiny')-17
-        if y<75:raise ValueError(('Sources overflow',n,y))
-    c.showPage();return finish(s,c)
+    for page,entries in enumerate((REFERENCES[:12],REFERENCES[12:])):
+        title='Plomberie, Lean et optimisation' if page==0 else 'Décision, lots et conditionnements'
+        y=heading(c,'POUR VÉRIFIER ET APPROFONDIR / SUITE',title,
+                  'Sources consultées le 22 octobre 2026. Titres cliquables. Les références [1] à [21] figurent page 25.')
+        intro=('Les références étayent des concepts, des méthodes ou des intitulés. Leur application à FLOW, '
+               'les exemples chiffrés et le cadre de pilotage sont des propositions à éprouver. '
+               'Les six leviers de plomberie sont une adaptation pédagogique.' if page==0 else
+               'Ces appuis précisent la circulation de l’information, le délai de décision et les contraintes de lots. '
+               'Ils ne prouvent ni une réalisation installée chez Beaumanoir, ni une fonction CTP qui conçoit automatiquement l’emballage physique.')
+        y=para(c,intro,M,y,style='small')-20
+        top=y;w=(CW-22)/2;split=(len(entries)+1)//2
+        for i,(n,title,body,url) in enumerate(entries):
+            if i==split:y=top
+            x=M+(w+22 if i>=split else 0)
+            y=para(c,f'<link href="{url}" color="#236159"><b>[{n}] {title}</b></link>',x,y,w,'source')-5
+            y=para(c,body,x,y,w,'tiny')-17
+            if y<75:raise ValueError(('Sources overflow',n,y))
+        c.showPage()
+    return finish(s,c)

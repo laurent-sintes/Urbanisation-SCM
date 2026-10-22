@@ -26,6 +26,17 @@ Le menu **Documents** liste les PDF déclarés dans `document_catalog` de la pub
 
 Chaque PDF source est conservé dans `modeles/documents/` sous le nom de son empreinte SHA-256. `scripts/export_atlas.py` vérifie cette empreinte puis copie le fichier vers `data/VERSION/documents/ID.pdf`, pour le serveur local comme pour GitHub Pages. Les fichiers servis et le catalogue proviennent du même snapshot ; aucun chemin local n'est exposé comme lien de téléchargement. Le hotspot C08 du backlog lie le PDF de synthèse `DOC001` : ils deviennent consultables ensemble dans la publication qui les inclut. Un document publié est accessible à tout visiteur ayant accès au site Atlas ; vérifier sa diffusion avant la release.
 
+## Mise à jour du dossier SCM
+
+À la demande de Laurent, la livraison d’une modification du dossier inclut sa synchronisation dans Atlas local et distant, sauf demande explicite d’étude seule, de brouillon ou de livraison locale.
+
+1. Modifier les sources du dossier, régénérer et contrôler visuellement `output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf`. Conserver ce fichier comme source unique du téléchargement ; actualiser la date de couverture et les métadonnées affichées dans `app/src/components/Sidebar.tsx` (menu) et `app/src/components/DocumentCatalogPage.tsx` (Documents), en gardant l’auteur convenu. Ces dates ne sont pas déduites automatiquement du PDF.
+2. Conserver l’import commun dans `app/src/scmStudy.ts`, utilisé par le menu **Télécharger** et la page **Documents**. Ne pas créer de copie manuelle du PDF ni figer l’URL de l’asset généré.
+3. Recompiler Atlas, puis exécuter `node app/verify-static.mjs` avec l’environnement décrit dans les procédures de l’agent. Cette recette télécharge le PDF depuis les deux entrées, compare ses octets au fichier source et vérifie leur URL commune, y compris en consultation historique.
+4. Suivre les skills `commit` et `push`, attendre le déploiement et vérifier le commit servi ainsi que le PDF téléchargé depuis le menu d’Atlas distant. Une génération locale ou un push réussi ne suffit pas à annoncer le dossier distant à jour. Signaler tout blocage de cette synchronisation.
+
+Cette livraison documentaire ne modifie pas les publications historiques du modèle et ne demande pas de release métier.
+
 ## Aide à la lecture
 
 Le menu **Aide** propose « Par où commencer », « Mode atelier » et le guide du métamodèle de la publication sélectionnée. Le tutoriel renvoie vers la cartographie et les points chauds. La page « Mode atelier » explique la saisie par Codex et donne des exemples de prompts. Les liens `#/help` et `#/help?topic=workshop` conservent une version historique sélectionnée.
