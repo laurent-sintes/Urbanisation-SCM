@@ -1,0 +1,587 @@
+schema_version: 1.0.0
+id: decision-latency-packaging-audit-U1145
+status: applied
+audited_on: '2026-10-22'
+author: Codex
+source_refs:
+- U1142
+- U1143
+- U1145
+- U1146
+purpose: Vérifier la couverture du délai de décision et du choix des conditionnements, puis proposer des précisions ciblées.
+authority: Lot proposé U1145 validé explicitement par Laurent en U1146 et appliqué au modèle et au glossaire. Les propositions
+  antérieures restent conservées ci-dessous comme base de l’accord.
+basis:
+  backlog_path: modeles/backlog/model.yaml
+  backlog_sha256: f2e28139faa91ba97477e0088a5662ede55b4efd8f56f2fa34fb82be6ab19396
+  glossary_path: modeles/backlog/glossary.yaml
+  glossary_sha256: a6d5ebd8cf479838b3f2c6a5fede21aa2fef765e2e3138fdb636b58c2f15e3d2
+  publication_index: modeles/release/index.json
+  publication_descriptor: modeles/release/urbanisation-v087-2026-10-21.3.yaml
+  publication_version: 2026-10-21.3
+  publication_path: modeles/release/2026-10-21.3/model.yaml
+  publication_sha256: 6436a86f95655d40cffb508ea6a63d4456f7a4487fb1aa5dd5862ac3fb7dc101
+  parity: Noms, définitions et périmètres identiques pour les huit capacités de processus examinées. Champs métier identiques
+    pour les douze fiches de promesse, conditionnement et planification examinées. Définitions et contextes des termes concernés
+    cohérents avec ces deux états ; les métadonnées techniques de publication peuvent différer.
+verdict: Les responsabilités nécessaires existent. Le délai de décision n'est pas défini comme mesure explicite et la coopération
+  entre CTP, conditionnements et comparaison de scénarios reste partiellement implicite. Préciser sept fiches existantes,
+  leurs reprises dans le glossaire et deux relations suffit à ce stade.
+boundaries:
+- Aucun nouveau domaine, sous-domaine, capacité ou comportement proposé.
+- Aucun renommage ou changement de parent ; les identifiants historiques ne déterminent pas la nature des fiches.
+- Le modèle décrit une cible ; aucune réalisation installée Beaumanoir n'est déduite.
+- L'audit des comportements clos U431 n'est pas rouvert.
+- Les sept KPI du dossier et ses six questions sont conservés ; les mesures de délai sont des diagnostics complémentaires.
+- La rapidité d'une décision ne prouve ni sa pertinence ni son gain économique.
+existing_coverage:
+- ids:
+  - work-deadline-management
+  - human-task-management
+  - work-assignment
+  - order-workflow-sentry
+  - order-workflow-planning
+  finding: Échéances, attentes, tâches humaines, habilitations, relances et réactions autorisées déjà couvertes.
+  gap: Bornes du délai de décision et dernière date encore utile à rendre explicites.
+- ids:
+  - process-ledger
+  - process-mining
+  - BHV082
+  finding: Faits et connaissance distingués ; décisions et corrections conservées ; durées, distributions et dossiers ouverts
+    analysables.
+  gap: Réception d'un signal distincte de son exploitabilité ; mesure du délai de décision et vue des décisions arrivant à
+    échéance à préciser.
+- ids:
+  - D03.j
+  - BHV075
+  - BHV076
+  - ba-order-promising
+  finding: Faisabilité des apports, matières, capacités finies, calendriers, prestations logistiques et validité des hypothèses
+    déjà couvertes.
+  gap: Expliciter l'évaluation des options qui nécessitent un déconditionnement ou reconditionnement.
+- ids:
+  - packaging-specification
+  - packaging-material-reference
+  - D08
+  - service-order-packing
+  - BHV044
+  finding: Consignes, quantités, niveaux, unités, versions, matières, reconditionnement et scission des commandes déjà représentés.
+  gap: Aucun manque de responsabilité identifié ; scission informatique et geste physique doivent rester distincts.
+- ids:
+  - D05.e
+  - D03.k
+  - BHV006
+  finding: Replenishment examine déjà le multiple admissible et son excédent, dont l'exemple 50 pièces nécessitant 60 en cartons
+    de 12. PTP compare les conséquences économiques ; Simulation & Analysis compare les scénarios et peut recommander des
+    évolutions.
+  gap: Rendre explicite la comparaison de conditionnements et le retour vers les choix des approvisionnements futurs.
+proposed_node_changes:
+- node_id: work-deadline-management
+  name: Work Deadline Management
+  field: scope
+  operation: append
+  proposed_text: Pour une décision sensible au temps, distinguer l'objectif de traitement de la dernière date à laquelle la
+    décision permet encore de produire l'effet attendu. Recevoir cette échéance utile de la responsabilité métier qui établit
+    les possibilités de réalisation et leurs délais ; conserver ses hypothèses, sa provenance et ses révisions. Suivre cette
+    date et déclencher les relances ou escalades autorisées avant que l'option devienne inutilisable. La gestion des échéances
+    ne choisit pas la réponse métier. Un dépassement ne vaut ni accord, ni refus, ni autorisation de dérogation.
+  example: Une commande d'appoint reste livrable vendredi si elle est autorisée avant mardi midi ; un objectif administratif
+    de réponse sous 48 heures ne garantit pas cette possibilité.
+  glossary_context_to_align:
+  - TER172
+  market_support:
+  - MS-WORK-TASK
+  - SAP-DEADLINE
+  - SAP-PROCUREMENT-WORKFLOW
+  market_limit: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date sont
+    une précision FLOW.
+- node_id: process-ledger
+  name: Process Ledger
+  field: scope
+  operation: append
+  proposed_text: Pour un dossier comportant une décision, relier les événements qualifiés qui distinguent le fait déclencheur,
+    la disponibilité d'un signal exploitable, la décision autorisée et l'effet réalisé au jalon retenu. Conserver aussi les
+    propositions, refus, décisions motivées de ne pas agir et révisions lorsqu'ils sont produits. Le producteur responsable
+    qualifie chaque événement ; le registre ne déduit pas une décision de la réception d'un message ni une réalisation de
+    son autorisation. Une borne absente reste inconnue. La réception d'une information et le moment où elle devient exploitable
+    peuvent différer.
+  glossary_context_to_align:
+  - TER375
+  - TER376
+  market_support:
+  - MS-WORK-HISTORY
+  - SAP-INBOX-ACTIONS
+  market_limit: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+    de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées.
+- node_id: process-mining
+  name: Process Mining
+  field: scope
+  operation: append
+  proposed_text: Mesurer séparément le délai d'information, le délai de décision et le délai de mise en œuvre lorsque leurs
+    bornes sont documentées. Le délai de décision inclut l'analyse, la comparaison, les attentes et l'approbation jusqu'à
+    la décision autorisée. Identifier chaque décision attendue et son itération dans le dossier. Présenter les distributions
+    des durées, l'ancienneté des attentes et la part des décisions prises avant leur échéance utile. Inclure les décisions
+    attendues arrivées à échéance sans réponse dans ce dernier suivi. Expliciter les inconnues et les révisions d'échéance.
+    Une décision rapide n'est pas nécessairement pertinente ; les activités et boucles qui se chevauchent ne s'additionnent
+    pas automatiquement.
+  glossary_context_to_align:
+  - TER173
+  - TER201
+  market_support:
+  - MS-WORK-HISTORY
+  - SAP-DEADLINE
+  market_limit: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+    des formules proposées ci-dessous.
+- node_id: BHV082
+  name: Process, Tasks & Order Visibility
+  field: scope
+  operation: append
+  proposed_text: Pour les dossiers en attente d'une décision, montrer depuis quand le signal est exploitable, qui porte la
+    décision, son échéance utile et le temps restant ou dépassé. Distinguer analyse en cours, approbation attendue, décision
+    autorisée et mise en œuvre restante. Présenter les valeurs inconnues et les options devenues caduques sans autoriser une
+    action à la place de la capacité responsable.
+  glossary_context_to_align:
+  - TER175
+  market_support:
+  - MS-WORK-HISTORY
+  - SAP-INBOX-ACTIONS
+  market_limit: Les vues documentées restent celles des workflows concernés ; la visibilité sur tous les flux FLOW est une
+    cible distincte.
+- node_id: D03.j
+  name: Capable-to-Promise (CTP)
+  field: scope
+  operation: append
+  proposed_text: Lorsque la possibilité étudiée dépend du conditionnement, vérifier les quantités admissibles, les conversions
+    d'unités, les consignes applicables et les opérations nécessaires pour obtenir le résultat demandé. Une scission de commande
+    ne réalise pas un déconditionnement physique. Si l'option nécessite une ouverture ou un reconditionnement autorisé, contrôler
+    les matières, capacités, calendriers et délais correspondants. Expliquer la quantité et la date réalisables, les contraintes
+    bloquantes et les hypothèses restant à confirmer. Le résultat peut alimenter la comparaison de conditionnements par Simulation
+    & Analysis ; il ne définit pas à lui seul un conditionnement optimal. Des packs déjà disponibles et admissibles relèvent
+    d'ATP ; tout choix de conditionnement n'est donc pas un calcul CTP.
+  example: Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité d'ouvrir des cartons
+    de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi ; livrer 24 exige un
+    accord distinct.
+  glossary_context_to_align:
+  - TER045
+  market_support:
+  - MS-CTP
+  - SAP-CTP-PPO
+  market_limit: Faisabilité de production et distinction optimisation/confirmation étayées ; application à toutes les prestations
+    logistiques ou conception de l'emballage non démontrées chez les deux éditeurs.
+- node_id: BHV076
+  name: Capacity-Constrained CTP
+  field: scope
+  operation: append
+  proposed_text: Pour une option nécessitant un reconditionnement, vérifier les capacités et créneaux de la prestation requise
+    avec les matières, durées et dépendances connues. Un délai standard ou une capacité non confirmée reste une hypothèse.
+    Le contrôle de faisabilité ne choisit pas l'organisation interne du prestataire et n'autorise pas la prestation.
+  glossary_context_to_align:
+  - TER045
+  market_support:
+  - MS-CTP
+  - SAP-CTP-PPO
+  market_limit: Exemple concret du périmètre logistique déjà présent dans FLOW ; aucune fonction native identique de reconditionnement
+    CTP présumée.
+- node_id: BHV006
+  name: Simulation & Analysis
+  field: scope
+  operation: append
+  proposed_text: Comparer également les tailles de lots et conditionnements admissibles, par produit et flux, en mobilisant
+    Replenishment, ATP, CTP et PTP selon le besoin. Conserver pour chaque variante les quantités et dates réalisables, opérations
+    supplémentaires, charge, reliquats, coûts et effets sur le service. Distinguer les options physiquement accessibles pour
+    la décision courante des variantes envisagées pour un futur approvisionnement. Les résultats peuvent recommander une évolution
+    des quantités, conditionnements ou consignes aux responsables concernés ; la recommandation ne modifie ni leurs paramètres
+    actifs ni les commandes. Le choix dépend du périmètre, des hypothèses de demande et des objectifs retenus, sans pondération
+    implicite.
+  example: Comparer cartons de douze et packs de six sur des demandes représentatives ; mettre en regard surcoûts, reconditionnements,
+    excédents et retards évités avant de recommander le prochain conditionnement.
+  glossary_context_to_align: []
+  glossary_check: Pas d'entrée au nom de cette capacité ; utiliser les termes existants ATP, CTP, PTP, Replenishment et Packaging
+    Specification. Les définitions de ces termes restent compatibles ; préciser TER045 seulement.
+  market_support:
+  - MS-MASTER-PLANS
+  - SAP-PPO-LOTS
+  market_limit: Simulation et contraintes de lots étayées ; boucle de recommandation vers les conditionnements futurs proposée
+    pour FLOW, pas fonction identique attestée chez les deux éditeurs.
+proposed_relations:
+- from: D03.j
+  to: packaging-specification
+  type: uses-reference
+  qualification: Consignes, unités, quantités et contraintes utiles à la faisabilité ; version valide et applicable, donnée
+    absente signalée.
+- from: BHV006
+  to: D03.j
+  type: relates-to
+  qualification: Mobiliser les évaluations CTP pour comparer des variantes, avec leurs hypothèses et conditions ; aucune application
+    ou confirmation implicite.
+relation_checks:
+- Les deux liens ci-dessus sont absents de l'état examiné ; attribuer leurs identifiants seulement lors d'une application.
+- Conserver REL-U891-USE-10, Replenishment vers Packaging Specification.
+- Conserver REL-CTP-EXECUTION-SERVICE et REL-PTP-CTP-SCENARIOS ; ne pas les doubler.
+proposed_measure_contract:
+  glossary_target: TER201
+  field: context
+  status: proposed
+  unit: Durée ; préciser calendrier ouvré ou écoulé et fuseau.
+  timestamps:
+    t0: Date du fait déclencheur.
+    t1: Date à laquelle le signal est qualifié comme exploitable pour la décision considérée.
+    t2: Date de la décision autorisée, humaine ou selon une règle autorisée.
+    t3: Date de l'effet réellement obtenu au jalon défini pour ce type d'action.
+  formulas:
+    information_delay: t1 - t0
+    decision_delay: t2 - t1
+    implementation_delay: t3 - t2
+    decisions_on_time: Décisions attendues de la population autorisées au plus tard à leur échéance utile / décisions attendues
+      dont cette échéance est atteinte dans la période.
+  measurement_rules:
+  - Numérateur et dénominateur portent sur la même population et la même version d'échéance.
+  - Identifier chaque décision attendue et son itération dans le dossier ; relier t0, t1, t2, t3 et l'échéance à cette même
+    occurrence. Une décision antérieure ne clôt pas une nouvelle attente.
+  - Fixer avant mesure le critère de signal exploitable et son producteur responsable ; conserver aussi la réception et la
+    qualification. Une qualification tardive ne doit pas masquer une attente déjà ouverte.
+  - Les décisions attendues échues sans réponse restent au dénominateur ; les attentes non échues sont suivies séparément
+    par leur ancienneté.
+  - Conserver échéance initiale et révisions justifiées ; ne pas déplacer rétroactivement une date pour masquer le retard.
+  - Documenter données manquantes et couverture de mesure ; absence de date ne vaut pas durée nulle.
+  - Une décision motivée de ne pas agir peut clore la décision ; ne pas lui inventer une réalisation physique t3.
+  - Expliciter les annulations et refus ; compter les boucles distinctes sans additionner les activités parallèles.
+  - Fixer population, dates, exclusions et jalon avant la comparaison de deux périodes ou flux.
+  example: 'Illustration en heures écoulées dans un même fuseau : fait lundi 8 h, signal exploitable lundi 10 h, autorisation
+    mardi 11 h, effet vendredi 14 h. Délais respectifs 2 h, 25 h et 75 h. Si l''échéance utile était mardi midi, la décision
+    est à temps. Une décision encore absente après mardi midi est en retard.'
+integration_rules_if_adopted:
+- Appliquer ensemble les ajouts aux scopes et aux contextes des termes associés ; contrôler résumés, exemples et descriptions
+  pédagogiques concernés sans réécriture générale.
+- Relier les termes spécialisés au glossaire existant ; ne pas introduire un terme « grain idéal » ni créer une notion autonome
+  pour chaque mesure.
+- Conserver les définitions générales, noms, parents et frontières compatibles ; aucune extension implicite d'accord sur les
+  autres champs.
+- Conserver les limites des comparaisons existantes et joindre les appuis ci-dessous aux seuls champs enrichis.
+- L'échéance utile doit être fournie et justifiée par la décision métier concernée, à partir de la faisabilité et des délais
+  connus ; aucune formule universelle date promise moins délai moyen.
+- Réévaluer la possibilité avant confirmation si une hypothèse ou un créneau n'est plus valide ; aucune attente d'approbation
+  supposée nulle.
+- Enregistrer séparément l'accord sur les valeurs finales, puis appliquer les contrôles proportionnés ; publier seulement
+  sur demande.
+market_sources:
+- id: MS-WORK-TASK
+  publisher: Microsoft
+  product: Dynamics 365 finance and operations
+  title: Configure manual tasks in a workflow
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+  consulted_on: '2026-10-22'
+  consulted: Time limit, Escalation, Automatic actions ; délais, calendriers et réactions.
+- id: MS-WORK-HISTORY
+  publisher: Microsoft
+  product: Dynamics 365 finance and operations
+  title: View workflow history
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+  consulted_on: '2026-10-22'
+  consulted: Instances, tâches, historique et durée écoulée.
+- id: SAP-DEADLINE
+  publisher: SAP
+  product: SAP S/4HANA 2025 FPS01
+  title: Deadline Tab Pages
+  url: https://help.sap.com/docs/sap_s4hana_on-premise/a602ff71a47c441bb3000504ec938fea/4f340800d46f17a6e10000000a42189d-321.html
+  consulted_on: '2026-10-22'
+  consulted: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+  access_limit: Ouverture directe vide ; consultation du contenu indexé, pas de validation de toutes les variantes de version.
+- id: SAP-PROCUREMENT-WORKFLOW
+  publisher: SAP
+  product: SAP S/4HANA Cloud Public Edition
+  title: Defining Workflows in Sourcing and Procurement
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/defining-workflows-in-sourcing-and-procurement_a17030df-33b7-4c0e-a8c6-31ec490618e9
+  consulted_on: '2026-10-22'
+  consulted: Approbateurs, étapes, échéances et notifications dans le périmètre achats.
+- id: SAP-INBOX-ACTIONS
+  publisher: SAP
+  product: SAP S/4HANA Cloud 2608
+  title: Standard and Custom Actions
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/f369b2eff700401494ba6e7c9a573288/d11d50e484a54d76adbb11d35615b31b.html?version=latest
+  consulted_on: '2026-10-22'
+  consulted: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+- id: MS-CTP
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Calculate sales order delivery dates using CTP
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+  consulted_on: '2026-10-22'
+  consulted: Faisabilité selon matières, capacités, nomenclature, gamme et délais.
+- id: SAP-CTP-PPO
+  publisher: SAP
+  product: SAP S/4HANA PP/DS
+  title: Explaining Supply Chain Planning
+  url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  consulted_on: '2026-10-22'
+  consulted: Production planning optimization ; supply creation based confirmation. Optimisation des lots et confirmation
+    CTP distinguées.
+- id: MS-MASTER-PLANS
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Master plans overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+  consulted_on: '2026-10-22'
+  consulted: Plusieurs plans pour simuler des stratégies et prévisions.
+- id: SAP-PPO-LOTS
+  publisher: SAP
+  product: SAP S/4HANA ePPDS
+  title: Understanding Cost-Based Discrete/Mixed-Integer Optimization
+  url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/understanding-cost-based-discrete-mixed-integer-optimization
+  consulted_on: '2026-10-22'
+  consulted: Lots entiers ou minimaux de production et transport, consommations fixes.
+- id: MS-CONTAINERS
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Containerization
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wave-containerization
+  consulted_on: '2026-10-22'
+  consulted: Contenants, capacités, stratégies et règles de mélange ; périmètre distinct du CTP.
+- id: SAP-PACKAGING
+  publisher: SAP
+  product: SAP S/4HANA Cloud Public Edition Warehouse Management
+  title: Maintaining Packaging Information
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+  consulted_on: '2026-10-22'
+  consulted: Matières, quantités, consignes à plusieurs niveaux, exigences client et tolérances.
+market_conclusion: 'Microsoft et SAP étayent les mécanismes sous-jacents : échéances, historiques, faisabilité sous contraintes,
+  paramètres de lots et simulation. Ils ne démontrent ni une norme commune de délai de décision ni un CTP qui choisirait seul
+  le meilleur emballage. Les coopérations proposées restent des choix FLOW argumentés.'
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1146
+  summary: 'Délai de décision et choix des conditionnements : sept fiches, sept termes et deux coopérations précisés sans
+    nouveau nœud.'
+  required_nodes:
+  - id: work-deadline-management
+    field_sha256:
+      scope: c13cfdb680ed7b33706c9649c7ddee67af03a2383dea083738a5c84a357fd026
+      market_comparisons: 9217ba7751556ba3c6b5d6c9b641d8e7d0be8c87a4d3b77971a7d9073c374700
+  - id: process-ledger
+    field_sha256:
+      scope: e8861239d2be2023139a2f8eb99199f02c5c03a3f02be1e25076a650f2c242dd
+      market_comparisons: 8b80280ed9fec1eac0115a1adc557c3b047184c38350b3a20ef176810bdd5322
+      pedagogical_description: e29a2678c8579e38fb19846338c409b25ad38b933dadc390a752087514daad01
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: process-mining
+    field_sha256:
+      scope: f35d44a702b63bb8f3060aa67e4e12e49e764847d181143ef217e4fe25f3575f
+      market_comparisons: 99608a714c5edff479fd385ee536fda87026d0aaaa700b5f00f4b0e49db99483
+      pedagogical_description: 062e128b43d5a6bf1852f41bb6ff4259b358e88cff938b09901e6447bb127ee6
+  - id: BHV082
+    field_sha256:
+      scope: 5588dc060a6a9190dd0feff25931fb2dad82493b00767671c196dc8b09889012
+      market_comparisons: 740112b293fbae2688e11aec778905e0e278be0b71956e012ada94902000ffca
+      market_inspiration: 7386b85e878da49e5a7505b24ad9f66840e9c3f265ecd84f2b5f06fa61ad28e3
+  - id: D03.j
+    field_sha256:
+      scope: a7220552e5946cb0df4036f7426454b6e23cc5243fc097275ca1505085ddf780
+      market_comparisons: 3e21f79404f2583d6a9b43470ea4ae5cd7289dd11f76231b243937fe9f30d768
+      market_inspiration: 5fa0740fb5e1a34bf8aae9946b6f9d180c7b37e7a768ab84af47e20b68d781b5
+      pedagogical_description: ddfc09231326026a38943488287c9d7072d8562ef91214dfef2dd13b97d16eb3
+  - id: BHV076
+    field_sha256:
+      scope: 81de2ca79046b96b7605f45172f93e447dab39ff5292ff2fbbb6f99a1975b336
+      market_comparisons: 8816fa22b44ce5f7261b093f91c3c18c69841b365cc7f456cbb4bd975db18d70
+      market_inspiration: a3f9f78ec5fdf2c56c0aafdc7132f9333a723d345d349080daa2efe8f69d4229
+  - id: BHV006
+    field_sha256:
+      scope: cf34ad678704400414b7bec08c7a7683eaf2eadef29d1b6fd512781e991cc2e2
+      market_comparisons: b75c51449b2a3a88662b8d140734496f5a4d68c646b1c4b37d1c20eadcd999a4
+      market_inspiration: 6b4d0e1fb245200db5e6acb0774fef2ff472a1cbfbb4d78095c880bfa40abd32
+  required_glossary:
+  - id: TER172
+    field_sha256:
+      context: c13cfdb680ed7b33706c9649c7ddee67af03a2383dea083738a5c84a357fd026
+      market_comparisons: e65c0d1b6661be0da1519e04822ce819144998d40ad48b5abbaeac59d1c5e102
+  - id: TER375
+    field_sha256:
+      context: e8861239d2be2023139a2f8eb99199f02c5c03a3f02be1e25076a650f2c242dd
+      market_comparisons: ea11f5d37c61dde148c1e17137d43c8f9381bc9ab83f8a40ed99431fbaece780
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER173
+    field_sha256:
+      context: f35d44a702b63bb8f3060aa67e4e12e49e764847d181143ef217e4fe25f3575f
+      market_comparisons: d5adae00adf65910c2ed0bfdae035ed1d3bc7db0cfda5e911c5b36e0fd254e60
+  - id: TER175
+    field_sha256:
+      context: 5588dc060a6a9190dd0feff25931fb2dad82493b00767671c196dc8b09889012
+      market_comparisons: b753c050992116d88cfc522d3ac9efa5fbb16e7a3e3dd53c3036e781db4b8060
+  - id: TER045
+    field_sha256:
+      context: 875ffaea7c7bf650118f6fa0d8f978ca9993f97684d8b666b239f4a85bacd653
+      market_comparisons: 19a9d4554d79498925a9f244e759e609fe6af8dd04748fb22a7f249c311f89d3
+  - id: TER376
+    field_sha256:
+      context: 420e91d4863de703eab9cb4e16fcf13c64834bc43f56189f67958d5ea2078e6c
+      market_comparisons: 98403131aacccb159ee042b847b7c14075b8379579eba8bcd6a802a113a4997f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER201
+    field_sha256:
+      context: d99bab7a2f86093ab16e0856788c9d1e4ffaeff6d3c4e10a9ab7916cb8b7d203
+      market_comparisons: 96b395c082ee483354b288b6f9736ca630ee9de0396bd5906520f54da5f4bc8b
+  required_relations:
+  - id: REL-U1146-CTP-PACKAGING
+    type: uses-reference
+    source_id: D03.j
+    target_id: packaging-specification
+  - id: REL-U1146-SIMULATION-CTP
+    type: relates-to
+    source_id: BHV006
+    target_id: D03.j
+  supersedes_requirements:
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - market_comparisons
+    - pedagogical_description
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: process-mining
+    fields:
+    - market_comparisons
+    - pedagogical_description
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER376
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: BHV082
+    fields:
+    - scope
+    - market_inspiration
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: work-deadline-management
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: process-mining
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER172
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER173
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER175
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER376
+    fields:
+    - market_comparisons
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER201
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - market_inspiration
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - scope
+    - market_comparisons
+    - pedagogical_description
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: terms
+    id: TER045
+    fields:
+    - context
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: BHV082
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: work-deadline-management
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: BHV006
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: BHV006
+    fields:
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - market_gaps
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - market_gaps
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER376
+    fields:
+    - market_gaps
+application:
+  source: U1146
+  date: '2026-10-22'
+  nodes:
+  - work-deadline-management
+  - process-ledger
+  - process-mining
+  - BHV082
+  - D03.j
+  - BHV076
+  - BHV006
+  terms:
+  - TER172
+  - TER375
+  - TER173
+  - TER175
+  - TER045
+  - TER376
+  - TER201
+  relations:
+  - REL-U1146-CTP-PACKAGING
+  - REL-U1146-SIMULATION-CTP
+  new_nodes: []
+  glossary_alignment: Définitions générales conservées ; contextes et appuis marché alignés. TER186 et TER074 contrôlés sans
+    modification ; aucune entrée nouvelle nécessaire.
+  market_gap_qualification: My Inbox apporte désormais un appui S/4HANA partiel aux traces de tâches et décisions. La réserve
+    sur le registre opérationnel complet et les pages inaccessibles est conservée avec ses URLs et sources dans evidence_limits
+    ; aucune couverture complète déclarée.

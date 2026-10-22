@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 id: flow-glossary
-as_of: '2026-10-16'
+as_of: '2026-10-22'
 source_refs:
 - C108
 - CMP096
@@ -52,6 +52,8 @@ source_refs:
 - U975
 - U1102
 - U1103
+- U1145
+- U1146
 terms:
 - id: TER001
   name: Capacité métier
@@ -7682,6 +7684,12 @@ terms:
     La capacité est mobilisable par [Master Planning](model:D05.f) pour le plan collectif sans créer une seconde capacité. Les engagements restent dans les commandes ; dans l’existant documenté, MAP conserve son carnet d’achat. Le mode cible ci-dessous précise les décisions possibles dans le [SCM](glossary:TER035).
 
     Dans le mode [offshore](glossary:TER382) / [nearshore](glossary:TER383), vérifier dès avant l'engagement initial quelle quantité d'appoint pourrait être obtenue avant la dernière date utile à la vente, puis réévaluer cette possibilité pendant la saison. Examiner produit qualifié, matières, capacité fournisseur disponible ou réservée, minimums, fabrication, transport et contrôle à réception. Une capacité annoncée mais non confirmée reste une hypothèse explicite ; le pays du fournisseur ne garantit pas son délai. Le résultat éclaire le socle initial et la décision d'appoint du [Supply Chain Management](model:supply-chain-orchestration). [Replenishment](model:D05.e) détermine le complément, le [PTP](glossary:TER068) compare sa valeur et [Purchase Order](model:D04.j) porte l'achat autorisé. La faisabilité seule n'autorise ni ne passe la commande.
+
+    Lorsque la possibilité étudiée dépend du conditionnement, vérifier les quantités admissibles, les conversions d'unités, les consignes applicables et les opérations nécessaires pour obtenir le résultat demandé. Une scission de commande ne réalise pas un déconditionnement physique. Si l'option nécessite une ouverture ou un reconditionnement autorisé, contrôler les matières, capacités, calendriers et délais correspondants. Expliquer la quantité et la date réalisables, les contraintes bloquantes et les hypothèses restant à confirmer. Le résultat peut alimenter la comparaison de conditionnements par [Simulation & Analysis](model:BHV006) ; il ne définit pas à lui seul un conditionnement optimal. Des packs déjà disponibles et admissibles relèvent d'[ATP](glossary:TER044) ; tout choix de conditionnement n'est donc pas un calcul [CTP](glossary:TER045).
+
+    Exemple fictif : Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité d'ouvrir des cartons de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi ; livrer 24 exige un accord distinct.
+
+    Pour une option nécessitant un reconditionnement, vérifier les capacités et créneaux de la prestation requise avec les matières, durées et dépendances connues. Un délai standard ou une capacité non confirmée reste une hypothèse. Le contrôle de faisabilité ne choisit pas l'organisation interne du prestataire et n'autorise pas la prestation.
   notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
     comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
@@ -7712,13 +7720,16 @@ terms:
   - U1133
   - U1134
   - U1135
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/33-frontieres-ctp.md
     anchor: ctp
   review:
     state: partial
-    note: 'U1009 valide le lot U999–U1008 : responsabilités, noms et rattachements explicitement proposés. Les compléments
-      rédactionnels et correspondances marché gardent leur qualification propre ; aucune réalisation installée.'
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
   previous_definition: Raisonnement de faisabilité de promesse prenant en compte les moyens nécessaires pour rendre une fourniture
     disponible, au-delà des ressources déjà présentes ou attendues mobilisables.
   market_comparisons:
@@ -7850,6 +7861,75 @@ terms:
     - U1133
     - U1134
     - U1135
+  - id: market-D03-j-U1146-ms-ctp-TER045
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Calculate sales order delivery dates using CTP
+    concept_name: Calculate sales order delivery dates using CTP
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Faisabilité selon matières, capacités, nomenclature, gamme et délais.
+    differences: Faisabilité de production et distinction optimisation/confirmation étayées ; application à toutes les prestations
+      logistiques ou conception de l'emballage non démontrées chez les deux éditeurs.
+    flow_position: |-
+      Lorsque la possibilité étudiée dépend du conditionnement, vérifier les quantités admissibles, les conversions d'unités, les consignes applicables et les opérations nécessaires pour obtenir le résultat demandé. Une scission de commande ne réalise pas un déconditionnement physique. Si l'option nécessite une ouverture ou un reconditionnement autorisé, contrôler les matières, capacités, calendriers et délais correspondants. Expliquer la quantité et la date réalisables, les contraintes bloquantes et les hypothèses restant à confirmer. Le résultat peut alimenter la comparaison de conditionnements par [Simulation & Analysis](model:BHV006) ; il ne définit pas à lui seul un conditionnement optimal. Des packs déjà disponibles et admissibles relèvent d'[ATP](glossary:TER044) ; tout choix de conditionnement n'est donc pas un calcul [CTP](glossary:TER045).
+
+      Exemple fictif : Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité d'ouvrir des cartons de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi ; livrer 24 exige un accord distinct.
+
+      Pour une option nécessitant un reconditionnement, vérifier les capacités et créneaux de la prestation requise avec les matières, durées et dépendances connues. Un délai standard ou une capacité non confirmée reste une hypothèse. Le contrôle de faisabilité ne choisit pas l'organisation interne du prestataire et n'autorise pas la prestation.
+    scope_summary: Faisabilité selon matières, capacités, nomenclature, gamme et délais.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+      selon les matières, les capacités et les délais nécessaires.
+    source_title: Calculate sales order delivery dates using CTP
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+    source_version: Dynamics 365 Supply Chain Management ; documentation consultée le 22 octobre 2026.
+    source_locator: Faisabilité selon matières, capacités, nomenclature, gamme et délais.
+    consulted_on: '2026-10-22'
+    evidence_limits: Faisabilité de production et distinction optimisation/confirmation étayées ; application à toutes les
+      prestations logistiques ou conception de l'emballage non démontrées chez les deux éditeurs. Aucune réalisation installée
+      Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-D03-j-U1146-sap-ctp-ppo-TER045
+    vendor: SAP
+    product: SAP S/4HANA PP/DS
+    element_name: Explaining Supply Chain Planning
+    concept_name: Explaining Supply Chain Planning
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Production planning optimization ; supply creation based confirmation. Optimisation des lots et confirmation
+      CTP distinguées.
+    differences: Faisabilité de production et distinction optimisation/confirmation étayées ; application à toutes les prestations
+      logistiques ou conception de l'emballage non démontrées chez les deux éditeurs.
+    flow_position: |-
+      Lorsque la possibilité étudiée dépend du conditionnement, vérifier les quantités admissibles, les conversions d'unités, les consignes applicables et les opérations nécessaires pour obtenir le résultat demandé. Une scission de commande ne réalise pas un déconditionnement physique. Si l'option nécessite une ouverture ou un reconditionnement autorisé, contrôler les matières, capacités, calendriers et délais correspondants. Expliquer la quantité et la date réalisables, les contraintes bloquantes et les hypothèses restant à confirmer. Le résultat peut alimenter la comparaison de conditionnements par [Simulation & Analysis](model:BHV006) ; il ne définit pas à lui seul un conditionnement optimal. Des packs déjà disponibles et admissibles relèvent d'[ATP](glossary:TER044) ; tout choix de conditionnement n'est donc pas un calcul [CTP](glossary:TER045).
+
+      Exemple fictif : Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité d'ouvrir des cartons de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi ; livrer 24 exige un accord distinct.
+
+      Pour une option nécessitant un reconditionnement, vérifier les capacités et créneaux de la prestation requise avec les matières, durées et dépendances connues. Un délai standard ou une capacité non confirmée reste une hypothèse. Le contrôle de faisabilité ne choisit pas l'organisation interne du prestataire et n'autorise pas la prestation.
+    scope_summary: Production planning optimization ; supply creation based confirmation. Optimisation des lots et confirmation
+      CTP distinguées.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+      selon les matières, les capacités et les délais nécessaires.
+    source_title: Explaining Supply Chain Planning
+    source_url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+    source_version: SAP S/4HANA PP/DS ; documentation consultée le 22 octobre 2026.
+    source_locator: Production planning optimization ; supply creation based confirmation. Optimisation des lots et confirmation
+      CTP distinguées.
+    consulted_on: '2026-10-22'
+    evidence_limits: Faisabilité de production et distinction optimisation/confirmation étayées ; application à toutes les
+      prestations logistiques ou conception de l'emballage non démontrées chez les deux éditeurs. Aucune réalisation installée
+      Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
   market_inspiration:
     choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
       les conditions de faisabilité.
@@ -7881,8 +7961,8 @@ terms:
       - U477
       - ELM417
       - CMP191
-  revision: 2
-  last_modified: '2026-10-15T00:00:00Z'
+  revision: 3
+  last_modified: '2026-10-22T00:00:00Z'
 - id: TER046
   name: Party
   short_description: Personne physique ou morale identifiée, à laquelle les accords et opérations Supply rattachent des rôles,
@@ -27508,6 +27588,10 @@ terms:
     Exemple fictif : une vérification dépasse son échéance ouvrée ; notifier le responsable puis solliciter un remplaçant selon la règle prévue.
 
     Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
+
+    Pour une décision sensible au temps, distinguer l'objectif de traitement de la dernière date à laquelle la décision permet encore de produire l'effet attendu. Recevoir cette échéance utile de la responsabilité métier qui établit les possibilités de réalisation et leurs délais ; conserver ses hypothèses, sa provenance et ses révisions. Suivre cette date et déclencher les relances ou escalades autorisées avant que l'option devienne inutilisable. La gestion des échéances ne choisit pas la réponse métier. Un dépassement ne vaut ni accord, ni refus, ni autorisation de dérogation.
+
+    Exemple fictif : Une commande d'appoint reste livrable vendredi si elle est autorisée avant mardi midi ; un objectif administratif de réponse sous 48 heures ne garantit pas cette possibilité.
   notes: Périmètre aligné avec la fiche [référente](model:work-deadline-management). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   market_comparisons:
@@ -27601,10 +27685,102 @@ terms:
     term_choice: Work Deadline Management nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
       native commune.
     definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou escalades autorisées.
+  - id: market-work-deadline-management-U1146-ms-work-task-TER172
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: Configure manual tasks in a workflow
+    concept_name: Configure manual tasks in a workflow
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Time limit, Escalation, Automatic actions ; délais, calendriers et réactions.
+    differences: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date sont
+      une précision FLOW.
+    flow_position: |-
+      Pour une décision sensible au temps, distinguer l'objectif de traitement de la dernière date à laquelle la décision permet encore de produire l'effet attendu. Recevoir cette échéance utile de la responsabilité métier qui établit les possibilités de réalisation et leurs délais ; conserver ses hypothèses, sa provenance et ses révisions. Suivre cette date et déclencher les relances ou escalades autorisées avant que l'option devienne inutilisable. La gestion des échéances ne choisit pas la réponse métier. Un dépassement ne vaut ni accord, ni refus, ni autorisation de dérogation.
+
+      Exemple fictif : Une commande d'appoint reste livrable vendredi si elle est autorisée avant mardi midi ; un objectif administratif de réponse sous 48 heures ne garantit pas cette possibilité.
+    scope_summary: Time limit, Escalation, Automatic actions ; délais, calendriers et réactions.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou [escalades](glossary:TER182)
+      autorisées.
+    source_title: Configure manual tasks in a workflow
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Time limit, Escalation, Automatic actions ; délais, calendriers et réactions.
+    consulted_on: '2026-10-22'
+    evidence_limits: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date
+      sont une précision FLOW. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-work-deadline-management-U1146-sap-deadline-TER172
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01
+    element_name: Deadline Tab Pages
+    concept_name: Deadline Tab Pages
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    differences: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date sont
+      une précision FLOW.
+    flow_position: |-
+      Pour une décision sensible au temps, distinguer l'objectif de traitement de la dernière date à laquelle la décision permet encore de produire l'effet attendu. Recevoir cette échéance utile de la responsabilité métier qui établit les possibilités de réalisation et leurs délais ; conserver ses hypothèses, sa provenance et ses révisions. Suivre cette date et déclencher les relances ou escalades autorisées avant que l'option devienne inutilisable. La gestion des échéances ne choisit pas la réponse métier. Un dépassement ne vaut ni accord, ni refus, ni autorisation de dérogation.
+
+      Exemple fictif : Une commande d'appoint reste livrable vendredi si elle est autorisée avant mardi midi ; un objectif administratif de réponse sous 48 heures ne garantit pas cette possibilité.
+    scope_summary: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou [escalades](glossary:TER182)
+      autorisées.
+    source_title: Deadline Tab Pages
+    source_url: https://help.sap.com/docs/sap_s4hana_on-premise/a602ff71a47c441bb3000504ec938fea/4f340800d46f17a6e10000000a42189d-321.html
+    source_version: SAP S/4HANA 2025 FPS01 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    consulted_on: '2026-10-22'
+    evidence_limits: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date
+      sont une précision FLOW. Ouverture directe vide ; consultation du contenu indexé, pas de validation de toutes les variantes
+      de version.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-work-deadline-management-U1146-sap-procurement-workflow-TER172
+    vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Defining Workflows in Sourcing and Procurement
+    concept_name: Defining Workflows in Sourcing and Procurement
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Approbateurs, étapes, échéances et notifications dans le périmètre achats.
+    differences: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date sont
+      une précision FLOW.
+    flow_position: |-
+      Pour une décision sensible au temps, distinguer l'objectif de traitement de la dernière date à laquelle la décision permet encore de produire l'effet attendu. Recevoir cette échéance utile de la responsabilité métier qui établit les possibilités de réalisation et leurs délais ; conserver ses hypothèses, sa provenance et ses révisions. Suivre cette date et déclencher les relances ou escalades autorisées avant que l'option devienne inutilisable. La gestion des échéances ne choisit pas la réponse métier. Un dépassement ne vaut ni accord, ni refus, ni autorisation de dérogation.
+
+      Exemple fictif : Une commande d'appoint reste livrable vendredi si elle est autorisée avant mardi midi ; un objectif administratif de réponse sous 48 heures ne garantit pas cette possibilité.
+    scope_summary: Approbateurs, étapes, échéances et notifications dans le périmètre achats.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou [escalades](glossary:TER182)
+      autorisées.
+    source_title: Defining Workflows in Sourcing and Procurement
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/defining-workflows-in-sourcing-and-procurement_a17030df-33b7-4c0e-a8c6-31ec490618e9
+    source_version: SAP S/4HANA Cloud Public Edition ; documentation consultée le 22 octobre 2026.
+    source_locator: Approbateurs, étapes, échéances et notifications dans le périmètre achats.
+    consulted_on: '2026-10-22'
+    evidence_limits: Échéances et réactions documentées ; dernière date économiquement utile et origine métier de cette date
+      sont une précision FLOW. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
   review:
-    state: proposed
-    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
-      comparaisons conservent leur qualification propre.
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
   source_refs:
   - U881
   - U882
@@ -27613,11 +27789,13 @@ terms:
   - U885
   - U908
   - U1113
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
-  last_modified: '2026-10-16T00:00:00Z'
-  revision: 1
+  last_modified: '2026-10-22T00:00:00Z'
+  revision: 2
 - id: TER173
   name: Process Mining
   definition: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes et performances.
@@ -27635,6 +27813,8 @@ terms:
     Les [mesures de processus](glossary:TER201) précisent les populations, bornes temporelles et inconnues ; leur nom seul ne garantit pas leur comparabilité.
 
     [Process Ledger](glossary:TER375) fournit le registre des faits et de leurs corrections. La capacité d’analyse en reconstruit les parcours observés et calcule les [mesures de processus](glossary:TER201), sans tenir un registre opérationnel concurrent. Les définitions de tâche et les vues courantes aident à interpréter les traces ; elles ne remplacent pas cette source. Fournir les résultats à [Operational Analysis & Reporting](glossary:TER174), avec population, période, formule et couverture des traces.
+
+    Mesurer séparément le délai d'information, le délai de décision et le délai de mise en œuvre lorsque leurs bornes sont documentées. Le délai de décision inclut l'analyse, la comparaison, les attentes et l'approbation jusqu'à la décision autorisée. Identifier chaque décision attendue et son itération dans le dossier. Présenter les distributions des durées, l'ancienneté des attentes et la part des décisions prises avant leur échéance utile. Inclure les décisions attendues arrivées à échéance sans réponse dans ce dernier suivi. Expliciter les inconnues et les révisions d'échéance. Une décision rapide n'est pas nécessairement pertinente ; les activités et boucles qui se chevauchent ne s'additionnent pas automatiquement.
   notes: Périmètre aligné avec la fiche [référente](model:process-mining). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -27749,10 +27929,78 @@ terms:
       commune.
     definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
       et performances.
+  - id: market-process-mining-U1146-ms-work-history-TER173
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Instances, tâches, historique et durée écoulée.
+    differences: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous.
+    flow_position: Mesurer séparément le délai d'information, le délai de décision et le délai de mise en œuvre lorsque leurs
+      bornes sont documentées. Le délai de décision inclut l'analyse, la comparaison, les attentes et l'approbation jusqu'à
+      la décision autorisée. Identifier chaque décision attendue et son itération dans le dossier. Présenter les distributions
+      des durées, l'ancienneté des attentes et la part des décisions prises avant leur échéance utile. Inclure les décisions
+      attendues arrivées à échéance sans réponse dans ce dernier suivi. Expliciter les inconnues et les révisions d'échéance.
+      Une décision rapide n'est pas nécessairement pertinente ; les activités et boucles qui se chevauchent ne s'additionnent
+      pas automatiquement.
+    scope_summary: Instances, tâches, historique et durée écoulée.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
+      et performances.
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Instances, tâches, historique et durée écoulée.
+    consulted_on: '2026-10-22'
+    evidence_limits: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-process-mining-U1146-sap-deadline-TER173
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01
+    element_name: Deadline Tab Pages
+    concept_name: Deadline Tab Pages
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    differences: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous.
+    flow_position: Mesurer séparément le délai d'information, le délai de décision et le délai de mise en œuvre lorsque leurs
+      bornes sont documentées. Le délai de décision inclut l'analyse, la comparaison, les attentes et l'approbation jusqu'à
+      la décision autorisée. Identifier chaque décision attendue et son itération dans le dossier. Présenter les distributions
+      des durées, l'ancienneté des attentes et la part des décisions prises avant leur échéance utile. Inclure les décisions
+      attendues arrivées à échéance sans réponse dans ce dernier suivi. Expliciter les inconnues et les révisions d'échéance.
+      Une décision rapide n'est pas nécessairement pertinente ; les activités et boucles qui se chevauchent ne s'additionnent
+      pas automatiquement.
+    scope_summary: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
+      et performances.
+    source_title: Deadline Tab Pages
+    source_url: https://help.sap.com/docs/sap_s4hana_on-premise/a602ff71a47c441bb3000504ec938fea/4f340800d46f17a6e10000000a42189d-321.html
+    source_version: SAP S/4HANA 2025 FPS01 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    consulted_on: '2026-10-22'
+    evidence_limits: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous. Ouverture directe vide ; consultation du contenu indexé, pas de validation de toutes
+      les variantes de version.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
   review:
-    state: proposed
-    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
-      comparaisons conservent leur qualification propre.
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
   source_refs:
   - U881
   - U882
@@ -27761,11 +28009,13 @@ terms:
   - U885
   - U909
   - U1113
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
-  last_modified: '2026-10-16T00:00:00Z'
-  revision: 1
+  last_modified: '2026-10-22T00:00:00Z'
+  revision: 2
 - id: TER174
   name: Operational Analysis & Reporting
   definition: Analyser les parcours et résultats Supply et partager des vues de pilotage fondées sur des indicateurs explicites.
@@ -27931,6 +28181,8 @@ terms:
     Une [instance de processus](glossary:TER200) est une occurrence suivie ; le parcours descriptif d’un scénario ne constitue pas une exécution.
 
     Exploiter les [événements de processus](glossary:TER376) conservés dans [Process Ledger](glossary:TER375) pour restituer l’histoire du [Case](glossary:TER064) et sa situation à un instant donné. Préciser la date des faits, la date de connaissance retenue et les limites de couverture. La vue relie ces faits aux états et engagements tenus par [Order Management](model:D04) ; elle ne déduit pas une transition autorisée de la seule présence d’une trace.
+
+    Pour les dossiers en attente d'une décision, montrer depuis quand le signal est exploitable, qui porte la décision, son échéance utile et le temps restant ou dépassé. Distinguer analyse en cours, approbation attendue, décision autorisée et mise en œuvre restante. Présenter les valeurs inconnues et les options devenues caduques sans autoriser une action à la place de la capacité responsable.
   notes: Périmètre aligné avec la fiche [référente](model:BHV082). U909 fusionne Order Visibility dans cette capacité ; les
     anciens accords restent historiques.
   market_comparisons:
@@ -28067,10 +28319,71 @@ terms:
     term_choice: Nom choisi par Laurent pour FLOW ; pas de dénomination commune établie chez les éditeurs.
     definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
       en distinguant faits, engagements, attentes et restes à satisfaire.
+  - id: market-BHV082-U1146-ms-work-history-TER175
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Instances, tâches, historique et durée écoulée.
+    differences: Les vues documentées restent celles des workflows concernés ; la visibilité sur tous les flux FLOW est une
+      cible distincte.
+    flow_position: Pour les dossiers en attente d'une décision, montrer depuis quand le signal est exploitable, qui porte
+      la décision, son échéance utile et le temps restant ou dépassé. Distinguer analyse en cours, approbation attendue, décision
+      autorisée et mise en œuvre restante. Présenter les valeurs inconnues et les options devenues caduques sans autoriser
+      une action à la place de la capacité responsable.
+    scope_summary: Instances, tâches, historique et durée écoulée.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Instances, tâches, historique et durée écoulée.
+    consulted_on: '2026-10-22'
+    evidence_limits: Les vues documentées restent celles des workflows concernés ; la visibilité sur tous les flux FLOW est
+      une cible distincte. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-BHV082-U1146-sap-inbox-actions-TER175
+    vendor: SAP
+    product: SAP S/4HANA Cloud 2608
+    element_name: Standard and Custom Actions
+    concept_name: Standard and Custom Actions
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    differences: Les vues documentées restent celles des workflows concernés ; la visibilité sur tous les flux FLOW est une
+      cible distincte.
+    flow_position: Pour les dossiers en attente d'une décision, montrer depuis quand le signal est exploitable, qui porte
+      la décision, son échéance utile et le temps restant ou dépassé. Distinguer analyse en cours, approbation attendue, décision
+      autorisée et mise en œuvre restante. Présenter les valeurs inconnues et les options devenues caduques sans autoriser
+      une action à la place de la capacité responsable.
+    scope_summary: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+    source_title: Standard and Custom Actions
+    source_url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/f369b2eff700401494ba6e7c9a573288/d11d50e484a54d76adbb11d35615b31b.html?version=latest
+    source_version: SAP S/4HANA Cloud 2608 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    consulted_on: '2026-10-22'
+    evidence_limits: Les vues documentées restent celles des workflows concernés ; la visibilité sur tous les flux FLOW est
+      une cible distincte. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
   review:
-    state: proposed
-    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
-      comparaisons conservent leur qualification propre.
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
   source_refs:
   - U881
   - U882
@@ -28079,11 +28392,13 @@ terms:
   - U885
   - U909
   - U1113
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
-  last_modified: '2026-10-16T00:00:00Z'
-  revision: 1
+  last_modified: '2026-10-22T00:00:00Z'
+  revision: 2
 - id: TER176
   name: Fulfilment Coordination
   definition: Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus,
@@ -31085,18 +31400,44 @@ terms:
     charge de travail.
   short_description: Indicateurs calculés sur des exécutions ou tâches identifiées pour comprendre durée, attente, progression
     et charge de travail.
-  context: 'Préciser population, événements de début et de fin, unité et calendrier. Temps en file : attente avant prise en
-    charge. Traitement actif : temps d’activité observé. Attente externe : attente d’une réponse ou d’un fait extérieur identifié.
-    Débit : nombre de sorties d’un périmètre par unité de temps. Ancienneté : temps écoulé depuis l’entrée d’un élément encore
-    ouvert. Ces mesures ne s’additionnent pas automatiquement : activités parallèles et événements manquants peuvent invalider
-    le calcul. [Process Mining](model:process-mining) analyse les [instances](glossary:TER200) documentées ; il distingue
-    résultat mesuré et inconnue.'
+  context: |-
+    Préciser population, événements de début et de fin, unité et calendrier. Temps en file : attente avant prise en charge. Traitement actif : temps d’activité observé. Attente externe : attente d’une réponse ou d’un fait extérieur identifié. Débit : nombre de sorties d’un périmètre par unité de temps. Ancienneté : temps écoulé depuis l’entrée d’un élément encore ouvert. Ces mesures ne s’additionnent pas automatiquement : activités parallèles et événements manquants peuvent invalider le calcul. [Process Mining](model:process-mining) analyse les [instances](glossary:TER200) documentées ; il distingue résultat mesuré et inconnue.
+
+    Distinguer les trois délais pour chaque décision attendue identifiée dans le [dossier](glossary:TER064) :
+
+    - t0 : Date du fait déclencheur.
+    - t1 : Date à laquelle le signal est qualifié comme exploitable pour la décision considérée.
+    - t2 : Date de la décision autorisée, humaine ou selon une règle autorisée.
+    - t3 : Date de l'effet réellement obtenu au jalon défini pour ce type d'action.
+
+    - Délai d’information = t1 - t0
+    - Délai de décision = t2 - t1
+    - Délai de mise en œuvre = t3 - t2
+    - Part des décisions prises à temps = Décisions attendues de la population autorisées au plus tard à leur échéance utile / décisions attendues dont cette échéance est atteinte dans la période.
+
+    Unité : Durée ; préciser calendrier ouvré ou écoulé et fuseau.
+
+    - Numérateur et dénominateur portent sur la même population et la même version d'échéance.
+    - Identifier chaque décision attendue et son itération dans le dossier ; relier t0, t1, t2, t3 et l'échéance à cette même occurrence. Une décision antérieure ne clôt pas une nouvelle attente.
+    - Fixer avant mesure le critère de signal exploitable et son producteur responsable ; conserver aussi la réception et la qualification. Une qualification tardive ne doit pas masquer une attente déjà ouverte.
+    - Les décisions attendues échues sans réponse restent au dénominateur ; les attentes non échues sont suivies séparément par leur ancienneté.
+    - Conserver échéance initiale et révisions justifiées ; ne pas déplacer rétroactivement une date pour masquer le retard.
+    - Documenter données manquantes et couverture de mesure ; absence de date ne vaut pas durée nulle.
+    - Une décision motivée de ne pas agir peut clore la décision ; ne pas lui inventer une réalisation physique t3.
+    - Expliciter les annulations et refus ; compter les boucles distinctes sans additionner les activités parallèles.
+    - Fixer population, dates, exclusions et jalon avant la comparaison de deux périodes ou flux.
+
+    Exemple fictif : Illustration en heures écoulées dans un même fuseau : fait lundi 8 h, signal exploitable lundi 10 h, autorisation mardi 11 h, effet vendredi 14 h. Délais respectifs 2 h, 25 h et 75 h. Si l'échéance utile était mardi midi, la décision est à temps. Une décision encore absente après mardi midi est en retard.
   source_refs:
   - U902
   - U903
+  - U1145
+  - U1146
   review:
-    state: proposed
-    note: Complément rédigé pour appliquer l’audit accepté U903 ; appuis primaires partiels explicités.
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Finance and Operations
@@ -31224,6 +31565,113 @@ terms:
       élément encore ouvert. Ces mesures ne s’additionnent pas automatiquement : activités parallèles et événements manquants
       peuvent invalider le calcul. [Process Mining](model:process-mining) analyse les [instances](glossary:TER200) documentées
       ; il distingue résultat mesuré et inconnue.'
+  - id: market-process-mining-U1146-ms-work-history-TER201
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Instances, tâches, historique et durée écoulée.
+    differences: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous.
+    flow_position: |-
+      Distinguer les trois délais pour chaque décision attendue identifiée dans le [dossier](glossary:TER064) :
+
+      - t0 : Date du fait déclencheur.
+      - t1 : Date à laquelle le signal est qualifié comme exploitable pour la décision considérée.
+      - t2 : Date de la décision autorisée, humaine ou selon une règle autorisée.
+      - t3 : Date de l'effet réellement obtenu au jalon défini pour ce type d'action.
+
+      - Délai d’information = t1 - t0
+      - Délai de décision = t2 - t1
+      - Délai de mise en œuvre = t3 - t2
+      - Part des décisions prises à temps = Décisions attendues de la population autorisées au plus tard à leur échéance utile / décisions attendues dont cette échéance est atteinte dans la période.
+
+      Unité : Durée ; préciser calendrier ouvré ou écoulé et fuseau.
+
+      - Numérateur et dénominateur portent sur la même population et la même version d'échéance.
+      - Identifier chaque décision attendue et son itération dans le dossier ; relier t0, t1, t2, t3 et l'échéance à cette même occurrence. Une décision antérieure ne clôt pas une nouvelle attente.
+      - Fixer avant mesure le critère de signal exploitable et son producteur responsable ; conserver aussi la réception et la qualification. Une qualification tardive ne doit pas masquer une attente déjà ouverte.
+      - Les décisions attendues échues sans réponse restent au dénominateur ; les attentes non échues sont suivies séparément par leur ancienneté.
+      - Conserver échéance initiale et révisions justifiées ; ne pas déplacer rétroactivement une date pour masquer le retard.
+      - Documenter données manquantes et couverture de mesure ; absence de date ne vaut pas durée nulle.
+      - Une décision motivée de ne pas agir peut clore la décision ; ne pas lui inventer une réalisation physique t3.
+      - Expliciter les annulations et refus ; compter les boucles distinctes sans additionner les activités parallèles.
+      - Fixer population, dates, exclusions et jalon avant la comparaison de deux périodes ou flux.
+
+      Exemple fictif : Illustration en heures écoulées dans un même fuseau : fait lundi 8 h, signal exploitable lundi 10 h, autorisation mardi 11 h, effet vendredi 14 h. Délais respectifs 2 h, 25 h et 75 h. Si l'échéance utile était mardi midi, la décision est à temps. Une décision encore absente après mardi midi est en retard.
+    scope_summary: Instances, tâches, historique et durée écoulée.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Indicateurs calculés sur des exécutions ou tâches identifiées pour comprendre durée, attente, progression
+      et charge de travail.
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Instances, tâches, historique et durée écoulée.
+    consulted_on: '2026-10-22'
+    evidence_limits: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  - id: market-process-mining-U1146-sap-deadline-TER201
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS01
+    element_name: Deadline Tab Pages
+    concept_name: Deadline Tab Pages
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    differences: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous.
+    flow_position: |-
+      Distinguer les trois délais pour chaque décision attendue identifiée dans le [dossier](glossary:TER064) :
+
+      - t0 : Date du fait déclencheur.
+      - t1 : Date à laquelle le signal est qualifié comme exploitable pour la décision considérée.
+      - t2 : Date de la décision autorisée, humaine ou selon une règle autorisée.
+      - t3 : Date de l'effet réellement obtenu au jalon défini pour ce type d'action.
+
+      - Délai d’information = t1 - t0
+      - Délai de décision = t2 - t1
+      - Délai de mise en œuvre = t3 - t2
+      - Part des décisions prises à temps = Décisions attendues de la population autorisées au plus tard à leur échéance utile / décisions attendues dont cette échéance est atteinte dans la période.
+
+      Unité : Durée ; préciser calendrier ouvré ou écoulé et fuseau.
+
+      - Numérateur et dénominateur portent sur la même population et la même version d'échéance.
+      - Identifier chaque décision attendue et son itération dans le dossier ; relier t0, t1, t2, t3 et l'échéance à cette même occurrence. Une décision antérieure ne clôt pas une nouvelle attente.
+      - Fixer avant mesure le critère de signal exploitable et son producteur responsable ; conserver aussi la réception et la qualification. Une qualification tardive ne doit pas masquer une attente déjà ouverte.
+      - Les décisions attendues échues sans réponse restent au dénominateur ; les attentes non échues sont suivies séparément par leur ancienneté.
+      - Conserver échéance initiale et révisions justifiées ; ne pas déplacer rétroactivement une date pour masquer le retard.
+      - Documenter données manquantes et couverture de mesure ; absence de date ne vaut pas durée nulle.
+      - Une décision motivée de ne pas agir peut clore la décision ; ne pas lui inventer une réalisation physique t3.
+      - Expliciter les annulations et refus ; compter les boucles distinctes sans additionner les activités parallèles.
+      - Fixer population, dates, exclusions et jalon avant la comparaison de deux périodes ou flux.
+
+      Exemple fictif : Illustration en heures écoulées dans un même fuseau : fait lundi 8 h, signal exploitable lundi 10 h, autorisation mardi 11 h, effet vendredi 14 h. Délais respectifs 2 h, 25 h et 75 h. Si l'échéance utile était mardi midi, la décision est à temps. Une décision encore absente après mardi midi est en retard.
+    scope_summary: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Indicateurs calculés sur des exécutions ou tâches identifiées pour comprendre durée, attente, progression
+      et charge de travail.
+    source_title: Deadline Tab Pages
+    source_url: https://help.sap.com/docs/sap_s4hana_on-premise/a602ff71a47c441bb3000504ec938fea/4f340800d46f17a6e10000000a42189d-321.html
+    source_version: SAP S/4HANA 2025 FPS01 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu intégral indexé ; dates de référence, dates limites et réactions.
+    consulted_on: '2026-10-22'
+    evidence_limits: Appuis sur les traces et bornes temporelles ; ni équivalence complète à Process Mining ni standard commun
+      des formules proposées ci-dessous. Ouverture directe vide ; consultation du contenu indexé, pas de validation de toutes
+      les variantes de version.
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
+  revision: 2
+  last_modified: '2026-10-22T00:00:00Z'
 - id: TER203
   name: Enterprise Architecture
   short_description: Vue d’ensemble du SI Beaumanoir cible et de ses systèmes métier.
@@ -41739,12 +42187,16 @@ terms:
     Exemple fictif : une réponse externe survenue à 10 h est reçue à 10 h 20, puis corrigée le lendemain. Le registre permet de restituer ce qui s’est passé et ce que le dossier permettait de connaître à 10 h 10, sans faire disparaître la première réponse ni valider une transition interdite.
 
     Le contrat commun de capture couvre aussi les événements de [Service Management](model:subdomain-service-orders) et les références des décisions de plan, d’affectation, d’application et des faits de stock reliés au [Case](glossary:TER064). Pour chaque source, identifier le dossier, l’événement d’origine, les deux dates, la version et les corrections ; les chemins direct et via [Process Sentry](model:order-workflow-sentry) ne doublent pas un fait. Les écritures de stock restent dans leurs registres et les activités sans lien au dossier ne sont pas capturées de force.
+
+    Pour un dossier comportant une décision, relier les événements qualifiés qui distinguent le fait déclencheur, la disponibilité d'un signal exploitable, la décision autorisée et l'effet réalisé au jalon retenu. Conserver aussi les propositions, refus, décisions motivées de ne pas agir et révisions lorsqu'ils sont produits. Le producteur responsable qualifie chaque événement ; le registre ne déduit pas une décision de la réception d'un message ni une réalisation de son autorisation. Une borne absente reste inconnue. La réception d'une information et le moment où elle devient exploitable peuvent différer.
   notes: Capacité [Process Ledger](model:process-ledger), de type [Ledger](method:MOD020), rattachée à [Process Supervision](glossary:TER165).
   source_refs:
   - U1110
   - U1111
   - U1113
   - U1115
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1110
@@ -41809,26 +42261,89 @@ terms:
     - U1110
     - U1111
     - U1113
-  market_gaps:
-  - family: sap_s4hana
-    reason: Les pages détaillées Business Event Logging et Action Logs repérées pour SAP S/4HANA restent vides ou requièrent
-      une authentification dans le navigateur de recherche. La nouvelle consultation de Business Event Logging le 2026-10-16
-      n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas cet appui et aucune équivalence opérationnelle
-      n’est établie.
-    investigated_urls:
-    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
-    - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html
+  - id: market-process-ledger-U1146-ms-work-history-TER375
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Instances, tâches, historique et durée écoulée.
+    differences: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées.
+    flow_position: Pour un dossier comportant une décision, relier les événements qualifiés qui distinguent le fait déclencheur,
+      la disponibilité d'un signal exploitable, la décision autorisée et l'effet réalisé au jalon retenu. Conserver aussi
+      les propositions, refus, décisions motivées de ne pas agir et révisions lorsqu'ils sont produits. Le producteur responsable
+      qualifie chaque événement ; le registre ne déduit pas une décision de la réception d'un message ni une réalisation de
+      son autorisation. Une borne absente reste inconnue. La réception d'une information et le moment où elle devient exploitable
+      peuvent différer.
+    scope_summary: Instances, tâches, historique et durée écoulée.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Instances, tâches, historique et durée écoulée.
+    consulted_on: '2026-10-22'
+    evidence_limits: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
     source_refs:
+    - U1145
+    - U1146
+  - id: market-process-ledger-U1146-sap-inbox-actions-TER375
+    vendor: SAP
+    product: SAP S/4HANA Cloud 2608
+    element_name: Standard and Custom Actions
+    concept_name: Standard and Custom Actions
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    differences: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées.
+    flow_position: Pour un dossier comportant une décision, relier les événements qualifiés qui distinguent le fait déclencheur,
+      la disponibilité d'un signal exploitable, la décision autorisée et l'effet réalisé au jalon retenu. Conserver aussi
+      les propositions, refus, décisions motivées de ne pas agir et révisions lorsqu'ils sont produits. Le producteur responsable
+      qualifie chaque événement ; le registre ne déduit pas une décision de la réception d'un message ni une réalisation de
+      son autorisation. Une borne absente reste inconnue. La réception d'une information et le moment où elle devient exploitable
+      peuvent différer.
+    scope_summary: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    source_title: Standard and Custom Actions
+    source_url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/f369b2eff700401494ba6e7c9a573288/d11d50e484a54d76adbb11d35615b31b.html?version=latest
+    source_version: SAP S/4HANA Cloud 2608 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    consulted_on: '2026-10-22'
+    evidence_limits: 'Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse
+      complet de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées. Aucune réalisation installée Beaumanoir
+      déduite. Limite documentaire conservée : Les pages détaillées Business Event Logging et Action Logs repérées pour SAP
+      S/4HANA restent vides ou requièrent une authentification dans le navigateur de recherche. La nouvelle consultation de
+      Business Event Logging le 2026-10-16 n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas
+      cet appui et aucune équivalence opérationnelle n’est établie. Pages investiguées : https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+      ; https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html.
+      Le présent appui porte seulement sur les tâches et décisions de My Inbox ; il ne démontre pas un registre complet des
+      événements métier.'
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
     - U1110
     - U1111
     - U1112
     - U1113
+  market_gaps: []
   review:
-    state: proposed
-    note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
-      illustrations, comparaisons et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite.
-  last_modified: '2026-10-16T00:00:00Z'
-  revision: 1
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
+  last_modified: '2026-10-22T00:00:00Z'
+  revision: 2
 - id: TER376
   name: Process Event
   definition: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
@@ -41838,6 +42353,8 @@ terms:
     Un [Case](glossary:TER064) relie les événements connus de son parcours. Un [événement de processus](glossary:TER376) peut être interne ou provenir d’un acteur extérieur ; [Process Sentry](glossary:TER127) capte et qualifie les apports utiles puis déclenche la réaction autorisée. [Process Ledger](glossary:TER375) conserve les événements et leurs corrections, y compris lorsqu’aucune réaction immédiate n’est nécessaire. La [notification d’événement](glossary:TER039) annonce un fait : sa réception ne prouve pas à elle seule qu’un résultat métier est réalisé. Date du fait, date de connaissance, identifiant source et liens aux objets permettent d’expliquer les retards, répétitions et corrections. Exemple fictif : distinguer l’heure d’une réponse client, son arrivée dans le dossier et une rectification ultérieure.
 
     Dans un dossier, la capture relie producteur, événement source, date du fait, date de connaissance, version et correction. Une référence à une écriture de stock ou à une décision conserve son autorité d’origine ; elle n’en réapplique pas l’effet.
+
+    Pour une décision attendue, identifier son occurrence et son itération dans le [dossier](glossary:TER064). Distinguer le fait déclencheur, la réception du signal, sa qualification comme exploitable, la décision autorisée et son effet constaté. La réception et l’exploitabilité peuvent survenir à des moments différents ; leur producteur et leurs critères restent explicites. Une borne absente reste inconnue. Les [mesures de processus](glossary:TER201) utilisent ces événements sans confondre proposition, autorisation et réalisation.
   notes: Terme métier introduit avec [Process Ledger](model:process-ledger), sans créer un niveau de hiérarchie ou un catalogue
     de messages.
   source_refs:
@@ -41845,6 +42362,8 @@ terms:
   - U1111
   - U1113
   - U1115
+  - U1145
+  - U1146
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1110
@@ -41909,26 +42428,87 @@ terms:
     - U1110
     - U1111
     - U1113
-  market_gaps:
-  - family: sap_s4hana
-    reason: Les pages détaillées Business Event Logging et Action Logs repérées pour SAP S/4HANA restent vides ou requièrent
-      une authentification dans le navigateur de recherche. La nouvelle consultation de Business Event Logging le 2026-10-16
-      n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas cet appui et aucune équivalence opérationnelle
-      n’est établie.
-    investigated_urls:
-    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
-    - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html
+  - id: market-process-ledger-U1146-ms-work-history-TER376
+    vendor: Microsoft
+    product: Dynamics 365 finance and operations
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Instances, tâches, historique et durée écoulée.
+    differences: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées.
+    flow_position: Pour une décision attendue, identifier son occurrence et son itération dans le [dossier](glossary:TER064).
+      Distinguer le fait déclencheur, la réception du signal, sa qualification comme exploitable, la décision autorisée et
+      son effet constaté. La réception et l’exploitabilité peuvent survenir à des moments différents ; leur producteur et
+      leurs critères restent explicites. Une borne absente reste inconnue. Les [mesures de processus](glossary:TER201) utilisent
+      ces événements sans confondre proposition, autorisation et réalisation.
+    scope_summary: Instances, tâches, historique et durée écoulée.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Dynamics 365 finance and operations ; documentation consultée le 22 octobre 2026.
+    source_locator: Instances, tâches, historique et durée écoulée.
+    consulted_on: '2026-10-22'
+    evidence_limits: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées. Aucune réalisation installée Beaumanoir déduite.
+    status: proposed
     source_refs:
+    - U1145
+    - U1146
+  - id: market-process-ledger-U1146-sap-inbox-actions-TER376
+    vendor: SAP
+    product: SAP S/4HANA Cloud 2608
+    element_name: Standard and Custom Actions
+    concept_name: Standard and Custom Actions
+    element_type: Mécanisme documenté dans le produit cité
+    relationship: Recouvrement partiel
+    similarities: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    differences: Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+      de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées.
+    flow_position: Pour une décision attendue, identifier son occurrence et son itération dans le [dossier](glossary:TER064).
+      Distinguer le fait déclencheur, la réception du signal, sa qualification comme exploitable, la décision autorisée et
+      son effet constaté. La réception et l’exploitabilité peuvent survenir à des moments différents ; leur producteur et
+      leurs critères restent explicites. Une borne absente reste inconnue. Les [mesures de processus](glossary:TER201) utilisent
+      ces événements sans confondre proposition, autorisation et réalisation.
+    scope_summary: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    approach_summary: Préciser la coopération dans FLOW en conservant les responsabilités et les autorisations distinctes.
+    term_choice: Nom existant conservé ; aucune appellation commune des éditeurs ni nouvelle capacité déduite.
+    definition_choice: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    source_title: Standard and Custom Actions
+    source_url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/f369b2eff700401494ba6e7c9a573288/d11d50e484a54d76adbb11d35615b31b.html?version=latest
+    source_version: SAP S/4HANA Cloud 2608 ; documentation consultée le 22 octobre 2026.
+    source_locator: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+    consulted_on: '2026-10-22'
+    evidence_limits: 'Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse
+      complet de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées. Aucune réalisation installée Beaumanoir
+      déduite. Limite documentaire conservée : Les pages détaillées Business Event Logging et Action Logs repérées pour SAP
+      S/4HANA restent vides ou requièrent une authentification dans le navigateur de recherche. La nouvelle consultation de
+      Business Event Logging le 2026-10-16 n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas
+      cet appui et aucune équivalence opérationnelle n’est établie. Pages investiguées : https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+      ; https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html.
+      Le présent appui porte seulement sur les tâches et décisions de My Inbox ; il ne démontre pas un registre complet des
+      événements métier.'
+    status: proposed
+    source_refs:
+    - U1145
+    - U1146
     - U1110
     - U1111
     - U1112
     - U1113
+  market_gaps: []
   review:
-    state: proposed
-    note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
-      illustrations, comparaisons et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite.
-  last_modified: '2026-10-16T00:00:00Z'
-  revision: 1
+    state: partial
+    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
+      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
+      déduite.
+  last_modified: '2026-10-22T00:00:00Z'
+  revision: 2
 - id: TER380
   name: Reference Maintenance
   definition: Recevoir et prendre en compte les évolutions des références locales nécessaires à la Supply.

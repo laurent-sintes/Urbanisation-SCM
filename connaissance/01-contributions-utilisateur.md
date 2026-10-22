@@ -25986,3 +25986,21 @@ Date : 2026-10-22. Source : Laurent, intégration documentaire et synchronisatio
 Verbatim : « Intègre ces précisions dans le PDF : vocabulaire de la plomberie, délai de décision et rôle du CTP dans le choix des conditionnements. Conserve les sept KPI et les six questions, et mets à jour le PDF téléchargeable dans Atlas. »
 
 Portée : intégrer les précisions discutées en U1141-U1143 au dossier de pilotage, en préserver les sept KPI, les six questions et les indicateurs complémentaires ; régénérer le PDF et synchroniser son téléchargement dans Atlas local et distant selon la consigne permanente. L'intégration documentaire conserve les limites des références et distingue cible proposée, confirmation CTP et optimisation. Elle ne demande pas de modification du modèle canonique ni de release métier.
+
+## U1145
+
+Date : 2026-10-22. Source : Laurent, demande de vérification ciblée du modèle FLOW.
+
+Verbatim : « Vérifie si le modèle FLOW couvre bien le délai de décision et le rôle du CTP dans le choix des conditionnements, et propose les ajustements nécessaires. »
+
+Portée : auditer le backlog, le glossaire et la publication courante sur les deux besoins de U1142-U1143 ; distinguer couverture explicite, couverture partielle et lacunes, puis proposer des ajustements ciblés et étayés. Cette demande n'adopte pas les propositions et ne demande ni application au modèle canonique ni release métier.
+
+Analyse proposée : [audit ciblé du délai de décision et des conditionnements](../modeles/backlog/decision-latency-packaging-audit-U1145.yaml).
+
+## U1146
+
+Date : 2026-10-22. Source : Laurent, validation et publication des ajustements du délai de décision et des conditionnements.
+
+Verbatim : « Je valide les ajustements proposés sur le délai de décision et les conditionnements. Intègre-les au modèle et au glossaire, puis publie la mise à jour dans Atlas. »
+
+Portée : adopter le lot cohérent proposé dans l'annexe U1145 : sept fiches existantes, leurs précisions de glossaire, les deux relations et le contrat de mesure avec identification de chaque décision attendue, échéance utile, données inconnues et dossiers sans réponse. Intégrer les valeurs au modèle et au glossaire puis publier une nouvelle version dans Atlas. Préserver les frontières ATP/CTP/PTP, les limites des références et l'absence de preuve de réalisation installée. Aucun nouveau nœud métier ni changement du dossier PDF ; commit et push restent distincts.
