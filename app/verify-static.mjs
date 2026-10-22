@@ -112,12 +112,31 @@ try {
   );
   assert.match(downloadedYaml.toString('utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
+  const menuStudyLink = page.locator('.download-menu').getByRole('link', { name: /Dossier SCM \(PDF\)/ });
+  await menuStudyLink.waitFor({ state: 'visible' });
+  const menuStudyHref = await menuStudyLink.getAttribute('href');
+  const studySource = await readFile(
+    path.join(directory, '../output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf'),
+  );
+  await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
+  await page.screenshot({ path: path.join(directory, '.runtime/qa-static/download-menu-study.png') });
+  const menuStudyPending = page.waitForEvent('download');
+  await menuStudyLink.click();
+  const menuStudyDownload = await menuStudyPending;
+  assert.equal(await menuStudyDownload.failure(), null, 'Study PDF download from the menu completes');
+  assert.equal(menuStudyDownload.suggestedFilename(), 'FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf');
+  assert.deepEqual(
+    await readFile(await menuStudyDownload.path()),
+    studySource,
+    'Actual menu download preserves the complete current source PDF',
+  );
   await page.goto(`${base}#/documents`);
   await page.getByRole('heading', { name: 'Études FLOW', exact: true }).waitFor();
   await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/documents-study.png') });
   const studyLink = page.getByRole('link', { name: 'Télécharger le dossier SCM (PDF)', exact: true });
   const studyHref = await studyLink.getAttribute('href');
+  assert.equal(studyHref, menuStudyHref, 'The menu and Documents provide the same PDF');
   assert.match(
     new URL(studyHref, base).pathname,
     /\/assets\/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions-[\w-]+\.pdf$/,
@@ -129,7 +148,7 @@ try {
   assert.equal(studyDownload.suggestedFilename(), 'FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf');
   assert.deepEqual(
     await readFile(await studyDownload.path()),
-    await readFile(path.join(directory, '../output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf')),
+    studySource,
     'Actual study download preserves the complete current source PDF',
   );
   await page.goto(`${base}#/documents?version=${historical}`);
@@ -139,6 +158,11 @@ try {
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   await page.locator('.download-menu summary').click();
   assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
+  assert.equal(
+    await menuStudyLink.getAttribute('href'),
+    studyHref,
+    'The download menu keeps the same study when browsing a historical publication',
+  );
   const historicYamlPending = page.waitForEvent('download');
   const historicYamlLink = page.getByRole('link', { name: /Modèle complet \(YAML\)/ });
   assert.equal(
@@ -197,7 +221,8 @@ try {
         'Explorer default and saved collapse',
         'no public JSON download action',
         'current and historical YAML downloads',
-        'study PDF download and shared availability across publications',
+        'study PDF downloads from the menu and Documents preserve the source bytes',
+        'same study URL in the menu, Documents and historical publications',
         'fixed history',
         'home links',
         'guide',

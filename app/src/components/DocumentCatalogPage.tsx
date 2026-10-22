@@ -1,8 +1,8 @@
 import { Download } from 'lucide-react';
 import { useState } from 'react';
-import scmStudyUrl from '../../../output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf?url';
 import { DOCUMENT_CATEGORY, documentDownloadName, documentFormat, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
+import { scmStudyFilename, scmStudyUrl } from '../scmStudy';
 import type { PublishedModel } from '../types';
 import './documents.css';
 
@@ -79,11 +79,7 @@ export function DocumentCatalogPage({
                 au déstockage. Plomberie, Lean, optimisation et impacts pour FLOW.
               </p>
               <p className="documents-study-author">Laurent Sintès</p>
-              <a
-                className="documents-download"
-                href={scmStudyUrl}
-                download="FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf"
-              >
+              <a className="documents-download" href={scmStudyUrl} download={scmStudyFilename}>
                 <Download size={17} aria-hidden="true" />
                 Télécharger le dossier SCM (PDF)
               </a>
