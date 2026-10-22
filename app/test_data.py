@@ -147,6 +147,22 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(self.request('/data/2026-10-13.2/documents/DOC003.pptm')[0], 404)
         self.assertEqual(self.request('/modeles/documents/DOC003.pptx')[0], 404)
 
+    def test_built_study_pdf_download_preserves_bytes_without_exposing_sources(self):
+        payload = b'%PDF-1.7\nFLOW study\n%%EOF\n'
+        (self.dist / 'assets/FLOW-study-aBcD1234.pdf').write_bytes(payload)
+        route = '/assets/FLOW-study-aBcD1234.pdf'
+        status, headers, body = self.request(route)
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Content-Type'], 'application/pdf')
+        self.assertEqual(body, payload)
+        status, headers, body = self.request(route, method='HEAD')
+        self.assertEqual(status, 200)
+        self.assertEqual(int(headers['Content-Length']), len(payload))
+        self.assertEqual(body, b'')
+        self.assertEqual(self.request('/assets/missing.pdf')[0], 404)
+        self.assertEqual(self.request('/output/pdf/FLOW-study.pdf')[0], 404)
+        self.assertEqual(self.request('/assets/../output/pdf/FLOW-study.pdf')[0], 404)
+
     def test_missing_build_has_diagnostic_without_old_interface_fallback(self):
         (self.dist / "index.html").unlink()
         status, _, body = self.request("/")

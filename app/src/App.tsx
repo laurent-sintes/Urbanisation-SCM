@@ -951,7 +951,7 @@ export function App() {
                                       ? 'Explorer les offres logicielles connues et leurs composants documentés.'
                                       : 'Parcourir les produits retenus dans chaque SI et leur positionnement métier connu.'
                                     : view === 'documents'
-                                      ? 'Consulter et télécharger les documents associés à cette publication.'
+                                      ? 'Consulter les études FLOW et les documents associés à cette publication.'
                                       : view === 'scenarios'
                                         ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
                                         : view === 'metamodel'

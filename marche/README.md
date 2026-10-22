@@ -6,6 +6,8 @@ Objectif : comparer durablement l'urbanisation Beaumanoir aux référentiels du 
 
 ## Lire et utiliser le référentiel
 
+- [Pilotage des flux SCM : Lean, indicateurs reconnus et optimisation](etudes/2026-10-22-pilotage-flux-scm-lean-indicateurs-optimisation.md) : appui universitaire de la métaphore hydraulique, VSM étendue, mathématiques des décisions et vocabulaire des KPI ; étude U1138–U1140 intégrée au dossier PDF, sans modification du modèle.
+
 - [Indicateurs et décisions pour piloter les flux SCM de bout en bout](etudes/2026-10-21-indicateurs-pilotage-scm.md) : six questions de direction, diagnostics achats, ventes, SAV, retours et déstockage ; données, calculs, décisions et cas d’entreprises avec gains publiés.
 
 - [Étude d’exploration d’Atlas](etudes/2026-09-14-exploration-atlas/etude.md) : U143, recherche du 14 septembre 2026 sur les outils de cartographie, les parcours et la maintenance du code par IA. Comparaison d’outils d’interface, distincte des modèles de capacités ci-dessous.

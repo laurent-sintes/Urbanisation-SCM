@@ -51,7 +51,8 @@ try {
     if (relative === '__atlas__/workshop/staging.json') return route.fulfill({ status: 404, body: '{}' });
     const target = path.resolve(dist, relative);
     if (!target.startsWith(dist + path.sep)) return route.abort();
-    if (route.request().isNavigationRequest() && /\/model\.(json|yaml)$/.test(relative)) return route.continue();
+    if (route.request().isNavigationRequest() && /(?:\/model\.(?:json|yaml)|\.pdf)$/.test(relative))
+      return route.continue();
     if (relative === 'delivery.json' && newerBuild)
       return route.fulfill({ json: { schema_version: 1, files: { 'index.html': 'new-build' } } });
     if (failGuideModule && /ModelingGuidePage-.*\.js$/.test(relative))
@@ -111,6 +112,29 @@ try {
   );
   assert.match(downloadedYaml.toString('utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
+  await page.goto(`${base}#/documents`);
+  await page.getByRole('heading', { name: 'Études FLOW', exact: true }).waitFor();
+  await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
+  await page.screenshot({ path: path.join(directory, '.runtime/qa-static/documents-study.png') });
+  const studyLink = page.getByRole('link', { name: 'Télécharger le dossier SCM (PDF)', exact: true });
+  const studyHref = await studyLink.getAttribute('href');
+  assert.match(
+    new URL(studyHref, base).pathname,
+    /\/assets\/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions-[\w-]+\.pdf$/,
+  );
+  const studyPending = page.waitForEvent('download');
+  await studyLink.click();
+  const studyDownload = await studyPending;
+  assert.equal(await studyDownload.failure(), null, 'Study PDF download completes');
+  assert.equal(studyDownload.suggestedFilename(), 'FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf');
+  assert.deepEqual(
+    await readFile(await studyDownload.path()),
+    await readFile(path.join(directory, '../output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf')),
+    'Actual study download preserves the complete current source PDF',
+  );
+  await page.goto(`${base}#/documents?version=${historical}`);
+  await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
+  assert.equal(await studyLink.getAttribute('href'), studyHref, 'The study is separate from historical publications');
   await page.goto(`${base}#/glossary?version=${historical}`);
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   await page.locator('.download-menu summary').click();
@@ -173,6 +197,7 @@ try {
         'Explorer default and saved collapse',
         'no public JSON download action',
         'current and historical YAML downloads',
+        'study PDF download and shared availability across publications',
         'fixed history',
         'home links',
         'guide',

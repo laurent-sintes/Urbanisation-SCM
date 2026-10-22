@@ -104,7 +104,7 @@ def footer(c, page, total, section):
     c.line(M, 47, W-M, 47)
     c.setFillColor(MUTED)
     c.setFont('Segoe', 7.4)
-    c.drawString(M, 31, 'FLOW  /  Dossier de pilotage  /  21 octobre 2026')
+    c.drawString(M, 31, 'FLOW  /  Dossier de pilotage  /  22 octobre 2026')
     c.drawRightString(W-M, 31, f'{section}  |  {page} / {total}')
 
 
@@ -226,24 +226,24 @@ PRIORITY_CODES = ('M01', 'M04', 'M07', 'M09', 'M11', 'M13', 'M18')
 QUESTION_PRIORITIES = (('M01',), ('M04',), ('M07', 'M09'), ('M11',), ('M13',), ('M18',))
 
 MEASURES = [
-    ('M01', 'OTIF par ligne', 'Résultat', True, 'Part des lignes livrées en totalité dans la promesse initiale.'),
+    ('M01', 'OTIF par ligne', 'Résultat', True, 'Part des lignes dues sur la période, livrées intégralement dans la promesse initiale.'),
     ('M02', 'Service à la date souhaitée par le client', 'Résultat', False, 'Part livrée à temps par rapport au besoin exprimé par le client.'),
     ('M03', 'Achats utilisables à temps', 'Résultat', False, 'Part des lignes d’achat reçues et utilisables à la date confirmée initiale.'),
-    ('M04', 'Engagements ouverts à risque', 'Anticipation', True, 'Part du carnet (lignes restant à servir) dont la date promise est menacée ; inconnus à part.'),
+    ('M04', 'Commandes à risque', 'Anticipation', True, 'Part du carnet (lignes restant à servir) dont la date promise est menacée ; inconnus à part.'),
     ('M05', 'Couverture ATP et manques résolus par CTP', 'Anticipation', False, 'Deux taux : couverture prévue et manques résolus par un apport vérifié.'),
     ('M06', 'Effet d’une protection de stock', 'Arbitrage', False, 'Lignes aidées et pénalisées par groupe, entre deux règles de protection.'),
-    ('M07', 'Coût du parcours par livraison', 'Résultat', True, 'Coût attribué aux unités servies, rapporté aux livraisons servies.'),
+    ('M07', 'Coût de service par livraison (CTS)', 'Résultat', True, 'Coût du parcours attribué aux unités servies, rapporté aux livraisons servies ; périmètre des coûts explicite.'),
     ('M08', 'Écart économique entre options : lecture PTP', 'Arbitrage', False, 'Gain attendu entre deux options, à même demande et même date future d’évaluation (horizon).'),
-    ('M09', 'Transferts préalables à la préparation wholesale', 'Diagnostic', True, 'Transferts inter-entrepôts : part des livraisons concernées et nombre moyen par livraison.'),
+    ('M09', 'Transferts avant préparation wholesale', 'Diagnostic', True, 'Transferts inter-entrepôts : part des livraisons concernées et nombre moyen par livraison.'),
     ('M10', 'Valeur du stock détenu', 'Résultat', False, 'Valeur détenue, en distinguant disponible, bloqué et transit.'),
-    ('M11', 'Excédent projeté à l’horizon', 'Anticipation', True, 'À une date future fixée (l’horizon), stock prévu au-delà du niveau souhaité (la cible), puis valorisé.'),
+    ('M11', 'Excédent projeté', 'Anticipation', True, 'À une date future fixée (l’horizon), stock prévu au-delà du niveau souhaité (la cible), puis valorisé.'),
     ('M12', 'Erreur et biais de prévision', 'Diagnostic', False, 'Écart absolu ; le biais indique si la prévision surestime ou sous-estime la demande.'),
-    ('M13', 'Délai de bout en bout et attente par étape', 'Résultat', True, 'Médiane : délai atteint par 50 % des dossiers terminés. Suivre aussi celui atteint par 90 %.'),
+    ('M13', 'Délai commande-livraison', 'Résultat', True, 'Délai des ventes, de l’acceptation à la livraison : médiane (50 %), délai atteint par 90 % et attentes par étape.'),
     ('M14', 'Nombre et âge des dossiers encore ouverts', 'Diagnostic', False, 'Volume en attente, âge des dossiers et dépassements d’un seuil défini.'),
     ('M15', 'Charge rapportée à la capacité disponible', 'Anticipation', False, 'Heures requises rapportées aux heures disponibles par opération et créneau.'),
     ('M16', 'Délai de remise à disposition des retours', 'Diagnostic', False, 'De la réception au stock utilisable ; compléter par les retours encore ouverts.'),
     ('M17', 'Part revendue dans un délai donné', 'Résultat', False, 'Part revendue sous 30 jours d’une cohorte : un même groupe de retours reçus sur une période fixée.'),
-    ('M18', 'Valeur nette récupérée par destination', 'Résultat', True, 'Recettes ou avoirs moins frais de récupération ; coût du stock séparé.'),
+    ('M18', 'Valeur nette récupérée', 'Résultat', True, 'Par destination : recettes ou avoirs moins frais de récupération ; coût du stock séparé.'),
 ]
 
 
@@ -317,14 +317,15 @@ def make_front():
     for title, body in [
         ('KPI : une mesure suivie dans le temps',
          'Un <b>Key Performance Indicator</b> est un indicateur clé de performance. '
-         'Exemple : <b>OTIF</b> (<b>On Time In Full</b>), part des lignes de commande (article ou variante) livrées à l’heure et en totalité. '
-         'Sa formule, son périmètre, sa source et sa fréquence doivent rester comparables. Un indicateur utile permet de constater, anticiper ou expliquer un résultat.'),
+         '<b>OTIF</b> (<b>On Time In Full</b>) mesure les lignes livrées complètes et à temps. '
+         '<b>CTS</b> (<b>Cost-to-Serve</b>) désigne le coût de service. Ici, il inclut les coûts attribuables du parcours, achat compris. '
+         'Ce périmètre doit être fixé pour comparer les résultats ; le sigle seul ne définit pas la formule. [29-30]'),
         ('OKR : un objectif et plusieurs résultats clés',
          '<b>Objectives and Key Results</b> associe un objectif qualitatif à des résultats clés chiffrés, avec une échéance. '
          'Un résultat clé (<b>KR, Key Result</b>) précise la valeur de départ et la cible. Un OKR peut mobiliser plusieurs KPI. [21]'),
         ('Décision : l’action ou la règle à changer',
-         'Changer le site préparateur, le lot d’achat ou la protection de stock (quantité préservée pour un usage ou un groupe) constitue une décision. '
-         'Vérifier ensuite son effet. Un seuil d’alerte ne constitue pas automatiquement la cible d’un KR.'),
+         'Changer le site préparateur, le lot d’achat ou une protection de stock (quantité préservée pour un usage), puis vérifier l’effet. '
+         'Un seuil d’alerte n’est pas automatiquement une cible de résultat clé.'),
     ]:
         y=para(c,title,M,y,style='head')-5
         y=para(c,body,M,y,style='small')-13
@@ -343,22 +344,21 @@ def make_front():
         y=para(c,text,M+10,y,width=CW-10,style='small')-5
     y-=3
     y=para(c,'<b>Actions à tester dans FLOW :</b> mieux placer le stock, changer de site préparateur ou fractionner certains achats. '
-           'Suivre ensuite les trois KPI ensemble : une baisse des transferts ne suffit pas si le service ou le coût se dégrade.',M,y,style='small')-11
+           'Vérifier ensemble transferts, OTIF et coût.',M,y,style='small')-11
     y=para(c,'Ces valeurs et cette échéance illustrent la méthode ; ce ne sont pas des cibles Beaumanoir. '
            'Les objectifs réels se fixent après mesure de la situation initiale.',M,y,style='tiny')-14
     y=para(c,'Trois vérifications avant de promettre au client',M,y,style='head')-5
     for text in [
         '<b>ATP — Available-to-Promise :</b> quantité promettable à une date, avec le stock libre et les arrivages déjà prévus.',
-        '<b>CTP - Capable-to-Promise :</b> option réalisable à temps après vérification des ressources et des délais, y compris un complément à créer.',
-        '<b>PTP — Profitable-to-Promise :</b> comparaison économique des options réalisables pour servir la demande. Exemple page 12. [2-5]',
+        '<b>CTP - Capable-to-Promise :</b> apport à obtenir ou à constituer à temps, après vérification des ressources et des délais.',
+        '<b>PTP — Profitable-to-Promise :</b> comparaison économique des options réalisables pour servir la demande. Exemple page 14. [2-5]',
     ]:
         y=para(c,text,M,y,style='small')-4
     if y<60:
         raise ValueError(f'Introduction overflow: {y}')
     c.showPage()
 
-    # Explicit catalogue: M is a reading reference, not a claim that every row
-    # is one homogeneous observed KPI.
+    # Internal measure keys support navigation; readers see meaningful names.
     for half in range(2):
         y=heading(c,'CATALOGUE DE MESURE / '+('1 SUR 2' if half==0 else '2 SUR 2'),'Les indicateurs à suivre',
                   'Sept KPI prioritaires et onze fiches complémentaires, organisés en six questions. '
@@ -367,7 +367,7 @@ def make_front():
             y=para(c,f'{qi+1:02d} / {QUESTIONS[qi]}',M,y,style='head')-6
             for code,title,nature,main,description in MEASURES[qi*3:qi*3+3]:
                 top=y
-                label=f'<b>{code} / {title}</b>' if main else f'{code} / {title}'
+                label=f'<b>{title}</b>' if main else title
                 y=para(c,label,M,y,width=385,style='small')
                 c.setFillColor(GREEN if main else MUTED)
                 c.setFont('Segoe-Bold' if main else 'Segoe',8.5)
@@ -382,8 +382,8 @@ def make_front():
             y-=9
         y=para(c,'<b>Résultat :</b> ce qui est mesuré sur les opérations. <b>Anticipation :</b> ce que les données actuelles annoncent. '
                '<b>Diagnostic :</b> ce qui aide à comprendre. <b>Arbitrage :</b> comparaison de scénarios, avec les mêmes hypothèses.',M,y,style='tiny')-8
-        y=para(c,'Les codes M01 à M18 sont des repères de lecture. Certaines fiches regroupent plusieurs mesures. '
-               'M06 et M08 comparent des options ; leurs résultats simulés sont distingués des résultats observés.',M,y,style='tiny')
+        y=para(c,'Certaines fiches regroupent plusieurs mesures. Les comparaisons de protections de stock et d’options économiques '
+               'sont des analyses de scénarios ; distinguer leurs résultats simulés des résultats observés.',M,y,style='tiny')
         if y<60:
             raise ValueError(f'Catalogue {half} overflow: {y}')
         c.showPage()
@@ -402,25 +402,25 @@ def make_summary(c, links):
     rows = [
         ['<b>KPI à suivre</b>', '<b>Exemple d’OKR au 31/03/2027</b><br/>Objectif + résultats clés (KR)',
          '<b>Décision concrète dans FLOW</b>'],
-        ['<b>M01 / OTIF par ligne</b><br/>Promesse initiale tenue',
-         '<b>Tenir les promesses clients.</b><br/>KR : OTIF de <b>94 % à 97 %</b> ; service à la date souhaitée de <b>90 % à 94 %</b> (M02).',
+        ['<b>OTIF par ligne</b><br/>Promesse initiale tenue',
+         '<b>Tenir les promesses clients.</b><br/>KR : OTIF de <b>94 % à 97 %</b> ; service à la date souhaitée de <b>90 % à 94 %</b>.',
          'Choisir un autre site préparateur ou réaffecter le stock après vérification ATP/CTP, pour tenir la date initiale.'],
-        ['<b>M04 / Engagements ouverts à risque</b><br/>Lignes évaluables dues sous 4 semaines',
+        ['<b>Commandes à risque</b><br/>Lignes évaluables dues sous 4 semaines',
          '<b>Prévenir les retards.</b><br/>KR : lignes à risque de <b>15 % à 5 %</b> ; lignes non calculables de <b>10 % à 2 %</b>, suivies séparément.',
          'Réaffecter du stock, changer de parcours ou vérifier un complément par CTP ; décider selon le coût et les délégations.'],
-        ['<b>M07 / Coût du parcours par livraison</b>',
+        ['<b>Coût de service par livraison (CTS)</b>',
          '<b>Réduire le coût du service.</b><br/>KR : de <b>100 € à 95 €</b> par livraison ; porter l’OTIF de <b>94 % à au moins 97 %</b>.',
          'Regrouper des départs ou changer de site préparateur si la simulation réduit le coût complet en tenant les promesses.'],
-        ['<b>M09 / Transferts inter-entrepôts avant préparation wholesale</b>',
+        ['<b>Transferts avant préparation wholesale</b>',
          '<b>Simplifier les flux wholesale.</b><br/>KR : livraisons avec au moins un transfert de <b>30 % à 20 %</b> ; OTIF de <b>94 % à 97 %</b> ; coût plafonné à <b>100 €</b> par livraison (100 € au départ).',
          'Simuler le placement du stock et le site préparateur ; ajuster l’affectation ou la répartition des achats en lots pour éviter le transfert, à service et coût maîtrisés.'],
-        ['<b>M11 / Excédent projeté</b><br/>À fin juin 2027',
-         '<b>Réduire le surplus prévu.</b><br/>KR : projection de <b>300 000 à 180 000 €</b> ; risque M04 de <b>15 % à 5 %</b>. Évaluation au 31 mars ; horizon (date future étudiée) au 30 juin.',
+        ['<b>Excédent projeté</b><br/>À fin juin 2027',
+         '<b>Réduire le surplus prévu.</b><br/>KR : projection de <b>300 000 à 180 000 €</b> ; lignes à risque de <b>15 % à 5 %</b>. Évaluation au 31 mars ; horizon (date future étudiée) au 30 juin.',
          'Réaffecter l’excédent, ajuster les achats ou préparer le déstockage ; comparer service, transferts et valeur récupérable.'],
-        ['<b>M13 / Délai de bout en bout</b><br/>Ventes : acceptation à livraison',
-         '<b>Fluidifier les livraisons.</b><br/>KR : délai couvrant 50 % des ventes terminées de <b>10 à 7 jours</b> ; celui couvrant 90 % de <b>18 à 12 jours</b> ; dossiers ouverts âgés de plus de 14 jours : <b>8 % à 5 %</b> (M14).',
+        ['<b>Délai commande-livraison</b><br/>Ventes : acceptation à livraison',
+         '<b>Fluidifier les livraisons.</b><br/>KR : délai couvrant 50 % des ventes terminées de <b>10 à 7 jours</b> ; celui couvrant 90 % de <b>18 à 12 jours</b> ; dossiers ouverts âgés de plus de 14 jours : <b>8 % à 5 %</b>.',
          'Réduire les lots ou déplacer un créneau sur l’étape qui concentre l’attente, après contrôle de la capacité aval.'],
-        ['<b>M18 / Valeur nette récupérée</b><br/>Rapportée à la valeur du stock',
+        ['<b>Valeur nette récupérée</b><br/>Rapportée à la valeur du stock',
          '<b>Mieux valoriser le stock restant.</b><br/>KR : de <b>35 à 45 € nets</b> pour 100 € de stock de référence ; unités en attente de destination de <b>20 % à 5 %</b> de la cohorte.',
          'Comparer revente, remise en état, retour fournisseur et déstockage, avec les prix et conditions autorisés.'],
     ]
@@ -442,13 +442,13 @@ def make_summary(c, links):
         links.append((5,(M,top-height,M+118,top),6+question_index))
         top -= height
     y -= h + 12
-    y = para(c, '<b>Périmètres comparables.</b> Conserver périodes, produits, canaux et calculs comparables. '
-             'M04 rapporte les inconnues à toutes les lignes. M09 suit toutes les livraisons wholesale, y compris sans transfert ; '
-             'son OTIF et son coût portent sur ce même périmètre. Le plafond de 100 € ne remplace pas la cible M07 si les périmètres sont identiques. '
-             'M11 garde stock cible et valorisation constants. M18 rapporte les sommes nettes aux valeurs de référence figées '
-             'de cohortes complètes (groupes reçus sur une même période), avec le même recul et les unités en attente ; frais déjà déduits.',
+    y = para(c, '<b>Périmètres comparables.</b> Garder périodes, produits, canaux et calculs comparables. '
+             'Rapporter les lignes inconnues à toutes les lignes. Pour les transferts, inclure toutes les livraisons wholesale, '
+             'même sans transfert ; mesurer OTIF et coût sur ce périmètre. Le plafond de 100 € ne remplace pas la cible de 95 € si les périmètres sont identiques. '
+             'Pour l’excédent, conserver stock cible et valorisation. Pour la valeur récupérée, figer les valeurs de référence '
+             'des cohortes complètes (groupes reçus sur une même période), avec le même recul et les unités en attente ; frais déjà déduits.',
              M,y,style='tiny') - 8
-    y = para(c, 'Les codes KPI sont cliquables vers les fiches de calcul. Les décisions restent soumises aux politiques et '
+    y = para(c, 'Les noms des KPI sont cliquables vers les fiches de calcul. Les décisions restent soumises aux politiques et '
              'délégations applicables ; leur effet est ensuite vérifié dans les mêmes indicateurs.', M,y,style='tiny')
     if y < 60:
         raise ValueError(f'Summary table overflow: {y}')

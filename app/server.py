@@ -38,6 +38,7 @@ BUILT_ASSET_TYPES = {
     ".ico": "image/x-icon",
     ".woff": "font/woff",
     ".woff2": "font/woff2",
+    ".pdf": "application/pdf",
 }
 MISSING_BUILD = "Interface Atlas non compilée. Depuis le projet : pnpm --dir app install, puis pnpm --dir app build."
 CSP = (

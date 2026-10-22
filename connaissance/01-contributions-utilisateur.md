@@ -25913,3 +25913,44 @@ Je crois que le document s'est déplacé des KPI aux décisions.
 Qu'ne penses-tu ? »
 
 Portée : revoir la structure du dossier, ajouter une page de garde et un sommaire, rendre la liste des indicateurs directement accessible et clarifier le lien entre mesure, objectif et action. La distinction proposée par Laurent est à préciser pédagogiquement : un OKR associe un objectif à des résultats clés mesurables et datés ; la décision désigne l'action choisie à partir des mesures. Les six questions de pilotage et les exemples déjà demandés restent conservés. Cette correction éditoriale ne modifie pas le modèle canonique, ne fixe aucune cible Beaumanoir et ne demande ni nouvelle publication Atlas, ni commit ou push.
+
+## U1138
+
+Date : 2026-10-22. Source : Laurent, étude des indicateurs reconnus et de la métaphore hydraulique du pilotage SCM.
+
+Verbatim : « Oui, je préfère des acronymes éventuellement comme OTIF, c'est plus facile à retenir.
+
+D'ailleurs, tu peux faire une recherche sur internet dans le domaine de la SCM pour voir quels approches standards comme OTIF sont connues et reconnues.
+
+D'autre part, lorsque j'explique ce qu'est le pilotage de la SCM, je l'explique comme un travail sur la plomberie :
+
+- on évite les fuites : des données importantes non acheminées au bon système au bon moment implique de mauvaises décisions
+- on agit sur le débit
+- on fait des dérivations : rendre du stock protégé disponible pour un flux
+- on supprime les grumeaux : on splitte les commandes
+- on essaie de faire en sorte que les grumeaux n'apparaissent pas : bonne gestion des des seuils dans les entrepots
+- on vidange : on essaie en fin de saison d'avoir des tuyaux vides
+
+Je ne sais pas si une telle métaphore existe officiellement ou un truc du genre portée par un expert de la SCM.
+
+Si oui, ça pourrait être une introduction interessante.
+
+Je ne veux pas de modifs dans le pdf pour l'instant, juste une étude. »
+
+Portée : rechercher les noms, sigles, mesures et méthodes SCM établis, leurs définitions et limites, puis vérifier les précédents experts de la métaphore de plomberie et ses correspondances avec les six leviers exprimés. La préférence pour les noms mémorisables ne valide aucun renommage de mesure. L'étude ne modifie ni le PDF, ni le modèle ou les glossaires canoniques, et ne demande ni publication Atlas, ni commit ou push. Les propositions d'introduction et les rapprochements restent à discuter.
+
+## U1139
+
+Date : 2026-10-22. Source : Laurent, prolongement de l'étude U1138 vers les mathématiques de l'optimisation.
+
+Verbatim : « "J’ai trouvé un précédent très proche : deux chercheurs de Georgia Tech" : génial ! ça aura plus de poids que c'est moi qui le dit. J'imagine que les mathématiques derrière les optimisations de flux sont un levier important pour optimiser la SCM, non ? »
+
+Portée : expliquer le rôle des modèles mathématiques dans le pilotage SCM et leur articulation avec la métaphore hydraulique, les mesures et les décisions FLOW. L'intérêt exprimé pour l'appui universitaire ne valide ni une attribution de toute la métaphore à ces auteurs, ni un algorithme, un objectif d'optimisation, une réalisation installée ou une modification du PDF et du modèle. La contrainte d'étude seule de U1138 reste applicable.
+
+## U1140
+
+Date : 2026-10-22. Source : Laurent, piste Lean dans l'étude des approches de pilotage des flux.
+
+Verbatim : « Je pense qu'il y a des recherches autour de la Lean Stream Value qui s'applique à la SCM »
+
+Portée : examiner la piste exprimée, identifier les termes établis et les travaux Lean sur les flux de valeur applicables à la supply chain, notamment au-delà d'un seul atelier. Distinguer le vocabulaire exact de la source, notre interprétation et les prolongements possibles pour FLOW. Cette piste prolonge l'étude U1138/U1139 sans modification du PDF, du modèle ou des glossaires, sans validation d'une méthode de transformation et sans publication.

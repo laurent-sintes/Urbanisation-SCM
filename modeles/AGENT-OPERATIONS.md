@@ -42,6 +42,8 @@ Les recherches marché, les contributions utiles et les arbitrages courants rest
 
 ## Solutions d’environnement éprouvées
 
+- **Contrôle du lanceur PowerShell dans une commande groupée.** Après un appel direct à un script `.ps1`, `$LASTEXITCODE` peut rester nul ou provenir d’une ancienne commande native ; le tester comme un code de sortie peut interrompre les contrôles suivants. Pour grouper lancement et vérification HTTP, utiliser `powershell.exe -NoProfile -File .\Lancer-FLOW-Atlas.ps1 -Port 8765 -NoBrowser`, puis contrôler `$LASTEXITCODE`. Même principe pour `-Stop` avant un redémarrage. Solution confirmée le 2026-10-22 ; portée : appels groupés du lanceur, sans changer le script ni la politique PowerShell.
+
 - **Script Python lancé via l’alias WindowsApps inaccessible.** Si `python scripts/refresh_sources.py` échoue au démarrage sur `C:\Users\laure\AppData\Local\Microsoft\WindowsApps\python.exe`, vérifier `Get-Command python -All`, puis, dans le même processus PowerShell, exécuter `$env:PATH = 'C:\Users\laure\AppData\Local\Python\bin;' + $env:PATH; python --version; python scripts/refresh_sources.py`. Solution confirmée le 2026-10-21 ; portée : scripts Python locaux de ce poste, sans modification du PATH système.
 
 - **Script temporaire Python nommé inspect.py — import standard masqué.** Un script placé à côté du programme exécuté peut masquer le module standard inspect et exécuter ses impressions lors des imports. Renommer uniquement le script temporaire concerné : Rename-Item -LiteralPath .runtime/business-sheet-pedagogy-U1125/inspect.py -NewName inspect_pilots.py. Solution confirmée le 2026-10-21 ; portée : scripts temporaires de cette recette, sans changement des bibliothèques Python.
