@@ -112,7 +112,7 @@ try {
   );
   assert.match(downloadedYaml.toString('utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
-  const menuStudyLink = page.locator('.download-menu').getByRole('link', { name: /Dossier SCM \(PDF\)/ });
+  const menuStudyLink = page.locator('.download-menu').getByRole('link', { name: /Piloter la supply chain \(PDF\)/ });
   await menuStudyLink.waitFor({ state: 'visible' });
   const menuStudyHref = await menuStudyLink.getAttribute('href');
   const studySource = await readFile(
@@ -134,7 +134,7 @@ try {
   await page.getByRole('heading', { name: 'Études FLOW', exact: true }).waitFor();
   await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/documents-study.png') });
-  const studyLink = page.getByRole('link', { name: 'Télécharger le dossier SCM (PDF)', exact: true });
+  const studyLink = page.getByRole('link', { name: 'Télécharger « Piloter la supply chain » (PDF)', exact: true });
   const studyHref = await studyLink.getAttribute('href');
   assert.equal(studyHref, menuStudyHref, 'The menu and Documents provide the same PDF');
   assert.match(

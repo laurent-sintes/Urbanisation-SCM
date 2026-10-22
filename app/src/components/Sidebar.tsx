@@ -18,7 +18,7 @@ import type { RouteState } from '../navigation';
 import { kindLabel } from '../presentation';
 import { publicationYamlUrl, staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
-import { scmStudyFilename, scmStudyUrl } from '../scmStudy';
+import { scmStudyFilename, scmStudyTitle, scmStudyUrl } from '../scmStudy';
 import { type SearchResult, searchPublication } from '../search';
 import type { PublishedModel } from '../types';
 import { downloadWorkingModel, workshopUrl } from '../workshop';
@@ -341,7 +341,7 @@ export function Sidebar({
           <a href={scmStudyUrl} download={scmStudyFilename} onClick={mobile ? onClose : undefined}>
             <span className="download-menu-label">
               <FileText size={15} aria-hidden="true" />
-              Dossier SCM (PDF)
+              {scmStudyTitle} (PDF)
             </span>
             <small>Indicateurs et décisions · 22 octobre 2026</small>
           </a>
