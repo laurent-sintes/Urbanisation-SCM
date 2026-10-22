@@ -129,6 +129,8 @@ try {
   await page.locator('.scenario-cards').waitFor();
   assert.equal(await page.locator('.scenario-cards>li').count(), catalog.scenarios.length);
   await page.getByLabel('Rechercher un scénario', { exact: true }).fill('Livraison fractionnée');
+  // The matching card is already visible before React applies the search filter.
+  await page.waitForFunction(() => document.querySelectorAll('.scenario-cards>li').length === 1);
   await page.locator('.scenario-cards a').filter({ hasText: 'Livrer une commande B2B' }).waitFor();
   assert.equal(await page.locator('.scenario-cards>li').count(), 1);
   for (const stream of catalog.value_streams) {

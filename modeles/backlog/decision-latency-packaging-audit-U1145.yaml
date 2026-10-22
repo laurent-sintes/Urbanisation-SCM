@@ -376,10 +376,11 @@ publication_delivery:
       market_inspiration: 7386b85e878da49e5a7505b24ad9f66840e9c3f265ecd84f2b5f06fa61ad28e3
   - id: D03.j
     field_sha256:
-      scope: a7220552e5946cb0df4036f7426454b6e23cc5243fc097275ca1505085ddf780
+      scope: f10433e6cabb4753f7c548d03ac12b100777710546caa1beba860b263502d93d
       market_comparisons: 3e21f79404f2583d6a9b43470ea4ae5cd7289dd11f76231b243937fe9f30d768
       market_inspiration: 5fa0740fb5e1a34bf8aae9946b6f9d180c7b37e7a768ab84af47e20b68d781b5
-      pedagogical_description: ddfc09231326026a38943488287c9d7072d8562ef91214dfef2dd13b97d16eb3
+      pedagogical_description: efdb6422482ad18482fade698232ccf114148abfc74b2162da45505e802b3163
+      examples: 18f3dfde036c77abc09d1a732bff178f85b4795c9edbd248c1b20fbd99effd17
   - id: BHV076
     field_sha256:
       scope: 81de2ca79046b96b7605f45172f93e447dab39ff5292ff2fbbb6f99a1975b336
@@ -557,6 +558,11 @@ publication_delivery:
     id: TER376
     fields:
     - market_gaps
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - examples
 application:
   source: U1146
   date: '2026-10-22'
@@ -585,3 +591,12 @@ application:
   market_gap_qualification: My Inbox apporte désormais un appui S/4HANA partiel aux traces de tâches et décisions. La réserve
     sur le registre opérationnel complet et les pages inaccessibles est conservée avec ses URLs et sources dans evidence_limits
     ; aucune couverture complète déclarée.
+  editorial_correction:
+    reason: Le contrôle test_model_coherence impose un périmètre inférieur à 500 mots.
+    operation: Deux paragraphes illustratifs déplacés sans modification de leur texte du scope vers les exemples de CTP et
+      reliés à la description pédagogique.
+    scope_words_before: 572
+    scope_words_after: 492
+    glossary_check: TER045 conserve les mêmes règles et illustrations ; seul leur emplacement dans la fiche change, aucune
+      modification du glossaire nécessaire.
+    source_ref: U1146

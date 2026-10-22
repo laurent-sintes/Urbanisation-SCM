@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-22.1
+version: 2026-10-22.2
 as_of: '2026-10-22'
 space: backlog
 display_policy: typed-tree-v1
@@ -9969,7 +9969,7 @@ nodes:
   last_modified: '2026-10-13T09:01:13.717760Z'
   content_sha256: 925228db7cb50a30cbd30e226d86ab9a827f1f1f1057e171866d151e8e7356ba
 - id: D03.j
-  revision: 24
+  revision: 25
   kind: capability
   fields:
     name: Capable-to-Promise (CTP)
@@ -9986,8 +9986,6 @@ nodes:
 
       [Master Plan](glossary:TER111) rassemble les apports proposés dans le master plan, et [Order Backlog Management](glossary:TER269) décide des affectations ; [Purchase Order](glossary:TER070) porte l’achat autorisé et les [Service Orders](glossary:TER066) les prestations. [CTP](glossary:TER045) ne crée ni achat, ni affectation, ni engagement et ne reconstruit pas les contributions prévisionnelles externes. Les conditions restant à vérifier et les autorisations restant à obtenir accompagnent le résultat.
 
-      Illustration FLOW : un assemblage peut être réalisable au regard des composants, mais son créneau dépend encore d’une capacité d’atelier confirmée. Les prestations logistiques nécessaires peuvent être examinées à partir des capacités communiquées, sans piloter l’organisation interne de l’exécutant.
-
       Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
 
       Cette même capacité est mobilisable par [Master Planning](model:D05.f) pour vérifier les apports proposés à la satisfaction du carnet. FLOW peut proposer l’apport et porter les décisions autorisées décrites ci-dessous. Dans l’existant documenté, MAP porte la planification et le carnet d’achat. La faisabilité ne vaut ni autorisation d’achat ni engagement fournisseur.
@@ -9995,8 +9993,6 @@ nodes:
       Dans le mode [offshore](glossary:TER382) / [nearshore](glossary:TER383), vérifier dès avant l'engagement initial quelle quantité d'appoint pourrait être obtenue avant la dernière date utile à la vente, puis réévaluer cette possibilité pendant la saison. Examiner produit qualifié, matières, capacité fournisseur disponible ou réservée, minimums, fabrication, transport et contrôle à réception. Une capacité annoncée mais non confirmée reste une hypothèse explicite ; le pays du fournisseur ne garantit pas son délai. Le résultat éclaire le socle initial et la décision d'appoint du [Supply Chain Management](model:supply-chain-orchestration). [Replenishment](model:D05.e) détermine le complément, le [PTP](glossary:TER068) compare sa valeur et [Purchase Order](model:D04.j) porte l'achat autorisé. La faisabilité seule n'autorise ni ne passe la commande.
 
       Lorsque la possibilité étudiée dépend du conditionnement, vérifier les quantités admissibles, les conversions d'unités, les consignes applicables et les opérations nécessaires pour obtenir le résultat demandé. Une scission de commande ne réalise pas un déconditionnement physique. Si l'option nécessite une ouverture ou un reconditionnement autorisé, contrôler les matières, capacités, calendriers et délais correspondants. Expliquer la quantité et la date réalisables, les contraintes bloquantes et les hypothèses restant à confirmer. Le résultat peut alimenter la comparaison de conditionnements par [Simulation & Analysis](model:BHV006) ; il ne définit pas à lui seul un conditionnement optimal. Des packs déjà disponibles et admissibles relèvent d'[ATP](glossary:TER044) ; tout choix de conditionnement n'est donc pas un calcul [CTP](glossary:TER045).
-
-      Exemple fictif : Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité d'ouvrir des cartons de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi ; livrer 24 exige un accord distinct.
     decomposition_rationale: Distinguer faisabilité fondée sur les sources, matières et délais, puis contrôle approfondi des
       capacités finies. Exposer ce qui a effectivement été vérifié.
     market_comparisons:
@@ -10418,6 +10414,23 @@ nodes:
       - U1133
       - U1134
       - U1135
+    - id: ctp-assembly-slot-U1146
+      title: Illustration FLOW — Vérifier le créneau d’assemblage
+      situation: 'Illustration FLOW : un assemblage peut être réalisable au regard des composants, mais son créneau dépend
+        encore d’une capacité d’atelier confirmée. Les prestations logistiques nécessaires peuvent être examinées à partir
+        des capacités communiquées, sans piloter l’organisation interne de l’exécutant.'
+      source_refs:
+      - U1146
+      outcome: Le créneau d’assemblage dépend encore d’une capacité d’atelier confirmée.
+    - id: ctp-packaging-slot-U1146
+      title: Illustration FLOW — Servir 18 pièces vendredi
+      situation: 'Exemple fictif : Servir 18 pièces vendredi avec trois packs de six disponibles, ou vérifier la possibilité
+        d''ouvrir des cartons de douze. Un créneau de reconditionnement seulement lundi interdit la seconde option pour vendredi
+        ; livrer 24 exige un accord distinct.'
+      source_refs:
+      - U1146
+      outcome: Un créneau de reconditionnement seulement lundi interdit cette option pour vendredi ; livrer 24 pièces exige
+        un accord distinct.
     pedagogical_description:
       explanation: |-
         Cette capacité cherche une possibilité de promesse lorsqu’il faut vérifier la faisabilité d’un apport à obtenir ou à constituer. Elle examine les ressources, les capacités et les délais nécessaires, au lieu de supposer que tout sera disponible. Son résultat reste conditionnel : il précise les vérifications et les autorisations encore nécessaires avant un engagement. Pour un appoint [nearshore](glossary:TER383), elle intervient avant le choix du socle initial puis lors du recours : une possibilité vérifiée éclaire la décision du [Supply Chain Management](model:supply-chain-orchestration), sans autoriser elle-même la commande.
@@ -10432,6 +10445,12 @@ nodes:
         example_id: offshore-nearshore-D03-j-U1134
         contribution: Le résultat retient 250 pièces utilisables à la date utile et signale 150 pièces non couvertes, avec
           les conditions de validité.
+      - node_id: D03.j
+        example_id: ctp-assembly-slot-U1146
+        contribution: Vérifier la faisabilité et ses conditions avant de promettre.
+      - node_id: D03.j
+        example_id: ctp-packaging-slot-U1146
+        contribution: Vérifier la faisabilité et ses conditions avant de promettre.
       distinctions:
       - node_id: BHV004
         explanation: Projected [ATP](glossary:TER044) utilise des apports futurs déjà attendus et admissibles. Le [CTP](glossary:TER045)
@@ -10530,13 +10549,15 @@ nodes:
     anchor: ctp
   review:
     state: partial
-    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
-      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
-      déduite.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1146-D03-j. Note antérieure, qui
+      ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements.
+      Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites marché sont conservées.
+      Aucune réalisation installée déduite. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
     antérieurs conservés seulement sur valeurs inchangées. Historique : audits/2026-09-17-refonte-appliquee/model-before.yaml.'
-  last_modified: '2026-10-22T09:20:00.780072Z'
-  content_sha256: 0ea9109d367218821b27b30e5b6263872bec4db1e4ff09c461bf435fed59311e
+  last_modified: '2026-10-22T09:34:35.099466Z'
+  content_sha256: 5e07b7f3360b39477862f264fba370b04689a25c838740a6b9b3afb591aafeea
 - id: D03.k
   revision: 22
   kind: capability
@@ -20617,9 +20638,11 @@ nodes:
     anchor: bhv006
   review:
     state: partial
-    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
-      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
-      déduite.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1146-BHV006. Note antérieure, qui
+      ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements.
+      Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites marché sont conservées.
+      Aucune réalisation installée déduite. »'
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
     Marché et justification : modeles/backlog/refactoring-target.yaml, PLAN-SIMULATE. U345 : principe d’application de plan
     sous Supply Assignment et explication des recommandations intégrés ; formulation détaillée éditoriale.'
@@ -28258,9 +28281,11 @@ nodes:
     anchor: u402
   review:
     state: partial
-    note: U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements. Les champs capturés séparément
-      portent cet accord ; les autres qualifications antérieures et limites marché sont conservées. Aucune réalisation installée
-      déduite.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1146-BHV076. Note antérieure, qui
+      ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision et conditionnements.
+      Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites marché sont conservées.
+      Aucune réalisation installée déduite. »'
   last_modified: '2026-10-22T09:20:00.780072Z'
   content_sha256: 48ff00b5ad75bb73abd127d9fa2dbe6a1711576c502ba3e0a3552586a59d0695
 - id: BHV078
@@ -67537,7 +67562,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa65e3b8d4abf891452e6922.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-16204af63f4e43afcc7a1c77.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -70017,7 +70042,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-80251a81dfd9190b7ec8cd5c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-36ba57904146897e28f9b871.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   fields:
@@ -72746,7 +72771,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e9fee2288ea55c8d46fa9a8d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ad6ef81f3913a3d92c082b58.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -85903,7 +85928,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c15f1ed87bab5e245bf5ff76.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8f83b8ba7c4b7e3a0c4abfc1.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -85970,7 +85995,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e99bfb01ac797a4c4a1f89aa.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-08c93ab901b70797df5c70d0.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -89178,7 +89203,10 @@ relations:
     - Résultat consommé avec ses hypothèses et limites ; aucun transfert de responsabilité, engagement ou application implicite.
   review:
     state: accepted
-    note: Relation proposée U1145, validée explicitement U1146 ; aucune réalisation installée déduite.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1146-REL-U1146-CTP-PACKAGING. Note
+      antérieure, qui ne qualifie pas cette révision : « Relation proposée U1145, validée explicitement U1146 ; aucune réalisation
+      installée déduite. »'
   content_sha256: 1c50fbab453f5972b1642b0fdf661366e3aa953cbef7dd5b3acbef0486a11f44
 - id: REL-U1146-SIMULATION-CTP
   revision: 1
@@ -89199,7 +89227,10 @@ relations:
     - Résultat consommé avec ses hypothèses et limites ; aucun transfert de responsabilité, engagement ou application implicite.
   review:
     state: accepted
-    note: Relation proposée U1145, validée explicitement U1146 ; aucune réalisation installée déduite.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1146-REL-U1146-SIMULATION-CTP. Note
+      antérieure, qui ne qualifie pas cette révision : « Relation proposée U1145, validée explicitement U1146 ; aucune réalisation
+      installée déduite. »'
   content_sha256: 2fb9c92da17d6434826fbeb6585151c23566b21ade7af871a005a7e24d3e118c
 alternatives: []
 principles:
@@ -147340,6 +147371,6 @@ glossary:
   last_modified: '2026-10-22T09:20:00.780072Z'
   content_sha256: 65f354d4edb8a3801dbd3d0ebb835594b88372f3c62307d4ea3969ee4a7e4f30
 element_versioning: 1
-revision: 88
-content_sha256: cd81816f3ef8acd33016e72d32a72b33cbae05a1666bf43cbb246701c199fdff
-last_modified: '2026-10-22T09:20:00.780072Z'
+revision: 89
+content_sha256: 2a1eec60ca8b079e88995088bfae9dab8782948571591c6add9ad1db0a0396db
+last_modified: '2026-10-22T09:34:35.099466Z'

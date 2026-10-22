@@ -1,4 +1,4 @@
-# Urbanisation 2026-10-22.1
+# Urbanisation 2026-10-22.2
 
 116 capacités. Sources : U1146.
 
