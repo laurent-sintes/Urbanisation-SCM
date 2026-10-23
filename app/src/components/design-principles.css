@@ -1,0 +1,87 @@
+.design-principles {
+  max-width: 1100px;
+  line-height: 1.65;
+}
+.design-principles p {
+  white-space: pre-line;
+}
+.principle-cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+}
+.principle-cards > li {
+  overflow-wrap: anywhere;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+.principle-cards a {
+  font-size: 17px;
+}
+.principle-cards small {
+  color: var(--muted);
+}
+.principle-filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+.principle-filters label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 230px;
+}
+.principle-filters select {
+  min-width: 0;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+}
+.principle-detail {
+  max-width: 850px;
+}
+.principle-detail > section {
+  margin: 28px 0;
+}
+.principle-detail h2 {
+  font-size: 27px;
+}
+.principle-detail h3 {
+  font-size: 18px;
+  color: var(--flow-green);
+}
+.principle-example {
+  padding: 16px 22px;
+  border-left: 3px solid var(--flow-green);
+  background: #f2f8f5;
+}
+.principle-example.counterexample {
+  border-color: #927954;
+  background: #fbf8f2;
+}
+.principle-references {
+  padding-left: 20px;
+}
+.principle-references > li {
+  margin: 24px 0;
+  overflow-wrap: anywhere;
+}
+.principle-conventions {
+  margin-top: 32px;
+}
+.principle-conventions > summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-weight: 600;
+}
+.sheet-principles li {
+  margin: 10px 0;
+}

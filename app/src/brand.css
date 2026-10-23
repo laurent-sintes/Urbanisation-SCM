@@ -433,6 +433,26 @@
   padding: 4px 12px 12px;
   border-bottom: 1px solid var(--line);
   flex: none;
+  max-height: min(40vh, 340px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.primary-spaces[hidden] {
+  display: none;
+}
+.sidebar .search-box {
+  flex: none;
+}
+.sidebar .search-box input {
+  min-width: 0;
+}
+.sidebar .space-navigation,
+.sidebar .search-results,
+.sidebar .model-tree {
+  min-height: 0;
+}
+.sidebar.is-searching .search-results {
+  padding-top: 4px;
 }
 .primary-spaces button,
 .space-navigation button {

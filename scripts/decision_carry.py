@@ -60,6 +60,11 @@ class ContextIndex:
         self.records = {key: _index(snapshot.get(key, [])) for key in ('nodes', 'relations', 'principles')}
         self.business = {key: {identifier: business_record(value) for identifier, value in records.items()}
                          for key, records in self.records.items()}
+        try:
+            from .architecture_principles import normative_principle
+        except ImportError:
+            from architecture_principles import normative_principle
+        self.business['principles'] = {k: normative_principle(v) for k, v in self.records['principles'].items()}
         self.terms = {key: business_record(value) for key, value in
                       _index(snapshot.get('glossary', {}).get('terms', [])).items()}
         self.term_links = ReferenceIndex(self.terms.values())
@@ -207,7 +212,7 @@ def classify_context(original, previous_snapshot, snapshot, *, indexes=None):
     try:
         target = original['target']
         collection, identifier = target['collection'], target['id']
-        if collection not in ('nodes', 'relations') or original.get('decision_state') != 'accepted':
+        if collection not in ('nodes', 'relations', 'principles') or original.get('decision_state') != 'accepted':
             return {'safe': False, 'reasons': ['decision_not_accepted_or_supported']}
         old_index, new_index = indexes or (ContextIndex(previous_snapshot), ContextIndex(snapshot))
         if old_index.snapshot is not previous_snapshot or new_index.snapshot is not snapshot:
@@ -234,9 +239,14 @@ def classify_context(original, previous_snapshot, snapshot, *, indexes=None):
             reasons.append('approved_values_changed_or_unverified')
         if old_index.business[collection][identifier] != new_index.business[collection][identifier]:
             reasons.append('target_business_changed')
-        seeds = {identifier} if collection == 'nodes' else {
-            value[key] for value in (old, new) for key in ('source_id', 'target_id')
-        }
+        try:
+            from .architecture_principles import applicable_principles, principle_anchors
+        except ImportError:
+            from architecture_principles import applicable_principles, principle_anchors
+        seeds = (principle_anchors(old, previous_snapshot.get('relations', []))
+                 | principle_anchors(new, snapshot.get('relations', [])) if collection == 'principles'
+                 else {identifier} if collection == 'nodes' else {
+                     value[key] for value in (old, new) for key in ('source_id', 'target_id')})
         old_nodes, old_relations = _model_context(old_index, seeds)
         new_nodes, new_relations = _model_context(new_index, seeds)
         if old_nodes != new_nodes:
@@ -248,7 +258,8 @@ def classify_context(original, previous_snapshot, snapshot, *, indexes=None):
             reasons.append('anchored_hotspot_changed')
         if any(value is None for value in [*old_nodes.values(), *new_nodes.values()]):
             reasons.append('context_node_missing')
-        old_principles, new_principles = old_index.business['principles'], new_index.business['principles']
+        old_principles = applicable_principles(previous_snapshot, seeds)
+        new_principles = applicable_principles(snapshot, seeds)
         if old_principles != new_principles:
             reasons.append('principles_changed')
         # Unknown root/glossary properties are significant by default.

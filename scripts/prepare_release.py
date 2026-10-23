@@ -20,7 +20,7 @@ from hashlib import sha256
 
 try:
     from .adoption_values import adoption_values
-    from .element_versions import assign_versions
+    from .element_versions import assign_versions, content_hash
     from .glossary import reference_impacts
     from .structured_io import working_path, _PARSER_SIGNATURE
     from .modeling_guide_publication import capture_association, verify_association, carry_association
@@ -37,7 +37,7 @@ try:
     from .validate_models import canonical_sha256, validate_release, validate_sources, validate_urbanism, validate_decision_review
 except ImportError:
     from adoption_values import adoption_values
-    from element_versions import assign_versions
+    from element_versions import assign_versions, content_hash
     from glossary import reference_impacts
     from structured_io import working_path, _PARSER_SIGNATURE
     from modeling_guide_publication import capture_association, verify_association, carry_association
@@ -165,7 +165,7 @@ def suggested_version(models):
 
 def reconcile_decisions(old_document, snapshot, additional=None, previous_snapshot=None, *, stable_ids=False):
     """Preserve exact approvals; carry across revisions only with proven stable context."""
-    targets = {c: {item['id']: item for item in snapshot[c]} for c in ('nodes', 'relations')}
+    targets = {c: {item['id']: item for item in snapshot.get(c, [])} for c in ('nodes', 'relations', 'principles')}
     previous_targets = {c: {item['id']: item for item in (previous_snapshot or {}).get(c, [])} for c in targets}
     kept, deferred = [], []
     context_cache = {}
@@ -368,6 +368,12 @@ def revision_errors(previous_snapshot, snapshot):
             keys = ('fields', 'kind', 'layer', 'group_role', 'level_ref') if collection == 'nodes' else ('type', 'source_id', 'target_id', 'qualification', 'fields')
             if any(item.get(k) != old.get(k) for k in keys) and item['revision'] <= old['revision']:
                 errors.append(item['id'] + ': changed model content requires a new revision')
+    old_principles = {p['id']: p for p in previous_snapshot.get('principles', [])}
+    for principle in snapshot.get('principles', []):
+        old = old_principles.get(principle['id'])
+        if old and (principle['revision'] < old['revision'] or
+                    (content_hash(principle) != content_hash(old) and principle['revision'] <= old['revision'])):
+            errors.append(principle['id'] + ': changed principle content requires a new revision')
     return errors
 
 

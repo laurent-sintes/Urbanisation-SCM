@@ -26052,3 +26052,87 @@ Date : 2026-10-23. Source : Laurent, accord sur la proposition U1150.
 Verbatim : « Go pour appliquer cette proposition à la fiche Supply Chain Management et ajouter le téléchargement du PDF dans la fiche. »
 
 Portée : appliquer la proposition complète U1150 : définition courte, finalité, explication pédagogique, exemple du site préparateur, frontières et alignement de TER035 ; ajouter dans la fiche l’accès au PDF courant, commun au menu Télécharger et aux Études FLOW. Préserver les exemples, responsabilités et publications historiques. Le PDF reste inchangé ; aucun commit, release ou push demandé. Les formulations approuvées sont distinguées des compléments éditoriaux rédigés pendant l’application.
+
+## U1152
+
+Date : 2026-10-23. Source : Laurent, question sur les saisons dans le modèle métier et comparaison Microsoft / SAP.
+
+Verbatim : « Je me pose une question sur la gestion des saisons.
+
+Elles n'apparaissent pas dans le modèle métier. Je suppose que c'est parce que c'est un mode d'organisation qui touche les l'organisation humaine, les contrats, la stratégie de production etc ? Qu'en disent microsoft et SAP ? C'est un aspect applicatif mais pas métier ? »
+
+Portée : examiner la présence et les responsabilités saisonnières déjà décrites dans le modèle, comparer les sources primaires Microsoft Dynamics et SAP S/4HANA, puis distinguer notion métier, capacités, règles et réalisation applicative. L’hypothèse de Laurent reste une question à examiner, pas un accord sur l’exclusion des saisons du métier. Aucune modification du modèle canonique, release, commit ou push demandé.
+
+## U1153
+
+Date : 2026-10-23. Source : Laurent, précision sur la durabilité des capacités et la souplesse des cycles.
+
+Verbatim : « "Product Portfolio & Collection Management" pour le cadrage amont, je suis d'accord.
+
+Mais pour matérialiser la notion de saison dans le modèle métier, je suis dubitatif pour deux raisons :
+
+- Une capacité métier existe en dehors de l'organisation et des outils.
+- J'ai lu des articles sur ces aspects d'objet de gouvernance des cycles : l'idée est de rendre cet aspect très souple au niveau de la master data. On peut imaginer de découper la saison en plan de fabrication, plan de design, plan commercial qui peuvent être alignés ou pas. Les Capsules sont des microsaison dans les saison etc. Dans la supply chain, il faut savoir à quel plan on se rattache quand on gère une commande et quelles sont les policies du plan mais savoir en dur dans la structure ce qu'est une saison ne me parait pas durable. Avant, la coutume, les habitudes faisaient qu'on gérait 4 saisons par année calendaire, aujourd'hui il n'y en a plus que deux. Certaines entreprises ont des lignes produits non gérées par les plans de saisons (la basiques reconduits systématiquement) etc. »
+
+Portée : accord sur Product Portfolio & Collection Management pour le cadrage amont ; objection à une structure de capacités figée par saisons. Examiner des calendriers, plans, règles et liens souples, y compris capsules et produits reconduits. Les exemples de nombre de saisons restent l’illustration de Laurent, sans généralisation à toutes les entreprises ni preuve de réalisation Beaumanoir. Aucune création automatique d’objet, de capacité ou de schéma.
+
+## U1154
+
+Date : 2026-10-23. Source : Laurent, élargissement de la recherche de marché.
+
+Verbatim : « Fais une recherche de marché au delà des éditeurs »
+
+Portée : étendre l’analyse U1152–U1153 aux standards, recherches académiques et pratiques de la mode, sur les saisons, collections, calendriers, plans et produits reconduits. Restituer les convergences, limites et conséquences proposées pour FLOW ; aucune modification canonique, release, commit ou push demandé.
+
+## U1155
+
+Date : 2026-10-23. Source : Laurent, accord sur les préconisations relatives aux saisons et aux liens de planification.
+
+Verbatim : « Go pour appliquer ces préconisations au modèle : garder les saisons comme un contexte configurable et expliciter les liens entre plans, policies et commandes, sans créer de capacité dédiée. »
+
+Portée : appliquer le cadrage cohérent U1152–U1154 corrigé par U1153 : Product Portfolio & Collection Management pour l’amont ; saisons, campagnes et capsules comme contextes configurables sans hiérarchie ou cardinalité saisonnière imposée ; distinguer références/calendriers, plans révisables, politiques et commandes ; conserver les responsabilités métier existantes et expliciter leurs liens. Les produits reconduits restent planifiables ; une commande peut être concernée par plusieurs plans. Aucune capacité dédiée, production Beaumanoir, réalisation installée ou taxonomie éditeur déduite. L’accord porte sur les préconisations, pas sur de nouveaux textes ou exemples rédigés ensuite. Aucune release, commit ou push demandé.
+
+## U1156
+
+Date : 2026-10-23. Source : Laurent, demande d’audit d’un référentiel de principes directeurs de conception de la cartographie métier.
+
+Verbatim : « Au vu de nos réflexions, je pense qu'il manque quelque chose dans notre cartographie, c'est une entrée "Principes directeurs". Les choix de cartographie, comme on vient de le voir avec les saison ne relève pas que d'une observation du métier mais d'un vrai choix prospectif de ce qui est durable, coeur métier, de ce qui ne l'est pas. Ces choix pourraient être dans un référentiel accessible dans le menu sous forme de principe, avec explication et lien avec les références sur la recherche et le marché car il faut justifier ce principe.
+
+Dans les principes, on pourrait avoir des choses qui expliquent pourquoi :
+
+- La supply chain management est un domaine à part et séparé des achats et commerce
+- La logistics n'est pas un domaine mais un système
+- Ce qui était structurant dans le système avant (années 80-90) devient configurable et adaptatif (c'est pourquoi on ne voit pas directement ces notions dans le modèle métier)
+  - Intercompany, flux documentaires en général
+  - Saison
+  - Grille Modèle / Colori / Taille => aller vers des Product Variant, la Grille n'est qu'outil de gestion pratique
+
+Je veux un audit pour :
+
+- ajouter cette fonctionnalité de principes directeur (de conception de la cartographie métier)
+- proposer des principes au vu de tout ce qu'on a décidé / construit. »
+
+Portée : auditer l’existant, proposer le contenu, les contrats de données et l’accès Atlas d’un référentiel de principes directeurs argumentés. Distinguer principes prospectifs, observations métier, décisions et règles de modélisation. Les exemples et le cadrage historique de Laurent sont à examiner, pas à généraliser sans preuve. Aucun développement, modification canonique, release, commit ou push demandé à ce stade.
+
+## U1157
+
+Date : 2026-10-23. Source : Laurent, correction du cadrage des principes sur le système Business Operations et le cycle des commandes dans SCM.
+
+Verbatim : « Concernant ta premiere précaution je tiens à dire que :
+
+- Supply chain, Procurement et Commerce sont des domaines d'un même système
+- Supply Chain Management n'est pas qu'un simple gestionnaire de flux, il porte le cycle de vie des commandes Procurement et Commerce afin que son système de décision ait un maximum de contexte => Ceci est un principe que j'aimerais ajouter à la liste.
+
+=> Donc on n'est pas très éloigné des modèles microsoft et SAP »
+
+Portée : corriger la présentation des frontières dans l’audit U1156 : les trois domaines coopèrent dans Business Operations ; la distinction des responsabilités ne fragmente pas le contexte des commandes. Ajouter un principe sur la tenue du cycle de vie des commandes d’achat et de vente dans SCM pour alimenter ses décisions avec un contexte complet, cohérent et traçable. Réexaminer le rapprochement avec les modèles intégrés Microsoft et SAP sans prétendre à une correspondance exacte de leurs modules avec les domaines FLOW. La demande corrige et complète la proposition de principes ; aucun développement, changement canonique, release, commit ou push demandé.
+
+## U1158
+
+Date : 2026-10-23. Source : Laurent, accord sur l’audit des principes directeurs et demande d’espace pour la recherche Atlas.
+
+Verbatim : « Go pour appliquer l’audit : ajouter l’entrée « Principes directeurs » dans Atlas et intégrer les 14 principes proposés, en commençant par le lot prioritaire.
+
+En termes d'UI ATLAS, le système de recherche a de moins en moins de place. »
+
+Portée : appliquer les 14 propositions U1156 corrigées et complétées par U1157, leurs justifications, limites, références et liens ; préserver les identifiants et publications historiques. Ajouter une entrée distincte dans Atlas, la recherche typée et les liens contextuels. Améliorer l’espace disponible pour la recherche. L’accord porte sur les propositions discutées ; les compléments éditoriaux ne sont pas automatiquement adoptés. Aucune release, commit ou push demandé.

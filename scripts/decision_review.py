@@ -104,8 +104,8 @@ def semantic(value):
 def make_review(snapshot, previous_snapshot, previous_release, old_decisions, deferred,
                 pointer, base_manifest_sha256, state, source_refs, diff, glossary_impacts=None):
     """Exact values plus context, prior to derived publication notes/timestamps."""
-    old = {c: {v['id']: v for v in previous_snapshot[c]} for c in ('nodes', 'relations')}
-    new = {c: {v['id']: v for v in snapshot[c]} for c in old}
+    old = {c: {v['id']: v for v in previous_snapshot.get(c, [])} for c in ('nodes', 'relations', 'principles')}
+    new = {c: {v['id']: v for v in snapshot.get(c, [])} for c in old}
     decisions = {v['id']: v for v in old_decisions['decisions']}
     impacts = reference_impacts(previous_release, snapshot) if glossary_impacts is None else glossary_impacts
     items = []

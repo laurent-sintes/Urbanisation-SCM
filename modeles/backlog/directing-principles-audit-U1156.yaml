@@ -1,0 +1,953 @@
+schema_version: 1.0.0
+id: directing-principles-audit-U1156
+status: proposed
+date: '2026-10-23'
+source_refs:
+- U1156
+- U1157
+scope: Audit et propositions seulement ; aucune modification canonique ou frontend, aucun commit, release ou push.
+basis:
+  current_principles: 30
+  model_sha256: f3dae9afd664ab5746bfde8115853cf48584bc79a7834d15ba8194a3fdcd18f9
+  glossary_sha256: a51d29512a25ed2bb2641b27385d8a5f2076026e34610b5f31c06ce4abb2136d
+  coverage: Socle courant des 30 énoncés, fiches et décisions ciblées citées, contrats de lecture et recherches. Pas une réadoption
+    ou requalification exhaustive des accords historiques.
+distinctions:
+  principle: Orientation durable pour choisir et faire évoluer la cartographie, avec raisons, effets et limites.
+  convention: 'Règle de représentation et de contrat : niveaux, cardinalités, sens des flèches, codes.'
+  decision: Application d’un principe à un périmètre daté, avec compromis ou exception explicites.
+  observation: Constat documenté, distinct d’un choix prospectif.
+  core: Le cœur approfondi de FLOW ne définit pas tout ce qui est métier ou important pour l’entreprise.
+findings:
+- id: A01
+  title: Accès absent au référentiel demandé
+  observation: 30 énoncés existent dans model.yaml.principles ; principles ouvre Méthodologie de transformation.
+  recommendation: Ajouter Principes directeurs comme entrée distincte et conserver les liens de la méthode.
+- id: A02
+  title: Contrat trop court
+  observation: Le schéma ne porte que id, statement, source_refs et métadonnées de révision.
+  recommendation: Enrichir les principes canoniques, sans deuxième catalogue concurrent.
+- id: A03
+  title: Natures et portées mélangées
+  observation: Choix d’architecture, conventions de représentation et limites du programme se côtoient.
+  recommendation: Distinguer catégories et portée ; 14 propositions de lecture, conventions détaillées reliées.
+- id: A04
+  title: Formulations historiques à réexaminer
+  observation: FLOW-LOGISTICS reste hors développement FLOW / C-Log ; plusieurs textes utilisent purposes, Demand ou Fulfillment,
+    et une ingestion par référentiel.
+  recommendation: Aligner sur le modèle courant et les ingestions mutualisées avant exposition ; préserver les preuves historiques.
+- id: A05
+  title: Identifiants utilisés par les contrôles
+  observation: validate_models.py, atlas_metamodel.py et model_depth.py activent des règles par présence de PRINCIPLE-*.
+  recommendation: Préserver les identifiants ; distinguer enrichissement éditorial, changement normatif et remplacement explicite.
+- id: A06
+  title: Qualification des principes incomplète
+  observation: Révisions, empreintes et contrôles de livraison existent ; record_decision ne capture que nodes et relations.
+  recommendation: Étendre la capture aux champs des principes avant de les afficher comme adoptés. Statut et publication ne
+    donnent pas accord.
+- id: A07
+  title: Impact large sur le réexamen
+  observation: semantic_context et decision_carry incluent aujourd’hui tout le catalogue des principes.
+  recommendation: Qualifier champs sémantiques et portée ; tester le réexamen ciblé sans neutraliser les changements réellement
+    globaux.
+- id: A08
+  title: Liens et recherche à créer
+  observation: Pas de cibles métier structurées ni d’index typé des principes du snapshot dans la recherche.
+  recommendation: Liens de lecture réciproques dérivés de la source publiée, sans relation de parentage.
+- id: A09
+  title: Chronologie générale non prouvée
+  observation: Les exemples documentent plusieurs évolutions, pas un passage universel de quatre à deux saisons ni de tous
+    les SI 1980–1990 à une configuration universelle.
+  recommendation: Présenter le choix prospectif FLOW, avec cas datés et limites ; la grille reste utile et les dimensions
+    restent métier.
+canonical_design:
+  authority: Enrichir modeles/backlog/model.yaml.principles ; publier dans le snapshot. Pas de catalogue concurrent dans la
+    méthode, un autre YAML métier ou le frontend.
+  identity: Conserver PRINCIPLE-* ; DP01–DP14 sont uniquement des repères de proposition. Aucun renommage, retrait ou fusion
+    implicite.
+  proposed_fields:
+    name_label_summary: Nom court, libellé français, résumé clair et énoncé.
+    rationale: Pourquoi ce choix, bénéfice et problème traité.
+    implications: Effets concrets sur les objets, frontières et relations.
+    scope: Portée globale ou cibles typées explicites, conditions et responsabilité du choix.
+    tradeoffs_alternatives: Compromis et alternatives écartées, avec leurs raisons.
+    examples_counterexamples: Illustrations qualifiées ; une illustration ne devient pas une observation.
+    references: Éditeur/auteur, titre, URL, version, consultation, passage, contenu observé, rôle dans la justification et
+      limites.
+    related_principles: Liens explicites ; aucun parent de capacité.
+    exceptions_supersedes_review_trigger: Optionnels et structurés, sans écrasement historique.
+  qualification: Les accords restent champ par champ et liés aux valeurs finales. Sources utilisateur, empreintes, réserves
+    et statuts internes de revue ne sont pas exposés automatiquement.
+  historical_contract: Les anciens id/statement/source_refs restent lisibles ; justification manquante signalée sans reprise
+    du backlog. Nouvelle édition des principes, fiches, glossaire et preuves issue du même snapshot.
+  context_contract: Définir les champs normatifs et la portée du réexamen ; une référence de source corrigée ne donne pas
+    de nouvel accord. Les champs inconnus et les changements globaux réellement sémantiques restent conservateurs.
+ux_proposal:
+  menu: Entrée Principes directeurs près de la cartographie et du glossaire ; garder Méthodologie de transformation et Aide
+    distinctes.
+  index: Titre, énoncé court, catégories et filtre par périmètre. Aucune chronologie d’accords présentée comme catalogue de
+    principes.
+  detail:
+  - Le principe
+  - Pourquoi ce choix
+  - Ce que cela change dans la carte
+  - Exemple et contre-exemple
+  - Limites et compromis
+  - Périmètres concernés
+  - Recherche et marché
+  contextual_access: 'Dans les fiches : Principes expliquant ce périmètre. Depuis le principe : objets et relations concernés.
+    Index inverse calculé depuis les liens canoniques, sans duplication.'
+  search: Résultats typés Principe directeur ; saison, intercompany et grille retrouvent les entrées utiles.
+  routing: Route distincte telle que design-principles ; ne pas réaffecter principles, déjà utilisé par la méthode. Liens
+    directs, retour au périmètre d’origine et version sélectionnée conservés.
+  accessibility: Clavier, liens et titres natifs, mobile ; les tooltips restent courts.
+  public_qualification: Distinguer orientation cible, justification documentée et preuve d’application ; ne pas afficher une
+    nouvelle formulation ou un énoncé historique comme adopté sans preuve. Ne pas publier les statuts internes de revue.
+initial_principles:
+- id: DP01
+  label_fr: Des capacités durables
+  status: proposed
+  statement: Structurer la carte par les responsabilités et résultats métier, indépendamment des équipes, outils et configurations.
+  rationale: La cible doit survivre aux changements d’organisation et d’application. Durable ne signifie ni universel ni immuable.
+  implications_and_limits: Un changement de calendrier ou de prestataire ne crée pas une capacité ; une transformation réelle
+    du métier peut justifier une nouvelle frontière.
+  existing_principle_refs:
+  - PRINCIPLE-CAPABILITY
+  target_node_ids:
+  - beaumanoir-target-universe
+  evidence_refs:
+  - LOCAL-CAPABILITY
+  - OMG-BMM
+- id: DP02
+  label_fr: Trois domaines complémentaires dans Business Operations
+  status: proposed
+  statement: Au sein de Business Operations, distinguer les responsabilités de Commerce, Sourcing and Procurement et Supply
+    Chain Management en conservant un ensemble métier intégré.
+  rationale: La spécialisation des responsabilités clarifie leurs autorités sans fragmenter le contexte des commandes et des
+    décisions.
+  implications_and_limits: Commerce conserve offres, canaux et décisions commerciales ; Sourcing and Procurement conserve
+    sources, négociations et accords fournisseurs. Le SCM porte le cycle complet des commandes d’achat et de vente de son
+    périmètre et les décisions sur leur satisfaction. Ce cadrage est proche de la logique intégrée Microsoft et SAP ; les
+    frontières des modules ne sont pas reproduites mécaniquement.
+  existing_principle_refs: []
+  target_node_ids:
+  - system-business-operations
+  - supply-chain-orchestration
+  - domain-sales
+  - domain-sourcing-procurement
+  evidence_refs:
+  - LOCAL-BOUNDARIES
+  - MS-SCM
+  - SAP-SCM
+- id: DP14
+  label_fr: Un SCM décisionnel fondé sur le cycle complet des commandes
+  status: proposed
+  statement: Supply Chain Management porte le cycle de vie des commandes d’achat et de vente de son périmètre afin que ses
+    décisions disposent d’un contexte métier complet, cohérent et traçable.
+  rationale: Les arbitrages de couverture, priorité, affectation, promesse et adaptation doivent connaître ce qui est demandé,
+    proposé, confirmé, changé, réalisé et restant à satisfaire. La tenue des commandes et les décisions Supply appartiennent
+    au même ensemble métier intégré.
+  implications_and_limits: Relier lignes, quantités, dates, réponses, engagements, évolutions autorisées et résultats aux
+    plans, ressources et règles utilisés pour décider. Les trois domaines appartiennent à Business Operations. Commerce et
+    Procurement gardent leurs autorités commerciales et fournisseurs ; réalisation logistique et autorités financières restent
+    explicites. L’intégration métier ne prescrit ni application, ni stockage, ni moteur de décision uniques.
+  existing_principle_refs:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-TO-PROMISE
+  target_node_ids:
+  - system-business-operations
+  - supply-chain-orchestration
+  - D04
+  - D04.i
+  - D04.j
+  - domain-plan
+  - D03
+  evidence_refs:
+  - LOCAL-ORDER-CONTEXT
+  - MS-PO-LIFECYCLE
+  - MS-SALES-LIFECYCLE
+  - SAP-INTEGRATED-SCM
+  - SAP-ORDER-PLANNING
+- id: DP03
+  label_fr: Logistics, système métier autonome
+  status: proposed
+  statement: Représenter Logistics comme l’ensemble cohérent de Warehousing, Transportation et Customs Management, avec leur
+    pilotage opérationnel local.
+  rationale: Le SCM coordonne les engagements entre acteurs ; Logistics réalise et pilote ses prestations. C-LOG est un acteur
+    de réalisation, pas l’identité du système.
+  implications_and_limits: L’externalisation seule ne justifie pas un Business System. Le niveau découle du métamodèle FLOW
+    et de la cohérence du périmètre ; il ne désigne ni application ni entreprise.
+  existing_principle_refs:
+  - PRINCIPLE-FLOW-LOGISTICS
+  - PRINCIPLE-BUSINESS-SYSTEM
+  target_node_ids:
+  - domain-logistics-execution
+  - domain-warehousing
+  - domain-transportation
+  - domain-customs-management
+  evidence_refs:
+  - LOCAL-LOGISTICS
+  - MS-SCM
+  - SAP-SCM
+- id: DP04
+  label_fr: Des contextes configurables
+  status: proposed
+  statement: Traiter saisons, capsules et situations intercompany comme des contextes qualifiant données, plans, règles et
+    parcours, sans en faire automatiquement des branches de capacités.
+  rationale: Les rythmes, marchés, produits et sociétés varient ; leurs combinaisons doivent pouvoir évoluer sans restructurer
+    la carte.
+  implications_and_limits: 'Ne pas réduire intercompany à un drapeau : engagements réciproques, sociétés, prix, propriété,
+    transit et factures restent explicites. Tous les plans ne sont pas de la master data ; une capsule n’est pas obligatoirement
+    une sous-saison.'
+  existing_principle_refs: []
+  target_node_ids:
+  - domain-product-portfolio-collection
+  - subdomain-collection-planning
+  - domain-plan
+  - subdomain-policies
+  - D04
+  evidence_refs:
+  - LOCAL-CYCLES
+  - LOCAL-INTERCOMPANY
+  - RESEARCH-CYCLES
+  - MS-PLANS
+  - SAP-FASHION
+- id: DP05
+  label_fr: La variante ne dépend pas de la grille
+  status: proposed
+  statement: Identifier les Product Variants par leurs caractéristiques métier et combinaisons admissibles ; utiliser la grille
+    comme représentation et moyen de gestion.
+  rationale: TER058 définit déjà Product Variant. Une matrice taille–couleur est pratique sans constituer à elle seule l’identité
+    du produit ni les mêmes axes pour toutes les marchandises.
+  implications_and_limits: La grille reste utile. Taille et couleur restent métier ; les combinaisons possibles ne sont pas
+    toutes nécessairement admissibles. Variante, segmentation de stock/demande, assortiment et conditionnement sont distincts.
+  existing_principle_refs: []
+  target_node_ids:
+  - D08
+  - D04.i
+  - D04.j
+  - D01
+  evidence_refs:
+  - LOCAL-VARIANT
+  - MS-VARIANTS
+  - SAP-VARIANTS
+  - SAP-FASHION
+- id: DP06
+  label_fr: L’intention et l’engagement avant le document
+  status: proposed
+  statement: Définir responsabilités et familles de commandes par l’intention, les parties et les engagements ; distinguer
+    objet, document et fait.
+  rationale: Un écran, un message ou une chaîne documentaire ne suffit pas à définir une capacité. Les documents peuvent porter
+    des preuves et obligations propres.
+  implications_and_limits: Une adaptation du parcours documentaire ne supprime pas les obligations contractuelles ou comptables.
+    Billing reste un savoir-faire durable ; un document métier peut être un enregistrement structuré sans PDF.
+  existing_principle_refs:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-MANAGEMENT-FACT-DOCUMENT
+  target_node_ids:
+  - D04
+  - subdomain-service-orders
+  - process-ledger
+  evidence_refs:
+  - LOCAL-DOCUMENTS
+  - LOCAL-INTERCOMPANY
+  - OMG-BMM
+- id: DP07
+  label_fr: Des responsabilités uniques, des parcours transversaux
+  status: proposed
+  statement: Conserver un parent métier explicite pour une capacité ; décrire ses mobilisations dans les scénarios, Cases
+    et processus sans créer de nouvelles appartenances.
+  rationale: Une même responsabilité sert plusieurs contextes ; la dupliquer par canal ou scénario rend l’autorité ambiguë.
+  implications_and_limits: Distinguer hiérarchie, besoin, partage et mobilisation. Un parcours ne constitue ni une séquence
+    universelle ni une réalisation installée. Les cardinalités détaillées restent des conventions.
+  existing_principle_refs:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-BUSINESS-SCENARIOS
+  - PRINCIPLE-CASE-SUPPLY-ORDERS
+  target_node_ids:
+  - subdomain-process-management
+  - D04
+  evidence_refs:
+  - LOCAL-HIERARCHY
+  - OMG-BMM
+- id: DP08
+  label_fr: Des décisions et effets métier distincts
+  status: proposed
+  statement: Distinguer calcul, choix autorisé, promesse, confirmation, réservation et réalisation physique.
+  rationale: Une solution réalisable n’est pas encore acceptée ; une affectation ne bloque pas seule le stock ; un nouveau
+    plan ne réécrit pas les engagements.
+  implications_and_limits: Tracer décision, versions, règles et conditions ; les commandes conservent leurs engagements et
+    les exécutants leurs opérations. Aucun ordre universel imposé.
+  existing_principle_refs:
+  - PRINCIPLE-TO-PROMISE
+  - PRINCIPLE-RESERVATION-CONCURRENCY
+  - PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+  - PRINCIPLE-ORDER-AGREEMENT
+  target_node_ids:
+  - domain-plan
+  - D03
+  - D04
+  - D02.e
+  - D02.c
+  - D06
+  evidence_refs:
+  - LOCAL-COMMITMENTS
+  - LOCAL-CYCLES
+- id: DP09
+  label_fr: Une autorité explicite pour chaque information
+  status: proposed
+  statement: Distinguer source de vérité d’entreprise, source locale, données reçues et résultats produits, avec provenance
+    et validité connues.
+  rationale: L’intégration ne transfère pas automatiquement l’autorité. Une référence locale peut être tenue et qualifiée
+    activement.
+  implications_and_limits: Placer les échanges chez les producteurs et destinataires métier. Réexaminer la formule historique
+    une ingestion par référentiel avec l’ingestion mutualisée actuelle ; ne pas réduire la projection à une copie passive.
+  existing_principle_refs:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-RELATION-DIRECTION
+  target_node_ids:
+  - business-references
+  - D08
+  - plans-ingestion
+  evidence_refs:
+  - LOCAL-REFERENCES
+  - MS-PRODUCT
+  - SAP-FASHION
+- id: DP10
+  label_fr: Des faits traçables pour reconstruire et analyser
+  status: proposed
+  statement: Conserver les faits reconnus, datés et justifiés dans les registres métier responsables ; distinguer faits de
+    stock et traces de processus.
+  rationale: Les états à une date, explications de décisions et analyses doivent être reliés aux faits disponibles et à leur
+    contexte.
+  implications_and_limits: Inventory Management et Process Ledger gardent leurs mandats distincts. Process Mining exploite
+    les traces. Ce choix ne prescrit ni event sourcing universel, ni stockage commun, ni reconstruction parfaite au-delà de
+    la couverture connue.
+  existing_principle_refs:
+  - PRINCIPLE-MANAGEMENT-FACT-DOCUMENT
+  - PRINCIPLE-CAPABILITY-NATURE
+  target_node_ids:
+  - D01
+  - process-ledger
+  - process-mining
+  - BHV082
+  evidence_refs:
+  - LOCAL-LEDGERS
+- id: DP11
+  label_fr: Des arbitrages explicites sur le parcours complet
+  status: proposed
+  statement: Comparer les options selon service, coût, délais, stock et valeur récupérée, sous contraintes et délégations
+    explicites.
+  rationale: Une économie locale peut déplacer les coûts ou dégrader une promesse ailleurs. Le résultat recherché est multidimensionnel.
+  implications_and_limits: Distinguer simulation, décision et résultat réel. Aucun optimum ou poids universel ; les chiffres
+    fictifs ne deviennent pas des objectifs ou gains Beaumanoir.
+  existing_principle_refs:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  target_node_ids:
+  - supply-chain-orchestration
+  - D03.o
+  - D03.k
+  evidence_refs:
+  - LOCAL-PILOTAGE
+- id: DP12
+  label_fr: Cible, observation et réalisation prouvée
+  status: proposed
+  statement: Distinguer observation métier, choix prospectif, comparaison de marché et preuve de réalisation installée.
+  rationale: Une cartographie exprime une architecture cible ; une offre éditeur ou une illustration n’a pas la même valeur
+    de preuve qu’un fonctionnement observé.
+  implications_and_limits: Conserver les différences et limites des sources. Une norme de description ne prescrit pas la taxonomie
+    FLOW ; les produits Microsoft et SAP ne déterminent pas ses domaines.
+  existing_principle_refs:
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-TARGET-UNIVERSE
+  target_node_ids:
+  - beaumanoir-target-universe
+  evidence_refs:
+  - ISO-AD
+  - MS-SCM
+  - SAP-SCM
+- id: DP13
+  label_fr: Une profondeur proportionnée au besoin
+  status: proposed
+  statement: Déclarer et justifier la profondeur du cœur FLOW et des périmètres de contexte sans inventer de capacités pour
+    compléter l’arbre.
+  rationale: Une partie moins étudiée n’est pas un métier absent ; le cœur du programme n’est pas toute l’entreprise.
+  implications_and_limits: Conserver les profondeurs déclarées, susceptibles d’évolution sur étude autorisée. Externalisé
+    ou périphérique ne signifie pas non métier ou inutile.
+  existing_principle_refs:
+  - PRINCIPLE-SUPPLY-FIRST
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  target_node_ids:
+  - supply-chain-orchestration
+  - domain-sales
+  - domain-sourcing-procurement
+  - domain-logistics-execution
+  evidence_refs:
+  - LOCAL-DEPTH
+existing_inventory:
+- id: PRINCIPLE-REFERENCE-PROJECTIONS
+  statement_sha256: 8d807051c8b6f712ba7c5471c42339034fb5eafc9beaaf1a3b7ba06640e2e59e
+  source_refs:
+  - U134
+  - C75
+  - U479
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP09
+- id: PRINCIPLE-CAPABILITY
+  statement_sha256: c3d3388536d89c6b92c2b5c802d1227e87d08511f77df236583745af407f7493
+  source_refs:
+  - U33
+  - U751
+  - U752
+  - U753
+  - U786
+  - U787
+  - U791
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP01
+- id: PRINCIPLE-SUPPLY-DOCUMENTS
+  statement_sha256: bb33a66b7791e35cd412f244454660513515a2d46bf1b2735a97dab58c830e84
+  source_refs:
+  - U100
+  - U393
+  - U394
+  - U435
+  - U455
+  - U472
+  - U482
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP06
+  - DP14
+- id: PRINCIPLE-FLOW-LOGISTICS
+  statement_sha256: 33e3cc0e6819f43c8af05a21027b0c79cfb08be0439bca0c3fb9cad78dba313d
+  source_refs:
+  - U58
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP03
+- id: PRINCIPLE-ORDER-AGREEMENT
+  statement_sha256: e8817bc8b7650b495f9632c2b6c178ce163470d00991359cea60a57cc8ba50d3
+  source_refs:
+  - U98
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP08
+- id: PRINCIPLE-CASE-SUPPLY-ORDERS
+  statement_sha256: 2020c8a4a286912734d47b5cb726c682df95c9d1e29bf0e8ec4c8242edf7236b
+  source_refs:
+  - U169
+  - U173
+  - U202
+  - U472
+  - CMP187
+  - U482
+  - U592
+  - U616
+  - U617
+  - U624
+  - U626
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP07
+- id: PRINCIPLE-TO-PROMISE
+  statement_sha256: 47eb9f86b85533a3fdf9e6d837fbe0cfddbe123c2ee826cce5aa47c82a88a0bb
+  source_refs:
+  - U154
+  - U156
+  - U202
+  - U251
+  - U438
+  - U592
+  - U616
+  - U617
+  - U624
+  - U626
+  - U765
+  - U766
+  - U834
+  - U835
+  - U1118
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP08
+  - DP14
+- id: PRINCIPLE-EXECUTION-ORCHESTRATION
+  statement_sha256: ba3f50f398afa0b02069722b607203db312958ea60a98a0858d7e00e07ce1c4b
+  source_refs:
+  - U240
+  - U242
+  - U243
+  - U244
+  - U438
+  - U592
+  - U616
+  - U617
+  - U624
+  - U626
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP03
+  - DP08
+- id: PRINCIPLE-EXECUTION-DECISION-AND-COORDINATION
+  statement_sha256: 85b99cc373aba24cff0fb7af3a958bf1df68a2f09d1e2f9996dd6926f4a28ab5
+  source_refs:
+  - U245
+  - U246
+  - U247
+  - U438
+  - U497
+  - U592
+  - U616
+  - U617
+  - U624
+  - U626
+  - U885
+  - U1118
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP08
+- id: PRINCIPLE-CAPABILITY-BEHAVIOR
+  statement_sha256: 06dfa23dfbb71dd46f54decc4b3b15a772b7e7d857bf928a659c41ab43a377dd
+  source_refs:
+  - U262
+  - U263
+  - U264
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-JUSTIFIED-BEHAVIOR
+  statement_sha256: c85a6f3c0565c867f009e66357c7f34e433f5f6be24a5627c2bc0bbbfac2b0e9
+  source_refs:
+  - U265
+  - U282
+  - U283
+  - U290
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+  statement_sha256: 2934372094b347b0b9ed05cab1952d66410fd0bb4486ee42967f9eaa719c3e44
+  source_refs:
+  - U267
+  - U269
+  - U271
+  - U283
+  - U284
+  - U290
+  - U537
+  - U538
+  - U539
+  - U541
+  - U552
+  - U749
+  - U750
+  - U1118
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP08
+- id: PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  statement_sha256: 7df406794c2ea139f0fa2c8be9f348a4e505305505a86f6ee3066c9371a4ca66
+  source_refs:
+  - U275
+  - U289
+  - U290
+  - U795
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP11
+- id: PRINCIPLE-RESERVATION-CONCURRENCY
+  statement_sha256: dff4a486bdce95634a87f6b3bc1cb549fbf41f5d84917d350671ab36c09ab8c2
+  source_refs:
+  - U436
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP08
+- id: PRINCIPLE-CAPABILITY-NATURE
+  statement_sha256: 6564cfef4e997da84483cf025d1610f1a84709c4f3639ee056d4bc9cff4051a0
+  source_refs:
+  - U449
+  - U482
+  - U592
+  - U616
+  - U617
+  - U624
+  - U626
+  - U756
+  - U767
+  proposed_role: modeling_convention
+  candidate_refs:
+  - DP10
+- id: PRINCIPLE-BEHAVIOR-NATURE
+  statement_sha256: 84b0c13464b8959107daeb30f5e3c295b1789edf2562742be8cc32743b90d613
+  source_refs:
+  - U450
+  - U451
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-DOMAIN-INTERACTIONS
+  statement_sha256: 772aab0dbbebd08e97090447f437b8689fcd81e7048d0c47f97f04d0e81cdf26
+  source_refs:
+  - U455
+  - U482
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP07
+- id: PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  statement_sha256: c060be03ce9b9a057ad0f355d57ae254b6fb54ec5360b25af172bf63cbb05b98
+  source_refs:
+  - U456
+  - U459
+  - C107
+  - U482
+  - U1033
+  - U1034
+  - U1036
+  - U1037
+  - U1038
+  - U1039
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP12
+- id: PRINCIPLE-MANAGEMENT-FACT-DOCUMENT
+  statement_sha256: ad5874b783f6f53c2851c1284fa5e3975b3639c6628f54cc8cd51ce94bcc2743
+  source_refs:
+  - U61
+  - U461
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP06
+  - DP10
+- id: PRINCIPLE-SUPPLY-FIRST
+  statement_sha256: e7268003ff08b68ca2aa182db592e4746335e91fcf403587de040f34cf4392f4
+  source_refs:
+  - U472
+  - CMP187
+  - U482
+  - U1118
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP13
+- id: PRINCIPLE-DOMAIN-SUBDOMAIN
+  statement_sha256: 864213a8c484e1eb7b404c30a997ed9428a78865192c0661b36c7598ddd0b3f8
+  source_refs:
+  - U655
+  - U667
+  - U673
+  - U848
+  - U880
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-DIFFERENTIATING-BEHAVIORS
+  statement_sha256: ecff1c532112f0b09d5b0ab1443bea52b3388e3f33023156b626c9d909710440
+  source_refs:
+  - U710
+  - U711
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-BUSINESS-SCENARIOS
+  statement_sha256: 1b43ebb3c4f67e6a3866452c456d6f0b19dca04b4bd718c0ed364e5fc03a2607
+  source_refs:
+  - U763
+  - U764
+  - U786
+  - U787
+  - U789
+  - U790
+  - U791
+  - U792
+  - U793
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP07
+- id: PRINCIPLE-BUSINESS-SYSTEM
+  statement_sha256: 7bcc98a77845ee82b5e76415e6ade6a5b9ca571fe2e34779e257aeb593030f4b
+  source_refs:
+  - U778
+  - U779
+  - U780
+  - U912
+  - U975
+  - U1079
+  - U1091
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP03
+- id: PRINCIPLE-DISPLAY-CODES
+  statement_sha256: a3489da7f5726a096f0c3ca929b61ee278150184d2494b08dfeba4df5999ee7a
+  source_refs:
+  - U782
+  - U783
+  - U912
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-BUSINESS-AREA
+  statement_sha256: 5bdc6a2e6223f539744269f823f943dccd1c70416464a999d3694b6cd418e595
+  source_refs:
+  - U846
+  - U847
+  - U848
+  - U863
+  - U880
+  - U912
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-REQUIRED-BUSINESS-AREA
+  statement_sha256: f848a65f9424d974d649468ac1532e6afaae043217d2a0fd4ec9b2ebdb31efe4
+  source_refs:
+  - U880
+  proposed_role: modeling_convention
+  candidate_refs: []
+- id: PRINCIPLE-TARGET-UNIVERSE
+  statement_sha256: 558370011ad8a3b42d403c2b2f0668c8e50384d692a949ba516e6aa09df37e5c
+  source_refs:
+  - U915
+  - U912
+  - U975
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP12
+- id: PRINCIPLE-ORCHESTRATION-DETAIL
+  statement_sha256: 772d88dde2223b868471ca9a67b84df8321572c57fa57f7aed2c66a53a0d6872
+  source_refs:
+  - U981
+  - U1025
+  - U1023
+  - U1024
+  - U1026
+  - U1027
+  - U1079
+  - U1091
+  - U1118
+  proposed_role: architecture_principle_or_local_choice
+  candidate_refs:
+  - DP13
+- id: PRINCIPLE-RELATION-DIRECTION
+  statement_sha256: 68c3850d296602dccaf9c52cf6ad5576fb8f81b2aab3c3547bc55da1aaa935be
+  source_refs:
+  - U1116
+  - U1117
+  - U1118
+  proposed_role: modeling_convention
+  candidate_refs:
+  - DP09
+market_references:
+- id: OG-PRINCIPLES
+  publisher: The Open Group
+  title: Using TOGAF for Enterprise SOA
+  url: https://www.opengroup.org/soa/source-book/togaf/p4.htm
+  edition: Source Book fondé sur TOGAF 9
+  locator: Architecture Principles / Service-Orientation
+  observed: Principes pour orienter les décisions futures, avec statement, rationale et implications.
+  limits: Index officiel consulté ; ouverture directe 403. Appui au rôle et au format, pas aux frontières métier FLOW.
+  consulted_on: '2026-10-23'
+- id: ISO-AD
+  publisher: ISO / IEC / IEEE
+  title: Architecture description
+  url: https://www.iso.org/standard/74393.html
+  edition: ISO/IEC/IEEE 42010:2022, édition 2
+  locator: Abstract
+  observed: Distingue architecture et description ; ne prescrit pas les outils, méthodes ou formats de création.
+  limits: Résumé public seulement ; aucune conformité ou exigence détaillée attribuée sans lecture intégrale.
+  consulted_on: '2026-10-23'
+- id: OMG-BMM
+  publisher: OMG
+  title: Business Motivation Model
+  url: https://www.omg.org/spec/BMM/1.2/PDF
+  edition: 1.2, mai 2014
+  locator: 8.3.3 Course of Action
+  observed: Plans/approches, directives et résultats distingués des processus.
+  limits: Appui méthodologique, pas métamodèle universel de cycle fashion.
+  consulted_on: '2026-10-23'
+- id: MS-VARIANTS
+  publisher: Microsoft
+  title: Product dimensions
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-dimensions
+  edition: Documentation évolutive
+  locator: Introduction / Product variants / Example
+  observed: Variantes identifiées par combinaison de dimensions ; sélection à la ligne de commande ; toutes les combinaisons
+    ne sont pas nécessairement produites.
+  limits: Mécanismes Dynamics 365 SCM ; pas mêmes dimensions imposées à tous les produits FLOW.
+  consulted_on: '2026-10-23'
+- id: SAP-VARIANTS
+  publisher: SAP
+  title: Maintenance of Variants Data for Generic Article
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/64609d0ecac54654b0837cba34555b82/0995c7536e8e2a4be10000000a174cb4.html
+  edition: Index affichant 2608, Retail and Fashion and Vertical Business
+  locator: Use
+  observed: Variantes définies par caractéristiques et valeurs ; maintenance possible via une matrice.
+  limits: Passage primaire consulté dans l’index ; ouverture directe inaccessible. SAP-FASHION apporte un appui primaire lisible
+    sur les variantes.
+  consulted_on: '2026-10-23'
+- id: SAP-FASHION
+  publisher: SAP
+  title: Comparing with Legacy SAP Apparel and Footwear Solution
+  url: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/comparing-with-sap-fashion-management-solution-fms
+  edition: Cours S/4HANA Fashion évolutif
+  locator: Transitioning from Specialized Grids / Master Data Evolution / Advanced Seasonality Management
+  observed: Grilles spécialisées AFS, modèle article générique/variantes et données saisonnières ; évolution vers les mécanismes
+    S/4HANA.
+  limits: Un cas de migration de gamme ; segmentation de stock/demande et identité de variante restent distinctes. Aucune
+    généralisation à tous les SI des années 1980–1990.
+  consulted_on: '2026-10-23'
+- id: MS-SCM
+  publisher: Microsoft
+  title: Welcome to Dynamics 365 Supply Chain Management
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+  edition: Documentation datée 2025-09-10
+  locator: Core concepts and tasks
+  observed: Planification, stocks, achats, ventes, production, entrepôt et transport regroupés dans une offre.
+  limits: Frontière produit plus large que les domaines FLOW ; ne justifie pas à elle seule leur séparation.
+  consulted_on: '2026-10-23'
+- id: SAP-SCM
+  publisher: SAP
+  title: Supply Chain Management — SAP Learning
+  url: https://learning.sap.com/products/supply-chain-management
+  edition: Page de gamme évolutive
+  locator: S/4HANA Cloud Public Edition / Private Edition
+  observed: Gamme couvrant planification, opérations, vente, achats et exécution.
+  limits: IBP/GTS sont des offres complémentaires ; pas de prescription du niveau Business System pour Logistics.
+  consulted_on: '2026-10-23'
+- id: MS-PLANS
+  publisher: Microsoft
+  title: Master plans overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+  edition: Documentation évolutive
+  locator: Using master plans / Time fences in days
+  observed: Plusieurs plans, horizons et paramètres ; règles influant sur les propositions.
+  limits: Recouvrement partiel, pas ontologie complète des cycles.
+  consulted_on: '2026-10-23'
+- id: MS-PRODUCT
+  publisher: Microsoft
+  title: Product information overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+  edition: Documentation évolutive
+  locator: Product definition / Distribution, export, and import
+  observed: Définition, classifications, attributs et identifiants partagés ou importés.
+  limits: Les autorités de données FLOW restent distinctes de la configuration du produit Dynamics.
+  consulted_on: '2026-10-23'
+- id: MS-PO-LIFECYCLE
+  publisher: Microsoft
+  title: Purchase order overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-overview
+  edition: Dynamics 365 SCM ; page mise à jour 2026-09-08
+  locator: Introduction / Purchase order statuses
+  observed: 'Approvisionnement : approbation, confirmation, réception, rapprochement factures, quantités et états.'
+  limits: Les responsabilités natives ne sont pas identiques aux domaines FLOW.
+  consulted_on: '2026-10-23'
+- id: MS-SALES-LIFECYCLE
+  publisher: Microsoft
+  title: Configure and manage sales, and customers in Dynamics 365 Supply Chain Management
+  url: https://learn.microsoft.com/en-us/training/paths/configure-manage-sales-customers-dyn365-supply-chain-mgmt/
+  edition: Parcours de formation évolutif
+  locator: Overview / Work with order to cash
+  observed: Processus de commandes, facturation et encaissement dans Dynamics 365 SCM.
+  limits: Présentation consultée, pas exécution des modules ; aucune réalisation Beaumanoir ni transfert des autorités Finance.
+  consulted_on: '2026-10-23'
+- id: SAP-INTEGRATED-SCM
+  publisher: SAP
+  title: Exploring SAP Business Suite
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-sales-essentials/exploring-sap-business-suite_b72620ef-8bca-4db7-8264-586a9afb5e8f
+  edition: SAP S/4HANA Sales Essentials ; cours évolutif
+  locator: SAP Business Suite and SAP S/4HANA
+  observed: SAP décrit SCM avec design, planning, procurement, manufacture, sales, assets et service.
+  limits: Proximité de logique intégrée ; pas identité des frontières locales ni attribution de tout cet ensemble au domaine
+    SCM FLOW.
+  consulted_on: '2026-10-23'
+- id: SAP-ORDER-PLANNING
+  publisher: SAP
+  title: Execute Supply Chain Planning
+  url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
+  edition: SAP S/4HANA ; cours évolutif
+  locator: Production Planning and Control / Demand Management
+  observed: Les commandes Sales alimentent les besoins client de la planification selon leur type et stratégie.
+  limits: Appui à l’intégration du contexte de commande ; le cours porte aussi sur la production, sans l’ajouter au périmètre
+    Beaumanoir.
+  consulted_on: '2026-10-23'
+local_evidence:
+  LOCAL-CAPABILITY:
+  - modeles/backlog/modeling-glossary.yaml#MOD015
+  - modeles/backlog/model.yaml#PRINCIPLE-CAPABILITY
+  LOCAL-BOUNDARIES:
+  - modeles/backlog/context-business-systems-U975.yaml
+  - modeles/backlog/supply-domain-rename-U1121.yaml
+  - modeles/backlog/scm-domain-study-application-U1151.yaml
+  LOCAL-LOGISTICS:
+  - modeles/backlog/context-business-systems-U975.yaml
+  - modeles/backlog/context-structure-application-U1027.yaml
+  LOCAL-CYCLES:
+  - modeles/backlog/season-context-application-U1155.yaml
+  - modeles/backlog/season-cycle-market-research-U1154.yaml
+  RESEARCH-CYCLES:
+  - modeles/backlog/season-cycle-market-research-U1154.yaml
+  LOCAL-INTERCOMPANY:
+  - modeles/backlog/intercompany-audit-U1147.yaml
+  - modeles/backlog/intercompany-application-U1149.yaml
+  LOCAL-VARIANT:
+  - modeles/backlog/glossary.yaml#TER058
+  LOCAL-DOCUMENTS:
+  - modeles/backlog/model.yaml#PRINCIPLE-SUPPLY-DOCUMENTS
+  - modeles/backlog/model.yaml#PRINCIPLE-MANAGEMENT-FACT-DOCUMENT
+  LOCAL-HIERARCHY:
+  - modeles/backlog/model.yaml#PRINCIPLE-BUSINESS-SCENARIOS
+  - modeles/backlog/model.yaml#PRINCIPLE-DOMAIN-SUBDOMAIN
+  LOCAL-COMMITMENTS:
+  - modeles/backlog/model.yaml#PRINCIPLE-TO-PROMISE
+  - modeles/backlog/model.yaml#PRINCIPLE-RESERVATION-CONCURRENCY
+  LOCAL-REFERENCES:
+  - modeles/backlog/model.yaml#PRINCIPLE-REFERENCE-PROJECTIONS
+  LOCAL-LEDGERS:
+  - modeles/backlog/model.yaml#process-ledger
+  - modeles/backlog/model.yaml#process-mining
+  LOCAL-PILOTAGE:
+  - modeles/backlog/scm-domain-study-application-U1151.yaml
+  LOCAL-DEPTH:
+  - modeles/backlog/model.yaml#PRINCIPLE-ORCHESTRATION-DETAIL
+  LOCAL-ORDER-CONTEXT:
+  - connaissance/01-contributions-utilisateur.md#u1157
+  - modeles/backlog/model.yaml#D04
+  - modeles/backlog/model.yaml#D04.i
+  - modeles/backlog/model.yaml#D04.j
+implementation_order:
+- phase: 1
+  title: Source unique et qualification
+  work:
+  - Réexaminer les énoncés historiques et préserver les identifiants utilisés par les contrôles.
+  - Schéma et validation rétrocompatibles ; cibles et références.
+  - Capture d’accords sur les principes et contrôle des impacts sémantiques.
+- phase: 2
+  title: Lecture Atlas et sept priorités
+  work:
+  - Entrée, index, fiche, recherche et liens contextuels.
+  - 'DP01–DP06 et DP14 : capacités, domaines intégrés de Business Operations, cycle complet des commandes pour les décisions
+    SCM, Logistics, contextes, variantes/grilles et documents.'
+  - Préserver méthodologie, aide et sélection historique.
+- phase: 3
+  title: Compléter et publier
+  work:
+  - DP07–DP13 à partir des preuves citées.
+  - Relier les conventions détaillées sans doubler les catalogues.
+  - Capturer les accords pertinents ; release et déploiement seulement sur demande.
+acceptance_checks:
+- Anciens et nouveaux contrats ; identités et cibles résolues.
+- Contraintes activées par PRINCIPLE-* préservées.
+- Accords limités aux champs approuvés ; remplacement explicite et historique intègre.
+- Réexamen ciblé d’une justification locale, global d’un principe global effectivement modifié.
+- Même publication pour principes, fiches, glossaire et preuves ; aucun repli backlog.
+- Recherche saison/intercompany/grille, liens réciproques, mobile et clavier.
+- Aucune double autorité méthode/modèle/frontend.
+verification:
+  state: passed
+  scope: Audit documentaire ; pas de build ni de tests métier nécessaires. Références, identités et empreintes à contrôler.
+  checks:
+  - 30 énoncés inventoriés ; 14 propositions, dont le cadrage et le principe ajoutés U1157.
+  - Références locales existantes, sources et limites explicites.
+  - Modèle, glossaire et frontend inchangés par l’audit.
+  clarification: Correction et ajout dans la proposition uniquement ; modèle et glossaire inchangés.
+clarification_U1157:
+  source_ref: U1157
+  correction: Commerce, Sourcing and Procurement et SCM sont trois domaines complémentaires du même système Business Operations.
+    Le SCM porte le cycle complet des commandes d’achat et de vente pour donner à ses décisions un contexte métier complet,
+    cohérent et traçable.
+  market_position: Proximité de logique intégrée avec Microsoft et SAP ; aucune identité mécanique entre leurs modules et
+    les domaines FLOW.

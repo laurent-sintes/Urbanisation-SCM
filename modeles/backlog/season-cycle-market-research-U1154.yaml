@@ -1,0 +1,178 @@
+schema_version: 1.0.0
+id: season-cycle-market-research-U1154
+status: proposed
+date: '2026-10-23'
+source_refs:
+- U1152
+- U1153
+- U1154
+purpose: Rechercher au-delà des éditeurs des appuis et limites à une gouvernance souple des cycles, calendriers, plans et
+  règles, sans structurer les capacités par saisons.
+authority: Recherche et recommandations seulement ; aucun objet canonique créé, aucun accord étendu, aucune release ni opération
+  Git demandée.
+relationship_to_prior_analysis:
+  annex: season-business-analysis-U1152.yaml
+  correction: Retirer l’orientation vers une capacité Season Management dédiée sur les seuls constats disponibles. Conserver
+    la notion métier dans les données et les descriptions utiles, sans en faire un niveau structurel. Product Portfolio &
+    Collection Management reste le cadrage amont accepté U1153.
+  preserved: Distinction entre saison commerciale, saisonnalité et collection ; réutilisation des capacités et responsabilités
+    existantes.
+sources:
+- id: SRC-U1154-01
+  publisher: McKinsey
+  type: Analyse de pratiques sectorielles par ses auteurs
+  title: 'Faster fashion: How to shorten the apparel calendar'
+  url: https://www.mckinsey.com/industries/retail/our-insights/faster-fashion-how-to-shorten-the-apparel-calendar
+  date: '2018-05-17'
+  locator: The phases of the fashion cycle / Planning, design, and product development
+  observed: Des lignes produit d’une même marque peuvent suivre des calendriers différents ; les basiques n’ont pas nécessairement
+    le rythme des collections saisonnières. Conception, vente aux distributeurs et production/livraison ont des phases distinctes
+    ; la coordination entre objectifs financiers et choix créatifs est une activité explicite.
+  interpretation: Les rythmes et horizons doivent être configurables ; leur cohérence doit être gérée.
+  limits: Observation sectorielle datée, pas norme ni dénombrement actuel universel des saisons ; les préconisations d’organisation
+    de l’article ne deviennent pas les capacités FLOW.
+  consulted_on: '2026-10-23'
+- id: SRC-U1154-02
+  publisher: Ermenegildo Zegna Group
+  type: Déclaration primaire d’entreprise
+  title: Corporate Presentation — February 2026
+  url: https://s29.q4cdn.com/118983938/files/doc_downloads/2026/Corporate-Presentation-February-2026.pdf
+  date: 2026-02
+  locator: 'Page 15, Merchandising evolution: from seasonal collections to drops'
+  observed: La présentation ZEGNA expose le passage de quatre collections à huit drops, avec des lancements SS et FW.
+  interpretation: Un nombre de lancements variable peut coexister avec des repères saisonniers ; les deux notions ne sont
+    pas identiques.
+  limits: Un cas déclaré dans une présentation investisseurs, pas une norme, pas une preuve sur toutes les marques ou sur
+    Beaumanoir. La présentation de février ne vaut pas état technique audité au 23 octobre.
+  consulted_on: '2026-10-23'
+- id: SRC-U1154-03
+  publisher: Caro et Gallien — UCLA / MIT
+  type: Article académique, manuscrit des auteurs
+  title: Dynamic Assortment with Demand Learning for Seasonal Consumer Goods
+  url: https://web.mit.edu/jgallien/www/DynAssortCaroGallienRev2.pdf
+  date: '2006-05-15'
+  locator: Abstract et introduction, pages 1–3
+  observed: Les décisions de conception et d’assortiment peuvent être révisées pendant la saison grâce aux informations de
+    demande ; le modèle représente plusieurs décisions successives sur un horizon fini.
+  interpretation: Saison et contenu figé ne sont pas équivalents ; le plan doit supporter les révisions et les décisions datées.
+  limits: Modèle stylisé à horizon fini et cas historiques ; ne prouve ni une ontologie universelle des cycles ni la performance
+    d’une réalisation FLOW.
+  consulted_on: '2026-10-23'
+- id: SRC-U1154-04
+  publisher: Zaragoza Logistics Center — Luis Wilbert et Yasel Costa
+  type: Présentation par les chercheurs de leur recherche
+  title: Out with the old; in with the new – risk pooling and assortment planning
+  url: https://www.zlc.edu.es/news/out-with-the-old-in-with-the-new-risk-pooling-and-assortment-planning/
+  date: Date non affichée dans le passage consulté
+  locator: Paragraphes sur les lignes saisonnières, NOS et le cycle de vie produit
+  observed: Coexistence de lignes d’une seule saison et de Never Out of Stock reconduits sur plusieurs saisons. Même les gammes
+    NOS sont renouvelées ; le modèle distingue saisonnalité et cycle de vie produit.
+  interpretation: Le régime de renouvellement doit pouvoir varier par produit ; permanent ne signifie pas immuable ou dépourvu
+    de planification.
+  limits: Vulgarisation d’une recherche appuyée notamment sur des données Adidas ; pas standard de référentiel ni catalogue
+    d’architecture.
+  consulted_on: '2026-10-23'
+- id: SRC-U1154-05
+  publisher: GS1
+  type: Standard de vocabulaire de données
+  title: GS1 Web Vocabulary — WearableProduct et seasonName
+  url: https://ref.gs1.org/voc/WearableProduct
+  date: Vocabulaire évolutif ; édition historique 1.6.1 de novembre 2015 également repérée
+  locator: seasonCalendarYear, seasonName, seasonParameter
+  observed: La saison et l’année sont décrites comme propriétés du produit vestimentaire. Le guide GDSN indexé distingue disponibilité
+    saisonnière, expédition et livraison.
+  interpretation: Appui à une représentation par informations de référence et dates distinctes, plutôt qu’à la transformation
+    d’un attribut de produit en capacité.
+  limits: Termes consultés dans l’index officiel ; les pages ouvertes renvoient principalement le conteneur dynamique et les
+    PDF historiques retournent 403. Le guide TIIG de 20 Mo n’a pas pu être chargé intégralement. Aucun prétendu modèle générique
+    de gouvernance de tous les plans attribué à GS1.
+  additional_urls:
+  - https://ref.gs1.org/voc/seasonName
+  - https://ref.gs1.org/guidelines/tiig/
+  consulted_on: '2026-10-23'
+- id: SRC-U1154-06
+  publisher: Object Management Group
+  type: Standard de modélisation métier
+  title: Business Motivation Model 1.2
+  url: https://www.omg.org/spec/BMM/1.2/PDF
+  date: 2014-05
+  locator: Section 8.3.3, Course of Action, page imprimée 28 / PDF 38
+  observed: Un Course of Action représente une approche ou un plan pour obtenir des résultats, encadré par des directives
+    ; cette notion est distinguée des processus qui le réalisent.
+  interpretation: Appui méthodologique pour séparer résultats, plans, règles et processus, en gardant leurs liens explicites.
+  limits: Portée stratégique ; ne fournit pas un contrat de plan opérationnel ni un objet standard de gouvernance des saisons
+    fashion.
+  consulted_on: '2026-10-23'
+findings:
+- id: F01
+  source_ids:
+  - SRC-U1154-01
+  - SRC-U1154-02
+  - SRC-U1154-04
+  fact: Plusieurs rythmes de renouvellement peuvent coexister, même au sein d’une marque.
+  consequence: Aucun nombre fixe de saisons ni calendrier unique obligatoire.
+- id: F02
+  source_ids:
+  - SRC-U1154-02
+  - SRC-U1154-03
+  fact: Un repère saisonnier peut coexister avec plusieurs lancements et décisions successives.
+  consequence: Éviter une hiérarchie obligatoire saison–capsule–plan. Une capsule peut être associée à un cycle selon le contexte
+    ; ce lien ne devient pas une règle universelle.
+- id: F03
+  source_ids:
+  - SRC-U1154-04
+  - SRC-U1154-05
+  fact: Saisonnalité, cycle de vie, disponibilité commerciale et renouvellement n’ont pas le même sens.
+  consequence: Autoriser produits reconduits et contextes multiples, sans déduire que permanent signifie sans plan ou sans
+    règle.
+- id: F04
+  source_ids:
+  - SRC-U1154-01
+  - SRC-U1154-06
+  fact: Les fonctions et leurs objectifs exigent une coordination explicite de leurs plans et règles.
+  consequence: Des plans différents restent possibles ; les contraintes partagées et conflits doivent être traités, pas ignorés.
+recommended_separation:
+- layer: Capacités
+  content: 'Savoir-faire durables : cadrer les collections, prévoir la demande, planifier, décider les approvisionnements,
+    tenir les commandes et appliquer les politiques existantes.'
+  boundary: Le rythme saisonnier ne constitue pas un parent de capacité. La stabilité n’interdit pas une capacité propre à
+    un métier, mais sa responsabilité doit être prouvée.
+- layer: Données de référence et calendriers
+  content: Repères de campagne, collection ou saison, jalons, fenêtres, liens entre produits et cycles et autorités de maintenance.
+  boundary: Structure configurable avec types et contraintes métier explicites ; ne pas imposer le calendrier civil ni une
+    arborescence SAP.
+- layer: Plans
+  content: 'Objectifs, hypothèses, quantités, choix et versions propres à chaque périmètre : conception, commercial ou approvisionnement
+    selon le cas.'
+  boundary: Un plan vivant ne se réduit pas à de la master data. Le Master Plan Supply rapproche les contributions utiles
+    à son mandat sans devenir propriétaire de tous les plans d’entreprise. Aucun périmètre de production ajouté à Beaumanoir.
+- layer: Policies
+  content: Règles applicables selon le plan, la période, les produits, le canal et l’autorité de décision.
+  boundary: Référencer les règles autorisées avec leur validité ; ne pas transférer implicitement Commerce ou Finance à Supply
+    Policy Management.
+- layer: Commandes et décisions
+  content: Références aux contextes et plans applicables, éventuellement à la ligne ; contribution ou consommation à distinguer,
+    versions et règles utilisées traçables.
+  boundary: Une commande peut être concernée par plusieurs plans ; ne pas imposer un rattachement exclusif. Les engagements
+    réels et leur validité ne sont pas réécrits par le seul changement de plan.
+market_position: Les sources appuient des rythmes variables, des données de référence et des plans révisables. Elles ne démontrent
+  pas un consensus ni un standard unique nommé objet de gouvernance des cycles. La séparation proposée pour FLOW est une recommandation
+  d’architecture argumentée.
+vendor_comparison_reused:
+  annex: season-business-analysis-U1152.yaml
+  Microsoft: Les assortiments datés et la saisonnalité des prévisions restent des appuis partiels, pas une définition universelle
+    de saison.
+  SAP: Le Season Workbench est une réalisation possible ; sa hiérarchie année/saison/collection/thème ne devient pas la taxonomie
+    obligatoire de FLOW.
+  boundary: Les sources Microsoft et SAP consultées dans U1152 sont conservées ; aucune comparaison de nouvelles fiches ou
+    capacité détaillée déclarée.
+additional_access_limit: 'Guide TOGAF Business Capabilities : accès officiel redirigé vers authentification ; une copie tierce
+  a été repérée mais n’est pas utilisée comme appui primaire à cette recherche.'
+not_established:
+- 'Transition universelle de quatre à deux saisons : nombre et usages varient selon les entreprises.'
+- Toute capsule serait nécessairement une microsaison temporelle imbriquée.
+- Tous les plans relèveraient de la master data ou d’une seule autorité.
+- Un standard prescrirait que les plans soient toujours alignés ou qu’ils puissent ignorer leurs contraintes mutuelles.
+verification:
+  scope: Documentation et sources ; modèle, glossaire et publications canoniques inchangés.
+  source_comparison: Constats, interprétations et recommandations séparés ; limites de lecture et dates explicites.

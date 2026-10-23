@@ -1,4 +1,5 @@
 import { businessFields } from './businessContent.ts';
+import { designPrinciples, principleSearchText, principleTitle } from './designPrinciples.ts';
 import { examplesForNode, readerExamplesSearchText } from './examples.ts';
 import { glossaryAliases, isCurrentGlossaryTerm } from './glossary.ts';
 import { plainInlineText } from './inlineLinks.ts';
@@ -12,7 +13,7 @@ import type { AtlasNode, GlossaryTerm, MarketComparison, MarketInspiration, Publ
 
 export interface SearchResult {
   id: string;
-  kind: 'model' | 'glossary' | 'scenario' | 'value_stream' | 'method' | 'guide';
+  kind: 'model' | 'glossary' | 'scenario' | 'value_stream' | 'method' | 'guide' | 'principle';
   name: string;
   excerpt: string;
   score: number;
@@ -89,6 +90,13 @@ function index(model: PublishedModel): SearchResult[] {
   };
   const catalog = catalogOf(model);
   const entries: SearchResult[] = [
+    ...designPrinciples(model).map((p) => ({
+      id: p.id,
+      kind: 'principle' as const,
+      name: principleTitle(p),
+      excerpt: principleSearchText(p),
+      score: 0,
+    })),
     ...(catalog
       ? catalog.scenarios.map((s) => ({
           id: s.id,

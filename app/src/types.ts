@@ -177,7 +177,39 @@ export interface GlossaryTerm extends JsonRecord {
   revision?: number;
   last_modified?: string;
 }
+export interface ArchitecturePrinciple {
+  id: string;
+  statement: string;
+  name?: string;
+  label_fr?: string;
+  summary?: string;
+  category?: string;
+  featured?: boolean;
+  display_order?: number;
+  rationale?: string;
+  implications?: string;
+  tradeoffs?: string;
+  review_trigger?: string;
+  exceptions?: readonly string[];
+  supersedes?: readonly string[];
+  scope?: { kind: 'global' | 'targeted'; targets: readonly { collection: 'nodes' | 'relations'; id: string }[] };
+  examples?: readonly { kind: 'illustration' | 'counterexample'; text: string }[];
+  related_principles?: readonly string[];
+  references?: readonly {
+    id: string;
+    publisher: string;
+    title: string;
+    url: string;
+    edition: string;
+    consulted_on: string;
+    locator: string;
+    observed: string;
+    role: string;
+    limits: string;
+  }[];
+}
 export interface RawPublication extends JsonRecord {
+  principles?: readonly ArchitecturePrinciple[];
   application_catalog?: ApplicationCatalog;
   workshop?: { active: true; session_id: string; base_version: string; revision: number };
   document_catalog?: { schema_version: 1; source_refs: string[]; documents: AtlasDocument[] };

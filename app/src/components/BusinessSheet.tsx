@@ -2,6 +2,7 @@ import { ArrowRight, Download, GitBranch } from 'lucide-react';
 import { Fragment, type ReactNode } from 'react';
 import { behaviorTypeLabel } from '../behaviorTypes';
 import { businessFields, businessQualification } from '../businessContent';
+import { principlesForNode, principlesForRelation, principleTitle } from '../designPrinciples';
 import { pedagogyOf, resolvePedagogy } from '../pedagogy';
 import { kindLabel } from '../presentation';
 import { publicText } from '../publicText';
@@ -34,7 +35,7 @@ import {
 import { catalogOf, pathsForNode, scenariosForNode } from '../scenarioCatalog';
 import { BusinessExamples } from './BusinessExamples';
 import { BusinessPedagogy } from './BusinessPedagogy';
-import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
+import { CatalogLink, DesignPrincipleLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
 
 const labels: Record<string, string> = {
   name: 'Libellé',
@@ -131,9 +132,11 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
   const hasScmStudy = node.id === scmStudyDomainId;
+  const principles = principlesForNode(model, node.id);
   const sections = [
     pedagogyOf(node) && ['pedagogical_description', 'Comprendre ce périmètre'],
     hasScmStudy && ['study', 'Pour approfondir'],
+    principles.length > 0 && ['principles', 'Principes expliquant ce périmètre'],
     examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'],
     otherChildren.length > 0 && ['children', 'Explorer ce périmètre'],
     fields.scope && ['scope', 'Périmètre'],
@@ -233,6 +236,18 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           </div>
         </section>
         <BusinessPedagogy model={model} node={node} />
+        {principles.length > 0 && (
+          <section id={`field-${node.id}-principles`} tabIndex={-1} className="sheet-principles">
+            <h2>Principes expliquant ce périmètre</h2>
+            <ul>
+              {principles.map((p) => (
+                <li key={p.id}>
+                  <DesignPrincipleLink id={p.id}>{principleTitle(p)}</DesignPrincipleLink>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         {hasScmStudy && (
           <section id={`field-${node.id}-study`} tabIndex={-1} className="sheet-study">
             <h2>Pour approfondir</h2>
@@ -469,6 +484,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
 }
 
 export function RelationDetails({ model, relation }: { model: PublishedModel; relation: AtlasRelation }) {
+  const principles = principlesForRelation(model, relation.id);
   const fields = Object.entries(businessFields(relation.fields)).filter(
     ([key, value]) => key !== 'name' && hasValue(value),
   );
@@ -497,6 +513,18 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
       <p className="relation-meaning">
         <ModelText text={publicText(relation.qualification.meaning || relation.label)} />
       </p>
+      {principles.length > 0 && (
+        <section className="sheet-principles">
+          <h2>Principes expliquant cette relation</h2>
+          <ul>
+            {principles.map((p) => (
+              <li key={p.id}>
+                <DesignPrincipleLink id={p.id}>{principleTitle(p)}</DesignPrincipleLink>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <div className="relation-description">
         {qualifications.map(([key, value]) => (
           <section key={key}>

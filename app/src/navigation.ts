@@ -7,6 +7,7 @@ export type View =
   | 'market'
   | 'glossary'
   | 'principles'
+  | 'design-principles'
   | 'metamodel'
   | 'help'
   | 'scenarios'
@@ -79,8 +80,11 @@ export function readRoute(hash: string): RouteState {
   if (p.get('neighbors') === 'all') graph.graphNeighbors = true;
   return {
     ...(view === 'relations' ? graph : {}),
-    node: view === 'principles' || view === 'metamodel' || view === 'help' ? '' : node,
-    scope: view === 'principles' || view === 'metamodel' || view === 'help' ? '' : p.get('scope') || '',
+    node: view === 'design-principles' || view === 'principles' || view === 'metamodel' || view === 'help' ? '' : node,
+    scope:
+      view === 'design-principles' || view === 'principles' || view === 'metamodel' || view === 'help'
+        ? ''
+        : p.get('scope') || '',
     ...(mapDepth !== null && ['0', '1', '2', '3', '4'].includes(mapDepth)
       ? { mapDepth: Number(mapDepth) as RouteState['mapDepth'] }
       : {}),
@@ -93,6 +97,7 @@ export function readRoute(hash: string): RouteState {
       'market',
       'glossary',
       'principles',
+      'design-principles',
       'metamodel',
       'help',
       'scenarios',
@@ -102,7 +107,7 @@ export function readRoute(hash: string): RouteState {
     ].includes(view || '')
       ? (view as View)
       : undefined,
-    ...((view === 'principles' || view === 'metamodel') && p.has('principle')
+    ...((view === 'design-principles' || view === 'principles' || view === 'metamodel') && p.has('principle')
       ? { principle: p.get('principle') || '' }
       : {}),
     ...(p.has('term') ? { term: p.get('term') || '' } : {}),
@@ -178,7 +183,9 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
     catalogReturn: route.catalogReturn,
     scroll: route.scroll,
     glossary: route.view === 'glossary' ? route.glossary : undefined,
-    principle: route.view === 'principles' || route.view === 'metamodel' ? route.principle : undefined,
+    principle: ['design-principles', 'principles', 'metamodel'].includes(route.view || '')
+      ? route.principle
+      : undefined,
     ...(route.view === 'relations'
       ? {
           level:
@@ -199,6 +206,8 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
   return p.size ? `${path}?${p}` : path;
 }
 export const routeHash = (route: RouteState, model?: PublishedModel | null) => `#${routePath(route, model)}`;
+/** Typing in search keeps the mobile drawer; opening content closes it. */
+export const drawerNavigationKey = (route: RouteState) => routeHash({ ...route, query: '', status: '' });
 export function preference<T>(key: string, fallback: T): T {
   try {
     const value = localStorage.getItem(`flow-atlas:${key}`);

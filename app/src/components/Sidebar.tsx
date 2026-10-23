@@ -11,6 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { designPrinciples, principleTitle } from '../designPrinciples';
 import { NodeIcon } from '../icons';
 import { lineageOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
@@ -138,7 +139,7 @@ export function Sidebar({
         ? searchResults.filter(
             (result) =>
               resultType === 'all' ||
-              (['glossary', 'scenario', 'value_stream', 'method', 'guide'].includes(resultType)
+              (['glossary', 'scenario', 'value_stream', 'method', 'guide', 'principle'].includes(resultType)
                 ? result.kind === resultType
                 : result.node?.kind === resultType),
           )
@@ -163,7 +164,35 @@ export function Sidebar({
           <PanelLeftClose size={20} />
         </button>
       </div>
-      <nav className="primary-spaces" aria-label="Espaces Atlas">
+      <div className="search-box">
+        <Search size={17} />
+        <input
+          ref={searchRef}
+          id="fa-search"
+          aria-label="Rechercher dans le modèle publié"
+          placeholder="Rechercher…"
+          value={route.query}
+          onChange={(e) => onSearch({ query: e.target.value })}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              panel.current?.querySelector<HTMLButtonElement>('[data-search-result]')?.focus();
+            }
+            if (e.key === 'Escape') {
+              e.stopPropagation();
+              onSearch({ query: '', status: '' });
+            }
+          }}
+        />
+        {route.query ? (
+          <button type="button" aria-label="Effacer la recherche" onClick={() => onSearch({ query: '', status: '' })}>
+            <X size={14} />
+          </button>
+        ) : (
+          <kbd>Ctrl K</kbd>
+        )}
+      </div>
+      <nav className="primary-spaces" aria-label="Espaces Atlas" hidden={searching}>
         <button
           type="button"
           aria-current={
@@ -174,6 +203,7 @@ export function Sidebar({
               'applications',
               'glossary',
               'principles',
+              'design-principles',
               'metamodel',
               'help',
             ].includes(route.view || '')
@@ -302,6 +332,28 @@ export function Sidebar({
         </button>
         <button
           type="button"
+          onClick={() => {
+            onSearch({
+              view: 'design-principles',
+              principle: '',
+              node: '',
+              scope: '',
+              query: '',
+              section: '',
+              returnTo: '',
+              scroll: '',
+              term: '',
+              relation: '',
+            });
+            onClose();
+          }}
+          aria-current={route.view === 'design-principles' ? 'page' : undefined}
+        >
+          <Compass size={17} />
+          Principes directeurs
+        </button>
+        <button
+          type="button"
           onClick={onOpenPrinciples}
           aria-current={route.view === 'principles' ? 'page' : undefined}
         >
@@ -362,31 +414,6 @@ export function Sidebar({
           )}
         </details>
       </nav>
-      <div className="search-box">
-        <Search size={17} />
-        <input
-          ref={searchRef}
-          id="fa-search"
-          aria-label="Rechercher dans le modèle publié"
-          placeholder="Un nom, une idée, un repère…"
-          value={route.query}
-          onChange={(e) => onSearch({ query: e.target.value })}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowDown') {
-              e.preventDefault();
-              panel.current?.querySelector<HTMLButtonElement>('[data-search-result]')?.focus();
-            }
-            if (e.key === 'Escape') onSearch({ query: '', status: '' });
-          }}
-        />
-        {route.query ? (
-          <button type="button" aria-label="Effacer la recherche" onClick={() => onSearch({ query: '', status: '' })}>
-            <X size={14} />
-          </button>
-        ) : (
-          <kbd>Ctrl K</kbd>
-        )}
-      </div>
       {searching ? (
         <div className="search-results" role="region" aria-label="Résultats de recherche">
           <label className="search-filter">
@@ -402,6 +429,7 @@ export function Sidebar({
               <option value="glossary">Glossaire métier</option>
               <option value="method">Notions documentaires</option>
               <option value="guide">Documentation</option>
+              <option value="principle">Principes directeurs</option>
               <option value="scenario">Scénarios</option>
               <option value="value_stream">Flux de valeur</option>
             </select>
@@ -417,6 +445,18 @@ export function Sidebar({
               onClick={() => {
                 if (['glossary', 'method'].includes(result.kind)) {
                   onOpenTerm(result.id);
+                } else if (result.kind === 'principle') {
+                  onSearch({
+                    view: 'design-principles',
+                    principle: result.id,
+                    node: '',
+                    scope: '',
+                    query: '',
+                    section: '',
+                    returnTo: '',
+                    scroll: '',
+                  });
+                  onClose();
                 } else if (result.kind === 'guide') {
                   onSearch({
                     view: result.document || 'principles',
@@ -464,15 +504,17 @@ export function Sidebar({
                         .slice(0, -1)
                         .map((n) => n.name)
                         .join(' / ')}`
-                    : result.kind === 'scenario'
-                      ? 'Scénario métier'
-                      : result.kind === 'value_stream'
-                        ? 'Flux de valeur'
-                        : result.kind === 'method'
-                          ? 'Notion méthodologique'
-                          : result.kind === 'guide'
-                            ? 'Méthode'
-                            : 'Terme du glossaire'}{' '}
+                    : result.kind === 'principle'
+                      ? 'Principe directeur'
+                      : result.kind === 'scenario'
+                        ? 'Scénario métier'
+                        : result.kind === 'value_stream'
+                          ? 'Flux de valeur'
+                          : result.kind === 'method'
+                            ? 'Notion méthodologique'
+                            : result.kind === 'guide'
+                              ? 'Méthode'
+                              : 'Terme du glossaire'}{' '}
                   · {result.node?.displayCode ?? result.id}
                 </small>
                 {result.excerpt && <span className="search-excerpt">{result.excerpt}</span>}
@@ -481,7 +523,9 @@ export function Sidebar({
           ))}
           {!searchPending && !matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
         </div>
-      ) : ['scenarios', 'glossary', 'principles', 'metamodel', 'help'].includes(route.view || '') ? (
+      ) : ['scenarios', 'glossary', 'design-principles', 'principles', 'metamodel', 'help'].includes(
+          route.view || '',
+        ) ? (
         <nav
           className="space-navigation"
           aria-label={
@@ -513,6 +557,36 @@ export function Sidebar({
               >
                 Glossaire de transformation
               </button>
+            </>
+          )}
+          {route.view === 'design-principles' && (
+            <>
+              <h2>Principes directeurs</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  onSearch({ principle: '', scroll: '' });
+                  onClose();
+                }}
+                aria-current={!route.principle ? 'page' : undefined}
+              >
+                Tous les principes
+              </button>
+              {designPrinciples(model)
+                .filter((p) => p.featured)
+                .map((p) => (
+                  <button
+                    type="button"
+                    key={p.id}
+                    aria-current={route.principle === p.id ? 'page' : undefined}
+                    onClick={() => {
+                      onSearch({ principle: p.id, scroll: '' });
+                      onClose();
+                    }}
+                  >
+                    {principleTitle(p)}
+                  </button>
+                ))}
             </>
           )}
           {route.view === 'principles' && (

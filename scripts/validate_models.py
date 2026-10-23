@@ -470,6 +470,11 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
             if target not in nodes:
                 errors.append(f"alternatives/{identifier}: dangling target {target}")
     _index(model.get("principles", []), "principles", errors)
+    try:
+        from .architecture_principles import validate_principles
+    except ImportError:
+        from architecture_principles import validate_principles
+    errors.extend(validate_principles(model))
     if model.get('element_versioning') == 1:
         glossary = model.get('glossary')
         glossary_items = ([glossary] + glossary['terms']) if isinstance(glossary, dict) and isinstance(glossary.get('terms'), list) else []
@@ -538,8 +543,8 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
         errors.append("release: decisions/frozen input version mismatch")
     errors.extend(_source_refs(decisions_document, sources, "decisions"))
     decisions = _index(decisions_document.get("decisions", []), "decisions", errors)
-    frozen = {c: _index(snapshot[c], f"snapshot/{c}", errors) for c in ("nodes", "relations")}
-    approved_targets = {"nodes": set(), "relations": set()}
+    frozen = {c: _index(snapshot.get(c, []), f"snapshot/{c}", errors) for c in ("nodes", "relations", "principles")}
+    approved_targets = {"nodes": set(), "relations": set(), "principles": set()}
     for identifier, decision in decisions.items():
         target = decision.get("target", {})
         collection, target_id = target.get("collection"), target.get("id")

@@ -120,14 +120,19 @@ def semantic(value):
 
 def semantic_context(snapshot, collection, target_id):
     """Capture a conservative neighborhood plus all principles and glossary terms."""
-    if collection not in ('nodes', 'relations'):
-        raise ValueError('collection must be nodes or relations')
+    if collection not in ('nodes', 'relations', 'principles'):
+        raise ValueError('collection must be nodes, relations or principles')
     nodes = _records(snapshot.get('nodes'), 'nodes')
     relations = _records(snapshot.get('relations'), 'relations')
-    target = (nodes if collection == 'nodes' else relations).get(target_id)
+    target = _records(snapshot.get(collection, []), collection).get(target_id)
     if target is None:
         raise ValueError('Unknown target: ' + collection + '/' + target_id)
-    anchors = {target_id} if collection == 'nodes' else {target.get('source_id'), target.get('target_id')}
+    try:
+        from .architecture_principles import applicable_principles, principle_anchors
+    except ImportError:
+        from architecture_principles import applicable_principles, principle_anchors
+    anchors = (principle_anchors(target, list(relations.values())) if collection == 'principles'
+               else {target_id} if collection == 'nodes' else {target.get('source_id'), target.get('target_id')})
     incident = {key: relation for key, relation in relations.items()
                 if relation.get('source_id') in anchors or relation.get('target_id') in anchors}
     neighbors = anchors | {relation.get(key) for relation in incident.values()
@@ -151,7 +156,9 @@ def semantic_context(snapshot, collection, target_id):
         'incident_relations': {key: semantic(value) for key, value in sorted(incident.items())},
         'related_nodes': {key: semantic(nodes[key]) for key in sorted(neighbors)
                           if collection != 'nodes' or key != target_id},
-        'principles': semantic(snapshot.get('principles', [])),
+        'principles': (semantic(snapshot.get('principles', []))
+                       if not any('scope' in p for p in snapshot.get('principles', []))
+                       else applicable_principles(snapshot, anchors)),
         'glossary': semantic(snapshot.get('glossary', {})),
     }
 
@@ -179,16 +186,16 @@ class ContextIndex:
         if key not in self.contexts:
             # The graph neighborhood keeps exactly the conservative legacy scope.
             # Shared objects are omitted here to avoid repeatedly copying the glossary.
-            view = {**self.snapshot, 'principles': [], 'glossary': {}}
+            view = {**self.snapshot, 'glossary': {}}
             context = compact_context(semantic_context(view, collection, target_id))
-            context.update(self.shared)
+            context['glossary'] = self.shared['glossary']
             self.contexts[key] = context
         return deepcopy(self.contexts[key])
 
 
 def _values(snapshot, collection, target_id, fields):
-    if collection not in ('nodes', 'relations'):
-        raise ValueError('collection must be nodes or relations')
+    if collection not in ('nodes', 'relations', 'principles'):
+        raise ValueError('collection must be nodes, relations or principles')
     target = _records(snapshot.get(collection), collection).get(target_id)
     if target is None:
         raise ValueError('Unknown target: ' + collection + '/' + target_id)
@@ -230,8 +237,8 @@ def validate_document(document, sources=None):
         if not isinstance(target, dict) or set(target) != TARGET_KEYS:
             raise ValueError('Invalid intent target: ' + intent['id'])
         _text(target['id'], 'target id')
-        if target['collection'] not in ('nodes', 'relations'):
-            raise ValueError('collection must be nodes or relations')
+        if target['collection'] not in ('nodes', 'relations', 'principles'):
+            raise ValueError('collection must be nodes, relations or principles')
         fields = _strings(target['approved_fields'], 'approved_fields')
         if any(field in METADATA for field in fields):
             raise ValueError('Cannot approve editorial metadata')
@@ -523,7 +530,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
     parser.add_argument('--id', dest='intent_id', required=True)
-    parser.add_argument('--collection', choices=('nodes', 'relations'), required=True)
+    parser.add_argument('--collection', choices=('nodes', 'relations', 'principles'), required=True)
     parser.add_argument('--target', dest='target_id', required=True)
     parser.add_argument('--fields', action='append', required=True)
     parser.add_argument('--source', dest='source_refs', action='append', required=True)

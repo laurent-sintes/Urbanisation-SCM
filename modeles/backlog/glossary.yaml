@@ -1269,6 +1269,8 @@ terms:
     Dans le vocabulaire FLOW retenu U874, un Order porte identité, contenu, destinataire, engagements et état. Il peut être échangé sous forme de données structurées ; il ne se réduit pas à un fichier imprimable. Un appel technique ou un service interne ne crée pas automatiquement un Order. Les usages natifs des éditeurs peuvent être plus larges.
 
     Relier aussi les engagements réciproques [intercompany](glossary:TER122) : société porteuse et contrepartie, identités d’origine, lignes, quantités, versions et rôle dans la chaîne. Lier la vente de B à A et l’achat de A auprès de B ne les fusionne pas ; la vente éventuelle de A au client garde son identité. Conserver correspondances et périmètre des changements ; chaque famille de [commande](glossary:TER012) demeure responsable de leur validité et de leur acceptation. Le [dossier](glossary:TER064) exploite ces liens pour solliciter et suivre les réponses. Les mêmes 100 pièces ne deviennent pas trois besoins indépendants.
+
+    Conserver les liens des commandes avec les [contextes de planification](glossary:TER389) et les plans concernés, éventuellement par ligne ou quantité. Distinguer provenance d’une proposition, contribution à un besoin planifié et couverture déjà retenue ; une commande peut participer à plusieurs plans sans dupliquer son engagement ni compter plusieurs fois le même besoin. [Saison](glossary:TER386) et [capsule](glossary:TER388) ne constituent pas un rattachement obligatoire. Pour chaque décision, garder la version du plan et des règles effectivement utilisées, leur validité et l’autorité applicable. Une nouvelle version du plan ou des politiques ne modifie pas seule la commande : les transitions et changements restent autorisés par la famille responsable.
   notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
     autre périmètre.
   source_refs:
@@ -1282,6 +1284,10 @@ terms:
   - U1147
   - U1148
   - U1149
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -1435,8 +1441,10 @@ terms:
   market_inspiration:
     choice: 'Formaliser une instruction et ses conditions pour pouvoir la suivre. Commande doit être qualifiée par son contexte
       : client, achat ou ordre de déplacement, par exemple.'
-    flow_scope: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
-      et son état.
+    flow_scope: |-
+      Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions et son état.
+
+      Conserver les liens des commandes avec les [contextes de planification](glossary:TER389) et les plans concernés, éventuellement par ligne ou quantité. Distinguer provenance d’une proposition, contribution à un besoin planifié et couverture déjà retenue ; une commande peut participer à plusieurs plans sans dupliquer son engagement ni compter plusieurs fois le même besoin. [Saison](glossary:TER386) et [capsule](glossary:TER388) ne constituent pas un rattachement obligatoire. Pour chaque décision, garder la version du plan et des règles effectivement utilisées, leur validité et l’autorité applicable. Une nouvelle version du plan ou des politiques ne modifie pas seule la commande : les transitions et changements restent autorisés par la famille responsable.
     flow_approach: |-
       Dans le vocabulaire FLOW retenu U874, un Order porte identité, contenu, destinataire, engagements et état. Il peut être échangé sous forme de données structurées ; il ne se réduit pas à un fichier imprimable. Un appel technique ou un service interne ne crée pas automatiquement un Order. Les usages natifs des éditeurs peuvent être plus larges.
 
@@ -9599,6 +9607,8 @@ terms:
     Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
 
     Les versions reçues gardent provenance, validité et limites connues. [Reference Ingestion](model:master-data-ingestion) reçoit les apports ; [Operational References](model:business-references) porte la référence locale utilisable. Les maîtres d’entreprise restent externes ; aucune alimentation installée n’est présumée.
+
+    Conserver, lorsqu’elles sont fournies, les associations des produits aux [contextes de planification](glossary:TER389) : [saisons](glossary:TER386), campagnes ou [capsules](glossary:TER388), avec identifiants, version, fenêtres, validité et source. Un produit peut être associé à plusieurs contextes ou être reconduit sans rattachement saisonnier obligatoire. Ces associations ne remplacent ni ses caractéristiques approuvées ni son cycle de vie ; elles ne constituent pas une disponibilité de stock ou une autorisation de vente. Les plans et les politiques ne sont pas stockés comme de simples attributs du produit.
   notes: Actualisé selon le modèle courant ; formulation détaillée proposée et périmètre local, pas une définition éditeur
     universelle.
   source_refs:
@@ -9619,6 +9629,10 @@ terms:
   - U896
   - U897
   - U898
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9761,8 +9775,10 @@ terms:
       aux opérations.
   market_inspiration:
     choice: Permettre de reconnaître et traiter les marchandises demandées ou échangées.
-    flow_scope: Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques utiles aux
-      opérations.
+    flow_scope: |-
+      Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques utiles aux opérations.
+
+      Conserver, lorsqu’elles sont fournies, les associations des produits aux [contextes de planification](glossary:TER389) : [saisons](glossary:TER386), campagnes ou [capsules](glossary:TER388), avec identifiants, version, fenêtres, validité et source. Un produit peut être associé à plusieurs contextes ou être reconduit sans rattachement saisonnier obligatoire. Ces associations ne remplacent ni ses caractéristiques approuvées ni son cycle de vie ; elles ne constituent pas une disponibilité de stock ou une autorisation de vente. Les plans et les politiques ne sont pas stockés comme de simples attributs du produit.
     flow_approach: |-
       [Product Reference](glossary:TER052) porte les références des marchandises, leurs identifiants d’origine, désignations, [variantes](glossary:TER058), unités et caractéristiques. [Product Catalog](model:D12) décrit les offres, [Assortment](model:D16) les sélections et [Product Price Book](model:product-price-book) les tarifs de référence. Exemple fictif : reconnaître le modèle, la couleur et la taille du vêtement demandé.
 
@@ -12072,6 +12088,8 @@ terms:
     La vue [Product Reference](model:D08) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
 
     Pour une vente [intercompany](glossary:TER122), conserver la société vendeuse, l’acheteur et les correspondances de lignes avec l’achat réciproque et, s’il existe, le [besoin](glossary:TER010) du client externe. Les changements demandés, acceptés, refusés ou encore attendus gardent leur portée et leur version. Une quantité acceptée entre sociétés ne confirme pas automatiquement la vente au client. Le [prix de cession interne](glossary:TER384) reste distinct du prix externe ; utiliser la source autorisée, jamais le recopier par défaut. La [facture intercompany](glossary:TER385) est obtenue du [service](glossary:TER075) de [facturation](glossary:TER153), sans déduire son émission de la livraison.
+
+    Conserver les liens des commandes avec les [contextes de planification](glossary:TER389) et les plans concernés, éventuellement par ligne ou quantité. Distinguer provenance d’une proposition, contribution à un besoin planifié et couverture déjà retenue ; une commande peut participer à plusieurs plans sans dupliquer son engagement ni compter plusieurs fois le même besoin. [Saison](glossary:TER386) et [capsule](glossary:TER388) ne constituent pas un rattachement obligatoire. Pour chaque décision, garder la version du plan et des règles effectivement utilisées, leur validité et l’autorité applicable. Une nouvelle version du plan ou des politiques ne modifie pas seule la commande : les transitions et changements restent autorisés par la famille responsable.
   notes: Famille gérée par [Sales Order](model:D04.i). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
   source_refs:
@@ -12108,6 +12126,10 @@ terms:
   - U1147
   - U1148
   - U1149
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -12423,6 +12445,8 @@ terms:
     La décision à l'origine d'un achat peut provenir de plusieurs domaines : socle [offshore](glossary:TER382) préparé dès [Design & Development](model:system-design-development), parcours d'achat, ou appoint [nearshore](glossary:TER383) décidé dans le [Supply Chain Management](model:supply-chain-orchestration). Conserver besoin d'origine, scénario ou plan retenu, résultat [CTP](glossary:TER045), décision, autorité ou règle de délégation, conditions et liens entre propositions et commandes. Le domaine d'origine de la décision ne crée pas un second cycle de commande. La capacité applique les transitions autorisées et tient les réponses et engagements ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve les accords et la conduite des échanges fournisseur. Une vérification [CTP](glossary:TER045) positive reste distincte de l'autorisation, de l'[affermissement](glossary:TER197) et de la confirmation fournisseur. Ce mode possible ne préjuge ni de l'équipe qui saisit la commande ni de l'outil qui la transmet.
 
     Quand le fournisseur est une autre société du groupe, conserver la société acheteuse et les correspondances avec la vente réciproque, par ligne, quantité et version. Appliquer uniquement les changements acceptés par l’autorité concernée ; suivre les refus et les reliquats sans synchronisation aveugle des états. Le [prix de cession interne](glossary:TER384) est reçu de la source autorisée et devient le prix engagé de cet achat selon ses règles. Les références et résultats du traitement de la facture fournisseur sont reçus de [Finance](glossary:TER117) ; leur conservation ne transfère ni son contrôle, ni sa comptabilisation, ni son paiement dans la [commande](glossary:TER012).
+
+    Conserver les liens des commandes avec les [contextes de planification](glossary:TER389) et les plans concernés, éventuellement par ligne ou quantité. Distinguer provenance d’une proposition, contribution à un besoin planifié et couverture déjà retenue ; une commande peut participer à plusieurs plans sans dupliquer son engagement ni compter plusieurs fois le même besoin. [Saison](glossary:TER386) et [capsule](glossary:TER388) ne constituent pas un rattachement obligatoire. Pour chaque décision, garder la version du plan et des règles effectivement utilisées, leur validité et l’autorité applicable. Une nouvelle version du plan ou des politiques ne modifie pas seule la commande : les transitions et changements restent autorisés par la famille responsable.
   notes: 'Famille gérée par [Purchase Order](model:D04.j). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
     U391 : inclut l’achat de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat
@@ -12455,6 +12479,10 @@ terms:
   - U1147
   - U1148
   - U1149
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -18757,19 +18785,10 @@ terms:
   short_description: Établir les besoins nets et arbitrer leur couverture par les ressources.
   definition: Sous-domaine opérationnel qui établit les besoins nets et décide comment les ressources couvrent la demande
     retenue, y compris commande par commande en pénurie.
-  context: '[Sous-domaine](method:MOD038) de [Supply Chain Management](model:supply-chain-orchestration). [Demand & Supply
-    Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
-    [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie
-    la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et
-    confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule les besoins
-    nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
-    arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix alimentent
-    un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose des adaptations
-    des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de ces responsabilités,
-    pas des frontières de la carte. [Order Management](model:D04) conserve l’identité, les engagements et les transitions
-    des commandes. [Plan Application](model:D02.e) transmet les choix autorisés ; une affectation ne vaut ni réservation ni
-    confirmation de promesse. FLOW Core porte cette cible sans présumer d’un moteur unique ou d’un transfert installé depuis
-    MAP.'
+  context: |-
+    [Sous-domaine](method:MOD038) de [Supply Chain Management](model:supply-chain-orchestration). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management) arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de ces responsabilités, pas des frontières de la carte. [Order Management](model:D04) conserve l’identité, les engagements et les transitions des commandes. [Plan Application](model:D02.e) transmet les choix autorisés ; une affectation ne vaut ni réservation ni confirmation de promesse. FLOW Core porte cette cible sans présumer d’un moteur unique ou d’un transfert installé depuis MAP.
+
+    Rapprocher les contributions utiles dans leurs [contextes de planification](glossary:TER389), avec leurs horizons, versions et règles applicables. Les plans de collection, commerciaux et Supply restent distincts ; leurs calendriers peuvent différer, mais les dépendances et conflits doivent être examinés avant de retenir une solution. Une [saison](glossary:TER386) ou une [capsule](glossary:TER388) est un repère possible, sans imposer un plan unique ou une structure annuelle. Un plan révisable porte hypothèses, objectifs et choix ; il ne se réduit pas à un calendrier de référence. Les commandes peuvent contribuer à plusieurs plans, notamment par ligne ou quantité, sans double compte des besoins. Un nouveau plan ne réécrit aucun engagement ; [Plan Application](model:D02.e) transmet les changements autorisés aux responsables des commandes.
   notes: 'Sous-domaine de Supply Chain Management : prévision et projection de ressources précèdent le calcul opérationnel
     des besoins nets dans Master Planning. Order Backlog Management décide priorités et affectations. Ce découpage métier
     ne fixe pas un moteur unique.'
@@ -18793,6 +18812,10 @@ terms:
   - U858
   - U975
   - U976
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   review:
     state: partial
     note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
@@ -20316,6 +20339,8 @@ terms:
     [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
     Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
+
+    Les [contextes de planification](glossary:TER389) reçus avec les produits peuvent décrire [saisons](glossary:TER386), campagnes, [capsules](glossary:TER388), rythmes de renouvellement et fenêtres connues. [Product Reference](model:D08) conserve les associations utiles, leur provenance et leur validité ; le cadrage amont reste dans [Product Portfolio & Collection Management](model:domain-product-portfolio-collection). Ces données ne créent ni capacité saisonnière ni hiérarchie obligatoire. Les calendriers de référence restent distincts des plans révisables et des règles sous autorité de [Supply Policy Management](model:subdomain-policies).
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
   source_refs:
   - U835
@@ -20336,6 +20361,10 @@ terms:
   - U1014
   - U1015
   - U1113
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
@@ -20578,8 +20607,10 @@ terms:
   last_modified: '2026-10-16T00:00:00Z'
   market_inspiration:
     choice: Porter une référence locale fiable et partagée pour interpréter les opérations Supply.
-    flow_scope: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
-      leur référence locale fiable sans transférer la maîtrise d’entreprise.
+    flow_scope: |-
+      Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
+
+      Les [contextes de planification](glossary:TER389) reçus avec les produits peuvent décrire [saisons](glossary:TER386), campagnes, [capsules](glossary:TER388), rythmes de renouvellement et fenêtres connues. [Product Reference](model:D08) conserve les associations utiles, leur provenance et leur validité ; le cadrage amont reste dans [Product Portfolio & Collection Management](model:domain-product-portfolio-collection). Ces données ne créent ni capacité saisonnière ni hiérarchie obligatoire. Les calendriers de référence restent distincts des plans révisables et des règles sous autorité de [Supply Policy Management](model:subdomain-policies).
     flow_approach: |-
       [Partner & Agreement References](model:ba-partner-agreement-references) porte les parties, accords et profils de crédit ; [Merchandise References](model:ba-product-references) les produits destinés à la vente, catalogues, assortiments et tarifs ; [Packaging References](model:ba-packaging-references) les matières et consignes de conditionnement ; [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references) les fournitures et équipements internes ; [Service References](model:ba-service-references) les offres et moyens de prestation.
 
@@ -21529,6 +21560,8 @@ terms:
     Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
 
     [Demand & Supply Policies](model:ba-protection-policies) inclut [Demand Fulfilment Policy Management](model:demand-fulfilment-policy-management) : admission, priorités, marges de réarbitrage, protection, conditions de livraison et recours aux apports proposés. Cette capacité maintient la stratégie ; [Master Planning](model:D05.f) produit les arbitrages contextuels. Les conditions contractuelles restent sous leur autorité, et la définition des parcours dans [Process Management](model:subdomain-process-management).
+
+    Qualifier les règles Supply par [contexte de planification](glossary:TER389), plan ou version concernée, produits, canaux, période et autorité, selon leur portée réelle. Une [saison](glossary:TER386), une [capsule](glossary:TER388) ou un régime de produits reconduits peut contribuer à cette portée sans définir une capacité supplémentaire. [Master Plan](model:domain-plan) et [Order Management](model:D04) utilisent les références et versions applicables ; en cas de règles concurrentes, les priorités connues et les conflits non résolus restent explicites. Le remplacement d’une règle ne vaut pas changement des engagements déjà pris. Les règles commerciales et financières conservent leurs autorités ; l’appartenance à un même plan ne les transfère pas à Supply.
   notes: |-
     Alignement U843 ; rédaction détaillée proposée.
 
@@ -21541,6 +21574,10 @@ terms:
   - U908
   - U1020
   - U1021
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -33274,6 +33311,8 @@ terms:
     Choisir les orientations et les produits à développer. [Product Strategy & Requirements](model:subdomain-product-strategy-requirements) examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification) définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221) conserve les objectifs et budgets financiers.
 
     Mode possible pour une collection : préparer très tôt les volumes du socle [offshore](glossary:TER382) et les lignes susceptibles d'un appoint [nearshore](glossary:TER383). Définition du produit, matières, jalons et hypothèses de demande permettent d'examiner les options avec [Sourcing and Procurement](model:domain-sourcing-procurement). Le [Supply Chain Management](model:supply-chain-orchestration) utilise ces contributions pour dimensionner le socle et le recours possible ; son [CTP](glossary:TER045) vérifie ce que les ressources permettent réellement d'obtenir à temps. Une hypothèse de collection ne constitue ni une capacité fournisseur réservée ni une commande ferme. La décision d'achat peut être portée par différents domaines selon son objet et la délégation applicable.
+
+    Cadrer les [contextes de planification](glossary:TER389) en amont : [saisons](glossary:TER386), campagnes, [capsules](glossary:TER388), produits reconduits et jalons utiles. [Collection Planning](model:subdomain-collection-planning) précise ces repères et leurs liens aux produits. Les rythmes peuvent varier par ligne de produits, canal ou marché ; aucun nombre annuel, calendrier unique ou emboîtement saison–capsule n’est imposé. Chaque domaine conserve ses plans et ses règles ; le cadrage amont ne décide pas à la place de Commerce, Finance ou du [Master Plan](model:domain-plan).
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -33286,6 +33325,10 @@ terms:
   - U1133
   - U1134
   - U1135
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   review:
     state: partial
     adopted_scope: Nom et rattachement validés U975 ; précisions de contenu U1092–U1093 proposées.
@@ -33523,6 +33566,8 @@ terms:
     [Sous-domaine](method:MOD038) de [Product Portfolio & Collection Management](model:domain-product-portfolio-collection). Composer la collection : modèles, coloris, variantes envisagées, cohérence de gamme et dates de lancement. [Product Design & Specification](model:subdomain-product-design-specification) définit ensuite les caractéristiques du produit. [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) utilise la sélection de produits et le calendrier comme hypothèses pour estimer la demande et les ressources possibles. La composition de la collection ne produit pas à elle seule un Forecast Plan ; [Commerce](glossary:TER108) décide les assortiments par canal.
 
     Fournir les produits et jalons envisagés à [Development Planning](model:subdomain-development-planning) et [Product Design & Specification](model:subdomain-product-design-specification). Cette contribution reste distincte de la définition approuvée et des assortiments commerciaux.
+
+    Définir les produits, jalons et fenêtres du [contexte de planification](glossary:TER389) amont avec leur identité, version, validité et autorité de modification. Une [saison](glossary:TER386), une campagne ou une [capsule](glossary:TER388) peut servir de repère ; leurs liens sont configurables, sans calendrier civil ni hiérarchie obligatoires. Les produits reconduits peuvent relever d’un rythme continu. Les calendriers de conception, d’approvisionnement et de commercialisation peuvent différer ; leurs dépendances et écarts doivent être explicités. Aucun plan de production Beaumanoir n’est ajouté.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -33534,6 +33579,10 @@ terms:
   - U974
   - U975
   - U1115
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   review:
     state: proposed
     note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
@@ -44387,11 +44436,17 @@ terms:
     Recevoir les contributions externes aux plans de demande et de ressources, avec leurs versions, horizons, provenances et statuts ; contrôler leur recevabilité avant usage dans [Master Plan](model:domain-plan). Les plans produits dans le sous-domaine ne requièrent pas une ingestion externe. Une contribution reçue n’est ni une commande ferme ni un engagement.
 
     [Master Plan Management](model:ba-master-plan-management) porte cette réception locale : conserver le [Forecast Plan](glossary:TER372) source fourni par [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting), puis le transmettre à [Demand Forecast Qualification](model:demand-forecast-development). Les autres contributions externes reconnues restent distinctes ; la réception n’établit pas une seconde prévision source. Les corrections et rejets restent rattachés à la version reçue.
+
+    Conserver avec chaque contribution reçue les références du [contexte de planification](glossary:TER389) : origine, version, période, produits, statut et hypothèses connues. Une [saison](glossary:TER386) ou une [capsule](glossary:TER388) peut qualifier la contribution sans devenir un type de capacité ni une hiérarchie imposée. Distinguer un calendrier de référence d’un plan portant des quantités et des choix ; ne pas aligner silencieusement des horizons différents. Les règles reçues restent attribuées à leur autorité : une référence à une politique ne l’active pas et l’ingestion ne crée aucun engagement.
   notes: Responsabilité de réception locale dans Master Plan Management ; la source garde la production et l’autorité sur
     sa contribution. Les sources marché étayent partiellement réception et consommation, sans équivalent complet revendiqué.
   source_refs:
   - U1107
   - U1113
+  - U1152
+  - U1153
+  - U1154
+  - U1155
   review:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
@@ -44847,6 +44902,100 @@ terms:
     concept_name: Advanced Intercompany Stock Transfer
     scope_summary: Transfert de stock entre sociétés.
     approach_summary: Flux physique et chaîne de facturation articulés.
+- id: TER386
+  name: Season
+  definition: Saison commerciale identifiée, utilisée pour situer des produits, des objectifs et des fenêtres d’activité.
+  short_description: Repère commercial configurable ; il ne fixe pas à lui seul les dates ou règles d’une commande.
+  context: Une saison est un [contexte de planification](glossary:TER389) possible. Son nombre, ses dates et ses associations
+    varient selon les produits, marchés ou canaux. Distinguer la [saisonnalité](glossary:TER387), la collection et la [capsule](glossary:TER388).
+    Un produit peut relever de plusieurs saisons ou être reconduit sans saison obligatoire. Les fenêtres de conception, d’achat,
+    de livraison et de vente restent distinctes ; aucune hiérarchie année–saison–collection n’est imposée.
+  notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
+    réalisation installée déduite.
+  source_refs:
+  - U1152
+  - U1153
+  - U1154
+  - U1155
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1155
+  review:
+    state: proposed
+    note: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts, liens
+      explicites avec les commandes. Les nouveaux textes, exemples et rapprochements restent proposés ; aucun accord étendu
+      ni réalisation installée présumée.'
+- id: TER387
+  name: Seasonality
+  definition: Variation récurrente de la demande liée à une périodicité ou à des événements qui se répètent.
+  short_description: Motif récurrent de demande, distinct d’une saison commerciale.
+  context: La [saisonnalité](glossary:TER387) peut être hebdomadaire, annuelle ou liée à des événements récurrents. Elle ne
+    définit pas les appartenances d’un produit à une [saison](glossary:TER386). Un produit reconduit peut présenter une demande
+    saisonnière. Les hypothèses et observations restent à qualifier dans les prévisions.
+  notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
+    réalisation installée déduite.
+  source_refs:
+  - U1152
+  - U1153
+  - U1154
+  - U1155
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1155
+  review:
+    state: proposed
+    note: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts, liens
+      explicites avec les commandes. Les nouveaux textes, exemples et rapprochements restent proposés ; aucun accord étendu
+      ni réalisation installée présumée.'
+- id: TER388
+  name: Capsule
+  definition: Ensemble restreint de produits associé à une intention ou à un lancement particulier.
+  short_description: Petit ensemble de produits pour une proposition ou un lancement ciblé.
+  context: Une capsule peut être reliée à une collection, une [saison](glossary:TER386) ou un autre [contexte de planification](glossary:TER389),
+    avec ses jalons et fenêtres propres. Elle n’est pas obligatoirement une sous-saison et ne crée pas une capacité dédiée.
+    Son lien à un calendrier et sa portée sont à qualifier ; capsule, campagne et lancement ne sont pas des synonymes automatiques.
+  notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
+    réalisation installée déduite.
+  source_refs:
+  - U1152
+  - U1153
+  - U1154
+  - U1155
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1155
+  review:
+    state: proposed
+    note: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts, liens
+      explicites avec les commandes. Les nouveaux textes, exemples et rapprochements restent proposés ; aucun accord étendu
+      ni réalisation installée présumée.'
+- id: TER389
+  name: Planning Context
+  definition: Ensemble identifié de repères qui précise les produits, périodes, périmètres et hypothèses dans lesquels un
+    plan ou une décision s’applique.
+  short_description: Contexte commun permettant d’interpréter un plan, ses règles et les commandes concernées.
+  context: Un contexte peut faire référence à une [saison](glossary:TER386), une campagne, une [capsule](glossary:TER388)
+    ou un régime de produits reconduits. Les calendriers et classifications de référence décrivent les repères ; les plans
+    révisables portent objectifs, hypothèses, quantités et choix ; les politiques définissent les règles et autorités applicables.
+    Les liens entre ces éléments sont explicites et versionnés selon leur nature. Une commande peut contribuer à plusieurs
+    plans, éventuellement par ligne ou quantité, sans double compte. Le changement d’un plan ou d’un contexte ne révise pas
+    seul ses engagements. Ce terme décrit un contexte métier, pas un nouveau niveau de la cartographie ni un métamodèle universel
+    imposé.
+  notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
+    réalisation installée déduite.
+  source_refs:
+  - U1152
+  - U1153
+  - U1154
+  - U1155
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1155
+  review:
+    state: proposed
+    note: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts, liens
+      explicites avec les commandes. Les nouveaux textes, exemples et rapprochements restent proposés ; aucun accord étendu
+      ni réalisation installée présumée.'
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

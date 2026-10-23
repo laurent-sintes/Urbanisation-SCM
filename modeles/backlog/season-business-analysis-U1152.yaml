@@ -1,0 +1,109 @@
+schema_version: 1.0.0
+id: season-business-analysis-U1152
+status: proposed
+date: '2026-10-23'
+source_refs:
+- U1152
+scope: Analyse de la notion de saison et de sa représentation ; aucune modification du modèle canonique, publication ou réalisation
+  installée.
+current_model:
+  named_season_nodes: 0
+  named_season_terms: 0
+  existing_mentions:
+  - supply-chain-orchestration
+  - D03.j
+  - D04.m
+  - D05.e
+  - subdomain-sales-wholesale
+  - subdomain-assortment-catalog-management
+  - subdomain-pricing-promotions-management
+  - ba-wholesale-sales
+  - cap-wholesale-offer-preparation
+  existing_collection_domain: domain-product-portfolio-collection
+  finding: Les usages saisonniers sont documentés ; la notion partagée, son calendrier et ses autorités ne sont pas explicitement
+    définis.
+distinctions:
+- concept: Season
+  interpretation: 'Objet métier : période commerciale identifiée, avec produits concernés et fenêtres d’achat, de livraison
+    ou de vente éventuellement différentes selon le contexte. Ne présume pas un calendrier unique Beaumanoir.'
+- concept: Seasonality
+  interpretation: Variations récurrentes de la demande ; une périodicité statistique ne définit pas une saison commerciale.
+- concept: Collection
+  interpretation: Ensemble de produits conçu et présenté selon une intention ; ses liens aux saisons sont à expliciter, sans
+    imposer la hiérarchie native SAP au modèle FLOW.
+- concept: Season Management
+  interpretation: Une capacité est justifiée si une responsabilité durable définit les saisons, calendriers, affectations
+    et changements autorisés. Le seul usage de la saison dans plusieurs capacités ne suffit pas à créer un sous-domaine transversal.
+sources:
+- publisher: SAP
+  product: SAP S/4HANA for fashion and vertical business
+  title: Comparing with Legacy SAP Apparel and Footwear Solution
+  url: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/comparing-with-sap-fashion-management-solution-fms
+  consulted_on: '2026-10-23'
+  edition: Cours évolutif ; release précise non indiquée
+  locator: Comparison of Master Data Capabilities / Advanced Seasonality Management
+  observed: Hiérarchie année de saison, saison, collection, thème ; un article peut relever de plusieurs saisons ; détermination
+    de saison dans les documents ; Season Workbench accessible aux utilisateurs métier.
+  comparison: Appui à une notion métier partagée et à sa maintenance ; le produit ne détermine pas le parent de capacité FLOW.
+  limits: Pas de preuve de réalisation Beaumanoir ; aucune reprise de la hiérarchie éditeur imposée.
+- publisher: SAP
+  product: SAP S/4HANA Cloud — Retail and Fashion and Vertical Business
+  title: Season Management
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/64609d0ecac54654b0837cba34555b82/3e35f61c56b04cae9778e7d8d24670f7.html
+  consulted_on: '2026-10-23'
+  edition: Résultat indexé affichant 2602 ; documentation évolutive
+  locator: Overview / Order-to-Cash / Procure-to-Pay
+  observed: Données de saison aux lignes de commande de vente et d’achat, transmises aux documents suivants.
+  comparison: Appui au partage de contexte métier entre processus.
+  limits: Contenu consulté dans le résultat indexé officiel ; ouverture directe sans texte exploitable. Le cours SAP accessible
+    fournit un appui primaire indépendant à la notion S/4HANA Fashion.
+- publisher: Microsoft
+  product: Dynamics 365 Commerce
+  title: Assortment management
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+  consulted_on: '2026-10-23'
+  edition: Documentation évolutive
+  locator: Introduction / Basic assortment setup
+  observed: Assortiments associant produits et canaux pour des périodes déterminées.
+  comparison: 'Recouvrement partiel : traduit la décision commerciale de produits proposés selon canal et période.'
+  limits: Cette page ne démontre pas un objet Season natif ni un Season Workbench équivalent à SAP ; disponibilité commerciale
+    distincte de quantité physique.
+- publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management — Demand planning
+  title: Design forecast models
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/design-forecast-models
+  consulted_on: '2026-10-23'
+  edition: Documentation évolutive ; page datée 2026-08-10
+  locator: Seasonality in forecasts
+  observed: Prise en compte des motifs récurrents dans les séries de demande ; saisonnalité possible par produit et lieu.
+  comparison: Appui à la prévision saisonnière ; recouvrement partiel avec la gestion des saisons commerciales.
+  limits: Ne définit pas une collection ou saison fashion. L’autodétection est signalée preview sur la page ; aucune disponibilité
+    générale ou licence installée présumée.
+- publisher: Microsoft
+  product: Dynamics 365 Commerce
+  title: Retail discounts
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/retail-discounts-overview
+  consulted_on: '2026-10-23'
+  edition: Documentation évolutive
+  locator: Best practices for discount management
+  observed: Catégories complémentaires recommandées pour regrouper les produits de déstockage ou de la saison passée.
+  comparison: Appui au traitement commercial des produits en fin de saison.
+  limits: Une catégorie ne prouve pas un référentiel complet des saisons.
+recommendations:
+- Définir Season, Seasonality et leur distinction avec Collection dans le glossaire, puis relier les mentions concernées lors
+  d’un lot autorisé.
+- Expliciter qui définit le calendrier et ses versions, affecte les produits et autorise les modifications. Product Portfolio
+  & Collection Management est un candidat à examiner pour le cadrage amont, pas une autorité déjà prouvée.
+- 'Faire consommer le contexte saisonnier par les responsabilités existantes : collections, assortiments et prix, achats,
+  plans, disponibilité, commandes et traitement des excédents.'
+- Ne créer une capacité de gestion du calendrier saisonnier que si la responsabilité propre est établie ; ne pas copier automatiquement
+  un écran SAP en sous-domaine FLOW.
+- Ne pas déduire qu’un produit ne peut appartenir qu’à une saison ni que sa vente devient impossible après la fin de cette
+  saison. Les règles de report et déstockage sont à qualifier.
+example:
+  nature: Fictif
+  situation: Un produit Été 2027 peut être commandé bien avant la saison, livré avant implantation et encore vendu en déstockage
+    après la période principale.
+  lesson: Saison de référence, fenêtres opérationnelles et éligibilité commerciale sont liées mais distinctes.
+conclusion: La saison est métier ; sa représentation applicative matérialise les objets, calendriers et règles. Dans la cartographie,
+  rendre explicite la notion et ses usages avant de décider une capacité dédiée.

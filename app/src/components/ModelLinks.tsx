@@ -182,17 +182,41 @@ export function ContextReturn() {
               : 'Retour au catalogue'
             : origin.view === 'metamodel'
               ? 'Retour au métamodèle'
-              : origin.view === 'principles'
-                ? context.metaGuide
-                  ? 'Retour à la transformation'
-                  : 'Retour à la méthode'
-                : origin.view === 'glossary'
-                  ? 'Retour au glossaire'
-                  : `Retour à la fiche : ${context.model.nodeById.get(origin.node)?.name || origin.node}`;
+              : origin.view === 'design-principles'
+                ? 'Retour aux principes directeurs'
+                : origin.view === 'principles'
+                  ? context.metaGuide
+                    ? 'Retour à la transformation'
+                    : 'Retour à la méthode'
+                  : origin.view === 'glossary'
+                    ? 'Retour au glossaire'
+                    : `Retour à la fiche : ${context.model.nodeById.get(origin.node)?.name || origin.node}`;
   return (
     <p className="context-return">
       <a href={context.route.returnTo}>{label}</a>
     </p>
+  );
+}
+
+export function DesignPrincipleLink({ id, children }: { id: string; children: ReactNode }) {
+  const context = useContext(Context);
+  if (!context?.model) return <>{children}</>;
+  return (
+    <a
+      href={routeHash({
+        ...context.route,
+        view: 'design-principles',
+        principle: id,
+        node: '',
+        scope: '',
+        query: '',
+        section: '',
+        scroll: '',
+        returnTo: readingOrigin(context.route, context.model.version),
+      })}
+    >
+      {children}
+    </a>
   );
 }
 

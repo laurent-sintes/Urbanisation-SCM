@@ -18,6 +18,7 @@ import {
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ApplicationCatalogPage } from './components/ApplicationCatalogPage';
 import { BusinessSheet } from './components/BusinessSheet';
+import { DesignPrinciplesPage } from './components/DesignPrinciplesPage';
 import { DocumentCatalogPage } from './components/DocumentCatalogPage';
 import { GlossaryPage } from './components/GlossaryPage';
 import { HelpPage } from './components/HelpPage';
@@ -46,7 +47,15 @@ import { mapRouteForNode } from './mapNavigation';
 import { defaultMapDepth, mapDepthLimit } from './mapProjection';
 import { activeMethod, methodEntries } from './methodNavigation';
 import { childrenOf, lineageOf, parentRelationOf, relatedTo, scopeStatistics } from './model';
-import { preference, type RouteState, readRoute, routeHash, savePreference, type View } from './navigation';
+import {
+  drawerNavigationKey,
+  preference,
+  type RouteState,
+  readRoute,
+  routeHash,
+  savePreference,
+  type View,
+} from './navigation';
 import { staticUrl } from './publication';
 import { revealSection } from './readerNavigation';
 import type { MarketComparison, MarketGap, MarketInspiration } from './types';
@@ -179,6 +188,8 @@ export function App() {
   const content = useRef<HTMLDivElement>(null);
   const restoreScroll = useRef<number | null>(null);
   const lastLocationKey = useRef(locationKey);
+  const drawerDestination = drawerNavigationKey(route);
+  const previousDrawerDestination = useRef(drawerDestination);
   const [fullPath, setFullPath] = useState(false);
   const universeNode = model?.nodes.find((node) => node.kind === 'universe');
   const rootName = universeNode?.name || 'Univers';
@@ -241,6 +252,7 @@ export function App() {
     view === 'hotspots' ||
     view === 'documents' ||
     view === 'glossary' ||
+    view === 'design-principles' ||
     view === 'principles' ||
     view === 'metamodel' ||
     view === 'help';
@@ -257,8 +269,9 @@ export function App() {
     if (lastLocationKey.current === locationKey) return;
     lastLocationKey.current = locationKey;
     restoreScroll.current = navigationType === 'POP' ? (history.state?.atlasScroll ?? null) : null;
-    setDrawer(false);
-  }, [locationKey, navigationType]);
+    if (previousDrawerDestination.current !== drawerDestination) setDrawer(false);
+    previousDrawerDestination.current = drawerDestination;
+  }, [locationKey, navigationType, drawerDestination]);
   // The selected content changes the scroll context even when the effect only reads the target ref.
   // biome-ignore lint/correctness/useExhaustiveDependencies: These route fields intentionally reset reading position.
   useLayoutEffect(() => {
@@ -623,9 +636,11 @@ export function App() {
                       ? 'Scénarios métier'
                       : view === 'metamodel'
                         ? 'Métamodèle FLOW'
-                        : view === 'principles'
-                          ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                          : glossaryTitle}
+                        : view === 'design-principles'
+                          ? 'Principes directeurs'
+                          : view === 'principles'
+                            ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                            : glossaryTitle}
           </span>
         </span>
       )}
@@ -834,7 +849,7 @@ export function App() {
                           returnTo: '',
                           catalogReturn: '',
                           scroll: '',
-                          ...(['principles', 'metamodel'].includes(view) ? { principle: '' } : {}),
+                          ...(['design-principles', 'principles', 'metamodel'].includes(view) ? { principle: '' } : {}),
                         })
                       }
                     >
@@ -878,7 +893,10 @@ export function App() {
                         <span className="node-icon framed tone-context">
                           {view === 'hotspots' ? (
                             <Flame size={30} />
-                          ) : view === 'principles' || view === 'metamodel' || view === 'help' ? (
+                          ) : view === 'design-principles' ||
+                            view === 'principles' ||
+                            view === 'metamodel' ||
+                            view === 'help' ? (
                             <Lightbulb size={30} />
                           ) : (
                             <Compass size={30} />
@@ -896,15 +914,17 @@ export function App() {
                               ? 'AIDE À LA LECTURE'
                               : view === 'metamodel'
                                 ? 'LE MÉTAMODÈLE'
-                                : view === 'principles'
-                                  ? 'LA DÉMARCHE DE TRANSFORMATION'
-                                  : view === 'glossary'
-                                    ? 'LE VOCABULAIRE PUBLIÉ'
-                                    : view === 'applications'
-                                      ? 'LES APPLICATIONS PUBLIÉES'
-                                      : view === 'documents'
-                                        ? 'LES DOCUMENTS PUBLIÉS'
-                                        : 'LE MODÈLE PUBLIÉ'}
+                                : view === 'design-principles'
+                                  ? 'LES CHOIX DE CONCEPTION'
+                                  : view === 'principles'
+                                    ? 'LA DÉMARCHE DE TRANSFORMATION'
+                                    : view === 'glossary'
+                                      ? 'LE VOCABULAIRE PUBLIÉ'
+                                      : view === 'applications'
+                                        ? 'LES APPLICATIONS PUBLIÉES'
+                                        : view === 'documents'
+                                          ? 'LES DOCUMENTS PUBLIÉS'
+                                          : 'LE MODÈLE PUBLIÉ'}
                           </span>
                         )}
                         {headingNode && (
@@ -930,11 +950,13 @@ export function App() {
                                   ? 'Scénarios métier'
                                   : view === 'metamodel'
                                     ? 'Métamodèle FLOW'
-                                    : view === 'principles'
-                                      ? methodTitle
-                                      : view === 'glossary'
-                                        ? glossaryTitle
-                                        : headingNode?.name || 'Cartographie'}
+                                    : view === 'design-principles'
+                                      ? 'Principes directeurs'
+                                      : view === 'principles'
+                                        ? methodTitle
+                                        : view === 'glossary'
+                                          ? glossaryTitle
+                                          : headingNode?.name || 'Cartographie'}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
@@ -956,14 +978,16 @@ export function App() {
                                         ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
                                         : view === 'metamodel'
                                           ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
-                                          : view === 'principles'
-                                            ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
-                                            : view === 'glossary'
-                                              ? 'Les notions et leurs définitions dans la publication consultée.'
-                                              : headingNode?.purpose ||
-                                                (headingNode
-                                                  ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                                  : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                                          : view === 'design-principles'
+                                            ? 'Comprendre les choix qui structurent la cartographie, leurs raisons et leurs limites.'
+                                            : view === 'principles'
+                                              ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                              : view === 'glossary'
+                                                ? 'Les notions et leurs définitions dans la publication consultée.'
+                                                : headingNode?.purpose ||
+                                                  (headingNode
+                                                    ? 'Explore cet élément et ses relations dans le modèle publié.'
+                                                    : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
                             }
                           />
                         </p>
@@ -1151,6 +1175,13 @@ export function App() {
                         onSelect={(principle) => changeRoute({ principle })}
                       />
                     </Suspense>
+                  ) : view === 'design-principles' ? (
+                    <DesignPrinciplesPage
+                      key={model.version}
+                      model={model}
+                      route={route}
+                      onSelect={(principle) => changeRoute({ principle, section: '', scroll: '' })}
+                    />
                   ) : view === 'principles' ? (
                     <Suspense fallback={<p role="status">Ouverture de la méthodologie…</p>}>
                       <ModelingGuidePage

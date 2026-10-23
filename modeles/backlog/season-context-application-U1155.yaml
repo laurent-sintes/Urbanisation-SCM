@@ -1,0 +1,440 @@
+schema_version: 1.0.0
+id: season-context-application-U1155
+status: applied
+date: '2026-10-23'
+source_refs:
+- U1152
+- U1153
+- U1154
+- U1155
+research:
+- season-business-analysis-U1152.yaml
+- season-cycle-market-research-U1154.yaml
+scope: Saisons configurables et liens plans–policies–commandes ; aucune capacité, aucun sous-domaine ni comportement supplémentaire.
+approval_boundary: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts,
+  liens explicites avec les commandes. Les nouveaux textes, exemples et rapprochements restent proposés ; aucun accord étendu
+  ni réalisation installée présumée.'
+market_basis: Sources primaires Microsoft et SAP reconsultées au niveau des apports ciblés ; recouvrements partiels conservés.
+  Recherche indépendante U1154 réutilisée ; aucune taxonomie de produit éditeur imposée.
+baseline:
+  model_sha256: 914e28be68993ca96810e6b66689890aefc5f93a59c51c9a8da7a0333e4f676e
+  glossary_sha256: 25b4be975d83b7d0231605cc6e5a25f8713af2e61dca1ba87eaf1d9fdc418cdd
+  hash_kind: Sérialisation structurée, pas empreinte des octets sources.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1152
+  - U1153
+  - U1154
+  - U1155
+  summary: Contextes saisonniers souples ; plans, calendriers et politiques distincts ; traçabilité des commandes et des décisions.
+  required_nodes:
+  - id: domain-plan
+    field_sha256:
+      scope: 1b705c6ef7b1c4f68f237665c793351720afe063f3fd88d866a9d4bae98d347a
+      market_comparisons: 09577b2d2410310a88d37d6ee53e37235ec1a314f0aa1942e5753552e2917ef4
+      pedagogical_description: 86ba07f70a0e8870c44608ebd7249b208441e38da0ae95b8069ffff57a4c2db0
+  - id: business-references
+    field_sha256:
+      market_comparisons: f6e88a2b2401b081495aa9abbe6cc12c877fa0a773b1145c1ccb5e26b2e45961
+      market_inspiration: b400e235ff113a8b8aad52cfb8d9cf74e6d702a71dda2b265f23d3c08745980a
+      scope: 682266f4656f23c97f0088a69fa2a8b72569fd08ed7b52085337fc6532946a3b
+      pedagogical_description: cb8448faf1dea43088c4527a4bb3ae31479aad7735e81ddaba3c4bb6c3c2ab0a
+  - id: D08
+    field_sha256:
+      market_comparisons: d8c216434699ba8e5c814fdfdd17e2f8f12f045b25dfea85caef69a334f0d06d
+      market_inspiration: 927c33a82a72a08ddfa45cfeb1a0c1a43ec1161e98850e28e25e97f843676ed2
+      scope: d790f0becc037e9c7ef1a780610ab38ef039427202dc0f930931a96440150bca
+      pedagogical_description: 256af2f6a66ce46d062749aeca06deaba24944241040e89a5b210fef986177ae
+  - id: D02.e
+    field_sha256:
+      scope: d8a2e68a4028d19c208142d228e810c1bb1aacc6fef320c1d430742dfcbb9d8e
+      market_comparisons: 80cb0b5d3a9a25897393576ba4ae35d44d612720f0f974eaee692f3189d758cc
+      market_inspiration: 9bb4d2c2799a0049dc9bacf7db462236dbae77386e7a498b52fbf31cca563c14
+  - id: D04.i
+    field_sha256:
+      market_comparisons: 5203b992c33653afce4218a44f6c718ae3cf4d963dd2e182db1cc1136678914b
+      market_inspiration: 1d665f4edc81c5a387bf846aefe7b15d75953562ca44d24e50e46601b172a00a
+      examples: ff8715cc2de22be9aca77461a522252b3df8b0d0d526823810c3b9c025669731
+  - id: D04.j
+    field_sha256:
+      market_comparisons: 63ccc8c3e1f1c6ae807930c155ba44af7445447a83445a6817128cf8148ef841
+      examples: 7070d2ef490a368a6fda2535ce29e438c1b060f9d34f610e5bb0c62a3e8544d3
+      market_inspiration: 003ba750fa9393d06d502c5719fd99497f3934c8ee6f6da6830e2055dfe5f1c5
+  - id: D04
+    field_sha256:
+      scope: df9684076deef8401d6ccc6ebf8ebc0c8236988d1d1e1007aea975e89a67aa48
+      market_comparisons: 68bb47571e05701a9592560315b8d4ea9f72c0ca1301a68413a0db181aa5f8ed
+      market_inspiration: 0b697aeb2bf409a849481ce356b869ef546f887a7f9bd7cf51239d25bdf8f8f6
+      pedagogical_description: 0cadbebfddfc43704f07457ffa9a7fd7f627af7f3eee636314e9599701b5056c
+  - id: subdomain-policies
+    field_sha256:
+      scope: 6cee43cd1b2a28d910a92a1557fce07af684301c93918916322460dd47098677
+      market_comparisons: 33bad1922d06f2c032fedf2d13f7d6c8e7b66016f3aba7205a86bb5d60cb774f
+      market_inspiration: f903ac8fbecb00ceaa64a16d79cfb637b48cdfd8d6c4bc9e373a62c1bcaf289c
+      pedagogical_description: f6530a111e02efc2293f3351978732a2a140253d0c3c1c1c0f446e4997db7a13
+  - id: plans-ingestion
+    field_sha256:
+      scope: 6234e1e65e7a3d4b5be8a0004c223cfb484b341bc85c8d9d2b547f5c3887c793
+      market_comparisons: bd4ec363e4836718be0f06732c6fc6dbc36e210cb99c7eb093085ebe612a564c
+      market_inspiration: 433099bbbb9715a19fb9dee604086aab7c6a79748b13f263e10b729644f98e73
+  - id: domain-product-portfolio-collection
+    field_sha256:
+      scope: 546d1d75482ddfe2d367a93f15b857e5982a3231baeb49f0aa16f200408ea581
+      market_comparisons: 4ed6081ee3dfae0eabc7f483b00b12b5b6fc5f15455923c1c9279935f80ca8fe
+      pedagogical_description: 7c25b66a00bb96f9821e5d1c45b4100d2b57790a86308c55e04c00a65b037ae6
+  - id: subdomain-collection-planning
+    field_sha256:
+      scope: b7bed31882e7c5b60e129ecbd8f91492432c03bb66ff11ffa344a5d94a303e52
+      market_comparisons: 894eed862deaa11b0b273774196369c5300ca4aa4a244d7e71d92e3c1c0e1640
+      pedagogical_description: 2b9001a8129372897d45cc3db20f50c0e5e54eb48c606bc90145cf67dd343862
+  required_relations:
+  - id: REL-U673-ORDER-MATCHING
+    type: shares-data
+    source_id: D04
+    target_id: domain-plan
+    field_sha256:
+      data_exchange: 9b2168c5d9a1c8a4cc723e395b1b543be3a1971ffb0f513f51a45372c1dc29b7
+  - id: REL-U673-POLICIES-MATCHING
+    type: shares-data
+    source_id: subdomain-policies
+    target_id: domain-plan
+    field_sha256:
+      data_exchange: 1a158c1e1371f481130847522d5f9af240f5474cca8f244be5599e157e6c2b89
+  - id: REL-U794-PLAN-INGESTION
+    type: shares-data
+    source_id: plans-ingestion
+    target_id: domain-plan
+    field_sha256:
+      data_exchange: e5faedfdf52b8b9690a6e07b1b37f2e81ee0d6c37b4d97c01899604b8bb2a983
+  - id: REL-U1101-collection-to-demand-supply-forecast
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      data_exchange: deed72d0b8f952d7c689a546ca08630a12f0b635610c0513d18c48e755924674
+  - id: REL-U1113-application-to-sales-release
+    type: shares-data
+    source_id: D02.e
+    target_id: D04.i
+    field_sha256:
+      data_exchange: a31a0005cd99ed951f73982ee871748b72083ca77937b3e44c819303d24600db
+  - id: REL-U1113-application-to-D04-j
+    type: shares-data
+    source_id: D02.e
+    target_id: D04.j
+    field_sha256:
+      data_exchange: dae4101b41f868e3f3f5ed638c241b36ddeb7a649b19d25c432d9d91999466d3
+  - id: REL-U1155-policies-orders
+    type: shares-data
+    source_id: subdomain-policies
+    target_id: D04
+    field_sha256:
+      label: 9e68875b5d6f98a54ac2703370caa50b65cfe20cfa2bc978e1899e34dac4181e
+      data_exchange: b3102accd83e0766f348ae5d3087a32c75abf6b734580416e8b9359fd81c3650
+  required_glossary:
+  - id: TER012
+    field_sha256:
+      context: a39abedb2a8fe749f1fd07450929324b2464d4c60ed77c2e840945ad95662f2d
+      market_inspiration: 4c53fa9ad9adc4cddee031b1d755a5b20c5b4190319c139bdd1cd716e28f64a2
+  - id: TER052
+    field_sha256:
+      context: d790f0becc037e9c7ef1a780610ab38ef039427202dc0f930931a96440150bca
+      market_inspiration: 82177d7f1af159f9147e11343895a9d89db5cc7af58c1b96b58482e81b545134
+  - id: TER069
+    field_sha256:
+      context: ce68b8d3ab2f8d8503ef13f9eb69ad99523b5fe65d532b5cc038a95fc2b5f7b8
+  - id: TER070
+    field_sha256:
+      context: c384d8fcf0facd143f44309257e66d8c65c7e6b6eb035d89e444df8813c96e4f
+  - id: TER111
+    field_sha256:
+      context: 1b705c6ef7b1c4f68f237665c793351720afe063f3fd88d866a9d4bae98d347a
+  - id: TER123
+    field_sha256:
+      context: 682266f4656f23c97f0088a69fa2a8b72569fd08ed7b52085337fc6532946a3b
+      market_inspiration: 0c06a5a53e566edd205983af6437248eb430b5879dbdf6641e4069d6bcc5ae28
+  - id: TER130
+    field_sha256:
+      context: 6cee43cd1b2a28d910a92a1557fce07af684301c93918916322460dd47098677
+  - id: TER206
+    field_sha256:
+      context: 546d1d75482ddfe2d367a93f15b857e5982a3231baeb49f0aa16f200408ea581
+  - id: TER208
+    field_sha256:
+      context: b7bed31882e7c5b60e129ecbd8f91492432c03bb66ff11ffa344a5d94a303e52
+  - id: TER381
+    field_sha256:
+      context: 6234e1e65e7a3d4b5be8a0004c223cfb484b341bc85c8d9d2b547f5c3887c793
+  - id: TER386
+    field_sha256:
+      id: 85007b1509a321bf9c36121b3266eeff60a538df578aec5156260c4292b11726
+      name: ff74f2c8fc64aa3ad56ae8ebf0e238fb9a72d1ebbce246ec61ab59a1f2a49c6d
+      definition: ad9b9fa2ff74c7f242530d124c27230d28599b9f9306ab9a3fd762486ea4d0fe
+      short_description: 7eeebd297636a4f4b4868c3c5568fc5a5a8b9ea0aa423f79c6bd6a58bec7a8df
+      context: 2017b78bbbe81d1a025b83da67af0d21276188e17ff0538dc826e3fa1ed25d02
+      notes: f01ca87ee8a9f98e90c7fcef31ec3064630f36aed0acd789f1bcd5a4f3566970
+  - id: TER387
+    field_sha256:
+      id: 9024854d4fae3cb3801ef9faf2ee1d79f7013cc162a6377813a41dcd2bd986fe
+      name: 6c25fdd1d4f492b701ad3dd267dfe7817fa987518978f5ad3cbe47ee9af0b955
+      definition: 4156159c5aec7039082826de4cf1258a5615d5167229fc7173571d645d15dbe5
+      short_description: 5eafcb489737002470302cf3fb673c47f5153a72d8b8d3a13be611b6a2b215cd
+      context: 31844a23f567179203e3cfc73391d7646f84f0d1375e1df351c25f3187625771
+      notes: f01ca87ee8a9f98e90c7fcef31ec3064630f36aed0acd789f1bcd5a4f3566970
+  - id: TER388
+    field_sha256:
+      id: 1dbc49ec551228bf87a084ab8476739a77e195487355fcfcfbe9e562b33b5c4f
+      name: d98280a1caedb3288e170c8c444fb708bdb7c2a050b95b8cf70460f422f2cb6e
+      definition: 19d79fb64aedf53b3a686941707bea27e5bfc0d4bbb6bbade596cffd5d9814a8
+      short_description: 9ac354af309d9ce621642b663bdb510c5c23a9c470ae414451fa570bb95c29bb
+      context: ac75e848838f70d1e624bf6a6eff3662b5d6136a026945888644a21875a7b3b5
+      notes: f01ca87ee8a9f98e90c7fcef31ec3064630f36aed0acd789f1bcd5a4f3566970
+  - id: TER389
+    field_sha256:
+      id: 7c17a5be4fc2b1112e560e8c787b19733e6e0a14e60e167629b15e641b0f0c12
+      name: 48f12fa92747417acb6f00a1bc5f326ea10cbd075bff564608e9abad9391a867
+      definition: 742970d282707b823a09e47a22918e3821e618c69c4ff228f016f1a1afcd5910
+      short_description: 9aa8a8a8a23b2b1f9960cfa813b7be0628681f04b786f0c84a2702e289cb0366
+      context: 509f1d971002be032ff8a883c4d48c759d78a949da06b51b96c3e1b2885f9138
+      notes: f01ca87ee8a9f98e90c7fcef31ec3064630f36aed0acd789f1bcd5a4f3566970
+  supersedes_requirements:
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_comparisons
+    - pedagogical_description
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_inspiration
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_inspiration
+    - scope
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - market_inspiration
+    - scope
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: relations
+    id: REL-U1101-collection-to-demand-supply-forecast
+    fields:
+    - data_exchange
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_inspiration
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - market_comparisons
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U673-ORDER-MATCHING
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U673-POLICIES-MATCHING
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U1113-application-to-sales-release
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U1113-application-to-D04-j
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER381
+    fields:
+    - context
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - examples
+    - market_comparisons
+    - market_inspiration
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - market_comparisons
+    - market_inspiration
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER012
+    fields:
+    - context
+    - market_inspiration
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER069
+    fields:
+    - context
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER070
+    fields:
+    - context
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - examples
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - context
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D02.e
+    fields:
+    - market_comparisons
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_inspiration
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - market_inspiration
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER130
+    fields:
+    - context
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - market_inspiration
+  - annex: supply-domain-rename-U1121.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+verification:
+  state: passed
+  backlog_errors: 0
+  pending_delivery_lots: 0
+  backlog_rendered: true
+  source_index_records: 3188
+  tests:
+    passed: 30
+    modules:
+    - scripts.test_model_coherence
+    - scripts.test_glossary
+    - scripts.test_pedagogy
+    - scripts.test_market_comparisons
+    - scripts.test_market_vendor_policy
+  integrity: 352 nœuds préservés, mêmes noms, types et hiérarchie. Six échanges enrichis sans changement de sens ou extrémités
+    ; un partage policies → commandes ajouté. Autres catalogues inchangés. Quatre termes explicatifs ajoutés ; aucun objet
+    saisonnier dans l’arbre de capacités.
+  qualified_scope: Le lien policies → commandes est capturé sur type et extrémités ; formulations, exemples et comparaisons
+    nouvelles restent proposés. Les accords historiques conservent leur portée.
+  publication: Backlog seulement ; publication v092 / 2026-10-23.3 et PDF inchangés. Aucun commit, release ou push demandé.

@@ -272,6 +272,12 @@ La carte **Authoritative Data**, anciennement Business References, offre le mêm
 
 La recherche porte sur les noms, identifiants et textes publiés, avec un filtre par type d’élément. Ctrl+K place le focus dans la recherche ; flèche bas entre dans les résultats, Entrée ouvre le résultat ciblé. Les synonymes français non présents dans la publication ne sont pas inventés. Les anciens paramètres d’URL relatifs au statut ou aux sources internes ne réactivent pas leur affichage.
 
+### Principes directeurs et place de la recherche — U1158
+
+**Principes directeurs** ouvre `#/design-principles`, distinct de `#/principles` qui conserve la méthode de transformation. Le référentiel lit uniquement `principles` dans la publication sélectionnée : index par thème et périmètre, fiche argumentée, sources avec apports et limites, liens vers les objets et relations. Les fiches présentent les principes explicitement rattachés à leur responsabilité ou à un ancêtre ; aucun lien de lecture ne crée de parent métier. Les éditions anciennes restent lisibles avec leurs seuls énoncés, sans complément du backlog. La recherche propose le type **Principe directeur** et conserve version et identité à l’ouverture.
+
+La recherche reste en tête du panneau. Les espaces disposent d’une zone défilante bornée ; pendant une recherche, les menus cèdent leur place aux résultats. Effacer la recherche ou utiliser Échap restitue les espaces. La recette `node app/verify-design-principles.mjs` vérifie les 14 fiches candidates, les liens, l’historique, le clavier et trois tailles d’écran sans publier le backlog.
+
 ## Données statiques et contrôles
 
 - `data/index.json` : catalogue et pointeur courant explicites, empreintes des exports.

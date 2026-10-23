@@ -61,7 +61,7 @@ def verify_index(path, document, sources=None):
         if set(entry) not in (keys, keys | {'supersedes'}):
             raise ValueError('Invalid registry entry')
         target = entry['target']
-        if not isinstance(target, dict) or set(target) != {'collection', 'id', 'approved_fields'} or target['collection'] not in ('nodes', 'relations'):
+        if not isinstance(target, dict) or set(target) != {'collection', 'id', 'approved_fields'} or target['collection'] not in ('nodes', 'relations', 'principles'):
             raise ValueError('Invalid registry target')
         r._text(target['id'], 'target id')
         r._strings(target['approved_fields'], 'approved fields')
