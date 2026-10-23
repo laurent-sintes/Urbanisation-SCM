@@ -2,7 +2,15 @@ import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { DOCUMENT_CATEGORY, documentDownloadName, documentFormat, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
-import { scmStudyFilename, scmStudyTitle, scmStudyUrl } from '../scmStudy';
+import {
+  scmStudyAuthor,
+  scmStudyDate,
+  scmStudyFilename,
+  scmStudyFullTitle,
+  scmStudyPages,
+  scmStudyTitle,
+  scmStudyUrl,
+} from '../scmStudy';
 import type { PublishedModel } from '../types';
 import './documents.css';
 
@@ -72,13 +80,15 @@ export function DocumentCatalogPage({
             <h2 id="flow-studies-title">Études FLOW</h2>
             <p>Des dossiers transversaux, communs aux différentes versions du modèle.</p>
             <article className="documents-study">
-              <p className="documents-category">Dossier de pilotage · PDF · 22 octobre 2026</p>
-              <h3>{scmStudyTitle} : indicateurs et décisions</h3>
+              <p className="documents-category">
+                Dossier de pilotage · PDF · {scmStudyPages} pages · {scmStudyDate}
+              </p>
+              <h3>{scmStudyFullTitle}</h3>
               <p>
                 Sept indicateurs prioritaires, six questions de pilotage et des cas concrets, des achats aux retours et
                 au déstockage. Plomberie, délais de décision, CTP et conditionnements, Lean et impacts pour FLOW.
               </p>
-              <p className="documents-study-author">Laurent Sintès</p>
+              <p className="documents-study-author">{scmStudyAuthor}</p>
               <a className="documents-download" href={scmStudyUrl} download={scmStudyFilename}>
                 <Download size={17} aria-hidden="true" />
                 Télécharger « {scmStudyTitle} » (PDF)

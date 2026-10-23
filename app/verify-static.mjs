@@ -151,6 +151,41 @@ try {
     studySource,
     'Actual study download preserves the complete current source PDF',
   );
+  for (const selectedVersion of [version, historical]) {
+    await page.setViewportSize({ width: selectedVersion === version ? 1440 : 390, height: 1000 });
+    await page.goto(`${base}#/sheet?node=supply-chain-orchestration&version=${selectedVersion}`);
+    const sheet = page.getByRole('article', { name: 'Fiche métier de Supply Chain Management', exact: true });
+    await sheet.waitFor();
+    const study = sheet.locator('.sheet-study');
+    await study.getByRole('heading', { name: 'Pour approfondir', exact: true }).waitFor();
+    assert.match(await study.innerText(), /PDF · 27 pages · 22 octobre 2026 · Laurent Sintès/);
+    assert.match(await study.innerText(), /Étude FLOW courante, commune aux versions du modèle/);
+    await study.scrollIntoViewIfNeeded();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    await page.screenshot({ path: path.join(directory, `.runtime/qa-static/scm-study-${selectedVersion}.png`) });
+    const link = study.getByRole('link', { name: 'Télécharger le dossier (PDF)', exact: true });
+    assert.equal(await link.getAttribute('href'), studyHref, 'All three study links use the same current asset');
+    // Tab from the section must reach the native download link.
+    await study.focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await link.evaluate((element) => element === document.activeElement));
+    const pending = page.waitForEvent('download');
+    await page.keyboard.press('Enter');
+    const download = await pending;
+    assert.equal(await download.failure(), null);
+    assert.deepEqual(await readFile(await download.path()), studySource);
+    const selectedModel = JSON.parse(await readFile(path.join(dist, 'data', selectedVersion, 'model.json'), 'utf8'));
+    const definition = selectedModel.nodes.find((node) => node.id === 'supply-chain-orchestration').fields.definition;
+    const plainDefinition = definition.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+    assert.equal(
+      await sheet.locator('#field-supply-chain-orchestration-definition .business-copy').innerText(),
+      plainDefinition,
+    );
+    await page.goto(`${base}#/sheet?node=D01&version=${selectedVersion}`);
+    await page.getByRole('article', { name: 'Fiche métier de Inventory Management', exact: true }).waitFor();
+    assert.equal(await page.locator('.sheet-study').count(), 0, 'The study card belongs only to the SCM domain');
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${base}#/documents?version=${historical}`);
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   assert.equal(await studyLink.getAttribute('href'), studyHref, 'The study is separate from historical publications');
@@ -221,7 +256,8 @@ try {
         'Explorer default and saved collapse',
         'no public JSON download action',
         'current and historical YAML downloads',
-        'study PDF downloads from the menu and Documents preserve the source bytes',
+        'study PDF downloads from the menu, Documents and domain sheet preserve the source bytes',
+        'domain study link is keyboard accessible and historical definitions remain frozen',
         'same study URL in the menu, Documents and historical publications',
         'fixed history',
         'home links',

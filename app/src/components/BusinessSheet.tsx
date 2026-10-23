@@ -1,4 +1,4 @@
-import { ArrowRight, GitBranch } from 'lucide-react';
+import { ArrowRight, Download, GitBranch } from 'lucide-react';
 import { Fragment, type ReactNode } from 'react';
 import { behaviorTypeLabel } from '../behaviorTypes';
 import { businessFields, businessQualification } from '../businessContent';
@@ -6,6 +6,17 @@ import { pedagogyOf, resolvePedagogy } from '../pedagogy';
 import { kindLabel } from '../presentation';
 import { publicText } from '../publicText';
 import { revealSection } from '../readerNavigation';
+import {
+  scmStudyAuthor,
+  scmStudyDate,
+  scmStudyDescription,
+  scmStudyDomainId,
+  scmStudyFilename,
+  scmStudyFullTitle,
+  scmStudyPages,
+  scmStudyTemporalLabel,
+  scmStudyUrl,
+} from '../scmStudy';
 import type { AtlasNode, AtlasRelation, PublishedModel } from '../types';
 import './details.css';
 import './ux-reading.css';
@@ -119,8 +130,10 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
     !!catalogOf(model) && ['domain', 'area', 'business_area', 'capability', 'reference'].includes(node.kind);
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
+  const hasScmStudy = node.id === scmStudyDomainId;
   const sections = [
     pedagogyOf(node) && ['pedagogical_description', 'Comprendre ce périmètre'],
+    hasScmStudy && ['study', 'Pour approfondir'],
     examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'],
     otherChildren.length > 0 && ['children', 'Explorer ce périmètre'],
     fields.scope && ['scope', 'Périmètre'],
@@ -220,6 +233,21 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           </div>
         </section>
         <BusinessPedagogy model={model} node={node} />
+        {hasScmStudy && (
+          <section id={`field-${node.id}-study`} tabIndex={-1} className="sheet-study">
+            <h2>Pour approfondir</h2>
+            <h3>{scmStudyFullTitle}</h3>
+            <p>{scmStudyDescription}</p>
+            <p className="detail-muted">
+              PDF · {scmStudyPages} pages · {scmStudyDate} · {scmStudyAuthor}
+            </p>
+            <a className="sheet-study-download" href={scmStudyUrl} download={scmStudyFilename}>
+              <Download size={17} aria-hidden="true" />
+              Télécharger le dossier (PDF)
+            </a>
+            <p className="detail-muted">{scmStudyTemporalLabel}</p>
+          </section>
+        )}
         {parents.length > 0 && (
           <div className="sheet-parent">
             {parents.map((relation) => (

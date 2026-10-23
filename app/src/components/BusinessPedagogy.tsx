@@ -12,9 +12,11 @@ export function BusinessPedagogy({ model, node }: { model: PublishedModel; node:
   return (
     <section id={`field-${node.id}-pedagogical_description`} tabIndex={-1} className="business-pedagogy">
       <h2>Comprendre ce périmètre</h2>
-      <p>
-        <ModelText text={publicText(block.explanation)} />
-      </p>
+      {block.explanation.split(/\n\s*\n/).map((paragraph) => (
+        <p key={paragraph}>
+          <ModelText text={publicText(paragraph)} />
+        </p>
+      ))}
       {examples.map((example) => (
         <article className="pedagogy-example" key={example.id}>
           <h3>{example.title}</h3>

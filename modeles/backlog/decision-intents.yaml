@@ -1,3 +1,65 @@
 schema_version: 1.0.0
-intents: []
+intents:
+- id: ADOPT-U1151-SCM-DESCRIPTION
+  author: Laurent
+  decided_at: '2026-10-23'
+  recorded_at: '2026-10-23'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1150
+  - U1151
+  note: 'Go sur la proposition U1150 : définition et finalité reprises sans extension. La pédagogie et les compléments sont
+    tracés dans l’annexe U1151 ; aucun autre champ approuvé par cette capture.'
+  target:
+    collection: nodes
+    id: supply-chain-orchestration
+    approved_fields:
+    - definition
+    - finality
+    values:
+      definition: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+        ventes, service après-vente, retours et déstockage.
+      finality: Tenir les [engagements](glossary:TER013) de service en maîtrisant les coûts, les délais et le [stock](glossary:TER005)
+        immobilisé, et en récupérant de la valeur sur les retours et les excédents.
+    value_sha256:
+      definition: 351dc1a0471a18cc827b02d20231ade2883b2356760c828992b7429ed81947da
+      finality: 1d9a0e964a3d3ecd8788b6a79955b93d80f7773b3f43e8688309aa096d2b0427
+    context:
+      format: semantic-sha256-v1
+      target: 337e948e354734955ef279f311cf60e4a46071e43e3fe7207faa9335dfa089da
+      principles: 2d9b358cf92c256f4bc317d3693e8dd0ec640166eca53547afad4b86346c3ad1
+      glossary: 0dcafbb3baf3cab878b78e08ce18246256ea42be1a46a8fd6f865aabfd227818
+      incident_relations:
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U1115-control-requirements-supply-chain-orchestration: beeff3cd96a366944c44c49f479a9837ac2be4f1e9e0867b2c043e5c7cd51026
+        REL-U673-PRESENTS-subdomain-policies: 6ce7f1d4bd8a3e98259f288f9bb86384481240ca5013a7bfb616bc2da8149c3d
+        REL-U682-PRESENTS-SERVICE-ORDERS: a02703567b7e7b6514adc3aa63c20e7254665283cbd1147dde8a722709b862a9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U885-PARENT-subdomain-process-management: de91f336471b8a953f120b7fa0f53540e2f18488addb530f91573d033009c71d
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U975-domain-governance-risk-compliance: dca5047082eb10ffc2ff359f78a497deffea6b3c86e3c6662a85d4a6ec259a9a
+        REL-U975-subdomain-risk-internal-control: 37d4fd3a9408b6a02c9fd4a0bd347a6599592a10fa9df65e2d57c622b862966d
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+        REL-UNIVERSE-SUPPLY-business-references: b230a48f8d30c1c227481793ce51ef4e2030ed6a2b8ff3492450a35a16a691bf
+      related_nodes:
+        D01: a02ab32c1190813ab06e0ae0ddcd0c567c300415bed377b390ae2303adcdca1c
+        D03: 5fc413e600021d405a111804b551d8b7285ba586a0a8cb0e259e0d2e9843cd67
+        D04: a422ae4a24eada1e2676953f7f1cb548e80706c215eb2fca591f998a2043446a
+        D06: 777995b7edbe75279ba70b80190a853c2f693aa6da6e4ccf78341a2758b64a49
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        business-references: 4acfaa14f209fa1e91d389558ec48b4507196cf4f2be278e0440e31e787b62b2
+        domain-governance-risk-compliance: 331fb1532c141a9c12008a9e21fe70e05ce52c6085b98ab208de8827b6cee537
+        domain-plan: 156992a96367a992ab7044f428d5f860b9453bc6c95841ce8bc856d4ee7e9202
+        subdomain-policies: 0cdfac5fb5beb4e6b8102193e26c15c8e359a10523d493dc7b00f982a9a85328
+        subdomain-process-management: 405f498f2ef12584d6ea30bf7be1dd5352e0d52c5a6edda263229b9a43307cca
+        subdomain-risk-internal-control: 0fcebc1b3a96b9b2b9ca52e172752982a22b08ffb6cff82cce73193fc69d8b31
+        subdomain-service-orders: 7e8149eda5d0a50d227bbc53a04666c844dea7ee3a090191b3d8f319807ff6e5
+        system-business-operations: 44f6b7a73d2e01592e7f073b1ecd78e92fbc8940c146a5cd6cec04e1821642a9
+        system-enterprise-management-control: 981be200ae9819c71c4224a46c22c9b741921b737571e92e57712383216c2669
+    context_sha256: 8db42dd5e125e7daff0d4f5f32202812c49ecb934caaeca71c3f27286fe2ce75
 suspensions: []

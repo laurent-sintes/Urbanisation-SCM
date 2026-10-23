@@ -18,7 +18,7 @@ import type { RouteState } from '../navigation';
 import { kindLabel } from '../presentation';
 import { publicationYamlUrl, staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
-import { scmStudyFilename, scmStudyTitle, scmStudyUrl } from '../scmStudy';
+import { scmStudyDate, scmStudyFilename, scmStudyTitle, scmStudyUrl } from '../scmStudy';
 import { type SearchResult, searchPublication } from '../search';
 import type { PublishedModel } from '../types';
 import { downloadWorkingModel, workshopUrl } from '../workshop';
@@ -343,7 +343,7 @@ export function Sidebar({
               <FileText size={15} aria-hidden="true" />
               {scmStudyTitle} (PDF)
             </span>
-            <small>Indicateurs et décisions · 22 octobre 2026</small>
+            <small>Indicateurs et décisions · {scmStudyDate}</small>
           </a>
           {model.raw.workshop && (
             <>

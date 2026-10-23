@@ -165,6 +165,15 @@ try {
   await scmBlock.waitFor();
   assert.ok((await scmBlock.innerText()).includes('cent tee-shirts'));
   assert.equal(await scmBlock.locator('.pedagogy-boundaries').count(), 1);
+  assert.equal(await scmBlock.locator(':scope > p').count(), 3);
+  await scmBlock
+    .getByRole('heading', { name: 'Choisir le site qui évite un transfert inutile', exact: true })
+    .waitFor();
+  assert.match(await scmBlock.innerText(), /220 €/);
+  assert.match(await scmBlock.innerText(), /300 €/);
+  const scmStudy = page.locator('.sheet-study');
+  await scmStudy.getByRole('link', { name: 'Télécharger le dossier (PDF)', exact: true }).waitFor();
+  assert.match(await scmStudy.innerText(), /Étude FLOW courante, commune aux versions du modèle/);
   assert.notEqual(
     await scmBlock.locator(':scope > p').first().innerText(),
     plainInlineText(model.nodeById.get('supply-chain-orchestration').definition),
@@ -191,7 +200,12 @@ try {
   await visit({ view: 'sheet', node: 'process-ledger', section: 'pedagogical_description' });
   await page.locator('.business-pedagogy').waitFor();
   await page.locator('.business-pedagogy summary').click();
-  assert.ok((await page.locator('.business-pedagogy').innerText()).includes('Appui manquant : SAP S/4HANA'));
+  // The ledger's source coverage has evolved; warnings must follow the selected snapshot.
+  const ledgerGaps = model.nodeById.get('process-ledger').fields.market_gaps || [];
+  assert.equal(
+    await page.locator('.business-pedagogy strong').filter({ hasText: 'Appui manquant :' }).count(),
+    ledgerGaps.length,
+  );
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   await page.screenshot({ path: resolve(output, 'mobile.png') });
   for (const id of ['system-business-operations', 'ba-receiving-operations', 'subdomain-strategy-objectives']) {

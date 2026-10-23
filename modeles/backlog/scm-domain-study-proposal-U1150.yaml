@@ -1,0 +1,200 @@
+schema_version: 1.0.0
+id: scm-domain-study-proposal-U1150
+status: proposed
+date: '2026-10-23'
+source_refs:
+- U1150
+authority: Proposition demandée, sans modification du modèle, du glossaire, du PDF ou du frontend ; aucune release, commit
+  ou push autorisé à ce stade.
+basis:
+  model_path: modeles/backlog/model.yaml
+  model_sha256: 4295c2a920d4cd16cd5a06503b2147f558ba0a7e986d4a45825ea6d8ffbebdff
+  glossary_path: modeles/backlog/glossary.yaml
+  glossary_sha256: bfc4351760823ae6709c7e23b75764dbe477dae0826059d20aa610fb82ad0904
+  publication_descriptor: modeles/release/urbanisation-v091-2026-10-23.2.yaml
+  publication_version: 2026-10-23.2
+  domain_id: supply-chain-orchestration
+  term_id: TER035
+  pdf:
+    path: output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf
+    sha256: 857b88a22f6d083bdfe05f9a4d804e34e94a7de29bb0bb88e52682b0348ef7e0
+    pages: 27
+    edition: director-guide-2026-10-22-v8
+    cover_date: '2026-10-22'
+    displayed_author: Laurent Sintès
+    read_pages:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 7
+    - 14
+    - 16
+    - 17
+    - 18
+    - 22
+    scope_of_reading: Définition, leviers, sept KPI, exemples et impacts du dossier ; pas une nouvelle validation de toutes
+      ses références ou de tous ses calculs.
+findings:
+- id: F01
+  finding: La définition actuelle commence par organiser les ressources et prestations ; elle rend peu visible le pilotage
+    intégré des flux et ses objectifs.
+  action: Formuler directement service rendu, largeur du parcours et compromis à piloter.
+- id: F02
+  finding: La pédagogie actuelle présente surtout rapprochement des demandes et coordination des prestations ; l’appoint nearshore
+    est déjà illustré.
+  action: Expliquer les arbitrages de bout en bout, la boucle faits–plans–décisions–résultats et ajouter le cas de préparation
+    sans transfert, sans retirer les exemples existants.
+- id: F03
+  finding: Le dossier développe service, risque de retard, coût, transferts, surplus, délais et valeur récupérée.
+  action: En donner une synthèse dans la fiche et renvoyer au PDF pour les sept KPI, six questions et fiches de calcul ; ne
+    pas copier un tableau de bord ni adopter les cibles fictives.
+- id: F04
+  finding: Le dossier page 22 se réfère à la v087 ; le modèle courant a intégré en U1146 les précisions de délai de décision
+    et de conditionnements, avant l’intercompany U1149.
+  action: Présenter ces responsabilités comme documentées dans le modèle courant, sans reprendre comme statuts actuels les
+    réserves temporelles du dossier. Les réalisations et résultats restent à prouver.
+- id: F05
+  finding: Le PDF est une étude courante commune aux versions, importée dans scmStudy.ts et déjà accessible depuis Télécharger
+    et Documents → Études FLOW.
+  action: Ajouter un accès contextuel au même asset dans la fiche du domaine, avec qualification temporelle visible.
+proposed_domain_fields:
+  definition: Piloter les ressources et les flux entre l’offre et la demande, en reliant achats, stocks, ventes, service après-vente,
+    retours et déstockage.
+  finality: Tenir les engagements de service en maîtrisant les coûts, les délais et le stock immobilisé, et en récupérant
+    de la valeur sur les retours et les excédents.
+  scope_change:
+    operation: prepend_paragraph
+    text: Le pilotage relie l’offre et la demande sur les parcours d’achat, de vente, de service après-vente, de retour et
+      de déstockage. Les choix portent sur les ressources utilisables, les priorités, les lots, les destinations et les prestations.
+      Leurs effets sont appréciés ensemble sur le service, les coûts, les délais, le stock et la valeur récupérée.
+    preserve: Conserver la liste et les frontières des neuf sous-domaines ainsi que le cadrage offshore/nearshore, les règles
+      de délégation, les limites des données et les distinctions planification/engagement/exécution.
+  pedagogical_description:
+    explanation: |-
+      Ce domaine prépare et ajuste la façon dont les produits sont approvisionnés, affectés, livrés, repris ou réorientés. Il rapproche les demandes, le stock, les apports attendus et les capacités de prestation pour construire des engagements réalisables.
+
+      Il compare les options sur l’ensemble du parcours : acheter autrement, choisir un autre site préparateur, adapter les lots, protéger une quantité pour le service après-vente ou remettre un retour en état. Une économie locale peut augmenter le coût ou le délai ailleurs. Les décisions tiennent compte des règles, des ressources et des engagements déjà pris.
+
+      Les résultats observés permettent de réviser les plans et les règles de gestion. Le pilotage relie la planification, les décisions et leurs effets réels ; il distingue le temps nécessaire pour disposer de l’information, décider et réaliser l’action.
+    additional_example:
+      id: whole-chain-preparation-choice-U1150
+      title: Choisir le site qui évite un transfert inutile
+      situation: 'Exemple fictif : une commande de 100 pièces peut être préparée depuis A après un transfert de 70 pièces
+        depuis B, ou directement depuis B. Les deux options permettent de tenir la date demandée et préservent le stock protégé
+        pour le service après-vente.'
+      contribution: Comparer les ressources utilisables, la faisabilité et le coût du parcours complet avant d’autoriser le
+        choix du site préparateur.
+      outcome: 'L’option depuis B coûte ici 220 € de préparation et transport, contre 300 € depuis A : un transfert préalable
+        est évité. Les effets réels sur le service, le coût et les autres engagements restent à vérifier après exécution.'
+      lesson: Le transport final peut être plus cher alors que le parcours complet est moins coûteux. Une simulation ne prouve
+        pas un gain réalisé.
+      source_pdf_page: 14
+    boundary_explanation: Le domaine tient les plans, commandes, engagements et faits de stock de son périmètre, arbitre les
+      usages des ressources et coordonne les prestations confiées. Commerce conserve offres, canaux et décisions commerciales
+      ; Sourcing and Procurement conserve sources, accords et échanges fournisseur. Finance garde les autorités financières
+      ; Logistics et les autres exécutants réalisent les opérations. Les cas de fabrication ne sont pas ajoutés au modèle
+      actuel. Cette répartition n’exclut ni la planification ni les commandes de vente et d’achat du domaine, et ne présume
+      aucun moteur ou déploiement unique.
+    preserve_existing_examples: true
+    guidance: 'Réutiliser le contrat pédagogique structuré existant : exemple dans fields.examples, référence dans example_refs
+      ; frontières dans distinctions avec les périmètres concernés. Aucun nouveau champ de métamodèle nécessaire pour ces
+      textes.'
+proposed_glossary_alignment:
+  id: TER035
+  definition: Piloter les ressources et les flux entre l’offre et la demande, en reliant achats, stocks, ventes, service après-vente,
+    retours et déstockage.
+  short_description: Pilotage des ressources et des flux entre offre et demande, sur les parcours d’achat, de vente, de retour
+    et de déstockage.
+  context_append: Le domaine tient les plans, commandes, engagements et faits de stock de son périmètre, arbitre les usages
+    des ressources et coordonne les prestations confiées. Commerce conserve offres, canaux et décisions commerciales ; Sourcing
+    and Procurement conserve sources, accords et échanges fournisseur. Finance garde les autorités financières ; Logistics
+    et les autres exécutants réalisent les opérations. Les cas de fabrication ne sont pas ajoutés au modèle actuel. Cette
+    répartition n’exclut ni la planification ni les commandes de vente et d’achat du domaine, et ne présume aucun moteur ou
+    déploiement unique.
+  editorial_alignment: Réexaminer dans le même lot market_inspiration, résumés, exemples et correspondances du domaine et
+    de TER035. Remplacer le cadrage réducteur de coordination par le pilotage intégré, en conservant les différences avec
+    la discipline étendue et les offres éditeur. Les correspondances Oracle/IOM plus étroites restent qualifiées, pas effacées.
+proposed_reading_order:
+- Définition courte
+- 'Comprendre ce périmètre : pilotage et arbitrages'
+- 'Pour approfondir : dossier PDF'
+- Illustrations métier, dont le choix du site préparateur
+- Explorer ce périmètre
+- Périmètre détaillé et frontières
+- Scénarios mobilisant ce périmètre et responsabilités liées
+proposed_download:
+  section_title: Pour approfondir
+  title: 'Piloter la supply chain : indicateurs et décisions'
+  description: Définition du SCM, leviers de pilotage, sept indicateurs, six questions et exemples de décisions.
+  metadata: PDF · 27 pages · 22 octobre 2026 · Laurent Sintès
+  action_label: Télécharger le dossier (PDF)
+  temporal_label: Étude FLOW courante, commune aux versions du modèle.
+  placement: Dans la fiche, après le bloc pédagogique et avant les illustrations et le détail du périmètre ; aucune action
+    Comprendre ajoutée aux cartes et listes.
+  node_binding:
+    node_id: supply-chain-orchestration
+    strategy: Identité persistante du domaine, sans condition sur son libellé ni inférence sur les autres nœuds.
+  source_module: app/src/scmStudy.ts
+  implementation: Réutiliser scmStudyUrl et scmStudyFilename. Centraliser le titre complet, la date, l’auteur et les informations
+    documentaires communes aux trois accès. Conserver un fichier PDF source unique ; aucune URL d’asset généré codée en dur
+    ni copie dans les publications.
+  historical_behavior: Même étude actuelle que le menu et Documents → Études FLOW ; étiquette explicite en consultation historique.
+    Le texte métier reste celui du snapshot consulté ; aucune reprise du backlog ou nouvelle rédaction injectée dans l’historique.
+  accessibility: Lien natif clavier avec intitulé explicite et attribut download ; disponibilité et identité du fichier vérifiables
+    localement et après déploiement.
+boundaries:
+- Aucun renommage, parent, nouvelle capacité, flux, formule ou objectif chiffré ajouté.
+- La métaphore de la plomberie sert d’aide à la lecture dans le dossier ; elle ne devient pas une taxonomie du modèle.
+- Promesse réalisable, autorisation de décision, réservation éventuelle et réalisation restent distinguées.
+- Les sept KPI et les six questions restent développés dans le dossier ; les valeurs fictives ne deviennent pas des objectifs
+  Beaumanoir.
+- Le PDF lui-même reste inchangé dans cette proposition. Une révision ultérieure du dossier déclencherait sa procédure de
+  synchronisation locale et distante.
+market_sources:
+- publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Welcome to Dynamics 365 Supply Chain Management
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+  consulted_on: '2026-10-23'
+  edition: Documentation évolutive ; mise à jour affichée 2025-09-10
+  locator: Core concepts and tasks
+  consulted_content: Présentation du périmètre du produit incluant planification, stock, achats et fonctions d’exécution.
+  relationship: Recouvrement partiel à la maille domaine
+  similarity: Planification et exécution appartiennent à un ensemble intégré.
+  difference: L’offre inclut aussi production, achats et exécution physique ; les domaines et acteurs FLOW conservent leurs
+    frontières. Le catalogue produit n’est pas une définition normative de la discipline SCM.
+  access_limits: Le corps de la page est lisible malgré une bannière générique d’autorisation ; aucune configuration installée,
+    édition client ou réalisation Beaumanoir vérifiée.
+- publisher: SAP
+  product: SAP S/4HANA Cloud Public Edition et Private Edition
+  title: Supply Chain Management — SAP Learning
+  url: https://learning.sap.com/products/supply-chain-management
+  consulted_on: '2026-10-23'
+  edition: Page de gamme évolutive ; release unique non applicable
+  locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition / Private Edition
+  consulted_content: 'Présentation de la gamme : chaînes connectées, visibilité, performance, planification et exécution ;
+    liens vers les parcours S/4HANA.'
+  relationship: Recouvrement partiel à la maille domaine
+  similarity: Pilotage et exécution sont reliés à une lecture de la performance de la chaîne.
+  difference: La page présente aussi des offres SAP complémentaires, dont IBP ; leur couverture n’est pas attribuée automatiquement
+    à S/4HANA. Ni la taxonomie ni tout le périmètre de la gamme ne sont repris dans FLOW.
+  access_limits: Présentation primaire consultée ; ne prouve ni chacun des leviers détaillés du PDF ni une capacité installée
+    chez Beaumanoir.
+delivery_if_approved:
+  model: Appliquer les champs au domaine et à TER035 ; relier le jargon aux entrées appropriées et aligner synthèses pédagogiques
+    et marché ; préserver les autres accords et les publications historiques.
+  frontend: Ajouter l’accès contextuel au PDF et centraliser ses métadonnées partagées. Les tooltips restent la définition
+    courte.
+  checks: Contrôle backlog avec rendu, tests de cohérence et de pédagogie, tests frontend et build, téléchargement comparé
+    octet pour octet aux trois accès, navigation clavier et consultation historique.
+  publication: Une évolution de fiche métier nécessite une nouvelle release ; l’accès logiciel au PDF nécessite build et déploiement.
+    La proposition seule ne déclenche aucune de ces opérations.
+verification:
+  state: passed
+  scope: 'Proposition documentaire seulement : cohérence des références, sources, empreintes et absence de modification canonique.'
+  checks:
+  - Lecture YAML stricte et références locales vérifiées.
+  - Empreintes du modèle, du glossaire et du PDF inchangées.
+  - Proposition sans modification canonique ni application frontend.

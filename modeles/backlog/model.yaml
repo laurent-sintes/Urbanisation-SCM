@@ -4282,13 +4282,12 @@ nodes:
       ; les accords historiques restent limités à leurs champs, et l’ordre de lecture est capturé séparément.
   last_modified: '2026-10-16T18:01:37Z'
 - id: supply-chain-orchestration
-  revision: 26
+  revision: 27
   kind: domain
   fields:
     name: Supply Chain Management
-    definition: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
-      et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
-      et suivre leurs résultats.
+    definition: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+      ventes, service après-vente, retours et déstockage.
     market_comparisons:
     - vendor: Zacharia, Sanders et Nix
       product: Recherche — Journal of Business Logistics
@@ -4298,21 +4297,10 @@ nodes:
       similarities: L’orchestration coordonne un réseau de partenaires et facilite leur coopération par le partage de l’information.
       differences: L’article étudie le rôle d’un prestataire logistique coordonnant plusieurs entreprises. FLOW décrit des
         responsabilités métier sans imposer ce prestataire ni cette organisation.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Orchestrator atteste un usage scientifique de la notion d’orchestration, distinct d’un nom de logiciel.
       definition_choice: Décrire les responsabilités et leur coopération sans présupposer l’acteur qui les réalisera.
       concept_name: Orchestrator
@@ -4340,21 +4328,10 @@ nodes:
       similarities: Le référentiel relie la coordination des acteurs, les règles et la performance de la chaîne.
       differences: Orchestrate dans SCOR comprend notamment stratégie, risques et ressources. FLOW se concentre sur commandes,
         stocks, engagements, optimisation et coordination de la réalisation.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Orchestrate est un usage professionnel du vocabulaire d’orchestration ; ce nom ne suffit pas à établir
         une équivalence.
       definition_choice: Conserver la responsabilité de coordination au périmètre FLOW sans reprendre l’ensemble de la stratégie
@@ -4386,21 +4363,10 @@ nodes:
       similarities: Le SCM inclut coordination des partenaires, approvisionnement, transformation et logistique.
       differences: Ce périmètre professionnel est plus large que le domaine FLOW ; SCM ne désigne pas seulement son noyau
         d’orchestration.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Management nomme le périmètre fonctionnel FLOW retenu sous U1121. La discipline SCM couvre
         une chaîne plus large ; les responsabilités applicables et les coopérations sont précisées sans déduire une réalisation
         interne de toutes les activités.
@@ -4433,26 +4399,13 @@ nodes:
       element_name: Welcome to Dynamics 365 Supply Chain Management
       element_type: Périmètre de produit
       relationship: Recouvrement partiel
-      similarities: La suite couvre notamment produits, stocks, planification, achats, production et entrepôts.
-      differences: 'Dynamics regroupe aussi sourcing, conception produit, production, entrepôts, transport et d’autres responsabilités.
-        FLOW conserve ses frontières métier : maîtrise des données d’entreprise, sourcing, décisions commerciales et financières
-        et réalisation logistique sont distincts. Production non applicable à Beaumanoir et logistique externalisée ne retirent
-        pas au domaine sa responsabilité de Supply Chain Management.'
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      similarities: Planification et exécution appartiennent à un ensemble intégré.
+      differences: L’offre inclut aussi production, achats et exécution physique ; les domaines et acteurs FLOW conservent
+        leurs frontières. Le catalogue produit n’est pas une définition normative de la discipline SCM.
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Management rend visibles la gestion des plans, des stocks, des commandes et de leurs engagements.
         La liste des modules Dynamics ne prescrit pas la frontière du domaine FLOW ; absence de fabrication et externalisation
         logistique ne suffisent pas à écarter ce nom.
@@ -4462,9 +4415,9 @@ nodes:
         Le périmètre de la suite Dynamics reste distinct du domaine métier FLOW.
       source_title: Welcome to Dynamics 365 Supply Chain Management
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
-      source_version: Page mise à jour le 10 septembre 2025
+      source_version: Documentation évolutive ; mise à jour affichée 2025-09-10
       source_locator: Core concepts and tasks
-      consulted_on: '2026-10-16'
+      consulted_on: '2026-10-23'
       status: proposed
       source_refs:
       - U470
@@ -4477,8 +4430,10 @@ nodes:
       - U1119
       - U1120
       - U1121
-      evidence_limits: Passage primaire consulté ; rapprochement limité au périmètre décrit, sans équivalence de catalogue,
-        choix de solution ni réalisation Beaumanoir déduite.
+      - U1150
+      - U1151
+      evidence_limits: Le corps de la page est lisible malgré une bannière générique d’autorisation ; aucune configuration
+        installée, édition client ou réalisation Beaumanoir vérifiée.
       concept_name: Supply Chain Management
       scope_summary: Produits, stocks, achats, planification, production, entrepôts et transport.
       approach_summary: Réunir ces fonctions dans une suite logicielle.
@@ -4492,21 +4447,10 @@ nodes:
       differences: Le module Oracle coopère avec Promising, Inventory et Order Management ; le domaine FLOW regroupe aussi
         des responsabilités que ces produits portent séparément. Supply Planning émet également des demandes vers ce composant
         ; FLOW place sa planification dans le même Domain.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Orchestration reste le nom natif du produit Oracle. Cet appui éclaire une partie de la coordination
         de Supply Chain Management dans FLOW, sans équivalence entre le produit et le domaine.
       definition_choice: Le nom met l’accent sur la coordination des engagements et des moyens de les satisfaire ; il ne signifie
@@ -4543,21 +4487,10 @@ nodes:
       similarities: Coordination de la planification et de l'exécution, avec adaptation aux changements.
       differences: Offre allant de la stratégie pluriannuelle à la livraison ; FLOW conserve un périmètre Supply plus limité
         et la réalisation physique reste chez les exécutants.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Supply Chain Orchestration
       source_url: https://www.kinaxis.com/en/solutions/supply-chain-orchestration
       source_version: Page évolutive ; édition non indiquée
@@ -4601,21 +4534,10 @@ nodes:
         de plans, stocks, commandes et engagements ; il ne reprend pas le périmètre entier de l’offre produit.
       evidence_limits: Appui au vocabulaire et au lien entre planification et réalisation ; ni consensus interéditeurs établi
         par ces deux documents Kinaxis, ni architecture obligatoire, ni réalisation installée prouvés.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       status: proposed
       source_refs:
       - ELM647
@@ -4643,21 +4565,10 @@ nodes:
       similarities: Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours d’exécution.
       differences: Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation Beaumanoir ; les
         capacités dépassent la couverture d’un seul produit.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Intelligent Order Management overview | Microsoft Learn
       source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -4693,21 +4604,10 @@ nodes:
         suit les échanges intercompany.
       differences: Appui à la propriété contractuelle et à un parcours orchestré ; VCM ne démontre pas une orchestration universelle
         ni toutes les adaptations locales de FLOW.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Executing the Advanced Intercompany Sales and Stock Transfer Proc
       source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -4738,40 +4638,27 @@ nodes:
       scope_summary: La page distingue les repères SCM de SAP S/4HANA Cloud Public et Private Edition et les autres solutions
         de la famille SAP.
       approach_summary: Repères de portée du SCM, distincts d’un catalogue équivalent aux responsabilités FLOW.
-      similarities: La gestion de la supply chain associe planification et conduite des opérations ; le nom peut couvrir plusieurs
-        responsabilités coopérantes.
-      differences: La famille et les éditions SAP regroupent aussi des activités non applicables ou confiées à d’autres domaines
-        dans FLOW. Les solutions IBP, GTS et Digital Manufacturing citées hors sections S/4HANA ne prouvent pas une couverture
-        native S/4HANA.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      similarities: Pilotage et exécution sont reliés à une lecture de la performance de la chaîne.
+      differences: La page présente aussi des offres SAP complémentaires, dont IBP ; leur couverture n’est pas attribuée automatiquement
+        à S/4HANA. Ni la taxonomie ni tout le périmètre de la gamme ne sont repris dans FLOW.
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Supply Chain Management | SAP Learning
       source_url: https://learning.sap.com/products/supply-chain-management
-      source_version: Page évolutive sans numéro d’édition ; sections explicitement dédiées à SAP S/4HANA Cloud Public Edition
-        et Private Edition.
-      source_locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition ; Browse the supply
-        chain management capabilities in SAP S/4HANA Cloud Private Edition.
-      consulted_on: '2026-10-16'
-      evidence_limits: Présentation de portée réellement consultée ; ne démontre ni une équivalence de catalogue, ni la couverture
-        complète du domaine, ni une réalisation Beaumanoir. Les fonctions détaillées s’appuient sur leurs documents propres.
+      source_version: Page de gamme évolutive ; release unique non applicable
+      source_locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition / Private Edition
+      consulted_on: '2026-10-23'
+      evidence_limits: Présentation primaire consultée ; ne prouve ni chacun des leviers détaillés du PDF ni une capacité
+        installée chez Beaumanoir.
       status: proposed
       source_refs:
       - U1119
       - U1120
       - U1121
+      - U1150
+      - U1151
       term_choice: Supply Chain Management est le nom métier local adopté U1121. Le périmètre produit SAP et ses intitulés
         de formation ne sont pas des frontières imposées au domaine.
       definition_choice: Conserver la gestion des plans, stocks, commandes et engagements au périmètre FLOW, avec coopération
@@ -4885,18 +4772,33 @@ nodes:
       - U1133
       - U1134
       - U1135
-    finality: Satisfaire les besoins de la chaîne d’approvisionnement avec des engagements explicites et une utilisation cohérente
-      des ressources.
+    - id: whole-chain-preparation-choice-U1150
+      title: Choisir le site qui évite un transfert inutile
+      situation: 'Exemple fictif : une commande de 100 pièces peut être préparée depuis A après un transfert de 70 pièces
+        depuis B, ou directement depuis B. Les deux options permettent de tenir la date demandée et préservent le [stock](glossary:TER005)
+        protégé pour le service après-vente.'
+      outcome: 'L’option depuis B coûte ici 220 € de préparation et transport, contre 300 € depuis A : un transfert préalable
+        est évité. Les effets réels sur le service, le coût et les autres [engagements](glossary:TER013) restent à vérifier
+        après exécution.'
+      lesson: Le transport final peut être plus cher alors que le parcours complet est moins coûteux. Une simulation ne prouve
+        pas un gain réalisé.
+      source_refs:
+      - U1150
+      - U1151
+    finality: Tenir les [engagements](glossary:TER013) de service en maîtrisant les coûts, les délais et le [stock](glossary:TER005)
+      immobilisé, et en récupérant de la valeur sur les retours et les excédents.
     scope: |-
+      Le pilotage relie l’offre et la [demande](glossary:TER011) sur les parcours d’achat, de vente, de service après-vente, de retour et de déstockage. Les choix portent sur les ressources utilisables, les priorités, les lots, les destinations et les prestations. Leurs effets sont appréciés ensemble sur le service, les coûts, les délais, le [stock](glossary:TER005) et la valeur récupérée.
+
       [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
 
       Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
     market_inspiration:
-      choice: Supply Chain Management relie les choix du [Master Plan](model:domain-plan), les changements autorisés aux commandes
-        et la coordination des prestations.
-      flow_scope: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
-        et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
-        et suivre leurs résultats.
+      choice: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions,
+        [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005)
+        et valeur récupérée.
+      flow_scope: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+        ventes, service après-vente, retours et déstockage.
       flow_approach: |-
         Le domaine réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Ces périmètres coopèrent par des informations, des décisions et des engagements explicites.
 
@@ -4923,6 +4825,10 @@ nodes:
         et coordination de la réalisation.
       - Le SCM inclut coordination des partenaires, approvisionnement, transformation et logistique. Ce périmètre professionnel
         est plus large que le domaine FLOW ; SCM ne désigne pas seulement son noyau d’orchestration.
+      - U1150–U1151 — Le dossier de pilotage explicite les arbitrages sur le parcours complet et la mesure de leurs effets.
+        Les offres Microsoft Dynamics 365 SCM et SAP S/4HANA relient planification et exécution ; leurs périmètres produits
+        ne définissent pas les frontières de FLOW. Les exemples chiffrés du dossier sont fictifs, sans objectif ou gain Beaumanoir
+        présumé.
       examples:
       - title: Illustration FLOW
         situation: Une campagne augmente les besoins tandis qu’un prestataire prend du retard.
@@ -4934,11 +4840,12 @@ nodes:
         - U626
     modeling_depth: behaviors
     pedagogical_description:
-      explanation: Ce domaine aide à satisfaire une demande avec les produits et les prestations disponibles ou à obtenir.
-        Il rapproche les besoins, les stocks et les possibilités d’approvisionnement, puis suit les commandes et coordonne
-        les prestations nécessaires. Il permet aussi de revoir une solution lorsqu’un retard ou un manque apparaît. Dans un
-        mode saisonnier, il peut décider des commandes d'appoint [nearshore](glossary:TER383), après contrôle [CTP](glossary:TER045)
-        et comparaison économique, dans les délégations prévues.
+      explanation: |-
+        Ce domaine prépare et ajuste la façon dont les produits sont approvisionnés, affectés, livrés, repris ou réorientés. Il rapproche les [demandes](glossary:TER011), le [stock](glossary:TER005), les apports attendus et les capacités de prestation pour construire des [engagements](glossary:TER013) réalisables.
+
+        Il compare les options sur l’ensemble du parcours : acheter autrement, choisir un autre site préparateur, adapter les lots, protéger une quantité pour le service après-vente ou remettre un retour en état. Une économie locale peut augmenter le coût ou le délai ailleurs. Les décisions tiennent compte des règles, des ressources et des [engagements](glossary:TER013) déjà pris.
+
+        Les résultats observés permettent de réviser les plans et les règles de gestion. Le pilotage relie la planification, les décisions et leurs effets réels ; il distingue le temps nécessaire pour disposer de l’information, décider et réaliser l’action.
       example_refs:
       - node_id: supply-chain-orchestration
         example_id: illustration-supply-chain-orchestration-U1125
@@ -4947,10 +4854,27 @@ nodes:
         example_id: offshore-nearshore-supply-chain-orchestration-U1134
         contribution: Avant d'engager le socle, comparer notamment 950 pièces initiales et un appoint de 250. Pendant la saison,
           ne déclencher l'appoint que si le besoin, la faisabilité, l'économie et les autorisations le justifient.
+      - node_id: supply-chain-orchestration
+        example_id: whole-chain-preparation-choice-U1150
+        contribution: Comparer les ressources utilisables, la faisabilité et le coût du parcours complet avant d’autoriser
+          le choix du site préparateur.
       distinctions:
       - node_id: D01
         explanation: Inventory Management établit les faits et les quantités de stock. Ce domaine utilise cette référence
           avec les commandes, les plans et les prestations pour organiser la satisfaction de la demande.
+      - node_id: domain-sales
+        explanation: '[Commerce](glossary:TER108) conserve les offres, les canaux et les décisions commerciales. Le domaine
+          Supply tient les commandes de vente ayant un impact sur le [stock](glossary:TER005) et leurs [engagements](glossary:TER013).'
+      - node_id: domain-sourcing-procurement
+        explanation: '[Sourcing and Procurement](glossary:TER109) conserve les sources, accords et échanges fournisseur. Le
+          domaine Supply tient les commandes d’achat et peut décider un appoint dans les délégations prévues.'
+      - node_id: domain-finance
+        explanation: Finance conserve les autorités financières et les règles comptables ; le domaine Supply fournit les faits
+          nécessaires, sans se substituer à ces responsabilités.
+      - node_id: domain-logistics-execution
+        explanation: '[Logistics](glossary:TER110) et les autres exécutants réalisent les opérations physiques. Le domaine
+          Supply coordonne les prestations confiées et suit leurs résultats. La fabrication n’est pas ajoutée au modèle actuel
+          ; cette répartition ne présume aucun moteur ou déploiement unique.'
       market_comparison_refs:
       - node_id: supply-chain-orchestration
         comparison_id: market-supply-chain-orchestration-1
@@ -4966,6 +4890,8 @@ nodes:
       - U1133
       - U1134
       - U1135
+      - U1150
+      - U1151
   source_refs:
   - C108
   - C78
@@ -5056,6 +4982,8 @@ nodes:
   - U1133
   - U1134
   - U1135
+  - U1150
+  - U1151
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u373
@@ -5063,7 +4991,7 @@ nodes:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
       comparaisons conservent leur qualification propre.
-  last_modified: '2026-10-16T00:00:00Z'
+  last_modified: '2026-10-23T00:00:00Z'
 - id: business-references
   revision: 20
   kind: area

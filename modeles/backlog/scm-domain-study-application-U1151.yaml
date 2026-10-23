@@ -1,0 +1,128 @@
+schema_version: 1.0.0
+id: scm-domain-study-application-U1151
+status: applied
+date: '2026-10-23'
+source_refs:
+- U1150
+- U1151
+proposal: scm-domain-study-proposal-U1150.yaml
+scope: Fiche du domaine et TER035 alignés sur le dossier ; téléchargement du PDF courant dans la fiche. Identités, hiérarchie,
+  autres fiches et PDF inchangés.
+approval_boundary: U1151 approuve la proposition U1150. Les nouveaux résumés marché et formulations détaillées des distinctions
+  restent des compléments éditoriaux proposés ; aucun accord étendu automatiquement.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1150
+  - U1151
+  summary: Pilotage global des ressources et des flux, pédagogie et accès contextuel au dossier SCM.
+  required_nodes:
+  - id: supply-chain-orchestration
+    kind: domain
+    field_sha256:
+      definition: 351dc1a0471a18cc827b02d20231ade2883b2356760c828992b7429ed81947da
+      market_comparisons: 1d7ed5b26bd1a286eb9b2879239877ba906da1fd81ab59e72b6b75a2a0756adc
+      examples: 7aab0fb12dab353e6af5f3937f2987d5d38d78c8933affb891511655c6d83024
+      finality: 1d9a0e964a3d3ecd8788b6a79955b93d80f7773b3f43e8688309aa096d2b0427
+      scope: 2c647422fc39cab67fbd300d4d175ea8c6d9c670e6d8b6e2d319f0830cf30c51
+      market_inspiration: 87a64f7d80db49e909c336b52c10c78fd8bd86f5e18e6ece27f66b9393207c06
+      pedagogical_description: 0f697a0a128cadf4c0f26655fa2d93b1ef5fe7606c36da18a85ec5e58cbc8e95
+  supersedes_requirements:
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - definition
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - definition
+    - finality
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - definition
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - examples
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: terms
+    id: TER035
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - definition
+    - finality
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_inspiration
+  - annex: supply-domain-rename-U1121.yaml
+    collection: terms
+    id: TER035
+    fields:
+    - definition
+  required_glossary:
+  - id: TER035
+    field_sha256:
+      short_description: 4d7b6bf85e00dbaf5cf3da6337b1c8638990127275b3d34df2c4bdbc8907cbac
+      definition: 351dc1a0471a18cc827b02d20231ade2883b2356760c828992b7429ed81947da
+      context: 526fc9a4e99e2efa347d26f63f057bab700f8bd0894638b60daf5b227e9d08cd
+      market_inspiration: 70613b91b670c07360b7e6cc9dd75a7407bf5eadb5961903355abd943d7028be
+verification:
+  state: passed
+  backlog_errors: 0
+  pending_delivery_lots: 0
+  backlog_rendered: true
+  source_index_records: 3184
+  python_tests:
+    passed: 30
+    modules:
+    - scripts.test_model_coherence
+    - scripts.test_glossary
+    - scripts.test_pedagogy
+    - scripts.test_market_comparisons
+    - scripts.test_market_vendor_policy
+  frontend_tests:
+    passed: 4
+    files:
+    - app/test-pedagogy.mjs
+    - app/test-document-catalog.mjs
+  browser_checks:
+    pedagogical_sheets: 142
+    static_downloads: passed
+    three_accesses_same_pdf_bytes: true
+    keyboard: passed
+    mobile: passed
+    current_version: 2026-10-23.2
+    historical_version: 2026-10-23.1
+    historical_definitions_preserved: true
+  build: pnpm --dir app build réussi ; données publiées inchangées.
+  code_style: Biome et git diff --check réussis.
+  scope_integrity: Un domaine et TER035 modifiés ; autres objets, relations, catalogues, hiérarchie et PDF préservés. Anciennes
+    illustrations conservées.
+  publication: Aucune release, commit ou push effectué. La nouvelle rédaction est dans le backlog ; le téléchargement est
+    disponible dans le build local.
+proposal_sha256: 619015bdc70d10dbc37ee6370c5d9e6a0e29b6d25ecb53a9893661ebbc1854b2
+approved_fragments:
+  source_ref: U1151
+  proposal_ref: scm-domain-study-proposal-U1150.yaml
+  items:
+  - Définition et finalité capturées au registre sur leurs valeurs finales.
+  - Explication pédagogique en trois paragraphes et exemple du site préparateur approuvés dans la proposition U1150, avec
+    liens de glossaire ajoutés.
+  - Principe des frontières et téléchargement contextuel du PDF commun aux trois accès approuvés.
+  qualification_limit: Les nouveaux résumés marché et les formulations détaillées des distinctions restent proposés. Le contrat
+    de capture porte sur des champs entiers ; la qualification limitée des autres fragments est explicitée ici sans adopter
+    le bloc composite en entier.

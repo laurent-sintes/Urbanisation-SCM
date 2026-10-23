@@ -26030,3 +26030,25 @@ Date : 2026-10-23. Source : Laurent, autorisation d’appliquer les préconisati
 Verbatim : « Go pour appliquer les préconisations de l'audit »
 
 Portée : appliquer le lot cohérent des dix constats IC01–IC10 de l’audit U1147, avec la clarification U1148 : engagements réciproques et changements, chaîne de factures et traitement acheteur, transfert sans client externe, identité des sociétés, prix interne distinct du prix externe, retours réciproques, pilotage des Cases, transit et double comptage, frontière Finance et glossaire. Réutiliser les capacités et profondeurs existantes ; les règles fiscales, autorités de prix non documentées et réalisations installées ne sont pas inventées. Le Go approuve les recommandations présentées, sans adoption automatique des formulations et exemples rédigés ensuite. Aucun commit, release ou push demandé.
+
+## U1150
+
+Date : 2026-10-23. Source : Laurent, demande de proposition d’évolution de la fiche Supply Chain Management à partir du dossier de pilotage.
+
+Verbatim : « Le document pdf téléchargeable sur le pilotage de la Supply chain Management est interessant car il contient aussi une définition de la Supply Chain Management.
+
+Je souhaite que la fiche du domaine Supply chain Management soit revue suite aux apport du document et qu'elle propose aussi le téléchargement du pdf en plus du menu téléchargement.
+
+Tu peux me faire une proposition d'évolution ? »
+
+Portée : lire le dossier de pilotage téléchargeable, comparer ses apports à la fiche du domaine et au glossaire, puis proposer une évolution cohérente des descriptions, explications, frontières et accès au même PDF depuis la fiche. La demande porte sur une proposition : aucun changement du modèle canonique, du PDF ou de l’interface, ni release, commit ou push n’est demandé à ce stade.
+
+Proposition : [évolution de la fiche Supply Chain Management à partir du dossier de pilotage](../modeles/backlog/scm-domain-study-proposal-U1150.yaml).
+
+## U1151
+
+Date : 2026-10-23. Source : Laurent, accord sur la proposition U1150.
+
+Verbatim : « Go pour appliquer cette proposition à la fiche Supply Chain Management et ajouter le téléchargement du PDF dans la fiche. »
+
+Portée : appliquer la proposition complète U1150 : définition courte, finalité, explication pédagogique, exemple du site préparateur, frontières et alignement de TER035 ; ajouter dans la fiche l’accès au PDF courant, commun au menu Télécharger et aux Études FLOW. Préserver les exemples, responsabilités et publications historiques. Le PDF reste inchangé ; aucun commit, release ou push demandé. Les formulations approuvées sont distinguées des compléments éditoriaux rédigés pendant l’application.

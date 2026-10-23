@@ -4078,13 +4078,16 @@ terms:
   presentation: historical
 - id: TER035
   name: Supply Chain Management
-  short_description: Coordination et optimisation métier de la satisfaction des demandes Supply.
-  definition: Périmètre métier qui coordonne et optimise la satisfaction des demandes en mobilisant commandes, stocks, engagements
-    et services exécutants.
+  short_description: Pilotage des ressources et des flux entre offre et [demande](glossary:TER011), sur les parcours d’achat,
+    de vente, de retour et de déstockage.
+  definition: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+    ventes, service après-vente, retours et déstockage.
   context: |-
     Sens fonctionnel local porté par [Supply Chain Management](model:supply-chain-orchestration), distinct du côté ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
 
     Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
+
+    Le domaine tient les plans, commandes, [engagements](glossary:TER013) et faits de [stock](glossary:TER005) de son périmètre, arbitre les usages des ressources et coordonne les prestations confiées. [Commerce](model:domain-sales) conserve offres, canaux et décisions commerciales ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve sources, accords et échanges fournisseur. [Finance](model:domain-finance) garde les autorités financières ; [Logistics](glossary:TER110) et les autres exécutants réalisent les opérations. Les cas de fabrication ne sont pas ajoutés au modèle actuel. Cette répartition n’exclut ni la planification ni les commandes de vente et d’achat du domaine, et ne présume aucun moteur ou déploiement unique.
   notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
     la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
     toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
@@ -4120,6 +4123,8 @@ terms:
   - U1133
   - U1134
   - U1135
+  - U1150
+  - U1151
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -4341,15 +4346,20 @@ terms:
     - U1134
     - U1135
   market_inspiration:
-    choice: Nommer le périmètre FLOW qui coordonne la satisfaction des demandes avec commandes, stocks, engagements et services.
-      Supply, dans ce sens fonctionnel local, ne désigne ni les seules ressources disponibles ni toute la Supply Chain.
-    flow_scope: Coordination et optimisation de la satisfaction dans le modèle FLOW.
-    flow_approach: Faire coopérer des responsabilités métier explicites.
+    choice: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013)
+      et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+    flow_scope: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+      ventes, service après-vente, retours et déstockage.
+    flow_approach: Relier la planification, les décisions et leurs effets observés, avec des responsabilités métier explicites.
     synthesis:
-    - Le CSCMP décrit un Supply Chain Management étendu aux achats, à la transformation et à la coopération interentreprises.
-      Microsoft IOM cible la coordination de la satisfaction des commandes. Ils éclairent deux périmètres de largeur différente.
-    - FLOW choisit ici un périmètre de coordination, en laissant l’administration des maîtres et les opérations physiques
-      aux responsabilités externes concernées. Ce sens local doit être annoncé lorsqu’il est employé.
+    - Microsoft Dynamics 365 Supply Chain Management et les parcours SAP S/4HANA relient planification et exécution. Leurs
+      périmètres produits sont plus larges que le domaine FLOW sur plusieurs activités ; aucune équivalence complète ni réalisation
+      installée n’est présumée.
+    - Le domaine FLOW pilote les ressources et les flux sur les parcours d’achat, de vente, de service après-vente, de retour
+      et de déstockage. Les autorités commerciales, fournisseurs et financières ainsi que les opérations physiques gardent
+      leurs responsables.
+    - 'Le CSCMP éclaire une discipline étendue. Microsoft Intelligent Order Management illustre la coordination des commandes
+      : ce rapprochement partiel ne résume pas le domaine FLOW.'
     examples:
     - title: Illustration FLOW — satisfaire une demande
       situation: Une demande nécessite des ressources, un engagement de date et plusieurs prestations.
@@ -4361,6 +4371,20 @@ terms:
       - U477
       - ELM405
       - CMP193
+    - title: Choisir le site qui évite un transfert inutile
+      situation: 'Exemple fictif : une commande de 100 pièces peut être préparée depuis A après un transfert de 70 pièces
+        depuis B, ou directement depuis B. Les deux options permettent de tenir la date demandée et préservent le [stock](glossary:TER005)
+        protégé pour le service après-vente.'
+      outcome: 'L’option depuis B coûte ici 220 € de préparation et transport, contre 300 € depuis A : un transfert préalable
+        est évité. Les effets réels sur le service, le coût et les autres [engagements](glossary:TER013) restent à vérifier
+        après exécution.'
+      lesson: Le transport final peut être plus cher alors que le parcours complet est moins coûteux. Une simulation ne prouve
+        pas un gain réalisé.
+      source_title: 'Piloter la supply chain : indicateurs et décisions — page 14'
+      source_refs:
+      - U1150
+      - U1151
+      source_url: https://github.com/laurent-sintes/Urbanisation-SCM/blob/b4864c22e56ad21b60b228eabaf7477d82a8e12e/output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf#page=14
 - id: TER036
   name: Fait de gestion — sens plateforme
   short_description: Événement métier associé à un document, selon la distinction exprimée par Laurent.
