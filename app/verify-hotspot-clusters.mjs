@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
@@ -112,6 +113,7 @@ async function setup(width = 390, height = 900, touch = false, view = 'overview'
   }
   await page.goto(`${base}#/map?${params}`);
   if (view === 'system') {
+    await openMapDisplay(page);
     await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
     // Let the initial framing and focus finish before testing an already open group.
     await page.waitForTimeout(400);

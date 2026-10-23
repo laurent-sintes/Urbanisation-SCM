@@ -18,6 +18,7 @@ import {
   scmStudyTemporalLabel,
   scmStudyUrl,
 } from '../scmStudy';
+import { sheetSections } from '../sheetSections';
 import type { AtlasNode, AtlasRelation, PublishedModel } from '../types';
 import './details.css';
 import './ux-reading.css';
@@ -134,17 +135,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const hasScmStudy = node.id === scmStudyDomainId;
   const { direct: principles, inherited: inheritedPrinciples } = principleGroupsForNode(model, node.id);
   const hasPrinciples = principles.length > 0 || inheritedPrinciples.length > 0;
-  const sections = [
-    pedagogyOf(node) && ['pedagogical_description', 'Comprendre ce périmètre'],
-    hasScmStudy && ['study', 'Pour approfondir'],
-    hasPrinciples && ['principles', 'Principes expliquant ce périmètre'],
-    examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'],
-    otherChildren.length > 0 && ['children', 'Explorer ce périmètre'],
-    fields.scope && ['scope', 'Périmètre'],
-    behaviors.length > 0 && ['behaviors', 'Comportements'],
-    (scenarioSection || scenarios.length > 0) && ['scenarios', 'Scénarios mobilisant ce périmètre'],
-    relations.length > 0 && ['interactions', 'Responsabilités liées'],
-  ].filter(Boolean) as string[][];
+  const sections = sheetSections(model, node);
   const jump = (field: string) => {
     const target = document.getElementById(`field-${node.id}-${field}`);
     if (target) revealSection(target);
@@ -230,13 +221,22 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
             </dl>
           </section>
         )}
-        <section id={`field-${node.id}-definition`}>
-          <h2>Définition</h2>
-          <div className="business-copy">
-            <Value value={fields.definition} />
-          </div>
-        </section>
         <BusinessPedagogy model={model} node={node} />
+        {pedagogyOf(node) ? (
+          <details id={`field-${node.id}-definition`} className="sheet-definition">
+            <summary>Définition de référence</summary>
+            <div className="business-copy">
+              <Value value={fields.definition} />
+            </div>
+          </details>
+        ) : (
+          <section id={`field-${node.id}-definition`}>
+            <h2>Définition</h2>
+            <div className="business-copy">
+              <Value value={fields.definition} />
+            </div>
+          </section>
+        )}
         {hasPrinciples && (
           <section id={`field-${node.id}-principles`} tabIndex={-1} className="sheet-principles">
             <h2>Principes expliquant ce périmètre</h2>

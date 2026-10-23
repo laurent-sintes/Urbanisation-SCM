@@ -120,11 +120,14 @@ export function HelpPage({
             <button type="button" className="help-link" onClick={() => onNavigate('map')}>
               Ouvrir la cartographie
             </button>{' '}
-            pour situer les systèmes, domaines et responsabilités métier. Dans le Catalogue, choisis le niveau de détail
-            ; dans Flux, zoome et déplace-toi sur la carte.
+            pour situer les systèmes, domaines et responsabilités métier. Sur la carte, choisis le niveau de détail ;
+            dans Flux, zoome et déplace-toi sur la carte.
           </li>
           <li>Choisir un élément sur la carte, puis ouvrir sa fiche pour lire son périmètre et ses exemples.</li>
-          <li>Utiliser la recherche à gauche pour retrouver un nom, un code ou une notion.</li>
+          <li>
+            Utiliser la recherche dans l’en-tête, ou Ctrl+K, pour retrouver un nom, un code ou une notion. Ouvrir la
+            fiche pour lire ; choisir « Voir sur la carte » pour situer l’objet.
+          </li>
           <li>
             <button type="button" className="help-link" onClick={() => onNavigate('hotspots')}>
               Explorer les points chauds
@@ -145,8 +148,8 @@ export function HelpPage({
           termes métier employés dans les fiches.
         </p>
         <p>
-          Atlas présente la version que tu as choisie. Le menu Télécharger fournit le modèle complet, y compris les
-          points chauds publiés. Les anciennes versions conservent leur contenu d’origine.
+          Atlas présente la version que tu as choisie dans l’en-tête. Documents et téléchargements fournit le modèle
+          complet, y compris les points chauds publiés. Les anciennes versions conservent leur contenu d’origine.
         </p>
       </section>
       <section>

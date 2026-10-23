@@ -7,6 +7,7 @@ import './styles.css';
 import './brand.css';
 import './reader.css';
 import './map-shell.css';
+import './navigation-ux.css';
 
 if (!location.hash) {
   const saved = preference<string>('selection', '');

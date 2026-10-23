@@ -4,6 +4,7 @@ import { RelationDetails } from './components/BusinessSheet';
 import { MetaTypeLabel, ReferenceLink } from './components/ModelLinks';
 import { type DependencyOptions, dependencyLevel, dependencyLevels, projectDependencies } from './dependencyGraph';
 import { NodeIcon } from './icons';
+import { plainInlineText } from './inlineLinks';
 import { hasAreaLevels, parentRelationOf } from './model';
 import type { GraphRoute } from './navigation';
 import { publicText } from './publicText';
@@ -346,11 +347,13 @@ export function DependenciesPane({
                     {model.nodeById.get(link.targetId)?.name || link.targetId}
                   </span>
                   <small>
-                    {publicText(
-                      link.qualification.meaning ||
-                        (link.label === link.type
-                          ? 'Qualification non renseignée dans cette publication.'
-                          : link.label),
+                    {plainInlineText(
+                      publicText(
+                        link.qualification.meaning ||
+                          (link.label === link.type
+                            ? 'Qualification non renseignée dans cette publication.'
+                            : link.label),
+                      ),
                     )}
                   </small>
                   {[link.sourceId, link.targetId].some((id) => model.nodeById.get(id)?.kind === 'behavior') && (

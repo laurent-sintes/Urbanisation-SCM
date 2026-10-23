@@ -27,6 +27,7 @@ import { savedFlowMap, useFlowMapLayout } from '../useFlowMapLayout';
 import { FlowScrollbars } from './FlowScrollbars';
 import { COMPACT_HOTSPOT_DIAMETER, COMPACT_HOTSPOT_TOUCH_DIAMETER, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
+import { MapDisplayOptions } from './MapDisplayOptions';
 import { FLOW_TYPES, type FlowType, MapFlowPicker } from './MapFlowPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapLegend } from './MapLegend';
@@ -1016,31 +1017,38 @@ export function FlowMapPanel(props: MapPanelProps) {
             }))}
             onOpenDestination={onOpenScope ? openBoundaryDestination : undefined}
           />
-          {!!model.raw.hotspot_catalog?.hotspots.length && (
-            <MapHotspotPicker
-              filters={hotspotFilters}
-              onChange={onHotspotFiltersChange}
-              scopedHotspots={scopedHotspots}
-              visibleHotspots={hotspots}
-              onOpenHotspot={onOpenHotspot}
-              selectedHotspotId={selectedHotspotId}
-              onSelectHotspot={(id) => {
-                onHotspotFiltersChange({ enabled: true });
-                setSelectedHotspotId(id);
-                const hotspot = scopedHotspots.find((item) => item.id === id);
-                const anchor = hotspot?.location.node_ids.find((nodeId) => visibleAncestorId(model, nodeId, allIds));
-                if (anchor) center(anchor);
-              }}
-            />
-          )}
-          {!!catalog && (
-            <MapApplicationPicker
-              catalog={catalog}
-              selectionId={applicationSelectionId}
-              componentId={applicationComponentId}
-              onChange={onApplicationChange}
-            />
-          )}
+          <MapDisplayOptions
+            active={[
+              ...(hotspotFilters.enabled ? ['Points chauds'] : []),
+              ...(applicationSelectionId ? ['Application'] : []),
+            ]}
+          >
+            {!!model.raw.hotspot_catalog?.hotspots.length && (
+              <MapHotspotPicker
+                filters={hotspotFilters}
+                onChange={onHotspotFiltersChange}
+                scopedHotspots={scopedHotspots}
+                visibleHotspots={hotspots}
+                onOpenHotspot={onOpenHotspot}
+                selectedHotspotId={selectedHotspotId}
+                onSelectHotspot={(id) => {
+                  onHotspotFiltersChange({ enabled: true });
+                  setSelectedHotspotId(id);
+                  const hotspot = scopedHotspots.find((item) => item.id === id);
+                  const anchor = hotspot?.location.node_ids.find((nodeId) => visibleAncestorId(model, nodeId, allIds));
+                  if (anchor) center(anchor);
+                }}
+              />
+            )}
+            {!!catalog && (
+              <MapApplicationPicker
+                catalog={catalog}
+                selectionId={applicationSelectionId}
+                componentId={applicationComponentId}
+                onChange={onApplicationChange}
+              />
+            )}
+          </MapDisplayOptions>
           <button
             type="button"
             className="map-fullscreen-button"

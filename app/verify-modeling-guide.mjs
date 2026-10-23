@@ -6,6 +6,7 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadPublication } from '../scripts/load-publication.mjs';
+import { openNavigationGroup } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
 import { lessonForPublication } from './src/modelingGuide.ts';
@@ -122,6 +123,7 @@ try {
   await page.getByTestId('business-sheet').waitFor();
   const panelToggle = page.locator('#fa-tree-open');
   if ((await panelToggle.getAttribute('aria-expanded')) === 'false') await panelToggle.click();
+  await openNavigationGroup(page, 'Comprendre');
   await page.getByRole('button', { name: guide.title, exact: true }).click();
   if (guide.chapters) {
     const chapters = page.locator('.method-chapters');

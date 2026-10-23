@@ -3,9 +3,12 @@ import test from 'node:test';
 import {
   annotatePrincipleText,
   designPrinciples,
+  featuredPrinciples,
+  principleDestination,
   principleGroupsForNode,
   principlesForNode,
   principlesForRelation,
+  readingGuides,
   readingsForPrinciple,
 } from './src/designPrinciples.ts';
 import { inlineParts, plainInlineText } from './src/inlineLinks.ts';
@@ -94,6 +97,61 @@ test('typing and clearing a query keeps the drawer while choosing content closes
     drawerNavigationKey({ ...route, view: 'design-principles', principle: 'P', node: '' }),
   );
   assert.notEqual(drawerNavigationKey(route), drawerNavigationKey({ ...route, version: 'older' }));
+});
+
+test('generic practices form a reading guide outside the directing principles', () => {
+  const raw = structuredClone(fixture().raw);
+  raw.principles[0].featured = false;
+  raw.principles[0].implications = 'private-iteration-detail';
+  raw.principles.push({
+    id: 'FOUNDATION',
+    label_fr: 'Une cartographie métier',
+    statement: 'Des responsabilités durables.',
+    featured: true,
+    reading_children: ['P'],
+    scope: { kind: 'global', targets: [{ collection: 'nodes', id: 'D' }] },
+  });
+  raw.nodes[1].fields.scope = '[Pourquoi](principle:P)';
+  const original = structuredClone(raw),
+    model = adaptPublication(raw);
+  assert.deepEqual(
+    featuredPrinciples(model).map((p) => p.id),
+    [],
+  );
+  assert.deepEqual(
+    readingGuides(model).map((p) => p.id),
+    ['FOUNDATION'],
+  );
+  assert.equal(principleDestination(model, 'P').principle.id, 'FOUNDATION');
+  assert.equal(principleDestination(model, 'P').section, 'principle-P');
+  assert.equal(principleDestination(model, 'OLD'), undefined);
+  assert.equal(
+    searchPublication(model, 'private-iteration-detail').some((r) => r.kind === 'principle'),
+    false,
+  );
+  assert.equal(
+    searchPublication(model, 'Historic convention').some((r) => r.kind === 'principle'),
+    false,
+  );
+  const guide = searchPublication(model, 'saison').find((r) => r.id === 'FOUNDATION');
+  assert.equal(guide.kind, 'guide');
+  assert.equal(guide.document, 'design-principles');
+  assert.equal(guide.name, 'Comment lire la cartographie');
+  assert.equal(
+    searchPublication(model, 'saison').some((r) => r.kind === 'principle'),
+    false,
+  );
+  assert.deepEqual(
+    principleGroupsForNode(model, 'C').direct.map((p) => p.id),
+    [],
+  );
+  assert.deepEqual(principleGroupsForNode(model, 'C').inherited, []);
+  assert.equal(readingsForPrinciple(model, 'FOUNDATION').length, 1);
+  assert.deepEqual(model.raw, original);
+  const historical = adaptPublication({ ...raw, principles: raw.principles.filter((p) => p.id !== 'FOUNDATION') });
+  assert.equal(principleDestination(historical, 'P'), undefined);
+  assert.deepEqual(featuredPrinciples(historical), []);
+  assert.deepEqual(readingGuides(historical), []);
 });
 
 test('typed principle links preserve escaped labels and plain text without inventing links', () => {

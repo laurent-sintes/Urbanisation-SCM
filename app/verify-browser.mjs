@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { projectDependencies } from './src/dependencyGraph.ts';
 import { adaptPublication } from './src/model.ts';
@@ -164,6 +165,7 @@ try {
 
   await visit({ view: 'map' });
   assert.equal(await page.locator('.universe-toolbar .map-detail-picker').count(), 1);
+  await openMapDisplay(page);
   assert.equal(await page.locator('.universe-toolbar .map-hotspot-picker').count(), 1);
   await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
   const hotspotFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
@@ -186,13 +188,16 @@ try {
     .getByRole('button', { name: 'L', exact: true })
     .click();
   assert.equal(await severityChoices.inputValue(), 'all');
+  await openMapDisplay(page);
   await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
   await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();
   await page.locator('.map-toolbar .map-detail-picker').waitFor();
   assert.equal(await page.locator('.map-toolbar .map-detail-picker').count(), 1);
+  await openMapDisplay(page);
   assert.equal(await page.locator('.map-toolbar .map-hotspot-picker').count(), 1);
   await page.getByRole('tab', { name: 'Fiche' }).click();
-  await page.getByRole('tab', { name: 'Catalogue' }).click();
+  await page.getByRole('tab', { name: 'Carte' }).click();
+  await openMapDisplay(page);
   await page.locator('.map-toolbar .map-hotspot-picker .detail-trigger').click();
   const scopedFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(
@@ -436,6 +441,7 @@ try {
     ]) {
       await page.setViewportSize({ width: 1440, height });
       await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '1', hf: JSON.stringify({ enabled }) });
+      await openMapDisplay(page);
       await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
       await page.locator('.graph-canvas.zoom-page').waitFor();
       await page.waitForFunction(() => {
@@ -474,6 +480,7 @@ try {
       mapDepth: '4',
       hf: JSON.stringify({ enabled: false }),
     });
+    await openMapDisplay(page);
     await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
     await page.locator('.graph-canvas.zoom-width').waitFor();
   }
@@ -603,7 +610,7 @@ try {
   assert.equal(route().get('node'), capability.id);
   await page.locator(`[data-map-item-id="${capability.id}"][aria-current="true"]`).first().waitFor();
   assert.equal(await capabilityLink.getAttribute('aria-current'), 'true');
-  assert.equal(await page.getByRole('tab', { name: 'Catalogue' }).getAttribute('aria-selected'), 'true');
+  assert.equal(await page.getByRole('tab', { name: 'Carte' }).getAttribute('aria-selected'), 'true');
   await visit({ view: 'map', node: businessArea.id, scope: domain.id, mapDepth: '3', mapFocus: businessArea.id });
   const areaLink = page.locator(`[data-business-area-summary="${businessArea.id}"] button`).first();
   await areaLink.waitFor();
@@ -621,6 +628,7 @@ try {
     const term = page.locator('.business-card[data-node-id="subdomain-integration"] .model-reference').first();
     if (await term.count()) await expectTooltip(term, 'Supply Chain', true);
   }
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine page' }).click();
   await expectCompletePage(page);
   await page.getByRole('button', { name: 'Réduire la carte' }).click();
@@ -636,6 +644,7 @@ try {
   await freshFraming.locator('#fa-version').waitFor({ state: 'attached' });
   await freshFraming.locator('.graph-canvas .business-card').first().waitFor();
   await freshFraming.waitForTimeout(1000);
+  await openMapDisplay(freshFraming);
   await freshFraming.getByRole('button', { name: 'Auto', exact: true }).click();
   const pageFraming = freshFraming.getByRole('button', { name: 'Pleine page' });
   await pageFraming.click();
@@ -646,6 +655,7 @@ try {
       .evaluate((element) => Number(element.style.transform.match(/scale\(([^)]+)\)/)?.[1]) < 0.85),
   );
   assert.equal(await freshFraming.locator('.map-zoom-asterisk,.map-zoom-tooltip').count(), 0);
+  await openMapDisplay(freshFraming);
   await freshFraming.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
   await freshFraming.waitForFunction(() => {
     const viewport = document.querySelector('.map-scroll-viewport');
@@ -664,6 +674,7 @@ try {
   );
   assert.ok(sparseScope, 'A published scope with one card is needed to check card redistribution');
   await visit({ view: 'map', node: sparseScope.id, scope: sparseScope.id, mapDepth: '0' });
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine page' }).click();
   const sparseCard = page.locator('.graph-canvas .business-card').first();
   await sparseCard.waitFor();
@@ -692,6 +703,7 @@ try {
     sparseCard.evaluate((element) => Number.parseFloat(element.closest('.react-flow__node')?.style.width || '0'));
   const pageCardWidth = await cardLayoutWidth();
   await page.locator('.graph-canvas').screenshot({ path: path.join(output, 'page-layout.png') });
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine largeur' }).click();
   await page.locator('.graph-canvas.zoom-width .business-card').first().waitFor();
   const widthCardWidth = await cardLayoutWidth();
@@ -741,6 +753,7 @@ try {
   checks.push('Page and width modes redistribute cards before framing');
 
   await visit({ view: 'map', node: system.id, scope: system.id, mapDepth: '0' });
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine largeur' }).click();
   const domainCards = page.locator('.graph-canvas .business-card');
   assert.ok((await domainCards.count()) >= 3, 'A multi-domain system is needed to check grid redistribution');
@@ -787,6 +800,7 @@ try {
   ]) {
     await page.setViewportSize({ width: params.scope === '@root' ? 600 : 980, height: 800 });
     await visit({ view: 'map', ...params });
+    await openMapDisplay(page);
     await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
     await page.waitForFunction(() => {
       const viewport = document.querySelector('.overview-map-scroll, .map-scroll-viewport');
@@ -805,7 +819,7 @@ try {
     await page.getByRole('tab', { name: 'Flux', exact: true }).click();
     await page.locator('#tab-flows[aria-selected="true"]').waitFor();
     await page.locator('.flow-map-panel').waitFor();
-    await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+    await page.getByRole('tab', { name: 'Carte', exact: true }).click();
     await page.waitForFunction((expected) => {
       const viewport = document.querySelector('.overview-map-scroll, .map-scroll-viewport');
       return (
@@ -834,7 +848,7 @@ try {
   await visit({ node: capability.id, view: 'sheet' });
   await page.getByTestId('business-sheet').waitFor();
   await page.getByRole('heading', { level: 1, name: capability.fields.name }).waitFor();
-  await page.getByRole('tab', { name: 'Catalogue' }).click();
+  await page.getByRole('tab', { name: 'Carte' }).click();
   await page.locator(`[data-map-item-id="${capability.id}"][aria-current="true"]`).first().waitFor();
   checks.push('Sheet and return to selected map object');
 
@@ -870,8 +884,10 @@ try {
     `${base}#/map?${new URLSearchParams({ version: model.version, node: domain.id, scope: domain.id, mapDepth: '4' })}`,
   );
   await touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane').waitFor();
+  await openMapDisplay(touchPage);
   await touchPage.getByRole('button', { name: 'Pleine page' }).tap();
   await expectCompletePage(touchPage);
+  await openMapDisplay(touchPage);
   await touchPage.getByRole('button', { name: 'Pleine largeur' }).tap();
   const touchPane = touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane');
   await touchPane.waitFor();

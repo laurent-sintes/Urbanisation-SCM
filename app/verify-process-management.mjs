@@ -175,9 +175,8 @@ try {
   }
   for (const query of ['BHV082', model.nodeById.get('BHV082').displayCode, 'Process Mining']) {
     const target = query === 'Process Mining' ? 'process-mining' : 'BHV082';
-    const panelToggle = page.locator('#fa-tree-open');
-    if ((await panelToggle.getAttribute('aria-expanded')) === 'false') await panelToggle.click();
-    await page.getByRole('textbox', { name: 'Rechercher dans le modèle publié' }).fill(query);
+    await page.getByRole('button', { name: 'Rechercher dans Atlas', exact: true }).click();
+    await page.getByRole('searchbox', { name: 'Rechercher dans le modèle publié' }).fill(query);
     await page.locator(`[data-search-result="${target}"]`).click();
     await page.getByRole('heading', { level: 1, name: model.nodeById.get(target).name, exact: true }).waitFor();
   }

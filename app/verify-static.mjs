@@ -94,8 +94,9 @@ try {
   await page.locator(`#fa-version[data-version="${version}"]`).waitFor({ state: 'attached' });
   assert.equal(await panelToggle.getAttribute('aria-expanded'), 'false', 'A saved collapse is respected');
   await panelToggle.click();
-  await page.locator('.download-menu summary').click();
-  assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
+  await page.goto(`${base}#/documents?version=${version}`);
+  await page.locator('.publication-downloads summary').click();
+  assert.equal(await page.locator('.publication-downloads a[download$=".json"]').count(), 0);
   const yamlPending = page.waitForEvent('download');
   const yamlLink = page.getByRole('link', { name: /Modèle complet \(YAML\)/ });
   assert.equal(new URL(await yamlLink.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.yaml`);
@@ -112,7 +113,7 @@ try {
   );
   assert.match(downloadedYaml.toString('utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
-  const menuStudyLink = page.locator('.download-menu').getByRole('link', { name: /Piloter la supply chain \(PDF\)/ });
+  const menuStudyLink = page.getByRole('link', { name: 'Télécharger « Piloter la supply chain » (PDF)', exact: true });
   await menuStudyLink.waitFor({ state: 'visible' });
   const menuStudyHref = await menuStudyLink.getAttribute('href');
   const studySource = await readFile(
@@ -177,6 +178,9 @@ try {
     const selectedModel = JSON.parse(await readFile(path.join(dist, 'data', selectedVersion, 'model.json'), 'utf8'));
     const definition = selectedModel.nodes.find((node) => node.id === 'supply-chain-orchestration').fields.definition;
     const plainDefinition = definition.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+    const definitionPanel = sheet.locator('#field-supply-chain-orchestration-definition');
+    if (await definitionPanel.evaluate((element) => element.tagName === 'DETAILS' && !element.open))
+      await definitionPanel.locator('summary').click();
     assert.equal(
       await sheet.locator('#field-supply-chain-orchestration-definition .business-copy').innerText(),
       plainDefinition,
@@ -191,8 +195,9 @@ try {
   assert.equal(await studyLink.getAttribute('href'), studyHref, 'The study is separate from historical publications');
   await page.goto(`${base}#/glossary?version=${historical}`);
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
-  await page.locator('.download-menu summary').click();
-  assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
+  await page.goto(`${base}#/documents?version=${historical}`);
+  await page.locator('.publication-downloads summary').click();
+  assert.equal(await page.locator('.publication-downloads a[download$=".json"]').count(), 0);
   assert.equal(
     await menuStudyLink.getAttribute('href'),
     studyHref,

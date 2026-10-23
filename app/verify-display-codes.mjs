@@ -85,14 +85,11 @@ try {
   const overviewOutput = path.join(app, '.runtime/qa-display-codes');
   await mkdir(overviewOutput, { recursive: true });
   await page.screenshot({ path: path.join(overviewOutput, 'overview.png') });
-  const panelToggle = page.locator('#fa-tree-open');
-  if ((await panelToggle.getAttribute('aria-expanded')) === 'false') await panelToggle.click();
-  const search = page.getByRole('textbox', { name: 'Rechercher dans le modèle publié' });
+  const search = page.getByRole('searchbox', { name: 'Rechercher dans le modèle publié' });
   for (const query of [capacity.displayCode, capacity.id]) {
+    await page.getByRole('button', { name: 'Rechercher dans Atlas', exact: true }).click();
     await search.fill(query);
-    await page.locator(`[data-search-result="${capacity.id}"]`).waitFor();
-    await search.fill('');
-    await page.goto(`${base}#/sheet?version=${version}&node=${capacity.id}`);
+    await page.locator(`[data-search-result="${capacity.id}"]`).click();
     await page.getByTestId('business-sheet').waitFor();
     assert.ok((await page.locator('.eyebrow').innerText()).includes(capacity.displayCode));
     assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('node'), capacity.id);

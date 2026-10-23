@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -152,6 +153,7 @@ try {
     for (const depth of [0, 1, 2, 3, 4]) {
       await visit({ node: systemId, scope: systemId, mapDepth: String(depth) });
       for (const mode of ['Auto', 'Pleine page', 'Pleine largeur']) {
+        await openMapDisplay(page);
         await page.getByRole('button', { name: mode, exact: true }).click();
         await checkRows(false);
         await noPageOverflow();
@@ -227,6 +229,7 @@ try {
   for (const width of [768, 1800]) {
     await page.setViewportSize({ width, height: 1000 });
     await visit({ node: domainId, scope: domainId, mapDepth: '1' });
+    await openMapDisplay(page);
     await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
     await page.locator('.graph-canvas:not(.fixed-placement) .business-card').first().waitFor();
     await page.waitForTimeout(250);

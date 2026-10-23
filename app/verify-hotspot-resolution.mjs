@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
@@ -100,6 +101,7 @@ try {
   });
   await page.goto(`${base}#/map?version=${index.current_version}&mapDepth=1`);
   const trigger = page.locator('.map-hotspot-picker .detail-trigger');
+  await openMapDisplay(page);
   await trigger.click();
   const filters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   await filters.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
@@ -121,6 +123,7 @@ try {
     }
   }
   assert.ok((await rings.count()) >= 5);
+  await openMapDisplay(page);
   await trigger.click();
   await filters.getByLabel('Avancement du cadrage').selectOption('ready_for_arbitration');
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
@@ -133,6 +136,7 @@ try {
       ),
     true,
   );
+  await openMapDisplay(page);
   await trigger.click();
   await filters.getByLabel('Avancement du cadrage').selectOption('all');
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
@@ -176,6 +180,7 @@ try {
   assert.equal(seen.size, groupTotal, 'paging keeps every hotspot reachable as a pastille');
   await page.getByRole('button', { name: 'Replier le groupe' }).click();
   await page.setViewportSize({ width: 390, height: 900 });
+  await openMapDisplay(page);
   await trigger.click();
   await filters.getByRole('combobox', { name: 'Avancement du cadrage' }).selectOption('credible');
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();

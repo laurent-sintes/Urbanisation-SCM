@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { hotspotImpactScopes } from './src/hotspotFraming.ts';
 import { hotspotsInScope } from './src/hotspotMap.ts';
@@ -45,6 +46,7 @@ try {
       const hash = `#/map?version=${catalog.current_version}&mapDepth=1${view === 'system' ? '&node=system-business-operations&scope=system-business-operations' : ''}`;
       await page.goto(`${base}${hash}`);
       const trigger = page.locator('.map-hotspot-picker .detail-trigger');
+      await openMapDisplay(page);
       await trigger.click();
       const filter = page.getByRole('dialog', { name: 'Filtres des points chauds' });
       await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
@@ -82,6 +84,7 @@ try {
       await assertWithinViewport(filter, page);
       await filter.getByRole('button', { name: 'Fermer les filtres' }).click();
       assert.equal(await filter.count(), 0, 'mouse closes filters without header interception');
+      await openMapDisplay(page);
       await trigger.click();
       await page.keyboard.press('Escape');
       assert.equal(await filter.count(), 0);
@@ -384,6 +387,7 @@ try {
       if (width === 1440 && view === 'overview') {
         await page.getByRole('button', { name: 'Étendre la carte' }).click();
         await page.waitForFunction(() => Boolean(document.fullscreenElement));
+        await openMapDisplay(page);
         await trigger.click();
         await filter.waitFor();
         assert.equal(await filter.evaluate((element) => document.fullscreenElement.contains(element)), true);

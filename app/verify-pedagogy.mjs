@@ -178,7 +178,7 @@ try {
     await scmBlock.locator(':scope > p').first().innerText(),
     plainInlineText(model.nodeById.get('supply-chain-orchestration').definition),
   );
-  await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+  await page.getByRole('tab', { name: 'Carte', exact: true }).click();
   assert.ok(page.url().includes('/map?'));
   assert.ok(page.url().includes(version));
   await visit({ view: 'map', scope: 'supply-chain-orchestration', node: 'D01', mapDepth: '1' });

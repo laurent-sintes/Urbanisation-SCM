@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { hotspotImpactScopes } from './src/hotspotFraming.ts';
 import { adaptPublication } from './src/model.ts';
@@ -149,6 +150,7 @@ try {
   await page.locator('.hotspot-table').waitFor();
   await waitForSubjects(false, true);
   await page.goto(shared.replace('#/hotspots', '#/map'));
+  await openMapDisplay(page);
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   const filters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(await filters.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).isChecked(), false);

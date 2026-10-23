@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
@@ -386,6 +387,7 @@ try {
             };
             await page.goto(`${base}#/map?${new URLSearchParams(params)}`);
             await page.locator(`#fa-version[data-version="${model.version}"]`).waitFor({ state: 'attached' });
+            await openMapDisplay(page);
             await page.getByRole('button', { name: mode, exact: true }).click();
             const expected = expectedFor(scope, profile);
             await verify(expected);
@@ -426,6 +428,7 @@ try {
       await page.goto(
         `${base}#/map?${new URLSearchParams({ version: model.version, scope: currentCase.scope, node: currentCase.scope, mapDepth: '4', hf: JSON.stringify(filtersFor(profiles[0])) })}`,
       );
+      await openMapDisplay(page);
       await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
       const marker = page.locator(`.hotspot-map-marker[data-hotspot-ids="${subject.id}"]`);
       await marker.waitFor();

@@ -1,5 +1,11 @@
 import { businessFields } from './businessContent.ts';
-import { designPrinciples, principleSearchText, principleTitle } from './designPrinciples.ts';
+import {
+  featuredPrinciples,
+  principleChildren,
+  principleSearchText,
+  principleTitle,
+  readingGuides,
+} from './designPrinciples.ts';
 import { examplesForNode, readerExamplesSearchText } from './examples.ts';
 import { glossaryAliases, isCurrentGlossaryTerm } from './glossary.ts';
 import { plainInlineText } from './inlineLinks.ts';
@@ -13,11 +19,11 @@ import type { AtlasNode, GlossaryTerm, MarketComparison, MarketInspiration, Publ
 
 export interface SearchResult {
   id: string;
-  kind: 'model' | 'glossary' | 'scenario' | 'value_stream' | 'method' | 'guide' | 'principle';
+  kind: 'model' | 'glossary' | 'scenario' | 'value_stream' | 'method' | 'guide' | 'principle' | 'document';
   name: string;
   excerpt: string;
   score: number;
-  document?: 'metamodel' | 'principles';
+  document?: 'metamodel' | 'principles' | 'design-principles';
   node?: AtlasNode;
   term?: GlossaryTerm;
 }
@@ -90,11 +96,33 @@ function index(model: PublishedModel): SearchResult[] {
   };
   const catalog = catalogOf(model);
   const entries: SearchResult[] = [
-    ...designPrinciples(model).map((p) => ({
+    ...(model.raw.document_catalog?.documents || []).map((document) => ({
+      id: document.id,
+      kind: 'document' as const,
+      name: document.title,
+      excerpt: [document.summary, document.context].filter(Boolean).join(' '),
+      score: 0,
+    })),
+    ...featuredPrinciples(model).map((p) => ({
       id: p.id,
       kind: 'principle' as const,
       name: principleTitle(p),
-      excerpt: principleSearchText(p),
+      excerpt: [
+        principleSearchText(p),
+        ...principleChildren(model, p).map((child) => `${principleTitle(child)} ${publicText(child.statement)}`),
+      ].join('\n'),
+      score: 0,
+    })),
+    ...readingGuides(model).map((p) => ({
+      id: p.id,
+      kind: 'guide' as const,
+      document: 'design-principles' as const,
+      name: 'Comment lire la cartographie',
+      excerpt: [
+        principleTitle(p),
+        principleSearchText(p),
+        ...principleChildren(model, p).map((child) => `${principleTitle(child)} ${publicText(child.statement)}`),
+      ].join('\n'),
       score: 0,
     })),
     ...(catalog

@@ -1,18 +1,14 @@
 import {
   ArrowLeft,
-  ArrowRightLeft,
-  BookOpen,
   ChevronRight,
   Compass,
   Copy,
-  FileText,
   Flame,
-  GitBranch,
-  LayoutGrid,
   Lightbulb,
   PanelLeft,
   PanelLeftClose,
   RefreshCw,
+  Search,
   X,
 } from 'lucide-react';
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -20,6 +16,7 @@ import { ApplicationCatalogPage } from './components/ApplicationCatalogPage';
 import { BusinessSheet } from './components/BusinessSheet';
 import { DesignPrinciplesPage } from './components/DesignPrinciplesPage';
 import { DocumentCatalogPage } from './components/DocumentCatalogPage';
+import { GlobalSearch } from './components/GlobalSearch';
 import { GlossaryPage } from './components/GlossaryPage';
 import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
@@ -33,9 +30,11 @@ import {
   readingOrigin,
   readingViewport,
 } from './components/ModelLinks';
+import { ModelViewTabs } from './components/ModelViewTabs';
 import { Overview } from './components/Overview';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { Sidebar } from './components/Sidebar';
+import { principleDestination } from './designPrinciples';
 import {
   encodeHotspotFilters,
   type HotspotMapFilters,
@@ -58,6 +57,7 @@ import {
 } from './navigation';
 import { staticUrl } from './publication';
 import { revealSection } from './readerNavigation';
+import { searchResultRoute } from './searchPresentation';
 import type { MarketComparison, MarketGap, MarketInspiration } from './types';
 import { useAtlasLocation } from './useAtlasLocation';
 import { useBuildUpdate } from './useBuildUpdate';
@@ -75,7 +75,7 @@ const FlowMapPanel = lazy(() =>
 const ModelingGuidePage = lazy(() =>
   import('./components/ModelingGuidePage').then((module) => ({ default: module.ModelingGuidePage })),
 );
-const clampWidth = (width: number) => Math.min(420, Math.max(240, Number.isFinite(width) ? width : 300));
+const clampWidth = (width: number) => Math.min(340, Math.max(220, Number.isFinite(width) ? width : 240));
 function useMobile() {
   const [mobile, setMobile] = useState(() => matchMedia('(max-width: 1000px)').matches);
   useEffect(() => {
@@ -95,6 +95,12 @@ export function App() {
     catalog?.releases.find((entry) => entry.version === model?.version)?.model_sha256,
   );
   const displayModel = workshop.displayModel || model;
+  const selectedReadingGuide =
+    model && route.view === 'design-principles'
+      ? principleDestination(model, route.principle || '')?.principle
+      : undefined;
+  const isReadingGuide = Boolean(selectedReadingGuide?.reading_children?.length);
+  const directingPrinciplesTitle = isReadingGuide ? 'Comment lire la cartographie' : 'Principes directeurs';
   const { state: guideState, retry: retryGuide } = useModelingGuide(
     model?.version,
     catalog?.releases.find((entry) => entry.version === model?.version)?.guide_sha256,
@@ -150,7 +156,8 @@ export function App() {
   const mobile = useMobile();
   const [drawer, setDrawer] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(() => preference('sidebar-open', true));
-  const [width, setWidth] = useState(() => clampWidth(Number(preference('tree-width', 300))));
+  const [width, setWidth] = useState(() => clampWidth(Number(preference('navigation-width', 240))));
+  const [searchOpen, setSearchOpen] = useState(Boolean(route.query.trim()));
   const [announcement, setAnnouncement] = useState('');
   const [hotspotFilters, setHotspotFilters] = useState(() => readHotspotFilters(route.hotspotFilters));
   const hotspotFiltersRef = useRef(hotspotFilters);
@@ -183,7 +190,6 @@ export function App() {
   useEffect(() => {
     if (workshopRevision !== undefined && !route.hotspotFilters) onHotspotFiltersChange({ enabled: true });
   }, [workshopRevision, route.hotspotFilters, onHotspotFiltersChange]);
-  const search = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const restoreScroll = useRef<number | null>(null);
@@ -428,7 +434,7 @@ export function App() {
     });
     return () => cancelAnimationFrame(timer);
   }, [route.section, route.term, route.node, model, view]);
-  useEffect(() => savePreference('tree-width', width), [width]);
+  useEffect(() => savePreference('navigation-width', width), [width]);
   useEffect(() => savePreference('sidebar-open', sidebarOpen), [sidebarOpen]);
   useEffect(() => {
     if (model && route.node && !model.nodeById.has(route.node)) {
@@ -445,14 +451,17 @@ export function App() {
     const shortcut = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        if (mobile) setDrawer(true);
-        else setSidebarOpen(true);
-        setTimeout(() => search.current?.focus(), 30);
+        setDrawer(false);
+        setSearchOpen(true);
+        document.querySelector<HTMLInputElement>('.global-search[open] input')?.focus();
       }
     };
     document.addEventListener('keydown', shortcut);
     return () => document.removeEventListener('keydown', shortcut);
-  }, [mobile]);
+  }, []);
+  useEffect(() => {
+    if (route.query.trim()) setSearchOpen(true);
+  }, [route.query]);
   const navigate = useCallback(
     (id: string, focusHeading = true) => {
       const item = model?.nodeById.get(id);
@@ -637,7 +646,7 @@ export function App() {
                       : view === 'metamodel'
                         ? 'Métamodèle FLOW'
                         : view === 'design-principles'
-                          ? 'Principes directeurs'
+                          ? directingPrinciplesTitle
                           : view === 'principles'
                             ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
                             : glossaryTitle}
@@ -697,11 +706,63 @@ export function App() {
               </strong>
             </button>
           </div>
-          {model && !mobile && (
-            <div className="topbar-navigation">
-              {breadcrumbs}
-              {shareButton}
-            </div>
+          {model && (
+            <button
+              type="button"
+              className="global-search-trigger"
+              aria-label="Rechercher dans Atlas"
+              aria-haspopup="dialog"
+              onClick={() => {
+                setDrawer(false);
+                setSearchOpen(true);
+              }}
+            >
+              <Search size={18} />
+              <span>Rechercher dans Atlas…</span>
+              <kbd>Ctrl K</kbd>
+            </button>
+          )}
+          {model && (
+            <details className="publication-picker">
+              <summary>
+                <span className="publication-mode">{route.version ? 'Modèle figé' : 'Modèle courant'}</span>
+                <span>{model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version}</span>
+              </summary>
+              <div>
+                <label>
+                  Publication consultée
+                  <select
+                    aria-label="Choisir la publication"
+                    value={route.version || ''}
+                    onChange={(event) => {
+                      changeRoute({
+                        version: event.target.value,
+                        returnTo: '',
+                        catalogReturn: '',
+                        scroll: '',
+                        section: '',
+                      });
+                      event.currentTarget.closest('details')?.removeAttribute('open');
+                    }}
+                  >
+                    <option value="">Courante · actualisée automatiquement</option>
+                    {catalog?.releases.map((entry) => (
+                      <option key={entry.version} value={entry.version}>
+                        {entry.revision ? `v${String(entry.revision).padStart(3, '0')} · ` : ''}
+                        {entry.version}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <p>
+                  {route.version ? 'Cette édition est fixe.' : 'La dernière publication est suivie automatiquement.'}
+                </p>
+                <button type="button" className="publication-refresh" onClick={reload} disabled={loading}>
+                  <RefreshCw size={15} />
+                  Actualiser la publication
+                </button>
+              </div>
+            </details>
           )}
           <button
             type="button"
@@ -722,14 +783,16 @@ export function App() {
             open={drawer}
             mobile={mobile}
             guide={guideState.status === 'ready' ? guideState.response.guide : undefined}
-            searchRef={search}
+            sheetNode={view === 'sheet' ? selected : undefined}
             onClose={closeDrawer}
             onNavigate={navigate}
             onOpenGlossary={openGlossary}
-            onOpenTerm={(id) => followReference('glossary', id)}
             onOpenPrinciples={openPrinciples}
             onOpenMetamodel={openMetamodel}
-            onSearch={(changes) => changeRoute(changes, true)}
+            onSearch={(changes) => {
+              changeRoute(changes);
+              setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
+            }}
           />
         )}
         {model && sidebarOpen && (
@@ -739,17 +802,17 @@ export function App() {
             tabIndex={0}
             aria-label="Largeur du panneau"
             aria-orientation="vertical"
-            aria-valuemin={240}
-            aria-valuemax={420}
+            aria-valuemin={220}
+            aria-valuemax={340}
             aria-valuenow={width}
             onKeyDown={(e) => {
               if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
                 e.preventDefault();
                 setWidth((value) =>
                   e.key === 'Home'
-                    ? 240
+                    ? 220
                     : e.key === 'End'
-                      ? 420
+                      ? 340
                       : clampWidth(value + (e.key === 'ArrowRight' ? 10 : -10)),
                 );
               }
@@ -817,6 +880,12 @@ export function App() {
           ) : (
             <>
               <div className="workspace-header">
+                {!mobile && (
+                  <div className="breadcrumb-row desktop-path">
+                    {breadcrumbs}
+                    {shareButton}
+                  </div>
+                )}
                 {softwareUpdate && (
                   <aside className="publication-selection" role="status">
                     <span>Une nouvelle version de l’interface Atlas est disponible.</span>
@@ -915,7 +984,9 @@ export function App() {
                               : view === 'metamodel'
                                 ? 'LE MÉTAMODÈLE'
                                 : view === 'design-principles'
-                                  ? 'LES CHOIX DE CONCEPTION'
+                                  ? isReadingGuide
+                                    ? 'REPÈRES DE LECTURE'
+                                    : 'LES CHOIX DE CONCEPTION'
                                   : view === 'principles'
                                     ? 'LA DÉMARCHE DE TRANSFORMATION'
                                     : view === 'glossary'
@@ -951,7 +1022,7 @@ export function App() {
                                   : view === 'metamodel'
                                     ? 'Métamodèle FLOW'
                                     : view === 'design-principles'
-                                      ? 'Principes directeurs'
+                                      ? directingPrinciplesTitle
                                       : view === 'principles'
                                         ? methodTitle
                                         : view === 'glossary'
@@ -979,7 +1050,9 @@ export function App() {
                                         : view === 'metamodel'
                                           ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
                                           : view === 'design-principles'
-                                            ? 'Comprendre les choix qui structurent la cartographie, leurs raisons et leurs limites.'
+                                            ? isReadingGuide
+                                              ? `${selectedReadingGuide?.reading_children?.length} bonnes pratiques pour comprendre les responsabilités, les frontières et les liens de la carte.`
+                                              : 'Comprendre les choix qui structurent la cartographie, leurs raisons et leurs limites.'
                                             : view === 'principles'
                                               ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
                                               : view === 'glossary'
@@ -1010,65 +1083,42 @@ export function App() {
                 )}
                 {!referenceView && (
                   <div className="view-bar">
-                    <div className="view-tabs" role="tablist" aria-label="Vue du modèle">
-                      {(
-                        [
-                          { id: 'map', label: 'Catalogue', Icon: LayoutGrid },
-                          { id: 'flows', label: 'Flux', Icon: ArrowRightLeft },
-                          { id: 'sheet', label: 'Fiche', Icon: FileText },
-                          { id: 'relations', label: 'Relations', Icon: GitBranch },
-                          { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen },
-                        ] as const
-                      )
-                        .filter((tab) => selected || !['sheet', 'market'].includes(tab.id))
-                        .map((tab) => (
-                          <button
-                            type="button"
-                            key={tab.id}
-                            role="tab"
-                            id={`tab-${tab.id}`}
-                            aria-controls="atlas-view"
-                            tabIndex={view === tab.id ? 0 : -1}
-                            aria-selected={view === tab.id}
-                            onClick={() =>
-                              tab.id === 'map' && !cartographicView
-                                ? showSelectedOnMap()
-                                : tab.id === 'flows'
-                                  ? changeRoute({
-                                      view: 'flows',
-                                      scope: validScope || scopeId || '@root',
-                                      relation: '',
-                                      section: '',
-                                    })
-                                  : changeRoute({ view: tab.id, relation: '', section: '' })
-                            }
-                            onKeyDown={(e) => {
-                              if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-                              e.preventDefault();
-                              const items = [
-                                ...(e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('button') || []),
-                              ];
-                              if (!items.length) return;
-                              const next =
-                                items[
-                                  (items.indexOf(e.currentTarget) + (e.key === 'ArrowRight' ? 1 : items.length - 1)) %
-                                    items.length
-                                ];
-                              next.click();
-                              next.focus();
-                            }}
-                          >
-                            <tab.Icon size={16} />
-                            {tab.label}
-                            {tab.id === 'relations' &&
-                              selected &&
-                              !['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(
-                                selected.kind,
-                              ) && <span className="count">{links.length}</span>}
-                          </button>
-                        ))}
-                    </div>
-                    {selected && selected.kind !== 'universe' && (
+                    <ModelViewTabs
+                      view={view}
+                      mobile={mobile}
+                      hasNode={!!selected}
+                      parentLabel={
+                        selected && selected.kind !== 'universe'
+                          ? cartographicView
+                            ? parentScope?.name || rootName
+                            : viewParent?.name || rootName
+                          : undefined
+                      }
+                      onParent={() =>
+                        cartographicView ? openMapLevel(parentScope?.id || '') : navigate(viewParent?.id || '')
+                      }
+                      relationCount={
+                        selected &&
+                        !['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(
+                          selected.kind,
+                        )
+                          ? links.length
+                          : undefined
+                      }
+                      onChange={(next) =>
+                        next === 'map' && !cartographicView
+                          ? showSelectedOnMap()
+                          : next === 'flows'
+                            ? changeRoute({
+                                view: 'flows',
+                                scope: validScope || scopeId || '@root',
+                                relation: '',
+                                section: '',
+                              })
+                            : changeRoute({ view: next, relation: '', section: '' })
+                      }
+                    />
+                    {!mobile && selected && selected.kind !== 'universe' && (
                       <button
                         type="button"
                         className="view-parent-button"
@@ -1312,6 +1362,26 @@ export function App() {
           )}
         </main>
       </div>
+      {model && (
+        <GlobalSearch
+          model={displayModel || model}
+          guide={activeGuide}
+          open={searchOpen}
+          query={route.query}
+          fixed={Boolean(route.version)}
+          onQuery={(query) => changeRoute({ query }, true)}
+          onClose={() => {
+            setSearchOpen(false);
+            changeRoute({ query: '' }, true);
+          }}
+          onSelect={(result, map) => {
+            setSearchOpen(false);
+            if (result.kind === 'glossary' || result.kind === 'method') followReference('glossary', result.id);
+            else changeRoute(searchResultRoute(model, result, map));
+            setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
+          }}
+        />
+      )}
     </ModelLinksProvider>
   );
 }

@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { assertMapOverlayCorners, catalogueTextIntegrity, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 import { writeRecipeJson } from './recipe-output.mjs';
@@ -174,6 +175,7 @@ try {
       `${base}#/map?${new URLSearchParams({ version: model.version, scope: item.scope || '@root', node: item.node || model.nodes.find((node) => node.kind === 'universe').id, mapDepth: String(item.depth), mapFocus: item.focus || '', hf: JSON.stringify({ enabled: item.layer.hotspots }), app: item.layer.application ? product.id : '' })}`,
     );
     await page.locator('.business-card,.overview-system,.graph-canvas.empty-state h2').first().waitFor();
+    await openMapDisplay(page);
     await page.getByRole('button', { name: widthMode ? 'Pleine largeur' : 'Pleine page', exact: true }).click();
     await page.evaluate(() => document.fonts.ready);
     // verify() waits for stable measured geometry and the requested framing below.
@@ -391,8 +393,10 @@ try {
       await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
       await page.waitForFunction(() => !document.fullscreenElement);
       await verify('after-fullscreen', 'width', baseline);
+      await openMapDisplay(page);
       await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
       await verify('page-roundtrip', 'page');
+      await openMapDisplay(page);
       await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
       await verify('after-page', 'width', baseline);
       await page.setViewportSize({ width: item.screen.width + 360, height: item.screen.height + 140 });

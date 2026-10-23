@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay, openNavigationGroup } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const root = resolve(import.meta.dirname, '..');
@@ -73,6 +74,7 @@ async function openFixture(viewport, withCatalog) {
 
 try {
   const desktop = await openFixture({ width: 1440, height: 900 }, true);
+  await openMapDisplay(desktop);
   await desktop.locator('.map-application-picker > button').click();
   await desktop
     .getByRole('dialog', { name: 'Applications sur la carte' })
@@ -80,12 +82,15 @@ try {
     .filter({ has: desktop.getByRole('heading', { name: 'SI Boardriders', exact: true }) })
     .getByRole('button', { name: 'NewStore' })
     .click();
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications NewStore' }).waitFor();
   await desktop.waitForFunction(() => location.hash.includes('app=selection-newstore-boardriders'));
   assert.equal(await desktop.locator('.overview-system.application-context').count(), 1);
   await desktop.reload();
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications NewStore' }).waitFor();
   assert.equal(await desktop.locator('.overview-system.application-context').count(), 1);
+  await openNavigationGroup(desktop, 'Applications');
   await desktop.getByRole('button', { name: 'SI à faire converger' }).click();
   const systems = desktop.getByRole('navigation', { name: 'SI et produits' });
   await systems.getByRole('heading', { name: 'SI Boardriders' }).waitFor();
@@ -100,7 +105,7 @@ try {
   await boardriders.getByRole('button', { name: 'SAP ECC' }).click();
   await desktop.locator('.application-detail').getByRole('heading', { name: 'SAP ECC' }).waitFor();
   assert.ok(
-    (await desktop.locator('.application-detail').getByRole('button', { name: 'Voir dans le Catalogue' }).count()) > 0,
+    (await desktop.locator('.application-detail').getByRole('button', { name: 'Voir sur la carte' }).count()) > 0,
   );
   await desktop
     .getByRole('navigation', { name: 'Modules de SAP ECC' })
@@ -141,6 +146,7 @@ try {
   assert.ok(await detail.getByRole('heading', { name: 'Couverture métier dans ce SI' }).isVisible());
   assert.ok((await detail.locator('.application-mapping').count()) > 0);
 
+  await openNavigationGroup(desktop, 'Applications');
   await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
   const products = desktop.getByRole('navigation', { name: 'Produits du marché' });
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
@@ -162,6 +168,7 @@ try {
   await desktop.waitForFunction(() => location.hash.includes('mapFocus=ba-wholesale-sales'));
   assert.ok((await desktop.evaluate(() => location.hash)).includes('scope=domain-sales'));
   assert.ok(!(await desktop.evaluate(() => location.hash)).includes('app='));
+  await openNavigationGroup(desktop, 'Applications');
   await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
   await products.getByRole('button', { name: 'SoCloz' }).click();
@@ -197,6 +204,7 @@ try {
   await detail.locator('.application-identity h2').filter({ hasText: 'SoCloz' }).waitFor();
   await desktop.screenshot({ path: resolve(output, 'desktop-produits.png'), fullPage: true });
 
+  await openNavigationGroup(desktop, 'Applications');
   await desktop.getByRole('button', { name: 'SI à faire converger' }).click();
   await systems.getByRole('heading', { name: 'SI Boardriders' }).waitFor();
   await boardriders.getByRole('button', { name: 'NewStore' }).click();
@@ -211,7 +219,8 @@ try {
   assert.ok(await routing.getByText('Non utilisé').isVisible());
   assert.equal(await boardriders.getByRole('button', { name: 'Order Routing' }).count(), 0);
   await boardriders.getByRole('button', { name: 'Elastic Suite' }).click();
-  await detail.getByRole('button', { name: 'Voir dans le Catalogue' }).first().click();
+  await detail.getByRole('button', { name: 'Voir sur la carte' }).first().click();
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications Elastic Suite' }).waitFor();
   assert.ok((await desktop.locator('.application-related-item').count()) > 0);
   assert.ok((await desktop.locator('.application-context-item').count()) > 0);
@@ -231,19 +240,23 @@ try {
     'dashed',
   );
   await desktop.screenshot({ path: resolve(output, 'desktop-carte.png'), fullPage: true });
+  await openMapDisplay(desktop);
   await desktop.locator('.map-application-picker > button').click();
   await desktop
     .getByRole('dialog', { name: 'Applications sur la carte' })
     .getByRole('button', { name: 'Whiteboard' })
     .click();
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications Elastic Suite · Whiteboard' }).waitFor();
   assert.equal(await desktop.locator('.application-related-item').count(), 0);
   assert.equal(await desktop.locator('.application-map-note').count(), 0);
+  await openMapDisplay(desktop);
   await desktop.locator('.map-application-picker > button').click();
   await desktop
     .getByRole('dialog', { name: 'Applications sur la carte' })
     .getByRole('button', { name: 'Flow Core System' })
     .click();
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications Flow Core System' }).waitFor();
   await desktop.locator('.application-related-item').filter({ hasText: supply.fields.name }).waitFor();
   assert.equal(await desktop.locator('.application-related-item').count(), 1);
@@ -251,12 +264,14 @@ try {
   await desktop.goto(
     `${base}#/map?version=${version}&node=supply-chain-orchestration&scope=supply-chain-orchestration&mapDepth=2&app=selection-newstore-boardriders`,
   );
+  await openMapDisplay(desktop);
   await desktop.getByRole('button', { name: 'Applications NewStore' }).waitFor();
   const projectedArea = desktop.locator('[data-business-area-summary="ba-order-lifecycle-management"]');
   await projectedArea.waitFor();
   assert.ok(await projectedArea.evaluate((element) => element.classList.contains('application-related-item')));
   assert.equal(await desktop.locator('[data-map-item-id="D04.i"]').count(), 0);
   assert.equal(await projectedArea.evaluate((element) => getComputedStyle(element).outlineStyle), 'solid');
+  await openMapDisplay(desktop);
   await desktop.locator('.map-hotspot-picker .detail-trigger').click();
   const hotspotFilters = desktop.getByRole('dialog', { name: 'Filtres des points chauds' });
   await hotspotFilters.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
@@ -264,6 +279,7 @@ try {
   const hotspotArea = desktop.locator('[data-business-area-summary="ba-service-planning"]');
   await hotspotArea.waitFor();
   const hotspotTitle = published.hotspot_catalog.hotspots.find((item) => item.id === 'HS-016').title;
+  await openMapDisplay(desktop);
   await desktop.locator('.map-hotspot-picker .detail-trigger').click();
   await hotspotFilters
     .locator('.hotspot-picker-row')
@@ -279,6 +295,7 @@ try {
   assert.equal(await desktop.locator('[data-map-item-id="D06.e"]').count(), 0);
   await desktop.mouse.move(0, 0);
   assert.ok(await hotspotArea.evaluate((element) => element.classList.contains('hotspot-related-item')));
+  await openMapDisplay(desktop);
   await desktop.locator('.map-hotspot-picker .detail-trigger').click();
   await hotspotFilters
     .locator('.hotspot-picker-row')
@@ -297,6 +314,7 @@ try {
 
   const mobile = await openFixture({ width: 390, height: 844 }, true);
   await mobile.getByRole('button', { name: 'Ouvrir le panneau' }).click();
+  await openNavigationGroup(mobile, 'Applications');
   await mobile.getByRole('button', { name: 'SI à faire converger' }).click();
   const mobileSystems = mobile.getByRole('navigation', { name: 'SI et produits' });
   await mobileSystems.getByRole('heading', { name: 'SI Boardriders' }).waitFor();
@@ -324,15 +342,18 @@ try {
   assert.equal(await mobile.locator('.application-detail').isVisible(), false);
   await mobile.waitForFunction(() => document.activeElement?.textContent?.includes('Systèmes d’information'));
   await mobile.getByRole('button', { name: 'Ouvrir le panneau' }).click();
+  await openNavigationGroup(mobile, 'Applications');
   await mobile.getByRole('button', { name: 'Produits logiciels du marché' }).click();
   const mobileProducts = mobile.getByRole('navigation', { name: 'Produits du marché' });
   await mobileProducts.getByRole('button', { name: 'SoCloz' }).waitFor();
   assert.equal(await mobileProducts.getByRole('button', { name: 'Flow Core System' }).count(), 0);
   await mobile.getByRole('button', { name: 'Ouvrir le panneau' }).click();
+  await openNavigationGroup(mobile, 'Applications');
   await mobile.getByRole('button', { name: 'SI à faire converger' }).click();
   await mobileSystems.getByRole('heading', { name: 'SI Boardriders' }).waitFor();
   await mobileSystems.getByRole('button', { name: 'Elastic Suite' }).first().click();
-  await mobile.locator('.application-detail').getByRole('button', { name: 'Voir dans le Catalogue' }).first().click();
+  await mobile.locator('.application-detail').getByRole('button', { name: 'Voir sur la carte' }).first().click();
+  await openMapDisplay(mobile);
   await mobile.locator('.map-application-picker > button').click();
   const componentBounds = await mobile.getByRole('dialog', { name: 'Applications sur la carte' }).boundingBox();
   assert.ok(

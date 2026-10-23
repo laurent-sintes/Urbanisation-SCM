@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { assertMapOverlayCorners, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 
@@ -430,6 +431,7 @@ try {
   const workshopWorld = await world(workshopPage);
   await waitCameraIdle(workshopPage);
   if (staging.hotspot) {
+    await openMapDisplay(workshopPage);
     await workshopPage.locator('.map-hotspot-picker > button').click();
     await workshopPage.getByText('Audit atelier 1', { exact: true }).waitFor();
     await workshopPage.keyboard.press('Escape');
@@ -452,6 +454,7 @@ try {
   );
   await workshopPage.waitForTimeout(500);
   if (staging.hotspot) {
+    await openMapDisplay(workshopPage);
     await workshopPage.locator('.map-hotspot-picker > button').click();
     await workshopPage.getByText('Audit atelier 2', { exact: true }).waitFor();
     await workshopPage.keyboard.press('Escape');
@@ -477,7 +480,8 @@ try {
   }
   const page = await preparePage();
   await visit(page, 'map', { node: domain.id, scope: domain.id, mapDepth: '3' });
-  await page.getByRole('tab', { name: 'Catalogue', exact: true }).waitFor();
+  await page.getByRole('tab', { name: 'Carte', exact: true }).waitFor();
+  await openMapDisplay(page);
   for (const label of ['Pleine page', 'Pleine largeur']) {
     const choice = page.getByRole('button', { name: label, exact: true });
     await choice.click();
@@ -809,6 +813,7 @@ try {
     (hotspot) => hotspot.visible !== false && hotspot.location.node_ids.some((id) => belongs(id, domain.id)),
   );
   if (visibleHotspots.length) {
+    await openMapDisplay(page);
     await page.locator('.flow-map-panel .map-hotspot-picker > button').click();
     await page.getByRole('checkbox', { name: 'Afficher les points chauds', exact: true }).check();
     await page.getByRole('button', { name: 'Fermer les filtres', exact: true }).click();
@@ -869,6 +874,7 @@ try {
       sarenza: 'SI Sarenza',
       'flow-platform': 'SI Beaumanoir cible',
     };
+    await openMapDisplay(page);
     await page.locator('.flow-map-panel .map-application-picker > button').click();
     const section = page
       .getByRole('dialog', { name: 'Applications sur la carte' })
@@ -952,13 +958,14 @@ try {
   await waitCameraIdle(page);
   const centeredCamera = await viewport(page);
   await assertWorld(page, baseline, 'Centering the selection preserves world geometry');
-  await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+  await page.getByRole('tab', { name: 'Carte', exact: true }).click();
   await page.locator('.map-panel, .universe-overview').first().waitFor();
   let route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
   assert.equal(route.get('node'), candidate, `Catalogue preserves selected object ${nameOf(byId.get(candidate))}`);
   assert.equal(route.get('scope'), selectedRoute.get('scope'), 'Catalogue preserves scope');
   assert.equal(route.get('version'), version, 'Catalogue preserves the selected publication');
   assert.equal(route.get('mapDepth'), '3', 'Catalogue preserves its explicitly chosen detail');
+  await openMapDisplay(page);
   assert.equal(
     await page.getByRole('button', { name: 'Pleine largeur', exact: true }).getAttribute('aria-pressed'),
     'true',
@@ -1117,6 +1124,7 @@ try {
   checks.push('Escape closes exchange detail opened from its label and restores keyboard focus');
 
   if (model.hotspot_catalog?.hotspots.some((hotspot) => hotspot.visible !== false)) {
+    await openMapDisplay(rootPage);
     await rootPage.locator('.map-hotspot-picker > button').click();
     await rootPage.getByRole('checkbox', { name: 'Afficher les points chauds', exact: true }).check();
     const origin = new URLSearchParams(new URL(rootPage.url()).hash.split('?')[1]);
@@ -1351,7 +1359,7 @@ try {
       await framingPage.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
       await framingPage.waitForFunction(() => !document.fullscreenElement);
       await assertFraming(framingPage, mode, expectedWorld);
-      await framingPage.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+      await framingPage.getByRole('tab', { name: 'Carte', exact: true }).click();
       await framingPage.getByRole('tab', { name: 'Flux', exact: true }).click();
       await assertFraming(framingPage, mode, expectedWorld);
     }

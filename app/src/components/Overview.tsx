@@ -22,6 +22,7 @@ import { CatalogueNavigator } from './CatalogueNavigator';
 import { HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
+import { MapDisplayOptions } from './MapDisplayOptions';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapLegend } from './MapLegend';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
@@ -421,27 +422,34 @@ export function Overview({
         </h2>
         <div className="map-actions">
           <MapDetailPicker labels={['Systèmes', 'Domaines', 'Sous-domaines']} value={detail} onChange={onDepthChange} />
-          {!!hotspots.length && (
-            <MapHotspotPicker
-              filters={hotspotFilters}
-              onChange={onHotspotFiltersChange}
-              scopedHotspots={hotspots}
-              visibleHotspots={visibleHotspots}
-              onOpenHotspot={onOpenHotspot}
-            />
-          )}
-          {!!(
-            applicationCatalog?.selections.length ||
-            applicationCatalog?.products.some((item) => item.kind === 'vendor_product')
-          ) && (
-            <MapApplicationPicker
-              catalog={applicationCatalog}
-              selectionId={applicationSelectionId}
-              componentId={applicationComponentId}
-              onChange={onApplicationChange}
-            />
-          )}
-          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
+          <MapDisplayOptions
+            active={[
+              ...(hotspotFilters.enabled ? ['Points chauds'] : []),
+              ...(applicationSelectionId ? ['Application'] : []),
+            ]}
+          >
+            {!!hotspots.length && (
+              <MapHotspotPicker
+                filters={hotspotFilters}
+                onChange={onHotspotFiltersChange}
+                scopedHotspots={hotspots}
+                visibleHotspots={visibleHotspots}
+                onOpenHotspot={onOpenHotspot}
+              />
+            )}
+            {!!(
+              applicationCatalog?.selections.length ||
+              applicationCatalog?.products.some((item) => item.kind === 'vendor_product')
+            ) && (
+              <MapApplicationPicker
+                catalog={applicationCatalog}
+                selectionId={applicationSelectionId}
+                componentId={applicationComponentId}
+                onChange={onApplicationChange}
+              />
+            )}
+            <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
+          </MapDisplayOptions>
           <button
             type="button"
             className="map-fullscreen-button"

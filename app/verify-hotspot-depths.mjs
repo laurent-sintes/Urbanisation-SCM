@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { adaptPublication } from './src/model.ts';
 
@@ -55,6 +56,7 @@ try {
         `${base}#/map?version=${catalog.current_version}&mapDepth=${depth}${scope ? `&node=${scope}&scope=${scope}` : ''}`,
       );
       const trigger = page.locator('.map-hotspot-picker .detail-trigger');
+      await openMapDisplay(page);
       await trigger.click();
       const filter = page.getByRole('dialog', { name: 'Filtres des points chauds' });
       await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
@@ -239,7 +241,9 @@ try {
   await page.goto(
     `${base}#/map?version=${catalog.current_version}&scope=system-business-operations&node=system-business-operations&mapDepth=0`,
   );
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
+  await openMapDisplay(page);
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   const filter = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
@@ -310,7 +314,9 @@ try {
   // four-row system map may correctly fall back to scrolling below the readability threshold.
   const zoomScope = 'supply-chain-orchestration';
   await page.goto(`${base}#/map?version=${catalog.current_version}&scope=${zoomScope}&node=${zoomScope}&mapDepth=0`);
+  await openMapDisplay(page);
   await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
+  await openMapDisplay(page);
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
   await filter.getByRole('button', { name: 'Fermer les filtres' }).click();
@@ -347,6 +353,7 @@ try {
   );
   await page.getByRole('button', { name: 'Étendre la carte' }).click();
   await page.waitForFunction(() => Boolean(document.fullscreenElement));
+  await openMapDisplay(page);
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   await filter.waitFor();
   assert.ok(await filter.evaluate((element) => document.fullscreenElement.contains(element)));

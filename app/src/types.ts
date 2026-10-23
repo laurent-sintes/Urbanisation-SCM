@@ -195,6 +195,7 @@ export interface ArchitecturePrinciple {
   scope?: { kind: 'global' | 'targeted'; targets: readonly { collection: 'nodes' | 'relations'; id: string }[] };
   examples?: readonly { kind: 'illustration' | 'counterexample'; text: string }[];
   related_principles?: readonly string[];
+  reading_children?: readonly string[];
   references?: readonly {
     id: string;
     publisher: string;

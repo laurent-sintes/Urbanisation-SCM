@@ -9,6 +9,7 @@ import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { CatalogueNavigator } from './CatalogueNavigator';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
+import { MapDisplayOptions } from './MapDisplayOptions';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapLegend } from './MapLegend';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
@@ -129,29 +130,36 @@ export function MapPanel({
             value={mapDepth}
             onChange={onDepthChange}
           />
-          {!!model.raw.hotspot_catalog?.hotspots.length && (
-            <MapHotspotPicker
-              filters={hotspotFilters}
-              onChange={onHotspotFiltersChange}
-              scopedHotspots={scopedHotspots}
-              visibleHotspots={visibleHotspots}
-              onOpenHotspot={onOpenHotspot}
-              selectedHotspotId={selectedHotspotId}
-              onSelectHotspot={(id) => {
-                onHotspotFiltersChange({ enabled: true });
-                setSelectedHotspotId((current) => (current === id ? '' : id));
-              }}
-            />
-          )}
-          {!!(catalog?.selections.length || catalog?.products.some((item) => item.kind === 'vendor_product')) && (
-            <MapApplicationPicker
-              catalog={catalog}
-              selectionId={applicationSelectionId}
-              componentId={applicationComponentId}
-              onChange={onApplicationChange}
-            />
-          )}
-          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
+          <MapDisplayOptions
+            active={[
+              ...(hotspotFilters.enabled ? ['Points chauds'] : []),
+              ...(applicationSelectionId ? ['Application'] : []),
+            ]}
+          >
+            {!!model.raw.hotspot_catalog?.hotspots.length && (
+              <MapHotspotPicker
+                filters={hotspotFilters}
+                onChange={onHotspotFiltersChange}
+                scopedHotspots={scopedHotspots}
+                visibleHotspots={visibleHotspots}
+                onOpenHotspot={onOpenHotspot}
+                selectedHotspotId={selectedHotspotId}
+                onSelectHotspot={(id) => {
+                  onHotspotFiltersChange({ enabled: true });
+                  setSelectedHotspotId((current) => (current === id ? '' : id));
+                }}
+              />
+            )}
+            {!!(catalog?.selections.length || catalog?.products.some((item) => item.kind === 'vendor_product')) && (
+              <MapApplicationPicker
+                catalog={catalog}
+                selectionId={applicationSelectionId}
+                componentId={applicationComponentId}
+                onChange={onApplicationChange}
+              />
+            )}
+            <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
+          </MapDisplayOptions>
           <button
             type="button"
             className="map-fullscreen-button"

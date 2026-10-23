@@ -1,30 +1,25 @@
 import {
   BookOpen,
+  Boxes,
   ChevronDown,
   Compass,
-  Download,
   FileText,
+  Flame,
   HelpCircle,
   Lightbulb,
   PanelLeftClose,
-  Search,
-  X,
+  Route,
 } from 'lucide-react';
-import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { designPrinciples, principleTitle } from '../designPrinciples';
-import { NodeIcon } from '../icons';
-import { lineageOf } from '../model';
+import { useEffect, useRef, useState } from 'react';
+import { featuredPrinciples, principleTitle, readingGuides } from '../designPrinciples';
 import type { ModelingGuide } from '../modelingGuide';
 import type { RouteState } from '../navigation';
-import { kindLabel } from '../presentation';
-import { publicationYamlUrl, staticUrl } from '../publication';
+import { staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
-import { scmStudyDate, scmStudyFilename, scmStudyTitle, scmStudyUrl } from '../scmStudy';
-import { type SearchResult, searchPublication } from '../search';
-import type { PublishedModel } from '../types';
-import { downloadWorkingModel, workshopUrl } from '../workshop';
+import type { AtlasNode, PublishedModel } from '../types';
 import { MethodNavigation } from './MethodNavigation';
 import { CatalogLink } from './ModelLinks';
+import { SheetNavigation } from './SheetNavigation';
 
 interface Props {
   guide?: ModelingGuide;
@@ -32,13 +27,12 @@ interface Props {
   route: RouteState;
   open: boolean;
   mobile: boolean;
-  searchRef: RefObject<HTMLInputElement | null>;
+  sheetNode?: AtlasNode;
   onClose: () => void;
   onNavigate: (id: string, focusHeading?: boolean) => void;
   onSearch: (changes: Partial<RouteState>) => void;
   onOpenGlossary: (mode: 'model' | 'meta' | 'transformation') => void;
   onOpenMetamodel: () => void;
-  onOpenTerm: (id: string) => void;
   onOpenPrinciples: () => void;
 }
 export function Sidebar({
@@ -47,75 +41,38 @@ export function Sidebar({
   route,
   open,
   mobile,
-  searchRef,
+  sheetNode,
   onClose,
   onNavigate,
   onSearch,
   onOpenGlossary,
-  onOpenTerm,
   onOpenPrinciples,
   onOpenMetamodel,
 }: Props) {
   const panel = useRef<HTMLElement>(null);
-  const [resultType, setResultType] = useState('all');
-  const searching = Boolean(route.query.trim());
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [searchPending, setSearchPending] = useState(false);
-  const searchWorker = useRef<Worker | null>(null);
-  const searchRequest = useRef(0);
-  const currentQuery = useRef(route.query);
+  const apps = route.view === 'applications';
+  const understand = ['documents', 'glossary', 'design-principles', 'principles', 'help', 'metamodel'].includes(
+    route.view || '',
+  );
+  const [appsOpen, setAppsOpen] = useState(apps);
+  const [understandOpen, setUnderstandOpen] = useState(understand);
   useEffect(() => {
-    if (typeof Worker === 'undefined') return;
-    const worker = new Worker(new URL('../searchWorker.ts', import.meta.url), { type: 'module' });
-    searchWorker.current = worker;
-    worker.postMessage({ type: 'init', model, guide, metaGuide: model.raw.metamodel?.documentation });
-    worker.onmessage = (event: MessageEvent<{ id: number; results: SearchResult[] }>) => {
-      if (event.data.id !== searchRequest.current) return;
-      setSearchResults(event.data.results);
-      setSearchPending(false);
-    };
-    worker.onerror = () => {
-      if (searchWorker.current !== worker) return;
-      searchWorker.current = null;
-      worker.terminate();
-      setSearchResults(searchPublication(model, currentQuery.current, guide, model.raw.metamodel?.documentation));
-      setSearchPending(false);
-    };
-    return () => {
-      searchWorker.current = null;
-      worker.terminate();
-    };
-  }, [model, guide]);
-  useEffect(() => {
-    const query = route.query.trim();
-    currentQuery.current = route.query;
-    const id = ++searchRequest.current;
-    if (!query) {
-      setSearchResults([]);
-      setSearchPending(false);
-    } else if (searchWorker.current) {
-      setSearchPending(true);
-      searchWorker.current.postMessage({ type: 'query', id, query });
-    } else {
-      setSearchResults(searchPublication(model, query, guide, model.raw.metamodel?.documentation));
-      setSearchPending(false);
-    }
-  }, [model, guide, route.query]);
+    if (apps) setAppsOpen(true);
+    if (understand) setUnderstandOpen(true);
+  }, [apps, understand]);
   useEffect(() => {
     if (!open || !mobile) return;
     const previous = document.activeElement as HTMLElement | null;
     panel.current?.querySelector<HTMLButtonElement>('.drawer-close')?.focus();
-    const key = (event: globalThis.KeyboardEvent) => {
+    const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         onClose();
       }
       if (event.key !== 'Tab') return;
       const items = [
-        ...(panel.current?.querySelectorAll<HTMLElement>(
-          'button:not([disabled]):not([tabindex="-1"]),input,select,a[href],summary',
-        ) || []),
-      ].filter((el) => el.offsetParent !== null);
+        ...(panel.current?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],summary,select') || []),
+      ].filter((el) => el.getClientRects().length > 0);
       const first = items[0],
         last = items.at(-1);
       if (event.shiftKey && document.activeElement === first) {
@@ -130,22 +87,24 @@ export function Sidebar({
     document.addEventListener('keydown', key);
     return () => {
       document.removeEventListener('keydown', key);
-      previous?.focus();
+      previous?.focus({ preventScroll: true });
     };
   }, [open, mobile, onClose]);
-  const matches = useMemo(
-    () =>
-      searching
-        ? searchResults.filter(
-            (result) =>
-              resultType === 'all' ||
-              (['glossary', 'scenario', 'value_stream', 'method', 'guide', 'principle'].includes(resultType)
-                ? result.kind === resultType
-                : result.node?.kind === resultType),
-          )
-        : [],
-    [searchResults, resultType, searching],
-  );
+  const visit = (changes: Partial<RouteState>) => {
+    onSearch({
+      returnTo: '',
+      catalogReturn: '',
+      scroll: '',
+      node: '',
+      scope: '',
+      query: '',
+      section: '',
+      term: '',
+      principle: '',
+      ...changes,
+    });
+    onClose();
+  };
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
   const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
   return (
@@ -153,8 +112,10 @@ export function Sidebar({
     <aside
       ref={panel}
       id="atlas-tree-panel"
-      className={`sidebar ${open ? 'open' : ''} ${searching ? 'is-searching' : ''}`}
+      className={`sidebar ${open ? 'open' : ''}`}
       aria-label="Navigation Atlas"
+      inert={mobile && !open}
+      aria-hidden={mobile && !open ? true : undefined}
       aria-modal={mobile && open ? true : undefined}
       role={mobile && open ? 'dialog' : undefined}
     >
@@ -164,417 +125,180 @@ export function Sidebar({
           <PanelLeftClose size={20} />
         </button>
       </div>
-      <div className="search-box">
-        <Search size={17} />
-        <input
-          ref={searchRef}
-          id="fa-search"
-          aria-label="Rechercher dans le modèle publié"
-          placeholder="Rechercher…"
-          value={route.query}
-          onChange={(e) => onSearch({ query: e.target.value })}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowDown') {
-              e.preventDefault();
-              panel.current?.querySelector<HTMLButtonElement>('[data-search-result]')?.focus();
-            }
-            if (e.key === 'Escape') {
-              e.stopPropagation();
-              onSearch({ query: '', status: '' });
-            }
-          }}
-        />
-        {route.query ? (
-          <button type="button" aria-label="Effacer la recherche" onClick={() => onSearch({ query: '', status: '' })}>
-            <X size={14} />
-          </button>
-        ) : (
-          <kbd>Ctrl K</kbd>
-        )}
-      </div>
-      <nav className="primary-spaces" aria-label="Espaces Atlas" hidden={searching}>
-        <button
-          type="button"
-          aria-current={
-            ![
-              'scenarios',
-              'hotspots',
-              'documents',
-              'applications',
-              'glossary',
-              'principles',
-              'design-principles',
-              'metamodel',
-              'help',
-            ].includes(route.view || '')
-              ? 'page'
-              : undefined
-          }
-          onClick={() => onNavigate('')}
-        >
-          <Compass size={17} />
-          Cartographie
-        </button>
-        {!!model.raw.application_catalog && (
-          <>
-            <button
-              type="button"
-              aria-current={route.view === 'applications' && route.appView === 'products' ? 'page' : undefined}
-              onClick={() => {
-                onSearch({
-                  view: 'applications',
-                  appView: 'products',
-                  appSelection: '',
-                  appComponent: '',
-                  node: '',
-                  scope: '',
-                  query: '',
-                  section: '',
-                });
-                onClose();
-              }}
-            >
-              <Compass size={17} />
-              Produits logiciels du marché
-            </button>
-            <button
-              type="button"
-              aria-current={route.view === 'applications' && route.appView !== 'products' ? 'page' : undefined}
-              onClick={() => {
-                onSearch({
-                  view: 'applications',
-                  appView: 'systems',
-                  appSelection: '',
-                  appComponent: '',
-                  node: '',
-                  scope: '',
-                  query: '',
-                  section: '',
-                });
-                onClose();
-              }}
-            >
-              <Compass size={17} />
-              SI à faire converger
-            </button>
-          </>
-        )}
-        {!!model.raw.scenario_catalog && (
+      <div className="sidebar-scroll">
+        <nav className="primary-spaces" aria-label="Espaces Atlas">
           <button
             type="button"
-            aria-current={route.view === 'scenarios' ? 'page' : undefined}
-            onClick={() => {
-              onSearch({
-                view: 'scenarios',
-                node: '',
-                scope: '',
-                query: '',
-                scenario: '',
-                stream: '',
-                path: '',
-                section: '',
-                event: '',
-                object: '',
-                situation: '',
-                capability: '',
-                scenarioQuery: '',
-                returnTo: '',
-                catalogReturn: '',
-                scroll: '',
-              });
-              onClose();
-            }}
+            aria-current={
+              !apps && !understand && route.view !== 'scenarios' && route.view !== 'hotspots' ? 'page' : undefined
+            }
+            onClick={() => onNavigate('')}
           >
-            <Compass size={17} />
-            Scénarios métier
+            <Compass size={18} />
+            Cartographie
           </button>
-        )}
-        {!!model.raw.hotspot_catalog && (
-          <button
-            type="button"
-            aria-current={route.view === 'hotspots' ? 'page' : undefined}
-            onClick={() => {
-              onSearch({
-                view: 'hotspots',
-                hotspot: '',
-                hotspotGroup: '',
-                node: '',
-                scope: '',
-                query: '',
-                status: '',
-                section: '',
-              });
-              onClose();
-            }}
-          >
-            <Compass size={17} />
-            Points chauds
-          </button>
-        )}
-        <button
-          type="button"
-          aria-current={route.view === 'documents' ? 'page' : undefined}
-          onClick={() => {
-            onSearch({ view: 'documents', document: '', hotspot: '', node: '', scope: '', query: '', section: '' });
-            onClose();
-          }}
-        >
-          <FileText size={17} />
-          Documents
-        </button>
-        <button
-          type="button"
-          onClick={() => onOpenGlossary('model')}
-          aria-current={route.view === 'glossary' ? 'page' : undefined}
-        >
-          <BookOpen size={17} />
-          Glossaire métier
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            onSearch({
-              view: 'design-principles',
-              principle: '',
-              node: '',
-              scope: '',
-              query: '',
-              section: '',
-              returnTo: '',
-              scroll: '',
-              term: '',
-              relation: '',
-            });
-            onClose();
-          }}
-          aria-current={route.view === 'design-principles' ? 'page' : undefined}
-        >
-          <Compass size={17} />
-          Principes directeurs
-        </button>
-        <button
-          type="button"
-          onClick={onOpenPrinciples}
-          aria-current={route.view === 'principles' ? 'page' : undefined}
-        >
-          <Lightbulb size={17} />
-          {guide?.title || 'Transformation'}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            onSearch({ view: 'help', helpTopic: 'start', node: '', scope: '', query: '', section: '' });
-            onClose();
-          }}
-          aria-current={route.view === 'help' || route.view === 'metamodel' ? 'page' : undefined}
-        >
-          <HelpCircle size={17} />
-          Aide
-        </button>
-        <details className="download-menu">
-          <summary>
-            <Download size={17} />
-            Télécharger
-            <ChevronDown className="download-chevron" size={15} />
-          </summary>
-          <a
-            href={publicationYamlUrl(model.version)}
-            download={`flow-atlas-model-${model.version}.yaml`}
-            onClick={mobile ? onClose : undefined}
-          >
-            <span className="download-menu-label">
-              <Download size={15} aria-hidden="true" />
-              Modèle complet (YAML)
-            </span>
-            <small>
-              Modèle et métamodèle complets · {revision} · {model.version}
-            </small>
-          </a>
-          <a href={scmStudyUrl} download={scmStudyFilename} onClick={mobile ? onClose : undefined}>
-            <span className="download-menu-label">
-              <FileText size={15} aria-hidden="true" />
-              {scmStudyTitle} (PDF)
-            </span>
-            <small>Indicateurs et décisions · {scmStudyDate}</small>
-          </a>
-          {model.raw.workshop && (
-            <>
-              <a href={workshopUrl()} download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}>
-                <span className="download-menu-label">
-                  <Download size={15} aria-hidden="true" />
-                  Fichier de séance (JSON)
-                </span>
-                <small>Changements et propositions de l’atelier</small>
-              </a>
-              <button type="button" className="workshop-download" onClick={() => downloadWorkingModel(model)}>
-                <Download size={15} aria-hidden="true" />
-                Modèle de travail (JSON)
-              </button>
-            </>
+          {!!model.raw.scenario_catalog && (
+            <button
+              type="button"
+              aria-current={route.view === 'scenarios' ? 'page' : undefined}
+              onClick={() =>
+                visit({
+                  view: 'scenarios',
+                  scenario: '',
+                  stream: '',
+                  path: '',
+                  event: '',
+                  object: '',
+                  situation: '',
+                  capability: '',
+                  scenarioQuery: '',
+                })
+              }
+            >
+              <Route size={18} />
+              Scénarios métier
+            </button>
           )}
-        </details>
-      </nav>
-      {searching ? (
-        <div className="search-results" role="region" aria-label="Résultats de recherche">
-          <label className="search-filter">
-            Afficher
-            <select aria-label="Type de résultat" value={resultType} onChange={(e) => setResultType(e.target.value)}>
-              <option value="all">Tous les résultats</option>
-              <option value="capability">Capacités</option>
-              <option value="behavior">Comportements</option>
-              <option value="domain">Domaines</option>
-              <option value="area">Sous-domaines</option>
-              <option value="business_area">Business Areas</option>
-              <option value="reference">Référentiels</option>
-              <option value="glossary">Glossaire métier</option>
-              <option value="method">Notions documentaires</option>
-              <option value="guide">Documentation</option>
-              <option value="principle">Principes directeurs</option>
-              <option value="scenario">Scénarios</option>
-              <option value="value_stream">Flux de valeur</option>
-            </select>
-          </label>
-          <p role="status">
-            {searchPending ? 'Recherche en cours…' : `${matches.length} résultat${matches.length > 1 ? 's' : ''}`}
-          </p>
-          {matches.map((result) => (
+          {!!model.raw.hotspot_catalog && (
             <button
               type="button"
-              key={`${result.kind}:${result.id}`}
-              data-search-result={result.id}
-              onClick={() => {
-                if (['glossary', 'method'].includes(result.kind)) {
-                  onOpenTerm(result.id);
-                } else if (result.kind === 'principle') {
-                  onSearch({
-                    view: 'design-principles',
-                    principle: result.id,
-                    node: '',
-                    scope: '',
-                    query: '',
-                    section: '',
-                    returnTo: '',
-                    scroll: '',
-                  });
-                  onClose();
-                } else if (result.kind === 'guide') {
-                  onSearch({
-                    view: result.document || 'principles',
-                    principle: result.id,
-                    node: '',
-                    query: '',
-                    section: '',
-                    returnTo: '',
-                    scroll: '',
-                  });
-                  onClose();
-                } else if (['scenario', 'value_stream'].includes(result.kind)) {
-                  onSearch({
-                    view: 'scenarios',
-                    scenario: result.kind === 'scenario' ? result.id : '',
-                    stream: result.kind === 'value_stream' ? result.id : '',
-                    path: '',
-                    node: '',
-                    query: '',
-                    section: '',
-                  });
-                  onClose();
-                } else {
-                  onNavigate(result.id, true);
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'ArrowDown') {
-                  e.preventDefault();
-                  (e.currentTarget.nextElementSibling as HTMLElement)?.focus();
-                }
-                if (e.key === 'ArrowUp') {
-                  e.preventDefault();
-                  const previous = e.currentTarget.previousElementSibling;
-                  previous?.tagName === 'BUTTON' ? (previous as HTMLElement).focus() : searchRef.current?.focus();
-                }
-              }}
+              aria-current={route.view === 'hotspots' ? 'page' : undefined}
+              onClick={() => visit({ view: 'hotspots', hotspot: '', hotspotGroup: '', status: '' })}
             >
-              {result.node ? <NodeIcon node={result.node} size={20} framed /> : <BookOpen size={22} />}
-              <span>
-                <strong>{result.name}</strong>
-                <small>
-                  {result.node
-                    ? `${kindLabel(result.node)} · ${lineageOf(model, result.id)
-                        .slice(0, -1)
-                        .map((n) => n.name)
-                        .join(' / ')}`
-                    : result.kind === 'principle'
-                      ? 'Principe directeur'
-                      : result.kind === 'scenario'
-                        ? 'Scénario métier'
-                        : result.kind === 'value_stream'
-                          ? 'Flux de valeur'
-                          : result.kind === 'method'
-                            ? 'Notion méthodologique'
-                            : result.kind === 'guide'
-                              ? 'Méthode'
-                              : 'Terme du glossaire'}{' '}
-                  · {result.node?.displayCode ?? result.id}
-                </small>
-                {result.excerpt && <span className="search-excerpt">{result.excerpt}</span>}
-              </span>
+              <Flame size={18} />
+              Points chauds
             </button>
-          ))}
-          {!searchPending && !matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
-        </div>
-      ) : ['scenarios', 'glossary', 'design-principles', 'principles', 'metamodel', 'help'].includes(
-          route.view || '',
-        ) ? (
-        <nav
-          className="space-navigation"
-          aria-label={
-            ['principles', 'metamodel'].includes(route.view || '')
-              ? 'Rubriques de la documentation'
-              : 'Navigation de cet espace'
-          }
-        >
-          {route.view === 'glossary' && (
-            <>
+          )}
+          {!!model.raw.application_catalog && (
+            <details
+              className="navigation-group"
+              open={appsOpen}
+              onToggle={(event) => setAppsOpen(event.currentTarget.open)}
+            >
+              <summary className={apps ? 'is-active' : ''}>
+                <Boxes size={18} />
+                Applications
+                <ChevronDown size={15} />
+              </summary>
+              <div className="navigation-submenu">
+                <button
+                  type="button"
+                  aria-current={apps && route.appView === 'products' ? 'page' : undefined}
+                  onClick={() =>
+                    visit({ view: 'applications', appView: 'products', appSelection: '', appComponent: '' })
+                  }
+                >
+                  Produits logiciels du marché
+                </button>
+                <button
+                  type="button"
+                  aria-current={apps && route.appView !== 'products' ? 'page' : undefined}
+                  onClick={() =>
+                    visit({ view: 'applications', appView: 'systems', appSelection: '', appComponent: '' })
+                  }
+                >
+                  SI à faire converger
+                </button>
+              </div>
+            </details>
+          )}
+          <details
+            className="navigation-group"
+            open={understandOpen}
+            onToggle={(event) => setUnderstandOpen(event.currentTarget.open)}
+          >
+            <summary className={understand ? 'is-active' : ''}>
+              <BookOpen size={18} />
+              Comprendre
+              <ChevronDown size={15} />
+            </summary>
+            <div className="navigation-submenu">
               <button
                 type="button"
-                aria-current={route.glossary === 'model' || !route.glossary ? 'page' : undefined}
+                aria-current={route.view === 'design-principles' ? 'page' : undefined}
+                onClick={() => visit({ view: 'design-principles' })}
+              >
+                Principes directeurs
+              </button>
+              <button
+                type="button"
+                aria-current={route.view === 'glossary' ? 'page' : undefined}
                 onClick={() => onOpenGlossary('model')}
               >
                 Glossaire métier
               </button>
               <button
                 type="button"
-                aria-current={route.glossary === 'meta' ? 'page' : undefined}
-                onClick={() => onOpenGlossary('meta')}
+                aria-current={route.view === 'documents' ? 'page' : undefined}
+                onClick={() => visit({ view: 'documents', document: '', hotspot: '' })}
               >
-                Glossaire du métamodèle
+                <FileText size={15} />
+                Documents et téléchargements
               </button>
               <button
                 type="button"
-                aria-current={route.glossary === 'transformation' ? 'page' : undefined}
-                onClick={() => onOpenGlossary('transformation')}
+                aria-current={route.view === 'principles' ? 'page' : undefined}
+                onClick={onOpenPrinciples}
               >
-                Glossaire de transformation
+                <Lightbulb size={15} />
+                {guide?.title || 'Méthode de transformation'}
               </button>
-            </>
-          )}
-          {route.view === 'design-principles' && (
-            <>
-              <h2>Principes directeurs</h2>
               <button
                 type="button"
-                onClick={() => {
-                  onSearch({ principle: '', scroll: '' });
-                  onClose();
-                }}
-                aria-current={!route.principle ? 'page' : undefined}
+                aria-current={route.view === 'help' || route.view === 'metamodel' ? 'page' : undefined}
+                onClick={() => visit({ view: 'help', helpTopic: 'start' })}
               >
-                Tous les principes
+                <HelpCircle size={15} />
+                Aide et repères de lecture
               </button>
-              {designPrinciples(model)
-                .filter((p) => p.featured)
-                .map((p) => (
+            </div>
+          </details>
+        </nav>
+        {sheetNode ? (
+          <SheetNavigation model={model} node={sheetNode} onClose={onClose} />
+        ) : ['scenarios', 'glossary', 'design-principles', 'principles', 'metamodel', 'help'].includes(
+            route.view || '',
+          ) ? (
+          <nav className="space-navigation" aria-label="Navigation de cet espace">
+            {route.view === 'glossary' && (
+              <>
+                <button
+                  type="button"
+                  aria-current={route.glossary === 'model' || !route.glossary ? 'page' : undefined}
+                  onClick={() => onOpenGlossary('model')}
+                >
+                  Glossaire métier
+                </button>
+                <button
+                  type="button"
+                  aria-current={route.glossary === 'meta' ? 'page' : undefined}
+                  onClick={() => onOpenGlossary('meta')}
+                >
+                  Glossaire du métamodèle
+                </button>
+                <button
+                  type="button"
+                  aria-current={route.glossary === 'transformation' ? 'page' : undefined}
+                  onClick={() => onOpenGlossary('transformation')}
+                >
+                  Glossaire de transformation
+                </button>
+              </>
+            )}
+            {route.view === 'design-principles' && (
+              <>
+                <h2>Principes directeurs</h2>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSearch({ principle: '', scroll: '' });
+                    onClose();
+                  }}
+                  aria-current={!route.principle ? 'page' : undefined}
+                >
+                  Tous les principes
+                </button>
+                {featuredPrinciples(model).map((p) => (
                   <button
                     type="button"
                     key={p.id}
@@ -587,78 +311,102 @@ export function Sidebar({
                     {principleTitle(p)}
                   </button>
                 ))}
-            </>
-          )}
-          {route.view === 'principles' && (
-            <MethodNavigation
-              guide={guide}
-              selected={route.principle}
-              onSelect={(principle) => {
-                onSearch({ principle, scroll: '' });
-                onClose();
-              }}
-            />
-          )}
-          {(route.view === 'help' || route.view === 'metamodel') && (
-            <>
-              <h2>Aide</h2>
-              <button
-                type="button"
-                aria-current={route.view === 'help' && route.helpTopic !== 'workshop' ? 'page' : undefined}
-                onClick={() => {
-                  onSearch({ view: 'help', helpTopic: 'start', principle: '', section: '' });
-                  onClose();
-                }}
-              >
-                Par où commencer
-              </button>
-              <button
-                type="button"
-                aria-current={route.view === 'help' && route.helpTopic === 'workshop' ? 'page' : undefined}
-                onClick={() => {
-                  onSearch({ view: 'help', helpTopic: 'workshop', principle: '', section: '' });
-                  onClose();
-                }}
-              >
-                Mode atelier
-              </button>
-              <button
-                type="button"
-                aria-current={route.view === 'metamodel' ? 'page' : undefined}
-                onClick={onOpenMetamodel}
-              >
-                Métamodèle FLOW
-              </button>
-            </>
-          )}
-          {route.view === 'metamodel' && (
-            <>
-              <h2>Rubriques du métamodèle</h2>
+                {readingGuides(model).length > 0 && <h2>Repères de lecture</h2>}
+                {readingGuides(model).map((p) => (
+                  <button
+                    type="button"
+                    key={p.id}
+                    aria-current={
+                      route.principle === p.id || p.reading_children?.includes(route.principle || '')
+                        ? 'page'
+                        : undefined
+                    }
+                    onClick={() => {
+                      onSearch({ principle: p.id, scroll: '' });
+                      onClose();
+                    }}
+                  >
+                    Comment lire la cartographie
+                  </button>
+                ))}
+              </>
+            )}
+            {route.view === 'principles' && (
               <MethodNavigation
-                guide={model.raw.metamodel?.documentation}
+                guide={guide}
                 selected={route.principle}
                 onSelect={(principle) => {
                   onSearch({ principle, scroll: '' });
                   onClose();
                 }}
               />
-            </>
-          )}
-          {route.view === 'scenarios' && (
-            <>
-              <h2>Flux de valeur</h2>
-              <CatalogLink stream="">Tous les scénarios</CatalogLink>
-              {catalogOf(model)?.value_streams.map((v) => (
-                <CatalogLink key={v.id} stream={v.id}>
-                  {v.label_fr}
-                </CatalogLink>
-              ))}
-            </>
-          )}
-        </nav>
-      ) : (
-        <div className="sidebar-spacer" />
-      )}
+            )}
+            {(route.view === 'help' || route.view === 'metamodel') && (
+              <>
+                <h2>Aide</h2>
+                <button
+                  type="button"
+                  aria-current={route.view === 'help' && route.helpTopic !== 'workshop' ? 'page' : undefined}
+                  onClick={() => {
+                    onSearch({ view: 'help', helpTopic: 'start', principle: '', section: '' });
+                    onClose();
+                  }}
+                >
+                  Par où commencer
+                </button>
+                <button
+                  type="button"
+                  aria-current={route.view === 'help' && route.helpTopic === 'workshop' ? 'page' : undefined}
+                  onClick={() => {
+                    onSearch({ view: 'help', helpTopic: 'workshop', principle: '', section: '' });
+                    onClose();
+                  }}
+                >
+                  Mode atelier
+                </button>
+                <button
+                  type="button"
+                  aria-current={route.view === 'metamodel' ? 'page' : undefined}
+                  onClick={onOpenMetamodel}
+                >
+                  Métamodèle FLOW
+                </button>
+              </>
+            )}
+            {route.view === 'metamodel' && (
+              <>
+                <h2>Rubriques du métamodèle</h2>
+                <MethodNavigation
+                  guide={model.raw.metamodel?.documentation}
+                  selected={route.principle}
+                  onSelect={(principle) => {
+                    onSearch({ principle, scroll: '' });
+                    onClose();
+                  }}
+                />
+              </>
+            )}
+            {route.view === 'scenarios' && (
+              <>
+                <h2>Flux de valeur</h2>
+                <CatalogLink stream="">Tous les scénarios</CatalogLink>
+                {catalogOf(model)?.value_streams.map((v) => (
+                  <CatalogLink key={v.id} stream={v.id}>
+                    {v.label_fr}
+                  </CatalogLink>
+                ))}
+              </>
+            )}
+          </nav>
+        ) : route.view === 'documents' ? (
+          <nav className="space-navigation" aria-label="Dans les documents">
+            <h2>Documents</h2>
+            <button type="button" onClick={() => visit({ view: 'documents', document: '' })}>
+              Études FLOW et publication
+            </button>
+          </nav>
+        ) : null}
+      </div>
       <div className="sidebar-bottom">
         <div className="sidebar-stats">
           <span id="fa-version" className="model-version" data-version={model.version} title={publicationLabel}>

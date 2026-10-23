@@ -2,6 +2,7 @@ import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { DOCUMENT_CATEGORY, documentDownloadName, documentFormat, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
+import { publicationYamlUrl } from '../publication';
 import {
   scmStudyAuthor,
   scmStudyDate,
@@ -12,6 +13,7 @@ import {
   scmStudyUrl,
 } from '../scmStudy';
 import type { PublishedModel } from '../types';
+import { downloadWorkingModel, workshopUrl } from '../workshop';
 import './documents.css';
 
 export function DocumentCatalogPage({
@@ -37,6 +39,33 @@ export function DocumentCatalogPage({
 
   return (
     <section className="documents-page" aria-label="Documents et études FLOW">
+      <details className="publication-downloads">
+        <summary>
+          <Download size={17} aria-hidden="true" />
+          Télécharger le modèle et les fichiers de séance
+        </summary>
+        <a
+          className="documents-download"
+          href={publicationYamlUrl(model.version)}
+          download={`flow-atlas-model-${model.version}.yaml`}
+        >
+          Modèle complet (YAML) · {model.version}
+        </a>
+        {model.raw.workshop && (
+          <>
+            <a
+              className="documents-download"
+              href={workshopUrl()}
+              download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}
+            >
+              Fichier de séance (JSON)
+            </a>
+            <button type="button" className="documents-download" onClick={() => downloadWorkingModel(model)}>
+              Modèle de travail (JSON)
+            </button>
+          </>
+        )}
+      </details>
       {selected ? (
         <article className="documents-detail">
           <button type="button" onClick={() => onChange({ document: '' })}>

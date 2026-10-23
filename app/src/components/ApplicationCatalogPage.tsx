@@ -437,7 +437,7 @@ function ComponentDetail({
               {evidenceLabel[mapping.evidence_state]} · <ModelText text={mapping.note} />
             </span>
             <button type="button" onClick={() => onShowOnMap(context.id, mapping.component_id)}>
-              Voir dans le Catalogue
+              Voir sur la carte
             </button>
           </div>
         ))
@@ -593,7 +593,7 @@ export function ApplicationCatalogPage({
                   type="button"
                   onClick={() => onShowOnMap(selection.id, component.id === root?.id ? undefined : component.id)}
                 >
-                  Voir dans le Catalogue
+                  Voir sur la carte
                 </button>
               )}
             </div>

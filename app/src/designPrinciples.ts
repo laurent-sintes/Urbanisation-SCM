@@ -16,6 +16,35 @@ export function designPrinciples(model: PublishedModel) {
       (a.display_order ?? 999) - (b.display_order ?? 999) || principleTitle(a).localeCompare(principleTitle(b), 'fr'),
   );
 }
+/** Public articles and their short practices use this snapshot's editorial grouping. */
+export function principleDestination(model: PublishedModel, id: string) {
+  const all = designPrinciples(model);
+  const parent = all.find((p) => p.featured && p.reading_children?.includes(id));
+  const item = all.find((p) => p.id === id);
+  if (!item || (!item.featured && !parent)) return undefined;
+  return { principle: parent || item, section: parent ? `principle-${id}` : '' };
+}
+export function featuredPrinciples(model: PublishedModel) {
+  return designPrinciples(model).filter((p) => p.featured && !p.reading_children?.length);
+}
+export function readingGuides(model: PublishedModel) {
+  return designPrinciples(model).filter((p) => p.featured && p.reading_children?.length);
+}
+export function principleChildren(model: PublishedModel, p: ArchitecturePrinciple) {
+  return (p.reading_children || []).flatMap((id) => {
+    const child = model.raw.principles?.find((item) => item.id === id);
+    return child ? [child] : [];
+  });
+}
+function groupedPrinciples(model: PublishedModel, items: ArchitecturePrinciple[]) {
+  const seen = new Set<string>();
+  return items.flatMap((p) => {
+    const destination = principleDestination(model, p.id)?.principle;
+    if (!destination || destination.reading_children?.length || seen.has(destination.id)) return [];
+    seen.add(destination.id);
+    return [destination];
+  });
+}
 export type PrincipleReading = {
   collection: 'nodes' | 'relations' | 'terms';
   id: string;
@@ -72,7 +101,15 @@ function readingIndex(model: PublishedModel) {
   return index;
 }
 export function readingsForPrinciple(model: PublishedModel, id: string): readonly PrincipleReading[] {
-  return readingIndex(model).get(id) || [];
+  const p = model.raw.principles?.find((p) => p.id === id);
+  const result: PrincipleReading[] = [];
+  for (const key of [id, ...(p?.reading_children || [])])
+    for (const reading of readingIndex(model).get(key) || []) {
+      const existing = result.find((r) => r.collection === reading.collection && r.id === reading.id);
+      if (existing) existing.fields = [...new Set([...existing.fields, ...reading.fields])];
+      else result.push({ ...reading, fields: [...reading.fields] });
+    }
+  return result;
 }
 function citedBy(model: PublishedModel, collection: PrincipleReading['collection'], id: string, principle: string) {
   return readingsForPrinciple(model, principle).some((r) => r.collection === collection && r.id === id);
@@ -94,17 +131,18 @@ export function principleGroupsForNode(model: PublishedModel, id: string) {
       }
     pending = next;
   }
-  const principles = designPrinciples(model);
-  const direct = principles.filter(
-    (p) =>
-      (p.featured && p.scope?.targets.some((t) => t.collection === 'nodes' && t.id === id)) ||
-      citedBy(model, 'nodes', id, p.id),
+  const principles = designPrinciples(model).filter((p) => principleDestination(model, p.id));
+  const direct = groupedPrinciples(
+    model,
+    principles.filter(
+      (p) => p.scope?.targets.some((t) => t.collection === 'nodes' && t.id === id) || citedBy(model, 'nodes', id, p.id),
+    ),
   );
   const ids = new Set(direct.map((p) => p.id));
-  const inherited = principles.filter(
-    (p) =>
-      !ids.has(p.id) && p.featured && p.scope?.targets.some((t) => t.collection === 'nodes' && ancestors.has(t.id)),
-  );
+  const inherited = groupedPrinciples(
+    model,
+    principles.filter((p) => p.scope?.targets.some((t) => t.collection === 'nodes' && ancestors.has(t.id))),
+  ).filter((p) => !ids.has(p.id));
   return { direct, inherited };
 }
 export function principlesForNode(model: PublishedModel, id: string) {
@@ -112,10 +150,13 @@ export function principlesForNode(model: PublishedModel, id: string) {
   return [...direct, ...inherited];
 }
 export function principlesForRelation(model: PublishedModel, id: string) {
-  return designPrinciples(model).filter(
-    (p) =>
-      (p.featured && p.scope?.targets.some((t) => t.collection === 'relations' && t.id === id)) ||
-      citedBy(model, 'relations', id, p.id),
+  return groupedPrinciples(
+    model,
+    designPrinciples(model).filter(
+      (p) =>
+        p.scope?.targets.some((t) => t.collection === 'relations' && t.id === id) ||
+        citedBy(model, 'relations', id, p.id),
+    ),
   );
 }
 export function principleSearchText(p: ArchitecturePrinciple) {

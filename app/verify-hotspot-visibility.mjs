@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { defaultHotspotMapFilters, filterMapHotspots } from './src/hotspotMap.ts';
 import { adaptPublication } from './src/model.ts';
@@ -106,6 +107,7 @@ try {
   assert.ok(await page.locator('.hotspot-hidden-separator').isVisible());
   await page.setViewportSize({ width: 1440, height: 950 });
   await page.goto(`${base}#/map`);
+  await openMapDisplay(page);
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   const picker = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   await picker.getByRole('button', { name: 'Réinitialiser', exact: true }).click();

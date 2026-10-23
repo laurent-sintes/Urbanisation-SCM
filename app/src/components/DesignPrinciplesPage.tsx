@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { ArrowRight, BookOpen } from 'lucide-react';
+import { useEffect } from 'react';
 import {
   annotatePrincipleText,
-  designPrinciples,
+  featuredPrinciples,
   principleCategories,
+  principleChildren,
+  principleDestination,
   principleTitle,
+  readingGuides,
   readingsForPrinciple,
 } from '../designPrinciples';
+import { plainInlineText } from '../inlineLinks';
 import type { RouteState } from '../navigation';
 import { routeHash } from '../navigation';
+import { revealSection } from '../readerNavigation';
 import type { ArchitecturePrinciple, PublishedModel } from '../types';
 import { ModelText, ReferenceLink, readingOrigin } from './ModelLinks';
 import './design-principles.css';
@@ -22,97 +28,81 @@ export function DesignPrinciplesPage({
   onSelect: (id: string) => void;
 }) {
   const PrincipleText = ({ text }: { text: string }) => <ModelText text={annotatePrincipleText(model, text)} />;
-  const [category, setCategory] = useState('');
-  const [scope, setScope] = useState('');
-  const principles = designPrinciples(model);
-  const selected = principles.find((p) => p.id === route.principle);
-  const featured = principles.filter((p) => p.featured);
-  const legacy = principles.filter((p) => !p.featured);
-  const targets = [
-    ...new Set(
-      featured.flatMap((p) => p.scope?.targets.filter((t) => t.collection === 'nodes').map((t) => t.id) || []),
-    ),
-  ]
-    .map((id) => model.nodeById.get(id))
-    .filter((n) => !!n)
-    .sort((a, b) => a.name.localeCompare(b.name));
-  const filtered = featured.filter(
-    (p) =>
-      (!category || p.category === category) &&
-      (!scope || p.scope?.targets.some((t) => t.collection === 'nodes' && t.id === scope)),
-  );
-  const link = (id: string) =>
-    routeHash({ ...route, view: 'design-principles', principle: id, section: '', query: '' });
-  const cards = (items: ArchitecturePrinciple[]) => (
-    <ul className="principle-cards">
-      {items.map((p) => (
+  const destination = principleDestination(model, route.principle || '');
+  const selected = destination?.principle;
+  const choices = featuredPrinciples(model);
+  const guides = readingGuides(model);
+  const isGuide = Boolean(selected?.reading_children?.length);
+  const related = selected
+    ? [
+        ...new Map(
+          (selected.related_principles || []).flatMap((id) => {
+            const p = principleDestination(model, id)?.principle;
+            return p && !p.reading_children?.length && p.id !== selected.id ? [[p.id, p] as const] : [];
+          }),
+        ).values(),
+      ]
+    : [];
+  const section = route.section || destination?.section;
+  useEffect(() => {
+    if (!section) return;
+    const target = document.getElementById(section);
+    if (target) revealSection(target);
+  }, [section]);
+  const link = (id: string) => {
+    const target = principleDestination(model, id);
+    return routeHash({
+      ...route,
+      view: 'design-principles',
+      principle: target?.principle.id || '',
+      section: target?.section || '',
+      query: '',
+    });
+  };
+  const list = (items: ArchitecturePrinciple[]) => (
+    <ol className="principle-list">
+      {items.map((p, index) => (
         <li key={p.id}>
-          <a href={link(p.id)}>
-            <strong>{principleTitle(p)}</strong>
+          <a href={link(p.id)} aria-labelledby={`principle-choice-${p.id}`}>
+            <span className="principle-number" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span className="principle-preview">
+              <strong id={`principle-choice-${p.id}`}>{principleTitle(p)}</strong>
+              <span>{plainInlineText(p.summary || p.statement)}</span>
+            </span>
+            <ArrowRight size={21} aria-hidden="true" />
           </a>
-          <p>
-            <PrincipleText text={p.summary || p.statement} />
-          </p>
-          <small>{principleCategories[p.category || ''] || 'Règle du modèle'}</small>
         </li>
       ))}
-    </ul>
+    </ol>
   );
   if (!selected)
     return (
       <section className="design-principles" aria-label="Référentiel des principes directeurs">
-        {route.principle && <p role="status">Ce principe n’est pas présent dans cette publication.</p>}
-        <p>
-          Ces choix orientent la cartographie cible : ils expliquent ses frontières, les responsabilités retenues et les
-          compromis. Une comparaison au marché apporte un éclairage ; elle ne prouve pas une réalisation installée.
+        {route.principle && <p role="status">Ce principe n’est pas présenté dans cette publication.</p>}
+        <p className="principle-invitation">
+          Pourquoi ces frontières métier ? Pourquoi rendre certaines notions configurables ? Chaque principe explique un
+          choix et ce qu’il apporte.
         </p>
-        {featured.length > 0 && (
-          <>
-            <div className="principle-filters">
-              <label>
-                Thème
-                <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                  <option value="">Tous les thèmes</option>
-                  {Object.entries(principleCategories)
-                    .filter(([key]) => featured.some((p) => p.category === key))
-                    .map(([key, label]) => (
-                      <option value={key} key={key}>
-                        {label}
-                      </option>
-                    ))}
-                </select>
-              </label>
-              <label>
-                Périmètre
-                <select value={scope} onChange={(e) => setScope(e.target.value)}>
-                  <option value="">Tous les périmètres</option>
-                  {targets.map((n) => (
-                    <option value={n.id} key={n.id}>
-                      {n.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
+        <div className="principle-overview">
+          <section className="principle-choices">
+            <div className="principle-index-heading">
+              <h2>
+                <span className="principle-total">{choices.length}</span>{' '}
+                {choices.length > 1 ? 'principes directeurs' : 'principe directeur'}
+              </h2>
+              {guides.map((p) => (
+                <a className="principle-reading-link" key={p.id} href={link(p.id)}>
+                  <BookOpen size={18} aria-hidden="true" />
+                  Comment lire la cartographie
+                </a>
+              ))}
             </div>
-            <p role="status">
-              {filtered.length} principe{filtered.length > 1 ? 's' : ''}
-            </p>
-            {cards(filtered)}
-          </>
-        )}
-        {legacy.length > 0 && (
-          <details className="principle-conventions" open={!featured.length}>
-            <summary>Conventions et règles associées ({legacy.length})</summary>
-            {!featured.length && (
-              <p>
-                Cette publication contient les énoncés historiques. Leurs justifications détaillées ne sont pas
-                renseignées dans cette édition.
-              </p>
-            )}
-            {cards(legacy)}
-          </details>
-        )}
-        {!principles.length && <p>Aucun principe documenté dans cette publication.</p>}
+            {choices.length > 0 && list(choices)}
+          </section>
+        </div>
+        {!choices.length && <p>Aucun principe directeur présenté dans cette publication.</p>}
       </section>
     );
   return (
@@ -120,41 +110,68 @@ export function DesignPrinciplesPage({
       <button type="button" onClick={() => onSelect('')}>
         Tous les principes directeurs
       </button>
-      <p className="eyebrow">{principleCategories[selected.category || ''] || 'Règle du modèle'}</p>
+      <p className="eyebrow">
+        {isGuide ? 'Guide de lecture' : principleCategories[selected.category || ''] || 'Règle du modèle'}
+      </p>
       <h2>{principleTitle(selected)}</h2>
       <section>
-        <h3>Le principe</h3>
-        <PrincipleText text={selected.statement} />
+        <h3>{isGuide ? 'Lire une cartographie métier' : 'Le principe'}</h3>
+        <p>
+          <PrincipleText text={selected.statement} />
+        </p>
       </section>
+      {selected.reading_children?.length && (
+        <section className="principle-practices">
+          <h3>Bonnes pratiques de cartographie</h3>
+          {principleChildren(model, selected).map((child) => (
+            <section key={child.id} id={`principle-${child.id}`} tabIndex={-1} className="principle-practice">
+              <h4>{principleTitle(child)}</h4>
+              <p>
+                <PrincipleText text={child.statement} />
+              </p>
+            </section>
+          ))}
+        </section>
+      )}
       <section>
-        <h3>Pourquoi ce choix</h3>
-        <PrincipleText text={selected.rationale || 'Justification non renseignée dans cette publication.'} />
+        <h3>{isGuide ? 'À quoi servent ces repères' : 'Pourquoi ce choix'}</h3>
+        <p>
+          <PrincipleText text={selected.rationale || 'Justification non renseignée dans cette publication.'} />
+        </p>
       </section>
       {selected.implications && (
         <section>
-          <h3>Ce que cela change dans la carte</h3>
-          <PrincipleText text={selected.implications} />
+          <h3>{isGuide ? 'Parcourir le modèle' : 'Ce que cela change dans la carte'}</h3>
+          <p>
+            <PrincipleText text={selected.implications} />
+          </p>
         </section>
       )}
       {(selected.examples || []).map((e) => (
         <section key={`${e.kind}:${e.text}`} className={`principle-example ${e.kind}`}>
           <h3>{e.kind === 'illustration' ? 'Exemple illustratif' : 'Contre-exemple'}</h3>
-          <PrincipleText text={e.text} />
+          <p>
+            <PrincipleText text={e.text} />
+          </p>
         </section>
       ))}
       {selected.tradeoffs && (
         <section>
           <h3>Limites et compromis</h3>
-          <PrincipleText text={selected.tradeoffs} />
+          <p>
+            <PrincipleText text={selected.tradeoffs} />
+          </p>
         </section>
       )}
       {selected.scope && (
         <section>
-          <h3>Périmètres concernés</h3>
+          <h3>{isGuide ? 'Points d’entrée dans la cartographie' : 'Périmètres concernés'}</h3>
           <p>
-            {selected.scope.kind === 'global'
-              ? 'Orientation applicable à l’ensemble de la carte. Les liens suivants donnent des points d’entrée.'
-              : 'Orientation ciblée sur les responsabilités suivantes et leurs composantes.'}
+            {isGuide
+              ? 'Ces liens permettent de mettre les repères de lecture en pratique.'
+              : selected.scope.kind === 'global'
+                ? 'Orientation applicable à l’ensemble de la carte. Les liens suivants donnent des points d’entrée.'
+                : 'Orientation ciblée sur les responsabilités suivantes et leurs composantes.'}
           </p>
           <ul>
             {selected.scope.targets.map((t) => (
@@ -184,8 +201,12 @@ export function DesignPrinciplesPage({
       )}
       {readingsForPrinciple(model, selected.id).length > 0 && (
         <section className="principle-readings">
-          <h3>Descriptions qui citent ce principe</h3>
-          <p>Ces renvois expliquent un passage ; ils n’étendent pas le périmètre d’application du principe.</p>
+          <h3>{isGuide ? 'Descriptions qui citent ces repères' : 'Descriptions qui citent ce principe'}</h3>
+          <p>
+            {isGuide
+              ? 'Ces descriptions renvoient aux bonnes pratiques du guide.'
+              : 'Ces renvois expliquent un passage ; ils n’étendent pas le périmètre d’application du principe.'}
+          </p>
           <ul>
             {readingsForPrinciple(model, selected.id).map((r) => (
               <li key={`${r.collection}:${r.id}`}>
@@ -239,7 +260,7 @@ export function DesignPrinciplesPage({
         </section>
       )}
       <section>
-        <h3>Recherche et marché</h3>
+        <h3>{isGuide ? 'Références de méthode' : 'Recherche et marché'}</h3>
         {selected.references?.length ? (
           <ul className="principle-references">
             {selected.references.map((r) => (
@@ -272,13 +293,13 @@ export function DesignPrinciplesPage({
           </p>
         )}
       </section>
-      {selected.related_principles?.length ? (
+      {related.length > 0 ? (
         <section>
-          <h3>Principes et conventions liés</h3>
+          <h3>{isGuide ? 'Principes directeurs à explorer' : 'Autres principes directeurs'}</h3>
           <ul>
-            {selected.related_principles.map((id) => (
-              <li key={id}>
-                <a href={link(id)}>{principleTitle(principles.find((p) => p.id === id) || { id, statement: '' })}</a>
+            {related.map((p) => (
+              <li key={p.id}>
+                <a href={link(p.id)}>{principleTitle(p)}</a>
               </li>
             ))}
           </ul>
@@ -296,10 +317,12 @@ export function DesignPrinciplesPage({
           </ul>
         </section>
       ) : null}
-      {selected.review_trigger && (
+      {!isGuide && selected.review_trigger && (
         <section>
           <h3>Quand réexaminer ce choix</h3>
-          <PrincipleText text={selected.review_trigger} />
+          <p>
+            <PrincipleText text={selected.review_trigger} />
+          </p>
         </section>
       )}
     </article>

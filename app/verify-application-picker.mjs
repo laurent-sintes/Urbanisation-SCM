@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { openMapDisplay } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { projectedApplicationMapIds, selectionMappings } from './src/applicationCatalog.ts';
 import { adaptPublication } from './src/model.ts';
@@ -61,6 +62,7 @@ try {
       await page.goto(`https://atlas.test/#/${entry}?mapDepth=${depth}`);
       await page.locator('.overview-system').first().waitFor();
       const trigger = page.locator('.map-application-picker > button');
+      await openMapDisplay(page);
       await trigger.click();
       const section = page
         .getByRole('dialog', { name: 'Applications sur la carte' })
@@ -81,6 +83,7 @@ try {
         (id) => new URLSearchParams(location.hash.split('?')[1]).get('app') === id,
         selection.id,
       );
+      await openMapDisplay(page);
       await page.getByRole('button', { name: `Applications ${product.name}`, exact: true }).waitFor();
       assert.equal(
         await page.locator('.application-map-note').count(),
@@ -106,6 +109,7 @@ try {
       assert.deepEqual(actual, expected, `${product.name}: nearest visible coverage at detail ${depth}`);
       if (product.name === 'United Retail' && depth === 1) assert.deepEqual(actual, ['domain-sales']);
       await page.reload();
+      await openMapDisplay(page);
       await page.getByRole('button', { name: `Applications ${product.name}`, exact: true }).waitFor();
       assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('mapDepth'), String(depth));
       assert.deepEqual(
@@ -117,8 +121,10 @@ try {
         expected,
         `${product.name}: coverage survives reload`,
       );
+      await openMapDisplay(page);
       await trigger.click();
       await page.getByRole('button', { name: 'Masquer les applications', exact: true }).click();
+      await openMapDisplay(page);
       await page.getByRole('button', { name: 'Applications masquées', exact: true }).waitFor();
       assert.equal(await page.locator('.application-related-item, .application-context-item').count(), 0);
       cases.push({ product: product.name, context: selection.context_id, entry, depth, coverage: expected });
@@ -127,6 +133,7 @@ try {
   for (const product of catalog.products.filter((item) => item.kind === 'vendor_product')) {
     await page.goto('https://atlas.test/#/?mapDepth=1');
     await page.locator('.overview-system').first().waitFor();
+    await openMapDisplay(page);
     await page.locator('.map-application-picker > button').click();
     const market = page
       .getByRole('dialog', { name: 'Applications sur la carte' })
@@ -135,6 +142,7 @@ try {
         has: page.getByRole('heading', { name: 'Produits du marché', exact: true }),
       });
     await market.getByRole('button', { name: product.name, exact: true }).click();
+    await openMapDisplay(page);
     await page.getByRole('button', { name: `Applications ${product.name} · Offre éditeur`, exact: true }).waitFor();
     const visibleIds = new Set(
       await page
@@ -151,10 +159,12 @@ try {
     assert.deepEqual(await coverage(), expected, `${product.name}: editor offering coverage`);
     assert.equal(await page.locator('.application-map-note').count(), 0);
     await page.reload();
+    await openMapDisplay(page);
     await page.getByRole('button', { name: `Applications ${product.name} · Offre éditeur`, exact: true }).waitFor();
     assert.deepEqual(await coverage(), expected);
     if (product.components.length > 1) {
       const component = product.components.find((item) => item.kind !== 'product');
+      await openMapDisplay(page);
       await page.locator('.map-application-picker > button').click();
       await page
         .getByRole('group', { name: 'Fonctionnalité affichée' })
@@ -183,6 +193,7 @@ try {
       ['.map-hotspot-picker > button', '.hotspot-filter-popover'],
       ['.map-detail-picker > button', '.detail-popover'],
     ]) {
+      await openMapDisplay(page);
       await page.locator(triggerSelector).click();
       await page.locator(panelSelector).waitFor();
       await page.waitForFunction((selector) => {

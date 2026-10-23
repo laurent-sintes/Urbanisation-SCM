@@ -11,6 +11,7 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react';
+import { principleDestination } from '../designPrinciples';
 import { inlineParts, plainInlineText } from '../inlineLinks';
 import { MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import { childrenOf } from '../model';
@@ -209,15 +210,17 @@ export function DesignPrincipleLink({ id, anchor, children }: { id: string; anch
       </span>
     );
   const model = context.model;
+  const reading = principleDestination(model, id);
+  if (!reading) return <>{children}</>;
   const destination = () =>
     routeHash({
       ...context.route,
       view: 'design-principles',
-      principle: id,
+      principle: reading.principle.id,
       node: '',
       scope: '',
       query: '',
-      section: '',
+      section: reading.section,
       scroll: '',
       relation: '',
       term: '',
