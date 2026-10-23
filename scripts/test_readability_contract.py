@@ -1,11 +1,48 @@
 from copy import deepcopy
 from pathlib import Path
+import re
 import unittest
 from scripts.structured_io import read
 from scripts.validate_models import validate_urbanism
 from scripts.json_contract import validate
+from scripts.glossary import references
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def business_scope(text, model):
+    """U1160 permits a separate, bounded footer of links to directing principles.
+
+    Keep every business paragraph and every inline link in the comparison. Only
+    the final paragraph consisting entirely of valid principle links is separate.
+    """
+    body, separator, footer = text.rpartition('\n\n')
+    if not separator or not re.fullmatch(
+            r'(?:\[[^\]\n]+\]\(principle:[A-Za-z0-9_.-]+\)[.;]?\s*)+', footer):
+        return text
+    targets = [identifier for kind, identifier in references(footer) if kind == 'principle']
+    known = {principle['id'] for principle in model['principles']}
+    if not 1 <= len(targets) <= 2 or any(identifier not in known for identifier in targets):
+        raise AssertionError('Reading footer requires one or two existing directing principles')
+    return body
+
+
+class PrincipleReadingNotesTests(unittest.TestCase):
+    def test_only_a_standalone_final_principle_footer_is_separate(self):
+        model = {'principles': [{'id': 'P1'}, {'id': 'P2'}]}
+        body = 'Une responsabilité et ses limites.\n\nUn exemple [métier](model:D01).'
+        footer = '[Pourquoi ce choix](principle:P1). [Autre repère](principle:P2).'
+        self.assertEqual(business_scope(body + '\n\n' + footer, model), body)
+        for extra in ['Une nouvelle responsabilité.', '[Un objet](model:D02).',
+                      'Un fait métier [expliqué](principle:P1).']:
+            self.assertEqual(business_scope(body + '\n\n' + extra, model), body + '\n\n' + extra)
+        self.assertEqual(business_scope(footer + '\n\n' + body, model), footer + '\n\n' + body)
+
+    def test_missing_targets_and_unbounded_reading_footers_are_rejected(self):
+        model = {'principles': [{'id': 'P1'}]}
+        for footer in ['[Pourquoi](principle:UNKNOWN).', '[Pourquoi](principle:P1). ' * 3]:
+            with self.subTest(footer=footer), self.assertRaises(AssertionError):
+                business_scope('Périmètre métier.\n\n' + footer, model)
 
 class ReadabilityContractTests(unittest.TestCase):
     @classmethod

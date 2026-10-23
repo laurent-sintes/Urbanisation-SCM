@@ -5,6 +5,7 @@ import unittest
 from scripts.structured_io import read
 from scripts.display_codes import build_display_index
 from scripts.glossary import references
+from scripts.test_readability_contract import business_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -94,11 +95,11 @@ class ModelCoherenceTests(unittest.TestCase):
         for ident in ['D03.i','D03.j','D03.k']:
             scope=self.nodes[ident]['fields']['scope']
             self.assertIn(('model','ba-order-promising'),set(references(scope)))
-            self.assertLess(len(plain(scope).split()),500)
+            self.assertLess(len(plain(business_scope(scope, self.model)).split()),500)
         self.assertIn('absence de solution admissible', plain(self.nodes['ba-order-promising']['fields']['scope']))
         self.assertIn('capacités finies', self.nodes['D03.j']['fields']['scope'])
         self.assertIn('valeur absente', self.nodes['D03.k']['fields']['scope'])
-        self.assertLess(len(plain(self.nodes['D04.i']['fields']['scope']).split()),450)
+        self.assertLess(len(plain(business_scope(self.nodes['D04.i']['fields']['scope'], self.model)).split()),450)
 
     def test_identity_and_reading_order_follow_current_business_changes(self):
         audit=read(ROOT/'modeles/backlog/model-coherence-audit-U886.yaml')

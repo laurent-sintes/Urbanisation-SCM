@@ -5,6 +5,7 @@ from scripts.structured_io import read
 from scripts.display_codes import build_display_index
 from scripts.backlog_delivery import check_delivery
 from scripts.glossary import references
+from scripts.test_readability_contract import business_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -71,12 +72,13 @@ class ProcessManagementTests(unittest.TestCase):
                 # U903 appended explanations; U1113 aligns the full glossary
                 # context, including Process Ledger, with these sheets.
                 additions = {'process-mining': 'TER201', 'BHV082': 'TER200'}
+                scope = business_scope(f['scope'], self.model)
+                context = business_scope(t['context'], self.model)
                 if ident in additions:
-                    self.assertTrue(f['scope'] == t['context'] or
-                                    f['scope'].startswith(t['context'] + '\n\n'))
+                    self.assertTrue(scope == context or scope.startswith(context + '\n\n'))
                     self.assertIn(('glossary', additions[ident]), references(f['scope']))
                 else:
-                    self.assertEqual(t['context'],f['scope'])
+                    self.assertEqual(context, scope)
                 vendors={c['vendor'] for c in f.get('market_comparisons',[])}
                 self.assertLessEqual({'SAP','Microsoft'},vendors)
         for kind,ident in references(self.model):

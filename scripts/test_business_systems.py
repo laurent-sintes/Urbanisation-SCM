@@ -7,6 +7,7 @@ from scripts.structured_io import read
 from scripts.validate_models import validate_urbanism
 from scripts.backlog_delivery import check_delivery
 from scripts.render_models import render
+from scripts.test_readability_contract import business_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -161,7 +162,8 @@ class BusinessSystemTests(unittest.TestCase):
                 parents = [r['source_id'] for r in self.model['relations']
                            if r['type'] in ('presents','contains') and r['target_id'] == node_id]
                 self.assertEqual(parents, [parent])
-                self.assertEqual(terms[name]['context'], nodes[node_id]['fields']['scope'])
+                self.assertEqual(business_scope(terms[name]['context'], self.model),
+                                 business_scope(nodes[node_id]['fields']['scope'], self.model))
         backoffice = nodes['subdomain-store-backoffice-operations']['fields']['scope']
         self.assertIn('central ou local', backoffice)
         self.assertIn('model:subdomain-sales-b2c-store', backoffice)
