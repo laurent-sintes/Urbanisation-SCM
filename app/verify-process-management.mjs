@@ -7,6 +7,7 @@ import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
 import { adaptPublication, cardContentSummary, childrenOf } from './src/model.ts';
+import { scenariosForNode } from './src/scenarioCatalog.ts';
 
 const app = import.meta.dirname,
   root = resolve(app, '..'),
@@ -153,10 +154,18 @@ try {
     );
     const body = await sheet.innerText();
     assert.ok(body.includes(plainInlineText(cap.fields.definition)), `${cap.id} definition`);
-    if (cap.id === 'process-ledger') {
-      assert.equal(await sheet.locator('.scenario-links a').count(), 0, 'No scenario is documented for Process Ledger');
+    const scenarios = scenariosForNode(model, cap.id);
+    assert.equal(await sheet.locator('.scenario-links > ul > li').count(), scenarios.length, `${cap.id} scenarios`);
+    if (!scenarios.length) {
+      assert.equal(await sheet.locator('.scenario-links a').count(), 0, `${cap.id} has no documented scenario`);
       await sheet.getByText('Aucun scénario documenté pour ce périmètre.', { exact: true }).waitFor();
-    } else assert.ok((await sheet.locator('.scenario-links a').count()) > 0, `${cap.id} scenarios`);
+    } else {
+      for (const scenario of scenarios)
+        assert.ok(
+          (await sheet.locator(`.scenario-links a[href*="scenario=${scenario.id}"]`).count()) > 0,
+          `${cap.id} links to ${scenario.id}`,
+        );
+    }
     assert.equal(await sheet.locator('.unresolved-reference').count(), 0, `${cap.id} references`);
     if (cap.id === 'D03.j')
       assert.ok(
