@@ -1,12 +1,12 @@
-# Urbanisation 2026-10-22.2
+# Urbanisation 2026-10-23.1
 
-116 capacités. Sources : U1146.
+116 capacités. Sources : U1147, U1148, U1149.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 
 ## Scénarios métier
 
-5 flux de valeur, 41 scénarios et 48 parcours autonomes. Illustrations locales et lecture des anciennes publications conservées. Les nouveaux contenus restent proposés.
+5 flux de valeur, 43 scénarios et 50 parcours autonomes. Illustrations locales et lecture des anciennes publications conservées. Les nouveaux contenus restent proposés.
 
 ## Points chauds
 
