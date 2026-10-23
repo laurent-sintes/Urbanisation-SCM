@@ -959,7 +959,8 @@ try {
   const centeredCamera = await viewport(page);
   await assertWorld(page, baseline, 'Centering the selection preserves world geometry');
   await page.getByRole('tab', { name: 'Carte', exact: true }).click();
-  await page.locator('.map-panel, .universe-overview').first().waitFor();
+  await page.locator('.map-panel:not(.flow-map-panel), .universe-overview').first().waitFor();
+  await page.locator('.flow-map-panel').waitFor({ state: 'detached' });
   let route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
   assert.equal(route.get('node'), candidate, `Catalogue preserves selected object ${nameOf(byId.get(candidate))}`);
   assert.equal(route.get('scope'), selectedRoute.get('scope'), 'Catalogue preserves scope');
