@@ -6,7 +6,7 @@ editorial; unknown fields and every normative field remain significant.
 from copy import deepcopy
 
 PRESENTATION_FIELDS = frozenset({'name', 'label_fr', 'summary', 'category',
-                                 'display_order', 'featured', 'references', 'examples'})
+                                 'display_order', 'featured', 'references', 'examples', 'reading_children'})
 METADATA = frozenset({'revision', 'last_modified', 'content_sha256', 'source_refs',
                       'correction_refs', 'source_locator', 'review', 'lifecycle',
                       'editorial_basis', 'adoption_ids', 'approved_fields',
@@ -60,6 +60,8 @@ def validate_principles(model):
     known = {key: {item['id'] for item in model.get(key, [])}
              for key in ('nodes', 'relations', 'principles')}
     orders = set()
+    by_id = {p['id']: p for p in model.get('principles', [])}
+    reading_parents = {}
     for principle in model.get('principles', []):
         label = 'principles/' + principle['id']
         if 'display_order' in principle and principle['display_order'] < 1:
@@ -86,6 +88,14 @@ def validate_principles(model):
         for related in principle.get('related_principles', []) + principle.get('supersedes', []):
             if related == principle['id'] or related not in known['principles']:
                 errors.append(label + ': invalid related principle ' + related)
+        children = principle.get('reading_children', [])
+        if children and not principle.get('featured'):
+            errors.append(label + ': reading group must be featured')
+        for child in children:
+            if (child == principle['id'] or child not in by_id or child in reading_parents
+                    or by_id[child].get('reading_children') or by_id[child].get('featured')):
+                errors.append(label + ': invalid or repeated reading child ' + child)
+            reading_parents[child] = principle['id']
         for ref in principle.get('references', []):
             if not ref['url'].startswith('https://'):
                 errors.append(label + ': reference must use HTTPS')

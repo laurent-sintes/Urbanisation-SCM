@@ -72,6 +72,18 @@ class ArchitecturePrincipleTests(unittest.TestCase):
         self.model['principles']=[{'id':'OLD','statement':'Legacy global rule'}]
         self.assertIn('OLD',applicable_principles(self.model,{'cap'}))
 
+    def test_reading_groups_do_not_widen_child_scope_and_reject_invalid_members(self):
+        before=applicable_principles(self.model, {'cap'})
+        self.model['principles'][0]['reading_children']=['CHILD']
+        self.assertEqual(applicable_principles(self.model, {'cap'}), before)
+        self.assertTrue(validate_principles(self.model))
+        self.model['principles'][0].update(featured=True,name='Common practices',label_fr='Socle',summary='Des pratiques',implications='Une lecture',tradeoffs='Des limites',display_order=1)
+        self.model['principles'].append({'id':'CHILD','statement':'A local choice','scope':{'kind':'targeted','targets':[{'collection':'nodes','id':'peer'}]}})
+        self.assertEqual(validate_principles(self.model), [])
+        self.assertEqual(applicable_principles(self.model, {'cap'}), before)
+        self.model['principles'][1]['reading_children']=['LOCAL']
+        self.assertTrue(validate_principles(self.model))
+
     def test_reading_citation_never_widens_normative_scope_or_hides_text_changes(self):
         before = deepcopy(self.model)
         cap = next(n for n in self.model['nodes'] if n['id'] == 'cap')

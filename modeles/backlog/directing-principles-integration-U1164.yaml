@@ -1,0 +1,264 @@
+schema_version: 1.0.0
+id: directing-principles-integration-U1164
+status: applied
+date: '2026-10-23'
+source_refs:
+- U1161
+- U1162
+- U1163
+- U1164
+basis:
+- principle-reading-focus-U1161.yaml
+- principle-sponsor-language-U1162.yaml
+- operational-master-plan-principle-U1163.yaml
+intent: Intégrer les neuf choix structurants et le socle commun dans le modèle et la lecture Atlas, avec les liens depuis
+  Master Plan.
+reading:
+  featured_choices:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-OPERATIONAL-MASTER-PLAN
+  - PRINCIPLE-FLOW-LOGISTICS
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  foundation: PRINCIPLE-BUSINESS-MAP
+  practices:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-DECISION-EFFECTS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  hidden_conventions: 22
+market_basis: Appuis primaires Microsoft Dynamics 365 SCM et SAP S/4HANA effectivement consultés U1163, complétés par le résumé
+  de recherche HyPer. Apports, différences et limites transportés dans le principe ; références des autres améliorations conservées.
+  Aucun besoin de nouvelle recherche pour l’application de ces propositions inchangées.
+glossary_alignment: TER111 reçoit le même renvoi de lecture que Master Plan. TER100 et TER133, les définitions courtes, les
+  mandats du calcul, de l’application, des commandes et des registres restent cohérents et inchangés. Les autres améliorations
+  U1161/U1162 conservent les contrôles d’alignement déjà effectués.
+scoped_agreement:
+  source_refs:
+  - U1164
+  author: Laurent
+  decided_at: '2026-10-23'
+  principle_fields:
+  - id: PRINCIPLE-REFERENCE-PROJECTIONS
+    fields:
+    - label_fr
+    - summary
+    - rationale
+    - implications
+    - display_order
+    - examples
+  - id: PRINCIPLE-CAPABILITY
+    fields:
+    - featured
+  - id: PRINCIPLE-SUPPLY-DOCUMENTS
+    fields:
+    - featured
+  - id: PRINCIPLE-FLOW-LOGISTICS
+    fields:
+    - label_fr
+    - summary
+    - display_order
+  - id: PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+    fields:
+    - label_fr
+    - summary
+    - rationale
+    - implications
+    - display_order
+    - examples
+  - id: PRINCIPLE-DOMAIN-INTERACTIONS
+    fields:
+    - featured
+  - id: PRINCIPLE-ATLAS-BUSINESS-SCOPE
+    fields:
+    - featured
+  - id: PRINCIPLE-ORCHESTRATION-DETAIL
+    fields:
+    - featured
+  - id: PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+    fields:
+    - label_fr
+    - summary
+    - display_order
+  - id: PRINCIPLE-ORDER-DECISION-CONTEXT
+    fields:
+    - label_fr
+    - summary
+    - display_order
+  - id: PRINCIPLE-CONFIGURABLE-CONTEXTS
+    fields:
+    - label_fr
+    - summary
+    - display_order
+  - id: PRINCIPLE-PRODUCT-VARIANTS
+    fields:
+    - label_fr
+    - summary
+    - rationale
+    - display_order
+  - id: PRINCIPLE-DECISION-EFFECTS
+    fields:
+    - featured
+  - id: PRINCIPLE-TRACEABLE-FACTS
+    fields:
+    - label_fr
+    - summary
+    - display_order
+  - id: PRINCIPLE-BUSINESS-MAP
+    fields:
+    - name
+    - label_fr
+    - summary
+    - statement
+    - rationale
+    - implications
+    - tradeoffs
+    - category
+    - featured
+    - display_order
+    - scope
+    - reading_children
+    - review_trigger
+  - id: PRINCIPLE-OPERATIONAL-MASTER-PLAN
+    fields:
+    - name
+    - label_fr
+    - summary
+    - statement
+    - rationale
+    - implications
+    - examples
+    - related_principles
+  approved_reading_passage:
+    node_id: domain-plan
+    term_id: TER111
+    text: '[Pourquoi rapprocher la décision, le pilotage et les opérations](principle:PRINCIPLE-OPERATIONAL-MASTER-PLAN).'
+    sha256: b2fdc6e92d3a50c7fe11c6b911002bc9368163960d20ed7233773b717660dd69
+  boundary: Le Go couvre le lot proposé au fil des échanges. Les anciennes qualifications sont conservées comme preuves historiques
+    ; les accords de champs sont capturés séparément sur l’état final. Aucun accord étendu aux scopes complets des fiches
+    ou aux textes complémentaires rédigés après le Go.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1164
+  required_catalog:
+  - collection: principles
+    id: PRINCIPLE-REFERENCE-PROJECTIONS
+    content_sha256: 3568ffdb7fd3d16aa0c87992173c2f00891f1cd6ea7b49e06f2056e1b7912652
+  - collection: principles
+    id: PRINCIPLE-FLOW-LOGISTICS
+    content_sha256: 6f24292561e7a4caa59f349c43f5fc21fa90887af3ecd5d54a9f84442ff0af94
+  - collection: principles
+    id: PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+    content_sha256: 08b05316c940f57ddb471c65e0cb47b4349a6874dd7402982d4b0d55f7729668
+  - collection: principles
+    id: PRINCIPLE-CONFIGURABLE-CONTEXTS
+    content_sha256: 185aac4a2d68f0021ab1482f149d8144bdda9f1420750015ff0e267bf03e5910
+  - collection: principles
+    id: PRINCIPLE-PRODUCT-VARIANTS
+    content_sha256: 98ca323e551c6eedb809be8b642224bced07aac841953d17d58cb4701b16cd6e
+  - collection: principles
+    id: PRINCIPLE-TRACEABLE-FACTS
+    content_sha256: 0e63aa66d0bdcceb4d5f4b717615ef939d1e41a0d5efa5872d66f6cb36259ce0
+  - collection: principles
+    id: PRINCIPLE-BUSINESS-MAP
+    content_sha256: 1bf6387bea334eddaaf0e36610b4579aab6878e6dd4b9307212309244b551536
+  - collection: principles
+    id: PRINCIPLE-OPERATIONAL-MASTER-PLAN
+    content_sha256: d04e64929bacba11bb8174a8e9880614414203dbbe0b1a86a4628fca18372473
+  required_nodes:
+  - id: domain-plan
+    field_sha256:
+      scope: a76642bfaddb9de8df77d7355749279380e67ae0ed9345d465b0cadc6abf2f19
+  required_glossary:
+  - id: TER111
+    field_sha256:
+      context: 49a173d0b993891495451ae45799dedd7cb81f389219840afae2f34a2795e37e
+  supersedes_requirements:
+  - annex: principle-description-application-U1160.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-FLOW-LOGISTICS
+    fields:
+    - content_sha256
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-CONFIGURABLE-CONTEXTS
+    fields:
+    - content_sha256
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-PRODUCT-VARIANTS
+    fields:
+    - content_sha256
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-TRACEABLE-FACTS
+    fields:
+    - content_sha256
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-BUSINESS-MAP
+    fields:
+    - content_sha256
+  - annex: principle-sponsor-language-U1162.yaml
+    collection: principles
+    id: PRINCIPLE-REFERENCE-PROJECTIONS
+    fields:
+    - content_sha256
+  - annex: principle-sponsor-language-U1162.yaml
+    collection: principles
+    id: PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+    fields:
+    - content_sha256
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+qualification: Propositions U1161–U1163 appliquées sous U1164. Déplacement de l’ordre de lecture et renvois de navigation
+  sans transfert de responsabilités. La version publiée reste distincte du backlog ; aucune release, commit ou push déclenché.
+verification:
+  state: passed
+  checks:
+  - 'check_backlog.py --render : aucune erreur et aucun lot pending ; 16 accords de champs capturés en une écriture sur l’état
+    final'
+  - 41 tests Python et 307 tests frontend réussis ; 7 tests ciblés des principes rejoués après la refonte de lecture
+  - Build Atlas puis build frontend final et contrôle Biome réussis
+  - 'Recette candidate : neuf principes structurants, un guide distinct de six pratiques ; compteur, liste verticale, accès
+    au clavier et largeur disponible contrôlés'
+  - 'Quatre formats de 390 à 1920 pixels : lignes sans chevauchement, lien du guide près du compteur, aucun débordement horizontal'
+  - Renvois depuis 32 fiches, 10 termes et 9 relations ; Master Plan et TER111, liens inverses, édition et retours conservés
+  - Publication historique 2026-09-13.5 contrôlée sans repli ; filtres et conventions internes masqués ; aides courtes conservées
+  - Relecture visuelle des essais cartes élargies / liste verticale et de la présentation finale ; liste retenue
+  - Index des 3197 sources et git diff --check vérifiés
+  ui_choice: Liste verticale de neuf principes structurants, pleine largeur. Le contenu Une cartographie métier est un guide
+    distinct, accessible sous Comment lire la cartographie près du compteur et dans les Repères de lecture de la navigation.
+    La recherche le classe dans Documentation ; il est absent des listes et du filtre des principes. Les six bonnes pratiques,
+    leurs références et les anciens liens de section sont conservés. Le classement UI ne change pas les contenus canoniques
+    ni leurs portées.
+  preview_directory: .runtime/principles-U1164/
+  qualification: Recette isolée du candidat, sans modifier les données servies ni les publications. Le frontend est recompilé
+    ; une nouvelle release est nécessaire pour exposer les neuf principes dans le modèle publié.
+  reading_guide_verification:
+    state: passed
+    principles: 9
+    guides: 1
+    practices: 6
+    frontend_tests: 307
+    viewport_checks: 4
+    legacy_section_links: true
+    documentation_search: true
+    principle_filter_excludes_guide: true
+    build: passed
+    biome: passed

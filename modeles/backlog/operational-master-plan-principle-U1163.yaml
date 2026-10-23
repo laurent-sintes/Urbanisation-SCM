@@ -1,0 +1,129 @@
+schema_version: 1.0.0
+id: operational-master-plan-principle-U1163
+status: proposed
+date: '2026-10-23'
+source_refs:
+- U1163
+scope: Proposition de neuvième choix structurant, après le contexte complet des commandes. Formulation et appuis documentés
+  ; aucune modification du catalogue canonique ni accord étendu aux textes rédigés.
+basis:
+  model_sha256: 4e3d3f5c36da163c18aafdf81de38f94b8714a169addb6cc5d74d3545ca9ae92
+  glossary_sha256: 8e8a8eb4b557e8025863db6ac20295afa72f1e6a753df5a3ef38d21600917636
+  read_nodes:
+  - domain-plan
+  - ba-master-plan-management
+  - D05.f
+  - BHV006
+  - D02.e
+  read_terms:
+  - TER100
+  - TER111
+  - TER133
+proposed_principle:
+  proposed_id: PRINCIPLE-OPERATIONAL-MASTER-PLAN
+  name: Operational Master Planning and Decision Feedback
+  label_fr: Le Master Plan place la décision au cœur des opérations
+  summary: Le Master Plan rapproche commandes, stocks, arrivées attendues et règles applicables pour comparer les options
+    pendant les opérations. Les choix autorisés sont appliqués et leurs résultats observés afin de pouvoir réagir au prochain
+    changement.
+  statement: Rapprocher dans le Master Plan le contexte opérationnel utile, la comparaison des options, la décision et le
+    suivi de ses effets pour raccourcir le délai entre un changement constaté et une réponse applicable.
+  rationale: Une décision prise sur une extraction ancienne peut arriver après une nouvelle promesse, une réservation ou un
+    retard. Garder le contexte de décision proche des commandes et des faits facilite le réexamen des options au moment où
+    elles peuvent encore produire un effet utile.
+  implications:
+  - Relier observation, comparaison des options, décision, application autorisée et constat du résultat. Rendre explicites
+    la fraîcheur des données, les versions, les objectifs, les contraintes et les engagements à préserver.
+  - Le sous-domaine Master Plan réunit les responsabilités de préparation, calcul, simulation et arbitrage déjà décrites.
+    Master Planning garde le calcul des besoins nets ; Plan Application transmet et suit les changements autorisés. Les familles
+    de commandes conservent leurs engagements et leurs règles de transition.
+  - Les registres de stock et de processus restent responsables de leurs faits. Le Master Plan mobilise le contexte utile
+    sans devenir le propriétaire de toutes les données de l’entreprise.
+  - Le pilotage opérationnel peut lire les faits et résultats disponibles sans exiger une extraction complète préalable vers
+    une plateforme analytique. Cette possibilité est à étudier par usage, avec les droits, la charge, la conservation et la
+    qualité nécessaires.
+  expected_benefits:
+  - Réduire le temps entre un événement, son appréciation et l’application d’une réponse autorisée.
+  - Comparer les options avec un contexte plus actuel et complet, puis vérifier leurs effets.
+  - Selon la réalisation retenue, réduire les copies, transferts et traitements entretenus uniquement pour le pilotage opérationnel,
+    ainsi que leur délai de mise à jour.
+  tradeoffs:
+  - Davantage de données ne garantit ni une meilleure décision ni un calcul plus rapide. Qualité, cohérence, fraîcheur, sélection
+    des informations utiles et capacité de calcul conditionnent le bénéfice.
+  - L’intégration de la décision aux opérations laisse ouverts les moteurs, services et stockages. L’isolation des calculs
+    peut protéger les transactions et améliorer la réactivité.
+  - Les analyses transverses, l’historique long et les études spécifiques peuvent justifier une plateforme analytique distincte.
+    Aucune suppression générale du datalake ou de la BI, aucun gain chiffré ni déploiement Beaumanoir ne sont déduits.
+  example: 'Exemple fictif : une arrivée fournisseur est retardée. Le Master Plan rapproche les commandes concernées, le stock
+    utilisable, les autres arrivées et les priorités applicables. Il compare réaffectation, transfert et livraison partielle.
+    Les capacités responsables appliquent les choix autorisés ; les faits enregistrés permettent ensuite de suivre les commandes
+    encore exposées et le résultat des décisions.'
+  counterexample: Un tableau de bord signale une pénurie à partir de données extraites la veille, tandis que de nouveaux engagements
+    ont été pris. Le calcul d’un nouveau seuil ne suffit pas à établir quelles commandes peuvent encore être modifiées ni
+    si le changement a été appliqué.
+  related_principles:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DECISION-EFFECTS
+distinct_contribution:
+  complete_order_context: Le cycle complet des commandes précise les informations et engagements disponibles pour décider.
+  coordinated_decisions: Le résultat global de la Supply précise les objectifs et les conséquences à comparer entre décisions.
+  operational_master_plan: Le nouveau principe précise où et quand la décision, les opérations et le retour sur leurs effets
+    se rejoignent.
+market_references:
+- id: U1163-MS-PLANNING-ARCHITECTURE
+  publisher: Microsoft
+  title: Master planning system architecture
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-architecture
+  edition: Dynamics 365 Supply Chain Management ; page mise à jour le 2026-03-25
+  consulted_on: '2026-10-23'
+  locator: Introduction ; Performance ; Architecture and data flow
+  observed: Planning Optimization permet des calculs plus fréquents pendant les opérations. Un connecteur intégré transmet
+    les données de référence et transactionnelles ; les résultats de planification retournent dans SCM.
+  relationship: 'Recouvrement partiel : réactivité du master planning intégré aux opérations.'
+  difference: Le calcul est réalisé hors de la base SQL opérationnelle et les données utiles sont transmises au service. Ce
+    rapprochement métier ne prouve donc ni absence de copie ni nécessité d’une base physique unique.
+  limits: Architecture produit consultée ; aucune preuve du périmètre complet des décisions FLOW, de l’élimination d’une plateforme
+    analytique ou d’un gain Beaumanoir.
+- id: U1163-SAP-EMBEDDED-ANALYTICS
+  publisher: SAP
+  title: Describing SAP S/4HANA embedded analytics
+  url: https://learning.sap.com/courses/analytics-with-sap-solutions/describing-sap-s-4hana-embedded-analytics_a41e48ea-c96c-4149-80d1-2aac9f092d1f
+  edition: SAP S/4HANA ; cours évolutif sans édition globale précisée
+  consulted_on: '2026-10-23'
+  locator: SAP S/4HANA embedded analytics ; Bringing Transactions and Analytics Together ; The Virtual Data Model
+  observed: L’analytique opérationnelle est intégrée au travail quotidien sur les données transactionnelles courantes. Les
+    vues sémantiques préparent ces données pour l’analyse et permettent cet usage sans réplication préalable dans un autre
+    système analytique.
+  relationship: Appui au pilotage opérationnel proche des transactions et au bénéfice conditionnel de moindre réplication.
+  difference: La source présente l’analyse embarquée, pas une équivalence au Master Plan FLOW ni à son application des décisions.
+    Elle distingue explicitement ce pilotage quotidien de l’analyse stratégique.
+  limits: Le moindre besoin de copie porte sur les usages embarqués décrits ; il ne démontre pas la suppression de toute BI,
+    de tout historique externe ou du besoin d’analyse transverse.
+- id: U1163-RESEARCH-HYPER
+  publisher: Alfons Kemper et Thomas Neumann ; IEEE ICDE / Technische Universität München
+  title: 'HyPer: A hybrid OLTP&OLAP main memory database system based on virtual memory snapshots'
+  url: https://portal.fis.tum.de/de/publications/hyper-a-hybrid-oltpampolap-main-memory-database-system-based-on-v/
+  edition: ICDE 2011, pages 195–206 ; DOI 10.1109/ICDE.2011.5767867
+  consulted_on: '2026-10-23'
+  locator: Abstract de la publication originale
+  observed: Les auteurs décrivent les délais de fraîcheur et les ressources supplémentaires associés à la séparation transactionnel/analytique
+    avec extraction périodique. Ils proposent une architecture hybride utilisant des instantanés cohérents des données transactionnelles.
+  relationship: Appui de recherche au problème de fraîcheur et de duplication, distinct d’une preuve commerciale.
+  difference: Le travail étudie une architecture de base de données et des performances sur banc d’essai. Il ne définit pas
+    un périmètre métier ni les décisions du Master Plan.
+  limits: Résumé consulté, pas reproduction expérimentale ; aucune généralisation des mesures à FLOW, aux coûts complets ou
+    à la qualité des décisions métier.
+glossary_alignment: TER100, TER111 et TER133 décrivent déjà un plan opérationnel versionné, les décisions et l’application
+  autorisée, avec des moteurs éventuellement distincts. Le principe proposé les explicite sans transférer les faits ni les
+  engagements. Aucun changement de sens requis dans le glossaire à ce stade.
+integration_proposal:
+- Présenter ce choix après le cycle complet des commandes, avant les choix de frontières et de représentation.
+- À l’application, ajouter le principe canonique et ses appuis, puis des liens de lecture ciblés depuis Master Plan et son
+  terme métier. Conserver les définitions courtes et les tooltips simples.
+- Capturer uniquement les champs et portées effectivement approuvés sur le lot final ; ajouter les exigences de livraison
+  à cette étape.
+qualification: Proposition de formulation et de comparaison après U1163. Le bénéfice est attendu et conditionnel ; aucune
+  adoption globale des textes, équivalence éditeur, supériorité universelle ou réalisation installée présumée.

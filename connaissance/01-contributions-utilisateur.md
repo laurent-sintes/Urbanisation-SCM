@@ -26154,3 +26154,46 @@ Date : 2026-10-23. Source : Laurent, accord sur l’application de l’audit U11
 Verbatim : « Go pour appliquer l’audit dans l’ordre proposé : corrections de cohérence, liens ciblés dans les descriptions, puis affichage des principes hérités. Garde les tooltips simples. »
 
 Portée : appliquer les corrections et les liens ciblés de l’audit U1159, puis distinguer les principes directement pertinents des principes hérités dans Atlas. Préserver les définitions courtes, les tooltips simples, les portées normatives des principes et les publications historiques. L’accord porte sur la proposition auditée ; les compléments éditoriaux restent à qualifier. Aucune release, commit ou push demandé.
+
+## U1161
+
+Date : 2026-10-23. Source : Laurent, recentrage éditorial des principes directeurs.
+
+Verbatim : « Sur les principes directeurs :
+
+- système de filtre inutile
+- Conventions et règles associées => à cacher, c'est trop détaillé, l'objectif n'est pas de montrer notre travail itératif et nos mico décisions successives.
+- Il y a des principes directeurs qu'on peut regrouper car ils définissent des bonnes pratiques génériques de cartographie et d'architecture. On peut imaginer un principe : c'est une cartographie métier avec des sous principes de bonne pratique.
+- Les principes directeurs doivent expliquer essentiellement la singularité de cette cartographie. »
+
+Portée : simplifier la lecture Atlas des principes, masquer les conventions internes et regrouper les bonnes pratiques génériques sous un socle de cartographie métier. Mettre au premier plan les choix structurants propres à la carte. Conserver les identités, preuves et portées normatives ; le regroupement de lecture ne crée aucun parent métier. Les textes de synthèse rédigés pour cette application restent proposés. Aucune release, commit ou push demandé.
+
+## U1162
+
+Date : 2026-10-23. Source : Laurent, correction de lisibilité et de valeur pour un sponsor.
+
+Verbatim : « "Des références locales gérées activement dans le SCM" => rien compris
+
+"Des arbitrages sur le parcours complet" => On ne comprend pas bien l'interet. On peut imaginer qu'un sponsor se dise : "oui, bon il y aura des règles de gestion un peu partout comme dans tous les ERP, qu'est-ce que ça change ?" »
+
+Portée : reformuler ces deux principes autour de la responsabilité concrète du SCM et du bénéfice attendu pour l’entreprise, avec des exemples compréhensibles. Expliquer l’arbitrage coordonné entre commandes et ressources, ses objectifs et ses conséquences, en conservant les frontières et limites existantes. Les nouvelles formulations restent proposées ; aucune promesse de gain, réalisation installée ou nouvelle comparaison éditeur déduite. Aucune release, commit ou push demandé.
+
+## U1163
+
+Date : 2026-10-23. Source : Laurent, principe du Master Plan au cœur des décisions opérationnelles.
+
+Verbatim : « Je pense qu'il y a un principe supplémentaire qui porte sur le master plan : plus on concrentre les données, plus on est au coeur des opérations, plus on prend la meilleure décision rapidement. Ca s'oppose à de vieilles façons de penser où le coeur des opérations, ce sont des transactions déterministes qui s'appuient sur du paramétrage et l'intelligence est ailleurs, dans la BI, un système externe qui ingère les données opérationnelles et calcule les seuils les règles etc. Un avantage optionnel est qu'on n'a plus besoin d'extraire toutes les données opérationnelles dans un datalake pour la BI de pilotage : c'est moins couteux en flux, en stockage et en réactivité. »
+
+Portée : proposer un principe supplémentaire sur le rapprochement du contexte, des décisions et des opérations dans le Master Plan. Examiner le bénéfice attendu sur le délai et la qualité de décision, ainsi que la possibilité de limiter les copies et extractions nécessaires au pilotage opérationnel. Distinguer ce choix métier de sa réalisation technique, de l’analyse transverse d’entreprise et d’une garantie de performance ou d’économie. Les formulations et appuis proposés restent à qualifier ; aucune release, commit ou push demandé.
+
+Proposition documentée : [le Master Plan au cœur des opérations](../modeles/backlog/operational-master-plan-principle-U1163.yaml).
+
+## U1164
+
+Date : 2026-10-23. Source : Laurent, accord sur le neuvième principe et les améliorations précédentes des principes directeurs.
+
+Verbatim : « Go pour intégrer ce neuvième principe dans le modèle et Atlas, avec les liens depuis la fiche Master Plan. Intègre aussi les autres amélios précédentes »
+
+Portée : appliquer la proposition U1163, ses bénéfices conditionnels, frontières et appuis documentés, avec des liens de lecture depuis Master Plan et son terme métier. Finaliser aussi le recentrage U1161 (neuf choix structurants, socle regroupant les bonnes pratiques, filtres et conventions internes masqués) et les clarifications U1162 sur les données de décision et le résultat global de la Supply. Conserver les tooltips simples, les identités, les portées normatives existantes et les publications historiques. L’accord couvre les propositions discutées ; les nouveaux compléments de mise en œuvre ne sont pas adoptés par extension. Aucune release, commit ou push demandé.
+
+Application : [intégration des neuf principes et des améliorations de lecture](../modeles/backlog/directing-principles-integration-U1164.yaml).

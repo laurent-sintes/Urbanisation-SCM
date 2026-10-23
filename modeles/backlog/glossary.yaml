@@ -18798,6 +18798,8 @@ terms:
     [Sous-domaine](method:MOD038) de [Supply Chain Management](model:supply-chain-orchestration). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management) arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de ces responsabilités, pas des frontières de la carte. [Order Management](model:D04) conserve l’identité, les engagements et les transitions des commandes. [Plan Application](model:D02.e) transmet les choix autorisés ; une affectation ne vaut ni réservation ni confirmation de promesse. FLOW Core porte cette cible sans présumer d’un moteur unique ou d’un transfert installé depuis MAP.
 
     Rapprocher les contributions utiles dans leurs [contextes de planification](glossary:TER389), avec leurs horizons, versions et règles applicables. Les plans de collection, commerciaux et Supply restent distincts ; leurs calendriers peuvent différer, mais les dépendances et conflits doivent être examinés avant de retenir une solution. Une [saison](glossary:TER386) ou une [capsule](glossary:TER388) est un repère possible, sans imposer un plan unique ou une structure annuelle. Un plan révisable porte hypothèses, objectifs et choix ; il ne se réduit pas à un calendrier de référence. Les commandes peuvent contribuer à plusieurs plans, notamment par ligne ou quantité, sans double compte des besoins. Un nouveau plan ne réécrit aucun engagement ; [Plan Application](model:D02.e) transmet les changements autorisés aux responsables des commandes.
+
+    [Pourquoi rapprocher la décision, le pilotage et les opérations](principle:PRINCIPLE-OPERATIONAL-MASTER-PLAN).
   notes: 'Sous-domaine de Supply Chain Management : prévision et projection de ressources précèdent le calcul opérationnel
     des besoins nets dans Master Planning. Order Backlog Management décide priorités et affectations. Ce découpage métier
     ne fixe pas un moteur unique.'
@@ -18825,6 +18827,7 @@ terms:
   - U1153
   - U1154
   - U1155
+  - U1164
   review:
     state: partial
     note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,

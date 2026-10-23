@@ -4051,6 +4051,8 @@ nodes:
       Rapprocher les contributions utiles dans leurs [contextes de planification](glossary:TER389), avec leurs horizons, versions et règles applicables. Les plans de collection, commerciaux et Supply restent distincts ; leurs calendriers peuvent différer, mais les dépendances et conflits doivent être examinés avant de retenir une solution. Une [saison](glossary:TER386) ou une [capsule](glossary:TER388) est un repère possible, sans imposer un plan unique ou une structure annuelle. Un plan révisable porte hypothèses, objectifs et choix ; il ne se réduit pas à un calendrier de référence. Les commandes peuvent contribuer à plusieurs plans, notamment par ligne ou quantité, sans double compte des besoins. Un nouveau plan ne réécrit aucun engagement ; [Plan Application](model:D02.e) transmet les changements autorisés aux responsables des commandes.
 
       [Pourquoi une révision du plan ne change pas seule les engagements](principle:PRINCIPLE-DECISION-EFFECTS).
+
+      [Pourquoi rapprocher la décision, le pilotage et les opérations](principle:PRINCIPLE-OPERATIONAL-MASTER-PLAN).
     examples:
     - title: Couvrir une pénurie sans confondre plan et promesse
       situation: 'Illustration fictive : le [Forecast Plan](glossary:TER372) prévoit 1 000 pièces et le plan opérationnel
@@ -4372,6 +4374,7 @@ nodes:
   - U1154
   - U1155
   - U1160
+  - U1164
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u794
@@ -89496,19 +89499,24 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
+  - U1162
   name: Explicit Information Authority
-  label_fr: Une autorité explicite pour chaque information
-  summary: Distinguer source de vérité d’entreprise, source locale, données reçues et résultats produits, avec provenance
-    et validité connues.
-  rationale: L’intégration ne transfère pas automatiquement l’autorité. Une référence locale peut être tenue et qualifiée
-    activement.
-  implications: Placer les échanges chez les producteurs et destinataires métier. Réexaminer la formule historique une ingestion
-    par référentiel avec l’ingestion mutualisée actuelle ; ne pas réduire la projection à une copie passive.
+  label_fr: Le SCM est responsable de la qualité de ses données de décision
+  summary: Le SCM tient les informations sur les produits, unités, partenaires et accords dont ses décisions ont besoin. Il
+    vérifie ce qui est utilisable, conserve les versions applicables et signale les incohérences pour réduire le risque de
+    prendre un engagement sur des données erronées.
+  rationale: Une quantité mal interprétée ou un accord périmé peut conduire à une promesse impossible à tenir. Le SCM doit
+    savoir quelles informations sont applicables et quels écarts restent à résoudre avant de les utiliser dans ses décisions.
+  implications: Maintenir les informations de référence utiles aux opérations avec leur source, leur validité et leurs incohérences
+    connues. Traiter les écarts dans la portée autorisée ou les faire corriger par le responsable de la source. Les sources
+    d’entreprise conservent la création et la correction des données dont elles sont responsables ; le SCM répond de leur
+    prise en compte dans ses opérations.
   tradeoffs: L’autorité locale SCM exige une gestion active, la provenance et les écarts. Elle ne désigne pas automatiquement
     le maître de l’entreprise et ne se réduit pas à une copie passive.
   category: information
   featured: true
-  display_order: 10
+  display_order: 7
   scope:
     kind: targeted
     targets:
@@ -89520,10 +89528,12 @@ principles:
       id: plans-ingestion
   examples:
   - kind: illustration
-    text: Product Reference gère la vérité utile au SCM avec provenance et validité ; la définition du produit à l’échelle
-      de l’entreprise relève de son autorité propre.
+    text: 'Exemple fictif : un fournisseur annonce dix cartons et la commande attend soixante pièces. La conversion reconnue
+      est de six pièces par carton. Le SCM conserve cette information et sa validité pour apprécier la couverture de la commande.
+      Si deux versions se contredisent, l’écart appelle une clarification avant de conclure que la quantité est couverte.'
   - kind: counterexample
-    text: Diffuser une information ne transfère pas sa maîtrise au destinataire et ne prouve pas une interface installée.
+    text: Recevoir un fichier produit ne suffit pas à établir que son unité et ses dates sont utilisables pour une commande.
+      Une donnée encore en attente ou rejetée ne devient pas applicable du seul fait de sa réception.
   related_principles:
   - PRINCIPLE-RELATION-DIRECTION
   - PRINCIPLE-CONFIGURABLE-CONTEXTS
@@ -89567,6 +89577,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Durable Business Capabilities
   label_fr: Des capacités durables
   summary: Structurer la carte par les responsabilités et résultats métier, indépendamment des équipes, outils et configurations.
@@ -89578,7 +89589,7 @@ principles:
   tradeoffs: Une carte durable est moins proche des menus d’une application. Elle doit évoluer lorsqu’une responsabilité ou
     un résultat métier change réellement.
   category: architecture
-  featured: true
+  featured: false
   display_order: 1
   scope:
     kind: global
@@ -89619,6 +89630,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Intent and Commitment Before Documents
   label_fr: L’intention et l’engagement avant le document
   summary: Définir responsabilités et familles de commandes par l’intention, les parties et les engagements ; distinguer objet,
@@ -89632,7 +89644,7 @@ principles:
   tradeoffs: Les documents restent nécessaires pour prouver, autoriser ou satisfaire des obligations. La facturation et la
     tenue des faits conservent leurs responsabilités ; le choix ne supprime pas les documents.
   category: architecture
-  featured: true
+  featured: false
   display_order: 7
   scope:
     kind: targeted
@@ -89675,10 +89687,11 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Autonomous Logistics System
-  label_fr: Logistics, système métier autonome
-  summary: Représenter Logistics comme l’ensemble cohérent de Warehousing, Transportation et Customs Management, avec leur
-    pilotage opérationnel local.
+  label_fr: La logistique représentée comme un système autonome
+  summary: Logistics regroupe entreposage, transport et douane, avec leur pilotage opérationnel local. Cette frontière reste
+    valable quel que soit le prestataire.
   rationale: Le SCM coordonne les engagements entre acteurs ; Logistics réalise et pilote ses prestations. C-LOG est un acteur
     de réalisation, pas l’identité du système.
   implications: L’externalisation seule ne justifie pas un Business System. Le niveau découle du métamodèle FLOW et de la
@@ -89865,19 +89878,25 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
+  - U1162
   name: Explicit End-to-End Tradeoffs
-  label_fr: Des arbitrages explicites sur le parcours complet
-  summary: Comparer les options selon service, coût, délais, stock et valeur récupérée, sous contraintes et délégations explicites.
-  rationale: Une économie locale peut déplacer les coûts ou dégrader une promesse ailleurs. Le résultat recherché est multidimensionnel.
-  implications: |-
-    Distinguer simulation, décision et résultat réel. Aucun optimum ou poids universel ; les chiffres fictifs ne deviennent pas des objectifs ou gains Beaumanoir.
-
-    Supply Assignment affecte les ressources aux commandes afin de maximiser une valeur multidimensionnelle sous contraintes. Les critères, règles de priorité et arbitrages économiques restent explicites et mobilisent les décisions spécialisées ; aucune pondération universelle ni optimum garanti. Supply Assignment Plan signifie plan d’affectation, distinct des enveloppes de protection de groupes. Allocation de stock par groupe (Group Inventory Allocation) est un terme qualifié autorisé pour attribuer une enveloppe de stock à un usage ou une population, avec des droits et règles de consommation explicites. Allocation seul reste ambigu ; distinguer protection minimale, plafond de consommation, affectation aux demandes, réservation et réassort.
+  label_fr: Coordonner les décisions pour améliorer le résultat global de la Supply
+  summary: Le SCM compare les façons de servir les commandes avec les ressources disponibles ou attendues. Il coordonne priorités,
+    affectations, promesses et choix de satisfaction selon le service, le coût total, les délais et le stock, en respectant
+    les engagements déjà pris.
+  rationale: Une règle qui réduit le coût de préparation peut entraîner un transfert coûteux, retarder une livraison ou priver
+    une autre commande de stock. L’intérêt est de choisir des décisions compatibles qui améliorent ensemble le résultat recherché,
+    puis d’en observer les effets.
+  implications: 'Rendre explicites les décisions à coordonner : priorités entre demandes, ressources affectées, dates de promesse
+    et prestations confiées. Les règles fixent les contraintes et les choix autorisés ; l’arbitrage compare les options et
+    leurs conséquences. Chaque capacité garde son mandat ; les plans et engagements relient leurs décisions. Suivre les résultats
+    pour vérifier si le gain attendu a été obtenu, avec les critères, hypothèses et incertitudes connus.'
   tradeoffs: Les critères peuvent entrer en conflit. Les priorités, pondérations éventuelles et contraintes doivent être explicites
     ; les exemples ne constituent pas des gains Beaumanoir observés.
   category: decision
   featured: true
-  display_order: 12
+  display_order: 9
   scope:
     kind: targeted
     targets:
@@ -89889,10 +89908,14 @@ principles:
       id: D03.k
   examples:
   - kind: illustration
-    text: Servir une commande depuis un autre site peut gagner un délai mais augmenter le transport. L’arbitrage rend visibles
-      ces effets et ses contraintes.
+    text: 'Exemple fictif : servir une commande de cent pièces depuis A nécessite un transfert préalable et coûte au total
+      300 €. L’expédier directement depuis B coûte 220 €. Les deux options tiennent la date demandée et préservent le stock
+      protégé. Comparer la préparation, le transfert et le transport ensemble permet ici d’identifier un écart de 80 € ; les
+      effets réels restent à vérifier après réalisation.'
   - kind: counterexample
-    text: Un gain de chiffre d’affaires local ne suffit pas à prouver un gain global ; aucun optimum n’est garanti.
+    text: Choisir séparément la préparation la moins chère puis le transport le moins cher peut produire un parcours plus
+      coûteux ou incompatible avec la date promise. La présence de règles dans chaque étape ne suffit pas à établir que les
+      choix sont cohérents entre eux.
   related_principles: []
   review_trigger: Réexaminer si la responsabilité, les autorités, les obligations ou les besoins de décision de ce périmètre
     changent.
@@ -89970,6 +89993,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Unique Responsibilities and Cross-Domain Journeys
   label_fr: Des responsabilités uniques, des parcours transversaux
   summary: Conserver un parent métier explicite pour une capacité ; décrire ses mobilisations dans les scénarios, Cases et
@@ -89980,7 +90004,7 @@ principles:
   tradeoffs: Un parent unique simplifie la responsabilité ; il faut des parcours et des liens explicites pour rendre les coopérations
     lisibles. Un scénario n’est pas un parent hiérarchique.
   category: architecture
-  featured: true
+  featured: false
   display_order: 8
   scope:
     kind: global
@@ -90029,6 +90053,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Target Observation and Proven Realization
   label_fr: Cible, observation et réalisation prouvée
   summary: Distinguer observation métier, choix prospectif, comparaison de marché et preuve de réalisation installée.
@@ -90041,7 +90066,7 @@ principles:
   tradeoffs: Distinguer cible et preuve laisse des inconnues visibles. Une couverture non documentée reste non évaluée ; elle
     ne devient pas une absence de capacité.
   category: scope
-  featured: true
+  featured: false
   display_order: 13
   scope:
     kind: global
@@ -90232,6 +90257,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Proportionate Model Depth
   label_fr: Une profondeur proportionnée au besoin
   summary: Déclarer et justifier la profondeur du cœur FLOW et des périmètres de contexte sans inventer de capacités pour
@@ -90244,7 +90270,7 @@ principles:
   tradeoffs: La profondeur est limitée par le besoin d’analyse et les preuves disponibles. Elle peut évoluer sur demande ;
     aucune capacité périphérique n’est inventée pour compléter une symétrie.
   category: scope
-  featured: true
+  featured: false
   display_order: 14
   scope:
     kind: global
@@ -90283,10 +90309,11 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Integrated Business Operations
-  label_fr: Trois domaines complémentaires dans Business Operations
-  summary: Au sein de Business Operations, distinguer les responsabilités de Commerce, Sourcing and Procurement et Supply
-    Chain Management en conservant un ensemble métier intégré.
+  label_fr: Achats, Commerce et SCM dans un même système métier
+  summary: Business Operations réunit Commerce, Sourcing and Procurement et Supply Chain Management. Leurs responsabilités
+    sont distinctes et leurs décisions utilisent un contexte partagé.
   statement: Au sein de Business Operations, distinguer les responsabilités de Commerce, Sourcing and Procurement et Supply
     Chain Management en conservant un ensemble métier intégré.
   rationale: La spécialisation des responsabilités clarifie leurs autorités sans fragmenter le contexte des commandes et des
@@ -90299,7 +90326,7 @@ principles:
     Les découpages de modules Microsoft et SAP ne sont pas reproduits à l’identique.
   category: architecture
   featured: true
-  display_order: 2
+  display_order: 1
   scope:
     kind: targeted
     targets:
@@ -90349,10 +90376,11 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Complete Order Context for Supply Decisions
-  label_fr: Un SCM décisionnel fondé sur le cycle complet des commandes
-  summary: Supply Chain Management porte le cycle de vie des commandes d’achat et de vente de son périmètre afin que ses décisions
-    disposent d’un contexte métier complet, cohérent et traçable.
+  label_fr: Le cycle complet des commandes porté par le SCM
+  summary: SCM tient les commandes d’achat et de vente, leurs engagements et leurs évolutions. Ses décisions disposent ainsi
+    de la demande initiale, du reste à satisfaire et des résultats déjà réalisés.
   statement: Supply Chain Management porte le cycle de vie des commandes d’achat et de vente de son périmètre afin que ses
     décisions disposent d’un contexte métier complet, cohérent et traçable.
   rationale: Les arbitrages de couverture, priorité, affectation, promesse et adaptation doivent connaître ce qui est demandé,
@@ -90366,7 +90394,7 @@ principles:
     ni application, ni stockage, ni moteur uniques et ne transfère pas les autorités Commerce, Procurement ou Finance.
   category: decision
   featured: true
-  display_order: 3
+  display_order: 2
   scope:
     kind: targeted
     targets:
@@ -90451,10 +90479,11 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Configurable Business Contexts
-  label_fr: Des contextes configurables
-  summary: Traiter saisons, capsules et situations intercompany comme des contextes qualifiant données, plans, règles et parcours,
-    sans en faire automatiquement des branches de capacités.
+  label_fr: Des saisons et situations intercompany configurables
+  summary: Saisons, capsules et relations entre sociétés qualifient produits, plans, règles et parcours. Elles peuvent évoluer
+    sans imposer de nouvelles branches de capacités.
   statement: Traiter saisons, capsules et situations intercompany comme des contextes qualifiant données, plans, règles et
     parcours, sans en faire automatiquement des branches de capacités.
   rationale: Les rythmes, marchés, produits et sociétés varient ; leurs combinaisons doivent pouvoir évoluer sans restructurer
@@ -90547,14 +90576,15 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Product Variants Beyond Grids
-  label_fr: La variante ne dépend pas de la grille
-  summary: Identifier les Product Variants par leurs caractéristiques métier et combinaisons admissibles ; utiliser la grille
-    comme représentation et moyen de gestion.
+  label_fr: L’identité des variantes indépendante des grilles
+  summary: Les caractéristiques et combinaisons autorisées identifient les variantes produit. La grille modèle–coloris–taille
+    reste un moyen pratique de les représenter et de les gérer.
   statement: Identifier les Product Variants par leurs caractéristiques métier et combinaisons admissibles ; utiliser la grille
     comme représentation et moyen de gestion.
-  rationale: TER058 définit déjà Product Variant. Une matrice taille–couleur est pratique sans constituer à elle seule l’identité
-    du produit ni les mêmes axes pour toutes les marchandises.
+  rationale: Une même identité produit doit rester utilisable avec plusieurs modes de représentation. La matrice taille–couleur
+    convient à certains vêtements ; d’autres marchandises peuvent utiliser d’autres caractéristiques et combinaisons autorisées.
   implications: La grille reste utile. Taille et couleur restent métier ; les combinaisons possibles ne sont pas toutes nécessairement
     admissibles. Variante, segmentation de stock/demande, assortiment et conditionnement sont distincts.
   tradeoffs: La grille reste une aide de gestion utile. Les caractéristiques, combinaisons autorisées et unités restent métier
@@ -90625,6 +90655,7 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Distinct Decisions and Business Effects
   label_fr: Des décisions et effets métier distincts
   summary: Distinguer calcul, choix autorisé, promesse, confirmation, réservation et réalisation physique.
@@ -90636,7 +90667,7 @@ principles:
   tradeoffs: Séparer les effets rend les engagements contrôlables, mais demande de décrire les conditions de leur enchaînement.
     Aucun ordre universel calcul–confirmation–réservation n’est imposé.
   category: decision
-  featured: true
+  featured: false
   display_order: 9
   scope:
     kind: targeted
@@ -90712,10 +90743,11 @@ principles:
   - U1156
   - U1157
   - U1158
+  - U1161
   name: Traceable Business Facts
-  label_fr: Des faits traçables pour reconstruire et analyser
-  summary: Conserver les faits reconnus, datés et justifiés dans les registres métier responsables ; distinguer faits de stock
-    et traces de processus.
+  label_fr: Des registres distincts pour le stock et les processus
+  summary: Les registres de stock conservent les faits de stock et de propriété. Le Process Ledger conserve les événements
+    des dossiers ; Process Mining analyse ces traces.
   statement: Conserver les faits reconnus, datés et justifiés dans les registres métier responsables ; distinguer faits de
     stock et traces de processus.
   rationale: Les états à une date, explications de décisions et analyses doivent être reliés aux faits disponibles et à leur
@@ -90727,7 +90759,7 @@ principles:
     unique ni architecture technique fondée sur les événements pour toutes les applications.
   category: information
   featured: true
-  display_order: 11
+  display_order: 8
   scope:
     kind: targeted
     targets:
@@ -90800,6 +90832,233 @@ principles:
       événements métier.'
     role: Historiques de workflow et journaux de processus éclairent la tenue puis l’analyse des traces. Le Process Ledger
       FLOW couvre les événements métier internes et externes du Case ; aucune équivalence complète à ces outils n’est établie.
+- id: PRINCIPLE-BUSINESS-MAP
+  name: Business Capability Map
+  label_fr: Une cartographie métier
+  summary: Des responsabilités et savoir-faire durables, avec des frontières explicites. Ce socle réunit les bonnes pratiques
+    communes à toute la carte.
+  statement: Décrire les responsabilités et savoir-faire métier durables, leurs résultats et leurs coopérations, indépendamment
+    des équipes et des applications qui les réalisent.
+  rationale: 'Ce socle donne une base commune pour lire la carte : une responsabilité peut durer alors que son organisation,
+    ses outils ou ses configurations changent. Les bonnes pratiques ci-dessous permettent de décrire les choix structurants
+    avec des frontières compréhensibles.'
+  implications: Chaque capacité possède un parent métier explicite. Les parcours montrent ses contributions, tandis que les
+    décisions, engagements, faits et réalisations gardent leurs effets propres. La profondeur dépend du besoin d’analyse et
+    des preuves disponibles.
+  tradeoffs: La carte doit être réexaminée si une responsabilité ou un résultat métier change. Sa structure ne suffit pas
+    à démontrer la couverture des applications installées.
+  category: architecture
+  featured: true
+  display_order: 10
+  scope:
+    kind: global
+    targets:
+    - collection: nodes
+      id: beaumanoir-target-universe
+  reading_children:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-DECISION-EFFECTS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  related_principles:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-OPERATIONAL-MASTER-PLAN
+  - PRINCIPLE-FLOW-LOGISTICS
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  references:
+  - id: OMG-BMM
+    publisher: OMG
+    title: Business Motivation Model
+    url: https://www.omg.org/spec/BMM/1.2/PDF
+    edition: 1.2, mai 2014
+    locator: 8.3.3 Course of Action
+    observed: Plans/approches, directives et résultats distingués des processus.
+    limits: Appui méthodologique, pas métamodèle universel de cycle fashion.
+    consulted_on: '2026-10-23'
+    role: Appui méthodologique pour distinguer résultats, orientations et moyens. La durabilité des capacités et leur maille
+      sont un choix FLOW explicité ici ; BMM ne constitue pas une taxonomie universelle de capacités.
+  - id: ISO-AD
+    publisher: ISO / IEC / IEEE
+    title: Architecture description
+    url: https://www.iso.org/standard/74393.html
+    edition: ISO/IEC/IEEE 42010:2022, édition 2
+    locator: Abstract
+    observed: Distingue architecture et description ; ne prescrit pas les outils, méthodes ou formats de création.
+    limits: Résumé public seulement ; aucune conformité ou exigence détaillée attribuée sans lecture intégrale.
+    consulted_on: '2026-10-23'
+    role: La distinction entre architecture et sa description éclaire la séparation FLOW entre cible, observation et preuve.
+      Les pages éditeurs décrivent des offres, sans établir leur usage chez Beaumanoir ni une conformité ISO.
+  - id: MS-SCM
+    publisher: Microsoft
+    title: Welcome to Dynamics 365 Supply Chain Management
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+    edition: Documentation datée 2025-09-10
+    locator: Core concepts and tasks
+    observed: Planification, stocks, achats, ventes, production, entrepôt et transport regroupés dans une offre.
+    limits: Frontière produit plus large que les domaines FLOW ; ne justifie pas à elle seule leur séparation.
+    consulted_on: '2026-10-23'
+    role: La distinction entre architecture et sa description éclaire la séparation FLOW entre cible, observation et preuve.
+      Les pages éditeurs décrivent des offres, sans établir leur usage chez Beaumanoir ni une conformité ISO.
+  - id: SAP-SCM
+    publisher: SAP
+    title: Supply Chain Management — SAP Learning
+    url: https://learning.sap.com/products/supply-chain-management
+    edition: Page de gamme évolutive
+    locator: S/4HANA Cloud Public Edition / Private Edition
+    observed: Gamme couvrant planification, opérations, vente, achats et exécution.
+    limits: IBP/GTS sont des offres complémentaires ; pas de prescription du niveau Business System pour Logistics.
+    consulted_on: '2026-10-23'
+    role: La distinction entre architecture et sa description éclaire la séparation FLOW entre cible, observation et preuve.
+      Les pages éditeurs décrivent des offres, sans établir leur usage chez Beaumanoir ni une conformité ISO.
+  - id: PRINCIPLE-DECISION-EFFECTS-market-5
+    publisher: Microsoft
+    title: Order promising
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    edition: Dynamics 365 Supply Chain Management
+    locator: ATP calculations ; CTP calculations
+    consulted_on: '2026-10-13'
+    observed: Dates et quantités promettables ; le contrôle ATP ne constitue pas à lui seul une affectation protégée.
+    limits: Passages consultés pendant l’audit U999–U1008 ; aucune preuve de réalisation installée ni équivalence complète.
+      Dates et quantités promettables ; le contrôle ATP ne constitue pas à lui seul une affectation protégée.
+    role: Les mécanismes de contrôle de disponibilité, d’allocation et de libération montrent des résultats différents. FLOW
+      distingue calcul, décision, confirmation et réservation sans en déduire une séquence universelle.
+  - id: PRINCIPLE-DECISION-EFFECTS-market-3
+    publisher: SAP
+    title: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
+    url: https://learning.sap.com/courses/performing-the-availability-check/running-an-available-to-promise-atp-check-in-sap-s-4hana-sales_a2b4c5e3-1618-418d-a4f6-efe5ff43f7f1
+    edition: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    locator: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales — passages sur le mécanisme rapproché.
+    consulted_on: '2026-09-25'
+    observed: L’ATP confronte quantité et date demandées aux disponibilités, puis propose des échéances confirmables.
+    limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le produit enchaîne calcul et confirmation ; FLOW sépare évaluation, sélection de proposition et
+      engagement de la commande. Les stocks futurs restent dans le périmètre ATP de référence.
+    role: Les mécanismes de contrôle de disponibilité, d’allocation et de libération montrent des résultats différents. FLOW
+      distingue calcul, décision, confirmation et réservation sans en déduire une séquence universelle.
+  - id: PRINCIPLE-DECISION-EFFECTS-market-6
+    publisher: SAP
+    title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    edition: SAP S/4HANA
+    locator: aATP ; Product Allocation ; Release for Delivery
+    consulted_on: '2026-10-13'
+    observed: Contrôle de disponibilité et protections ; couverture produit qui ne dicte pas les parents du modèle FLOW.
+    limits: Passages consultés pendant l’audit U999–U1008 ; aucune preuve de réalisation installée ni équivalence complète.
+      Contrôle de disponibilité et protections ; couverture produit qui ne dicte pas les parents du modèle FLOW.
+    role: Les mécanismes de contrôle de disponibilité, d’allocation et de libération montrent des résultats différents. FLOW
+      distingue calcul, décision, confirmation et réservation sans en déduire une séquence universelle.
+  source_refs:
+  - U1156
+  - U1157
+  - U1158
+  - U1161
+  review_trigger: Réexaminer le socle lorsque les responsabilités, leurs résultats ou le besoin de lecture de la cartographie
+    changent.
+- id: PRINCIPLE-OPERATIONAL-MASTER-PLAN
+  name: Operational Master Planning and Decision Feedback
+  label_fr: Le Master Plan place la décision au cœur des opérations
+  summary: Le Master Plan rapproche commandes, stocks, arrivées attendues et règles applicables pour comparer les options
+    pendant les opérations. Les choix autorisés sont appliqués et leurs résultats observés afin de pouvoir réagir au prochain
+    changement.
+  statement: Rapprocher dans le Master Plan le contexte opérationnel utile, la comparaison des options, la décision et le
+    suivi de ses effets pour raccourcir le délai entre un changement constaté et une réponse applicable.
+  rationale: |-
+    Une décision prise sur une extraction ancienne peut arriver après une nouvelle promesse, une réservation ou un retard. Garder le contexte de décision proche des commandes et des faits facilite le réexamen des options au moment où elles peuvent encore produire un effet utile.
+
+    Réduire le temps entre un événement, son appréciation et l’application d’une réponse autorisée. Comparer les options avec un contexte plus actuel et complet, puis vérifier leurs effets. Selon la réalisation retenue, réduire les copies, transferts et traitements entretenus uniquement pour le pilotage opérationnel, ainsi que leur délai de mise à jour.
+  implications: |-
+    Relier observation, comparaison des options, décision, application autorisée et constat du résultat. Rendre explicites la fraîcheur des données, les versions, les objectifs, les contraintes et les engagements à préserver.
+
+    Le [sous-domaine](method:MOD038) [Master Plan](model:domain-plan) réunit les responsabilités de préparation, calcul, simulation et arbitrage déjà décrites. [Master Planning](model:D05.f) garde le calcul des besoins nets ; [Plan Application](model:D02.e) transmet et suit les changements autorisés. Les familles de commandes conservent leurs engagements et leurs règles de transition.
+
+    Les registres de stock et de processus restent responsables de leurs faits. Le Master Plan mobilise le contexte utile sans devenir le propriétaire de toutes les données de l’entreprise.
+
+    Le pilotage opérationnel peut lire les faits et résultats disponibles sans exiger une extraction complète préalable vers une plateforme analytique. Cette possibilité est à étudier par usage, avec les droits, la charge, la conservation et la qualité nécessaires.
+  tradeoffs: |-
+    Davantage de données ne garantit ni une meilleure décision ni un calcul plus rapide. Qualité, cohérence, fraîcheur, sélection des informations utiles et capacité de calcul conditionnent le bénéfice.
+
+    L’intégration de la décision aux opérations laisse ouverts les moteurs, services et stockages. L’isolation des calculs peut protéger les transactions et améliorer la réactivité.
+
+    Les analyses transverses, l’historique long et les études spécifiques peuvent justifier une plateforme d’analyse distincte. Les économies éventuelles dépendent de l’architecture et des usages retenus ; aucun gain chiffré ni déploiement Beaumanoir ne sont déduits.
+  examples:
+  - kind: illustration
+    text: 'Exemple fictif : une arrivée fournisseur est retardée. Le Master Plan rapproche les commandes concernées, le stock
+      utilisable, les autres arrivées et les priorités applicables. Il compare réaffectation, transfert et livraison partielle.
+      Les capacités responsables appliquent les choix autorisés ; les faits enregistrés permettent ensuite de suivre les commandes
+      encore exposées et le résultat des décisions.'
+  - kind: counterexample
+    text: Un tableau de bord signale une pénurie à partir de données extraites la veille, tandis que de nouveaux engagements
+      ont été pris. Le calcul d’un nouveau seuil ne suffit pas à établir quelles commandes peuvent encore être modifiées ni
+      si le changement a été appliqué.
+  category: decision
+  featured: true
+  display_order: 3
+  scope:
+    kind: targeted
+    targets:
+    - collection: nodes
+      id: domain-plan
+  related_principles:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DECISION-EFFECTS
+  references:
+  - id: U1163-MS-PLANNING-ARCHITECTURE
+    publisher: Microsoft
+    title: Master planning system architecture
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-architecture
+    edition: Dynamics 365 Supply Chain Management ; page mise à jour le 2026-03-25
+    locator: Introduction ; Performance ; Architecture and data flow
+    consulted_on: '2026-10-23'
+    observed: Planning Optimization permet des calculs plus fréquents pendant les opérations. Un connecteur intégré transmet
+      les données de référence et transactionnelles ; les résultats de planification retournent dans SCM.
+    role: 'Recouvrement partiel : réactivité du master planning intégré aux opérations.'
+    limits: Le calcul est réalisé hors de la base SQL opérationnelle et les données utiles sont transmises au service. Ce
+      rapprochement métier ne prouve donc ni absence de copie ni nécessité d’une base physique unique. Architecture produit
+      consultée ; aucune preuve du périmètre complet des décisions FLOW, de l’élimination d’une plateforme analytique ou d’un
+      gain Beaumanoir.
+  - id: U1163-SAP-EMBEDDED-ANALYTICS
+    publisher: SAP
+    title: Describing SAP S/4HANA embedded analytics
+    url: https://learning.sap.com/courses/analytics-with-sap-solutions/describing-sap-s-4hana-embedded-analytics_a41e48ea-c96c-4149-80d1-2aac9f092d1f
+    edition: SAP S/4HANA ; cours évolutif sans édition globale précisée
+    locator: SAP S/4HANA embedded analytics ; Bringing Transactions and Analytics Together ; The Virtual Data Model
+    consulted_on: '2026-10-23'
+    observed: L’analytique opérationnelle est intégrée au travail quotidien sur les données transactionnelles courantes. Les
+      vues sémantiques préparent ces données pour l’analyse et permettent cet usage sans réplication préalable dans un autre
+      système analytique.
+    role: Appui au pilotage opérationnel proche des transactions et au bénéfice conditionnel de moindre réplication.
+    limits: La source présente l’analyse embarquée, pas une équivalence au Master Plan FLOW ni à son application des décisions.
+      Elle distingue explicitement ce pilotage quotidien de l’analyse stratégique. Le moindre besoin de copie porte sur les
+      usages embarqués décrits ; il ne démontre pas la suppression de toute BI, de tout historique externe ou du besoin d’analyse
+      transverse.
+  - id: U1163-RESEARCH-HYPER
+    publisher: Alfons Kemper et Thomas Neumann ; IEEE ICDE / Technische Universität München
+    title: 'HyPer: A hybrid OLTP&OLAP main memory database system based on virtual memory snapshots'
+    url: https://portal.fis.tum.de/de/publications/hyper-a-hybrid-oltpampolap-main-memory-database-system-based-on-v/
+    edition: ICDE 2011, pages 195–206 ; DOI 10.1109/ICDE.2011.5767867
+    locator: Abstract de la publication originale
+    consulted_on: '2026-10-23'
+    observed: Les auteurs décrivent les délais de fraîcheur et les ressources supplémentaires associés à la séparation transactionnel/analytique
+      avec extraction périodique. Ils proposent une architecture hybride utilisant des instantanés cohérents des données transactionnelles.
+    role: Appui de recherche au problème de fraîcheur et de duplication, distinct d’une preuve commerciale.
+    limits: Le travail étudie une architecture de base de données et des performances sur banc d’essai. Il ne définit pas
+      un périmètre métier ni les décisions du Master Plan. Résumé consulté, pas reproduction expérimentale ; aucune généralisation
+      des mesures à FLOW, aux coûts complets ou à la qualité des décisions métier.
+  review_trigger: Réexaminer si les responsabilités de décision, la disponibilité des faits ou le délai nécessaire à une réponse
+    opérationnelle changent.
+  source_refs:
+  - U1163
+  - U1164
 limitations:
 - Les propositions, illustrations et justifications éditoriales ne sont pas validées par leur présence dans le modèle. Consulter
   les portées par champ et leurs sources.
