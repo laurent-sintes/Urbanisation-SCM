@@ -1,0 +1,718 @@
+schema_version: 1.0.0
+id: principle-description-application-U1160
+status: applied
+date: '2026-10-23'
+source_refs:
+- U1159
+- U1160
+basis: principle-description-coherence-audit-U1159.yaml
+application_order:
+- Corrections de cohérence et glossaire
+- Liens de lecture ciblés et contrat typé
+- Principes locaux et hérités ; index inverse
+coverage:
+  nodes: 32
+  relations: 9
+  terms: 9
+coherence_corrections:
+- Cycle complet SCM et Purchase Order ; contexte TER035/TER109 aligné
+- 'Operational References : maîtrise locale active et responsabilités actuelles du Master Plan'
+- 'Exemple de réception produit : caractéristiques maîtres et gestion locale distinguées'
+- 'Conventions : code BA et profondeur courante, sans réécriture historique'
+reading_links:
+- collection: nodes
+  id: supply-chain-orchestration
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: nodes
+  id: system-business-operations
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+- collection: nodes
+  id: domain-sales
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: nodes
+  id: domain-sourcing-procurement
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+- collection: nodes
+  id: domain-logistics-execution
+  principle_refs:
+  - PRINCIPLE-FLOW-LOGISTICS
+- collection: nodes
+  id: domain-product-definition-lifecycle
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: nodes
+  id: subdomain-product-definition-variants
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: nodes
+  id: D08
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: nodes
+  id: business-references
+  principle_refs:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: nodes
+  id: domain-plan
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: subdomain-policies
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: D04
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: D04.i
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: D04.j
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: subdomain-process-management
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+- collection: nodes
+  id: process-ledger
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: process-mining
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: D01
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: D01.g
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: inventory-ownership-ledger
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: domain-product-portfolio-collection
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: subdomain-collection-planning
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: D03.o
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: nodes
+  id: D03.k
+  principle_refs:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: nodes
+  id: D02.c
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: D02.e
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: service-order-billing
+  principle_refs:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+- collection: nodes
+  id: cap-purchasing-case-coordination
+  principle_refs:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: nodes
+  id: workflow-definition-management
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+- collection: nodes
+  id: order-workflow-orchestration
+  principle_refs:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+- collection: nodes
+  id: order-workflow-sentry
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: beaumanoir-target-universe
+  principle_refs:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+- collection: terms
+  id: TER035
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: terms
+  id: TER058
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+- collection: terms
+  id: TER122
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+- collection: terms
+  id: TER123
+  principle_refs:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: terms
+  id: TER375
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: terms
+  id: TER386
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: terms
+  id: TER389
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: terms
+  id: TER215
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: relations
+  id: REL-U673-ORDER-MATCHING
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: relations
+  id: REL-U1155-policies-orders
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: relations
+  id: REL-U1113-order-events
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: relations
+  id: REL-U1113-ledger-mining
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: relations
+  id: REL-U1113-sentry-events
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: relations
+  id: REL-U1115-wholesale-offer-to-engagement
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: relations
+  id: REL-U1115-requisition-to-purchase-order
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+- collection: relations
+  id: REL-U1115-agreement-to-purchase-order
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+- collection: relations
+  id: REL-U794-PLAN-INGESTION
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+glossary_check: Les huit contextes recommandés et TER109 sont enrichis. Définitions, aides courtes et comparaisons marché
+  inchangées ; les miroirs restants conservent leur sens, les autorités et frontières. Les sources consultées U1156–U1159
+  sont réutilisées, sans nouvelle équivalence éditeur.
+preserved:
+- Identifiants, parents, relations métier et cibles normatives des principes
+- Définitions courtes et tooltips simples
+- Publications et accords historiques
+qualification: L’accord U1160 porte sur l’audit et ses corrections. Les nouveaux renvois sont des aides de lecture ; aucun
+  renvoi ni publication ne vaut adoption globale des champs composites rédigés. Les compléments éditoriaux restent proposés.
+  Seuls les deux énoncés de convention corrigés (BUSINESS-SYSTEM et DISPLAY-CODES) font l’objet d’une capture ciblée U1160
+  ; les champs descriptifs composites enrichis restent proposés.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1160
+  required_nodes:
+  - id: beaumanoir-target-universe
+    field_sha256:
+      scope: 640922a22d7b6929adc47c7bebae5a70d2f1a26682655288283d23c373b4d95e
+  - id: system-business-operations
+    field_sha256:
+      pedagogical_description: 9e450aeb24642ffe2cbc03c0e15f2f05753603b3123d956adc462ec70f5c4242
+  - id: domain-sales
+    field_sha256:
+      scope: 68b8aabe84a0c44195b2e509bd6e06188e24fe6bf756a76a91b314e4cbf9d24e
+      pedagogical_description: aade0cb53f56c058dd6047a26c242d31406c3802e399e1db80333a6995f1d768
+  - id: domain-sourcing-procurement
+    field_sha256:
+      scope: 57b91d94e31ca0f859464d701b9342213a4b49f083756f6f9c7adffd30708036
+      pedagogical_description: bd2dcb770671eccbd419d90ed95821aedbeb845d92c13467566424a760184a0e
+  - id: domain-plan
+    field_sha256:
+      scope: c6011d479a6672da692db731ebbae02f553aae9e8a1464a1bfba02ac3519739b
+      pedagogical_description: 8f6fbf25f8bc9b713ffde772e942c83a1d9f1e56e0eac7cfcffd7cf87f7df8b9
+  - id: supply-chain-orchestration
+    field_sha256:
+      examples: ed24cf1cc87202ee667817df68caef3bd0ee93877baeeb30574e24a8871824f8
+      scope: cb09c8c00cda67764c66d59cff3ce55935c3286e4d32e2b663b75ac7b1324ab7
+      pedagogical_description: 8d24ce991f4dd2a665bdea3eedcd5e5b1607730ec5323a203e287ad50dd1a0f1
+  - id: business-references
+    field_sha256:
+      mastership: fe477fe8bcca70b1479df642851439b9208150cce5f9f6bab10baa8106f92228
+      pedagogical_description: 4e7ac52bee2484dd631d4a63a9707dd96ce16b36c59ef6a70f85c613dbe72a19
+  - id: D08
+    field_sha256:
+      scope: 394fa61898db64db2d2d795d845aa938759bcdc21740fa19756d442495c9822c
+      pedagogical_description: 35838638d577439c92caeee28def0ec70ef2a8614847c7ed00043f3d22889774
+  - id: D01.g
+    field_sha256:
+      scope: d70d91e47be38287bb253e94f00ff3ce7ff8dfb9b17a68e6e005fe79a11e767d
+  - id: D02.c
+    field_sha256:
+      scope: 3da4df064ed8aa5bfea9af903fa42776c73cd098538a4989659fed6e5d099474
+  - id: D02.e
+    field_sha256:
+      scope: d8ccc7a364e40bb3de4fdc73841f8bb4f89c4e9530829cee23eb70de7374732a
+  - id: D03.k
+    field_sha256:
+      scope: 60300488149214004738a7dbd686e5a66effb1ccfa3b00cc29b71891131f08f8
+  - id: D04.i
+    field_sha256:
+      scope: 1125390f5ce54d4762f8c57c62ec3b1a3a105bc84ac2e4fc63893313c7bff7f0
+  - id: D04.j
+    field_sha256:
+      scope: 37a24ca946dd48b9b75fa7e7209a8aa36038726883fe79891a2879f2fb522261
+  - id: D04
+    field_sha256:
+      scope: bbc7204fa9b0cabfe1c34c68e096b7d1c625d24b24d7592a39f2881c98e45894
+      pedagogical_description: 21dab361ab8fc91657f2fc2bd612863568e568dfbfb126752ec6060e27a2b98e
+  - id: D01
+    field_sha256:
+      scope: 06f517f89ca21ef84440b2f2efd4bda87d3ea66c4c006017a3eb9acf7a52b338
+  - id: D03.o
+    field_sha256:
+      scope: 19e7abb739e3f5489f33fb8baded54788bb3e215ddc7b7a509b586021c2d470e
+  - id: subdomain-policies
+    field_sha256:
+      pedagogical_description: ab39b19384795c1715eba8e4ac05d81cc3d2721f1a59f10ade64c75f089d10db
+  - id: service-order-billing
+    field_sha256:
+      scope: 3be029300d7c450ad0c38ccf2b2a5a4b62edb0a57ed3840c3af6360c87bdca22
+  - id: inventory-ownership-ledger
+    field_sha256:
+      scope: 245ad7f7f9bc3c57aa4935e3fca6ddd1b8c993ea2b4135497b7da412e83b69fc
+  - id: domain-logistics-execution
+    field_sha256:
+      pedagogical_description: e2ca49435536d50287d4bea33bc1f67d36298c1af5b230188e05f2adf6118d60
+  - id: workflow-definition-management
+    field_sha256:
+      scope: f83ee0473e5dcc0d90935ff17ad79ded3eb2e91d3d578dbb9b331fc42af41fae
+  - id: order-workflow-sentry
+    field_sha256:
+      scope: 1622a06a0205e3057b81c2c3428a24bde6d7a55a86ea41966bf1038ca6fbd709
+  - id: order-workflow-orchestration
+    field_sha256:
+      scope: 42c14b752c4a5f970be9cb99faec02758b2c5709614acc784b43407b68017486
+  - id: subdomain-process-management
+    field_sha256:
+      scope: 3a5fc8f8cc3c6c078a22fd10d8cb9eac1d046c03fd17c5c679759037434dbc84
+      pedagogical_description: 873abe818de380a25a31806dfdf08be0f9fb063f2858d4a8965f1cb645c398e0
+  - id: process-mining
+    field_sha256:
+      pedagogical_description: 0c0e1dd8bfd29bd6a528d4e017da251a6215b06080f7dfd36e23b10fcf034828
+  - id: domain-product-portfolio-collection
+    field_sha256:
+      pedagogical_description: c999a86479d7dd6075581c2705b84eea71c15ca9df7af36ba125862d44ad3b35
+  - id: subdomain-collection-planning
+    field_sha256:
+      pedagogical_description: df364483f67c2b582865558f641b167771d5f92b79cc051207ca60cfd7b47663
+  - id: domain-product-definition-lifecycle
+    field_sha256:
+      scope: 8527752df6741e9807f46c2bf61951b211c049c76c0768918a2c5de1d51072df
+      pedagogical_description: 4e3cd04ea67cc9ef72c7a40b50d4816a47fd3db4da8d0a98514caaec1fccdf6c
+  - id: subdomain-product-definition-variants
+    field_sha256:
+      scope: d42e421c672ca2692deb9fdc7da7f55fcdead9e909bfb84faa051ce50f2b3706
+      pedagogical_description: 4c3e939433b448d8551cb8bfe0a4d0e8c909bfa002c009c2c6d5a8c28a57b455
+  - id: cap-purchasing-case-coordination
+    field_sha256:
+      scope: a2a6e5e0f294fc085d17282788b42d1a748c217c3c044e63765d00b9adad7936
+  - id: process-ledger
+    field_sha256:
+      pedagogical_description: fb01622311401d8deab6ccb0a183d37133b9674b07ae1b01be0d827c8c1650ff
+  required_glossary:
+  - id: TER035
+    field_sha256:
+      context: db0e991995a76ca0ef71c568e73d8024aa84e7c67f1bf413361201dab3870d51
+  - id: TER058
+    field_sha256:
+      context: e07d6d850ca7b16607caa39bd63bcc6992bca8e226915565ef9a15a166c11a25
+  - id: TER109
+    field_sha256:
+      context: 57b91d94e31ca0f859464d701b9342213a4b49f083756f6f9c7adffd30708036
+  - id: TER122
+    field_sha256:
+      context: 7b010f13df56d1e7a706799eeaef7a9571a3e6576f7aa924dc2c43beefbf893c
+  - id: TER123
+    field_sha256:
+      context: 3b22081c4bc4bcf6806b1f321b1faad2489b31a282ef9bd77febfe8eff5e17a3
+  - id: TER215
+    field_sha256:
+      context: bd6f854518f5d3cc1c3bea7cb8fc6f5d7516d6cefebd351bb94ef9b837f14293
+  - id: TER375
+    field_sha256:
+      context: edda4577c9a7f05349b610250e5670aa490f4bd0e69edd01029c6862e3901328
+  - id: TER386
+    field_sha256:
+      context: ab86da37fd6322c3f3b91ce17b0f474c2e701d2c6291d3b410eeea64282ba589
+  - id: TER389
+    field_sha256:
+      context: 39efa56b53b2ef6b216f15b4f28f4d45db14892c156de31183896186d4f11087
+  required_relations:
+  - id: REL-U673-ORDER-MATCHING
+    field_sha256:
+      data_exchange: 2bb71b289c8d9966402f0abac92a22aa0eeac3a5b844700873d4f00209e5957a
+  - id: REL-U794-PLAN-INGESTION
+    field_sha256:
+      data_exchange: 80b6ac5811ab662a51e12c36733eb800cea053e0450f8aba0d36d54962a1fe91
+  - id: REL-U1113-sentry-events
+    field_sha256:
+      data_exchange: f37bd524c75a8eb9958c22813891765145882011638ac06e61edd47fca247108
+  - id: REL-U1113-order-events
+    field_sha256:
+      data_exchange: bcd4142488456efe8a98a542a8466ef03bd9efb068c073f639baa376ca86254f
+  - id: REL-U1113-ledger-mining
+    field_sha256:
+      data_exchange: 05d80c631ed61c344e753a2c203174561d2869f001f05326bbcb2116a58a5682
+  - id: REL-U1115-wholesale-offer-to-engagement
+    field_sha256:
+      data_exchange: 7767e3d66d80a710d9fd64e8763e2154d8fa6f9d470ed4ed394aafe9d6ec18cf
+  - id: REL-U1115-requisition-to-purchase-order
+    field_sha256:
+      data_exchange: 7402cb8e01c62e2288eed8782f20a323b3d353fca29d048aab8baa7b37d38971
+  - id: REL-U1115-agreement-to-purchase-order
+    field_sha256:
+      data_exchange: 57db514b7e913bc6a5a2b2fdadd34449427108f8b3c53a8779d8df335bf5314c
+  - id: REL-U1155-policies-orders
+    field_sha256:
+      data_exchange: 99bfd9175161873d74896f9026f63c89ef50dd10be2d64667205079c8477251b
+  required_catalog:
+  - collection: principles
+    id: PRINCIPLE-BUSINESS-SYSTEM
+    content_sha256: f20bccd86b14126fd4c12aa18287000d608e898d215cf89a9b0b4005552d6b22
+  - collection: principles
+    id: PRINCIPLE-DISPLAY-CODES
+    content_sha256: 5d1f69f829729869d48712ab38939823438c9ee1f356ed089f91ac3b751b2e28
+  supersedes_requirements:
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: D02.c
+    fields:
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - pedagogical_description
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-logistics-execution
+    fields:
+    - pedagogical_description
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-process-management
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: domain-product-definition-lifecycle
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-product-definition-variants
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - pedagogical_description
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: nodes
+    id: process-mining
+    fields:
+    - pedagogical_description
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: subdomain-product-definition-variants
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: cap-purchasing-case-coordination
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: relations
+    id: REL-U1115-wholesale-offer-to-engagement
+    fields:
+    - data_exchange
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: relations
+    id: REL-U1115-requisition-to-purchase-order
+    fields:
+    - data_exchange
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: relations
+    id: REL-U1115-agreement-to-purchase-order
+    fields:
+    - data_exchange
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER215
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: D01
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: order-workflow-sentry
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U1113-sentry-events
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U1113-order-events
+    fields:
+    - data_exchange
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U1113-ledger-mining
+    fields:
+    - data_exchange
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: service-order-billing
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: inventory-ownership-ledger
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: workflow-definition-management
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: order-workflow-orchestration
+    fields:
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER122
+    fields:
+    - context
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - context
+  - annex: market-coverage-audit-U775.yaml
+    collection: nodes
+    id: D01.g
+    fields:
+    - scope
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.k
+    fields:
+    - scope
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - mastership
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - mastership
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D01.g
+    fields:
+    - scope
+  - annex: scm-domain-study-application-U1151.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - examples
+    - pedagogical_description
+    - scope
+  - annex: scm-domain-study-application-U1151.yaml
+    collection: terms
+    id: TER035
+    fields:
+    - context
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - pedagogical_description
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: D02.e
+    fields:
+    - scope
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: D04
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - pedagogical_description
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - pedagogical_description
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - pedagogical_description
+  - annex: season-context-application-U1155.yaml
+    collection: relations
+    id: REL-U673-ORDER-MATCHING
+    fields:
+    - data_exchange
+  - annex: season-context-application-U1155.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - data_exchange
+  - annex: season-context-application-U1155.yaml
+    collection: relations
+    id: REL-U1155-policies-orders
+    fields:
+    - data_exchange
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - context
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER386
+    fields:
+    - context
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER389
+    fields:
+    - context
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: subdomain-process-management
+    fields:
+    - scope
+verification:
+  state: passed
+  checks:
+  - 'check_backlog.py : aucune erreur ni lot pending'
+  - 'validate_models.py : aucune erreur, publications historiques conservées'
+  - 40 tests Python des liens, principes, contexte et lecture historique
+  - 306 tests frontend ; contrôle Biome et build Atlas réussis
+  - 'Recette candidate : 14 principes, 32 fiches, 9 termes et 9 relations ; index inverse, clavier, retour avec position et
+    version conservées'
+  - Trois formats d’écran et publication historique 2026-09-13.5 ; tooltips courts sans action supplémentaire

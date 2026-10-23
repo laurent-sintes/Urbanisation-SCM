@@ -1,3 +1,4 @@
+import { businessFields, businessQualification } from './businessContent.ts';
 import { inlineParts, plainInlineText } from './inlineLinks.ts';
 import type { ArchitecturePrinciple, PublishedModel } from './types.ts';
 
@@ -15,8 +16,69 @@ export function designPrinciples(model: PublishedModel) {
       (a.display_order ?? 999) - (b.display_order ?? 999) || principleTitle(a).localeCompare(principleTitle(b), 'fr'),
   );
 }
-/** Reading links are explicit. Global applicability alone does not flood every sheet. */
-export function principlesForNode(model: PublishedModel, id: string) {
+export type PrincipleReading = {
+  collection: 'nodes' | 'relations' | 'terms';
+  id: string;
+  fields: string[];
+};
+const readingIndexes = new WeakMap<PublishedModel, Map<string, PrincipleReading[]>>();
+/** Derived only from displayed prose in this edition, never from editorial metadata. */
+function readingIndex(model: PublishedModel) {
+  const cached = readingIndexes.get(model);
+  if (cached) return cached;
+  const index = new Map<string, PrincipleReading[]>();
+  const known = new Set(designPrinciples(model).map((p) => p.id));
+  const add = (collection: PrincipleReading['collection'], id: string, field: string, value: unknown) => {
+    if (typeof value !== 'string') return;
+    for (const p of inlineParts(value)) {
+      if (p.kind !== 'principle' || !p.target || p.anchor || !known.has(p.target)) continue;
+      const entries = index.get(p.target) || [];
+      const entry = entries.find((r) => r.collection === collection && r.id === id);
+      if (entry) {
+        if (!entry.fields.includes(field)) entry.fields.push(field);
+      } else entries.push({ collection, id, fields: [field] });
+      index.set(p.target, entries);
+    }
+  };
+  const prose = (collection: PrincipleReading['collection'], id: string, field: string, value: unknown) => {
+    if (typeof value === 'string') add(collection, id, field, value);
+    else if (Array.isArray(value))
+      value.forEach((v) => {
+        prose(collection, id, field, v);
+      });
+    else if (value && typeof value === 'object')
+      for (const [key, child] of Object.entries(value))
+        if (['explanation', 'title', 'situation', 'outcome', 'lesson', 'contribution'].includes(key))
+          prose(collection, id, field, child);
+  };
+  for (const node of model.nodes) {
+    for (const [field, value] of Object.entries(businessFields(node.fields)))
+      if (field !== 'name') prose('nodes', node.id, field, value);
+    prose('nodes', node.id, 'illustrations', node.fields.examples);
+    const pedagogy = node.fields.pedagogical_description as Record<string, unknown> | undefined;
+    for (const field of ['explanation', 'distinctions', 'example_refs'])
+      prose('nodes', node.id, 'pedagogical_description', pedagogy?.[field]);
+  }
+  for (const term of model.glossary)
+    for (const field of ['definition', 'context', 'notes']) prose('terms', term.id, field, term[field]);
+  for (const relation of model.relations) {
+    add('relations', relation.id, 'data_exchange', relation.dataExchange?.purpose);
+    for (const [field, value] of Object.entries(businessFields(relation.fields)))
+      if (field !== 'name') prose('relations', relation.id, field, value);
+    for (const [field, value] of Object.entries(businessQualification(relation.qualification)))
+      prose('relations', relation.id, field, value);
+  }
+  readingIndexes.set(model, index);
+  return index;
+}
+export function readingsForPrinciple(model: PublishedModel, id: string): readonly PrincipleReading[] {
+  return readingIndex(model).get(id) || [];
+}
+function citedBy(model: PublishedModel, collection: PrincipleReading['collection'], id: string, principle: string) {
+  return readingsForPrinciple(model, principle).some((r) => r.collection === collection && r.id === id);
+}
+/** Citation is a reading aid; it never widens a principle's normative scope. */
+export function principleGroupsForNode(model: PublishedModel, id: string) {
   const ancestors = new Set([id]);
   let pending = [id];
   while (pending.length) {
@@ -32,13 +94,28 @@ export function principlesForNode(model: PublishedModel, id: string) {
       }
     pending = next;
   }
-  return designPrinciples(model).filter(
-    (p) => p.featured && p.scope?.targets.some((t) => t.collection === 'nodes' && ancestors.has(t.id)),
+  const principles = designPrinciples(model);
+  const direct = principles.filter(
+    (p) =>
+      (p.featured && p.scope?.targets.some((t) => t.collection === 'nodes' && t.id === id)) ||
+      citedBy(model, 'nodes', id, p.id),
   );
+  const ids = new Set(direct.map((p) => p.id));
+  const inherited = principles.filter(
+    (p) =>
+      !ids.has(p.id) && p.featured && p.scope?.targets.some((t) => t.collection === 'nodes' && ancestors.has(t.id)),
+  );
+  return { direct, inherited };
+}
+export function principlesForNode(model: PublishedModel, id: string) {
+  const { direct, inherited } = principleGroupsForNode(model, id);
+  return [...direct, ...inherited];
 }
 export function principlesForRelation(model: PublishedModel, id: string) {
   return designPrinciples(model).filter(
-    (p) => p.featured && p.scope?.targets.some((t) => t.collection === 'relations' && t.id === id),
+    (p) =>
+      (p.featured && p.scope?.targets.some((t) => t.collection === 'relations' && t.id === id)) ||
+      citedBy(model, 'relations', id, p.id),
   );
 }
 export function principleSearchText(p: ArchitecturePrinciple) {

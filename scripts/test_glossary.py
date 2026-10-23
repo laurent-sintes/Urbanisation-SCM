@@ -67,6 +67,20 @@ class GlossaryTests(unittest.TestCase):
         model['glossary']['terms'][1]['id'] = []
         self.assertTrue(validate(model))
 
+    def test_principle_links_resolve_only_in_the_supplied_publication(self):
+        model = self.model()
+        model['principles'] = [{'id': 'P', 'statement': 'An explicit choice.'}]
+        model['nodes'][0]['fields']['scope'] = '[Why](principle:P)'
+        model['glossary']['terms'][0]['context'] = '[Why](principle:P)'
+        model['relations'] = [{'id': 'R', 'fields': {'data_exchange': {'purpose': '[Why](principle:P)'}}}]
+        self.assertEqual(validate(model), [])
+        self.assertEqual(list(references(r'\[Literal](principle:absent) [Why](principle:P)')), [('principle', 'P')])
+        historical = deepcopy(model)
+        historical['principles'] = []
+        self.assertIn('principle: unresolved published link P', validate(historical))
+        model['nodes'][0]['fields']['scope'] = '[Why](principle:P#invented)'
+        self.assertIn('principle: unresolved section P#invented', validate(model))
+
     def test_catalog_links_and_explicit_method_vocabulary_are_checked(self):
         model = self.model()
         model['scenario_catalog'] = {'paths': [{'description': '[Absent](model:missing)'}]}

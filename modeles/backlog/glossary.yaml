@@ -4096,6 +4096,10 @@ terms:
     Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
 
     Le domaine tient les plans, commandes, [engagements](glossary:TER013) et faits de [stock](glossary:TER005) de son périmètre, arbitre les usages des ressources et coordonne les prestations confiées. [Commerce](model:domain-sales) conserve offres, canaux et décisions commerciales ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve sources, accords et échanges fournisseur. [Finance](model:domain-finance) garde les autorités financières ; [Logistics](glossary:TER110) et les autres exécutants réalisent les opérations. Les cas de fabrication ne sont pas ajoutés au modèle actuel. Cette répartition n’exclut ni la planification ni les commandes de vente et d’achat du domaine, et ne présume aucun moteur ou déploiement unique.
+
+    Le domaine porte le cycle de vie des [commandes](glossary:TER012) d’achat et de vente de son périmètre. Les décisions disposent ainsi des demandes, [engagements](glossary:TER013), changements et réalisations nécessaires pour apprécier leurs conséquences. [Pourquoi conserver ce contexte complet](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
+
+    [Pourquoi examiner les conséquences sur le parcours complet](principle:PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE).
   notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
     la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
     toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
@@ -4133,6 +4137,7 @@ terms:
   - U1135
   - U1150
   - U1151
+  - U1160
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -10550,6 +10555,8 @@ terms:
     Exemple fictif : bleu taille M est une déclinaison d’un modèle de tee-shirt. Cent pièces de cette déclinaison peuvent partager la même référence de variante ; elles ne deviennent pas une seule Product Unit. Taille et couleur illustrent ce cas, sans imposer ces dimensions à tous les produits.
 
     Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
+
+    Les caractéristiques et combinaisons admissibles identifient les [variantes](glossary:TER058). La grille peut aider à les représenter ou à les commander ; elle ne définit pas leur identité métier. [Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS).
   source_refs:
   - U193
   - U203
@@ -10561,6 +10568,7 @@ terms:
   - ELM063
   - U890
   - U891
+  - U1160
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -18377,7 +18385,7 @@ terms:
 
     [Sourcing and Procurement](glossary:TER109) porte la recherche et la sélection des sources d’achat, les conditions commerciales et les [Cases](glossary:TER064) opérationnels : validations, échanges fournisseur et suites à donner aux confirmations ou écarts.
 
-    Ces parcours mobilisent [Supply Chain Management](model:supply-chain-orchestration). [Purchase Order](model:D04.j) y conserve le document, ses états et ses transitions autorisées ; aucun cycle concurrent n’est créé. La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
+    Ces parcours mobilisent [Supply Chain Management](model:supply-chain-orchestration). [Purchase Order](model:D04.j) porte dans [Supply Chain Management](glossary:TER035) la [commande](glossary:TER012) d’achat, ses [engagements](glossary:TER013) et leurs évolutions autorisées. Les parcours d’achat coordonnent les validations et échanges fournisseur. [Pourquoi le cycle complet reste dans SCM](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
 
     Exemple fictif : le parcours d’achat demande une validation puis traite la confirmation fournisseur ; le Core conserve la commande et orchestre les prestations autorisées. [Supplier Management](glossary:TER241), [Strategic Sourcing](glossary:TER242), [Purchase Contract Management](glossary:TER243) et [Operational Procurement](glossary:TER244) décrivent les responsabilités du domaine, avec des capacités proposées U1079.
 
@@ -18411,6 +18419,7 @@ terms:
   - U1133
   - U1134
   - U1135
+  - U1160
   review:
     state: proposed
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
@@ -20184,11 +20193,10 @@ terms:
   short_description: Relation entre sociétés juridiquement distinctes d’un même groupe, avec ou sans client externe.
   definition: Relation entre sociétés juridiquement distinctes d’un même groupe. Elle qualifie les parties à un échange, indépendamment
     du trajet physique des biens et de la présence d’un client externe.
-  context: 'Les scénarios décrivent une vente avec livraison directe, une fourniture au [stock](glossary:TER005) d’une autre
-    société ou un retour réciproque. Chaque [commande](glossary:TER012) conserve son identité, sa société, sa contrepartie
-    et ses engagements. Une marque ou un site différent ne suffit pas à qualifier une autre société. Exemple fictif : B fournit
-    100 vestes au [stock](glossary:TER005) de A ; aucun client final n’est nécessaire. Autre cas : A vend au client et B livre
-    directement, avec vente B–A et achat A–B liés. Les mêmes 100 vestes ne sont pas trois besoins indépendants.'
+  context: |-
+    Les scénarios décrivent une vente avec livraison directe, une fourniture au [stock](glossary:TER005) d’une autre société ou un retour réciproque. Chaque [commande](glossary:TER012) conserve son identité, sa société, sa contrepartie et ses engagements. Une marque ou un site différent ne suffit pas à qualifier une autre société. Exemple fictif : B fournit 100 vestes au [stock](glossary:TER005) de A ; aucun client final n’est nécessaire. Autre cas : A vend au client et B livre directement, avec vente B–A et achat A–B liés. Les mêmes 100 vestes ne sont pas trois besoins indépendants.
+
+    [Pourquoi ce cas reste un contexte configurable](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi les documents ne définissent pas seuls les responsabilités](principle:PRINCIPLE-SUPPLY-DOCUMENTS).
   notes: '[Intercompany](glossary:TER122) Sales reste un comportement de la capacité [Sales Order](glossary:TER069). Le cas
     d’usage mobilise aussi les achats, le [stock](glossary:TER005), la [facturation](glossary:TER153), le pilotage des [dossiers](glossary:TER064)
     et [Finance](glossary:TER117) selon le montage retenu. Il ne devient ni une capacité globale, ni un comportement obligatoire
@@ -20202,6 +20210,7 @@ terms:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u831
@@ -20336,9 +20345,9 @@ terms:
 
     Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-    [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+    [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée. [Pourquoi distinguer autorité d’entreprise et gestion locale](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
 
-    Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
+    Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les contributions de planification de [Master Plan](model:domain-plan). Les contributions de planification sont reçues et qualifiées dans [Master Plan](model:domain-plan). [Supply Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility), dans [Master Plan Management](model:ba-master-plan-management), les interprètent pour leurs consommateurs.
 
     Les [contextes de planification](glossary:TER389) reçus avec les produits peuvent décrire [saisons](glossary:TER386), campagnes, [capsules](glossary:TER388), rythmes de renouvellement et fenêtres connues. [Product Reference](model:D08) conserve les associations utiles, leur provenance et leur validité ; le cadrage amont reste dans [Product Portfolio & Collection Management](model:domain-product-portfolio-collection). Ces données ne créent ni capacité saisonnière ni hiérarchie obligatoire. Les calendriers de référence restent distincts des plans révisables et des règles sous autorité de [Supply Policy Management](model:subdomain-policies).
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
@@ -20365,6 +20374,7 @@ terms:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
@@ -34145,6 +34155,8 @@ terms:
     Conserve des identités et caractéristiques utilisables par les consommateurs ; les sources responsables sont à établir par objet, notamment pour les produits achetés déjà conçus.
 
     Recevoir les caractéristiques préparées et maintenir les versions selon les changements autorisés. Les sources responsables par objet restent à établir ; la coopération avec la mise à disposition ne crée pas un maître unique de tous les produits de l’entreprise.
+
+    Les caractéristiques et combinaisons admissibles identifient les [variantes](glossary:TER058). La grille peut aider à les représenter ou à les commander ; elle ne définit pas leur identité métier. [Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS). [Pourquoi préciser la source responsable par objet](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -34152,6 +34164,7 @@ terms:
   - U975
   - CMP312
   - U1115
+  - U1160
   review:
     state: proposed
     note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
@@ -43959,6 +43972,8 @@ terms:
     Pour un dossier comportant une décision, relier les événements qualifiés qui distinguent le fait déclencheur, la disponibilité d'un signal exploitable, la décision autorisée et l'effet réalisé au jalon retenu. Conserver aussi les propositions, refus, décisions motivées de ne pas agir et révisions lorsqu'ils sont produits. Le producteur responsable qualifie chaque événement ; le registre ne déduit pas une décision de la réception d'un message ni une réalisation de son autorisation. Une borne absente reste inconnue. La réception d'une information et le moment où elle devient exploitable peuvent différer.
 
     Dans un [dossier](glossary:TER064) [intercompany](glossary:TER122), relier chaque événement à la société qui porte l’[engagement](glossary:TER013), à sa contrepartie et aux identités d’origine des commandes, lignes et factures connues. Conserver propositions de changement, réponses partielles, refus et résultats financiers reçus avec leurs versions et corrections. Une notification partagée entre [dossiers](glossary:TER064) ne devient pas plusieurs réalisations. Les liens de [dossier](glossary:TER064) expliquent la chaîne ; les [faits de propriété](glossary:TER132) et les [écritures comptables](glossary:TER121) restent chez leurs producteurs, sans registre [intercompany](glossary:TER122) concurrent.
+
+    [Pourquoi distinguer tenue des faits et analyse de leurs traces](principle:PRINCIPLE-TRACEABLE-FACTS).
   notes: Capacité [Process Ledger](model:process-ledger), de type [Ledger](method:MOD020), rattachée à [Process Supervision](glossary:TER165).
   source_refs:
   - U1110
@@ -43970,6 +43985,7 @@ terms:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1110
@@ -44906,10 +44922,10 @@ terms:
   name: Season
   definition: Saison commerciale identifiée, utilisée pour situer des produits, des objectifs et des fenêtres d’activité.
   short_description: Repère commercial configurable ; il ne fixe pas à lui seul les dates ou règles d’une commande.
-  context: Une saison est un [contexte de planification](glossary:TER389) possible. Son nombre, ses dates et ses associations
-    varient selon les produits, marchés ou canaux. Distinguer la [saisonnalité](glossary:TER387), la collection et la [capsule](glossary:TER388).
-    Un produit peut relever de plusieurs saisons ou être reconduit sans saison obligatoire. Les fenêtres de conception, d’achat,
-    de livraison et de vente restent distinctes ; aucune hiérarchie année–saison–collection n’est imposée.
+  context: |-
+    Une saison est un [contexte de planification](glossary:TER389) possible. Son nombre, ses dates et ses associations varient selon les produits, marchés ou canaux. Distinguer la [saisonnalité](glossary:TER387), la collection et la [capsule](glossary:TER388). Un produit peut relever de plusieurs saisons ou être reconduit sans saison obligatoire. Les fenêtres de conception, d’achat, de livraison et de vente restent distinctes ; aucune hiérarchie année–saison–collection n’est imposée.
+
+    [Pourquoi aucun calendrier ni découpage annuel n’est imposé](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
   notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
     réalisation installée déduite.
   source_refs:
@@ -44917,6 +44933,7 @@ terms:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1155
@@ -44974,13 +44991,10 @@ terms:
   definition: Ensemble identifié de repères qui précise les produits, périodes, périmètres et hypothèses dans lesquels un
     plan ou une décision s’applique.
   short_description: Contexte commun permettant d’interpréter un plan, ses règles et les commandes concernées.
-  context: Un contexte peut faire référence à une [saison](glossary:TER386), une campagne, une [capsule](glossary:TER388)
-    ou un régime de produits reconduits. Les calendriers et classifications de référence décrivent les repères ; les plans
-    révisables portent objectifs, hypothèses, quantités et choix ; les politiques définissent les règles et autorités applicables.
-    Les liens entre ces éléments sont explicites et versionnés selon leur nature. Une commande peut contribuer à plusieurs
-    plans, éventuellement par ligne ou quantité, sans double compte. Le changement d’un plan ou d’un contexte ne révise pas
-    seul ses engagements. Ce terme décrit un contexte métier, pas un nouveau niveau de la cartographie ni un métamodèle universel
-    imposé.
+  context: |-
+    Un contexte peut faire référence à une [saison](glossary:TER386), une campagne, une [capsule](glossary:TER388) ou un régime de produits reconduits. Les calendriers et classifications de référence décrivent les repères ; les plans révisables portent objectifs, hypothèses, quantités et choix ; les politiques définissent les règles et autorités applicables. Les liens entre ces éléments sont explicites et versionnés selon leur nature. Une commande peut contribuer à plusieurs plans, éventuellement par ligne ou quantité, sans double compte. Le changement d’un plan ou d’un contexte ne révise pas seul ses engagements. Ce terme décrit un contexte métier, pas un nouveau niveau de la cartographie ni un métamodèle universel imposé.
+
+    [Pourquoi distinguer contexte, plan et règle](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi changer de plan ne modifie pas seul un engagement](principle:PRINCIPLE-DECISION-EFFECTS).
   notes: Préconisations U1153–U1154 appliquées U1155. Formulation proposée ; aucune capacité, arborescence obligatoire ni
     réalisation installée déduite.
   source_refs:
@@ -44988,6 +45002,7 @@ terms:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1155

@@ -26136,3 +26136,21 @@ Verbatim : « Go pour appliquer l’audit : ajouter l’entrée « Principes dir
 En termes d'UI ATLAS, le système de recherche a de moins en moins de place. »
 
 Portée : appliquer les 14 propositions U1156 corrigées et complétées par U1157, leurs justifications, limites, références et liens ; préserver les identifiants et publications historiques. Ajouter une entrée distincte dans Atlas, la recherche typée et les liens contextuels. Améliorer l’espace disponible pour la recherche. L’accord porte sur les propositions discutées ; les compléments éditoriaux ne sont pas automatiquement adoptés. Aucune release, commit ou push demandé.
+
+## U1159
+
+Date : 2026-10-23. Source : Laurent, demande d’audit des liens entre descriptions et principes directeurs.
+
+Verbatim : « Je voudrais un audit du modèle et de ses descriptions pour voir elles ne seraient pas à enrichir avec des liens sur les principes. En profiter pour checker la cohérence. »
+
+Portée : auditer les descriptions métier, leur cohérence avec les principes U1158 et le glossaire, ainsi que les accès Atlas déjà présents. Proposer des liens utiles et les corrections nécessaires avec leurs priorités, sans modifier les fiches canoniques, les principes, les contrats ou l’interface à ce stade. Aucune release, commit ou push demandé.
+
+Audit : [liens des descriptions aux principes et cohérence du modèle](../modeles/backlog/principle-description-coherence-audit-U1159.yaml).
+
+## U1160
+
+Date : 2026-10-23. Source : Laurent, accord sur l’application de l’audit U1159.
+
+Verbatim : « Go pour appliquer l’audit dans l’ordre proposé : corrections de cohérence, liens ciblés dans les descriptions, puis affichage des principes hérités. Garde les tooltips simples. »
+
+Portée : appliquer les corrections et les liens ciblés de l’audit U1159, puis distinguer les principes directement pertinents des principes hérités dans Atlas. Préserver les définitions courtes, les tooltips simples, les portées normatives des principes et les publications historiques. L’accord porte sur la proposition auditée ; les compléments éditoriaux restent à qualifier. Aucune release, commit ou push demandé.

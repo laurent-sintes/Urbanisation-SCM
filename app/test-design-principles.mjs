@@ -1,6 +1,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { annotatePrincipleText, designPrinciples, principlesForNode } from './src/designPrinciples.ts';
+import {
+  annotatePrincipleText,
+  designPrinciples,
+  principleGroupsForNode,
+  principlesForNode,
+  principlesForRelation,
+  readingsForPrinciple,
+} from './src/designPrinciples.ts';
+import { inlineParts, plainInlineText } from './src/inlineLinks.ts';
 import { adaptPublication } from './src/model.ts';
 import { drawerNavigationKey, readRoute, routeHash } from './src/navigation.ts';
 import { searchPublication } from './src/search.ts';
@@ -86,4 +94,69 @@ test('typing and clearing a query keeps the drawer while choosing content closes
     drawerNavigationKey({ ...route, view: 'design-principles', principle: 'P', node: '' }),
   );
   assert.notEqual(drawerNavigationKey(route), drawerNavigationKey({ ...route, version: 'older' }));
+});
+
+test('typed principle links preserve escaped labels and plain text without inventing links', () => {
+  const text = String.raw`A [Pourquoi \[ce choix\]](principle:P) et \[littéral](principle:absent).`;
+  const parts = inlineParts(text);
+  assert.deepEqual(
+    parts.filter((p) => p.kind),
+    [{ text: 'Pourquoi [ce choix]', kind: 'principle', target: 'P', anchor: undefined }],
+  );
+  assert.equal(plainInlineText(text), 'A Pourquoi [ce choix] et [littéral](principle:absent).');
+  assert.equal(annotatePrincipleText(fixture(), '[Saison](principle:P)'), '[Saison](principle:P)');
+});
+
+test('local citations, explicit targets and collapsed inheritance are distinct and deduplicated', () => {
+  const raw = structuredClone(fixture().raw);
+  raw.nodes[1].fields.scope = '[Pourquoi](principle:P). [Encore](principle:P). [Absente](principle:missing).';
+  raw.nodes[1].fields.pedagogical_description = {
+    explanation: '[Raison](principle:P)',
+    source_refs: ['[Privé](principle:OLD)'],
+  };
+  raw.glossary.terms[0].context = '[Comprendre le choix](principle:P).';
+  raw.relations.push({
+    id: 'SHARE',
+    type: 'shares-data',
+    source_id: 'D',
+    target_id: 'C',
+    fields: {
+      label: 'Shared facts',
+      data_exchange: {
+        contents: [{ name: 'Facts', description: 'Shared facts.', glossary_refs: ['T'] }],
+        purpose: '[Pourquoi](principle:P)',
+      },
+    },
+  });
+  raw.principles.push({
+    id: 'OTHER',
+    featured: true,
+    statement: 'Another choice',
+    scope: { kind: 'targeted', targets: [{ collection: 'nodes', id: 'D' }] },
+  });
+  const original = structuredClone(raw),
+    model = adaptPublication(raw);
+  assert.deepEqual(
+    principleGroupsForNode(model, 'C').direct.map((p) => p.id),
+    ['P'],
+  );
+  assert.deepEqual(
+    principleGroupsForNode(model, 'C').inherited.map((p) => p.id),
+    ['OTHER'],
+  );
+  assert.deepEqual(
+    principlesForRelation(model, 'SHARE').map((p) => p.id),
+    ['P'],
+  );
+  assert.deepEqual(readingsForPrinciple(model, 'P'), [
+    { collection: 'nodes', id: 'C', fields: ['scope', 'pedagogical_description'] },
+    { collection: 'terms', id: 'T', fields: ['context'] },
+    { collection: 'relations', id: 'SHARE', fields: ['data_exchange'] },
+  ]);
+  assert.deepEqual(readingsForPrinciple(model, 'OLD'), []);
+  assert.deepEqual(readingsForPrinciple(model, 'missing'), []);
+  assert.deepEqual(model.raw, original);
+  const old = adaptPublication({ ...raw, principles: raw.principles.filter((p) => p.id !== 'P') });
+  assert.deepEqual(readingsForPrinciple(old, 'P'), []);
+  assert.deepEqual(principleGroupsForNode(old, 'C').direct, []);
 });

@@ -1,0 +1,1544 @@
+schema_version: 1.0.0
+id: principle-description-coherence-audit-U1159
+status: proposed
+audit_state: completed
+date: '2026-10-23'
+source_refs:
+- U1159
+scope: Audit du backlog courant confronté à la publication v093 ; recommandations seulement. Les 352 objets sont inventoriés
+  ; la lecture publique porte sur 348 fiches, les quatre illustrations restant à part.
+basis:
+  version: 2026-10-23.4
+  descriptor: urbanisation-v093-2026-10-23.4.yaml
+  sha256:
+    modeles/backlog/model.yaml: 92f506764c8909c61d7db1f5f91964a3ec9aaf1a6fe29a1f6b711cb3de7cbd7d
+    modeles/backlog/glossary.yaml: a51d29512a25ed2bb2641b27385d8a5f2076026e34610b5f31c06ce4abb2136d
+    app/src/designPrinciples.ts: 5ac90513d5103c7d4c4cbc8a4d3b2b6f71d926f467db58252d6427b36a77a7d2
+    app/src/inlineLinks.ts: 0d8a2a3b3d28c44ac3c9805404ed5f7bd8cc5c09eb718e3a78303cb7ee198b78
+coverage:
+  canonical_nodes: 352
+  visible_nodes: 348
+  kinds:
+    universe: 1
+    business_system: 4
+    domain: 12
+    area: 50
+    reference: 20
+    capability: 116
+    behavior: 74
+    business_area: 71
+  terms: 410
+  principles: 36
+  featured_principles: 14
+  relations: 889
+  published_relations: 881
+  text_leaves_scanned: 3238
+  glossary_leaves_scanned: 1182
+  inline_principle_links: 0
+  reading_coverage:
+    '2': 25
+    '4': 37
+    '5': 61
+    '8': 64
+    '6': 1
+    '7': 118
+    '9': 3
+    '11': 12
+    '10': 22
+    '3': 5
+  direct_coverage:
+    '2': 11
+    '0': 317
+    '3': 1
+    '4': 1
+    '1': 17
+    '5': 1
+method:
+- Inventaire transversal des champs descriptifs, portée des principes et parcours de lecture ; comparaison des concepts et
+  responsabilité au type réel des objets, sans interpréter leurs préfixes historiques.
+- Lecture approfondie ciblée des frontières, commandes, plans/règles, variantes, référentiels, registres et processus ; les
+  recherches lexicales sont des indices, pas des anomalies.
+- Réutilisation des lectures et contrôles valables de la session et des sources consultées pour U1154/U1156/U1157 ; aucun
+  nouvel audit des comportements ni réévaluation de réalisation installée.
+- Propositions sans création de capacité, déplacement ou nouvelle relation métier. Le futur contrat de lien reste une proposition
+  technique.
+conclusion: Les choix structurants restent cohérents. L’enrichissement prioritaire porte sur les raisons de conception à l’endroit
+  où elles expliquent la fiche ; quelques alignements éditoriaux sont nécessaires. Aucun nouveau découpage métier n’est justifié
+  par cet audit.
+findings:
+- id: F01
+  priority: P1
+  nature: missing_reading_contract
+  title: Aucun lien de principe dans les descriptions et contrat inline absent
+  evidence:
+  - app/src/inlineLinks.ts:inlineParts
+  - scripts/glossary.py:LINK
+  - app/src/components/ModelLinks.tsx:Kind
+  - 0 lien principle:, design-principles ou PRINCIPLE-* dans les champs descriptifs inventoriés
+  impact: 'Le lecteur voit une liste de principes mais ne sait pas quel passage de la fiche ils justifient. Insérer aujourd’hui
+    un lien principle: ne le rendrait pas navigable ni contrôlé.'
+  recommendation: 'Ajouter un lien typé principle: vers un id canonique, puis 1 à 3 renvois motivés dans les descriptions
+    longues. Valider cibles et publication ; conserver retour et clavier.'
+- id: F02
+  priority: P1
+  nature: insufficient_pedagogy
+  title: Le contexte complet des commandes reste implicite dans la pédagogie du domaine SCM
+  evidence:
+  - supply-chain-orchestration.fields.pedagogical_description.explanation
+  - PRINCIPLE-ORDER-DECISION-CONTEXT.statement
+  - 'domain-sourcing-procurement.fields.scope: « conserve le document » ; TER109.context'
+  impact: Le domaine est surtout expliqué par ressources, flux et optimisation. Le lecteur peut manquer le choix central U1157
+    ou réduire Purchase Order à un document.
+  recommendation: Ajouter une explication courte du cycle complet dans la pédagogie SCM et harmoniser le passage documentaire
+    de Procurement avec sa propre précision ultérieure. Relier DP14 et DP06. Conserver les définitions courtes.
+- id: F03
+  priority: P1
+  nature: reading_coverage_gap
+  title: Le principe des variantes est absent du périmètre de définition des variantes
+  evidence:
+  - 'subdomain-product-definition-variants: deux principes généraux seulement'
+  - 'domain-product-definition-lifecycle: deux principes généraux seulement'
+  - 'PRINCIPLE-PRODUCT-VARIANTS.scope.targets: D08, D04.i, D04.j, D01'
+  impact: Le principe est accessible depuis les consommateurs Supply, sans le lien qui explique l’identité produit au niveau
+    où elle est définie.
+  recommendation: Relier les descriptions longues des deux périmètres produit et TER058 au principe ; rappeler que taille/couleur
+    sont des exemples, sans imposer une grille ni un maître unique.
+- id: F04
+  priority: P1
+  nature: editorial_alignment_gap
+  title: Operational References conserve un ancien responsable nommé Plan Visibility
+  evidence:
+  - 'business-references.fields.mastership: « les prévisions de demande et de mouvements relèvent de Plan Visibility »'
+  - 'business-references.fields.scope et TER123.context: Master Plan Management'
+  - plans-visibility et demand-plan-visibility ont pour parent ba-master-plan-management ; aucun nœud courant nommé Plan Visibility
+  impact: La même fiche désigne différemment le responsable des plans ; le lien entre autorité, réception et interprétation
+    est moins clair.
+  recommendation: Aligner mastership sur les responsabilités actuelles, distinguer contributions reçues et interprétation
+    des plans, contrôler le glossaire déjà aligné, puis relier le principe d’autorité.
+- id: F05
+  priority: P1
+  nature: reading_vs_normative_scope
+  title: Les cibles normatives et les liens de lecture remplissent deux rôles
+  evidence:
+  - scripts/architecture_principles.py:applicable_principles
+  - scripts/decision_carry.py:classify_context
+  - app/src/designPrinciples.ts:principlesForNode
+  - principles.scope.targets
+  impact: Élargir scope.targets pour afficher un lien modifie aussi le périmètre normatif de réexamen. Ajouter un renvoi pédagogique
+    ne doit pas devenir un nouvel arbitrage de portée.
+  recommendation: Porter les renvois dans les textes et en dériver un index de lecture. Conserver scope comme déclaration
+    d’applicabilité. Les liens ne donnent pas d’accord sur la fiche et ne créent aucun parent.
+- id: F06
+  priority: P2
+  nature: reader_prioritization
+  title: L’héritage donne une couverture complète mais inégalement ciblée
+  evidence:
+  - 348 fiches ont 2 à 11 principes ; 317 n’ont aucune cible directe
+  - 12 fiches affichent 11 principes ; D04.i et D04.j en font partie
+  - Business Operations transmet les principes des trois domaines et du contexte complet à 282 fiches
+  impact: Le même espace mélange raisons propres à une fiche, choix du domaine et repères généraux. La couverture héritée
+    ne garantit pas la pertinence locale.
+  recommendation: Afficher d’abord les principes cités dans le texte et directement liés ; ranger les principes de contexte
+    et généraux dans un bloc repliable. Dédupliquer par id et conserver la liste complète accessible.
+- id: F07
+  priority: P2
+  nature: legacy_convention_drift
+  title: Deux énoncés historiques consultables demandent un alignement
+  evidence:
+  - PRINCIPLE-DISPLAY-CODES.statement liste UNI/SYS/DOM/SUB/REF/CAP/BHV sans BA
+  - 'modeling-glossary.yaml:identification_rules.prefixes contient business_area: BA'
+  - PRINCIPLE-BUSINESS-SYSTEM.statement conserve une phrase datée U975 avec Planning & Optimization
+  impact: La liste des préfixes est incomplète ; l’énoncé Business System mélange la règle actuelle et un ancien libellé sans
+    explication de lecture.
+  recommendation: Compléter BA et reformuler la convention courante selon Master Plan et les profondeurs déclarées. Conserver
+    les identités et les formulations dans les publications historiques.
+- id: F08
+  priority: P2
+  nature: ambiguous_example
+  title: Une leçon sur les références peut être lue comme une copie passive
+  evidence:
+  - supply-chain-orchestration.fields.examples[title=Recevoir une nouvelle référence produit].lesson
+  - PRINCIPLE-REFERENCE-PROJECTIONS.implications et tradeoffs
+  impact: « La création et les corrections de la référence restent dans la source de vérité externe » ne distingue pas les
+    attributs maîtres de la gestion locale active décrite ailleurs.
+  recommendation: Préciser qu’il s’agit des attributs maîtres externes dans cet exemple, puis rappeler provenance, validité
+    et cohérence de la référence locale. Qualifier cela comme clarification, pas comme transfert de maîtrise.
+coherence_confirmed:
+- topic: Business Operations
+  evidence:
+  - system-business-operations
+  - domain-sales
+  - domain-sourcing-procurement
+  - supply-chain-orchestration
+  conclusion: Trois domaines du même système ; prix, canaux, sources et accords conservent leurs autorités. Les commandes
+    gardent leur cycle SCM ; le principe explicite ce contexte.
+- topic: Logistics
+  evidence:
+  - domain-logistics-execution
+  - PRINCIPLE-FLOW-LOGISTICS
+  conclusion: Le type business_system et les trois domaines Warehousing, Transportation et Customs Management concordent.
+    Le prestataire ne détermine pas l’identité métier.
+- topic: Contextes
+  evidence:
+  - domain-product-portfolio-collection
+  - subdomain-collection-planning
+  - domain-plan
+  - subdomain-policies
+  - TER386
+  - TER387
+  - TER388
+  - TER389
+  conclusion: Saisons/capsules ne créent pas de capacité ; les produits reconduits et plans multiples restent possibles. Saison
+    commerciale et saisonnalité sont distinctes.
+- topic: Intercompany
+  evidence:
+  - BHV069
+  - TER122
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  conclusion: Intercompany Sales est un comportement process_variant explicite de Sales Order ; il n’est pas une capacité
+    globale. Cela est compatible avec un contexte qui influence des comportements sans les imposer partout.
+- topic: Variantes
+  evidence:
+  - subdomain-product-definition-variants
+  - D08
+  - TER058
+  conclusion: Les définitions ne rendent pas la grille obligatoire. Taille et couleur sont des exemples ; les caractéristiques
+    et sources responsables peuvent varier par objet.
+- topic: Faits et décisions
+  evidence:
+  - process-ledger
+  - process-mining
+  - D01.g
+  - inventory-ownership-ledger
+  - D02.c
+  - D02.e
+  - D03.o
+  conclusion: Les registres de stock et de processus sont distingués ; analyse des traces, calcul, application, engagement
+    et réservation conservent des effets différents.
+false_positives_rejected:
+- term: Operational References
+  reason: Nom canonique courant du modèle et de TER123 ; ne pas le remplacer par Authoritative Data sur la foi d’un ancien
+    texte documentaire.
+- term: grille wholesale
+  reason: L’exemple de Sales Pricing Rule Management désigne des tarifs, pas une matrice d’identité Product Variant.
+- term: fabrication dans CTP
+  reason: La faisabilité d’un apport chez un fournisseur n’établit pas une fabrication réalisée par Beaumanoir.
+- term: 317 fiches sans cible directe
+  reason: Elles ont des principes hérités ; ce nombre ne prouve pas un manque de contenu ou la nécessité d’ajouter un lien
+    à chacune.
+- term: Master Data / Order Backlog / références marché
+  reason: Ces mots peuvent désigner des responsabilités ou termes natifs valides. Seuls les écarts démontrés au contexte courant
+    sont retenus.
+recommended_contract:
+  authority: Le référentiel des principes reste model.yaml.principles. Les descriptions référencent ces identités sans reproduire
+    leurs articles.
+  inline_example: '[Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS)'
+  placement: Explication pédagogique, périmètre, frontières, exemple ou contexte de glossaire. Préserver les définitions courtes
+    et tooltips simples.
+  volume: Un à trois liens motivés par fiche concernée, selon le contenu ; aucune obligation de quota ni reprise des 14 principes
+    partout.
+  inverse_index: Calculer les liens de lecture inverses depuis les textes ; les combiner aux cibles explicites sans modifier
+    la portée normative pour des besoins d’affichage.
+  qualification: Un renvoi explique un choix ; il ne valide ni la description voisine, ni une réalisation installée. Les valeurs
+    approuvées et leurs empreintes conservent leur contrat.
+  publication: Résolution dans le snapshot sélectionné ; cible absente signalée, jamais complétée depuis le backlog. Liens
+    directs et retour au texte d’origine conservent la version.
+  technical_surfaces:
+  - app/src/inlineLinks.ts
+  - app/src/components/ModelLinks.tsx
+  - app/src/designPrinciples.ts
+  - scripts/glossary.py
+  - scripts/decision_carry.py
+  - scripts/record_decision.py
+  review_note: Définir explicitement les champs et dépendances de lecture. Ne pas ignorer un changement de sens ou un champ
+    inconnu pour éviter un réexamen ; ne pas transformer un renvoi en nouvelle règle globale.
+  relation_annotation: 'Pour les neuf partages sélectionnés, annoter fields.data_exchange.purpose : les labels et aides courtes
+    restent simples. Le renvoi ne constitue pas une nouvelle condition d’exécution ni une nouvelle relation métier.'
+  normative_scope_reexamination: Le rattachement normatif de Product Variants au périmètre de définition mérite un arbitrage
+    explicite si cette portée est élargie. Un lien de lecture depuis ce périmètre peut expliquer le choix existant sans modifier
+    scope.targets ; ces deux opérations restent distinctes.
+recommended_patches:
+- collection: nodes
+  id: supply-chain-orchestration
+  name: Supply Chain Management
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  reason: La pédagogie explique les flux et arbitrages, mais laisse implicite le cycle complet des commandes d’achat et de
+    vente au fondement de DP14. Le périmètre existant est préservé.
+  proposed_sentence: Le domaine porte le cycle de vie des commandes d’achat et de vente de son périmètre. Les décisions disposent
+    ainsi des demandes, engagements, changements et réalisations nécessaires pour apprécier leurs conséquences. [Pourquoi
+    conserver ce contexte complet](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: nodes
+  id: system-business-operations
+  name: Business Operations
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  reason: Expliquer pourquoi les trois domaines coopèrent dans le même système et pourquoi les frontières ne prescrivent pas
+    trois applications.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+- collection: nodes
+  id: domain-sales
+  name: Commerce
+  priority: P1
+  fields:
+  - scope
+  - pedagogical_description.explanation
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  reason: Le scope distingue déjà les responsabilités Commerce et Sales Order. Relier cette frontière au choix d’intégration
+    et de contexte complet, sans transférer prix ou canaux.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+- collection: nodes
+  id: domain-sourcing-procurement
+  name: Sourcing and Procurement
+  priority: P1
+  fields:
+  - scope
+  - pedagogical_description.explanation
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  reason: Harmoniser le passage « conserve le document » avec les précisions ultérieures sur identité, engagements et cycle
+    unique. La règle est déjà présente plus bas et dans TER109.
+  proposed_sentence: '[Purchase Order](model:D04.j) porte dans Supply Chain Management la commande d’achat, ses engagements
+    et leurs évolutions autorisées. Les parcours Procurement coordonnent les validations et échanges fournisseur. [Pourquoi
+    le cycle complet reste dans SCM](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).'
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+- collection: nodes
+  id: domain-logistics-execution
+  name: Logistics
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-FLOW-LOGISTICS
+  reason: 'Ajouter la raison du niveau Business System : cohérence des prestations et pilotage local, quel que soit le prestataire.
+    L’externalisation seule n’en est pas le critère.'
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-FLOW-LOGISTICS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  currently_direct_principles:
+  - PRINCIPLE-FLOW-LOGISTICS
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+- collection: nodes
+  id: domain-product-definition-lifecycle
+  name: Product Definition & Lifecycle Management
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: Rendre accessible le principe des variantes dans le domaine qui maintient les définitions, en conservant la réserve
+    sur les maîtres par objet.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  currently_direct_principles: []
+- collection: nodes
+  id: subdomain-product-definition-variants
+  name: Product Definition & Variants
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: La fiche ne montre que les deux principes généraux hérités. Le principe Variant est relié aujourd’hui à ses consommateurs
+    Supply, sans lien au périmètre de définition.
+  proposed_sentence: Les caractéristiques et combinaisons admissibles identifient les variantes. La grille peut aider à les
+    représenter ou à les commander ; elle ne définit pas leur identité métier. [Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS).
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  currently_direct_principles: []
+- collection: nodes
+  id: D08
+  name: Product Reference
+  priority: P1
+  fields:
+  - scope
+  - pedagogical_description.explanation
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: Relier les paragraphes sur variantes, saisons/capsules et vérité locale aux principes correspondants. La fiche parle
+    déjà de saisons mais n’hérite pas de Configurable Business Contexts.
+  currently_visible_principles:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+  currently_direct_principles:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-PRODUCT-VARIANTS
+- collection: nodes
+  id: business-references
+  name: Operational References
+  priority: P1
+  fields:
+  - mastership
+  - scope
+  - pedagogical_description.explanation
+  principle_refs:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: Remplacer l’ancien repère Plan Visibility dans mastership par les responsabilités actuelles. Scope et TER123 désignent
+    déjà Master Plan Management ; les deux capacités Visibility y appartiennent.
+  proposed_sentence: Les contributions de planification sont reçues et qualifiées dans [Master Plan](model:domain-plan). [Supply
+    Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility), dans [Master Plan
+    Management](model:ba-master-plan-management), les interprètent pour leurs consommateurs. [Pourquoi distinguer les autorités
+    et les usages](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
+  currently_visible_principles:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+- collection: nodes
+  id: domain-plan
+  name: Master Plan
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Relier les contextes et versions à leur justification et conserver la distinction entre plan révisable et effets
+    autorisés sur les commandes.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: subdomain-policies
+  name: Supply Policy Management
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Expliquer la portée configurable des règles, avec validité et autorité, à l’endroit où les saisons sont évoquées.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  currently_direct_principles:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: D04
+  name: Order Management
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Relier identité, engagements et transitions aux trois choix qui justifient cette frontière ; ne pas recopier les
+    articles des principes.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: D04.i
+  name: Sales Order
+  priority: P1
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Relier cycle client et rattachement souple à plusieurs plans ; garder les demandes et engagements distincts des
+    propositions.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+- collection: nodes
+  id: D04.j
+  name: Purchase Order
+  priority: P1
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Relier cycle fournisseur et provenance des plans ; conserver les autorités d’achat et l’affermissement autorisé.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+- collection: nodes
+  id: subdomain-process-management
+  name: Process Management
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  reason: Le texte dit déjà conserver l’histoire, mais le principe de traçabilité n’est pas affiché au niveau du sous-domaine
+    ; expliciter le lien entre parcours transversaux et registres.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+- collection: nodes
+  id: process-ledger
+  name: Process Ledger
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Renvoyer depuis la reconstitution d’un Case et les événements captés à la justification de la tenue des faits, sans
+    imposer une architecture technique unique.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: process-mining
+  name: Process Mining
+  priority: P1
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Relier l’analyse des traces au principe qui distingue production/captation des faits, registre durable et analyse.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles:
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: D01
+  name: Inventory Management
+  priority: P1
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Relier la distinction propriété/détention/réservation/affectation et les deux registres aux règles de séparation
+    des effets et de traçabilité.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-TRACEABLE-FACTS
+- collection: nodes
+  id: D01.g
+  name: Inventory Ledger
+  priority: P1
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Renvoyer depuis les faits datés, corrections et limites des soldes externes ; ne pas confondre reconstruction métier
+    et journal technique.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles: []
+- collection: nodes
+  id: inventory-ownership-ledger
+  name: Inventory Ownership Ledger
+  priority: P1
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Le registre explique déjà les effets intercompany. Ajouter le lien au contexte configurable et à la conservation
+    des faits, sans assimilation au trajet physique.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles: []
+- collection: nodes
+  id: domain-product-portfolio-collection
+  name: Product Portfolio & Collection Management
+  priority: P2
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Le texte est déjà riche et cohérent ; ajouter seulement le renvoi au choix saison/capsule configurable.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  currently_direct_principles:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: subdomain-collection-planning
+  name: Collection Planning
+  priority: P2
+  fields:
+  - pedagogical_description.explanation
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Le cadrage amont est déjà explicite ; relier les calendriers souples et produits reconduits au principe sans rallonger
+    leur description.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  currently_direct_principles:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+- collection: nodes
+  id: D03.o
+  name: Supply Assignment
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  reason: Justifier pourquoi l’affectation compare des options mais ne réserve pas seule la quantité.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: nodes
+  id: D03.k
+  name: Profitable-to-Promise (PTP)
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  reason: Relier la comparaison économique aux objectifs et contraintes explicites, sans promesse d’optimum universel.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+- collection: nodes
+  id: D02.c
+  name: Reservation
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Relier l’effet opposable de réservation à sa distinction avec calcul, promesse et affectation.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-DECISION-EFFECTS
+  - PRINCIPLE-TRACEABLE-FACTS
+  currently_direct_principles:
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: D02.e
+  name: Plan Application
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Rendre explicite la justification du passage du plan aux effets autorisés sans modifier les engagements par simple
+    révision.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  currently_direct_principles:
+  - PRINCIPLE-DECISION-EFFECTS
+- collection: nodes
+  id: service-order-billing
+  name: Billing
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  reason: Le passage expliquant que la facture est un résultat métier et ne crée pas Document Production est un bon point
+    d’ancrage.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles: []
+- collection: nodes
+  id: cap-purchasing-case-coordination
+  name: Purchasing Case Coordination
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  reason: Expliquer pourquoi le Case d’achat mobilise les responsabilités sans devenir le propriétaire du cycle de commande.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles: []
+- collection: nodes
+  id: workflow-definition-management
+  name: Process Definition Management
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  reason: Relier les parcours configurables et le cas intercompany sans faire des documents ou scénarios une nouvelle hiérarchie.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles: []
+- collection: nodes
+  id: order-workflow-orchestration
+  name: Process Orchestration
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  reason: Relier la conduite du parcours à l’autonomie des capacités mobilisées et aux transitions portées par les commandes.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles: []
+- collection: nodes
+  id: order-workflow-sentry
+  name: Process Sentry
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Relier la captation d’événements externes à leur conservation et analyse ; la sentinelle ne remplace pas le registre.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  - PRINCIPLE-DOMAIN-INTERACTIONS
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  currently_direct_principles: []
+- collection: nodes
+  id: beaumanoir-target-universe
+  name: Enterprise Architecture
+  priority: P2
+  fields:
+  - scope
+  principle_refs:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  reason: Présenter les trois repères de lecture généraux au niveau de la carte d’ensemble ; conserver des définitions courtes
+    et les profondeurs déclarées.
+  currently_visible_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  currently_direct_principles:
+  - PRINCIPLE-CAPABILITY
+  - PRINCIPLE-ATLAS-BUSINESS-SCOPE
+- collection: terms
+  id: TER035
+  name: Supply Chain Management
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  reason: Aligner les explications longues du terme SCM sur le contexte complet des commandes.
+- collection: terms
+  id: TER058
+  name: Product Variant
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  reason: Relier l’identité de variante et ses caractéristiques au choix de ne pas imposer une grille.
+- collection: terms
+  id: TER122
+  name: Intercompany
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  reason: Renvoyer du cas intercompany aux principes, sans créer de capacité globale.
+- collection: terms
+  id: TER123
+  name: Operational References
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: Conserver l’alignement avec Operational References et les responsabilités actuelles des plans.
+- collection: terms
+  id: TER375
+  name: Process Ledger
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Relier la définition du registre aux faits de stock/processus et à l’analyse des traces.
+- collection: terms
+  id: TER386
+  name: Season
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Expliquer le contexte configurable depuis le terme saison, sans nombre annuel imposé.
+- collection: terms
+  id: TER389
+  name: Planning Context
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-DECISION-EFFECTS
+  reason: Relier contexte, plan et règles sans les confondre avec un engagement appliqué.
+- collection: terms
+  id: TER215
+  name: Product Definition & Variants
+  priority: P2
+  fields:
+  - context
+  principle_refs:
+  - PRINCIPLE-PRODUCT-VARIANTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: Conserver la réserve sur le maître produit par objet tout en reliant les variantes.
+- collection: relations
+  id: REL-U673-ORDER-MATCHING
+  name: REL-U673-ORDER-MATCHING
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  reason: Les commandes alimentent la décision avec leurs engagements et évolutions. Annoter la finalité explicative existante
+    ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1155-policies-orders
+  name: REL-U1155-policies-orders
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  reason: Les règles applicables et leurs versions qualifient les commandes sans les modifier seules. Annoter la finalité
+    explicative existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1113-order-events
+  name: REL-U1113-order-events
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Les familles de commandes produisent leurs événements ; le registre conserve leur histoire. Annoter la finalité
+    explicative existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1113-ledger-mining
+  name: REL-U1113-ledger-mining
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Les traces conservées alimentent l’analyse ; elles ne sont pas produites par Process Mining. Annoter la finalité
+    explicative existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1113-sentry-events
+  name: REL-U1113-sentry-events
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-TRACEABLE-FACTS
+  reason: Les faits externes captés ont une origine et une date de connaissance conservées. Annoter la finalité explicative
+    existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1115-wholesale-offer-to-engagement
+  name: REL-U1115-wholesale-offer-to-engagement
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  reason: L’offre commerciale et le cycle de commande coopèrent sans cycle concurrent. Annoter la finalité explicative existante
+    ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1115-requisition-to-purchase-order
+  name: REL-U1115-requisition-to-purchase-order
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  reason: La demande approuvée ne se confond pas avec l’engagement porté par Purchase Order. Annoter la finalité explicative
+    existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U1115-agreement-to-purchase-order
+  name: REL-U1115-agreement-to-purchase-order
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-ORDER-DECISION-CONTEXT
+  - PRINCIPLE-SUPPLY-DOCUMENTS
+  reason: Les conditions de l’accord et l’engagement de la commande gardent leurs responsabilités. Annoter la finalité explicative
+    existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+- collection: relations
+  id: REL-U794-PLAN-INGESTION
+  name: REL-U794-PLAN-INGESTION
+  priority: P2
+  fields:
+  - fields.data_exchange.purpose
+  principle_refs:
+  - PRINCIPLE-CONFIGURABLE-CONTEXTS
+  - PRINCIPLE-REFERENCE-PROJECTIONS
+  reason: La réception des contributions conserve nature, provenance et version des plans. Annoter la finalité explicative
+    existante ; ne pas ajouter le principe comme une nouvelle condition d’exécution.
+patch_counts:
+  nodes: 32
+  terms: 8
+  relations: 9
+principle_coverage:
+- id: PRINCIPLE-REFERENCE-PROJECTIONS
+  title: Une autorité explicite pour chaque information
+  kind: targeted
+  direct_nodes: 3
+  inherited_nodes: 30
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: domain-product-definition-lifecycle
+  - collection: nodes
+    id: subdomain-product-definition-variants
+  - collection: nodes
+    id: D08
+  - collection: nodes
+    id: business-references
+  - collection: terms
+    id: TER123
+  - collection: terms
+    id: TER215
+  - collection: relations
+    id: REL-U794-PLAN-INGESTION
+- id: PRINCIPLE-CAPABILITY
+  title: Des capacités durables
+  kind: global
+  direct_nodes: 1
+  inherited_nodes: 348
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: beaumanoir-target-universe
+- id: PRINCIPLE-SUPPLY-DOCUMENTS
+  title: L’intention et l’engagement avant le document
+  kind: targeted
+  direct_nodes: 3
+  inherited_nodes: 62
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: domain-sourcing-procurement
+  - collection: nodes
+    id: D04
+  - collection: nodes
+    id: service-order-billing
+  - collection: terms
+    id: TER122
+  - collection: relations
+    id: REL-U1115-requisition-to-purchase-order
+  - collection: relations
+    id: REL-U1115-agreement-to-purchase-order
+- id: PRINCIPLE-FLOW-LOGISTICS
+  title: Logistics, système métier autonome
+  kind: targeted
+  direct_nodes: 4
+  inherited_nodes: 36
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: domain-logistics-execution
+- id: PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE
+  title: Des arbitrages explicites sur le parcours complet
+  kind: targeted
+  direct_nodes: 3
+  inherited_nodes: 220
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: supply-chain-orchestration
+  - collection: nodes
+    id: D03.o
+  - collection: nodes
+    id: D03.k
+  - collection: terms
+    id: TER035
+- id: PRINCIPLE-DOMAIN-INTERACTIONS
+  title: Des responsabilités uniques, des parcours transversaux
+  kind: global
+  direct_nodes: 2
+  inherited_nodes: 52
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: subdomain-process-management
+  - collection: nodes
+    id: cap-purchasing-case-coordination
+  - collection: nodes
+    id: workflow-definition-management
+  - collection: nodes
+    id: order-workflow-orchestration
+- id: PRINCIPLE-ATLAS-BUSINESS-SCOPE
+  title: Cible, observation et réalisation prouvée
+  kind: global
+  direct_nodes: 1
+  inherited_nodes: 348
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: beaumanoir-target-universe
+- id: PRINCIPLE-ORCHESTRATION-DETAIL
+  title: Une profondeur proportionnée au besoin
+  kind: global
+  direct_nodes: 4
+  inherited_nodes: 317
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: beaumanoir-target-universe
+- id: PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+  title: Trois domaines complémentaires dans Business Operations
+  kind: targeted
+  direct_nodes: 4
+  inherited_nodes: 282
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: system-business-operations
+  - collection: nodes
+    id: domain-sales
+  - collection: relations
+    id: REL-U1115-wholesale-offer-to-engagement
+- id: PRINCIPLE-ORDER-DECISION-CONTEXT
+  title: Un SCM décisionnel fondé sur le cycle complet des commandes
+  kind: targeted
+  direct_nodes: 7
+  inherited_nodes: 282
+  direct_relations:
+  - REL-U673-ORDER-MATCHING
+  recommended_objects:
+  - collection: nodes
+    id: supply-chain-orchestration
+  - collection: nodes
+    id: domain-sales
+  - collection: nodes
+    id: domain-sourcing-procurement
+  - collection: nodes
+    id: D04
+  - collection: nodes
+    id: D04.i
+  - collection: nodes
+    id: D04.j
+  - collection: nodes
+    id: cap-purchasing-case-coordination
+  - collection: terms
+    id: TER035
+  - collection: relations
+    id: REL-U673-ORDER-MATCHING
+  - collection: relations
+    id: REL-U1115-wholesale-offer-to-engagement
+  - collection: relations
+    id: REL-U1115-requisition-to-purchase-order
+  - collection: relations
+    id: REL-U1115-agreement-to-purchase-order
+- id: PRINCIPLE-CONFIGURABLE-CONTEXTS
+  title: Des contextes configurables
+  kind: targeted
+  direct_nodes: 5
+  inherited_nodes: 95
+  direct_relations:
+  - REL-U1155-policies-orders
+  recommended_objects:
+  - collection: nodes
+    id: D08
+  - collection: nodes
+    id: domain-plan
+  - collection: nodes
+    id: subdomain-policies
+  - collection: nodes
+    id: D04.i
+  - collection: nodes
+    id: D04.j
+  - collection: nodes
+    id: inventory-ownership-ledger
+  - collection: nodes
+    id: domain-product-portfolio-collection
+  - collection: nodes
+    id: subdomain-collection-planning
+  - collection: nodes
+    id: workflow-definition-management
+  - collection: terms
+    id: TER122
+  - collection: terms
+    id: TER386
+  - collection: terms
+    id: TER389
+  - collection: relations
+    id: REL-U1155-policies-orders
+  - collection: relations
+    id: REL-U794-PLAN-INGESTION
+- id: PRINCIPLE-PRODUCT-VARIANTS
+  title: La variante ne dépend pas de la grille
+  kind: targeted
+  direct_nodes: 4
+  inherited_nodes: 32
+  direct_relations: []
+  recommended_objects:
+  - collection: nodes
+    id: domain-product-definition-lifecycle
+  - collection: nodes
+    id: subdomain-product-definition-variants
+  - collection: nodes
+    id: D08
+  - collection: terms
+    id: TER058
+  - collection: terms
+    id: TER215
+- id: PRINCIPLE-DECISION-EFFECTS
+  title: Des décisions et effets métier distincts
+  kind: targeted
+  direct_nodes: 6
+  inherited_nodes: 115
+  direct_relations:
+  - REL-U673-PROMISING-ORDER
+  recommended_objects:
+  - collection: nodes
+    id: domain-plan
+  - collection: nodes
+    id: D04
+  - collection: nodes
+    id: D01
+  - collection: nodes
+    id: D03.o
+  - collection: nodes
+    id: D02.c
+  - collection: nodes
+    id: D02.e
+  - collection: terms
+    id: TER389
+- id: PRINCIPLE-TRACEABLE-FACTS
+  title: Des faits traçables pour reconstruire et analyser
+  kind: targeted
+  direct_nodes: 4
+  inherited_nodes: 22
+  direct_relations:
+  - REL-U1113-order-events
+  recommended_objects:
+  - collection: nodes
+    id: subdomain-process-management
+  - collection: nodes
+    id: process-ledger
+  - collection: nodes
+    id: process-mining
+  - collection: nodes
+    id: D01
+  - collection: nodes
+    id: D01.g
+  - collection: nodes
+    id: inventory-ownership-ledger
+  - collection: nodes
+    id: order-workflow-sentry
+  - collection: terms
+    id: TER375
+  - collection: relations
+    id: REL-U1113-order-events
+  - collection: relations
+    id: REL-U1113-ledger-mining
+  - collection: relations
+    id: REL-U1113-sentry-events
+market_basis:
+  reuse: Appuis effectivement consultés dans les travaux U1154/U1156/U1157 et conservés dans v093 ; les propositions de liens
+    sont justifiées par la cohérence du modèle et la lecture, sans nouvel intitulé ou équivalence fonctionnelle revendiqués.
+  position: Les cycles de commandes intégrés et variantes par caractéristiques éclairent les principes locaux. Microsoft et
+    SAP ne prescrivent ni les niveaux FLOW, ni l’interface de lecture, ni un maître de données Beaumanoir.
+  references_by_principle:
+  - principle_id: PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS
+    references:
+    - publisher: Microsoft
+      title: Welcome to Dynamics 365 Supply Chain Management
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+      consulted_on: '2026-10-23'
+      locator: Core concepts and tasks
+      limits: Frontière produit plus large que les domaines FLOW ; ne justifie pas à elle seule leur séparation.
+    - publisher: SAP
+      title: Supply Chain Management — SAP Learning
+      url: https://learning.sap.com/products/supply-chain-management
+      consulted_on: '2026-10-23'
+      locator: S/4HANA Cloud Public Edition / Private Edition
+      limits: IBP/GTS sont des offres complémentaires ; pas de prescription du niveau Business System pour Logistics.
+  - principle_id: PRINCIPLE-ORDER-DECISION-CONTEXT
+    references:
+    - publisher: Microsoft
+      title: Purchase order overview
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-overview
+      consulted_on: '2026-10-23'
+      locator: Introduction / Purchase order statuses
+      limits: Les responsabilités natives ne sont pas identiques aux domaines FLOW.
+    - publisher: Microsoft
+      title: Configure and manage sales, and customers in Dynamics 365 Supply Chain Management
+      url: https://learn.microsoft.com/en-us/training/paths/configure-manage-sales-customers-dyn365-supply-chain-mgmt/
+      consulted_on: '2026-10-23'
+      locator: Overview / Work with order to cash
+      limits: Présentation consultée, pas exécution des modules ; aucune réalisation Beaumanoir ni transfert des autorités
+        Finance.
+    - publisher: SAP
+      title: Exploring SAP Business Suite
+      url: https://learning.sap.com/courses/exploring-sap-s-4hana-sales-essentials/exploring-sap-business-suite_b72620ef-8bca-4db7-8264-586a9afb5e8f
+      consulted_on: '2026-10-23'
+      locator: SAP Business Suite and SAP S/4HANA
+      limits: Proximité de logique intégrée ; pas identité des frontières locales ni attribution de tout cet ensemble au domaine
+        SCM FLOW.
+    - publisher: SAP
+      title: Execute Supply Chain Planning
+      url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
+      consulted_on: '2026-10-23'
+      locator: Production Planning and Control / Demand Management
+      limits: Appui à l’intégration du contexte de commande ; le cours porte aussi sur la production, sans l’ajouter au périmètre
+        Beaumanoir.
+  - principle_id: PRINCIPLE-PRODUCT-VARIANTS
+    references:
+    - publisher: Microsoft
+      title: Product dimensions
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-dimensions
+      consulted_on: '2026-10-23'
+      locator: Introduction / Product variants / Example
+      limits: Mécanismes Dynamics 365 SCM ; pas mêmes dimensions imposées à tous les produits FLOW.
+    - publisher: SAP
+      title: Maintenance of Variants Data for Generic Article
+      url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/64609d0ecac54654b0837cba34555b82/0995c7536e8e2a4be10000000a174cb4.html
+      consulted_on: '2026-10-23'
+      locator: Use
+      limits: Passage primaire consulté dans l’index ; ouverture directe inaccessible. SAP-FASHION apporte un appui primaire
+        lisible sur les variantes.
+    - publisher: SAP
+      title: Comparing with Legacy SAP Apparel and Footwear Solution
+      url: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/comparing-with-sap-fashion-management-solution-fms
+      consulted_on: '2026-10-23'
+      locator: Transitioning from Specialized Grids / Master Data Evolution / Advanced Seasonality Management
+      limits: Un cas de migration de gamme ; segmentation de stock/demande et identité de variante restent distinctes. Aucune
+        généralisation à tous les SI des années 1980–1990.
+  - principle_id: PRINCIPLE-CONFIGURABLE-CONTEXTS
+    references:
+    - publisher: Microsoft
+      title: Master plans overview
+      url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+      consulted_on: '2026-10-23'
+      locator: Using master plans / Time fences in days
+      limits: Recouvrement partiel, pas ontologie complète des cycles.
+    - publisher: SAP
+      title: Comparing with Legacy SAP Apparel and Footwear Solution
+      url: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/comparing-with-sap-fashion-management-solution-fms
+      consulted_on: '2026-10-23'
+      locator: Transitioning from Specialized Grids / Master Data Evolution / Advanced Seasonality Management
+      limits: Un cas de migration de gamme ; segmentation de stock/demande et identité de variante restent distinctes. Aucune
+        généralisation à tous les SI des années 1980–1990.
+    - publisher: McKinsey
+      title: 'Faster fashion: How to shorten the apparel calendar'
+      url: https://www.mckinsey.com/industries/retail/our-insights/faster-fashion-how-to-shorten-the-apparel-calendar
+      consulted_on: '2026-10-23'
+      locator: The phases of the fashion cycle / Planning, design, and product development
+      limits: Observation sectorielle datée, pas norme ni dénombrement actuel universel des saisons ; les préconisations d’organisation
+        de l’article ne deviennent pas les capacités FLOW.
+    - publisher: Ermenegildo Zegna Group
+      title: Corporate Presentation — February 2026
+      url: https://s29.q4cdn.com/118983938/files/doc_downloads/2026/Corporate-Presentation-February-2026.pdf
+      consulted_on: '2026-10-23'
+      locator: 'Page 15, Merchandising evolution: from seasonal collections to drops'
+      limits: Un cas déclaré dans une présentation investisseurs, pas une norme, pas une preuve sur toutes les marques ou
+        sur Beaumanoir. La présentation de février ne vaut pas état technique audité au 23 octobre.
+  - principle_id: PRINCIPLE-TRACEABLE-FACTS
+    references:
+    - publisher: Microsoft
+      title: View workflow history
+      url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+      consulted_on: '2026-10-16'
+      locator: Instance ID, Version, Work items et Tracking details
+      limits: Le workflow documentaire ne prouve pas un registre complet de tous les événements internes et externes d’un
+        Case ni sa reconstruction à toute date. Aucune équivalence complète, taxonomie de capacités commune ni réalisation
+        Beaumanoir déduite.
+    - publisher: SAP
+      title: Introducing to Data Transformation
+      url: https://learning.sap.com/courses/analyzing-business-processes-with-sap-signavio-solutions/data-requirements-and-setup_c3cc0080-8486-4157-824f-d37acce55c0e
+      consulted_on: '2026-10-16'
+      locator: Introduction to Data Transformation ; What’s your Case?
+      limits: Le journal est reconstruit pour l’analyse à partir des sources ; il ne prouve pas un registre opérationnel maître.
+        Signavio est un appui complémentaire distinct de SAP S/4HANA. Aucune équivalence complète, taxonomie de capacités
+        commune ni réalisation Beaumanoir déduite.
+    - publisher: SAP
+      title: Standard and Custom Actions
+      url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/f369b2eff700401494ba6e7c9a573288/d11d50e484a54d76adbb11d35615b31b.html?version=latest
+      consulted_on: '2026-10-22'
+      locator: Contenu indexé ; journaux, prise en charge, démarrage, échéances et décisions selon l'application.
+      limits: 'Historiques de tâches et décisions documentés ; ces exemples ne couvrent pas le registre transverse complet
+        de FLOW et ne résolvent pas ses lacunes de comparaison déjà déclarées. Aucune réalisation installée Beaumanoir déduite.
+        Limite documentaire conservée : Les pages détaillées Business Event Logging et Action Logs repérées pour SAP S/4HANA
+        restent vides ou requièrent une authentification dans le navigateur de recherche. La nouvelle consultation de Business
+        Event Logging le 2026-10-16 n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas cet appui
+        et aucune équivalence opérationnelle n’est établie. Pages investiguées : https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+        ; https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html.
+        Le présent appui porte seulement sur les tâches et décisions de My Inbox ; il ne démontre pas un registre complet
+        des événements métier.'
+implementation_order:
+- step: 1
+  title: Alignements de cohérence
+  findings:
+  - F02
+  - F04
+  - F07
+  - F08
+  work: Clarifier les responsabilités dans les descriptions et leurs miroirs de glossaire ; conserver identités, frontières
+    et accords historiques.
+- step: 2
+  title: Lien de lecture typé
+  findings:
+  - F01
+  - F05
+  work: 'Parser, valider et afficher principle: ; version, accessibilité, retour et index inverse ; tester la séparation avec
+    le périmètre normatif.'
+- step: 3
+  title: Liens prioritaires dans les fiches
+  work: 'Traiter les P1 des recommandations : SCM/Business Operations/Commerce/Procurement, Logistics, variantes, référentiels,
+    plans/règles, commandes et faits.'
+- step: 4
+  title: Compléments et lecture ciblée
+  findings:
+  - F06
+  work: Compléter les P2, les contextes de glossaire et les neuf relations sélectionnées ; distinguer liens directs et hérités
+    dans Atlas.
+acceptance_checks:
+- Chaque lien vise un principe de la même publication, se retrouve depuis la fiche et depuis le principe, avec retour au texte
+  d’origine.
+- Aucune définition courte surchargée, tooltip long ou action Comprendre redondante ajoutés.
+- Aucun élargissement normatif par simple besoin d’affichage ; aucun nouveau parent ou producteur déduit.
+- Les anciens snapshots restent lisibles ; nouveaux liens inconnus ou absents échouent explicitement au contrôle.
+- Les distinctions contexte/plan/règle/commande, variante/grille, registre/analyse et calcul/engagement/réalisation sont préservées.
+- Modèle et glossaire contrôlés ensemble ; aucune adoption de texte déduite de sa publication ou d’un lien.
+verification:
+  state: passed
+  scope: Audit documentaire et contrôles des identités ; validation courante du backlog réutilisée puis contrôlée sur le lot
+    final sans build applicatif.
+  checks:
+  - '49 recommandations distinctes : 32 fiches, 8 contextes de glossaire et 9 finalités de relations existantes.'
+  - Les 14 principes sont couverts par des recommandations ; toutes les identités et cibles proposées sont résolues.
+  - Empreintes du modèle, du glossaire et des deux fichiers de lecture vérifiées identiques à la base de l’audit.
+  - Plan Visibility absent comme nœud courant ; deux Visibility rattachées à Master Plan Management.
+  - Operational References est confirmé comme nom courant ; occurrences historiques ou termes natifs écartés des anomalies.
+  - Exemples et réserves de maîtrise conservés ; aucune nouvelle définition, portée normative ou relation métier appliquée.

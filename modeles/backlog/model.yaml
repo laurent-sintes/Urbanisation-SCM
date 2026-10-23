@@ -3009,12 +3009,10 @@ nodes:
     definition: '[Enterprise Architecture](glossary:TER203) : représentation du SI Beaumanoir cible, organisée en systèmes
       métier et en responsabilités de plus en plus détaillées.'
     finality: Donner une vue d’ensemble du SI Beaumanoir cible pour situer les responsabilités métier et leurs coopérations.
-    scope: '[Enterprise Architecture](glossary:TER203) regroupe [Design & Development](glossary:TER105), [Business Operations](glossary:TER106),
-      [Logistics](glossary:TER110) et [Enterprise Management & Control](glossary:TER107). Elle décrit la cible à la profondeur
-      documentée dans chaque système ; elle ne constitue ni l’inventaire des applications existantes, ni une preuve de couverture
-      installée, ni une décomposition exhaustive de toute l’entreprise. Les réalisations et les flux techniques restent à
-      établir séparément. Le système [Logistics](glossary:TER110) représente une responsabilité métier autonome de prestation
-      ; son inclusion ne signifie pas que les marques dirigent les moyens des exécutants.'
+    scope: |-
+      [Enterprise Architecture](glossary:TER203) regroupe [Design & Development](glossary:TER105), [Business Operations](glossary:TER106), [Logistics](glossary:TER110) et [Enterprise Management & Control](glossary:TER107). Elle décrit la cible à la profondeur documentée dans chaque système ; elle ne constitue ni l’inventaire des applications existantes, ni une preuve de couverture installée, ni une décomposition exhaustive de toute l’entreprise. Les réalisations et les flux techniques restent à établir séparément. Le système [Logistics](glossary:TER110) représente une responsabilité métier autonome de prestation ; son inclusion ne signifie pas que les marques dirigent les moyens des exécutants.
+
+      [Pourquoi cartographier des savoir-faire durables](principle:PRINCIPLE-CAPABILITY). [Pourquoi distinguer cible et réalisation prouvée](principle:PRINCIPLE-ATLAS-BUSINESS-SCOPE). [Pourquoi adapter la profondeur au besoin d’analyse](principle:PRINCIPLE-ORCHESTRATION-DETAIL).
     examples:
     - title: Lecture transversale de la cible
       situation: 'Exemple fictif : une nouvelle offre est préparée, vendue puis réalisée ; ses résultats sont ensuite mesurés.
@@ -3090,6 +3088,7 @@ nodes:
   - U912
   - U974
   - U975
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u912
@@ -3470,10 +3469,10 @@ nodes:
       approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
         ni promettre une couverture APS exhaustive.
     pedagogical_description:
-      explanation: Ce système fait coopérer les achats, les ventes et la gestion de la [Supply](glossary:TER083) pour faire
-        aboutir les demandes. Il rapproche ce qui est recherché auprès des fournisseurs, ce qui est proposé aux clients et
-        les moyens de tenir les engagements. Ce regroupement métier n’impose ni une application unique ni une organisation
-        commune.
+      explanation: |-
+        Ce système fait coopérer les achats, les ventes et la gestion de la [Supply](glossary:TER083) pour faire aboutir les demandes. Il rapproche ce qui est recherché auprès des fournisseurs, ce qui est proposé aux clients et les moyens de tenir les engagements. Ce regroupement métier n’impose ni une application unique ni une organisation commune.
+
+        [Pourquoi faire coopérer ces trois domaines dans un même système](principle:PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS).
       example_refs:
       - node_id: system-business-operations
         example_id: illustration-system-business-operations-U1131
@@ -3485,6 +3484,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: system-business-operations
         comparison_id: market-system-business-operations-U1131-1
@@ -3503,6 +3503,7 @@ nodes:
   - U996
   - U1080
   - U1091
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u780
@@ -3651,6 +3652,8 @@ nodes:
       [Supply Chain Management](model:supply-chain-orchestration) conserve les commandes à satisfaire, promesses, affectations, stocks de référence et coordination. [Sales Order](model:D04.i) tient l’identité et les transitions autorisées ; les canaux ne créent pas un cycle concurrent. Commerce détermine les prix applicables et les dispositifs commerciaux ; [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule et règle les avantages sous Finance. Les décisions de crédit et la comptabilité restent dans [Finance](glossary:TER117).
 
       Exemple fictif : un revendeur prépare sa sélection puis soumet une commande ; la sélection seule ne réserve pas le stock. Les capacités décrivent la cible métier, sans preuve de transfert depuis les systèmes existants.
+
+      [Pourquoi conserver le cycle complet de la commande dans SCM](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
     modeling_depth: capabilities
     examples:
     - title: Illustration de responsabilité
@@ -3727,10 +3730,10 @@ nodes:
       status: proposed
       id: market-domain-sales-U1131-2
     pedagogical_description:
-      explanation: Ce [domaine](glossary:TER030) prépare ce qui est proposé aux clients et conduit les ventes en magasin,
-        en ligne ou aux revendeurs. Il organise l’offre, les prix, les dispositifs commerciaux et le fonctionnement des canaux.
-        La satisfaction des commandes, les décisions de crédit et les opérations logistiques gardent leurs responsabilités
-        propres.
+      explanation: |-
+        Ce [domaine](glossary:TER030) prépare ce qui est proposé aux clients et conduit les ventes en magasin, en ligne ou aux revendeurs. Il organise l’offre, les prix, les dispositifs commerciaux et le fonctionnement des canaux. La satisfaction des commandes, les décisions de crédit et les opérations logistiques gardent leurs responsabilités propres.
+
+        [Pourquoi distinguer les responsabilités dans un système intégré](principle:PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS).
       example_refs:
       - node_id: domain-sales
         example_id: illustration-domain-sales-U1131
@@ -3742,6 +3745,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: domain-sales
         comparison_id: market-domain-sales-U1131-1
@@ -3769,6 +3773,7 @@ nodes:
   - U1027
   - U1079
   - U1091
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u780
@@ -3791,7 +3796,7 @@ nodes:
 
       [Sourcing and Procurement](glossary:TER109) porte la recherche et la sélection des sources d’achat, les conditions commerciales et les [Cases](glossary:TER064) opérationnels : validations, échanges fournisseur et suites à donner aux confirmations ou écarts.
 
-      Ces parcours mobilisent [Supply Chain Management](model:supply-chain-orchestration). [Purchase Order](model:D04.j) y conserve le document, ses états et ses transitions autorisées ; aucun cycle concurrent n’est créé. La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
+      Ces parcours mobilisent [Supply Chain Management](model:supply-chain-orchestration). [Purchase Order](model:D04.j) porte dans [Supply Chain Management](glossary:TER035) la [commande](glossary:TER012) d’achat, ses [engagements](glossary:TER013) et leurs évolutions autorisées. Les parcours d’achat coordonnent les validations et échanges fournisseur. [Pourquoi le cycle complet reste dans SCM](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
 
       Exemple fictif : le parcours d’achat demande une validation puis traite la confirmation fournisseur ; le Core conserve la commande et orchestre les prestations autorisées. [Supplier Management](glossary:TER241), [Strategic Sourcing](glossary:TER242), [Purchase Contract Management](glossary:TER243) et [Operational Procurement](glossary:TER244) décrivent les responsabilités du domaine, avec des capacités proposées U1079.
 
@@ -3966,11 +3971,10 @@ nodes:
       - U1135
     market_gaps: []
     pedagogical_description:
-      explanation: 'Ce [domaine](glossary:TER030) prépare et conduit les achats : connaître les fournisseurs admissibles,
-        comparer leurs offres, tenir les accords et suivre les achats autorisés. Il relie le [besoin](glossary:TER010) de
-        l’entreprise aux échanges avec le fournisseur. La [commande](glossary:TER012) d’achat, la réception physique et le
-        traitement comptable gardent leurs responsables distincts. Le [Supply Chain Management](model:supply-chain-orchestration)
-        peut décider d''un appoint dans ce cadre négocié ; l''origine de la décision d''achat n''est donc pas unique.'
+      explanation: |-
+        Ce [domaine](glossary:TER030) prépare et conduit les achats : connaître les fournisseurs admissibles, comparer leurs offres, tenir les accords et suivre les achats autorisés. Il relie le [besoin](glossary:TER010) de l’entreprise aux échanges avec le fournisseur. La [commande](glossary:TER012) d’achat, la réception physique et le traitement comptable gardent leurs responsables distincts. Le [Supply Chain Management](model:supply-chain-orchestration) peut décider d'un appoint dans ce cadre négocié ; l'origine de la décision d'achat n'est donc pas unique.
+
+        [Pourquoi distinguer besoin, engagement et documents](principle:PRINCIPLE-SUPPLY-DOCUMENTS).
       example_refs:
       - node_id: domain-sourcing-procurement
         example_id: illustration-domain-sourcing-procurement-U1131
@@ -3991,6 +3995,7 @@ nodes:
       - U1133
       - U1134
       - U1135
+      - U1160
       market_comparison_refs:
       - node_id: domain-sourcing-procurement
         comparison_id: market-domain-sourcing-procurement-U1131-1
@@ -4023,6 +4028,7 @@ nodes:
   - U1133
   - U1134
   - U1135
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u780
@@ -4043,6 +4049,8 @@ nodes:
       [Sous-domaine](method:MOD038) de [Supply Chain Management](model:supply-chain-orchestration). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management) arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de ces responsabilités, pas des frontières de la carte. [Order Management](model:D04) conserve l’identité, les engagements et les transitions des commandes. [Plan Application](model:D02.e) transmet les choix autorisés ; une affectation ne vaut ni réservation ni confirmation de promesse. FLOW Core porte cette cible sans présumer d’un moteur unique ou d’un transfert installé depuis MAP.
 
       Rapprocher les contributions utiles dans leurs [contextes de planification](glossary:TER389), avec leurs horizons, versions et règles applicables. Les plans de collection, commerciaux et Supply restent distincts ; leurs calendriers peuvent différer, mais les dépendances et conflits doivent être examinés avant de retenir une solution. Une [saison](glossary:TER386) ou une [capsule](glossary:TER388) est un repère possible, sans imposer un plan unique ou une structure annuelle. Un plan révisable porte hypothèses, objectifs et choix ; il ne se réduit pas à un calendrier de référence. Les commandes peuvent contribuer à plusieurs plans, notamment par ligne ou quantité, sans double compte des besoins. Un nouveau plan ne réécrit aucun engagement ; [Plan Application](model:D02.e) transmet les changements autorisés aux responsables des commandes.
+
+      [Pourquoi une révision du plan ne change pas seule les engagements](principle:PRINCIPLE-DECISION-EFFECTS).
     examples:
     - title: Couvrir une pénurie sans confondre plan et promesse
       situation: 'Illustration fictive : le [Forecast Plan](glossary:TER372) prévoit 1 000 pièces et le plan opérationnel
@@ -4309,6 +4317,8 @@ nodes:
         Ce périmètre établit ce qu’il reste à couvrir puis organise l’usage des ressources pour répondre à la [demande](glossary:TER011) retenue. Il confronte commandes, prévisions retenues, [stock](glossary:TER005) et apports attendus, y compris lorsque plusieurs demandes sont en concurrence. Le plan rend les manques et propositions visibles sans confirmer à lui seul un [engagement](glossary:TER013) de [commande](glossary:TER012).
 
         Une [saison](glossary:TER386) peut aider à situer une décision. Les [plans, calendriers et règles](glossary:TER389) restent distingués : plusieurs plans peuvent concerner une commande, et leur révision ne modifie pas seule un engagement.
+
+        [Pourquoi distinguer les contextes, plans et règles](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
       example_refs:
       - node_id: domain-plan
         example_id: illustration-domain-plan-U1131
@@ -4324,6 +4334,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
       market_comparison_refs:
       - node_id: domain-plan
         comparison_id: market-domain-plan-U1131-1
@@ -4360,6 +4371,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u794
@@ -4835,16 +4847,19 @@ nodes:
       - U1125
       id: illustration-supply-chain-orchestration-U1125
     - title: Recevoir une nouvelle référence produit
-      situation: Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’application qui fait autorité sur les
-        produits.
-      outcome: Son identifiant et ses caractéristiques utiles sont reçus dans [Product Reference](glossary:TER052). La Supply
-        peut alors utiliser cette référence dans ses commandes et ses stocks.
-      lesson: La projection sert aux opérations Supply. La création et les corrections de la référence restent dans la source
-        de vérité externe.
+      situation: Une nouvelle [variante](glossary:TER058) de tee-shirt, bleu taille M, est créée dans l’application qui fait
+        autorité sur sa définition.
+      outcome: Son identifiant et ses caractéristiques utiles sont reçus dans [Product Reference](glossary:TER052). La [Supply](glossary:TER083)
+        maintient la référence locale utilisable, avec provenance, validité et incohérences connues, pour ses commandes et
+        ses stocks.
+      lesson: L’autorité d’entreprise conserve la création et les corrections des caractéristiques dont elle est responsable.
+        La gestion active de la référence locale reste sous la responsabilité d’[Operational References](model:business-references),
+        sans transfert de cette autorité.
       source_refs:
       - U470
       - U97
       - U460
+      - U1160
     - id: offshore-nearshore-supply-chain-orchestration-U1134
       title: Adapter le socle à la capacité de recours
       situation: 'Illustration fictive : 800 pièces [offshore](glossary:TER382) et 400 pièces d''appoint envisagées devraient
@@ -4880,6 +4895,8 @@ nodes:
       [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
 
       Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
+
+      [Pourquoi apprécier les compromis sur le parcours complet](principle:PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE).
     market_inspiration:
       choice: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions,
         [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005)
@@ -4933,6 +4950,8 @@ nodes:
         Il compare les options sur l’ensemble du parcours : acheter autrement, choisir un autre site préparateur, adapter les lots, protéger une quantité pour le service après-vente ou remettre un retour en état. Une économie locale peut augmenter le coût ou le délai ailleurs. Les décisions tiennent compte des règles, des ressources et des [engagements](glossary:TER013) déjà pris.
 
         Les résultats observés permettent de réviser les plans et les règles de gestion. Le pilotage relie la planification, les décisions et leurs effets réels ; il distingue le temps nécessaire pour disposer de l’information, décider et réaliser l’action.
+
+        Le domaine porte le cycle de vie des [commandes](glossary:TER012) d’achat et de vente de son périmètre. Les décisions disposent ainsi des demandes, [engagements](glossary:TER013), changements et réalisations nécessaires pour apprécier leurs conséquences. [Pourquoi conserver ce contexte complet](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
       example_refs:
       - node_id: supply-chain-orchestration
         example_id: illustration-supply-chain-orchestration-U1125
@@ -4979,6 +4998,7 @@ nodes:
       - U1135
       - U1150
       - U1151
+      - U1160
   source_refs:
   - C108
   - C78
@@ -5071,6 +5091,7 @@ nodes:
   - U1135
   - U1150
   - U1151
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u373
@@ -5454,7 +5475,10 @@ nodes:
 
       Les [contextes de planification](glossary:TER389) reçus avec les produits peuvent décrire [saisons](glossary:TER386), campagnes, [capsules](glossary:TER388), rythmes de renouvellement et fenêtres connues. [Product Reference](model:D08) conserve les associations utiles, leur provenance et leur validité ; le cadrage amont reste dans [Product Portfolio & Collection Management](model:domain-product-portfolio-collection). Ces données ne créent ni capacité saisonnière ni hiérarchie obligatoire. Les calendriers de référence restent distincts des plans révisables et des règles sous autorité de [Supply Policy Management](model:subdomain-policies).
     mastership: Source de vérité locale du domaine pour les sujets de référence ; maîtrise d’entreprise externe. Les règles
-      actives relèvent de Supply Policy Management ; les prévisions de demande et de mouvements relèvent de Plan Visibility.
+      actives relèvent de [Supply Policy Management](model:subdomain-policies). Les contributions de planification sont reçues
+      et qualifiées dans [Master Plan](model:domain-plan). [Supply Plan Visibility](model:plans-visibility) et [Demand Plan
+      Visibility](model:demand-plan-visibility), dans [Master Plan Management](model:ba-master-plan-management), les interprètent
+      pour leurs consommateurs.
     dominant_role:
       id: data-state
       display_name: Data & State
@@ -5468,10 +5492,10 @@ nodes:
       outcome: Les opérations peuvent interpréter les demandes à partir de la bonne version sans attribuer à la [Supply](glossary:TER083)
         la maîtrise de la source d’entreprise.
     pedagogical_description:
-      explanation: Ce périmètre fournit les données de référence locales dont les opérations [Supply](glossary:TER083) ont
-        [besoin](glossary:TER010) pour comprendre un produit, un partenaire, un accord ou un [service](glossary:TER075). Il
-        conserve leur origine, leur version et leurs conditions d’usage. Une donnée reçue ne devient utilisable qu’après sa
-        prise en compte ; la responsabilité des sources d’entreprise reste externe.
+      explanation: |-
+        Ce périmètre fournit les données de référence locales dont les opérations [Supply](glossary:TER083) ont [besoin](glossary:TER010) pour comprendre un produit, un partenaire, un accord ou un [service](glossary:TER075). Il conserve leur origine, leur version et leurs conditions d’usage. Une donnée reçue ne devient utilisable qu’après sa prise en compte ; la responsabilité des sources d’entreprise reste externe.
+
+        [Pourquoi une référence locale demande une gestion active](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
       example_refs:
       - node_id: business-references
         example_id: illustration-business-references-U1131
@@ -5483,6 +5507,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: business-references
         comparison_id: market-business-references-U1131-1
@@ -5567,6 +5592,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: business-references
@@ -5857,11 +5883,15 @@ nodes:
       Les versions reçues gardent provenance, validité et limites connues. [Reference Ingestion](model:master-data-ingestion) reçoit les apports ; [Operational References](model:business-references) porte la référence locale utilisable. Les maîtres d’entreprise restent externes ; aucune alimentation installée n’est présumée.
 
       Conserver, lorsqu’elles sont fournies, les associations des produits aux [contextes de planification](glossary:TER389) : [saisons](glossary:TER386), campagnes ou [capsules](glossary:TER388), avec identifiants, version, fenêtres, validité et source. Un produit peut être associé à plusieurs contextes ou être reconduit sans rattachement saisonnier obligatoire. Ces associations ne remplacent ni ses caractéristiques approuvées ni son cycle de vie ; elles ne constituent pas une disponibilité de stock ou une autorisation de vente. Les plans et les politiques ne sont pas stockés comme de simples attributs du produit.
+
+      [Pourquoi les rattachements aux calendriers restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi gérer la référence locale avec une autorité explicite](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
     pedagogical_description:
       explanation: |-
         Ce référentiel permet de parler du même produit dans les commandes et les stocks. Il décrit par exemple une variante de tee-shirt, sa taille, sa couleur et les unités utiles aux opérations. La Supply maintient sa référence locale à partir des sources externes ; cela ne lui transfère pas la maîtrise du produit à l’échelle de l’entreprise.
 
         Un produit peut relever de plusieurs [saisons](glossary:TER386) ou être reconduit. La référence conserve les associations connues et leurs dates ; elle ne remplace pas les plans ni les règles de décision.
+
+        [Pourquoi l’identité d’une variante reste indépendante de sa grille](principle:PRINCIPLE-PRODUCT-VARIANTS).
       example_refs:
       - node_id: D08
         example_id: illustration-d08-U1125
@@ -5885,6 +5915,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
   source_refs:
   - P81
   - U97
@@ -5929,6 +5960,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d08-produits-opérationnels
@@ -6313,6 +6345,8 @@ nodes:
       Conserver les filiations reconnues entre entrées, transformations et sorties : origines, lots, composants consommés, produits obtenus, fractionnements et destinations. Une [traçabilité](glossary:TER101) utile ne se réduit pas au fournisseur initial ni à l’origine technique d’un message. Conserver références, quantités, dates et corrections permettant de relier ces faits, avec leurs limites de connaissance ; ne pas fabriquer une généalogie complète à partir d’un simple solde. Inventory Visibility exploite ces liens ; le registre ne prend ni décision de rappel ni décision d’usage. Exemple fictif : conserver le lien entre un lot d’accessoires et les coffrets assemblés, puis leurs sorties vers les magasins.
 
       Conserver les structures et contenus des [Handling Units](glossary:TER189) reconnus, avec leurs liens aux biens, dates et corrections. Une [Packaging Specification](model:packaging-specification) peut qualifier une attente ; elle ne remplace pas une preuve du contenu reçu. Exemple fictif : conserver une réception reconnue de 118 pièces, puis sa correction éventuelle, sans comptabiliser les 120 annoncées comme une réception supplémentaire.
+
+      [Pourquoi une correction doit conserver l’histoire du fait](principle:PRINCIPLE-TRACEABLE-FACTS).
     market_comparisons:
     - vendor: Oracle
       product: Item Ledger Information
@@ -6601,6 +6635,7 @@ nodes:
   - U848
   - U890
   - U891
+  - U1160
   source_locator:
     path: connaissance/04-corrections.md
     anchor: c73
@@ -7671,6 +7706,8 @@ nodes:
       U733 : tenir création, révision, consommation, libération et expiration selon les conditions applicables ; ce sont des responsabilités communes, pas des Behaviors supplémentaires. Réservation et sortie physique ne sont pas décomptées deux fois. Les parcours rapides d’[Order Management](model:D04) peuvent solliciter cette capacité sans reconstruction systématique du plan collectif.
 
       Une réservation peut protéger une proposition pendant son attente de confirmation si les règles l’autorisent. Sa disparition ou son expiration impose de réexaminer la disponibilité avant confirmation ; elle ne valide ni ne refuse la commande à elle seule.
+
+      [Pourquoi distinguer le blocage d’une quantité du calcul de son affectation](principle:PRINCIPLE-DECISION-EFFECTS).
     market_comparisons:
     - vendor: Microsoft
       product: Inventory Visibility reservations
@@ -7840,6 +7877,7 @@ nodes:
   - U848
   - U877
   - U910
+  - U1160
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d01-stocks
@@ -8658,6 +8696,8 @@ nodes:
       [Delivery Release Decision](model:delivery-release-decision) produit le périmètre à autoriser en livraison et les motifs d’attente. Plan Application transmet et suit le choix retenu ; la famille de commande applique l’autorisation sous ses règles de transition. Cela ne confirme pas implicitement l’engagement et ne décide pas de la libération des prestations.
 
       Transmettre avec chaque changement autorisé les références du plan, de sa version et du [contexte de planification](glossary:TER389), ainsi que les règles et conditions qui justifient la décision. Vérifier leur validité au moment de l’application ; un écart impose le traitement prévu ou un réexamen explicite. La famille de commande conserve les versions utilisées, la portée appliquée ou refusée et ses engagements. Un changement de [saison](glossary:TER386), de calendrier ou de plan ne vaut pas à lui seul autorisation de modifier une commande.
+
+      [Pourquoi appliquer un choix exige de distinguer ses effets autorisés](principle:PRINCIPLE-DECISION-EFFECTS).
     market_comparisons:
     - vendor: Oracle
       product: Oracle Fusion Cloud SCM
@@ -10052,6 +10092,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d03-promesse-de-fourniture
@@ -10964,6 +11005,8 @@ nodes:
       Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
 
       [Master Planning](model:D05.f) peut mobiliser cette capacité pour éclairer les compromis du carnet. [Simulation & Analysis](model:BHV006) compare leurs conséquences globales. Une économie de transport ne permet pas à elle seule de reporter un engagement ; coûts applicables, service, risques et marges contractuelles restent explicites.
+
+      [Pourquoi aucun objectif économique universel n’est implicite](principle:PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE).
     market_comparisons:
     - vendor: Oracle
       product: Oracle Fusion Cloud SCM / Order Management / Global Order Promising
@@ -11351,6 +11394,7 @@ nodes:
   - U1019
   - U1020
   - U1021
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u154
@@ -12075,6 +12119,8 @@ nodes:
       Pour le pilotage du [carnet](glossary:TER205), [Delivery Release Decision](model:delivery-release-decision) fournit le choix des lignes et quantités éligibles à la livraison. Sales Order conserve l’engagement et applique l’autorisation selon les règles de transition. L’[affermissement](glossary:TER197), la protection de ressource et cette autorisation sont distincts, même lorsqu’une stratégie les coordonne.
 
       Pour l’[intercompany](glossary:TER122), conserver société, contrepartie et correspondances de lignes et versions. Chaque branche autorise ses changements et tient son prix engagé. [Facturation](glossary:TER153) et traitement financier conservent leurs responsabilités. L’exemple détaille les confirmations partielles et les prix distincts.
+
+      [Pourquoi tenir un cycle complet et unique](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). [Pourquoi les plans et règles applicables restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Commerce
@@ -12598,6 +12644,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -12641,6 +12688,8 @@ nodes:
       La décision à l'origine d'un achat peut provenir de plusieurs domaines : socle [offshore](glossary:TER382) préparé dès [Design & Development](model:system-design-development), parcours d'achat, ou appoint [nearshore](glossary:TER383) décidé dans le [Supply Chain Management](model:supply-chain-orchestration). Conserver besoin d'origine, scénario ou plan retenu, résultat [CTP](glossary:TER045), décision, autorité ou règle de délégation, conditions et liens entre propositions et commandes. Le domaine d'origine de la décision ne crée pas un second cycle de commande. La capacité applique les transitions autorisées et tient les réponses et engagements ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve les accords et la conduite des échanges fournisseur. Une vérification [CTP](glossary:TER045) positive reste distincte de l'autorisation, de l'[affermissement](glossary:TER197) et de la confirmation fournisseur. Ce mode possible ne préjuge ni de l'équipe qui saisit la commande ni de l'outil qui la transmet.
 
       Quand le fournisseur est une autre société du groupe, conserver la société acheteuse et les correspondances avec la vente réciproque, par ligne, quantité et version. Appliquer uniquement les changements acceptés par l’autorité concernée ; suivre les refus et les reliquats sans synchronisation aveugle des états. Le [prix de cession interne](glossary:TER384) est reçu de la source autorisée et devient le prix engagé de cet achat selon ses règles. Les références et résultats du traitement de la facture fournisseur sont reçus de [Finance](glossary:TER117) ; leur conservation ne transfère ni son contrôle, ni sa comptabilisation, ni son paiement dans la [commande](glossary:TER012).
+
+      [Pourquoi tenir un cycle complet et unique](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). [Pourquoi les plans et règles applicables restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 SCM
@@ -13281,6 +13330,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -18535,6 +18585,8 @@ nodes:
       Consommer les [prix contextualisés](glossary:TER257) obtenus auprès de leur producteur commercial ou des accords d’achat et prestation applicables. Vérifier leur [applicabilité](glossary:TER265) : contexte identifié, date métier retenue, référence et version, période, autorisation et résultat de contrôle. Conserver le [prix engagé](glossary:TER263), la répartition autorisée des conditions entre lignes et les liens lors d’un fractionnement, retour ou correction. Une promotion nouvelle ou une correction tarifaire ne réécrit pas silencieusement un engagement. Si le résultat est absent, expiré ou incohérent, demander la correction ou la décision autorisée au producteur ; FLOW ne choisit ni nouveau prix ni règle de cumul. Le parcours traite l’attente, le refus ou la reprise dans la portée autorisée.
 
       Conserver les liens des commandes avec les [contextes de planification](glossary:TER389) et les plans concernés, éventuellement par ligne ou quantité. Distinguer provenance d’une proposition, contribution à un besoin planifié et couverture déjà retenue ; une commande peut participer à plusieurs plans sans dupliquer son engagement ni compter plusieurs fois le même besoin. [Saison](glossary:TER386) et [capsule](glossary:TER388) ne constituent pas un rattachement obligatoire. Pour chaque décision, garder la version du plan et des règles effectivement utilisées, leur validité et l’autorité applicable. Une nouvelle version du plan ou des politiques ne modifie pas seule la commande : les transitions et changements restent autorisés par la famille responsable.
+
+      [Pourquoi partir de l’intention et de l’engagement](principle:PRINCIPLE-SUPPLY-DOCUMENTS). [Pourquoi distinguer proposition, engagement et réalisation](principle:PRINCIPLE-DECISION-EFFECTS).
     market_comparisons:
     - vendor: IBM
       product: Document types
@@ -19026,6 +19078,8 @@ nodes:
         Ce périmètre garde la trace de ce qui a été demandé, proposé, accepté puis réalisé pour chaque [commande](glossary:TER012). Il contrôle les changements autorisés et le reste à satisfaire. Une réponse calculée, une préparation lancée ou une livraison partielle ne remplacent pas la mise à jour explicite de ses engagements.
 
         Une [saison](glossary:TER386) peut aider à situer une décision. Les [plans, calendriers et règles](glossary:TER389) restent distingués : plusieurs plans peuvent concerner une commande, et leur révision ne modifie pas seule un engagement.
+
+        [Pourquoi conserver le contexte complet des commandes](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
       example_refs:
       - node_id: D04
         example_id: illustration-d04-U1131
@@ -19042,6 +19096,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
       market_comparison_refs:
       - node_id: D04
         comparison_id: market-d04-U1131-1
@@ -19172,6 +19227,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -19200,6 +19256,8 @@ nodes:
       Exemple fictif : 70 pièces présentes, dont 20 réservées, et 30 attendues vendredi. [Ledger](glossary:TER056) explique les faits, Inventory Visibility expose les positions et réservations, Inventory Visibility qualifie l’apport. [ATP](glossary:TER044)/[CTP](glossary:TER045) évaluent les possibilités et délais ; [PTP](glossary:TER068) expose leurs conséquences économiques. La somme des quantités ne garantit ni la réception ni la livraison au client. [Fulfilment](glossary:TER085) coordonne les prestations et fournit leurs résultats ; seuls les effets reconnus alimentent le stock.
 
       [Inventory Management](model:D01) distingue réception des faits, détermination du transfert selon les accords et tenue des deux registres. Inventory Ownership Transfer Decision couvre consommation, échéances et autres jalons contractuels, avec ou sans consignation. [Inventory Ownership Ledger](model:inventory-ownership-ledger) conserve le fondement des changements reconnus ; [Inventory Ledger](glossary:TER056) conserve les mouvements et états. Les faits douaniers sont qualifiés sans transfert automatique déduit de leur seul statut.
+
+      [Pourquoi conserver les faits de stock dans leurs registres](principle:PRINCIPLE-TRACEABLE-FACTS). [Pourquoi distinguer propriété, réservation et affectation](principle:PRINCIPLE-DECISION-EFFECTS).
     market_comparisons:
     - vendor: Microsoft
       product: Inventory Visibility Add-in overview
@@ -19428,6 +19486,7 @@ nodes:
   - U887
   - U1113
   - U1118
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u219
@@ -24872,6 +24931,8 @@ nodes:
       Le résultat contribue au master plan commun : [Master Planning](model:D05.f) en pilote la cohérence ; [Plan Application](model:D02.e) matérialise les changements autorisés. Une affectation n’est ni une confirmation de promesse ni une réservation : seule [Reservation](model:D02.c) bloque les usages concurrents. Un risque de non-tenue de promesse doit être transmis au réexamen de promesse et aux [Orders](glossary:TER012) responsables, sans modification silencieuse des engagements.
 
       Exemple : pour deux besoins de 80 pièces et 100 pièces admissibles, déterminer des affectations compatibles et expliciter les 60 pièces non couvertes. Si une source change, chercher à préserver la promesse ; la priorisation collective seule ne transforme pas ce calcul en réexamen collectif des promesses. Les objectifs restent multidimensionnels, sans optimum mathématique garanti.
+
+      [Pourquoi une affectation ne réserve pas seule la quantité](principle:PRINCIPLE-DECISION-EFFECTS). [Pourquoi rendre les objectifs et compromis explicites](principle:PRINCIPLE-SUPPLY-ASSIGNMENT-VALUE).
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Intelligent Order Management
@@ -25281,6 +25342,7 @@ nodes:
   - U1015
   - U1018
   - U1019
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u378
@@ -33218,6 +33280,8 @@ nodes:
         Ce périmètre tient les règles actives qui orientent les décisions [Supply](glossary:TER083) : priorités, protections, limites et autorisations. Chaque règle possède une portée et une période d’application. Une recommandation de changement reste distincte de la version effectivement applicable.
 
         Une [saison](glossary:TER386) peut aider à situer une décision. Les [plans, calendriers et règles](glossary:TER389) restent distingués : plusieurs plans peuvent concerner une commande, et leur révision ne modifie pas seule un engagement.
+
+        [Pourquoi préciser la portée et la validité des règles](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
       example_refs:
       - node_id: subdomain-policies
         example_id: illustration-subdomain-policies-U1131
@@ -33233,6 +33297,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
       market_comparison_refs:
       - node_id: subdomain-policies
         comparison_id: market-subdomain-policies-U1131-1
@@ -33278,6 +33343,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u673
@@ -37170,6 +37236,8 @@ nodes:
       Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
 
       Distinguer la [facture intercompany](glossary:TER385) de B à A et la facture de A au client externe, lorsqu’il existe. Pour chaque facture, conserver émetteur, destinataire, commandes et lignes, quantités ou montants, devise, dates, statut d’émission, corrections et références réciproques connues. Fournir les faits de facture et justificatifs à [Financial Accounting](glossary:TER118), qui contrôle et traite la facture reçue chez l’acheteur et retourne ses résultats. Une émission ne prouve ni acceptation acheteur, ni comptabilisation, ni paiement. Les avoirs réciproques suivent chaque relation concernée ; ni leur nombre ni leur montant ne sont déduits du seul retour physique.
+
+      [Pourquoi la facture est un résultat métier du service](principle:PRINCIPLE-SUPPLY-DOCUMENTS).
     nature: action
     finality: Fournir une facture correspondant aux éléments facturables du flux.
     market_comparisons:
@@ -37440,6 +37508,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u709
@@ -39392,6 +39461,8 @@ nodes:
       Exemple fictif : sur 100 vêtements fournisseur présents, 20 deviennent propres selon une clause satisfaite. Le registre conserve 20 pièces transférées avec leur preuve ; les 100 pièces restent physiquement présentes tant qu’aucune sortie n’est reconnue. Aucun registre financier, blockchain ou mécanisme d’immutabilité technique n’est imposé.
 
       Dans une chaîne [intercompany](glossary:TER122), conserver les parties et preuves de chaque passage reconnu, même si le détenteur physique ne change pas ou si A n’a aucun entrepôt traversé. Relier les mêmes biens et quantités aux engagements concernés sans doubler le [stock](glossary:TER005). Les positions de propriété ne constituent ni un registre financier ni, à elles seules, un [stock](glossary:TER005) valorisé en transit ; [Finance](glossary:TER117) garde sa méthode et ses dates de reconnaissance comptable.
+
+      [Pourquoi le contexte entre sociétés ne définit pas le trajet physique](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi conserver chaque changement de propriétaire reconnu](principle:PRINCIPLE-TRACEABLE-FACTS).
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -39596,6 +39667,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   last_modified: '2026-10-06T00:00:00Z'
   review:
     state: proposed
@@ -41462,9 +41534,10 @@ nodes:
         leurs limites explicites.
     market_gaps: []
     pedagogical_description:
-      explanation: 'Ce système réalise les prestations confiées : recevoir, stocker, préparer et déplacer les biens, ainsi
-        que conduire les formalités douanières nécessaires. Les exécutants organisent leurs moyens et leur travail dans le
-        mandat reçu. Cette responsabilité reste compréhensible quel que soit le prestataire choisi.'
+      explanation: |-
+        Ce système réalise les prestations confiées : recevoir, stocker, préparer et déplacer les biens, ainsi que conduire les formalités douanières nécessaires. Les exécutants organisent leurs moyens et leur travail dans le mandat reçu. Cette responsabilité reste compréhensible quel que soit le prestataire choisi.
+
+        [Pourquoi représenter la logistique comme un système autonome](principle:PRINCIPLE-FLOW-LOGISTICS).
       example_refs:
       - node_id: domain-logistics-execution
         example_id: illustration-domain-logistics-execution-U1131
@@ -41476,6 +41549,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: domain-logistics-execution
         comparison_id: market-domain-logistics-execution-U1131-1
@@ -41495,6 +41569,7 @@ nodes:
   - U1025
   - U1026
   - U1027
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u780
@@ -42166,6 +42241,8 @@ nodes:
       Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
 
       Définir le parcours [intercompany](glossary:TER122) par les engagements à coordonner : sociétés, contreparties, demandes et réponses, autorisations de changement, factures attendues, contrôles et exceptions. Identifier le [dossier](glossary:TER064) responsable et ses liens aux demandes de chaque société, sans imposer un [dossier](glossary:TER064) technique unique ni un état partagé. Une livraison achevée peut laisser une attente financière ; les critères de fin du parcours précisent les résultats attendus de chacune des branches.
+
+      [Pourquoi les parcours et leurs versions restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi une définition de parcours ne crée pas une nouvelle hiérarchie métier](principle:PRINCIPLE-DOMAIN-INTERACTIONS).
     market_comparisons:
     - vendor: SAP
       product: SAP S/4HANA — Flexible Workflow
@@ -42332,6 +42409,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -42361,6 +42439,8 @@ nodes:
       Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
 
       Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) captés et les décisions de réaction reconnues, avec identité source, liens au [Case](glossary:TER064), dates et corrections. Un événement pertinent pour l’histoire du dossier est conservé même sans nouvelle action. Le déclenchement de la réaction et la tenue du registre sont deux responsabilités explicites.
+
+      [Pourquoi la réaction à un événement se distingue de sa conservation](principle:PRINCIPLE-TRACEABLE-FACTS).
     market_comparisons:
     - vendor: SAP
       product: SAP S/4HANA — Flexible Workflow
@@ -42488,6 +42568,7 @@ nodes:
   - U884
   - U885
   - U1113
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -42680,6 +42761,8 @@ nodes:
       Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
 
       Pour le [dossier](glossary:TER064) [intercompany](glossary:TER122), exploiter les liens entre commandes et sociétés pour solliciter les changements autorisés puis attendre les réponses de chaque responsabilité. Conserver acceptations partielles, refus, factures attendues et résultats financiers reçus ; ne pas aligner les états par copie. Une livraison terminée ne ferme pas une attente de [facturation](glossary:TER153) ou de traitement acheteur. Relier les [dossiers](glossary:TER064) délégués lorsqu’ils existent ; leur coordination ne déplace pas l’autorité des commandes, du [stock](glossary:TER005) ou de [Finance](glossary:TER117).
+
+      [Pourquoi conduire le parcours préserve l’autorité des capacités sollicitées](principle:PRINCIPLE-DOMAIN-INTERACTIONS).
     market_comparisons:
     - vendor: SAP
       product: SAP S/4HANA — Flexible Workflow
@@ -42936,6 +43019,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -48758,6 +48842,8 @@ nodes:
       Les mécanismes de conduite, d’intervention et d’analyse servent les [Cases](glossary:TER064) des domaines responsables, notamment [Commerce](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement). Leur généricité ne transfère pas les règles commerciales ou financières propres à ces parcours.
 
       Tenir l’histoire des [Cases](glossary:TER064) gérés grâce à [Process Ledger](glossary:TER375), sous [Process Supervision](glossary:TER165). Les producteurs internes et [Process Sentry](glossary:TER127) lui apportent les [événements de processus](glossary:TER376) ; visibilité et analyse exploitent ensuite ce registre avec ses dates, corrections et limites de couverture.
+
+      [Pourquoi conserver les faits du dossier et leurs corrections](principle:PRINCIPLE-TRACEABLE-FACTS).
     market_comparisons:
     - vendor: SAP
       product: SAP S/4HANA — Flexible Workflow
@@ -48885,9 +48971,10 @@ nodes:
       id: illustration-subdomain-process-management-U1131
       outcome: Le parcours peut aboutir et être analysé sans confondre pilotage de l’activité et autorité sur la [commande](glossary:TER012).
     pedagogical_description:
-      explanation: Ce périmètre définit et conduit les parcours de traitement des dossiers [Supply](glossary:TER083), avec
-        leurs contributions humaines et automatisées. Il conserve l’histoire des événements et permet de comprendre les attentes
-        ou d’améliorer les parcours. Les capacités mobilisées et les commandes gardent leurs responsabilités et leurs engagements.
+      explanation: |-
+        Ce périmètre définit et conduit les parcours de traitement des dossiers [Supply](glossary:TER083), avec leurs contributions humaines et automatisées. Il conserve l’histoire des événements et permet de comprendre les attentes ou d’améliorer les parcours. Les capacités mobilisées et les commandes gardent leurs responsabilités et leurs engagements.
+
+        [Pourquoi le parcours mobilise les responsabilités sans les dupliquer](principle:PRINCIPLE-DOMAIN-INTERACTIONS).
       example_refs:
       - node_id: subdomain-process-management
         example_id: illustration-subdomain-process-management-U1131
@@ -48899,6 +48986,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: subdomain-process-management
         comparison_id: market-subdomain-process-management-U1131-1
@@ -48918,6 +49006,7 @@ nodes:
   - U913
   - U1113
   - U1118
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -50445,6 +50534,8 @@ nodes:
         Cette capacité montre comment les demandes ont réellement cheminé, à partir des traces conservées dans [Process Ledger](glossary:TER375). Elle compare les parcours suivis, repère les reprises et mesure les temps de travail ou d’attente. Ces constats aident à choisir une amélioration ; ils ne changent pas à eux seuls le parcours d’une demande.
 
         Il distingue aussi le temps nécessaire pour obtenir une information exploitable, le temps de décision et le temps de mise en œuvre. Il montre les attentes encore ouvertes et les décisions prises trop tard pour produire l’effet attendu.
+
+        [Pourquoi analyser les traces conservées avec leurs limites](principle:PRINCIPLE-TRACEABLE-FACTS).
       example_refs:
       - node_id: process-mining
         example_id: illustration-process-mining-U1125
@@ -50463,6 +50554,7 @@ nodes:
       - U1125
       - U1145
       - U1146
+      - U1160
   source_refs:
   - U881
   - U882
@@ -50476,6 +50568,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -51708,6 +51801,8 @@ nodes:
         Ce [domaine](glossary:TER030) aide à choisir les produits à préparer pour une collection et à apprécier les ventes et ressources envisageables. Il rapproche les orientations de l’offre, les modèles retenus et leurs échéances. Ces choix préparent l’activité sans constituer une [commande](glossary:TER012) ni un plan de couverture opérationnel. Une collection peut ainsi préparer un socle [offshore](glossary:TER382) et des possibilités d'appoint [nearshore](glossary:TER383), dont la faisabilité sera vérifiée avant engagement.
 
         Les rythmes peuvent varier : deux [saisons](glossary:TER386), plusieurs [capsules](glossary:TER388) ou des produits reconduits. Le service rendu reste de préparer les produits et leurs jalons ; le calendrier est un [contexte configurable](glossary:TER389).
+
+        [Pourquoi les rythmes et calendriers restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
       example_refs:
       - node_id: domain-product-portfolio-collection
         example_id: illustration-domain-product-portfolio-collection-U1131
@@ -51732,6 +51827,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
       market_comparison_refs:
       - node_id: domain-product-portfolio-collection
         comparison_id: market-domain-product-portfolio-collection-U1131-1
@@ -51760,6 +51856,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u975
@@ -52096,6 +52193,8 @@ nodes:
         Ce périmètre compose la collection : quels modèles, quelles variantes envisagées et quelles dates de préparation ou de lancement ? Il donne un ensemble cohérent de produits à développer. La sélection commerciale propre à chaque canal et l’estimation des ventes restent des travaux distincts.
 
         Les rythmes peuvent varier : deux [saisons](glossary:TER386), plusieurs [capsules](glossary:TER388) ou des produits reconduits. Le service rendu reste de préparer les produits et leurs jalons ; le calendrier est un [contexte configurable](glossary:TER389).
+
+        [Pourquoi les rythmes et calendriers restent configurables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
       example_refs:
       - node_id: subdomain-collection-planning
         example_id: illustration-subdomain-collection-planning-U1131
@@ -52111,6 +52210,7 @@ nodes:
       - U1153
       - U1154
       - U1155
+      - U1160
       market_comparison_refs:
       - node_id: subdomain-collection-planning
         comparison_id: market-subdomain-collection-planning-U1131-1
@@ -52135,6 +52235,7 @@ nodes:
   - U1153
   - U1154
   - U1155
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u975
@@ -52676,8 +52777,10 @@ nodes:
     definition: '[Product Definition & Lifecycle Management](glossary:TER214) : tenir les définitions approuvées des produits
       et maîtriser leurs évolutions.'
     finality: '[Tenir](glossary:VER002) les définitions approuvées des produits et maîtriser leurs évolutions.'
-    scope: Maintenir les définitions approuvées, leurs variantes, versions et conditions d’utilisation. Cela ne présume pas
-      que toutes les données produit de l’entreprise ont leur maître dans ce domaine.
+    scope: |-
+      Maintenir les définitions approuvées, leurs variantes, versions et conditions d’utilisation. Cela ne présume pas que toutes les données produit de l’entreprise ont leur maître dans ce domaine.
+
+      [Pourquoi préciser la source responsable par objet](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
     examples:
     - title: Illustration de responsabilité
       situation: 'Exemple fictif : Publier une nouvelle version d’un modèle et préciser la date à laquelle elle devient applicable.'
@@ -52775,9 +52878,10 @@ nodes:
       status: proposed
     modeling_depth: context
     pedagogical_description:
-      explanation: Ce [domaine](glossary:TER030) permet de savoir quelle définition d’un produit est approuvée et dans quelles
-        conditions elle peut être utilisée. Il conserve les variantes, les documents et les évolutions autorisées. Il évite
-        de confondre une proposition de modification avec une version déjà applicable.
+      explanation: |-
+        Ce [domaine](glossary:TER030) permet de savoir quelle définition d’un produit est approuvée et dans quelles conditions elle peut être utilisée. Il conserve les variantes, les documents et les évolutions autorisées. Il évite de confondre une proposition de modification avec une version déjà applicable.
+
+        Les caractéristiques et combinaisons admissibles identifient les [variantes](glossary:TER058). La grille peut aider à les représenter ou à les commander ; elle ne définit pas leur identité métier. [Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS).
       example_refs:
       - node_id: domain-product-definition-lifecycle
         example_id: illustration-domain-product-definition-lifecycle-U1131
@@ -52789,6 +52893,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: domain-product-definition-lifecycle
         comparison_id: market-domain-product-definition-lifecycle-U1131-1
@@ -52798,6 +52903,7 @@ nodes:
   - U974
   - U975
   - CMP312
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u975
@@ -52817,6 +52923,8 @@ nodes:
       Conserve des identités et caractéristiques utilisables par les consommateurs ; les sources responsables sont à établir par objet, notamment pour les produits achetés déjà conçus.
 
       Recevoir les caractéristiques préparées et maintenir les versions selon les changements autorisés. Les sources responsables par objet restent à établir ; la coopération avec la mise à disposition ne crée pas un maître unique de tous les produits de l’entreprise.
+
+      [Pourquoi préciser la source responsable par objet](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
     examples:
     - title: Illustration de responsabilité
       situation: 'Exemple fictif : Identifier séparément les variantes de taille et couleur d’un article approuvé.'
@@ -52886,9 +52994,10 @@ nodes:
       status: proposed
       id: market-subdomain-product-definition-variants-U1131-1
     pedagogical_description:
-      explanation: Ce périmètre permet de désigner séparément un produit et ses variantes approuvées, par exemple ses tailles
-        et coloris. Il conserve les caractéristiques qui rendent ces identités utilisables par les autres métiers. La source
-        responsable reste à déterminer par objet, sans supposer un maître unique de toutes les données produit.
+      explanation: |-
+        Ce périmètre permet de désigner séparément un produit et ses variantes approuvées, par exemple ses tailles et coloris. Il conserve les caractéristiques qui rendent ces identités utilisables par les autres métiers. La source responsable reste à déterminer par objet, sans supposer un maître unique de toutes les données produit.
+
+        Les caractéristiques et combinaisons admissibles identifient les [variantes](glossary:TER058). La grille peut aider à les représenter ou à les commander ; elle ne définit pas leur identité métier. [Pourquoi distinguer variante et grille](principle:PRINCIPLE-PRODUCT-VARIANTS).
       example_refs:
       - node_id: subdomain-product-definition-variants
         example_id: illustration-subdomain-product-definition-variants-U1131
@@ -52900,6 +53009,7 @@ nodes:
       source_refs:
       - U1130
       - U1131
+      - U1160
       market_comparison_refs:
       - node_id: subdomain-product-definition-variants
         comparison_id: market-subdomain-product-definition-variants-U1131-1
@@ -52910,6 +53020,7 @@ nodes:
   - U975
   - CMP312
   - U1115
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u975
@@ -64901,11 +65012,10 @@ nodes:
       et soumettre le changement autorisé au porteur de commande.'
     finality: Qualifier un écart d’exécution d’achat, négocier une issue et soumettre le changement autorisé au porteur de
       commande.
-    scope: Qualifier l’impact commercial d’un écart signalé par [Supplier Commitment Follow-up](model:cap-supplier-commitment-follow-up),
-      obtenir une réponse et retenir une issue autorisée. Transmettre l’instruction de changement ou de maintien à [Purchase
-      Order](model:D04.j), puis recevoir son acceptation, son refus motivé ou l’état effectivement appliqué. Purchase Order
-      conserve identité, engagements et transitions ; [Process Management](model:subdomain-process-management) suit le travail
-      transversal. Une instruction envoyée ne prouve pas son application.
+    scope: |-
+      Qualifier l’impact commercial d’un écart signalé par [Supplier Commitment Follow-up](model:cap-supplier-commitment-follow-up), obtenir une réponse et retenir une issue autorisée. Transmettre l’instruction de changement ou de maintien à [Purchase Order](model:D04.j), puis recevoir son acceptation, son refus motivé ou l’état effectivement appliqué. Purchase Order conserve identité, engagements et transitions ; [Process Management](model:subdomain-process-management) suit le travail transversal. Une instruction envoyée ne prouve pas son application.
+
+      [Pourquoi le dossier mobilise des responsabilités distinctes](principle:PRINCIPLE-DOMAIN-INTERACTIONS). [Pourquoi la commande conserve son propre cycle](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
     nature: action
     market_comparisons:
     - vendor: Microsoft
@@ -65037,6 +65147,7 @@ nodes:
   - U1079
   - U1089
   - U1115
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1079
@@ -69217,6 +69328,8 @@ nodes:
         Ce registre conserve les événements métier d’un dossier de traitement, appelé [Case](glossary:TER064). Il réunit les événements internes et les événements externes captés par la [sentinelle](glossary:TER127), avec leurs dates, leurs origines et leurs corrections. Il sert à retrouver ce qui s’est passé et la situation connue d’une demande à un moment donné ; ses traces alimentent aussi l’analyse des parcours.
 
         Pour une décision, il conserve les repères qui distinguent le fait déclencheur, le signal devenu exploitable, la décision autorisée et son effet constaté. Une date manquante reste inconnue.
+
+        [Pourquoi conserver les événements avant de reconstituer le parcours](principle:PRINCIPLE-TRACEABLE-FACTS).
       example_refs:
       - node_id: process-ledger
         example_id: illustration-process-ledger-U1125
@@ -69233,6 +69346,7 @@ nodes:
       - U1125
       - U1145
       - U1146
+      - U1160
   source_refs:
   - U1110
   - U1111
@@ -69243,6 +69357,7 @@ nodes:
   - U1147
   - U1148
   - U1149
+  - U1160
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1110
@@ -74174,6 +74289,7 @@ relations:
   - U1153
   - U1154
   - U1155
+  - U1160
   review:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
@@ -74196,8 +74312,10 @@ relations:
         glossary_refs:
         - TER012
         - TER389
-      purpose: Calculer la couverture de la demande retenue dans le [Matching Master Plan](glossary:TER100), sans compter
-        deux fois commandes et prévision résiduelle.
+      purpose: |-
+        Calculer la couverture de la demande retenue dans le [Matching Master Plan](glossary:TER100), sans compter deux fois commandes et prévision résiduelle.
+
+        [Pourquoi la décision a besoin du contexte complet des commandes](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
   qualification:
     meaning: '[Order Management](model:D04) fournit au [Master Plan](glossary:TER111) les besoins et engagements dont il garde
       l’autorité.'
@@ -75474,7 +75592,10 @@ relations:
           avec horizon, jalons et hypothèses ; les calendriers de référence restent distincts des plans révisables.
         glossary_refs:
         - TER389
-      purpose: Rendre les contributions externes utilisables par [Master Plan](model:domain-plan).
+      purpose: |-
+        Rendre les contributions externes utilisables par [Master Plan](model:domain-plan).
+
+        [Pourquoi conserver nature et version des plans](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS). [Pourquoi la réception ne transfère pas l’autorité de la source](principle:PRINCIPLE-REFERENCE-PROJECTIONS).
   source_refs:
   - U794
   - U801
@@ -75490,6 +75611,7 @@ relations:
   - U1153
   - U1154
   - U1155
+  - U1160
   qualification:
     meaning: Contributions externes acceptées de [Supply Plan](glossary:TER098), [Demand Plan](glossary:TER099) ou [Planned
       Purchase Order](glossary:TER033), avec leur source, version, horizon et statut.
@@ -82039,7 +82161,10 @@ relations:
         - TER375
         - TER376
         - TER064
-      purpose: Conserver le fait daté et ses corrections dans l’histoire du Case sans transférer l’autorité de son producteur.
+      purpose: |-
+        Conserver le fait daté et ses corrections dans l’histoire du Case sans transférer l’autorité de son producteur.
+
+        [Pourquoi conserver origine, dates et corrections des faits captés](principle:PRINCIPLE-TRACEABLE-FACTS).
   qualification:
     meaning: Événements externes captés et corrélés au dossier, qualification, décisions de réaction et corrections, y compris
       sans nouvelle action immédiate.
@@ -82053,6 +82178,7 @@ relations:
   - U1110
   - U1111
   - U1113
+  - U1160
   review:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
@@ -82149,7 +82275,10 @@ relations:
         - TER064
         - TER375
         - TER376
-      purpose: Expliquer l’histoire des commandes dans le Case en conservant leur autorité dans Order Management.
+      purpose: |-
+        Expliquer l’histoire des commandes dans le Case en conservant leur autorité dans Order Management.
+
+        [Pourquoi conserver les faits sans déplacer leur autorité](principle:PRINCIPLE-TRACEABLE-FACTS).
   qualification:
     meaning: Identité, version, état et transitions reconnues des commandes liées au dossier, engagements concernés, dates,
       auteur, motif et corrections.
@@ -82163,6 +82292,7 @@ relations:
   - U1110
   - U1111
   - U1113
+  - U1160
   review:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
@@ -82219,7 +82349,10 @@ relations:
         - TER375
         - TER376
         - TER064
-      purpose: Analyser les parcours observés, leurs variantes et leurs mesures sans fabriquer les chemins non documentés.
+      purpose: |-
+        Analyser les parcours observés, leurs variantes et leurs mesures sans fabriquer les chemins non documentés.
+
+        [Pourquoi analyser les traces effectivement conservées](principle:PRINCIPLE-TRACEABLE-FACTS).
   qualification:
     meaning: Traces conservées et corrélées par Case, activités, événements, dates, versions, origines et corrections, avec
       la couverture connue des sources.
@@ -82233,6 +82366,7 @@ relations:
   - U1110
   - U1111
   - U1113
+  - U1160
   review:
     state: proposed
     note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
@@ -85074,7 +85208,10 @@ relations:
         glossary_refs:
         - TER371
         - TER342
-      purpose: Présenter une proposition identifiée avant de recueillir une demande du client.
+      purpose: |-
+        Présenter une proposition identifiée avant de recueillir une demande du client.
+
+        [Pourquoi l’offre et la commande relèvent de responsabilités qui coopèrent](principle:PRINCIPLE-INTEGRATED-BUSINESS-OPERATIONS). [Pourquoi la commande conserve son cycle complet](principle:PRINCIPLE-ORDER-DECISION-CONTEXT).
   qualification:
     meaning: Proposition commerciale de saison pour le revendeur, produits, quantités proposées, conditions et validité, avec
       référence de l’[offre](glossary:TER371).
@@ -85085,6 +85222,7 @@ relations:
     scope: Coopération métier cible entre responsabilités existantes ; aucune interface ni réalisation installée présumée.
   source_refs:
   - U1115
+  - U1160
   review:
     state: proposed
     note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
@@ -85875,7 +86013,10 @@ relations:
         glossary_refs:
         - TER338
         - TER070
-      purpose: Permettre la constitution ou la mise à jour autorisée d’un Purchase Order sans confondre besoin et engagement.
+      purpose: |-
+        Permettre la constitution ou la mise à jour autorisée d’un Purchase Order sans confondre besoin et engagement.
+
+        [Pourquoi la commande porte l’engagement](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). [Pourquoi distinguer demande et engagement](principle:PRINCIPLE-SUPPLY-DOCUMENTS).
   qualification:
     meaning: Demande d’achat approuvée, périmètre et autorisations, produits ou prestations, quantités et dates connues, avec
       référence et version.
@@ -85887,6 +86028,7 @@ relations:
     scope: Coopération métier cible entre responsabilités existantes ; aucune interface ni réalisation installée présumée.
   source_refs:
   - U1115
+  - U1160
   review:
     state: proposed
     note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
@@ -85937,7 +86079,10 @@ relations:
         glossary_refs:
         - TER336
         - TER070
-      purpose: Appliquer les conditions d’achat pertinentes dans la commande sans négocier l’accord dans Purchase Order.
+      purpose: |-
+        Appliquer les conditions d’achat pertinentes dans la commande sans négocier l’accord dans Purchase Order.
+
+        [Pourquoi la commande conserve ses engagements](principle:PRINCIPLE-ORDER-DECISION-CONTEXT). [Pourquoi accord et commande restent distincts](principle:PRINCIPLE-SUPPLY-DOCUMENTS).
   qualification:
     meaning: Conditions et prix d’achat autorisés, fournisseur, portée, version, validité et règles de consommation connues
       de l’[accord](glossary:TER336).
@@ -85949,6 +86094,7 @@ relations:
     scope: Coopération métier cible entre responsabilités existantes ; aucune interface ni réalisation installée présumée.
   source_refs:
   - U1115
+  - U1160
   review:
     state: proposed
     note: Corrections du lot U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés,
@@ -89311,8 +89457,10 @@ relations:
         - TER012
         - TER130
         - TER389
-      purpose: Permettre aux familles de commandes de vérifier l’applicabilité des décisions et de tracer les règles utilisées
-        sans transférer leurs engagements au plan.
+      purpose: |-
+        Permettre aux familles de commandes de vérifier l’applicabilité des décisions et de tracer les règles utilisées sans transférer leurs engagements au plan.
+
+        [Pourquoi conserver les versions et la portée des règles applicables](principle:PRINCIPLE-CONFIGURABLE-CONTEXTS).
   qualification:
     meaning: '[Supply Policy Management](model:subdomain-policies) fournit les références de règles Supply à [Order Management](model:D04)
       pour les décisions relevant de leur portée.'
@@ -89329,6 +89477,7 @@ relations:
   - U1153
   - U1154
   - U1155
+  - U1160
   review:
     state: proposed
     note: 'U1155 applique les préconisations U1153–U1154 : contexte saisonnier configurable, plans et règles distincts, liens
@@ -90012,9 +90161,10 @@ principles:
     Chaque domaine a un seul système parent explicite. Profondeur ciblée : contexte autour de Business Operations, domaines
     opérationnels précis, capacités dans les trois domaines de Business Operations et comportements dans Supply Chain Management.
     Les référentiels sources utiles aux ingestions seront documentés à terme sur preuve ; aucune exhaustivité périphérique,
-    source de vérité ou réalisation installée n’est inférée. U975 distingue Logistics comme système de prestation autonome
-    et enrichit les systèmes de contexte et Planning & Optimization jusqu’aux sous-domaines utiles aux interfaces ; U1079
-    approfondit les domaines adjacents de Business Operations jusqu’aux capacités.'
+    source de vérité ou réalisation installée n’est inférée. Logistics est un système métier autonome de prestation ; ses
+    domaines peuvent s’arrêter aux Business Areas de contexte. Dans Business Operations, Commerce, Sourcing and Procurement
+    et Supply Chain Management vont jusqu’aux capacités ; seul Supply Chain Management est détaillé jusqu’aux comportements.
+    Master Plan est un sous-domaine de Supply Chain Management. Les autres systèmes conservent leur profondeur déclarée.'
   source_refs:
   - U778
   - U779
@@ -90023,8 +90173,9 @@ principles:
   - U975
   - U1079
   - U1091
+  - U1160
 - id: PRINCIPLE-DISPLAY-CODES
-  statement: 'Identité persistante distincte du code de lecture : UNI/SYS/DOM/SUB/REF/CAP/BHV, trois chiffres au minimum,
+  statement: 'Identité persistante distincte du code de lecture : UNI/SYS/DOM/SUB/BA/REF/CAP/BHV, trois chiffres au minimum,
     séquence globale par type dans le parcours en profondeur de l’arbre de haut en bas. Arbre, cartes et fiches partagent
     le même ordre. Filtres, recherche, repli et placement du graphe ne renumérotent rien. Codes et ordre sont figés dans chaque
     nouvelle publication ; historiques inchangés. Recherche par code ou identité ; liens par identité et version. Règles méthodologiques
@@ -90034,6 +90185,7 @@ principles:
   - U782
   - U783
   - U912
+  - U1160
 - id: PRINCIPLE-BUSINESS-AREA
   statement: 'Enterprise Architecture → Business System → Domain → Subdomain → Business Area → Capability → Behavior. Business
     Area porte un périmètre de responsabilité métier distinct, avec une ou plusieurs capacités ; aucun minimum de deux. Une

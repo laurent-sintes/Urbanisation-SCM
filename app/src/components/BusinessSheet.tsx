@@ -2,7 +2,7 @@ import { ArrowRight, Download, GitBranch } from 'lucide-react';
 import { Fragment, type ReactNode } from 'react';
 import { behaviorTypeLabel } from '../behaviorTypes';
 import { businessFields, businessQualification } from '../businessContent';
-import { principlesForNode, principlesForRelation, principleTitle } from '../designPrinciples';
+import { principleGroupsForNode, principlesForRelation, principleTitle } from '../designPrinciples';
 import { pedagogyOf, resolvePedagogy } from '../pedagogy';
 import { kindLabel } from '../presentation';
 import { publicText } from '../publicText';
@@ -132,11 +132,12 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
   const hasScmStudy = node.id === scmStudyDomainId;
-  const principles = principlesForNode(model, node.id);
+  const { direct: principles, inherited: inheritedPrinciples } = principleGroupsForNode(model, node.id);
+  const hasPrinciples = principles.length > 0 || inheritedPrinciples.length > 0;
   const sections = [
     pedagogyOf(node) && ['pedagogical_description', 'Comprendre ce périmètre'],
     hasScmStudy && ['study', 'Pour approfondir'],
-    principles.length > 0 && ['principles', 'Principes expliquant ce périmètre'],
+    hasPrinciples && ['principles', 'Principes expliquant ce périmètre'],
     examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'],
     otherChildren.length > 0 && ['children', 'Explorer ce périmètre'],
     fields.scope && ['scope', 'Périmètre'],
@@ -236,16 +237,31 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           </div>
         </section>
         <BusinessPedagogy model={model} node={node} />
-        {principles.length > 0 && (
+        {hasPrinciples && (
           <section id={`field-${node.id}-principles`} tabIndex={-1} className="sheet-principles">
             <h2>Principes expliquant ce périmètre</h2>
-            <ul>
-              {principles.map((p) => (
-                <li key={p.id}>
-                  <DesignPrincipleLink id={p.id}>{principleTitle(p)}</DesignPrincipleLink>
-                </li>
-              ))}
-            </ul>
+            {principles.length > 0 && (
+              <ul>
+                {principles.map((p) => (
+                  <li key={p.id}>
+                    <DesignPrincipleLink id={p.id}>{principleTitle(p)}</DesignPrincipleLink>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {inheritedPrinciples.length > 0 && (
+              <details key={node.id} className="inherited-principles">
+                <summary>Principes hérités ({inheritedPrinciples.length})</summary>
+                <p>Ces principes concernent les périmètres qui englobent cette fiche.</p>
+                <ul>
+                  {inheritedPrinciples.map((p) => (
+                    <li key={p.id}>
+                      <DesignPrincipleLink id={p.id}>{principleTitle(p)}</DesignPrincipleLink>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </section>
         )}
         {hasScmStudy && (
@@ -526,6 +542,12 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
         </section>
       )}
       <div className="relation-description">
+        {relation.dataExchange && (
+          <section>
+            <h2>Finalité du partage</h2>
+            <Value value={relation.dataExchange.purpose} />
+          </section>
+        )}
         {qualifications.map(([key, value]) => (
           <section key={key}>
             <h2>{fieldName(key)}</h2>

@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import { annotatePrincipleText, designPrinciples, principleCategories, principleTitle } from '../designPrinciples';
+import {
+  annotatePrincipleText,
+  designPrinciples,
+  principleCategories,
+  principleTitle,
+  readingsForPrinciple,
+} from '../designPrinciples';
 import type { RouteState } from '../navigation';
 import { routeHash } from '../navigation';
 import type { ArchitecturePrinciple, PublishedModel } from '../types';
-import { ModelText, ReferenceLink } from './ModelLinks';
+import { ModelText, ReferenceLink, readingOrigin } from './ModelLinks';
 import './design-principles.css';
 
 export function DesignPrinciplesPage({
@@ -171,6 +177,62 @@ export function DesignPrinciplesPage({
                     {model.relationById.get(t.id)?.label || t.id}
                   </a>
                 )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {readingsForPrinciple(model, selected.id).length > 0 && (
+        <section className="principle-readings">
+          <h3>Descriptions qui citent ce principe</h3>
+          <p>Ces renvois expliquent un passage ; ils n’étendent pas le périmètre d’application du principe.</p>
+          <ul>
+            {readingsForPrinciple(model, selected.id).map((r) => (
+              <li key={`${r.collection}:${r.id}`}>
+                {r.collection === 'nodes' ? (
+                  <ReferenceLink target={r.id} anchor={r.fields[0]}>
+                    {model.nodeById.get(r.id)?.name || r.id}
+                  </ReferenceLink>
+                ) : r.collection === 'terms' ? (
+                  <ReferenceLink kind="glossary" target={r.id}>
+                    {model.glossaryById.get(r.id)?.name || r.id}
+                  </ReferenceLink>
+                ) : (
+                  <a
+                    href={routeHash({
+                      ...route,
+                      view: 'relations',
+                      principle: '',
+                      relation: r.id,
+                      node: '',
+                      scope: '',
+                      query: '',
+                      section: '',
+                      scroll: '',
+                      returnTo: readingOrigin(route, model.version),
+                    })}
+                    onClick={(event) => {
+                      event.currentTarget.href = routeHash({
+                        ...route,
+                        view: 'relations',
+                        principle: '',
+                        relation: r.id,
+                        node: '',
+                        scope: '',
+                        query: '',
+                        section: '',
+                        scroll: '',
+                        returnTo: readingOrigin(route, model.version),
+                      });
+                    }}
+                  >
+                    {model.relationById.get(r.id)?.label || r.id}
+                  </a>
+                )}
+                <small>
+                  {' '}
+                  · {r.collection === 'nodes' ? 'Fiche' : r.collection === 'terms' ? 'Glossaire' : 'Relation'}
+                </small>
               </li>
             ))}
           </ul>

@@ -198,22 +198,38 @@ export function ContextReturn() {
   );
 }
 
-export function DesignPrincipleLink({ id, children }: { id: string; children: ReactNode }) {
+export function DesignPrincipleLink({ id, anchor, children }: { id: string; anchor?: string; children: ReactNode }) {
   const context = useContext(Context);
   if (!context?.model) return <>{children}</>;
+  if (anchor || !context.model.raw.principles?.some((p) => p.id === id))
+    return (
+      <span className="unresolved-reference" title={`Principe ${id} absent de cette publication`}>
+        {children}
+        <span className="sr-only"> (référence absente)</span>
+      </span>
+    );
+  const model = context.model;
+  const destination = () =>
+    routeHash({
+      ...context.route,
+      view: 'design-principles',
+      principle: id,
+      node: '',
+      scope: '',
+      query: '',
+      section: '',
+      scroll: '',
+      relation: '',
+      term: '',
+      returnTo: readingOrigin(context.route, model.version),
+    });
   return (
     <a
-      href={routeHash({
-        ...context.route,
-        view: 'design-principles',
-        principle: id,
-        node: '',
-        scope: '',
-        query: '',
-        section: '',
-        scroll: '',
-        returnTo: readingOrigin(context.route, context.model.version),
-      })}
+      className="principle-reference"
+      href={destination()}
+      onClick={(event) => {
+        event.currentTarget.href = destination();
+      }}
     >
       {children}
     </a>
@@ -593,7 +609,11 @@ export function ModelText({ text }: { text: string }) {
       {inlineParts(publicText(text)).map((part) => {
         const key = `${offset}:${part.kind || 'text'}:${part.target || ''}`;
         offset += part.text.length + 1;
-        return part.kind && part.target ? (
+        return part.kind === 'principle' && part.target ? (
+          <DesignPrincipleLink key={key} id={part.target} anchor={part.anchor}>
+            {part.text}
+          </DesignPrincipleLink>
+        ) : part.kind && part.kind !== 'principle' && part.target ? (
           <ReferenceLink key={key} kind={part.kind} target={part.target} anchor={part.anchor}>
             {part.text}
           </ReferenceLink>

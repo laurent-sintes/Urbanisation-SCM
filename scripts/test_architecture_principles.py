@@ -72,6 +72,14 @@ class ArchitecturePrincipleTests(unittest.TestCase):
         self.model['principles']=[{'id':'OLD','statement':'Legacy global rule'}]
         self.assertIn('OLD',applicable_principles(self.model,{'cap'}))
 
+    def test_reading_citation_never_widens_normative_scope_or_hides_text_changes(self):
+        before = deepcopy(self.model)
+        cap = next(n for n in self.model['nodes'] if n['id'] == 'cap')
+        cap['fields']['scope'] = '[Explanation](principle:LOCAL)'
+        self.assertEqual(applicable_principles(self.model, {'cap'}), {})
+        self.assertEqual(self.model['principles'], before['principles'])
+        self.assertIn('target_business_changed', classify_context(self.decision, before, self.model)['reasons'])
+
     def test_schema_reads_old_and_rich_principles_and_rejects_unknown_attributes(self):
         schema=json.loads((Path(__file__).resolve().parents[1]/'modeles/schemas/urbanism.schema.json').read_text(encoding='utf8'))
         contract=schema['properties']['principles']['items']

@@ -5,7 +5,7 @@ try:
 except ImportError:
     from market_comparison import validate_comparisons, validate_inspiration
 
-LINK = re.compile(r'(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|modeling):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)')
+LINK = re.compile(r'(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|modeling|principle):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)')
 
 
 def links(value):
@@ -146,12 +146,14 @@ def validate(model, *, method_terms=None):
     texts += [model.get(key, {}) for key in ('scenario_catalog', 'hotspot_catalog', 'application_catalog',
                                            'document_catalog', 'information_catalog', 'principles')]
     method_index = {term['id']: term for term in method_terms or []}
+    principle_ids = {p['id'] for p in model.get('principles', [])}
     if method_terms is not None:
         texts += list(method_index.values())
     for kind, target, anchor in links(texts):
         if kind in ('method', 'modeling') and method_terms is None:
             continue  # No implicit live glossary for historical/frozen inputs.
-        targets = ids if kind == 'glossary' else method_index if kind in ('method', 'modeling') else nodes
+        targets = (ids if kind == 'glossary' else method_index if kind in ('method', 'modeling')
+                   else principle_ids if kind == 'principle' else nodes)
         if target not in targets:
             errors.append(f'{kind}: unresolved published link {target}')
         elif anchor:
@@ -160,6 +162,8 @@ def validate(model, *, method_terms=None):
                 allowed.update(k for k, v in nodes[target].get('fields', {}).items() if k != 'name' and v)
             elif kind in ('method', 'modeling'):
                 allowed = {'definition', 'short-description', 'notes', 'examples', 'market_comparisons'}
+            elif kind == 'principle':
+                allowed = set()  # Articles have stable identities, no public section contract.
             if anchor not in allowed:
                 errors.append(f'{kind}: unresolved section {target}#{anchor}')
     return errors
