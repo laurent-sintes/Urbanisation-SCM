@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-23.2
+version: 2026-10-23.3
 as_of: '2026-10-23'
 space: backlog
 display_policy: typed-tree-v1
@@ -4298,20 +4298,19 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b1daf1026850a32889fec029,
-      ADOPT-REASSESS-36d2667571bb6c261b382683. Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4068f484f10cdd90ad58bea7,
+      ADOPT-REASSESS-e8608a7fa49afd1c9be9d68f. Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée
       dans le lot U1116/U1117. Les nouvelles formulations gardent leur qualification proposée ; les accords historiques restent
       limités à leurs champs, et l’ordre de lecture est capturé séparément. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
   content_sha256: 7be40f86fdf81e99036e5278fde265e925117bb6e0101a0dce99ccedfd6ca475
 - id: supply-chain-orchestration
-  revision: 18
+  revision: 19
   kind: domain
   fields:
     name: Supply Chain Management
-    definition: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
-      et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
-      et suivre leurs résultats.
+    definition: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+      ventes, service après-vente, retours et déstockage.
     market_comparisons:
     - vendor: Zacharia, Sanders et Nix
       product: Recherche — Journal of Business Logistics
@@ -4321,21 +4320,10 @@ nodes:
       similarities: L’orchestration coordonne un réseau de partenaires et facilite leur coopération par le partage de l’information.
       differences: L’article étudie le rôle d’un prestataire logistique coordonnant plusieurs entreprises. FLOW décrit des
         responsabilités métier sans imposer ce prestataire ni cette organisation.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Orchestrator atteste un usage scientifique de la notion d’orchestration, distinct d’un nom de logiciel.
       definition_choice: Décrire les responsabilités et leur coopération sans présupposer l’acteur qui les réalisera.
       concept_name: Orchestrator
@@ -4363,21 +4351,10 @@ nodes:
       similarities: Le référentiel relie la coordination des acteurs, les règles et la performance de la chaîne.
       differences: Orchestrate dans SCOR comprend notamment stratégie, risques et ressources. FLOW se concentre sur commandes,
         stocks, engagements, optimisation et coordination de la réalisation.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Orchestrate est un usage professionnel du vocabulaire d’orchestration ; ce nom ne suffit pas à établir
         une équivalence.
       definition_choice: Conserver la responsabilité de coordination au périmètre FLOW sans reprendre l’ensemble de la stratégie
@@ -4409,21 +4386,10 @@ nodes:
       similarities: Le SCM inclut coordination des partenaires, approvisionnement, transformation et logistique.
       differences: Ce périmètre professionnel est plus large que le domaine FLOW ; SCM ne désigne pas seulement son noyau
         d’orchestration.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Management nomme le périmètre fonctionnel FLOW retenu sous U1121. La discipline SCM couvre
         une chaîne plus large ; les responsabilités applicables et les coopérations sont précisées sans déduire une réalisation
         interne de toutes les activités.
@@ -4456,26 +4422,13 @@ nodes:
       element_name: Welcome to Dynamics 365 Supply Chain Management
       element_type: Périmètre de produit
       relationship: Recouvrement partiel
-      similarities: La suite couvre notamment produits, stocks, planification, achats, production et entrepôts.
-      differences: 'Dynamics regroupe aussi sourcing, conception produit, production, entrepôts, transport et d’autres responsabilités.
-        FLOW conserve ses frontières métier : maîtrise des données d’entreprise, sourcing, décisions commerciales et financières
-        et réalisation logistique sont distincts. Production non applicable à Beaumanoir et logistique externalisée ne retirent
-        pas au domaine sa responsabilité de Supply Chain Management.'
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      similarities: Planification et exécution appartiennent à un ensemble intégré.
+      differences: L’offre inclut aussi production, achats et exécution physique ; les domaines et acteurs FLOW conservent
+        leurs frontières. Le catalogue produit n’est pas une définition normative de la discipline SCM.
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Management rend visibles la gestion des plans, des stocks, des commandes et de leurs engagements.
         La liste des modules Dynamics ne prescrit pas la frontière du domaine FLOW ; absence de fabrication et externalisation
         logistique ne suffisent pas à écarter ce nom.
@@ -4485,9 +4438,9 @@ nodes:
         Le périmètre de la suite Dynamics reste distinct du domaine métier FLOW.
       source_title: Welcome to Dynamics 365 Supply Chain Management
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
-      source_version: Page mise à jour le 10 septembre 2025
+      source_version: Documentation évolutive ; mise à jour affichée 2025-09-10
       source_locator: Core concepts and tasks
-      consulted_on: '2026-10-16'
+      consulted_on: '2026-10-23'
       status: proposed
       source_refs:
       - U470
@@ -4500,8 +4453,10 @@ nodes:
       - U1119
       - U1120
       - U1121
-      evidence_limits: Passage primaire consulté ; rapprochement limité au périmètre décrit, sans équivalence de catalogue,
-        choix de solution ni réalisation Beaumanoir déduite.
+      - U1150
+      - U1151
+      evidence_limits: Le corps de la page est lisible malgré une bannière générique d’autorisation ; aucune configuration
+        installée, édition client ou réalisation Beaumanoir vérifiée.
       concept_name: Supply Chain Management
       scope_summary: Produits, stocks, achats, planification, production, entrepôts et transport.
       approach_summary: Réunir ces fonctions dans une suite logicielle.
@@ -4515,21 +4470,10 @@ nodes:
       differences: Le module Oracle coopère avec Promising, Inventory et Order Management ; le domaine FLOW regroupe aussi
         des responsabilités que ces produits portent séparément. Supply Planning émet également des demandes vers ce composant
         ; FLOW place sa planification dans le même Domain.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       term_choice: Supply Chain Orchestration reste le nom natif du produit Oracle. Cet appui éclaire une partie de la coordination
         de Supply Chain Management dans FLOW, sans équivalence entre le produit et le domaine.
       definition_choice: Le nom met l’accent sur la coordination des engagements et des moyens de les satisfaire ; il ne signifie
@@ -4566,21 +4510,10 @@ nodes:
       similarities: Coordination de la planification et de l'exécution, avec adaptation aux changements.
       differences: Offre allant de la stratégie pluriannuelle à la livraison ; FLOW conserve un périmètre Supply plus limité
         et la réalisation physique reste chez les exécutants.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Supply Chain Orchestration
       source_url: https://www.kinaxis.com/en/solutions/supply-chain-orchestration
       source_version: Page évolutive ; édition non indiquée
@@ -4624,21 +4557,10 @@ nodes:
         de plans, stocks, commandes et engagements ; il ne reprend pas le périmètre entier de l’offre produit.
       evidence_limits: Appui au vocabulaire et au lien entre planification et réalisation ; ni consensus interéditeurs établi
         par ces deux documents Kinaxis, ni architecture obligatoire, ni réalisation installée prouvés.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       status: proposed
       source_refs:
       - ELM647
@@ -4666,21 +4588,10 @@ nodes:
       similarities: Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours d’exécution.
       differences: Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation Beaumanoir ; les
         capacités dépassent la couverture d’un seul produit.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Intelligent Order Management overview | Microsoft Learn
       source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -4716,21 +4627,10 @@ nodes:
         suit les échanges intercompany.
       differences: Appui à la propriété contractuelle et à un parcours orchestré ; VCM ne démontre pas une orchestration universelle
         ni toutes les adaptations locales de FLOW.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Executing the Advanced Intercompany Sales and Stock Transfer Proc
       source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -4761,40 +4661,27 @@ nodes:
       scope_summary: La page distingue les repères SCM de SAP S/4HANA Cloud Public et Private Edition et les autres solutions
         de la famille SAP.
       approach_summary: Repères de portée du SCM, distincts d’un catalogue équivalent aux responsabilités FLOW.
-      similarities: La gestion de la supply chain associe planification et conduite des opérations ; le nom peut couvrir plusieurs
-        responsabilités coopérantes.
-      differences: La famille et les éditions SAP regroupent aussi des activités non applicables ou confiées à d’autres domaines
-        dans FLOW. Les solutions IBP, GTS et Digital Manufacturing citées hors sections S/4HANA ne prouvent pas une couverture
-        native S/4HANA.
-      flow_position: '[Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references),
-        [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management),
-        [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders),
-        [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche
-        les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les
-        priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management
-        porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application
-        et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management),
-        reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance)
-        reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues
-        à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références
-        locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités
-        commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations
-        internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis
-        MAP ou un autre SI.'
+      similarities: Pilotage et exécution sont reliés à une lecture de la performance de la chaîne.
+      differences: La page présente aussi des offres SAP complémentaires, dont IBP ; leur couverture n’est pas attribuée automatiquement
+        à S/4HANA. Ni la taxonomie ni tout le périmètre de la gamme ne sont repris dans FLOW.
+      flow_position: |-
+        Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions, [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005) et valeur récupérée.
+
+        [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
       source_title: Supply Chain Management | SAP Learning
       source_url: https://learning.sap.com/products/supply-chain-management
-      source_version: Page évolutive sans numéro d’édition ; sections explicitement dédiées à SAP S/4HANA Cloud Public Edition
-        et Private Edition.
-      source_locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition ; Browse the supply
-        chain management capabilities in SAP S/4HANA Cloud Private Edition.
-      consulted_on: '2026-10-16'
-      evidence_limits: Présentation de portée réellement consultée ; ne démontre ni une équivalence de catalogue, ni la couverture
-        complète du domaine, ni une réalisation Beaumanoir. Les fonctions détaillées s’appuient sur leurs documents propres.
+      source_version: Page de gamme évolutive ; release unique non applicable
+      source_locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition / Private Edition
+      consulted_on: '2026-10-23'
+      evidence_limits: Présentation primaire consultée ; ne prouve ni chacun des leviers détaillés du PDF ni une capacité
+        installée chez Beaumanoir.
       status: proposed
       source_refs:
       - U1119
       - U1120
       - U1121
+      - U1150
+      - U1151
       term_choice: Supply Chain Management est le nom métier local adopté U1121. Le périmètre produit SAP et ses intitulés
         de formation ne sont pas des frontières imposées au domaine.
       definition_choice: Conserver la gestion des plans, stocks, commandes et engagements au périmètre FLOW, avec coopération
@@ -4908,18 +4795,33 @@ nodes:
       - U1133
       - U1134
       - U1135
-    finality: Satisfaire les besoins de la chaîne d’approvisionnement avec des engagements explicites et une utilisation cohérente
-      des ressources.
+    - id: whole-chain-preparation-choice-U1150
+      title: Choisir le site qui évite un transfert inutile
+      situation: 'Exemple fictif : une commande de 100 pièces peut être préparée depuis A après un transfert de 70 pièces
+        depuis B, ou directement depuis B. Les deux options permettent de tenir la date demandée et préservent le [stock](glossary:TER005)
+        protégé pour le service après-vente.'
+      outcome: 'L’option depuis B coûte ici 220 € de préparation et transport, contre 300 € depuis A : un transfert préalable
+        est évité. Les effets réels sur le service, le coût et les autres [engagements](glossary:TER013) restent à vérifier
+        après exécution.'
+      lesson: Le transport final peut être plus cher alors que le parcours complet est moins coûteux. Une simulation ne prouve
+        pas un gain réalisé.
+      source_refs:
+      - U1150
+      - U1151
+    finality: Tenir les [engagements](glossary:TER013) de service en maîtrisant les coûts, les délais et le [stock](glossary:TER005)
+      immobilisé, et en récupérant de la valeur sur les retours et les excédents.
     scope: |-
+      Le pilotage relie l’offre et la [demande](glossary:TER011) sur les parcours d’achat, de vente, de service après-vente, de retour et de déstockage. Les choix portent sur les ressources utilisables, les priorités, les lots, les destinations et les prestations. Leurs effets sont appréciés ensemble sur le service, les coûts, les délais, le [stock](glossary:TER005) et la valeur récupérée.
+
       [Supply Chain Management](model:supply-chain-orchestration) réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), dont [Order Backlog Management](model:ba-order-backlog-management), [Availability](glossary:TER112), [Order Management](model:D04), [Inventory Management](model:D01), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Master Plan rapproche les plans de demande et de ressources avec les commandes et le stock dans un plan commun ; Order Backlog arbitre les priorités, affectations et passages en livraison. Availability évalue les possibilités de promesse ; Order Management porte les engagements. Les décisions de priorité et d’affectation sont des capacités du Master Plan ; leur application et les engagements restent distincts. [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management), reçoit les contributions de planification externes et conserve leur provenance. [Reference Maintenance](model:ba-reference-maintenance) reçoit les références ; [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues à leurs destinataires. Les sources de vérité d’entreprise restent externes ; Operational References porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées. Les exécutants réalisent les prestations et conservent leurs opérations internes. La cible de centralisation dans FLOW Core ne prouve aucun moteur unique ni transfert déjà réalisé depuis MAP ou un autre SI.
 
       Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
     market_inspiration:
-      choice: Supply Chain Management relie les choix du [Master Plan](model:domain-plan), les changements autorisés aux commandes
-        et la coordination des prestations.
-      flow_scope: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
-        et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
-        et suivre leurs résultats.
+      choice: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions,
+        [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005)
+        et valeur récupérée.
+      flow_scope: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+        ventes, service après-vente, retours et déstockage.
       flow_approach: |-
         Le domaine réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Master Plan](model:domain-plan), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Process Management](model:subdomain-process-management). Ces périmètres coopèrent par des informations, des décisions et des engagements explicites.
 
@@ -4946,6 +4848,10 @@ nodes:
         et coordination de la réalisation.
       - Le SCM inclut coordination des partenaires, approvisionnement, transformation et logistique. Ce périmètre professionnel
         est plus large que le domaine FLOW ; SCM ne désigne pas seulement son noyau d’orchestration.
+      - U1150–U1151 — Le dossier de pilotage explicite les arbitrages sur le parcours complet et la mesure de leurs effets.
+        Les offres Microsoft Dynamics 365 SCM et SAP S/4HANA relient planification et exécution ; leurs périmètres produits
+        ne définissent pas les frontières de FLOW. Les exemples chiffrés du dossier sont fictifs, sans objectif ou gain Beaumanoir
+        présumé.
       examples:
       - title: Illustration FLOW
         situation: Une campagne augmente les besoins tandis qu’un prestataire prend du retard.
@@ -4957,11 +4863,12 @@ nodes:
         - U626
     modeling_depth: behaviors
     pedagogical_description:
-      explanation: Ce domaine aide à satisfaire une demande avec les produits et les prestations disponibles ou à obtenir.
-        Il rapproche les besoins, les stocks et les possibilités d’approvisionnement, puis suit les commandes et coordonne
-        les prestations nécessaires. Il permet aussi de revoir une solution lorsqu’un retard ou un manque apparaît. Dans un
-        mode saisonnier, il peut décider des commandes d'appoint [nearshore](glossary:TER383), après contrôle [CTP](glossary:TER045)
-        et comparaison économique, dans les délégations prévues.
+      explanation: |-
+        Ce domaine prépare et ajuste la façon dont les produits sont approvisionnés, affectés, livrés, repris ou réorientés. Il rapproche les [demandes](glossary:TER011), le [stock](glossary:TER005), les apports attendus et les capacités de prestation pour construire des [engagements](glossary:TER013) réalisables.
+
+        Il compare les options sur l’ensemble du parcours : acheter autrement, choisir un autre site préparateur, adapter les lots, protéger une quantité pour le service après-vente ou remettre un retour en état. Une économie locale peut augmenter le coût ou le délai ailleurs. Les décisions tiennent compte des règles, des ressources et des [engagements](glossary:TER013) déjà pris.
+
+        Les résultats observés permettent de réviser les plans et les règles de gestion. Le pilotage relie la planification, les décisions et leurs effets réels ; il distingue le temps nécessaire pour disposer de l’information, décider et réaliser l’action.
       example_refs:
       - node_id: supply-chain-orchestration
         example_id: illustration-supply-chain-orchestration-U1125
@@ -4970,10 +4877,27 @@ nodes:
         example_id: offshore-nearshore-supply-chain-orchestration-U1134
         contribution: Avant d'engager le socle, comparer notamment 950 pièces initiales et un appoint de 250. Pendant la saison,
           ne déclencher l'appoint que si le besoin, la faisabilité, l'économie et les autorisations le justifient.
+      - node_id: supply-chain-orchestration
+        example_id: whole-chain-preparation-choice-U1150
+        contribution: Comparer les ressources utilisables, la faisabilité et le coût du parcours complet avant d’autoriser
+          le choix du site préparateur.
       distinctions:
       - node_id: D01
         explanation: Inventory Management établit les faits et les quantités de stock. Ce domaine utilise cette référence
           avec les commandes, les plans et les prestations pour organiser la satisfaction de la demande.
+      - node_id: domain-sales
+        explanation: '[Commerce](glossary:TER108) conserve les offres, les canaux et les décisions commerciales. Le domaine
+          Supply tient les commandes de vente ayant un impact sur le [stock](glossary:TER005) et leurs [engagements](glossary:TER013).'
+      - node_id: domain-sourcing-procurement
+        explanation: '[Sourcing and Procurement](glossary:TER109) conserve les sources, accords et échanges fournisseur. Le
+          domaine Supply tient les commandes d’achat et peut décider un appoint dans les délégations prévues.'
+      - node_id: domain-finance
+        explanation: Finance conserve les autorités financières et les règles comptables ; le domaine Supply fournit les faits
+          nécessaires, sans se substituer à ces responsabilités.
+      - node_id: domain-logistics-execution
+        explanation: '[Logistics](glossary:TER110) et les autres exécutants réalisent les opérations physiques. Le domaine
+          Supply coordonne les prestations confiées et suit leurs résultats. La fabrication n’est pas ajoutée au modèle actuel
+          ; cette répartition ne présume aucun moteur ou déploiement unique.'
       market_comparison_refs:
       - node_id: supply-chain-orchestration
         comparison_id: market-supply-chain-orchestration-1
@@ -4989,6 +4913,8 @@ nodes:
       - U1133
       - U1134
       - U1135
+      - U1150
+      - U1151
   source_refs:
   - C108
   - C78
@@ -5079,17 +5005,19 @@ nodes:
   - U1133
   - U1134
   - U1135
+  - U1150
+  - U1151
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u373
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c294eb81dc834b23e248c907.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-977f7e5892eb1b22b12d710d.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
-  last_modified: '2026-10-21T15:08:29.834886Z'
-  content_sha256: d5a3deb7502a4f2390d0eacd74e70883e5fbce9c5babfc3a3f7986d699eb63e0
+  last_modified: '2026-10-23T10:03:30.140487Z'
+  content_sha256: b0405a403b69b7985586e520699874aa98826a268bb4cc117955ff25e492349f
 - id: business-references
   revision: 27
   kind: area
@@ -5487,7 +5415,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c49ce072ddae6a9c4e210726.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a3ecb398c745801e5c811c1f.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -10687,7 +10615,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e41bca14d07583da16c07f6c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c03a5e8e36274574cf27c2f0.
       Note antérieure, qui ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision
       et conditionnements. Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites
       marché sont conservées. Aucune réalisation installée déduite. »'
@@ -18615,7 +18543,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-29f04d8b97fee8bcadc5d2ed.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-548233c96489fb6c07394207.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -18875,7 +18803,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6876d1c9e65d5bd50e5548cc.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-280ed5cd0752d27a69ad35cc.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -19188,7 +19116,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-99e22653e88533c1cb37fc40.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-02d4d034df05476b9e72a682.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -19672,7 +19600,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a60ac26328b13c3396d02983.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7099f758f9819fc4181b03e3.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -21349,7 +21277,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bb74aff05d8f6344a93dd1f2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ecd22e170188de5333bef6cd.
       Note antérieure, qui ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision
       et conditionnements. Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites
       marché sont conservées. Aucune réalisation installée déduite. »'
@@ -29134,7 +29062,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0a09430991a1efe986077b7c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c016ef2bf20de4a2b08d9d82.
       Note antérieure, qui ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision
       et conditionnements. Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites
       marché sont conservées. Aucune réalisation installée déduite. »'
@@ -32788,7 +32716,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cac70f60be7f44ab2a312fbf.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7a5558135772ee434d9b322c.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -33139,7 +33067,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-beb00428d4fc133802817994.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-525a665eeca3b2ed590451fb.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   last_modified: '2026-10-17T08:57:31.725611Z'
@@ -33435,7 +33363,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b72d7d791c27d9b6fcbc100f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-99eccb346a557c3c870eb653.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -37391,7 +37319,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3d55fa144a304745eaf36859.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c53bb2a7b603559800408c4b.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   last_modified: '2026-10-17T08:57:31.725611Z'
@@ -41024,7 +40952,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e74c4f8a29a5e79892549755.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3c1c71451ef9f7b59ff779dc.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Niveau, composition et frontières du lot U975 ; accords
       historiques inchangés préservés. Proposé : Textes de mise en œuvre et exemples nouveaux ; comparaisons non certifiées
       globalement. »'
@@ -41469,7 +41397,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-047810fa28a062670e1bb203.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-90bff0face44af0766411d32.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -44531,7 +44459,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b07b2fe37bcfcfdea9dfe6c1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f4692123a4cd44dd34c3320d.
       Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés
       ; formulations détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -45371,8 +45299,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4d5d94941926f11d42bc3e93,
-      ADOPT-REASSESS-d0c091bf6cc1076740fac546. Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f728c51cd3db85407d7411d2,
+      ADOPT-REASSESS-9e51b8549e8bbe41b8ea87d3. Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement
       et les frontières proposés ; formulations détaillées et comparaisons marché proposées, sans réalisation installée déduite.
       »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -48512,7 +48440,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e2706edc87f31146bb665ce6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-95d96315808314e6441a1c38.
       Note antérieure, qui ne qualifie pas cette révision : « Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles
       formulations gardent leur qualification proposée ; les accords historiques restent limités à leurs champs, et l’ordre
       de lecture est capturé séparément. »'
@@ -49762,7 +49690,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e636560f7f65cdc39effe9f6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d3fd0b9758836080c3e86734.
       Note antérieure, qui ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision
       et conditionnements. Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites
       marché sont conservées. Aucune réalisation installée déduite. »'
@@ -51598,7 +51526,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9e5b84d4a5d6c0a3ab292de9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e4516acf5c511e53c868c08e.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -51941,7 +51869,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-559cf31665e45236e2a59716.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c9cd823d7acbbee59a051046.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -52060,7 +51988,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c858fa9ada394f8d756d98a3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4511f4faf88ce6327503b6e4.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -52140,8 +52068,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-70de2c9feb388c009bba88c7,
-      ADOPT-REASSESS-0face64b711ca2c440761872. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-296a721dfeec8b33fb516ed8,
+      ADOPT-REASSESS-15780e6fcbefc1697fc7702f. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
       U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons
       et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -52282,7 +52210,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f4e51443f12c70530e791a3d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-37419099cf40ff313da1a50a.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -52399,7 +52327,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-57298fd18e676da948147c39.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-98765ea246ec26da77371301.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -52657,7 +52585,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-176649cbf497f88d128c68d3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-144ef05aaf77344043ea580f.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -52771,7 +52699,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f3e5d534fc3b9de973b4d01b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-aa767432c1cc846938103467.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -52851,8 +52779,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-65e90af8dd596f843503750e,
-      ADOPT-REASSESS-30a00258db2b8079ba547b6c. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6e5557a7924d7090a0499ead,
+      ADOPT-REASSESS-4f473a2941146ddf8e860fe3. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
       U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons
       et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -53080,7 +53008,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6e0e74a067bc303c4a3d1fda.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d7a348b24e4fae79e3859956.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -53507,7 +53435,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fc91d4dcaa69fa7946009bcd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-90f6d5edb06572efd0400f28.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -53585,8 +53513,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1160d394599f743781168c90,
-      ADOPT-REASSESS-402abc10ff239bb0fa267f89. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e87c52715118b63c05e6a328,
+      ADOPT-REASSESS-26f17b3b6ede4d564b625dcc. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
       U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons
       et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -54063,7 +53991,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-66ae89358a60a0146831cb46.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-098f1f6da8a2a6abf3d0ef54.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -54203,8 +54131,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dce14126d8979cbe9c771248,
-      ADOPT-REASSESS-bef98cd7747c67166ccab67a. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0fa5bd8135221841198507ea,
+      ADOPT-REASSESS-e39168afa8b3133a93bb6210. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
       U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons
       et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -54339,8 +54267,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-75e75dad2d68f949699cf82a,
-      ADOPT-REASSESS-8aa49a656dbe8cb5cfdfb5cc. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-574696a46555a1fbbe3dccf2,
+      ADOPT-REASSESS-9070e671342879cad2d1278c. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -54476,8 +54404,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-190f826efea2323f7d1a5ef9,
-      ADOPT-REASSESS-c1a233327a4af30296277573. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-63e4706d1627406178db256b,
+      ADOPT-REASSESS-439c20cea9f0b89eb5932d82. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -54613,8 +54541,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e081f40a048cacd233583722,
-      ADOPT-REASSESS-2ffaffc3b3db35380e075c63. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-520891680c79d9abde90e4af,
+      ADOPT-REASSESS-6cf8b70e862720b2196e9c14. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -54758,7 +54686,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-49e8b809109cab606e62cc5e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-304d4d0af134555c659b389a.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -54897,8 +54825,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e89e0188cd4a33dab3e72911,
-      ADOPT-REASSESS-4a61d26a1984b5652c509336. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-df6f973e05ed36c5a77ab967,
+      ADOPT-REASSESS-7dbfbd3aad47eac886452405. Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot
       U1115 appliquées ; seuls les champs capturés séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons
       et choix de mise en œuvre nouveaux restent proposés ; aucune réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -55172,8 +55100,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-90ad847556b053bf8ba53f83,
-      ADOPT-REASSESS-c50af72e8a395ff5a7eab047. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3c2b895bf9e2c78c32558e92,
+      ADOPT-REASSESS-f783f1bc7f0ed708ab8cc5fc. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -55285,8 +55213,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-33db40a7be21c05ae8737278,
-      ADOPT-REASSESS-df7502f4b1df6a9b0a055af2. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-09a5e2204bb9b84f1f269790,
+      ADOPT-REASSESS-336de2d809595679ba2bf829. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -57828,7 +57756,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7a8a5d5a044fa638b3dda125.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8c334f43dd91913f952adac5.
       Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés
       ; formulations détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -60428,7 +60356,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a66bd890eaba136a6137bbd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d8a3fa96b746de95b3bd9560.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -60557,7 +60485,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-aee9783196daf9af97ff9904.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9096afdd8411210452ae94ae.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -60686,7 +60614,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ed9a1ece83f72fe9a634c21b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2933b94df9775cb9725de496.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -60814,7 +60742,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b8aaad9a5e7abc026cb6b70e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2768a58c8db4fa1c574ae579.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -60943,7 +60871,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b7dbe6ad39fc19d8e389b58f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-71b7923f24a66405217057a1.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61072,7 +61000,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d43950b574258d68490adbfe.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-483631147144d8380bdce085.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61175,7 +61103,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3e8b56a39dcc91d971b51c37.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bff5fc0547469fa273fe8231.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61305,7 +61233,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f01fe549773a65e3d3420e6b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3f1c565b70dc3a7fafb9d4cc.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61429,7 +61357,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-91de0148098341b8dec2eaf6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-07486d7781ab451a7a909c95.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61558,7 +61486,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a52d2da2d9b5af66b136b6ef.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-42bfab422f1ab420031de168.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61688,7 +61616,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e2ec3d98ef3977ef13bd884b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c122eedc24bfda3f3686f725.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61850,7 +61778,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c21ec92195b92346b1f832cf.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ee109d355486a401e45cd525.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -61979,7 +61907,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-526effacbefffbaca3594eaa.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a67246c42ff5a97f44749be0.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -62365,7 +62293,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c6a3065b17e17726d12aaf1c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7ac38090c89500cc9537be71.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -62493,7 +62421,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3727a7ede16d799785aa79a3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8782299fb572c62e3e37d2d4.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -62620,7 +62548,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7aac1d1a223ef87caf5286f7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ee3426955f4d07f44a154430.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -62853,7 +62781,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8c4cb3fd6ba8d658640f0a01.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-34977195ee140966a00ca539.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -62956,7 +62884,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-20d4004a627719bcc1eea379.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bf330a436059e7019b838ecc.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -63216,7 +63144,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4c6ee735975fe9d0227e4877.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c939011c58071f6862b3ffbf.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -63318,7 +63246,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ba5405204b2e7858ea4963bc.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0692ce7f86a6d280a2a9dc43.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -63440,7 +63368,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-23915e487b6a8a2ed11f5eef.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3332a5f999830a84aa8a892d.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -63568,7 +63496,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d1d7441c6b54ef0609e8e72f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0c295f5639f53a915ca3ae28.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -67510,7 +67438,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6c1dcb2663b4cac87e37b7ee.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-570224ef8d68c96dc7ae215d.
       Note antérieure, qui ne qualifie pas cette révision : « Regroupement, nom et ordre validés U1103 ; rédaction et rapprochements
       marché proposés, sans réalisation installée déduite. »'
   last_modified: '2026-10-21T14:24:42.920956Z'
@@ -69126,7 +69054,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-eba2afc282cc0f9b87d02a6a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9f26642d39bb48665b5006bd.
       Note antérieure, qui ne qualifie pas cette révision : « U1146 valide les précisions du lot U1145 sur délais de décision
       et conditionnements. Les champs capturés séparément portent cet accord ; les autres qualifications antérieures et limites
       marché sont conservées. Aucune réalisation installée déduite. »'
@@ -69423,7 +69351,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2e7a387ca4b8881cf1dd47cd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7d587b08c9f4eb98e1acb759.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69463,7 +69391,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bc2072c9dac2879b295f3cde.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6563e85247ddb8df0032116e.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69503,7 +69431,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9044a3dced141f7fb05a573c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-984a74c80cb0f32f17209941.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69544,7 +69472,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e2c64e7ebb0b59f990087ef0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9af1071f778d0f713ab533f2.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69585,7 +69513,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ad22124c9dcdb8d0599912d1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fb296698716c6dac17e6cf26.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69777,7 +69705,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dba4c868531de606ac78069c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a6dbc75b7ee004732a65e228.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69814,7 +69742,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6f930f8de55c9afe19904fbf.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c2ea95010d992c1d3b62b2f3.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69859,7 +69787,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-71f4a01249eaeccf7d78edeb.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-830b37c0c8d6d171f30abf2c.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69899,7 +69827,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-33e054d8ff76495089dc050e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-abfed757d4ec18179476192d.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -69989,7 +69917,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-83baf8996c05866acfa9f425.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-05cf9d27a8777f76075c8d63.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -71943,7 +71871,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a44af8f65b394774b3d8341a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9e86cb2a3157292bd0cd3d0a.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   fields:
@@ -71972,7 +71900,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-98af216f080031880a9b8865.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-acac155e2a016fd4d3189744.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   fields:
@@ -74100,7 +74028,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e15d5ee613f4b86fb72d1446.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-590e5faafca678ca55109c6b.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74390,7 +74318,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3f2ea2ea189376062ccb685c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d6198ca5a105d4859cb2b52a.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74553,7 +74481,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-685c105bc445badf7d600df6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d3bf26e0ec01f9d9bf092ced.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74592,7 +74520,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-92c799a714e31b5389e8b4d2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d4fd0888afb723cf38daebe1.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74627,7 +74555,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e00255ccc871eec5af16b1d4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5c53af02a61dfa8409f309b0.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74672,7 +74600,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-43045ec908cc41ed20d94cf5.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-91cbe9a66be93d4292c766fc.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74715,7 +74643,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c0cab09b7afab075be0e682d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1c91bbc676342d5a14b28137.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74755,7 +74683,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ad07dd1c9675d0086b7d6364.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c103c36e7f7ebd67a02db051.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74792,7 +74720,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7c0a99f4c4daddb6971e183d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dbd6e50de5a410d9bf748346.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74829,7 +74757,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d10ffe9778af6eb0f6ff4347.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-121780dc81f2759ff3827654.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74867,7 +74795,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-02253693b9c0820b6b15c5a0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5c4d39da199bffa799733be3.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -74905,7 +74833,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-600d58977c131c7b5e820e81.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d985770fc660b884f4082d3a.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -75674,7 +75602,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-db1b74172be25abb7fd13a36.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-af13e99a57c84a8d470ecbba.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -75743,7 +75671,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b20d73a3132f909e35e88dfa.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4f80f861d6409af82d574dac.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -75787,7 +75715,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cc14a7a0420d68efcff7fbbe.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-29bea4afb1ea3cd12f1fdfc3.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -76208,7 +76136,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dce085301926cabcec544aa1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-185992086382334ceaf84a3a.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -76243,7 +76171,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7094b957a003044908cd4f3f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6c98277032f5a7feb48fe71d.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -76278,7 +76206,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1fdf300732767665038ba373.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-25cfdd2ddb2f3f4aaae54d14.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -76314,7 +76242,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8a4b90ce9cdcf39d99423850.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cf723551d6c93ce524c90bba.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -76349,7 +76277,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a80cc00e4aeeeaef3402bb9a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0e38f03544acc8408cf5e1f1.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -76519,7 +76447,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bab540978fac19793a9ce859.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-93be53ad98632e4b77763f49.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -77252,7 +77180,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b0f1b9078ea27961fbc4dc45.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-56580af56c1b0c98ca800b29.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -77464,7 +77392,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ac43e6e0952ef87699188f02.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a7af4a60f0417326dd64a749.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -77564,7 +77492,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cc3d82ed13a038baa60d2dbc.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ace9ff3516099a63d05f5798.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -77580,7 +77508,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7e33defa36fd1d0edb755fd2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0709b663ec4879ec805de7d1.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -77596,7 +77524,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-37ac6454494ecbbd200e4f72.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-362b7713f49692944a4aa56b.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -78525,7 +78453,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-77c78d38ae0ede6648f09a71.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a2fb9dd11ae83b69559bdf7c.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   qualification:
@@ -79349,7 +79277,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9c34be2a16ebae2730703c46.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-28b53e47b0ededbf4b232bdf.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79378,7 +79306,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f1682ba73901b53b940bf119.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f39239af769e1b544b82c475.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79407,7 +79335,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b1829c2c13748fb7ab5cabcf.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c8a469442fd9ad904f9d202e.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79436,7 +79364,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f1b04dd2e6936ee0b9393d71.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-38920a1a770d893816ed8ac5.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79563,7 +79491,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b75705035ad592c2b0cc50f4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f3691907489ad83c9184e4ca.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79578,7 +79506,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-926566a8fffab525dc4914a4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-96e33f4c4f01e954745cc4bb.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79593,7 +79521,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c30ae5a8221ccbea703b1d10.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-595cf91d62c153f0c9ef7e96.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79608,7 +79536,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6fb94f1301359c640d2c1a10.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c78045e1b038d68e93328a22.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79651,7 +79579,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-16125860f5934b7d03e83e68.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c8869eb1ac15b64bb5cd739f.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -79666,7 +79594,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a6129f314d261f314136c06.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5c68b3f3c87c1c405eebd27f.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -80433,7 +80361,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3707b9e87a30c1d530a8f611.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c4b0d28009d40083df1f5ee3.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -80933,7 +80861,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-72c7f183375ff4e0ef431952.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-89b253459eec54503b912af3.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -80952,7 +80880,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-256d148c75fff0f4c7171260.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-23cdb6554dadffdbf90f1919.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -80971,7 +80899,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a8a9758edfcec413fa0471b8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8f857a41033c871f5c5b7e27.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -80990,7 +80918,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c152d854b243f73d0104b551.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b289abd4dd648d6734e6f32f.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81009,7 +80937,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6ef57a9cce4bdba16d2ac9c8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d40e83304d1cf91d7009524c.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81028,7 +80956,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-40f1a3af1ead5b9c2032ab62.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d9986d6704dcd054f657947b.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81047,7 +80975,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-578bbf77d52e0715f8644278.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2d7b1f67b704b3a589cae82c.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81066,7 +80994,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-80da80088ffb908644865eb3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c77386d8f108e9349ea346c9.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81085,7 +81013,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-faa535372de9974d80d92c5d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e7485c1b2deaf720b31e5c39.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81104,7 +81032,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b22a1b3ed1bdc283761d70f3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e4f8d988b5a88007b2dc3c62.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81123,7 +81051,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-03d9a7d7c32b401f3872a733.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e6c86c0565e317d771ae4898.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81142,7 +81070,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0a5dfe65f5076e44b72c587d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-528ab82e786e82b2c7f225d0.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81161,7 +81089,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1cd194a1fc7d3b3a702a72eb.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ec4ef3f1b4088969f462281f.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81252,7 +81180,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bab9e1c3b05c17e6d83a2390.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2f0438d3718fea5ec80dc195.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81289,7 +81217,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5b13fa3d6465aeda5d3960f8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-680242f6612ff13b578c5e11.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81308,7 +81236,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c157d987efd2ebf9aa3e4392.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5c9c87417f38b8c086d6be4e.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81363,7 +81291,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-39e129f6381d1ed59142135d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3d8b44f46360f9f219dbbdb1.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81400,7 +81328,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cbc62833e8eb9c1170570671.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5ea4b803465d8d7be4082772.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -81472,7 +81400,7 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-34c17053006ba3de54cd363a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5ab42385082663dffc3b6095.
       Note antérieure, qui ne qualifie pas cette révision : « Consultation et sélection rattachées au même événement de sourcing
       U1089. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
@@ -81880,7 +81808,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c6637b1021b1b34485ef2f90.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6e6d7f42c5ff999155047be8.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 92940165410cb0c210868e148c55857c9917b2f22cf2b73eb82766ff6f12c70b
@@ -81894,7 +81822,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a382b51ee1778fd1eecaa510.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-848c03956e968f29f53f23cc.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: c2ae940b6b69421c914cbc41b1d3ae0785f59add8f8d475e6789ad05102f19ee
@@ -81908,7 +81836,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d23087ab78cd92c8184c698d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cb70c3e8c5fdccd3a32be5b6.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: dfc9c5eab9b19012ec2b93f7b6b384b84e4ab87b35cb2d9561d23a48fba65e10
@@ -81922,7 +81850,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-08d686de66a0253ce012eed2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-30ede302590b3cada5bd7e78.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: f7eae8884c2278c3cb0434adf6174ea512410cd4260d82b158675a9f062ab059
@@ -81936,7 +81864,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-898724c4b35a6301a0e7d9e6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b094886df0c4aa50ccd8c0dd.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 31e24482636d559a59646ef9f8580956fd5576c6226bf0d4493ec10621f21ada
@@ -82214,7 +82142,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cc9d59afecc20347d49fd38a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0b4780b7f846a2edd99103a3.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -82244,7 +82172,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-edabdb5fb05b0e4c268ab4fa.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ec7fe9cd432cd921fc6450da.
       Note antérieure, qui ne qualifie pas cette révision : « Regroupement validé par Laurent U1103. »'
   last_modified: '2026-10-16T13:15:12.326783Z'
   content_sha256: d8cb5540318efa833951be3b88f20db5b8cf760db618486d599ae75bc81d3d61
@@ -82258,7 +82186,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa5a44cc11f49baca7cb914e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f2f71c9c43678536a7f358f9.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement dans la Business Area de préparation validé U1103.
       »'
   last_modified: '2026-10-16T13:15:12.326783Z'
@@ -82273,7 +82201,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-650113d41da9e62b976af5a9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0217fc782de3533a0710d1c1.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement dans la Business Area de préparation validé U1103.
       »'
   last_modified: '2026-10-16T13:15:12.326783Z'
@@ -82288,7 +82216,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0421a13def1757e8a0462ee8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-74fd7f993d695f497603dc04.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement dans la Business Area de préparation validé U1103.
       »'
   last_modified: '2026-10-16T13:15:12.326783Z'
@@ -82303,7 +82231,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-579796d37aa7b6f9e3ef9ee8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2e755c417f1214abbaadbfb6.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement dans la Business Area de préparation validé U1103.
       »'
   last_modified: '2026-10-16T13:15:12.326783Z'
@@ -83828,7 +83756,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bcee508e9a034f6e7e7174d7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fb1093ad912467ee013f89b5.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -83979,7 +83907,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fd057e295e6d664861dbdaf4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3aa07b68f7a951d181478d4a.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -84017,7 +83945,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a3f8b5d03acd885dc4855ccc.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b8798c0e7c190c6ec8adb4e8.
       Note antérieure, qui ne qualifie pas cette révision : « Correction du lot autorisé U1113 appliquée ; accords de champs
       capturés séparément. Compléments rédactionnels et comparaisons conservent leur qualification propre. »'
   last_modified: '2026-10-16T16:56:09.400404Z'
@@ -86832,7 +86760,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3f0436d041956e21fec8129d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8f526d491f356798a3dfeca7.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -86865,7 +86793,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fcbcb3a7f04dc4e8b222f171.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bf7a11aa6d7b880ce1d747a0.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -86901,7 +86829,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9746ee3eb491647b5ac5ca42.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-782b6493d33e0119cd05ee5b.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -86937,7 +86865,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-71a845c083a28410210aa656.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2651b6a8e08e2cc535b640be.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -86972,7 +86900,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-753c75e69b69900e337d2728.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e524e60d95662919f624441a.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87007,7 +86935,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-79469afa27d4381a40a68f52.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-25ad9ea2e227af03b56ce4ce.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87040,7 +86968,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-59f56614cb87b05ca3771c0e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-14047f704ce1d67b8f04ea29.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87111,7 +87039,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-efc1c6020ed1db3718f128e7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-91cf688083edce300e9de5f7.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87182,7 +87110,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-40da685451d6d96671921cce.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-92af52c5c6a86a6a15d0d3f0.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87253,7 +87181,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8da65df6c8141d61c27f952a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-927175a2a8705acb89e8aa5e.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87658,7 +87586,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d537c859b80661ca00e7082a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-00f885d2e9f9cf87274999ec.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87723,7 +87651,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-445ee0750ed87026b6b7409b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6497cfb416ca4c6544142d29.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87758,7 +87686,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ff004de1097a66d5f3c55ddf.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c847ef93307b9b73ce47df98.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87793,7 +87721,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-24d1f9aad24f6305c1a1e9e1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c3fd69ed0be3a0b7771e36ce.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87829,7 +87757,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7241598c1b5fd3f565f185f8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cd1581f1850be80b5d8524fb.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -87896,7 +87824,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-83835abc802467757efe5ba3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-20cee943cd50b77b1c6cb430.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -88562,7 +88490,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ca2d483431f758e9bf48f7f4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d1e5e33b89f2ba6ee9fcc81a.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U1115 appliquées ; seuls les champs capturés
       séparément sont adoptés. Les contrats détaillés, illustrations, comparaisons et choix de mise en œuvre nouveaux restent
       proposés ; aucune réalisation installée déduite. »'
@@ -91105,7 +91033,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ea30af5b73d304ed534d8399.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-caa12eec915d3704046d3e1e.
       Note antérieure, qui ne qualifie pas cette révision : « Relation proposée U1145, validée explicitement U1146 ; aucune
       réalisation installée déduite. »'
   content_sha256: 1c50fbab453f5972b1642b0fdf661366e3aa953cbef7dd5b3acbef0486a11f44
@@ -91129,7 +91057,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-476b82433accc5c4843f9b1e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-af3b4d298ddf1781c522016b.
       Note antérieure, qui ne qualifie pas cette révision : « Relation proposée U1145, validée explicitement U1146 ; aucune
       réalisation installée déduite. »'
   content_sha256: 2fb9c92da17d6434826fbeb6585151c23566b21ade7af871a005a7e24d3e118c
@@ -110016,13 +109944,16 @@ glossary:
     content_sha256: 79112a2111f7f9259f72c42d2c273b2c8600d06282530f67a165473e85a90f8c
   - id: TER035
     name: Supply Chain Management
-    short_description: Coordination et optimisation métier de la satisfaction des demandes Supply.
-    definition: Périmètre métier qui coordonne et optimise la satisfaction des demandes en mobilisant commandes, stocks, engagements
-      et services exécutants.
+    short_description: Pilotage des ressources et des flux entre offre et [demande](glossary:TER011), sur les parcours d’achat,
+      de vente, de retour et de déstockage.
+    definition: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+      ventes, service après-vente, retours et déstockage.
     context: |-
       Sens fonctionnel local porté par [Supply Chain Management](model:supply-chain-orchestration), distinct du côté ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
 
       Mode possible pour les achats saisonniers : un socle [offshore](glossary:TER382) est préparé très en amont, éventuellement dès [Design & Development](model:system-design-development). Le [SCM](glossary:TER035) peut décider de déclencher les commandes d'appoint [nearshore](glossary:TER383), dans le cadre des sources et accords tenus par [Sourcing and Procurement](model:domain-sourcing-procurement). [Replenishment](model:D05.e) détermine le complément ; le [CTP](glossary:TER045) vérifie quantité, date et conditions réalisables ; le [PTP](glossary:TER068) éclaire le compromis économique. La décision de commander n'est donc pas réservée à un seul domaine : elle suit le besoin, l'horizon et la délégation applicable. Les règles doivent préciser les sources admissibles, limites de quantité et de coût, budget, dates utiles et traitement des exceptions. [Plan Application](model:D02.e) transmet les choix autorisés ; [Purchase Order](model:D04.j) porte les commandes et leurs engagements. Le [CTP](glossary:TER045) intervient aussi avant l'engagement initial pour vérifier le recours sur lequel repose le volume [offshore](glossary:TER382). Ce mode cible ne prouve aucune organisation ou automatisation installée. La planification et les décisions opérationnelles appartiennent au même ensemble métier intégré : préparer le socle, réviser le besoin, vérifier le recours et décider l'appoint utilisent des hypothèses, ressources et engagements reliés. MAP désigne ici l'outillage de l'existant, pas une frontière métier qui exclurait la planification du [SCM](glossary:TER035). L'intégration logique ne préjuge pas du nombre d'outils qui la réalisent.
+
+      Le domaine tient les plans, commandes, [engagements](glossary:TER013) et faits de [stock](glossary:TER005) de son périmètre, arbitre les usages des ressources et coordonne les prestations confiées. [Commerce](model:domain-sales) conserve offres, canaux et décisions commerciales ; [Sourcing and Procurement](model:domain-sourcing-procurement) conserve sources, accords et échanges fournisseur. [Finance](model:domain-finance) garde les autorités financières ; [Logistics](glossary:TER110) et les autres exécutants réalisent les opérations. Les cas de fabrication ne sont pas ajoutés au modèle actuel. Cette répartition n’exclut ni la planification ni les commandes de vente et d’achat du domaine, et ne présume aucun moteur ou déploiement unique.
     notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
       la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
       toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
@@ -110058,6 +109989,8 @@ glossary:
     - U1133
     - U1134
     - U1135
+    - U1150
+    - U1151
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -110280,15 +110213,21 @@ glossary:
       - U1134
       - U1135
     market_inspiration:
-      choice: Nommer le périmètre FLOW qui coordonne la satisfaction des demandes avec commandes, stocks, engagements et services.
-        Supply, dans ce sens fonctionnel local, ne désigne ni les seules ressources disponibles ni toute la Supply Chain.
-      flow_scope: Coordination et optimisation de la satisfaction dans le modèle FLOW.
-      flow_approach: Faire coopérer des responsabilités métier explicites.
+      choice: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011) ; relier plans, décisions,
+        [engagements](glossary:TER013) et résultats pour apprécier ensemble service, coûts, délais, [stock](glossary:TER005)
+        et valeur récupérée.
+      flow_scope: Piloter les ressources et les flux entre l’offre et la [demande](glossary:TER011), en reliant achats, [stocks](glossary:TER005),
+        ventes, service après-vente, retours et déstockage.
+      flow_approach: Relier la planification, les décisions et leurs effets observés, avec des responsabilités métier explicites.
       synthesis:
-      - Le CSCMP décrit un Supply Chain Management étendu aux achats, à la transformation et à la coopération interentreprises.
-        Microsoft IOM cible la coordination de la satisfaction des commandes. Ils éclairent deux périmètres de largeur différente.
-      - FLOW choisit ici un périmètre de coordination, en laissant l’administration des maîtres et les opérations physiques
-        aux responsabilités externes concernées. Ce sens local doit être annoncé lorsqu’il est employé.
+      - Microsoft Dynamics 365 Supply Chain Management et les parcours SAP S/4HANA relient planification et exécution. Leurs
+        périmètres produits sont plus larges que le domaine FLOW sur plusieurs activités ; aucune équivalence complète ni
+        réalisation installée n’est présumée.
+      - Le domaine FLOW pilote les ressources et les flux sur les parcours d’achat, de vente, de service après-vente, de retour
+        et de déstockage. Les autorités commerciales, fournisseurs et financières ainsi que les opérations physiques gardent
+        leurs responsables.
+      - 'Le CSCMP éclaire une discipline étendue. Microsoft Intelligent Order Management illustre la coordination des commandes
+        : ce rapprochement partiel ne résume pas le domaine FLOW.'
       examples:
       - title: Illustration FLOW — satisfaire une demande
         situation: Une demande nécessite des ressources, un engagement de date et plusieurs prestations.
@@ -110300,9 +110239,23 @@ glossary:
         - U477
         - ELM405
         - CMP193
-    revision: 10
-    last_modified: '2026-10-21T15:08:29.834886Z'
-    content_sha256: e6745a65b59daf097aa43dba4bdb4bee0e0396520d971bf4239c2c5db7fa6054
+      - title: Choisir le site qui évite un transfert inutile
+        situation: 'Exemple fictif : une commande de 100 pièces peut être préparée depuis A après un transfert de 70 pièces
+          depuis B, ou directement depuis B. Les deux options permettent de tenir la date demandée et préservent le [stock](glossary:TER005)
+          protégé pour le service après-vente.'
+        outcome: 'L’option depuis B coûte ici 220 € de préparation et transport, contre 300 € depuis A : un transfert préalable
+          est évité. Les effets réels sur le service, le coût et les autres [engagements](glossary:TER013) restent à vérifier
+          après exécution.'
+        lesson: Le transport final peut être plus cher alors que le parcours complet est moins coûteux. Une simulation ne
+          prouve pas un gain réalisé.
+        source_title: 'Piloter la supply chain : indicateurs et décisions — page 14'
+        source_refs:
+        - U1150
+        - U1151
+        source_url: https://github.com/laurent-sintes/Urbanisation-SCM/blob/b4864c22e56ad21b60b228eabaf7477d82a8e12e/output/pdf/FLOW-Piloter-la-supply-chain-indicateurs-et-decisions.pdf#page=14
+    revision: 11
+    last_modified: '2026-10-23T10:03:30.140487Z'
+    content_sha256: e66bd6c8d0b2aad159f28bf4347bcf020e094aff3106cc2a1bb20aad7867c2aa
   - id: TER036
     name: Fait de gestion — sens plateforme
     short_description: Événement métier associé à un document, selon la distinction exprimée par Laurent.
@@ -151856,10 +151809,10 @@ glossary:
   note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est
     figé avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial
     appliqué au brouillon, sans modifier les dates des publications figées.
-  revision: 65
-  last_modified: '2026-10-23T09:26:31.120827Z'
-  content_sha256: 74caca4e88b7556f285c3524d5e905935de4b29b3737ba6f17f19bc7dba43b0c
+  revision: 66
+  last_modified: '2026-10-23T10:03:30.140487Z'
+  content_sha256: d4f4263f592004604294f4b366ccbf076846d7434d63491fdd0b2d717166b908
 element_versioning: 1
-revision: 91
-content_sha256: 2dcf2bdc9e0f0775f4ffccaf085c3a4ba8385f8ec85a57f9620ed98ec5ade457
-last_modified: '2026-10-23T09:26:31.120827Z'
+revision: 92
+content_sha256: 72dd4f8dce9b3631856125ac9f1562ec08b60cf5463b77d05051a4126896c2e9
+last_modified: '2026-10-23T10:03:30.140487Z'
