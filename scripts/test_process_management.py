@@ -44,9 +44,13 @@ class ProcessManagementTests(unittest.TestCase):
         self.assertTrue(all(self.nodes[c]['kind']=='capability' for c in caps))
         contributions={c['node_id'] for p in self.model['scenario_catalog']['paths']
                        for s in p['steps'] for c in s['contributions']}
-        # U1113 introduces the ledger with qualified data flows. No scenario
-        # contribution has been documented for it; preserve the original twelve.
-        self.assertEqual(caps - contributions, {'process-ledger'})
+        # U1149 documents the ledger's contribution to the intercompany cases.
+        # All thirteen Process capabilities now contribute to explicit paths.
+        self.assertEqual(caps - contributions, set())
+        for ident in ('intercompany-direct-delivery-path', 'intercompany-stock-transfer-path',
+                      'intercompany-partial-return-path'):
+            path=next(p for p in self.model['scenario_catalog']['paths'] if p['id']==ident)
+            self.assertIn('process-ledger', {c['node_id'] for s in path['steps'] for c in s['contributions']})
         flows={(r['source_id'], r['target_id']) for r in self.model['relations']
                if r['type']=='shares-data'}
         self.assertLessEqual({('order-workflow-sentry', 'process-ledger'),

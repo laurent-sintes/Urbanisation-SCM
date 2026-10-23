@@ -25395,6 +25395,8 @@ terms:
     Exemple fictif : tarif d’un vêtement par unité pour une période donnée. [Service Price Book](model:service-price-book) décrit les tarifs de prestation. Les conditions d’achat des fournitures ou matières de conditionnement restent portées par les références et accords concernés, sans créer un tarif universel.
 
     Les versions reçues gardent provenance, validité et limites connues. [Reference Ingestion](model:master-data-ingestion) reçoit les apports ; [Operational References](model:business-references) porte la référence locale utilisable. Les maîtres d’entreprise restent externes ; aucune alimentation installée n’est présumée.
+
+    Un tarif peut concerner une relation [intercompany](glossary:TER122) lorsqu’une source autorisée le fournit : identifier les sociétés, l’unité, la devise, la validité et les conditions du [prix de cession interne](glossary:TER384). Le prix externe, le prix interne et une valeur comptable ne sont pas interchangeables. La référence ne définit ni la politique fiscale ni le prix engagé ; elle signale une condition ou une autorité manquante au lieu d’appliquer silencieusement le tarif client.
   source_refs:
   - U862
   - U863

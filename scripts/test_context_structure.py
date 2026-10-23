@@ -97,8 +97,15 @@ class ContextStructureTests(unittest.TestCase):
             'seasonal-order-backlog-path': ['cap-wholesale-offer-preparation',
                                             'cap-wholesale-sales-engagement',
                                             'cap-purchasing-case-coordination'],
+            'intercompany-direct-delivery-path': [
+                'workflow-definition-management', 'order-workflow-orchestration', 'process-ledger',
+                'service-order-billing', 'D04.j', 'order-workflow-orchestration', 'process-ledger', 'BHV082',
+            ],
         }
-        self.assertEqual(set(current)-set(historical), {'forecast-to-shortage-arbitration-path'})
+        self.assertEqual(set(current)-set(historical), {
+            'forecast-to-shortage-arbitration-path',
+            'intercompany-stock-transfer-path', 'intercompany-partial-return-path',
+        })
         self.assertLessEqual(set(historical), set(current))
         for ident, previous in historical.items():
             with self.subTest(path=ident):
@@ -110,7 +117,14 @@ class ContextStructureTests(unittest.TestCase):
                 else:
                     extra=additions.get(ident, [])
                     self.assertEqual(Counter(current[ident])-Counter(previous), Counter(extra))
-                    self.assertEqual([node for node in current[ident] if node not in extra], previous)
+                    if ident=='intercompany-direct-delivery-path':
+                        # U1149 reuses Purchase Order for the buyer's invoice follow-up.
+                        # Preserve the earlier sequence even when an added role uses
+                        # a capability that already contributed to the old path.
+                        remaining=iter(current[ident])
+                        self.assertTrue(all(any(node==expected for node in remaining) for expected in previous))
+                    else:
+                        self.assertEqual([node for node in current[ident] if node not in extra], previous)
         self.assertLessEqual({'demand-forecast-development', 'demand-plan-development',
                              'supply-plan-development', 'planning-scenario-reconciliation',
                              'D03.m', 'D03.o', 'D04.i', 'D04.j', 'D05.f', 'D02.e',
