@@ -1,0 +1,897 @@
+id: intercompany-application-U1149
+date: '2026-10-23'
+source_refs:
+- U1147
+- U1148
+- U1149
+status: applied
+scope: Application des dix recommandations IC01–IC10 et de la clarification U1148 ; intercompany reste une relation donnant
+  lieu à des scénarios transversaux.
+agreement_scope: U1149 approuve les recommandations présentées. Les nouvelles rédactions, exemples et correspondances détaillées
+  restent proposés ; aucun ADOPT global ni validation de réalisation installée.
+business_boundaries:
+- Aucun nouveau nœud, nom, parent, type, comportement ou profondeur métier.
+- Traitement de facture fournisseur et comptes réciproques dans le contexte Financial Accounting ; Billing porte le service
+  d’émission.
+- 'Prix de cession interne : cadre financier, conditions convenues, calcul commercial et prix engagé distingués ; toute source
+  ou autorité absente reste à qualifier.'
+- Payment conserve les encaissements et remboursements clients ; aucune extension aux paiements fournisseurs.
+- Le dossier SCM PDF n’est pas modifié ; aucune release, commit ou push demandé.
+audit_coverage:
+  IC01:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC02:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC03:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC04:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC05:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC06:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC07:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC08:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC09:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+  IC10:
+    status: applied
+    reason: Périmètres, termes, relations et parcours concernés complétés ; les contrôles de livraison ci-dessous lient leur
+      état final.
+market_evidence: Les douze sources primaires de l’audit U1147 consultées le 23 octobre sont réutilisées avec leurs limites
+  et éditions. Les appuis SAP sur les retours restent classiques et partiels ; aucune compatibilité générale du processus
+  avancé ni automatisme ERP imposé.
+glossary_alignment:
+  modified_terms:
+  - TER006
+  - TER012
+  - TER046
+  - TER047
+  - TER048
+  - TER069
+  - TER070
+  - TER071
+  - TER072
+  - TER073
+  - TER114
+  - TER118
+  - TER122
+  - TER126
+  - TER129
+  - TER132
+  - TER145
+  - TER153
+  - TER156
+  - TER173
+  - TER175
+  - TER229
+  - TER231
+  - TER256
+  - TER345
+  - TER367
+  - TER375
+  - TER384
+  - TER385
+  new_terms:
+  - TER384
+  - TER385
+  linked_terms:
+  - TER005
+  - TER010
+  - TER011
+  - TER012
+  - TER013
+  - TER014
+  - TER017
+  - TER024
+  - TER030
+  - TER064
+  - TER069
+  - TER070
+  - TER071
+  - TER075
+  - TER083
+  - TER117
+  - TER118
+  - TER121
+  - TER122
+  - TER132
+  - TER153
+  - TER154
+  - TER229
+  - TER231
+  - TER384
+  - TER385
+  result: Modèle et termes miroirs enrichis dans le même lot ; Intercompany est élargi au cas sans client externe, prix interne
+    et facture réciproque expliqués.
+  market_gap_transitions:
+  - id: TER006
+    prior_gaps:
+    - family: sap_s4hana
+      reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+        de Position de stock. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+      investigated_urls:
+      - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+      source_refs:
+      - U853
+    qualification: Appui primaire partiel désormais présent ; réserve de portée conservée dans evidence_limits.
+  - id: TER048
+    prior_gaps:
+    - family: sap_s4hana
+      reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+        de Agreement. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+      investigated_urls:
+      - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+      source_refs:
+      - U853
+    qualification: Appui primaire partiel désormais présent ; réserve de portée conservée dans evidence_limits.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1147
+  - U1148
+  - U1149
+  summary: 'Intercompany : contrats des engagements et des factures, six échanges métier, deux scénarios et deux parcours
+    nouveaux ; parcours direct complété, capacités existantes conservées.'
+  required_nodes:
+  - id: D01.c
+    kind: capability
+    parent: ba-inventory-position-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 687bc886dd42eac864e7adeadd8dc0e044bc23ff3a0cc1a514e8eb2267328baa
+      market_inspiration: fd1ce88d3a949f5478bb8c02029124dc3a13eaa32b06595c32345a247f560d78
+      scope: 5f000a64498324584a8e641dee83f18dcd12312f09e6a1954cc33fda92215d03
+  - id: D09
+    kind: reference
+    parent: ba-partner-agreement-references
+    parent_type: presents
+    field_sha256:
+      market_comparisons: fc64693d8fa792cd3487e84a180e027cde92ad8a794d621f22d151e0d6d79eba
+      market_inspiration: f3ec54768efdb6b8f1018165d861a4f581ac5c260fb9022ccd50730183010e1b
+      scope: 3807a745fb17b23b690b9a6f1ba38903ec5bae13e5306503d3387e1eead37b17
+  - id: D11
+    kind: reference
+    parent: ba-partner-agreement-references
+    parent_type: presents
+    field_sha256:
+      market_comparisons: 5b4ad8c479ddea9e4de6eb4725dcdb2cf12bf17f99e1a3d5bfd7dcd591f16ccc
+      market_inspiration: 4b4ed2b25b300b9fbcd02bd840485b24f69afdd4b8386fb764b8d08ea44c0948
+      scope: 3f20b1358002bbd4ba3bb855d35c7f59be3eff2c42e31c172b0fb67242972e15
+  - id: D04.i
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 27a6828398279c2c2e69fe08f0f0bc898fc890648d2fa85a415555db26cca1b3
+      market_inspiration: cf59cd769fc0fe86691b58d87d87e01357c359c7dd6480e9130a786c0e99600f
+      scope: 794a613a28bd1c0a298e7307d33b031aaf65170d34a907d3fa6aa94c06797783
+      examples: 85b696c51c08b2f834fb04f7d637dcabcf9a42878c39dfe9fb015fe310c0d7dc
+  - id: D04.j
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 709fcfb043d0738b39a9468f45b75b2a906963882928cdbcb991f2addaf649f7
+      market_inspiration: ca4cd0147d786b0c80032423e8062e7675abecb97caac995618c32a826b1996b
+      scope: bb63aeaf89966b1a987d46683040dbdd837a5621a8fb95e03f90ee820a447f80
+  - id: D04.k
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 71035016854cd43ea005c49ad69456c551d1d4bde493cc334ba9bb0c34d75742
+      market_inspiration: ddd292999e20a3f397a4d87140b6e3cc5167c5a4e439f02f082d955813ba1104
+      scope: 31bc1e52de8187e0291c064deb13db0599f5908685a4e669fc29d678eb801593
+  - id: D04.l
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: d677eb8a918ebfb4f640be11edcde9fc4e1051c916407d933b4c4bf6f962e506
+      market_inspiration: 346a64ebdcfa3cb13ca2861e6d546b23e2dbe2ab931166a44b91d880527ddf13
+      scope: d46fd5a9f6e577e14554a70c373e78f1be3cec319345b25b56e524e66208a288
+  - id: D04.m
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: d0795745e00ca19495c621755fc340e2ac468a306086c7d4825e2b7cbaa88829
+      market_inspiration: 33f19ce45feb4ae2bdb62fa2844c60b72e3c082a35d0882076d69fa926c1d8ad
+      scope: fb28a8e7acaf46087f0b02470a87838f68a5605eceae51a497e147bc6d4ae741
+  - id: D04.n
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: ecec20fd2d056a9edf229aed3d0e5c92404bbe6d211c0c6254d14ff0419d3b75
+      market_inspiration: c0dd12519e1c77533ebe7a4ee83210f2f4e0d6ff9e4ac6dfe6dc147d3031291a
+      scope: 2a66cbcf40ffed3d88bd9ff5088204de4a41d9cb2f5153486dfa7952ca98ad32
+  - id: D01.h
+    kind: capability
+    parent: ba-inventory-ownership-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 45c67fc13efd1eaa53f5b9652379ba9789d63452c88f2fb3468a6419c84ce483
+      market_inspiration: e6346b1d408f0151d794e6e81048a46c9e1eb0d43b643c878fc0e6ecaff9a57a
+      scope: 009babf4a4d8bdf4d2983ce36fd6bdb81378973d46de17ab2369edc79cb5bd91
+  - id: BHV069
+    kind: behavior
+    parent: D04.i
+    parent_type: contains
+    field_sha256:
+      market_comparisons: b4ff275c53045aff78c66e52f4e035897491af4551a0564907ca467b58dea242
+      market_inspiration: efe8b86415769ef1a9e9baa0b0f71a4d84c71e959fbb2d99ac76af08c6bd128e
+      scope: b0be303886f965bf47350317d3e9e753f3242fb8a396bd5dde267baf0284af60
+  - id: BHV082
+    kind: capability
+    parent: ba-process-supervision
+    parent_type: contains
+    field_sha256:
+      market_comparisons: a8aa0359f85303bd71d0e76c4e4eed61b4892ffc79be1b9c20c8288d3d96c962
+      market_inspiration: ab9ba3780378df4fd73bcbbdcc2d9904a93d45c6145f3c5e4be0395fdf236fb0
+      scope: 0dbc5f91d42448356c76f069de7a65f822bf333938c7ce9dab5119e444a04a25
+  - id: service-order-billing
+    kind: capability
+    parent: ba-financial-service-order-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 701e37a36d25edb0856118e2327adcd5b90ff4293d7ad094a23906102f39c2f0
+      scope: 83b350f1708d951eb753808014e06723d94719f86db0099a234ee29114fb2654
+  - id: inventory-ownership-ledger
+    kind: capability
+    parent: ba-inventory-ownership-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: eea8d9394e32e9e8610a2d9bdd1139c304516cd8a0d985d4aa7f1422789992f1
+      scope: 8ec7d7eb5bbd9470be3aa902d76e70620cf5c474431cd7f9122c4c9005f48f3b
+  - id: accounting-data-provision
+    kind: capability
+    parent: ba-inventory-position-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 0a5ef8b6f14fa67dc42f2e06e36b10cc19d68f35eeced1cd17894ec3f6a28838
+      scope: 26789fe78916f505040831aa7072dbb706be5826004c08aba48c0b7c671eb075
+  - id: subdomain-financial-accounting
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      market_comparisons: 9ed44e9f18a2713cceefb35ae652f4811bb479dbc883450f60455b3f5ca90b5e
+      pedagogical_description: b486f0dc2965abb719baff3e7e1683bc3536ed96803589d854e98216856559cf
+      scope: 7950c573178346b076f376586787b7aaf0aa43bd2c665112a3dc10cf095c90f8
+  - id: workflow-definition-management
+    kind: capability
+    parent: ba-reactive-workflow-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 4a457b73e466ee5b73aa88b9075c8765a5e6e3c2ee56262eaa603476eddee66e
+      market_inspiration: 48c7b901b7de0988fcae494457fa2aae99952067acec834ed76af175ddc76292
+      scope: 4a96f9dffbc28a83d0c6f653dd6b01e4272a25dee62cf479b08cf7faa1800d84
+  - id: order-workflow-orchestration
+    kind: capability
+    parent: ba-reactive-workflow-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 7f8bd4d050f71c6b9dc8fadc736791380807862f14703031654ded478a53b2d1
+      market_inspiration: a161368e714966ad23744ee58ac673ded6aca318b3a25e5a4941de5e6f938ead
+      scope: 3d148024c145960650843ab1fb3724fd15716f654a37b84cf5bb848396d86872
+  - id: product-price-book
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    field_sha256:
+      market_comparisons: a09f87b48e69fbaa97c61be1ac270b01d1e5f54ee0f0bd87ca235befafcda617
+      market_inspiration: c3c43fc397b69707493569d14ca85e976988485c889b33bf8996a578a32df423
+      scope: 93c247c0b6de9fad0bf7658fa64c634a995bfb9271bc4d7aac63fa9d99163a4e
+  - id: return-credit-resolution
+    kind: behavior
+    parent: D04.l
+    parent_type: contains
+    field_sha256:
+      market_comparisons: e3c76236acfbffce66884cbd6964256ff8e482693ec0a0f5beeb05319b4e367b
+      market_inspiration: 08bee556bbeeafa9de4e8f3159f317c271cab26ed03d227fa03673f413b56271
+      scope: f503c14c9f6e5506e5d6ce05e54bd480a2dccddc6d0327844ab271455ba95a0d
+  - id: process-mining
+    kind: capability
+    parent: ba-process-intelligence
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 0821b9e422d1386d110a26e569d7b19cd62b3b4cb5700446d75b691880281cfe
+      scope: c00fc3a64e21c3c2c26199c3e7bb6a9c8dae9604a59601ffd965214e46a47a18
+  - id: subdomain-cost-profitability
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      market_comparisons: b1a81528520924369b8b7cda5170ace1beae3e7f4d2f506c9a76374becc64059
+      pedagogical_description: 3da50f1bf394822537447411f933cacb61cbf2f6b76a29a194c5c6bfeb3de685
+      scope: cb3f3c663e297178a63b2e85b605827ea2c1046ad5beb7d6a3c57e72ea279aec
+  - id: subdomain-treasury-cash
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      market_comparisons: 1d430fc89fb2c983570d02f88fe67cec04052e477ade460f6be2393a14da6b73
+      pedagogical_description: 9ea985ffc551df71cba18798bd17df53b56ffa9f744a141a8be9e289b208c39b
+      scope: 329225e4a11d10981966d4ea812f079158ef37a1c12bdb8f615377e7b5791b88
+  - id: subdomain-commercial-settlement-management
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      market_comparisons: 6a5f178b0d9cf8f1d88e6cfdddc717ae9ba31ddb974a684388bb07b423a813ff
+      scope: 504c96be1fa51ea2e05ce64debe789ca203f19ce30dfa69f88e53366879255e3
+  - id: cap-sales-price-determination
+    kind: capability
+    parent: ba-pricing-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: 2e8e26a8910383f615fb75e96b3bc4d27d5684701dfd700c82e57a300a7a4ce3
+      scope: daf89930d60f4582fcb93d8a547fa6041ce13287db27445848e5f15d67683dfd
+  - id: cap-sales-pricing-rule-management
+    kind: capability
+    parent: ba-pricing-management
+    parent_type: contains
+    field_sha256:
+      market_comparisons: d083e7e2433bf74db5c3e9c4783349dc81831cb149ce69f02a53db25671ceeee
+      scope: 349766638e90ab3c5ed13775d53993e02e567c78c0d789b209d8ea3f8c3b2000
+  - id: process-ledger
+    kind: capability
+    parent: ba-process-supervision
+    parent_type: contains
+    field_sha256:
+      market_comparisons: d5355152cf92093f2144580e053340295ef7b46bc616ade6beacced920b4805e
+      scope: 7ff7e1c33b38468804744edff4b02a1b7adee431c6cffbe656f2715fb165c105
+  required_glossary:
+  - id: TER006
+    field_sha256:
+      context: 8e96ad89775486e18f3a0dd0cc560f646b7f3d6e70ad6178e75bd15b488dee73
+      market_comparisons: 64b7b51b69bb59f7d7b284c3b9f10619bbcbe51c5738a232ac54bdd22b229f8a
+      market_inspiration: a6a7ba30d900159c0122f97b2811c94cbc51eb396b82d54a8c31d83886f14b3b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER012
+    field_sha256:
+      context: 067858eeeaaf7faec2b9a08c89819918d0aab5754c5e1da709d741dd031f2221
+      market_comparisons: 74c56726082c753eca4b766e1f5ea89068e2b05f789264152c86586b84941690
+      market_inspiration: b597f889c16f08f26c6668e22c4fd42f9d3828889b89052afe47368b9a7fe489
+  - id: TER046
+    field_sha256:
+      context: 0b96672d84faf56ba349b4a697ffc0841fbaf231b1243adf222c1deb886ba787
+      market_comparisons: cc9ffaad4b165abbafe9f2785970d691d4f7cd95cdca3a225e1d0f629796445d
+      market_inspiration: 784449c8c6467c922354147c7449a069bd522b494b5cbcf16719f0fda1652901
+  - id: TER047
+    field_sha256:
+      context: b05c90859a938aa017706a9ef824768da7a68d77d7a2b0be7bfb41d3373c7cf1
+      market_comparisons: 531fb31007b51c4600041c266ab5501f6808091c04fc6d9a6c4bd3ba406eeeeb
+      market_inspiration: d815b51ebc6bc5a1ad41f26761a7bde71885938e343008ab47759f5a1bf322e7
+  - id: TER048
+    field_sha256:
+      context: a17b45d194729fd5de9b5cc0b145b11c02bf5d988e21d4f256b048c27460eed9
+      market_comparisons: 5360f9090229231b948a51fd397ab4cb5a321f849193b7176ba26a4ddf7d81fe
+      market_inspiration: ee64f92cee0a0eaef2962e2d8d9b4bf36fdeabad67742a683c330fc308c31d33
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER069
+    field_sha256:
+      context: cad26ca7fb6dfffd8eaf34ff3a1769f94b7df483509f0090840d6239741f5568
+      market_comparisons: bcf93bd9a6900ddf2f806011486444861101109e6f44a133ad114cc0ad93e37d
+      market_inspiration: 39d4619c85ebed8174d2e2fe2b7d761cda3faff61fa61912c2fcff2eae506e68
+  - id: TER070
+    field_sha256:
+      context: f8c0c9db8f6d23ad7d043580b6b09547c1f9a4fad4b05cbe406563f5e9a46aad
+      market_comparisons: a4ebd3d2481f6026871084f3f725a04b852e5407a689fb181fc0895835dfd571
+      market_inspiration: d285456e3f2b6bb8f97ceafb99719b205c72afd6e50fdcab9d7777fca16d3ece
+  - id: TER071
+    field_sha256:
+      context: 7f3eb1f2b3d49d7e5d5246a46ab23a514aec80af2ae41f910dd6938f0d515bda
+      market_comparisons: 6326a279696ad9a996705cccb57fd03da2a8182f694329d4e257c979581e5bd2
+      market_inspiration: dfc08d72e18cc18c35a868b7de29eeee4940b1692daee68cb918c2b099f6e2b7
+  - id: TER072
+    field_sha256:
+      context: e7908920214ee93a99ebd1fd22ffdbdc0bcfea8bd6de85fb6135b0cf3e25841d
+      market_comparisons: aa8214b40e00b04654f5e5036a491f96480716c919d32dfe2ce1ba5b9d13a227
+      market_inspiration: 5c2cffa69d30236ae8c95203aa47c79933a2def4daf8cff4adefdb4f6d7fc23a
+  - id: TER073
+    field_sha256:
+      context: 234848e9503e4dc77a24e4db726c0a301bc65911bf78075dd904fa46e7249879
+      market_comparisons: 13e326b07744f9b5dd717b564110fe71ed009c30af675ae03fc93d9a60ca4935
+      market_inspiration: 87e1a2af0579ca57885cc19ec9be3854699583000431968305aceff34b3a7949
+  - id: TER114
+    field_sha256:
+      context: 26789fe78916f505040831aa7072dbb706be5826004c08aba48c0b7c671eb075
+      market_comparisons: e5d5024bde91d8971d9af6b2dbde255873e35178a9a58a638f8921d3535c98e7
+  - id: TER118
+    field_sha256:
+      context: 7950c573178346b076f376586787b7aaf0aa43bd2c665112a3dc10cf095c90f8
+      market_comparisons: 1a676c4f343bbb381e0331649a46eb3462fadbb898447f71428fa34047ff9648
+  - id: TER122
+    field_sha256:
+      context: 028c56f3fd9a65c494bdd590c1551b54c993ead99d98b779b4cb792915aecffd
+      definition: 05c401c6217fc76bceabad4f8bbaa03893aaa8a9dc441a0e39b2191eeffc4b81
+      market_comparisons: 5e42327b7bb76230b4d7b0aa622aa9a15fb9473c9c06185cb048f30318e5dddc
+      notes: de4a5e203b90ad0e0ffd859e439c49454c529e38d945d14fa3fcdfb74008b99a
+      short_description: 7f247e24eeb36b8a7b37b1224004025e682193c57a0ac4f147704f0f93dc8d08
+  - id: TER126
+    field_sha256:
+      context: 4a96f9dffbc28a83d0c6f653dd6b01e4272a25dee62cf479b08cf7faa1800d84
+      market_comparisons: 64c2306df1fdd17c89ee406fe99db15498eb581588633fb5d42988071c3754d8
+  - id: TER129
+    field_sha256:
+      context: 3d148024c145960650843ab1fb3724fd15716f654a37b84cf5bb848396d86872
+      market_comparisons: b7aa07bf9b3b5cea6c96bde7b299bc4a4443f45ba23d94c0ae32a850ef754ba3
+      market_inspiration: edae4cef56e88a44668376c587fa36f28607cdeea363a8803f0d87518b5cd849
+  - id: TER132
+    field_sha256:
+      context: 83b56bedb366edf0dbf288feda8beb3806618357379df7aad766a0cd0348689d
+      market_comparisons: 29aa82041d7e7bbd97c8efa94ea339d0c7971c6073fa5f97c35e8a11c9719fab
+  - id: TER145
+    field_sha256:
+      context: 93c247c0b6de9fad0bf7658fa64c634a995bfb9271bc4d7aac63fa9d99163a4e
+      market_comparisons: 0387fc1b491ec947e2d5572a1e411436028f708ee7a481b9119bc75d06dbe91d
+      market_inspiration: c3c43fc397b69707493569d14ca85e976988485c889b33bf8996a578a32df423
+  - id: TER153
+    field_sha256:
+      context: 83b350f1708d951eb753808014e06723d94719f86db0099a234ee29114fb2654
+      market_comparisons: ad86a9e9c7bd35827e0e42236788b0c30968410a9e676d4fc62fe29d0cdde080
+  - id: TER156
+    field_sha256:
+      context: f503c14c9f6e5506e5d6ce05e54bd480a2dccddc6d0327844ab271455ba95a0d
+      market_comparisons: 6c55d70e9c9cb026065098376699976550b6aae97e0b1d9f7142af3dbc477170
+      market_inspiration: b1424281a4b3cbc6bd34382c8304d1a7206883e2356799db232ba6d68847e37a
+  - id: TER173
+    field_sha256:
+      context: c00fc3a64e21c3c2c26199c3e7bb6a9c8dae9604a59601ffd965214e46a47a18
+      market_comparisons: dcc202b605c5d416ff0811effe43718c29873aa156b0350da0e9b1a14acc5494
+  - id: TER175
+    field_sha256:
+      context: 0dbc5f91d42448356c76f069de7a65f822bf333938c7ce9dab5119e444a04a25
+      market_comparisons: a39e8d8ef2e90ef042ea6eadf3c03a902c59719e4080c3093cd394f7c7de6568
+  - id: TER229
+    field_sha256:
+      context: cb3f3c663e297178a63b2e85b605827ea2c1046ad5beb7d6a3c57e72ea279aec
+      market_comparisons: c323c2d645bbfa58b216244a214e89c9f49b737c8baf97024a2b05bb8305beba
+  - id: TER231
+    field_sha256:
+      context: 329225e4a11d10981966d4ea812f079158ef37a1c12bdb8f615377e7b5791b88
+      market_comparisons: 4e0ae3c3057aa9ffcd5d1579eaefad917fb3697e40dc5da2e3e1ca89ce46323b
+  - id: TER256
+    field_sha256:
+      context: 504c96be1fa51ea2e05ce64debe789ca203f19ce30dfa69f88e53366879255e3
+      market_comparisons: 2ce7a55052bce56243d2913ec2d2f482c8a8cf7daac5a83ff1c11bccacc968a4
+  - id: TER345
+    field_sha256:
+      context: fb2953e9672fede60e91f24619955589b5bd7c97632f0b5cee6d99d974bb8586
+      market_comparisons: 426f5c5a8f0ec747e77ef95c78fda910d92057757fb36d75e282584570aa0cdd
+  - id: TER367
+    field_sha256:
+      context: bf4fe3df7ce4b403e9deb287b4c62e69396f8ed5356b43e1ccc6526a26d490d3
+      market_comparisons: 6a2454756e6584c2775d0cccff05eaf5d8f7a38c0f000d1f356e081922b7e612
+  - id: TER375
+    field_sha256:
+      context: 7ff7e1c33b38468804744edff4b02a1b7adee431c6cffbe656f2715fb165c105
+      market_comparisons: e0d0c7af9c4e147ae875da1598385caad515aaf2fd03692120df4120060b13d9
+  - id: TER384
+    field_sha256:
+      context: b600fbe7de0697071224e0e3f33ee093cdb205922856198b1e78271e2b083da1
+      definition: e6e9b6f30f71654b5c360a90bdd667c7712c401b668765f038772b77db659c07
+      id: d795aa564e6a28fd3ae35381aa9c058d82a8f5577708555e54faf89b3d60a132
+      market_comparisons: 213bf319d8397df855e14129f1853c77e96f98c3313fccd22fc9af2577397d60
+      name: a451db7706ffbd5206ff5b5bfbd7328f7718a02dfa2279152c413de05a7148f2
+      notes: 294d54d2261e561ad6b15677337cd4df3a30a27270a735b87a4bf6054a9d52fd
+      short_description: 9b4a21f24d68262ffa0d191518247c1a4e6f3bdb2c16740d707461ad86a6b11f
+      source_locator: 2a9611042e19c79eaa032ca16ee2fadad24bbec3f2f76c53888adea9a43b5523
+  - id: TER385
+    field_sha256:
+      context: 1f5113ee3be074309b1b2bb65539b6572b50449de8c058611fb04b0ca5d8b90a
+      definition: ee443c8fafef2f329265198661c1d86e401aecb64509af2e4e4a83e648cfbca2
+      id: 8d2c0bc4142584cd1f1ee4072ad04b98409d4f38a2b91f37ba51b4581bbe27e1
+      market_comparisons: 57ddec9b74a8f90cdf8a7193688108ac38df15375903bd20e0c0617c5f0306fd
+      name: 5f5918d43b2722c810b8b4a3460ab96a4212cb26c40e0555638aaa46ad1a5dc8
+      notes: 294d54d2261e561ad6b15677337cd4df3a30a27270a735b87a4bf6054a9d52fd
+      short_description: 462096187d764e09c111fb257b04d710b9ab85195b4830639251f0a03934eda4
+      source_locator: 2a9611042e19c79eaa032ca16ee2fadad24bbec3f2f76c53888adea9a43b5523
+  required_relations:
+  - id: REL-U1149-sales-links
+    type: shares-data
+    source_id: D04.i
+    target_id: D04.n
+    field_sha256:
+      label: 725ea337846140547aec63cbc164432889a245d939e866503b6e492d0c59c71c
+      data_exchange: b0a7b2a3c5b88a0c197cb47b34f9826d79fb818c050dd2d90ddd324279f0ceaa
+  - id: REL-U1149-purchase-links
+    type: shares-data
+    source_id: D04.j
+    target_id: D04.n
+    field_sha256:
+      label: c1a5de2fdba700865d54fa957cda3b6af0ae33469a91ff032c78a75190ccecd0
+      data_exchange: 2c45edb6c481ae6fe21846bb3488631f2557d2b105d1a8d9cf88a876d219fa1d
+  - id: REL-U1149-links-to-process
+    type: shares-data
+    source_id: D04.n
+    target_id: order-workflow-orchestration
+    field_sha256:
+      label: e0c5af1c84d82a973081fccf7228486e294ce7bd0bb7606c8b0c9e813b9f3cd8
+      data_exchange: fb7487129bb666037ce17be5e4f3fc634b2036249dc3c92e24032d7a398947ee
+  - id: REL-U1149-billing-to-accounting
+    type: shares-data
+    source_id: service-order-billing
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: 5ffd328840b7be3d574d60e3ac00dc17b367e82bd70b92d9f90c39fa0b0f6c25
+      data_exchange: dfd70e5ecd029d2151e631a86ec2dd63154e146d5676fdc52aa1ea7a7776cbe2
+  - id: REL-U1149-accounting-to-billing
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: service-order-billing
+    field_sha256:
+      label: b335e569764a8041fdb2d5014af837d2febbc226b66f6f1d26bbf72ef52110ce
+      data_exchange: f9b8fb96ade8816c4ba16067d468965ffbeb8def75602b61dfde207ce1cf3898
+  - id: REL-U1149-accounting-to-purchase
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: D04.j
+    field_sha256:
+      label: 405512654621deaac92d1acd3b21b36b4f15ef4b37d92f987627da4ddd7b3cdf
+      data_exchange: 52babf44b0f408805f8d05429c52854eca254fdf5a5690fe1c31744c5ec71557
+  required_catalog:
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: fc1eca80f45f9be73a4b2cbebd22cdbada8b6669b14dbfe4ecd290287916e69a
+  - collection: paths
+    id: intercompany-stock-transfer-path
+    content_sha256: 0fd958b30d9ebbf228b18b1bfa9ec5c5b1c4b55f96d6fa97f7e7f8940057dd29
+  - collection: paths
+    id: intercompany-partial-return-path
+    content_sha256: 5428a1b86fb5b8c275cc01109ebfcb70753835ed9471155e8e38128d5877a6aa
+  - collection: scenarios
+    id: intercompany-direct-delivery
+    content_sha256: dfcc974953d08a196d83cce04a43d367304f8fd82aabe1b95c3e702dc9654a28
+  - collection: scenarios
+    id: intercompany-stock-transfer
+    content_sha256: f317e858e5b51b5c48d0c6eeaa1b7fa1cc4cda9b9d29063e21f41412c6e920f4
+  - collection: scenarios
+    id: intercompany-partial-return
+    content_sha256: 5e447cccb7250ba0dd125d12ade508f390006253341562202e5437b5125bc6d9
+  supersedes_requirements:
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-financial-accounting
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-cost-profitability
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-treasury-cash
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: subdomain-commercial-settlement-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: capability-relevance-U856.yaml
+    collection: nodes
+    id: service-order-billing
+    fields:
+    - scope
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-commercial-settlement-management
+    fields:
+    - scope
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER229
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER231
+    fields:
+    - context
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D09
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: order-workflow-orchestration
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: product-price-book
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_comparisons
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: order-workflow-orchestration
+    fields:
+    - market_comparisons
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: D09
+    fields:
+    - scope
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: D11
+    fields:
+    - scope
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: D04.l
+    fields:
+    - scope
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: service-order-billing
+    fields:
+    - scope
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: return-credit-resolution
+    fields:
+    - scope
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - market_comparisons
+    - scope
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: nodes
+    id: process-mining
+    fields:
+    - market_comparisons
+    - scope
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: nodes
+    id: BHV082
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - context
+    - market_comparisons
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: terms
+    id: TER173
+    fields:
+    - context
+    - market_comparisons
+  - annex: decision-latency-packaging-audit-U1145.yaml
+    collection: terms
+    id: TER175
+    fields:
+    - context
+    - market_comparisons
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: cap-sales-price-determination
+    fields:
+    - market_comparisons
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: cap-sales-pricing-rule-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER345
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER367
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: paths
+    id: intercompany-direct-delivery-path
+    fields:
+    - content_sha256
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: accounting-data-provision
+    fields:
+    - market_comparisons
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: order-workflow-orchestration
+    fields:
+    - market_inspiration
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER114
+    fields:
+    - context
+    - market_comparisons
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER129
+    fields:
+    - context
+    - market_inspiration
+  - annex: global-model-remediation-U1118.yaml
+    collection: nodes
+    id: D04.n
+    fields:
+    - scope
+  - annex: intercompany-scenario-U831.yaml
+    collection: scenarios
+    id: intercompany-direct-delivery
+    fields:
+    - content_sha256
+  - annex: market-coverage-audit-U775.yaml
+    collection: nodes
+    id: D01.c
+    fields:
+    - scope
+  - annex: market-coverage-audit-U775.yaml
+    collection: nodes
+    id: D04.l
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - market_inspiration
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - market_comparisons
+    - scope
+  - annex: offshore-nearshore-operating-mode-U1134.yaml
+    collection: terms
+    id: TER070
+    fields:
+    - context
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: order-workflow-orchestration
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: workflow-definition-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: orchestration-detail-scope-U981.yaml
+    collection: nodes
+    id: subdomain-financial-accounting
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_inspiration
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER069
+    fields:
+    - context
+    - market_inspiration
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: product-price-book
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D01.c
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: D04.k
+    fields:
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: BHV069
+    fields:
+    - scope
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER071
+    fields:
+    - context
+verification:
+  state: passed
+  backlog_errors: 0
+  pending_delivery_lots: 0
+  backlog_rendered: true
+  source_index_records: 3182
+  tests:
+    passed: 50
+    modules:
+    - scripts.test_model_coherence
+    - scripts.test_scenario_catalog
+    - scripts.test_business_scenarios
+    - scripts.test_glossary
+    - scripts.test_market_comparisons
+    - scripts.test_market_vendor_policy
+    - scripts.test_pedagogy
+    execution_note: 42 tests ciblés réussis au premier passage ; huit tests de cohérence réussis après réduction du périmètre
+      Sales Order et conservation du détail dans son exemple.
+  business_invariants: 27 fiches enrichies ; identités, types, noms, définitions, finalités, ordre, nature, profondeur et
+    toute la hiérarchie préservés. Toutes les relations antérieures et les autres catalogues sont inchangés ; six relations
+    de partage ajoutées.
+  new_terms:
+  - TER384
+  - TER385
+  scenarios: 43
+  paths: 50
+  source_qualification: Autorités et règles de prix à identifier dans chaque contexte ; aucune attribution fiscale, politique
+    de prix ou réalisation installée inventée. Les réserves marché antérieures restent conservées.
+  publication: Publication v089 / 2026-10-22.2 inchangée ; aucune release, commit ou push demandé.
+  baseline_model_sha256: 2c977ad3f7db5b717d17f62df79101c684a40bf7ede5b41670128bbe7ff9ff66
+  baseline_glossary_sha256: f32778a170a6a89c60f6a6e142fc337742cdaf371ccf1def17f120041debdccd
+editorial_review:
+  sales_order_scope: Précision courte dans le périmètre ; détail de l’engagement intercompany conservé dans un exemple, pour
+    respecter la limite de lecture de la fiche sans perdre ses frontières.

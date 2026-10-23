@@ -1,0 +1,760 @@
+schema_version: 1.0.0
+id: intercompany-audit-U1147
+status: applied
+audited_on: '2026-10-23'
+author: Codex
+source_refs:
+- U1147
+- U1148
+- U1149
+purpose: Auditer la couverture de l’intercompany et les coopérations du modèle, en comparaison avec Microsoft Dynamics 365
+  et SAP S/4HANA.
+authority: Recommandations IC01–IC10 approuvées en U1149 avec la clarification U1148 ; application canonique suivie dans intercompany-application-U1149.yaml.
+  Le diagnostic conserve son état source et les nouveaux textes restent proposés.
+basis:
+  git_head: d69da9ab0d376e4f40874a5b8fe8f05807ec7793
+  backlog_path: modeles/backlog/model.yaml
+  backlog_sha256: 2c977ad3f7db5b717d17f62df79101c684a40bf7ede5b41670128bbe7ff9ff66
+  glossary_path: modeles/backlog/glossary.yaml
+  glossary_sha256: f32778a170a6a89c60f6a6e142fc337742cdaf371ccf1def17f120041debdccd
+  publication_index: modeles/release/index.json
+  publication_descriptor: modeles/release/urbanisation-v089-2026-10-22.2.yaml
+  publication_version: 2026-10-22.2
+  publication_path: modeles/release/2026-10-22.2/model.yaml
+  publication_sha256: 0035816bb3a4211a3808b89c2ec183252e67e89763cd020bc16088572013d254
+  audited_node_ids:
+  - BHV069
+  - BHV082
+  - D01.c
+  - D01.g
+  - D01.h
+  - D02.e
+  - D03.i
+  - D03.o
+  - D04
+  - D04.i
+  - D04.j
+  - D04.k
+  - D04.l
+  - D04.m
+  - D04.n
+  - D06.d
+  - D07.c
+  - D07.d
+  - D09
+  - D11
+  - accounting-data-provision
+  - cap-sales-price-determination
+  - cap-sales-pricing-rule-management
+  - inventory-ownership-ledger
+  - order-workflow-orchestration
+  - process-ledger
+  - process-mining
+  - product-price-book
+  - service-order-billing
+  - service-order-payment-collection
+  - subdomain-commercial-settlement-management
+  - subdomain-cost-profitability
+  - subdomain-financial-accounting
+  - subdomain-treasury-cash
+  - workflow-definition-management
+  audited_term_ids:
+  - TER122
+  - TER071
+  - TER069
+  - TER070
+  - TER132
+  - TER153
+  - TER154
+  - TER375
+  parity: '35 fiches : noms, définitions, finalités, périmètres et justifications de décomposition identiques à la publication
+    v089 / 2026-10-22.2. Huit termes : noms, définitions, descriptions courtes, contextes et notes identiques. Contrôle ciblé,
+    sans égalité générale présumée.'
+verdict: 'Le modèle possède les responsabilités de base et un scénario explicite de vente intercompany en livraison directe.
+  La couverture de bout en bout reste partielle : changements des commandes liées, chaîne de factures et traitement acheteur,
+  transfert intercompany sans client final et retour réciproque ne disposent pas de contrats suffisamment explicites. Les
+  responsabilités financières de contexte ne prouvent pas une gestion intercompany financière complète.'
+scope:
+  included:
+  - Relations entre sociétés juridiquement distinctes d’un même groupe
+  - Achats et ventes de biens, stock, propriété, prestations et changements des commandes
+  - Facturation, faits comptables et adhérences Finance
+  - Scénarios, parcours, relations, supervision et glossaire
+  limits:
+  - Aucune pratique installée ni flux Beaumanoir présumé.
+  - Pas d’audit fiscal ou juridique par pays ; aucune règle de taxe ou de prix de transfert imposée.
+  - 'Services intragroupe, financement intragroupe, cash pooling et consolidation exhaustive non détaillés : responsabilités
+    de contexte et lacunes signalées seulement.'
+  - Pas d’étude de compatibilité technique, de licences ni de couverture d’une configuration produit installée.
+  - Audit ciblé ; aucune réouverture de l’audit des comportements clos U431.
+comparison_method: Comparer les résultats et responsabilités, pas les modules à la hiérarchie FLOW. Les mécanismes automatiques
+  des ERP sont des appuis partiels ; ils ne deviennent pas des capacités supplémentaires ni des automatismes imposés à FLOW.
+  Microsoft Dynamics 365 SCM et Finance sont distingués de Business Central, qui n’est pas utilisé pour conclure. Les éditions
+  SAP et les limites d’accès sont précisées ci-dessous.
+market_sources:
+- id: MS01
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Intercompany orders and return orders
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: About intercompany orders ; Intercompany order example ; About intercompany return orders
+  consulted_content: Commandes de vente et d’achat correspondantes entre sociétés ; échange simple ou chaîne avec client externe.
+    Les retours peuvent aussi relier les commandes et ajuster les engagements des accords.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS02
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Intercompany parameters
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-parameters
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Example 1 ; Example 2
+  consulted_content: Le prix au client externe et le prix interne sont distincts. La documentation décrit des chaînes comprenant
+    plusieurs sociétés et des autorités de propagation propres aux informations concernées.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS03
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Change or delete an original intercompany sales order
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-change-delete-original-sales-order
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Table Operation / Result
+  consulted_content: Les modifications de quantité et de lignes se répercutent dans les commandes liées selon des règles ;
+    la suppression peut être interdite lorsque le traitement est avancé.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS04
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Check intercompany order price discrepancies
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-check-price-discrepancies
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Contrôle des écarts ; note après comptabilisation de la facture
+  consulted_content: Les écarts de prix, remises et frais entre les deux commandes sont contrôlés. Le traitement diffère après
+    facturation ; un désalignement des totaux peut empêcher la comptabilisation acheteur.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS05
+  publisher: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales returns
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Create intercompany return orders ; direct delivery shipment returns
+  consulted_content: La chaîne de retour peut concerner le client externe et deux sociétés ; le lieu de retour physique et
+    la propagation des suites financières sont documentés séparément.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS06
+  publisher: Microsoft
+  product: Dynamics 365 Finance
+  title: Intercompany accounting setup
+  url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/intercompany-accounting-setup
+  edition: Documentation évolutive ; édition du tenant non précisée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Define main accounts ; Define intercompany accounting setup
+  consulted_content: Les journaux intercompany, comptes réciproques et couples d’entités sont configurés dans Finance ; les
+    responsabilités ne se réduisent pas aux commandes logistiques.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: MS07
+  publisher: Microsoft
+  product: Dynamics 365 Finance
+  title: Consolidation and elimination overview
+  url: https://learn.microsoft.com/en-us/dynamics365/finance/budgeting/consolidation-elimination-overview
+  edition: Documentation évolutive ; mise à jour affichée 2026-04-03
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Introduction ; options de consolidation et d’élimination
+  consulted_content: La consolidation combine les résultats des filiales ; les éliminations des opérations internes font l’objet
+    de règles ou traitements propres. Consolider un résultat et exécuter une commande sont des responsabilités distinctes.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: SAP01
+  publisher: SAP
+  product: SAP S/4HANA ; Cloud Private Edition
+  title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+  edition: Cours évoquant l’introduction en S/4HANA 2022 ; pas une matrice de disponibilité actuelle
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Classical / Advanced Intercompany Sales ; Advanced Intercompany Stock Transfer ; Value Chain Monitoring
+  consulted_content: Le processus avancé distingue commandes et factures réciproques, livraison, stock valorisé en transit
+    et suivi de la chaîne. Il explicite l’objet directeur pour la logistique et la planification.
+  access_and_evidence_limits: Le cours contient aussi des limites historiques et une feuille de route. Elles ne sont pas extrapolées
+    aux éditions actuelles, aux retours, au multisystème ou au multiétage. Comparaison partielle, sans adoption de son modèle
+    documentaire.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: SAP02
+  publisher: SAP
+  product: SAP S/4HANA Cloud Public Edition
+  title: Exploring the Advanced Intercompany Stock Transfer (5HP) Scenario
+  url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/exploring-the-advanced-intercompany-stock-transfer-5hp-scenario_cb5f1869-1aee-4f11-b97c-22d6fc37564b
+  edition: Cours Public Edition ; release précise non affichée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Stock Transfer Between Company Codes ; Advanced Intercompany Stock Transfer (5HP)
+  consulted_content: Le transfert entre sociétés relie achat, vente, flux physique, facture réciproque et stock en transit.
+    Il diffère d’un déplacement au sein d’une même société et peut être suivi de bout en bout.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: SAP03
+  publisher: SAP
+  product: SAP S/4HANA
+  title: Understanding Transfer Pricing
+  url: https://learning.sap.com/courses/profit-center-accounting-in-sap-s-4hana/understanding-transfer-pricing
+  edition: Cours Profit Center Accounting ; release précise non affichée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Parallel Valuation Views ; Summary
+  consulted_content: La valorisation légale, celle du groupe et celle des centres de profit sont distinguées. Le prix interne
+    et l’élimination des marges dans la vue groupe ne se confondent pas avec un prix client.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: SAP04
+  publisher: SAP
+  product: SAP S/4HANA
+  title: Intercompany Matching and Reconciliation (Overview)
+  url: https://learning.sap.com/courses/configuring-the-financial-closing-in-sap-s-4hana/intercompany-matching-and-reconciliation-overview
+  edition: Cours Financial Closing ; release précise non affichée
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Performing the Intercompany Matching and Reconciliation Process
+  consulted_content: Rapprochement des écritures entre sociétés, traitement des écarts, approbations et statut des soldes
+    constituent un processus financier distinct. Les dates et devises peuvent expliquer les différences.
+  access_and_evidence_limits: Page primaire consultée ; synthèse limitée aux passages accessibles, sans équivalence globale
+    ni preuve de déploiement.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+- id: SAP05
+  publisher: SAP
+  product: SAP S/4HANA Cloud Public Edition — Sales
+  title: Intercompany Sales Processing
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/ed1719d0dc2647e2aa4ca6c448960f19.html
+  edition: 2608 affichée dans le résultat indexé
+  consulted_on: '2026-10-23'
+  native_nature: Documentation de mécanismes et processus logiciels
+  locator: Business Background ; Process ; scope items
+  consulted_content: L’extrait du processus classique distingue facture intercompany et facture fournisseur reçue ; il mentionne
+    un parcours de retour client intercompany (2F4).
+  access_and_evidence_limits: Passages du résultat indexé effectivement consultés ; ouverture directe sans corps lisible.
+    Ni consultation intégrale ni compatibilité des retours avec le processus avancé de toutes éditions établies.
+  reuse: Reformulation brève ; pas de reproduction substantielle ni redistribution de schémas éditeur.
+existing_coverage:
+- ids:
+  - BHV069
+  - D04.i
+  - D04.j
+  - D04.n
+  evidence: Intercompany Sales est un comportement de Sales Order. Le scénario décrit les deux ventes et l’achat, leur filiation
+    et leurs engagements distincts.
+  assessment: Présent ; contrat de cohérence à compléter.
+  market_refs:
+  - MS01
+  - SAP01
+- ids:
+  - D01.h
+  - inventory-ownership-ledger
+  - D01.g
+  - D01.c
+  evidence: La propriété, la détention, les mouvements, le risque et la disponibilité sont distingués. Quantités, dates, preuves
+    et corrections des changements de propriétaire sont conservées, y compris en transit.
+  assessment: Socle solide ; aucune nouvelle capacité de tenue de stock nécessaire.
+  market_refs:
+  - MS01
+  - SAP02
+- ids:
+  - process-ledger
+  - order-workflow-orchestration
+  - BHV082
+  - process-mining
+  evidence: Pilotage des parcours, événements externes, attentes, corrections et reconstruction historique présents ; les
+    autorisations et la tenue des commandes restent séparées.
+  assessment: Mécanismes présents ; leur mobilisation intercompany doit être explicitée.
+  market_refs:
+  - MS03
+  - SAP01
+- ids:
+  - accounting-data-provision
+  - subdomain-financial-accounting
+  evidence: Relations aller et retour explicites entre les registres, Accounting Data Provision et Financial Accounting. Acceptation,
+    rejet, correction et comptabilisation sont distingués.
+  assessment: Raccordement des faits de stock présent ; ne prouve pas la chaîne complète des factures.
+  market_refs:
+  - MS06
+  - SAP04
+findings:
+- id: IC01
+  priority: P1
+  title: Formaliser les engagements réciproques et leurs changements
+  node_ids:
+  - D04.i
+  - D04.j
+  - D04.n
+  - BHV069
+  - order-workflow-orchestration
+  coverage: partial
+  observation: Le parcours relie explicitement vente A–client, achat A–B et vente B–A. Les relations des familles vers Order
+    Structuring sont génériques ; le contrat ne précise pas quelle information fait autorité, les changements attendus par
+    contrepartie ni les refus de propagation.
+  interpretation_and_risk: Des commandes peuvent rester liées tout en devenant incompatibles en quantité, date ou condition.
+    Une modification d’un côté ne vaut pas acceptation de l’autre.
+  recommendation: 'Préciser les responsabilités existantes : chaque famille tient ses engagements ; Order Structuring conserve
+    les correspondances entre lignes, sociétés et versions ; Process Management conduit les demandes de changement, leurs
+    réponses et exceptions. Exprimer dans le parcours et les échanges utiles les propositions, acceptations partielles, refus,
+    annulations et reliquats, sans graphe complet entre toutes les commandes.'
+  market_refs:
+  - MS01
+  - MS03
+  - SAP01
+  common_ground: Les produits documentent des documents liés et des évolutions coordonnées.
+  difference_and_limit: FLOW doit exprimer le résultat métier attendu, sans imposer la création automatique des documents
+    ni toutes les règles natives ERP.
+  glossary_follow_up:
+  - TER122
+  - TER069
+  - TER070
+  acceptance_example: 100 vestes liées ; 60 acceptées, 40 reportées ou refusées. Chaque société conserve sa réponse et son
+    engagement ; aucun acquittement ne confirme la promesse client.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC02
+  priority: P1
+  title: Fermer la chaîne de facturation et de traitement acheteur
+  node_ids:
+  - service-order-billing
+  - accounting-data-provision
+  - subdomain-financial-accounting
+  - D04.i
+  - D04.j
+  coverage: gap_in_chain
+  observation: 'Le parcours intercompany ne mobilise pas Billing : sa dernière étape transmet les faits de stock à Finance.
+    Billing couvre émission et correction génériques, sans contrat intercompany ni réception/contrôle explicites de la facture
+    fournisseur. Ses quatre relations actuelles portent parent, mandat, résultat et rapprochement de prestation ; aucun échange
+    explicite Billing–Financial Accounting.'
+  interpretation_and_risk: La comptabilisation des mouvements ne prouve ni facture client A–client, ni facture B–A, ni reconnaissance
+    de la dette de A. Une facture unique pour l’ensemble du groupe serait une mauvaise déduction.
+  recommendation: Compléter le parcours par les factures distinctes, leurs parties, lignes et références. Clarifier l’émission
+    dans Billing ; porter la réception, le contrôle et le traitement acheteur dans Financial Accounting au niveau de contexte
+    autorisé. Décrire les faits de facture et retours de traitement près de leur producteur ; ne pas détourner Accounting
+    Data Provision, limité aux registres de stock. Définir explicitement les échanges réellement utiles avec Finance.
+  market_refs:
+  - MS04
+  - MS06
+  - SAP01
+  - SAP05
+  common_ground: Les appuis distinguent les relations commerciales et leurs conséquences financières.
+  difference_and_limit: Un service générique de facturation ne démontre pas le traitement entrant d’une facture fournisseur.
+    Le contrôle financier reste extérieur au domaine Supply.
+  glossary_follow_up:
+  - TER153
+  - TER118
+  - TER120
+  - TER121
+  acceptance_example: Une livraison B–client de 100 pièces peut donner deux factures de vente distinctes ; la facture B–A
+    est traitée comme fournisseur chez A. Un écart bloque ou met en attente le traitement concerné sans invalider silencieusement
+    les faits de stock.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC03
+  priority: P1
+  title: Éprouver le transfert intercompany sans client externe
+  node_ids:
+  - D04.k
+  - D04.i
+  - D04.j
+  - D01.h
+  - inventory-ownership-ledger
+  coverage: partial
+  observation: Transfer Order couvre les déplacements entre sites. Les achats, ventes et changements de propriétaire existent.
+    Le seul scénario explicitement intercompany comporte un client externe et une livraison directe.
+  interpretation_and_risk: Le déplacement intra-société et le transfert entre personnes morales risquent d’être lus de la
+    même manière, alors que les engagements et suites financières peuvent différer.
+  recommendation: Ajouter un scénario de transfert de B vers un site de A, sans client final. Préciser le mandat du déplacement
+    et, lorsque le montage retenu l’exige, les engagements vente/achat et la facturation. Ne pas rendre les trois commandes
+    obligatoires dans toute solution ; un document directeur peut porter le déplacement. Un changement de propriétaire sans
+    déplacement reste possible selon accord et preuve.
+  market_refs:
+  - MS01
+  - SAP02
+  common_ground: Microsoft décrit l’échange simple entre sociétés ; SAP documente spécifiquement le transfert intercompany.
+  difference_and_limit: Le Stock Transport Order SAP n’est pas une équivalence automatique de Transfer Order FLOW et n’impose
+    pas une topologie documentaire universelle.
+  glossary_follow_up:
+  - TER122
+  - TER071
+  - TER132
+  acceptance_example: 'B fournit 100 vestes au site de A pour reconstituer son stock : un seul mouvement physique, des engagements
+    juridiques explicités, aucune vente client fictive.'
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC04
+  priority: P2
+  title: Identifier sociétés, groupe et contextes des références
+  node_ids:
+  - D09
+  - D11
+  - D04.i
+  - D04.j
+  coverage: partial
+  observation: Party / Role distingue personne morale, rôle et unité interne ; un fournisseur peut être client. Le terme Intercompany
+    exige l’appartenance au même groupe. Les références ne rendent pas explicite la qualification intercompany, son origine
+    et sa validité pour chaque paire de sociétés.
+  interpretation_and_risk: Deux sites, deux marques ou deux rôles ne prouvent pas deux sociétés ni une relation intragroupe.
+    L’identité locale d’une commande peut aussi être ambiguë sans sa société.
+  recommendation: Préciser société qui porte l’engagement, contrepartie, identifiants d’origine, relation de groupe documentée
+    et validité. Relier les sites aux responsabilités connues sans fabriquer un maître d’entreprise ou une cartographie juridique
+    Beaumanoir.
+  market_refs:
+  - MS01
+  - MS06
+  - SAP02
+  common_ground: Les transactions comparées dépendent des entités et de leurs contreparties identifiées.
+  difference_and_limit: Company code et legal entity sont des objets produit à contextualiser ; leur identité technique n’est
+    pas imposée au modèle métier.
+  glossary_follow_up:
+  - TER122
+  - TER046
+  - TER047
+  - TER048
+  acceptance_example: Deux entrepôts d’une même société ne suffisent pas à qualifier intercompany ; une même société peut
+    être acheteur et vendeur dans des accords différents.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC05
+  priority: P2
+  title: Séparer prix externe, prix interne et valorisation groupe
+  node_ids:
+  - product-price-book
+  - D11
+  - cap-sales-pricing-rule-management
+  - cap-sales-price-determination
+  - subdomain-cost-profitability
+  coverage: partial
+  observation: Tarifs, prix contextualisés, accords et prix engagés sont couverts. Cost & Profitability Management porte les
+    méthodes de valorisation. Aucun contrat explicite ne distingue prix de cession interne, prix client et vue économique
+    groupe.
+  interpretation_and_risk: Réutiliser le prix final sur toutes les branches peut fausser marge, achat et contrôle financier.
+    Le prix de cession et sa justification fiscale ne se déduisent pas d’un résultat de promesse.
+  recommendation: Identifier l’autorité qui fournit le prix interne et ses conditions ; conserver origine, validité, devise
+    et prix engagé sur les branches concernées. Faire arbitrer le partage exact entre politique financière, accords et détermination
+    commerciale ; FLOW consomme les résultats autorisés. Distinguer les coûts/marges de société de la lecture groupe.
+  market_refs:
+  - MS02
+  - MS04
+  - SAP03
+  common_ground: Les sources permettent de distinguer prix externe, relation interne et vues de valorisation.
+  difference_and_limit: La documentation ne justifie pas de transférer automatiquement tout prix interne à Commerce ou tout
+    calcul de prix à Finance. Aucun régime fiscal ni règle de marge applicable à Beaumanoir établi.
+  glossary_follow_up:
+  - TER122
+  - TER048
+  - TER229
+  acceptance_example: 'A vend 100 au client et achète 70 à B : chaque prix garde son sens ; la valeur groupe ne s’obtient
+    pas en additionnant les deux chiffres d’affaires.'
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC06
+  priority: P2
+  title: Décrire les retours et corrections réciproques
+  node_ids:
+  - D04.l
+  - D04.m
+  - return-credit-resolution
+  - service-order-billing
+  - inventory-ownership-ledger
+  coverage: partial
+  observation: Retours client et fournisseur, avoir, remboursement et remplacement existent. Le scénario intercompany reste
+    nominal ; les correspondances entre les retours, crédits réciproques et changements de propriété ne sont pas éprouvées.
+  interpretation_and_risk: Un retour physique chez B pourrait être pris à tort pour une réception chez A, un avoir unique
+    ou une annulation des ventes initiales.
+  recommendation: 'Ajouter un parcours de retour partiel intercompany : lieu réel, autorisations, lignes et quantités, destinataires
+    des avoirs, éventuel remboursement client, contrepassations ou nouveaux faits de propriété justifiés. Conserver les responsabilités
+    existantes et distinguer correction financière, mouvement et remplacement.'
+  market_refs:
+  - MS01
+  - MS05
+  - SAP05
+  common_ground: Microsoft décrit explicitement les chaînes de retour ; SAP mentionne un processus intercompany de retour
+    dans son périmètre classique.
+  difference_and_limit: L’extrait SAP n’établit pas une compatibilité universelle du retour avec Advanced Intercompany Sales
+    ; le cours SAP01 comporte des restrictions historiques. Aucun automatisme commun n’est supposé.
+  glossary_follow_up:
+  - TER122
+  - TER072
+  - TER073
+  - TER153
+  - TER154
+  acceptance_example: 10 vestes retournent du client vers B ; crédit A–client et crédit B–A sont suivis séparément lorsqu’ils
+    sont dus, sans réception fictive chez A ni remboursement déduit d’un avoir.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC07
+  priority: P2
+  title: Mobiliser le pilotage de Case sur toute la chaîne
+  node_ids:
+  - workflow-definition-management
+  - order-workflow-orchestration
+  - process-ledger
+  - BHV082
+  - process-mining
+  coverage: existing_mechanism_implicit_use
+  observation: Le registre Process et la conduite des parcours existent. Le parcours intercompany ne mobilise pas explicitement
+    ces contributeurs pour la corrélation entre sociétés et les exceptions documentaires ou financières.
+  interpretation_and_risk: Le lecteur peut comprendre une coopération nominale sans savoir où suivre un engagement réciproque
+    refusé ou une branche en attente. Absence d’un contributeur ne prouve pas absence du mécanisme générique.
+  recommendation: Identifier le Case responsable et ses liens aux demandes de chaque société, sans imposer un dossier technique
+    unique à toutes. Conserver événements d’origine, dates, versions, refus et corrections ; distinguer synchronisation attendue,
+    traitement achevé et clôture financière. Réutiliser Process Ledger et les capacités de supervision et d’analyse.
+  market_refs:
+  - MS03
+  - MS04
+  - SAP01
+  - SAP04
+  common_ground: Les sources distinguent coordination opérationnelle et traitement des écarts ; la surveillance de la chaîne
+    est un résultat utile.
+  difference_and_limit: Value Chain Monitoring SAP n’est pas une équivalence complète du Case Management FLOW. Process Ledger
+    n’est ni le registre comptable ni le registre de stock.
+  glossary_follow_up:
+  - TER064
+  - TER375
+  acceptance_example: 'La livraison est terminée mais une facture est rejetée chez A : le dossier affiche l’attente financière
+    sans recréer une livraison ni déclarer le parcours intégralement achevé.'
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC08
+  priority: P2
+  title: Éprouver transit, contrôle et comptage par société
+  node_ids:
+  - D01.c
+  - D01.g
+  - D01.h
+  - inventory-ownership-ledger
+  - D03.i
+  - D03.o
+  coverage: strong_base_targeted_clarification
+  observation: Les positions par propriétaire/détenteur, la propriété en transit, les deux dates et l’absence de double comptage
+    sont explicites. Le scénario relie 100 pièces et trois commandes sans en faire 300. Le contrôle économique n’est pas explicitement
+    qualifié comme jalon distinct de la propriété.
+  interpretation_and_risk: Une équivalence directe avec le stock valorisé SAP serait excessive. Un stock visible du groupe
+    n’est pas automatiquement utilisable pour une autre société, et des commandes liées ne sont pas des besoins indépendants.
+  recommendation: Préserver les registres existants. Éprouver droits d’usage, autorisation de fourniture, branches de demande
+    et jalons documentés du transit ; Finance garde valorisation et reconnaissance comptable. Qualifier le contrôle économique
+    seulement si nécessaire et étayé, distinct de propriété/risque ; aucune nouvelle capacité ou écriture physique déduite.
+  market_refs:
+  - MS01
+  - MS02
+  - SAP01
+  - SAP02
+  common_ground: Les scénarios éditeurs lient plusieurs engagements à un flux de biens ; le transit et les conséquences financières
+    doivent être interprétés dans leur contexte.
+  difference_and_limit: Le mécanisme SAP Valuated Stock in Transit est un rapprochement partiel avec plusieurs responsabilités
+    FLOW, pas un équivalent d’Inventory Ownership Ledger.
+  glossary_follow_up:
+  - TER122
+  - TER132
+  - TER071
+  acceptance_example: '100 pièces en transit changent de propriétaire selon preuve : quantité physique du groupe inchangée
+    ; position par société mise à jour, usage par la promesse sous conditions.'
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC09
+  priority: P3
+  title: Rendre visible la frontière financière intercompany
+  node_ids:
+  - subdomain-financial-accounting
+  - subdomain-cost-profitability
+  - subdomain-treasury-cash
+  - subdomain-commercial-settlement-management
+  - service-order-payment-collection
+  coverage: context_not_detailed
+  observation: Finance couvre comptes, méthodes de coûts et trésorerie à un niveau de contexte. Rapprochement intercompany,
+    soldes réciproques et éliminations de consolidation ne sont pas explicitement détaillés. Payment est limité aux encaissements/remboursements
+    clients ; Commercial Settlement Management traite les avantages commerciaux.
+  interpretation_and_risk: Ni ces deux dernières fiches ni une analyse consolidée de performance ne prouvent paiement fournisseur,
+    compensation des soldes intercompany ou consolidation financière.
+  recommendation: Préciser dans les périmètres de contexte et leurs contrats qui reçoit les faits, rapproche les contreparties,
+    traite les écarts et produit les résultats consolidés. Finance conserve ses autorités et sa profondeur déclarée. Ne pas
+    ajouter automatiquement de capacités comptables ni étendre Payment. Services, trésorerie intragroupe et éliminations complètes
+    nécessitent un cadrage séparé s’ils deviennent un besoin approfondi.
+  market_refs:
+  - MS06
+  - MS07
+  - SAP03
+  - SAP04
+  common_ground: Les deux familles séparent opérations commerciales et responsabilités financières intercompany.
+  difference_and_limit: Microsoft Finance et SAP ICMR ne sont pas déclarés équivalents fonctionnellement. La couverture cible
+    complète et la réalisation installée restent à établir ; une analyse de coûts Supply n’est pas une consolidation légale.
+  glossary_follow_up:
+  - TER118
+  - TER154
+  - TER229
+  - TER231
+  acceptance_example: Une créance B sur A et la dette de A sont rapprochées ; un écart de période reste visible. L’analyse
+    groupe neutralise les échanges internes selon les règles financières sans effacer les engagements locaux.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+- id: IC10
+  priority: P2
+  title: Élargir l’explication du terme Intercompany sans changer son parent
+  node_ids:
+  - BHV069
+  - D04.i
+  coverage: editorial_scope_narrower_than_term
+  observation: TER122 définit correctement la relation entre sociétés mais sa description courte la rattache ici à une livraison
+    client ; son seul exemple est direct. BHV069 permet déjà de combiner intercompany et mode de livraison.
+  interpretation_and_risk: Le lecteur peut confondre intercompany et livraison directe ou croire que toute transaction intragroupe
+    est portée par le seul comportement Intercompany Sales.
+  recommendation: Élargir l’explication du terme à la relation, illustrer vente directe et fourniture au stock d’une autre
+    société, puis distinguer sa portée générale du comportement de vente. Garder BHV069 sous Sales Order ; ne pas créer de
+    domaine transversal aspirant achats, stock et Finance.
+  market_refs:
+  - MS01
+  - SAP02
+  common_ground: Les cas comparés dépassent la seule livraison directe à un client externe.
+  difference_and_limit: Intercompany Sales reste une variante de vente ; le terme général peut éclairer plusieurs coopérations
+    sans devenir une capacité universelle.
+  glossary_follow_up:
+  - TER122
+  - TER071
+  - TER069
+  - TER070
+  acceptance_example: Une fourniture de B au stock de A est reconnue comme intercompany même sans client externe ; un simple
+    changement d’entrepôt n’en est pas automatiquement un.
+  decision_state: accepted_recommendation
+  adoption_source: U1149
+relation_assessment:
+  present:
+  - REL-U756-MOVEMENTS
+  - REL-U1113-ownership-decision-ledger
+  - REL-U826-D01.g-TO-accounting-data-provision
+  - REL-U826-inventory-ownership-ledger-TO-accounting-data-provision
+  - REL-U981-accounting-facts
+  - REL-U1113-accounting-processing-results
+  - REL-U1113-accounting-results-D01.g
+  - REL-U1113-accounting-results-inventory-ownership-ledger
+  generic_not_absent:
+  - REL-NEEDS-U290-046
+  - REL-NEEDS-U290-054
+  to_qualify:
+  - Correspondances de lignes entre branches vente/achat et portée des changements, dans le contrat de structuration et de
+    conduite du parcours.
+  - Éléments facturables par relation juridique, résultat d’émission, fait de facture et résultat du traitement acheteur ;
+    faits produits par Billing et Finance, pas par les registres de stock.
+  - Réponses financières et corrections motivées vers le producteur concerné, sans action directe de Finance dans les registres
+    source.
+  - Mobilisation du Case, du Process Ledger et de la supervision dans les parcours intercompany nominal et en exception.
+  interpretation: Un parcours explicite est déjà une preuve de coopération. L’absence d’une arête directe Sales Order–Purchase
+    Order n’est pas une erreur automatique ; compléter les contrats manquants avant de multiplier les relations. Les arêtes
+    de publication n’établissent aucune interface installée.
+implementation_order_proposed:
+- step: 1
+  finding_ids:
+  - IC01
+  - IC04
+  - IC10
+  deliverable: Vocabulaire et contrat des engagements réciproques, identités et changements.
+- step: 2
+  finding_ids:
+  - IC02
+  - IC05
+  deliverable: Parcours de factures distinctes et traitement acheteur ; autorité du prix interne et contrats Finance.
+- step: 3
+  finding_ids:
+  - IC03
+  - IC08
+  deliverable: Scénario sans client externe ; transit, droits d’usage et absence de double compte.
+- step: 4
+  finding_ids:
+  - IC06
+  - IC07
+  deliverable: Retour partiel, refus et corrections, avec pilotage explicite des Cases et de leurs traces.
+- step: 5
+  finding_ids:
+  - IC09
+  deliverable: Précisions du contexte financier, sans décomposition exhaustive ni extension implicite du domaine.
+glossary_alignment:
+  checked: Les huit termes ciblés et les responsabilités du modèle ont été lus ensemble. TER122 conserve un sens juridique
+    cohérent ; sa description courte et son exemple sont trop étroits pour expliquer tout le périmètre intercompany audité.
+    TER071 n’exclut pas un changement de propriétaire ; ne pas lui ajouter une exclusion intra-société inventée.
+  proposed_follow_up: Lors d’une application autorisée, corriger ensemble modèle, glossaire, scénarios et références de marché
+    réellement concernés ; expliquer factures réciproques, prix interne et contrôle économique uniquement dans leur portée
+    qualifiée.
+  canonical_changes: false
+validation:
+  state: passed
+  checked:
+  - 35 fiches et huit termes en parité métier ciblée avec v089
+  - Dix constats reliés à des identifiants existants
+  - Au moins un appui Microsoft Dynamics 365 et un appui SAP S/4HANA par constat, avec limites explicites
+  - Relations présentes et génériques vérifiées par identifiant
+  - Sources primaires avec date, périmètre, localisateur et limite de consultation
+  - Empreintes du modèle et du glossaire inchangées
+  scope: Audit documentaire seulement ; aucun build, test produit ou publication déclenché.
+  applies_to: État diagnostiqué avant application U1149 ; contrôles de l’état final dans intercompany-application-U1149.yaml.
+application:
+  source: U1149
+  annex: intercompany-application-U1149.yaml
+  new_nodes: []
+  modified_nodes:
+  - BHV069
+  - BHV082
+  - D01.c
+  - D01.h
+  - D04.i
+  - D04.j
+  - D04.k
+  - D04.l
+  - D04.m
+  - D04.n
+  - D09
+  - D11
+  - accounting-data-provision
+  - cap-sales-price-determination
+  - cap-sales-pricing-rule-management
+  - inventory-ownership-ledger
+  - order-workflow-orchestration
+  - process-ledger
+  - process-mining
+  - product-price-book
+  - return-credit-resolution
+  - service-order-billing
+  - subdomain-commercial-settlement-management
+  - subdomain-cost-profitability
+  - subdomain-financial-accounting
+  - subdomain-treasury-cash
+  - workflow-definition-management
+  new_relations:
+  - REL-U1149-sales-links
+  - REL-U1149-purchase-links
+  - REL-U1149-links-to-process
+  - REL-U1149-billing-to-accounting
+  - REL-U1149-accounting-to-billing
+  - REL-U1149-accounting-to-purchase
+  new_scenarios:
+  - intercompany-stock-transfer
+  - intercompany-partial-return
+  new_paths:
+  - intercompany-stock-transfer-path
+  - intercompany-partial-return-path

@@ -26004,3 +26004,29 @@ Date : 2026-10-22. Source : Laurent, validation et publication des ajustements d
 Verbatim : « Je valide les ajustements proposés sur le délai de décision et les conditionnements. Intègre-les au modèle et au glossaire, puis publie la mise à jour dans Atlas. »
 
 Portée : adopter le lot cohérent proposé dans l'annexe U1145 : sept fiches existantes, leurs précisions de glossaire, les deux relations et le contrat de mesure avec identification de chaque décision attendue, échéance utile, données inconnues et dossiers sans réponse. Intégrer les valeurs au modèle et au glossaire puis publier une nouvelle version dans Atlas. Préserver les frontières ATP/CTP/PTP, les limites des références et l'absence de preuve de réalisation installée. Aucun nouveau nœud métier ni changement du dossier PDF ; commit et push restent distincts.
+
+## U1147
+
+Date : 2026-10-23. Source : Laurent, demande d’audit de la couverture intercompany du modèle.
+
+Verbatim : « Je voudrais que tu me fasses un audit sur la gestion de l'intercompany dans le modèle en comparaison avec microsoft et SAP »
+
+Portée : examiner le backlog courant, ses relations, scénarios et termes métier, puis comparer la couverture intercompany aux documentations primaires pertinentes de Microsoft Dynamics 365 et SAP S/4HANA. Distinguer responsabilités existantes, couverture implicite, lacunes et recommandations ; ne présumer aucun usage installé ni flux propre à Beaumanoir. Cette demande autorise l’audit, sans application au modèle canonique, adoption des recommandations, release, commit ou push.
+
+Analyse proposée : [audit intercompany Microsoft Dynamics 365 / SAP S/4HANA](../modeles/backlog/intercompany-audit-U1147.yaml).
+
+## U1148
+
+Date : 2026-10-23. Source : Laurent, clarification de la place de l’intercompany dans le modèle.
+
+Verbatim : « En gros, ce qu'il faut comprendre, c'est que l'intercompany n'est pas une capacité mais un cas d'usage qui impacte le comportement de certaines capacités, c'est ça ? »
+
+Portée : clarifier l’intercompany comme relation juridique donnant lieu à des scénarios transversaux qui mobilisent et précisent les capacités existantes. La discussion distingue le terme général du comportement Intercompany Sales, conservé sous Sales Order ; aucun comportement Intercompany systématique dans chaque capacité ni capacité globale supplémentaire. Les responsabilités financières spécialisées restent possibles à leur maille et selon la profondeur autorisée.
+
+## U1149
+
+Date : 2026-10-23. Source : Laurent, autorisation d’appliquer les préconisations de l’audit intercompany.
+
+Verbatim : « Go pour appliquer les préconisations de l'audit »
+
+Portée : appliquer le lot cohérent des dix constats IC01–IC10 de l’audit U1147, avec la clarification U1148 : engagements réciproques et changements, chaîne de factures et traitement acheteur, transfert sans client externe, identité des sociétés, prix interne distinct du prix externe, retours réciproques, pilotage des Cases, transit et double comptage, frontière Finance et glossaire. Réutiliser les capacités et profondeurs existantes ; les règles fiscales, autorités de prix non documentées et réalisations installées ne sont pas inventées. Le Go approuve les recommandations présentées, sans adoption automatique des formulations et exemples rédigés ensuite. Aucun commit, release ou push demandé.
