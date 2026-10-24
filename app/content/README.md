@@ -15,4 +15,4 @@ Le fichier de travail `modeles/backlog/atlas-reader-content.yaml` contient seule
 
 Les JSON exportés conservent les valeurs du snapshot et portent séparément `reader_projection`, `presentation` et les descripteurs du métamodèle. L’adaptateur construit une copie de présentation immuable ; son attribut `raw` comprend cette projection. Il ne modifie ni la réponse d’origine ni le snapshot sur disque.
 
-Les ressources d’interface sont dans `../locales/fr/ui.json`. Les informations du dossier SCM sont dans `../../output/pdf/scm-study.json`, près de sa source PDF unique. Le document reste courant et commun aux versions du modèle.
+Les ressources de lecture sont réparties dans `../locales/fr/` par usage : interface, calculs partagés, API locale, export et HTML initial ; voir le [contrat des textes](../README.md#textes-et-vocabulaire-de-lecture). Les informations du dossier SCM sont dans `../../output/pdf/scm-study.json`, près de sa source PDF unique. Le document reste courant et commun aux versions du modèle.

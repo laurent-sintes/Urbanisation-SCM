@@ -1,5 +1,5 @@
+import { ui } from './coreUi.ts';
 import type { AtlasNode, BusinessExample, MarketComparison, PublishedModel } from './types.ts';
-import { ui } from './ui.ts';
 
 export interface PedagogicalDescription {
   explanation: string;

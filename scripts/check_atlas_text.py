@@ -1,12 +1,13 @@
 """Check resource ownership in the Python parts of the Atlas reader."""
 import ast
-import json
 from pathlib import Path
 import re
 try:
     from .atlas_reader_content import verify_legacy_inputs
+    from .atlas_text import load_resources
 except ImportError:
     from atlas_reader_content import verify_legacy_inputs
+    from atlas_text import load_resources
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = ('app/server.py', 'app/modeling_guide.py', 'scripts/atlas_metamodel.py',
@@ -14,7 +15,7 @@ FILES = ('app/server.py', 'app/modeling_guide.py', 'scripts/atlas_metamodel.py',
 
 
 def check(root=ROOT):
-    resources = json.loads((root / 'app/locales/fr/ui.json').read_bytes())
+    resources = load_resources(root)
     errors = []
     try:
         verify_legacy_inputs(root, required=True)

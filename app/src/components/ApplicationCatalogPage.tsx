@@ -416,10 +416,12 @@ function ComponentDetail({
           <h5>{ui('applicationCatalogPage.dans_ce_si')}</h5>
           <p className="application-state">
             {ui('applicationCatalogPage.acquisition')}
-            {state ? selectionStateLabel[state.acquired] || state.acquired : 'inconnue'}
+            {state ? selectionStateLabel[state.acquired] || state.acquired : ui('applicationCatalogPage.unknown_state')}
             {ui('applicationCatalogPage.activation')}{' '}
-            {state ? selectionStateLabel[state.activated] || state.activated : 'inconnue'} ·{' '}
-            {state ? usageLabel[state.used] || state.used : ui('applicationCatalogPage.usage_non_evalue')}
+            {state
+              ? selectionStateLabel[state.activated] || state.activated
+              : ui('applicationCatalogPage.unknown_state')}{' '}
+            · {state ? usageLabel[state.used] || state.used : ui('applicationCatalogPage.usage_non_evalue')}
           </p>
         </>
       )}
@@ -678,9 +680,9 @@ export function ApplicationCatalogPage({
                 <p>
                   {ui('applicationCatalogPage.inventaire')}{' '}
                   {product.inventory_status === 'partial'
-                    ? 'partiel'
+                    ? ui('applicationCatalogPage.partial_inventory')
                     : product.inventory_status === 'complete'
-                      ? 'complet'
+                      ? ui('applicationCatalogPage.complete_inventory')
                       : ui('applicationCatalogPage.a_etablir')}
                 </p>
                 {product.note && !product.documentation && (

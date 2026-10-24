@@ -6,11 +6,29 @@ import unittest
 
 from scripts.atlas_reader_content import reading_projection, reader_vocabulary, reader_content_inputs, scoped_projection, compile_reader_content
 from scripts.check_atlas_text import check
-from scripts.atlas_text import ReaderError
+from scripts.atlas_text import ReaderError, load_resources, CATALOGS
 from scripts.atlas_metamodel import describe_metamodel
 
 
 class ReaderContentTests(unittest.TestCase):
+    def test_catalog_split_preserves_export_fingerprints_and_rejects_duplicate_keys(self):
+        root = Path(__file__).resolve().parents[1]
+        resources = load_resources(root)
+        export_texts = {key: value for key, value in resources.items()
+                        if key.startswith(('metamodelExport.', 'documentationExport.'))}
+        expected = hashlib.sha256(json.dumps(export_texts, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+        self.assertEqual(reader_content_inputs(root)['export_texts'], expected)
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory)
+            folder = fixture / 'app/locales/fr'
+            folder.mkdir(parents=True)
+            for name in CATALOGS:
+                (folder / f'{name}.json').write_text('{}')
+            (folder / 'core.json').write_text('{"duplicate": "first"}')
+            (folder / 'ui.json').write_text('{"duplicate": "second"}')
+            with self.assertRaisesRegex(ValueError, 'Duplicate text resources'):
+                load_resources(fixture)
+
     def test_authoring_bindings_cannot_introduce_alternative_business_prose(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

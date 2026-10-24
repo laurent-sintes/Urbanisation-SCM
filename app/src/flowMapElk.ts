@@ -1,4 +1,5 @@
 import type { ElkNode } from 'elkjs/lib/elk.bundled.js';
+import { ui } from './coreUi.ts';
 import type { FlowMapBox, FlowMapLayout } from './flowMapLayout.ts';
 import { bypassPorts } from './flowMapPorts.ts';
 import { betterFlowScore, flowQualityScore, flowRoutingQuality } from './flowMapQuality.ts';
@@ -16,7 +17,6 @@ import {
   flowLabelSize,
   spaceFlowMap,
 } from './flowMapSpacing.ts';
-import { ui } from './ui.ts';
 
 export interface FlowLayoutEngine {
   layout(graph: ElkNode): Promise<ElkNode>;

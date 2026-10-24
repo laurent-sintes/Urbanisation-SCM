@@ -1,6 +1,6 @@
+import { ui } from './coreUi.ts';
 import { publicText } from './publicText.ts';
 import type { AtlasNode, JsonRecord, PublishedModel } from './types.ts';
-import { ui } from './ui.ts';
 
 export interface ScenarioContribution {
   node_id: string;

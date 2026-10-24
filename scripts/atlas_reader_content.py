@@ -36,7 +36,7 @@ def reader_content_inputs(root):
     result = {name: sha256((root / 'app/content' / name).read_bytes()).hexdigest()
             for name in ('legacy-reader-projections.json', 'legacy-vocabulary.json', 'presentation-profiles.json', 'metamodel-export.json')
             if (root / 'app/content' / name).exists()}
-    resources_path = root / 'app/locales/fr/ui.json'
+    resources_path = root / 'app/locales/fr/export.json'
     if resources_path.exists():
         texts = {key: value for key, value in json.loads(resources_path.read_bytes()).items()
                  if key.startswith(('metamodelExport.', 'documentationExport.'))}

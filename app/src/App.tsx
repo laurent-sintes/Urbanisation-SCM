@@ -745,7 +745,11 @@ export function App() {
                 <span className="publication-mode">
                   {route.version ? ui('app.modele_fige') : ui('app.modele_courant')}
                 </span>
-                <span>{model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version}</span>
+                <span>
+                  {model.revision
+                    ? ui('common.publication_revision', { revision: String(model.revision).padStart(3, '0') })
+                    : model.version}
+                </span>
               </summary>
               <div>
                 <label>

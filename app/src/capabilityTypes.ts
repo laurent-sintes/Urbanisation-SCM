@@ -1,5 +1,5 @@
+import { ui } from './coreUi.ts';
 import type { AtlasNode } from './types.ts';
-import { ui } from './ui.ts';
 
 /** Explicit published nature only; names and identifiers never determine the type. */
 export const capabilityTypes = {

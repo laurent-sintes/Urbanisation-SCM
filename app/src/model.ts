@@ -1,5 +1,6 @@
 import { sortCapabilitiesByType } from './capabilityTypes.ts';
 import { categorySections } from './categories.ts';
+import { ui } from './coreUi.ts';
 import { readDataExchange } from './dataSharing.ts';
 import { validateDisplayIndex } from './displayCodes.ts';
 import { resolveGlossaryTerm } from './glossary.ts';
@@ -15,7 +16,6 @@ import type {
   RawPublication,
   StructuralRelationType,
 } from './types.ts';
-import { ui } from './ui.ts';
 
 const structuralTypes = new Set<string>(['contains', 'presents']);
 export const isStructural = (relation: AtlasRelation): boolean => structuralTypes.has(relation.type);
@@ -131,7 +131,7 @@ export function adaptPublication(input: RawPublication): PublishedModel {
       raw: node,
     });
   });
-  const nodeById = uniqueMap(nodes, 'Nœud');
+  const nodeById = uniqueMap(nodes, ui('model.node'));
   const glossary = raw.glossary?.terms ?? [];
   if (!Array.isArray(glossary)) throw new Error(ui('model.glossaire_publie_invalide'));
   const glossaryById = uniqueMap(glossary, ui('model.terme'));

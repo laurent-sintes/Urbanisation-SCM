@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { messages, parameters, schema } from './label-resources.mjs';
+import { catalogs, messages, parameters, schema } from './label-resources.mjs';
 
 const app = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -25,13 +25,19 @@ const readerAttributes = new Set([
   'heading',
   'intro',
   'emptyMessage',
+  'help',
+  'hint',
+  'tooltip',
+  'summary',
+  'subtitle',
+  'message',
+  'children',
 ]);
 const technicalMethods = new Set([
   'querySelector',
   'querySelectorAll',
   'closest',
   'matches',
-  'setAttribute',
   'getAttribute',
   'createElement',
   'addEventListener',
@@ -46,7 +52,7 @@ const technical = (value) =>
     value,
   );
 const human = (value) =>
-  /\p{L}/u.test(value) && !technical(value) && (/[\sÀ-ÿ’]/u.test(value) || /^[A-Z][a-z]/.test(value));
+  /\p{L}/u.test(value) && !technical(value) && (/[\sÀ-ÿŒœ’]/u.test(value) || /^\p{Lu}\p{Ll}/u.test(value));
 const readerName =
   /(?:labels?|titles?|subtitles?|messages?|errors?|captions?|headings?|descriptions?|placeholders?|tooltips?|feedback|hints?|notice|intro|summary|text)$/i;
 
@@ -54,7 +60,90 @@ const readerName =
 export function scanLabels(filename, source) {
   const parsed = parseSync(filename, source);
   const findings = parsed.errors.map((error) => ({ line: 1, text: String(error) }));
-  const add = (node, text) => findings.push({ line: source.slice(0, node.start).split('\n').length, text });
+  const reported = new Set();
+  const add = (node, text) => {
+    const identity = `${node.start}:${text}`;
+    if (reported.has(identity)) return;
+    reported.add(identity);
+    findings.push({ line: source.slice(0, node.start).split('\n').length, text });
+  };
+  const scopes = new WeakMap();
+  const children = (node) =>
+    Object.entries(node)
+      .flatMap(([key, value]) =>
+        ['comments', 'loc', 'raw', 'start', 'end'].includes(key) ? [] : Array.isArray(value) ? value : [value],
+      )
+      .filter((child) => child?.type);
+  // Resolve immutable local bindings only. Parameters, imports and mutable bindings
+  // still shadow outer constants; this is not interprocedural data-flow analysis.
+  const bindPattern = (pattern, scope, binding = null) => {
+    if (!pattern) return;
+    if (pattern.type === 'Identifier') scope.bindings.set(pattern.name, binding);
+    else if (pattern.type === 'RestElement') bindPattern(pattern.argument, scope);
+    else if (pattern.type === 'AssignmentPattern') bindPattern(pattern.left, scope);
+    else if (pattern.type === 'ArrayPattern') for (const element of pattern.elements) bindPattern(element, scope);
+    else if (pattern.type === 'ObjectPattern')
+      for (const property of pattern.properties) bindPattern(property.value ?? property.argument, scope);
+  };
+  function collect(node, scope, parent) {
+    if (!node?.type) return;
+    if (['FunctionDeclaration', 'ClassDeclaration'].includes(node.type)) bindPattern(node.id, scope);
+    if (['Program', 'BlockStatement', 'CatchClause'].includes(node.type) || /Function/.test(node.type))
+      scope = { parent: scope, bindings: new Map() };
+    scopes.set(node, scope);
+    for (const parameter of node.params ?? []) bindPattern(parameter, scope);
+    if (node.type === 'CatchClause') bindPattern(node.param, scope);
+    if (node.type === 'VariableDeclarator')
+      bindPattern(node.id, scope, parent.kind === 'const' && node.id.type === 'Identifier' ? node.init : null);
+    if (/^Import.*Specifier$/.test(node.type)) bindPattern(node.local, scope);
+    for (const child of children(node)) collect(child, scope, node);
+  }
+  collect(parsed.program, { bindings: new Map() });
+  function binding(node) {
+    let scope = scopes.get(node);
+    while (scope) {
+      if (scope.bindings.has(node.name)) return scope.bindings.get(node.name);
+      scope = scope.parent;
+    }
+  }
+  function readable(node, seen = new Set(), excludedValues = new Set(), exclusions = new Map()) {
+    if (!node || seen.has(node)) return;
+    seen.add(node);
+    if (node.type === 'Identifier')
+      readable(binding(node), seen, exclusions.get(node.name) ?? excludedValues, exclusions);
+    else if (
+      node.type === 'Literal' &&
+      typeof node.value === 'string' &&
+      /\p{L}/u.test(node.value) &&
+      !excludedValues.has(node.value)
+    )
+      add(node, node.value);
+    else if (node.type === 'TemplateLiteral') {
+      const value = node.quasis.map((quasi) => quasi.value.cooked ?? quasi.value.raw).join('');
+      if (/\p{L}/u.test(value)) add(node, value);
+      for (const expression of node.expressions) readable(expression, seen, excludedValues, exclusions);
+    } else if (node.type === 'ConditionalExpression') {
+      const test = node.test;
+      const identifier = test.left?.type === 'Identifier' ? test.left : test.right;
+      const literal = test.left?.type === 'Literal' ? test.left : test.right;
+      const narrowed = new Map(exclusions);
+      if (
+        test.type === 'BinaryExpression' &&
+        ['===', '!=='].includes(test.operator) &&
+        identifier?.type === 'Identifier' &&
+        literal?.type === 'Literal'
+      )
+        narrowed.set(identifier.name, new Set([...(exclusions.get(identifier.name) ?? []), literal.value]));
+      readable(node.consequent, new Set(seen), excludedValues, test.operator === '!==' ? narrowed : exclusions);
+      readable(node.alternate, new Set(seen), excludedValues, test.operator === '===' ? narrowed : exclusions);
+    } else if (node.type === 'LogicalExpression' || (node.type === 'BinaryExpression' && node.operator === '+')) {
+      readable(node.left, seen, excludedValues, exclusions);
+      readable(node.right, seen, excludedValues, exclusions);
+    } else if (node.type === 'ArrayExpression')
+      for (const element of node.elements) readable(element, seen, excludedValues, exclusions);
+    else if (['JSXExpressionContainer', 'ParenthesizedExpression'].includes(node.type) || node.type.startsWith('TS'))
+      readable(node.expression, seen, excludedValues, exclusions);
+  }
   function walk(node, parent, inType = false, attribute, ancestors = []) {
     if (!node?.type) return;
     const typeOnly =
@@ -80,6 +169,14 @@ export function scanLabels(filename, source) {
         readerName.test(ancestor.id.name),
     );
     const prop = parent?.type === 'Property' ? parent.key?.name || parent.key?.value : undefined;
+    const technicalContext = ancestors.some(
+      (ancestor) =>
+        (ancestor.type === 'Property' && ['className', 'selector', 'transform'].includes(ancestor.key?.name)) ||
+        (ancestor.type === 'VariableDeclarator' && /_SELECTOR$/.test(ancestor.id?.name ?? '')) ||
+        (ancestor.type === 'AssignmentExpression' &&
+          ancestor.left?.type === 'MemberExpression' &&
+          ['className', 'font', 'fillStyle', 'strokeStyle', 'transform'].includes(ancestor.left.property?.name)),
+    );
     const reader =
       parent?.type !== 'BinaryExpression' &&
       (readerAttributes.has(attr) ||
@@ -98,7 +195,9 @@ export function scanLabels(filename, source) {
       errorConstructor &&
       typeof node.value === 'string' &&
       (node.value === 'integrity' || node.value.startsWith('ui.'));
-    const technicalCall = call?.callee?.type === 'MemberExpression' && technicalMethods.has(call.callee.property.name);
+    const attributeCall = call?.callee?.type === 'MemberExpression' && call.callee.property.name === 'setAttribute';
+    const technicalCall =
+      call?.callee?.type === 'MemberExpression' && (technicalMethods.has(call.callee.property.name) || attributeCall);
     const styleAssignment =
       parent?.type === 'AssignmentExpression' &&
       parent.left?.type === 'MemberExpression' &&
@@ -109,9 +208,26 @@ export function scanLabels(filename, source) {
       (attr && !readerAttributes.has(attr)) ||
       resourceCall ||
       technicalCall ||
+      technicalContext ||
       styleAssignment ||
       ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration'].includes(parent?.type) ||
       ['icon', 'className', 'selector'].includes(prop);
+    if (node.type === 'JSXExpressionContainer' && ['JSXElement', 'JSXFragment'].includes(parent?.type))
+      readable(node.expression);
+    if (node.type === 'JSXAttribute' && readerAttributes.has(node.name.name)) readable(node.value);
+    if (
+      node.type === 'CallExpression' &&
+      node.callee.type === 'MemberExpression' &&
+      node.callee.property.name === 'setAttribute'
+    ) {
+      let attributeName = node.arguments[0];
+      const seen = new Set();
+      while (attributeName?.type === 'Identifier' && !seen.has(attributeName)) {
+        seen.add(attributeName);
+        attributeName = binding(attributeName);
+      }
+      if (readerAttributes.has(attributeName?.value)) readable(node.arguments[1]);
+    }
     if (node.type === 'JSXText' && /\p{L}/u.test(node.value)) add(node, node.value.trim());
     if (
       node.type === 'Literal' &&
@@ -153,7 +269,7 @@ export function scanLabels(filename, source) {
 export function scanBootstrap(html) {
   const findings = [];
   const body = html.replace(/__ATLAS_TEXT_([\w.]+)__/g, (_match, key) => {
-    if (!Object.hasOwn(messages, key)) findings.push(`Unknown bootstrap resource: ${key}`);
+    if (!Object.hasOwn(catalogs.bootstrap, key)) findings.push(`Unknown bootstrap resource: ${key}`);
     return '';
   });
   if (/>[^<>]*\p{L}[^<>]*</u.test(body)) findings.push('Literal bootstrap text');
@@ -195,5 +311,5 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const findings = checkLabels();
   for (const finding of findings) console.error(`${finding.file}:${finding.line}: ${finding.text}`);
   if (findings.length) process.exitCode = 1;
-  else console.log('Atlas labels: no embedded reader text; resource keys and parameters verified.');
+  else console.log('Atlas labels: checked text contexts and local constants; resource keys and parameters verified.');
 }

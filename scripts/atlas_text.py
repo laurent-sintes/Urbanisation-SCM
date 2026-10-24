@@ -5,9 +5,23 @@ from pathlib import Path
 import re
 
 
+CATALOGS = ('ui', 'core', 'server', 'export', 'bootstrap')
+
+
+def load_resources(root):
+    result = {}
+    for name in CATALOGS:
+        catalog = json.loads((root / f'app/locales/fr/{name}.json').read_bytes())
+        duplicates = result.keys() & catalog.keys()
+        if duplicates:
+            raise ValueError('Duplicate text resources: ' + ', '.join(sorted(duplicates)))
+        result.update(catalog)
+    return result
+
+
 @lru_cache(maxsize=1)
 def resources():
-    return json.loads((Path(__file__).resolve().parents[1] / 'app/locales/fr/ui.json').read_bytes())
+    return load_resources(Path(__file__).resolve().parents[1])
 
 
 def text(key, **parameters):

@@ -3,7 +3,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const app = path.dirname(fileURLToPath(import.meta.url));
-export const messages = JSON.parse(fs.readFileSync(path.join(app, 'locales/fr/ui.json'), 'utf8'));
+export const catalogs = Object.fromEntries(
+  ['ui', 'core', 'server', 'export', 'bootstrap'].map((name) => [
+    name,
+    JSON.parse(fs.readFileSync(path.join(app, `locales/fr/${name}.json`), 'utf8')),
+  ]),
+);
+export const messages = {};
+for (const catalog of Object.values(catalogs)) {
+  for (const [key, value] of Object.entries(catalog)) {
+    if (Object.hasOwn(messages, key)) throw new Error(`Duplicate resource: ${key}`);
+    messages[key] = value;
+  }
+}
 
 export function parameters(template) {
   if (template && typeof template === 'object') {

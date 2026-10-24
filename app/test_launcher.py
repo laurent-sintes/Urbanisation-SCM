@@ -34,7 +34,8 @@ class LauncherTests(unittest.TestCase):
             shutil.copy2(ROOT / 'app/server.py', root / 'app')
             (root / 'scripts').mkdir()
             (root / 'app/locales/fr').mkdir(parents=True)
-            shutil.copy2(ROOT / 'app/locales/fr/ui.json', root / 'app/locales/fr')
+            for catalog in (ROOT / 'app/locales/fr').glob('*.json'):
+                shutil.copy2(catalog, root / 'app/locales/fr')
             for dependency in ('atlas_lock.py', 'atlas_workshop.py', 'hotspot_catalog.py', 'hotspot_resolution.py', 'atlas_text.py'):
                 shutil.copy2(ROOT / 'scripts' / dependency, root / 'scripts')
             with socket.socket() as reservation:

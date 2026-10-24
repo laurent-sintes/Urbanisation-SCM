@@ -1,4 +1,5 @@
 import { businessFields } from './businessContent.ts';
+import { ui } from './coreUi.ts';
 import {
   featuredPrinciples,
   principleChildren,
@@ -16,7 +17,6 @@ import { publicText } from './publicText.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
 import { catalogOf, scenarioSearchText, valueStreamSearchText } from './scenarioCatalog.ts';
 import type { AtlasNode, GlossaryTerm, MarketComparison, MarketInspiration, PublishedModel } from './types.ts';
-import { ui } from './ui.ts';
 
 export interface SearchResult {
   id: string;

@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { apiErrorMessage } from './apiErrors.ts';
 import { type FetchLike, fetchJson, staticUrl } from './publication.ts';
 import type { Hotspot, PublishedModel, RawPublication } from './types.ts';
-import { apiErrorMessage, ui } from './ui.ts';
+import { ui } from './ui.ts';
 
 export interface WorkshopOperation {
   sequence: number;

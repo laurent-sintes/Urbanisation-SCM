@@ -18,6 +18,7 @@ import { MapNodeButton } from './ModelLinks';
 import './applications.css';
 
 const ReactFlowPane = lazy(() => import('../ReactFlowPane').then((module) => ({ default: module.ReactFlowPane })));
+const MAP_CARDS_SELECTOR = '[data-testid="react-flow-canvas"] .react-flow__node-business';
 
 export interface MapPanelProps {
   model: PublishedModel;
@@ -66,13 +67,7 @@ export function MapPanel({
 }: MapPanelProps) {
   const panel = useRef<HTMLElement>(null);
   const scroll = useRef<HTMLDivElement>(null);
-  useCatalogueScrollMemory(
-    scroll,
-    model.version,
-    scopeId,
-    restoreViewport,
-    ui('mapPanel.data_testid_react_flow_canvas_react_flow_node_business'),
-  );
+  useCatalogueScrollMemory(scroll, model.version, scopeId, restoreViewport, MAP_CARDS_SELECTOR);
   const [expanded, setExpanded] = useState(false);
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
   const [scopeHotspotHighlighted, setScopeHotspotHighlighted] = useState(false);

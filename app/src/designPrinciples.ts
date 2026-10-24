@@ -1,7 +1,7 @@
 import { businessFields, businessQualification } from './businessContent.ts';
+import { ui } from './coreUi.ts';
 import { inlineParts, plainInlineText } from './inlineLinks.ts';
 import type { ArchitecturePrinciple, PublishedModel } from './types.ts';
-import { ui } from './ui.ts';
 
 export const principleCategories: Record<string, string> = {
   architecture: ui('designPrinciples.structure_metier'),

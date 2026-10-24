@@ -2,7 +2,9 @@
 
 ## Textes et vocabulaire de lecture
 
-Les textes d’interface sont dans `locales/fr/ui.json` : menus, titres, messages, aides, accessibilité et pluriels. Les composants utilisent des clés typées, avec leurs paramètres. Après une modification des ressources, exécuter `pnpm --dir app resources:types`. `check:code` et `build` contrôlent l’absence de nouveaux textes lecteur dans les sources, les attributs, les CSS et les parties Python du lecteur.
+Les textes sont répartis dans `locales/fr/` selon leur usage : `ui.json` pour l’interface, `core.json` pour les calculs de publication, recherche et carte, `server.json` pour l’API locale, `export.json` pour l’export et `bootstrap.json` pour le HTML initial. Chaque clé possède une seule source. Les modules de calcul utilisent `coreUi.ts` : les workers n’importent ni l’interface ni les messages du serveur. Les composants utilisent `ui.ts`, les erreurs structurées de l’atelier `apiErrors.ts`. Les classes CSS, sélecteurs DOM et expressions géométriques restent des constantes techniques dans le code.
+
+Les clés et paramètres sont typés. Après une modification des ressources, exécuter `pnpm --dir app resources:types`. `check:code` et `build` contrôlent les textes JSX, les propriétés textuelles déclarées (dont `help`), les attributs accessibles, les expressions conditionnelles, les constantes locales immuables et les parties Python du lecteur. Ce contrôle statique ne suit pas les valeurs à travers tous les appels de fonctions ou les mutations : la revue et les recettes navigateur restent nécessaires. Les tests compilent aussi les deux workers pour vérifier leurs dépendances et leurs budgets de taille.
 
 Les noms et définitions métier restent dans la publication sélectionnée. Les libellés des types et des natures sont résolus depuis son métamodèle et son vocabulaire associé, par identifiant stable. Le prochain guide préparé embarque `modeles/backlog/atlas-reader-vocabulary.yaml` avec ses autres dépendances vérifiées ; Atlas ne lit jamais ce fichier de travail directement.
 

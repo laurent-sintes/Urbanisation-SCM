@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import messages from './locales/fr/ui.json' with { type: 'json' };
+import messages from './locales/fr/bootstrap.json' with { type: 'json' };
 
 const escapeHtml = (text: string) => text.replace(/[&<>"']/g, (value) => `&#${value.charCodeAt(0)};`);
 

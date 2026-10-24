@@ -877,7 +877,7 @@ function Canvas(props: ReactFlowPaneProps) {
             applicationRelatedIds: [...applicationIds],
           },
           className:
-            `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ui('reactFlowPane.hotspot_related') : ''}${applicationIds.has(node.id.replace(/^group:/, '')) ? ui('reactFlowPane.application_related') : ''}`.trim(),
+            `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ' hotspot-related' : ''}${applicationIds.has(node.id.replace(/^group:/, '')) ? ' application-related' : ''}`.trim(),
         }))
       : nodes;
   const select = useCallback(

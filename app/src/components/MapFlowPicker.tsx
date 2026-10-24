@@ -40,12 +40,12 @@ export function MapFlowPicker({
   const state = !enabled
     ? ui('mapFlowPicker.masques')
     : !types.length
-      ? 'aucun'
+      ? ui('mapFlowPicker.none')
       : types.length === 1
         ? types[0] === 'shares-data'
           ? ui('mapFlowPicker.donnees')
-          : 'connaissance'
-        : 'tous';
+          : ui('mapFlowPicker.knowledge')
+        : ui('mapFlowPicker.all');
   return (
     <div className="map-flow-picker">
       <button

@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { checkLabels, scanBootstrap, scanLabels } from './check-labels.mjs';
+import { apiErrorMessage } from './src/apiErrors.ts';
 import { contextName } from './src/applicationCatalog.ts';
 import { capabilityTypeLabel } from './src/capabilityTypes.ts';
 import { iconFor } from './src/iconRegistry.ts';
 import { adaptPublication } from './src/model.ts';
 import { kindLabel } from './src/presentation.ts';
 import { readerPublication } from './src/readerContent.ts';
-import { apiErrorMessage, ui } from './src/ui.ts';
+import { ui } from './src/ui.ts';
 
 test('production reader text is externalized and every resource call has the declared parameters', () => {
   assert.deepEqual(checkLabels(), []);
@@ -36,6 +37,42 @@ test('the guard rejects reader text in JSX, attributes, callbacks, templates and
   );
 });
 
+test('reader contexts follow branches, local constants and declared custom text props', () => {
+  for (const source of [
+    '<p>{ready ? "oui" : "non"}</p>',
+    'element.setAttribute("aria-label", "texte accessible");',
+    'const attr = "title"; const value = "bonjour"; element.setAttribute(attr, value);',
+    'const value = "bonjour"; const View = () => <p>{value}</p>;',
+    'const value = "bonjour"; const alias = value; const View = () => <p>{alias}</p>;',
+    '<MyButton help="aide" />',
+    '<MyButton help={ready ? "oui" : "non"} />',
+    '<p>{ready && ("salut" + suffix)}</p>',
+    `const value = "bonjour"; const View = () => <p>{\`\${value}\`}</p>;`,
+    'const View = () => { const value = "bonjour"; return <p>{value as string}</p>; };',
+    'const value = "bonjour"; const View = () => <p>{value !== "autre" ? value : "autre"}</p>;',
+    'const code = "Nœud";',
+  ])
+    assert.ok(scanLabels('fixture.tsx', source).length, source);
+});
+
+test('technical contexts and shadowed bindings do not exempt actual reader text', () => {
+  for (const source of [
+    'const CARD_SELECTOR = ".business-card button"; element.querySelector(CARD_SELECTOR);',
+    'element.className = "graph-canvas zoom-width";',
+    'element.setAttribute("class", "graph-canvas zoom-width");',
+    `context.font = \`\${weight} \${size}px \${family}\`;`,
+    `const frame = { transform: \`translate(\${x}px, \${y}px) scale(\${scale})\` };`,
+    'const value = "technique"; function View(value) { return <p>{value}</p>; }',
+    'const value = "technique"; const View = ({ item: value }) => <p>{value}</p>;',
+    'const value = "technique"; const View = () => { const value = node.name; return <p>{value}</p>; };',
+    'const value = other; const other = value; const View = () => <p>{value}</p>;',
+    'const state = node.state || "unassessed"; const View = () => <p>{state === "unassessed" ? "?" : state}</p>;',
+  ])
+    assert.deepEqual(scanLabels('fixture.tsx', source), [], source);
+  assert.ok(scanLabels('fixture.tsx', '<p className="graph-canvas zoom-width">bonjour</p>').length);
+  assert.ok(scanLabels('fixture.tsx', 'element.setAttribute("title", "graph-canvas zoom-width");').length);
+});
+
 test('French quantities use full resources with explicit plural forms', () => {
   assert.equal(ui('scenarioCatalogPage.scenario_count', { count: 0 }), '0 scénario');
   assert.equal(ui('scenarioCatalogPage.scenario_count', { count: 1 }), '1 scénario');
@@ -52,6 +89,7 @@ test('bootstrap ownership includes metadata and accessible attribute text', () =
     assert.ok(scanBootstrap(source).length);
   assert.deepEqual(scanBootstrap('<title>__ATLAS_TEXT_bootstrap.title__</title>'), []);
   assert.ok(scanBootstrap('<title>__ATLAS_TEXT_unknown.resource__</title>').length);
+  assert.ok(scanBootstrap('<title>__ATLAS_TEXT_server.requete_invalide__</title>').length);
 });
 
 test('vocabulary is edition-owned; a rename does not change type, nature or assigned icon', () => {

@@ -1,5 +1,5 @@
+import { ui } from './coreUi.ts';
 import type { RawPublication } from './types.ts';
-import { ui } from './ui.ts';
 
 /** Frozen order belongs to the snapshot, never to search/filter/layout state. */
 export function validateDisplayIndex(raw: RawPublication): void {

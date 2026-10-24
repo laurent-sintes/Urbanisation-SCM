@@ -76,8 +76,7 @@ function titleTypography(box: FlowMapBox, zoom: number, hasChildren: boolean) {
   const fontFamily = getComputedStyle(document.body).fontFamily;
   const fontWeight = hasChildren ? 650 : 600;
   const measure = (text: string, font: number) => {
-    if (titleMeasure)
-      titleMeasure.font = ui('flowMapPanel.px', { fontWeight: fontWeight, font: font, fontFamily: fontFamily });
+    if (titleMeasure) titleMeasure.font = `${fontWeight} ${font}px ${fontFamily}`;
     return titleMeasure?.measureText(text).width ?? text.length * font * 0.54;
   };
   const preferred =

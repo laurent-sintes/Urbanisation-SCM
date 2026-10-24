@@ -95,7 +95,9 @@ export function Sidebar({
     });
     onClose();
   };
-  const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
+  const revision = model.revision
+    ? ui('common.publication_revision', { revision: String(model.revision).padStart(3, '0') })
+    : model.version;
   const publicationLabel = ui('sidebar.version_du_modele_complet', {
     revision: revision,
     version: model.version,

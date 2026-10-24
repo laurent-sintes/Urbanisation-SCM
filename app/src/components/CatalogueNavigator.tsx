@@ -43,8 +43,10 @@ interface Geometry {
   blocks: Block[];
 }
 
-const BLOCKS = ui('catalogueNavigator.business_card_data_node_id_overview_system_data_node_id_overview_');
-const CONTENT = ui('catalogueNavigator.graph_canvas_map_flow_surface_react_flow_viewport_overview_map_fr');
+const BLOCKS_SELECTOR =
+  '.business-card[data-node-id], .overview-system[data-node-id], .overview-domain-link[data-map-item-id], .overview-subdomain-link[data-map-item-id]';
+const CONTENT_SELECTOR =
+  '.graph-canvas, .map-flow-surface, .react-flow__viewport, .overview-map-frame, .urbanisation-overview';
 const MAJOR_KINDS = new Set(['business_system', 'domain', 'area', 'group']);
 const EMPTY: Geometry = {
   width: 1,
@@ -60,7 +62,7 @@ const rounded = (value: number) => Math.round(value * 10) / 10;
 const clamp = (value: number, max: number) => Math.max(0, Math.min(Math.max(0, max), value));
 
 function candidates(viewport: HTMLElement) {
-  const items = [...viewport.querySelectorAll<HTMLElement>(BLOCKS)].map((element) => ({
+  const items = [...viewport.querySelectorAll<HTMLElement>(BLOCKS_SELECTOR)].map((element) => ({
     element,
     kind:
       element.dataset.kind ||
@@ -180,7 +182,7 @@ export function CatalogueNavigator({
       const next = new Set<Element>([
         viewport,
         ...viewport.children,
-        ...viewport.querySelectorAll(CONTENT),
+        ...viewport.querySelectorAll(CONTENT_SELECTOR),
         ...candidates(viewport).map((item) => item.element),
       ]);
       for (const element of observed)

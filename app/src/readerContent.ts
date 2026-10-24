@@ -1,5 +1,5 @@
+import { ui } from './coreUi.ts';
 import type { RawPublication } from './types.ts';
-import { ui } from './ui.ts';
 
 /** Apply edition-owned presentation data, never infer edits from prose or names. */
 export function readerPublication(input: RawPublication): RawPublication {

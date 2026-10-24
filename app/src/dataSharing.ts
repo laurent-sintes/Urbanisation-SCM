@@ -1,6 +1,6 @@
+import { ui } from './coreUi.ts';
 import type { MapSlot } from './mapPlacement.ts';
 import type { AtlasRelation, DataExchange, Hotspot, PublishedModel, RawRelation } from './types.ts';
-import { ui } from './ui.ts';
 
 export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet<string>): DataExchange | undefined {
   const raw = relation.fields?.data_exchange;

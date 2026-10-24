@@ -1,5 +1,5 @@
+import { ui } from './coreUi.ts';
 import type { AtlasNode } from './types.ts';
-import { ui } from './ui.ts';
 
 const originKeys = ['frontoffice', 'backoffice'] as const;
 export type RequestOrigin = (typeof originKeys)[number];

@@ -1,5 +1,3 @@
-import { ui } from './ui.ts';
-
 type Point = { x: number; y: number };
 
 export const HOTSPOT_CLUSTER_MOTION_MS = 460;
@@ -18,11 +16,7 @@ export function hotspotClusterMotion(anchor: Point, center: Point, point: Point)
     return {
       offset: progress,
       opacity: Math.min(1, progress * 5),
-      transform: ui('hotspotClusterMotion.translate_px_px_scale', {
-        value1: x - point.x,
-        value2: y - point.y,
-        value3: 0.55 + progress * 0.45,
-      }),
+      transform: `translate(${x - point.x}px, ${y - point.y}px) scale(${0.55 + progress * 0.45})`,
     };
   });
 }

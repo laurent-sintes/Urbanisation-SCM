@@ -106,7 +106,9 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
     [model, query, resultContext, results, type, scope],
   );
   const scopes = model.nodes.filter((node) => ['business_system', 'domain'].includes(node.kind));
-  const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
+  const revision = model.revision
+    ? ui('common.publication_revision', { revision: String(model.revision).padStart(3, '0') })
+    : model.version;
   return (
     <dialog
       ref={dialog}
