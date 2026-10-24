@@ -271,7 +271,7 @@ try {
       await tooltip.waitFor({ state: 'detached' });
       assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0);
       await page.mouse.move(0, 0);
-      await trigger.focus();
+      await page.locator('.map-display-options > summary').focus();
       await individual.focus();
       assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0, 'pastille focus only highlights coverage');
       await info.focus();

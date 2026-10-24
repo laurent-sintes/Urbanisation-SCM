@@ -221,7 +221,7 @@ try {
             assert.deepEqual(missing, [], `${scope || 'overview'}/${id}: all visible descendants illuminate`);
             await page.keyboard.press('Escape');
           }
-          await trigger.focus();
+          await page.locator('.map-display-options > summary').focus();
           await page.waitForFunction(
             () => document.querySelectorAll('.hotspot-related, .hotspot-related-item').length === 0,
           );

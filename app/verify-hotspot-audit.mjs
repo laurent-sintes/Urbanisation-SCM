@@ -167,7 +167,7 @@ try {
   assert.ok((await tooltip.innerText()).includes(subject.problem.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')));
   await page.keyboard.press('Escape');
   await page.mouse.move(0, 0);
-  await page.locator('.map-hotspot-picker .detail-trigger').focus();
+  await page.locator('.map-display-options > summary').focus();
   await page.waitForTimeout(350);
   assert.ok(
     await page
