@@ -7,6 +7,7 @@ import { kindLabel } from '../presentation';
 import { type SearchResult, searchPublication } from '../search';
 import { filterSearchResults, searchExcerpt } from '../searchPresentation';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 
 interface Props {
   model: PublishedModel;
@@ -21,14 +22,15 @@ interface Props {
 function resultLabel(result: SearchResult) {
   if (result.node) return kindLabel(result.node);
   return {
-    glossary: 'Glossaire métier',
-    method: 'Notion méthodologique',
-    guide: result.document === 'design-principles' ? 'Guide de lecture' : 'Documentation',
-    principle: 'Principe directeur',
-    scenario: 'Scénario métier',
-    value_stream: 'Flux de valeur',
-    model: 'Objet métier',
-    document: 'Document de la publication',
+    glossary: ui('globalSearch.glossaire_metier'),
+    method: ui('globalSearch.notion_methodologique'),
+    guide:
+      result.document === 'design-principles' ? ui('globalSearch.guide_de_lecture') : ui('globalSearch.documentation'),
+    principle: ui('globalSearch.principe_directeur'),
+    scenario: ui('globalSearch.scenario_metier'),
+    value_stream: ui('globalSearch.flux_de_valeur'),
+    model: ui('globalSearch.objet_metier'),
+    document: ui('globalSearch.document_de_la_publication'),
   }[result.kind];
 }
 export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClose, onSelect }: Props) {
@@ -139,10 +141,10 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
       }}
     >
       <div className="global-search-heading">
-        <h2 id="global-search-title">Rechercher dans Atlas</h2>
-        <button type="button" aria-label="Fermer la recherche" onClick={onClose}>
+        <h2 id="global-search-title">{ui('globalSearch.rechercher_dans_atlas')}</h2>
+        <button type="button" aria-label={ui('globalSearch.fermer_la_recherche')} onClick={onClose}>
           <X size={19} />
-          <span>Fermer</span>
+          <span>{ui('globalSearch.fermer')}</span>
         </button>
       </div>
       <div className="global-search-input search-box">
@@ -151,8 +153,8 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
           ref={input}
           id="fa-search"
           type="search"
-          aria-label="Rechercher dans le modèle publié"
-          placeholder="Un périmètre, une capacité, un principe…"
+          aria-label={ui('globalSearch.rechercher_dans_le_modele_publie')}
+          placeholder={ui('globalSearch.un_perimetre_une_capacite_un_principe')}
           value={query}
           onChange={(event) => onQuery(event.target.value)}
           onKeyDown={(event) => {
@@ -165,38 +167,43 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
       </div>
       <div className="global-search-context">
         <p>
-          {fixed ? 'Publication figée' : 'Publication courante'} · {revision} · {model.version}
+          {fixed ? ui('globalSearch.publication_figee') : ui('globalSearch.publication_courante')} · {revision} ·{' '}
+          {model.version}
         </p>
         <div className="global-search-filters">
           <label>
-            Type
-            <select aria-label="Type de résultat" value={type} onChange={(event) => setType(event.target.value)}>
-              <option value="all">Tous les résultats</option>
-              <option value="universe">Enterprise Architecture</option>
-              <option value="business_system">Systèmes métier</option>
-              <option value="domain">Domaines</option>
-              <option value="area">Sous-domaines</option>
-              <option value="business_area">Business Areas</option>
-              <option value="capability">Capacités</option>
-              <option value="behavior">Comportements</option>
-              <option value="reference">Référentiels</option>
-              <option value="glossary">Glossaire métier</option>
-              <option value="method">Notions méthodologiques</option>
-              <option value="guide">Documentation</option>
-              <option value="principle">Principes directeurs</option>
-              <option value="document">Documents de la publication</option>
-              <option value="scenario">Scénarios</option>
-              <option value="value_stream">Flux de valeur</option>
+            {ui('globalSearch.type')}
+            <select
+              aria-label={ui('globalSearch.type_de_resultat')}
+              value={type}
+              onChange={(event) => setType(event.target.value)}
+            >
+              <option value="all">{ui('globalSearch.tous_les_resultats')}</option>
+              <option value="universe">{ui('globalSearch.enterprise_architecture')}</option>
+              <option value="business_system">{ui('globalSearch.systemes_metier')}</option>
+              <option value="domain">{ui('globalSearch.domaines')}</option>
+              <option value="area">{ui('globalSearch.sous_domaines')}</option>
+              <option value="business_area">{ui('globalSearch.business_areas')}</option>
+              <option value="capability">{ui('globalSearch.capacites')}</option>
+              <option value="behavior">{ui('globalSearch.comportements')}</option>
+              <option value="reference">{ui('globalSearch.referentiels')}</option>
+              <option value="glossary">{ui('globalSearch.glossaire_metier')}</option>
+              <option value="method">{ui('globalSearch.notions_methodologiques')}</option>
+              <option value="guide">{ui('globalSearch.documentation')}</option>
+              <option value="principle">{ui('globalSearch.principes_directeurs')}</option>
+              <option value="document">{ui('globalSearch.documents_de_la_publication')}</option>
+              <option value="scenario">{ui('globalSearch.scenarios')}</option>
+              <option value="value_stream">{ui('globalSearch.flux_de_valeur')}</option>
             </select>
           </label>
           <label>
-            Périmètre
+            {ui('globalSearch.perimetre')}
             <select
-              aria-label="Périmètre de recherche"
+              aria-label={ui('globalSearch.perimetre_de_recherche')}
               value={scope}
               onChange={(event) => setScope(event.target.value)}
             >
-              <option value="">Tout le modèle</option>
+              <option value="">{ui('globalSearch.tout_le_modele')}</option>
               {scopes.map((node) => (
                 <option key={node.id} value={node.id}>
                   {node.name}
@@ -205,19 +212,19 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
             </select>
           </label>
         </div>
-        {scope && <p>Le filtre de périmètre porte sur les objets de la hiérarchie métier.</p>}
+        {scope && <p>{ui('globalSearch.le_filtre_de_perimetre_porte_sur_les_objets_de_la_hierarchie_meti')}</p>}
       </div>
       <p className="global-search-count" role="status">
         {!query.trim()
-          ? 'Saisis un nom, un mot métier ou un code.'
+          ? ui('globalSearch.saisis_un_nom_un_mot_metier_ou_un_code')
           : pending
-            ? 'Recherche en cours…'
-            : `${matches.length} résultat${matches.length > 1 ? 's' : ''}`}
+            ? ui('globalSearch.recherche_en_cours')
+            : ui('globalSearch.resultat', { count: matches.length })}
       </p>
       <div
         className="global-search-results search-results"
         role="region"
-        aria-label="Résultats de recherche"
+        aria-label={ui('globalSearch.resultats_de_recherche')}
         aria-busy={pending}
       >
         {matches.slice(0, limit).map((result) => {
@@ -256,14 +263,14 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
                   type="button"
                   className="search-result-map"
                   onClick={() => onSelect(result, true)}
-                  aria-label={`Voir ${result.name} sur la carte`}
+                  aria-label={ui('globalSearch.voir_sur_la_carte', { name: result.name })}
                 >
                   <MapPin size={15} />
-                  Voir sur la carte
+                  {ui('globalSearch.voir_sur_la_carte_2')}
                 </button>
               )}
               <details className="search-result-details">
-                <summary>Détails</summary>
+                <summary>{ui('globalSearch.details')}</summary>
                 <p>
                   {path.map((node) => node.name).join(' › ')}
                   {path.length > 0 && ' · '}
@@ -273,14 +280,17 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
             </div>
           );
         })}
-        {!pending && query.trim() && !matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
+        {!pending && query.trim() && !matches.length && (
+          <p>{ui('globalSearch.aucun_element_ne_correspond_dans_cette_publication')}</p>
+        )}
         {matches.length > limit && (
           <button
             type="button"
             className="secondary-button search-more"
             onClick={() => setLimit((value) => value + 40)}
           >
-            Afficher davantage de résultats <ArrowUpRight size={15} />
+            {ui('globalSearch.afficher_davantage_de_resultats')}
+            <ArrowUpRight size={15} />
           </button>
         )}
       </div>

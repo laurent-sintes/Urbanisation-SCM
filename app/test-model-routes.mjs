@@ -4,7 +4,7 @@ import { readRoute, routeHash } from './src/navigation.ts';
 
 const nodes = [
   { id: 'supply-chain-orchestration', kind: 'domain', displayCode: 'DOM-004' },
-  { id: 'D04', kind: 'area', hierarchyLabel: 'Sous-domaine', displayCode: 'SUB-001' },
+  { id: 'D04', kind: 'area', hierarchyLabel: 'Sous-domaine', hierarchyKind: 'subdomain', displayCode: 'SUB-001' },
 ];
 const model = { version: 'v1', nodes, nodeById: new Map(nodes.map((n) => [n.id, n])) };
 test('domain links expose canonical identity with no compatibility alias', () => {

@@ -1,6 +1,7 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
 import { lineageOf, visibleAncestorId } from './model.ts';
 import type { AtlasRelation, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface FlowMapPresentationOptions {
   zoom: number;
@@ -43,7 +44,10 @@ export function flowMapBoundaryDestinations(
     const scopeId = common && common.kind !== 'universe' ? common.id : '';
     const destination = destinations.get(scopeId) || {
       scopeId,
-      name: common?.name || model.nodes.find((node) => node.kind === 'universe')?.name || 'Enterprise Architecture',
+      name:
+        common?.name ||
+        model.nodes.find((node) => node.kind === 'universe')?.name ||
+        ui('flowMapPresentation.enterprise_architecture'),
       relations: [],
       depth: common ? sourceLineage.findIndex((node) => node.id === common.id) : -1,
     };

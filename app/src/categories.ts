@@ -1,4 +1,5 @@
 import type { AtlasNode } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface DisplayCategory {
   id: string;
@@ -48,5 +49,5 @@ export function startsCategorySection(nodes: readonly AtlasNode[], index: number
 }
 
 export function categoryCaption(node: AtlasNode): string {
-  return categoryOf(node)?.display_name ?? 'Autres capacités';
+  return categoryOf(node)?.display_name ?? ui('categories.autres_capacites');
 }

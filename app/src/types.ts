@@ -209,7 +209,32 @@ export interface ArchitecturePrinciple {
     limits: string;
   }[];
 }
+export interface ReaderVocabulary {
+  presentation_roles?: Record<string, { label: string }>;
+  capability_natures?: Record<string, { label: string; definition?: string }>;
+  behavior_natures?: Record<string, { label: string; definition?: string }>;
+  request_origins?: Record<string, { label: string; description: string }>;
+  behavior_aspects?: Record<string, { label: string }>;
+  field_labels?: Record<string, string>;
+}
+export interface FlowNeighborhood {
+  scope_id: string;
+  required_ids: string[];
+  columns: string[][];
+  upper_stacks: string[][];
+  upper_height_ids: string[];
+  core_stacks: string[][];
+  centered_stack: string[];
+  centered_against: string;
+  core_ids: string[];
+}
 export interface RawPublication extends JsonRecord {
+  reader_projection?: {
+    schema_version: 1;
+    publication_version: string;
+    patches: { path: string[]; source_sha256?: string; text: string }[];
+  };
+  presentation?: { icons?: Record<string, string>; flow_neighborhood?: FlowNeighborhood | null };
   principles?: readonly ArchitecturePrinciple[];
   application_catalog?: ApplicationCatalog;
   workshop?: { active: true; session_id: string; base_version: string; revision: number };
@@ -230,7 +255,8 @@ export interface RawPublication extends JsonRecord {
     sources?: { id: string; title: string; kind: string; access: string; date?: string }[];
   };
   metamodel?: {
-    node_types?: { kind: string; label: string; definition?: string | null }[];
+    node_types?: { kind: string; label: string; definition?: string | null; short_description?: string | null }[];
+    vocabulary?: ReaderVocabulary;
     documentation?: import('./modelingGuide').ModelingGuide;
   };
   display_policy?: 'typed-tree-v1';
@@ -329,6 +355,7 @@ export interface ApplicationSelection {
   mappings: ApplicationMapping[];
 }
 export interface ApplicationCatalog {
+  contexts?: { id: string; name: string }[];
   schema_version: 1;
   source_refs: string[];
   products: ApplicationProduct[];
@@ -450,8 +477,16 @@ export interface AtlasDocument {
   review: Review;
 }
 export interface AtlasNode {
+  readonly reading?: {
+    kind?: string;
+    nature?: string;
+    vocabulary?: ReaderVocabulary;
+    icon?: string;
+    neighborhood?: FlowNeighborhood | null;
+  };
   readonly displayCode?: string;
   readonly hierarchyLabel?: string;
+  readonly hierarchyKind?: 'subdomain' | 'purpose' | 'area';
   readonly referenceParentName?: string;
   readonly id: string;
   readonly name: string;

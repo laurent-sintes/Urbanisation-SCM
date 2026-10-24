@@ -2,26 +2,27 @@ import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { defaultHotspotMapFilters, type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
 import { RESOLUTION_STAGES } from '../hotspotResolution';
+import { ui } from '../ui.ts';
 
 const sizeOptions = [
-  { value: 'all', label: 'Toutes' },
-  { value: 'S', label: 'S' },
-  { value: 'M', label: 'M' },
-  { value: 'L', label: 'L' },
-  { value: 'XL', label: 'XL' },
-  { value: 'unassessed', label: 'Non évaluée' },
+  { value: 'all', label: ui('hotspotFilterFields.toutes') },
+  { value: 'S', label: ui('hotspotFilterFields.s') },
+  { value: 'M', label: ui('hotspotFilterFields.m') },
+  { value: 'L', label: ui('hotspotFilterFields.l') },
+  { value: 'XL', label: ui('hotspotFilterFields.xl') },
+  { value: 'unassessed', label: ui('hotspotFilterFields.non_evaluee') },
 ];
 const typeOptions = [
-  { value: 'all', label: 'Tous' },
-  { value: 'scope', label: 'Périmètre' },
-  { value: 'integration', label: 'Intégration' },
+  { value: 'all', label: ui('hotspotFilterFields.tous') },
+  { value: 'scope', label: ui('hotspotFilterFields.perimetre') },
+  { value: 'integration', label: ui('hotspotFilterFields.integration') },
 ];
 const statusOptions = [
-  { value: 'all', label: 'Tous' },
-  { value: 'discovered', label: 'Découvert' },
-  { value: 'shared', label: 'Partagé' },
-  { value: 'validated', label: 'Validé' },
-  { value: 'resolved', label: 'Résolu' },
+  { value: 'all', label: ui('hotspotFilterFields.tous') },
+  { value: 'discovered', label: ui('hotspots.status.discovered') },
+  { value: 'shared', label: ui('hotspots.status.shared') },
+  { value: 'validated', label: ui('hotspots.status.validated') },
+  { value: 'resolved', label: ui('hotspots.status.resolved') },
 ];
 
 function FilterChoices({
@@ -69,19 +70,34 @@ export function HotspotFilterFields({
   );
   const computedSeverity = severityForComplexities(filters.arbitration, filters.implementation);
   const active = [
-    !filters.showModelHotspots && 'Modèle masqué',
-    !filters.showTransitionHotspots && 'Transition masquée',
-    !filters.showUsageHotspots && 'Usage masqué',
-    !filters.showUnqualifiedHotspots && 'Impact à qualifier masqué',
-    !filters.showResolved && 'Cadrages résolus masqués',
+    !filters.showModelHotspots && ui('hotspotFilterFields.modele_masque'),
+    !filters.showTransitionHotspots && ui('hotspotFilterFields.transition_masquee'),
+    !filters.showUsageHotspots && ui('hotspotFilterFields.usage_masque'),
+    !filters.showUnqualifiedHotspots && ui('hotspotFilterFields.impact_a_qualifier_masque'),
+    !filters.showResolved && ui('hotspotFilterFields.cadrages_resolus_masques'),
     filters.resolutionStage !== 'all' &&
-      `Cadrage : ${RESOLUTION_STAGES[(filters.resolutionStage || 'unassessed') as keyof typeof RESOLUTION_STAGES]}`,
-    filters.status !== 'all' && `Sujet : ${statusOptions.find((option) => option.value === filters.status)?.label}`,
-    filters.kind !== 'all' && `Type : ${typeOptions.find((option) => option.value === filters.kind)?.label}`,
+      ui('hotspotFilterFields.cadrage', {
+        value1: RESOLUTION_STAGES[(filters.resolutionStage || 'unassessed') as keyof typeof RESOLUTION_STAGES],
+      }),
+    filters.status !== 'all' &&
+      ui('hotspotFilterFields.sujet', {
+        value1: statusOptions.find((option) => option.value === filters.status)?.label,
+      }),
+    filters.kind !== 'all' &&
+      ui('hotspotFilterFields.type', { value1: typeOptions.find((option) => option.value === filters.kind)?.label }),
     filters.severity !== 'all' &&
-      `Criticité : ${filters.severityMode === 'at_least' ? 'au moins ' : filters.severityMode === 'at_most' ? 'au plus ' : ''}${filters.severity === 'unassessed' ? 'Non évaluée' : filters.severity}`,
-    filters.arbitration !== 'all' && `Arbitrage : ${filters.arbitration}`,
-    filters.implementation !== 'all' && `Implémentation : ${filters.implementation}`,
+      ui('hotspotFilterFields.criticite', {
+        value1:
+          filters.severityMode === 'at_least'
+            ? ui('hotspotFilterFields.au_moins')
+            : filters.severityMode === 'at_most'
+              ? ui('hotspotFilterFields.au_plus')
+              : '',
+        value2: filters.severity === 'unassessed' ? ui('hotspotFilterFields.non_evaluee') : filters.severity,
+      }),
+    filters.arbitration !== 'all' && ui('hotspotFilterFields.arbitrage', { arbitration: filters.arbitration }),
+    filters.implementation !== 'all' &&
+      ui('hotspotFilterFields.implementation', { implementation: filters.implementation }),
   ].filter(Boolean);
   const severityChoice =
     filters.severity === 'all' || filters.severity === 'unassessed'
@@ -90,13 +106,15 @@ export function HotspotFilterFields({
   return (
     <div className="hotspot-filter-controls">
       <div className="hotspot-filter-summary" role="status">
-        <span>Filtres communs à la liste et à la carte · inclus dans le lien partagé.</span>
+        <span>{ui('hotspotFilterFields.filtres_communs_a_la_liste_et_a_la_carte_inclus_dans_le_lien_part')}</span>
         <button type="button" onClick={() => onChange({ ...defaultHotspotMapFilters, enabled: true })}>
-          Réinitialiser
+          {ui('hotspotFilterFields.reinitialiser')}
         </button>
       </div>
       <p className="hotspot-active-filters">
-        {active.length ? `Critères actifs : ${active.join(' · ')}` : 'Aucun critère restrictif.'}
+        {active.length
+          ? ui('hotspotFilterFields.criteres_actifs', { value1: active.join(' · ') })
+          : ui('hotspotFilterFields.aucun_critere_restrictif')}
       </p>
       {showDisplayToggle && (
         <label className="hotspot-map-toggle">
@@ -105,18 +123,18 @@ export function HotspotFilterFields({
             checked={filters.enabled}
             onChange={(event) => onChange({ enabled: event.target.checked })}
           />
-          Afficher les points chauds
+          {ui('hotspotFilterFields.afficher_les_points_chauds')}
         </label>
       )}
       <fieldset className="hotspot-impact-filters">
-        <legend>Impact du sujet</legend>
+        <legend>{ui('hotspotFilterFields.impact_du_sujet')}</legend>
         <label className="hotspot-map-toggle">
           <input
             type="checkbox"
             checked={filters.showModelHotspots !== false}
             onChange={(event) => onChange({ showModelHotspots: event.target.checked, enabled: true })}
           />
-          Hotspots modèle
+          {ui('hotspotFilterFields.hotspots_modele')}
         </label>
         <label className="hotspot-map-toggle">
           <input
@@ -124,7 +142,7 @@ export function HotspotFilterFields({
             checked={filters.showTransitionHotspots !== false}
             onChange={(event) => onChange({ showTransitionHotspots: event.target.checked, enabled: true })}
           />
-          Hotspots transition
+          {ui('hotspotFilterFields.hotspots_transition')}
         </label>
         <label className="hotspot-map-toggle">
           <input
@@ -132,7 +150,7 @@ export function HotspotFilterFields({
             checked={filters.showUsageHotspots !== false}
             onChange={(event) => onChange({ showUsageHotspots: event.target.checked, enabled: true })}
           />
-          Hotspots usage
+          {ui('hotspotFilterFields.hotspots_usage')}
         </label>
         <label className="hotspot-map-toggle">
           <input
@@ -140,20 +158,17 @@ export function HotspotFilterFields({
             checked={filters.showUnqualifiedHotspots !== false}
             onChange={(event) => onChange({ showUnqualifiedHotspots: event.target.checked, enabled: true })}
           />
-          Impact à qualifier
+          {ui('hotspotFilterFields.impact_a_qualifier')}
         </label>
-        <p>
-          Modèle métier ou Core System FLOW · Trajectoire et bascule · Usage de l’outil. Un sujet peut avoir plusieurs
-          impacts.
-        </p>
+        <p>{ui('hotspotFilterFields.modele_metier_ou_core_system_flow_trajectoire_et_bascule_usage_de')}</p>
       </fieldset>
       <label className="hotspot-filter-select">
-        Avancement du cadrage
+        {ui('hotspotFilterFields.avancement_du_cadrage')}
         <select
           value={filters.resolutionStage || 'all'}
           onChange={(event) => onChange({ resolutionStage: event.target.value, enabled: true })}
         >
-          <option value="all">Tous</option>
+          <option value="all">{ui('hotspotFilterFields.tous')}</option>
           {Object.entries(RESOLUTION_STAGES).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -167,12 +182,12 @@ export function HotspotFilterFields({
           checked={filters.showResolved !== false}
           onChange={(event) => onChange({ showResolved: event.target.checked, enabled: true })}
         />
-        Inclure les cadrages résolus
+        {ui('hotspotFilterFields.inclure_les_cadrages_resolus')}
       </label>
       <div className="hotspot-filter-grid">
         <div className="hotspot-filter-section">
           <label className="hotspot-filter-select">
-            Criticité
+            {ui('hotspotFilterFields.criticite_2')}
             <select
               value={severityChoice}
               onChange={(event) => {
@@ -182,34 +197,34 @@ export function HotspotFilterFields({
                 onChange({ severity: level, severityMode: mode as HotspotMapFilters['severityMode'], enabled: true });
               }}
             >
-              <option value="all">Toutes</option>
-              <optgroup label="Un niveau précis">
-                <option value="exact:S">S uniquement</option>
-                <option value="exact:M">M uniquement</option>
-                <option value="exact:L">L uniquement</option>
-                <option value="exact:XL">XL uniquement</option>
+              <option value="all">{ui('hotspotFilterFields.toutes')}</option>
+              <optgroup label={ui('hotspotFilterFields.un_niveau_precis')}>
+                <option value="exact:S">{ui('hotspotFilterFields.s_uniquement')}</option>
+                <option value="exact:M">{ui('hotspotFilterFields.m_uniquement')}</option>
+                <option value="exact:L">{ui('hotspotFilterFields.l_uniquement')}</option>
+                <option value="exact:XL">{ui('hotspotFilterFields.xl_uniquement')}</option>
               </optgroup>
-              <optgroup label="Ce niveau et plus critiques">
-                <option value="at_least:M">M à XL</option>
-                <option value="at_least:L">L à XL</option>
+              <optgroup label={ui('hotspotFilterFields.ce_niveau_et_plus_critiques')}>
+                <option value="at_least:M">{ui('hotspotFilterFields.m_a_xl')}</option>
+                <option value="at_least:L">{ui('hotspotFilterFields.l_a_xl')}</option>
               </optgroup>
-              <optgroup label="Ce niveau et moins critiques">
-                <option value="at_most:M">S à M</option>
-                <option value="at_most:L">S à L</option>
+              <optgroup label={ui('hotspotFilterFields.ce_niveau_et_moins_critiques')}>
+                <option value="at_most:M">{ui('hotspotFilterFields.s_a_m')}</option>
+                <option value="at_most:L">{ui('hotspotFilterFields.s_a_l')}</option>
               </optgroup>
-              <option value="unassessed">Non évaluée</option>
+              <option value="unassessed">{ui('hotspotFilterFields.non_evaluee')}</option>
             </select>
           </label>
         </div>
         <div className="hotspot-filter-section">
           <FilterChoices
-            label="Type"
+            label={ui('hotspotFilterFields.type_2')}
             options={typeOptions}
             value={filters.kind}
             onChange={(kind) => onChange({ kind, enabled: true })}
           />
           <FilterChoices
-            label="Statut"
+            label={ui('hotspotFilterFields.statut')}
             options={statusOptions}
             value={filters.status}
             onChange={(status) => onChange({ status, enabled: true })}
@@ -222,33 +237,42 @@ export function HotspotFilterFields({
         aria-expanded={advancedOpen}
         onClick={() => setAdvancedOpen((value) => !value)}
       >
-        Affiner par complexité
+        {ui('hotspotFilterFields.affiner_par_complexite')}
         {(filters.arbitration !== 'all' || filters.implementation !== 'all') && (
           <strong>
-            Arbitrage {filters.arbitration} · Implémentation {filters.implementation}
+            {ui('hotspotFilterFields.arbitrage_2')}
+            {filters.arbitration}
+            {ui('hotspotFilterFields.implementation_2')}
+            {filters.implementation}
           </strong>
         )}
         <ChevronDown size={14} className={advancedOpen ? 'is-open' : ''} />
       </button>
       {advancedOpen && (
-        <div className="hotspot-filter-advanced" role="group" aria-label="Composantes de la criticité">
-          <p>La criticité résulte de ces deux complexités. Leur choix remplace le filtre de criticité.</p>
+        <div
+          className="hotspot-filter-advanced"
+          role="group"
+          aria-label={ui('hotspotFilterFields.composantes_de_la_criticite')}
+        >
+          <p>{ui('hotspotFilterFields.la_criticite_resulte_de_ces_deux_complexites_leur_choix_remplace_')}</p>
           <FilterChoices
-            label="Complexité d’arbitrage"
+            label={ui('hotspotFilterFields.complexite_d_arbitrage')}
             options={sizeOptions}
             value={filters.arbitration}
             onChange={(arbitration) => onChange({ arbitration, enabled: true })}
           />
           <FilterChoices
-            label="Complexité d’implémentation"
+            label={ui('hotspotFilterFields.complexite_d_implementation')}
             options={sizeOptions}
             value={filters.implementation}
             onChange={(implementation) => onChange({ implementation, enabled: true })}
           />
           {computedSeverity && (
             <p className="hotspot-filter-result" role="status">
-              Criticité résultante :{' '}
-              <strong>{computedSeverity === 'unassessed' ? 'Non évaluée' : computedSeverity}</strong>
+              {ui('hotspotFilterFields.criticite_resultante')}{' '}
+              <strong>
+                {computedSeverity === 'unassessed' ? ui('hotspotFilterFields.non_evaluee') : computedSeverity}
+              </strong>
             </p>
           )}
         </div>

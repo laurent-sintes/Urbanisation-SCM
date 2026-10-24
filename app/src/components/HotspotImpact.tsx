@@ -1,47 +1,46 @@
 import { framingLabel, hotspotImpactScopes } from '../hotspotFraming';
 import type { Hotspot } from '../types';
+import { ui } from '../ui.ts';
 import { ModelText } from './ModelLinks';
 export function HotspotImpact({ item }: { item: Hotspot }) {
   const impact = item.framing_impact;
   return (
     <details className="hotspot-impact-detail">
       <summary className="hotspot-framing-marker">{framingLabel(item)}</summary>
-      <p>Qualification de l’impact, indépendante de la criticité et de l’avancement.</p>
-      <p>
-        Modèle : règle, responsabilité, donnée ou réalisation métier/Core System concernée. Usage : praticité de
-        l’outil, sans changement métier établi. Transition : étapes, coexistence, reprise et bascule. Ces portées
-        peuvent se cumuler.
-      </p>
+      <p>{ui('hotspotImpact.qualification_de_l_impact_independante_de_la_criticite_et_de_l_av')}</p>
+      <p>{ui('hotspotImpact.modele_regle_responsabilite_donnee_ou_realisation_metier_core_sys')}</p>
       {impact ? (
         <>
           <p>
-            <strong>Justification : </strong>
+            <strong>{ui('hotspotImpact.justification')}</strong>
             <ModelText text={impact.rationale} />
           </p>
           <p>
-            Modèle concerné :{' '}
+            {ui('hotspotImpact.modele_concerne')}{' '}
             {impact.targets
-              .map((target) => (target === 'business_model' ? 'Modèle métier' : 'Core System FLOW'))
+              .map((target) =>
+                target === 'business_model' ? ui('hotspotImpact.modele_metier') : ui('hotspotImpact.core_system_flow'),
+              )
               .join(' · ') ||
               (hotspotImpactScopes(item).includes('transition')
-                ? 'Impact durable non établi'
+                ? ui('hotspotImpact.impact_durable_non_etabli')
                 : impact.category === 'usage'
-                  ? 'Usage de l’outil'
-                  : 'À qualifier')}
+                  ? ui('hotspotImpact.usage_de_l_outil')
+                  : ui('hotspotImpact.a_qualifier'))}
           </p>
           <p>
-            Preuve :{' '}
+            {ui('hotspotImpact.preuve')}{' '}
             {impact.evidence_state === 'hypothesis'
-              ? 'Hypothèse à éprouver'
+              ? ui('hotspotImpact.hypothese_a_eprouver')
               : impact.evidence_state === 'documented'
-                ? 'Qualification documentée ; portée des sources à vérifier'
-                : 'À investiguer'}
+                ? ui('hotspotImpact.qualification_documentee_portee_des_sources_a_verifier')
+                : ui('hotspotImpact.a_investiguer')}
           </p>
         </>
       ) : (
-        <p>Qualification non documentée dans cette publication.</p>
+        <p>{ui('hotspotImpact.qualification_non_documentee_dans_cette_publication')}</p>
       )}
-      <ModelText text="[Comprendre le Hotspot et ses dimensions](method:MOD044)" />
+      <ModelText text={ui('hotspotImpact.comprendre_le_hotspot_et_ses_dimensions_method_mod044')} />
     </details>
   );
 }

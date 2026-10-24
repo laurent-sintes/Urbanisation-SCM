@@ -6,6 +6,7 @@ import type { ModelingGuide } from '../modelingGuide';
 import { readRoute, routeHash } from '../navigation';
 import { publicText } from '../publicText';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import type { GuideState } from '../useModelingGuide';
 import { MarketComparisons } from './MarketComparisons';
 import { MethodLink, MethodReturn, ModelText } from './ModelLinks';
@@ -105,7 +106,7 @@ export function GlossaryPage({
             items: matches.filter((term) => group.term_ids.includes(term.id)),
           })),
           {
-            label: 'Notions métier nécessaires à la lecture du modèle',
+            label: ui('glossaryPage.notions_metier_necessaires_a_la_lecture_du_modele'),
             items: matches.filter((term) => !glossary.groups?.some((group) => group.term_ids.includes(term.id))),
           },
         ].filter((group) => group.items.length)
@@ -127,14 +128,14 @@ export function GlossaryPage({
     }
   }, [term, selected]);
   if (mode === 'transformation' && guideState.status === 'loading')
-    return <p role="status">Chargement du glossaire de transformation…</p>;
+    return <p role="status">{ui('glossaryPage.chargement_du_glossaire_de_transformation')}</p>;
   if (mode === 'transformation' && guideState.status === 'error')
     return (
       <section className="glossary-empty">
-        <h2>Le glossaire de transformation n’est pas accessible</h2>
+        <h2>{ui('glossaryPage.le_glossaire_de_transformation_n_est_pas_accessible')}</h2>
         <p>{guideState.message}</p>
         <button type="button" onClick={onRetry}>
-          Réessayer
+          {ui('glossaryPage.reessayer')}
         </button>
       </section>
     );
@@ -142,38 +143,39 @@ export function GlossaryPage({
     return (
       <section className="glossary-empty">
         <BookOpen size={30} />
-        <h2>Glossaire indisponible pour cette version</h2>
+        <h2>{ui('glossaryPage.glossaire_indisponible_pour_cette_version')}</h2>
       </section>
     );
   if (!terms.length)
     return (
       <section className="glossary-empty">
         <BookOpen size={30} />
-        <h2>Aucun terme dans cette version</h2>
+        <h2>{ui('glossaryPage.aucun_terme_dans_cette_version')}</h2>
       </section>
     );
   const href = (view: 'glossary' | 'metamodel' | 'principles', changes = {}) =>
     routeHash({ ...readRoute(''), version: routeVersion || '', view, ...changes });
   return (
     <>
-      <nav className="glossary-switch" aria-label="Choisir un glossaire">
+      <nav className="glossary-switch" aria-label={ui('glossaryPage.choisir_un_glossaire')}>
         <a href={href('glossary', { glossary: 'model' })} aria-current={mode === 'model' ? 'page' : undefined}>
-          Métier
+          {ui('glossaryPage.metier')}
         </a>
         <a href={href('glossary', { glossary: 'meta' })} aria-current={mode === 'meta' ? 'page' : undefined}>
-          Métamodèle
+          {ui('glossaryPage.metamodele')}
         </a>
         <a
           href={href('glossary', { glossary: 'transformation' })}
           aria-current={mode === 'transformation' ? 'page' : undefined}
         >
-          Transformation
+          {ui('glossaryPage.transformation')}
         </a>
       </nav>
       {mode !== 'model' && (
         <div className="method-glossary-nav">
           <a href={href(mode === 'meta' ? 'metamodel' : 'principles')}>
-            Retour {mode === 'meta' ? 'au métamodèle' : 'à la transformation'}
+            {ui('glossaryPage.retour')}
+            {mode === 'meta' ? ui('glossaryPage.au_metamodele') : ui('glossaryPage.a_la_transformation')}
           </a>
           <MethodReturn />
         </div>
@@ -183,26 +185,28 @@ export function GlossaryPage({
         className="glossary-mobile-jump"
         onClick={() => document.getElementById('glossary-index')?.scrollIntoView({ block: 'start' })}
       >
-        Choisir un terme
+        {ui('glossaryPage.choisir_un_terme')}
       </button>
       <div className="glossary-page" data-glossary={mode}>
-        <section className="glossary-index" id="glossary-index" aria-label="Termes du glossaire">
+        <section className="glossary-index" id="glossary-index" aria-label={ui('glossaryPage.termes_du_glossaire')}>
           <label className="glossary-search">
             <Search size={17} />
             <input
-              aria-label="Rechercher dans le glossaire"
-              placeholder="Un terme, une définition…"
+              aria-label={ui('glossaryPage.rechercher_dans_le_glossaire')}
+              placeholder={ui('glossaryPage.un_terme_une_definition')}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
           </label>
           <p role="status">
-            {matches.length} termes{showReadingHelp ? ' · aide sur les codes disponible' : ''}
+            {matches.length}
+            {ui('glossaryPage.termes')}
+            {showReadingHelp ? ui('glossaryPage.aide_sur_les_codes_disponible') : ''}
           </p>
           {groupedMatches.map((group) => (
             <section key={group.label}>
               {group.label && <h3>{group.label}</h3>}
-              <ul tabIndex={0} aria-label={group.label || 'Liste des termes'}>
+              <ul tabIndex={0} aria-label={group.label || ui('glossaryPage.liste_des_termes')}>
                 {group.items.map((item) => (
                   <li key={item.id}>
                     <a
@@ -231,15 +235,15 @@ export function GlossaryPage({
           ))}
           {showReadingHelp && !query && (
             <details>
-              <summary>Comprendre les codes et identifiants</summary>
+              <summary>{ui('glossaryPage.comprendre_les_codes_et_identifiants')}</summary>
               <ReadingHelp model={model} />
             </details>
           )}
         </section>
         {relocated ? (
           <section className="glossary-empty">
-            <h2>Cette règle appartient à la méthode</h2>
-            <MethodLink term={selected}>Consulter cette règle</MethodLink>
+            <h2>{ui('glossaryPage.cette_regle_appartient_a_la_methode')}</h2>
+            <MethodLink term={selected}>{ui('glossaryPage.consulter_cette_regle')}</MethodLink>
           </section>
         ) : showReadingHelp && query ? (
           <ReadingHelp model={model} />
@@ -249,41 +253,44 @@ export function GlossaryPage({
             id={`term-${term.id}`}
             ref={detail}
             tabIndex={0}
-            aria-label={`Définition de ${term.label_fr || term.name}`}
+            aria-label={ui('glossaryPage.definition_de', { value1: term.label_fr || term.name })}
           >
             <h2>{plainInlineText(term.label_fr || term.name)}</h2>
             {term.historical && (
               <p className="historical-notice">
-                Notion historique : elle est conservée pour les anciens liens et retirée de la liste courante de cette
-                publication.
+                {ui('glossaryPage.notion_historique_elle_est_conservee_pour_les_anciens_liens_et_re')}
               </p>
             )}
             {'presentation' in term && term.presentation === 'method' && (
               <p>
-                Ce verbe appartient aux conseils de rédaction.{' '}
-                <a href={href('principles', { principle: 'method' })}>Consulter la méthode de modélisation</a>.
+                {ui('glossaryPage.ce_verbe_appartient_aux_conseils_de_redaction')}{' '}
+                <a href={href('principles', { principle: 'method' })}>
+                  {ui('glossaryPage.consulter_la_methode_de_modelisation')}
+                </a>
+                .
               </p>
             )}
             {mode === 'model' && glossaryAliases(model.glossary, term.id).length > 0 && (
               <p className="term-origin">
-                Également recherché sous : {glossaryAliases(model.glossary, term.id).join(', ')}.
+                {ui('glossaryPage.egalement_recherche_sous')}
+                {glossaryAliases(model.glossary, term.id).join(', ')}.
               </p>
             )}
             {mode !== 'model' && (
               <p className="term-origin">
-                {mode === 'meta' ? 'Métamodèle' : 'Transformation'} · {term.id}
+                {mode === 'meta' ? ui('glossaryPage.metamodele') : ui('glossaryPage.transformation')} · {term.id}
               </p>
             )}
             {term.label_fr && term.label_fr !== term.name && <p className="glossary-english">{term.name}</p>}
             <section id={`term-${term.id}-definition`}>
-              <h3>Définition</h3>
+              <h3>{ui('glossaryPage.definition')}</h3>
               <p>
                 <ModelText text={term.definition} />
               </p>
             </section>
             {publicText(term.context) && (
               <section>
-                <h3>Contexte</h3>
+                <h3>{ui('glossaryPage.contexte')}</h3>
                 <p>
                   <ModelText text={publicText(term.context)} />
                 </p>
@@ -299,19 +306,19 @@ export function GlossaryPage({
                   </p>
                 ))}
             {mode === 'meta' && ['MOD026', 'MOD027', 'MOD028'].includes(term.id) && (
-              <nav aria-label="Notions associées">
+              <nav aria-label={ui('glossaryPage.notions_associees')}>
                 {glossary?.terms.find((t) => t.id === 'MOD026')?.status !== 'retired' && (
                   <>
-                    <MethodLink term="MOD026">Cas d’usage</MethodLink> ·{' '}
+                    <MethodLink term="MOD026">{ui('glossaryPage.cas_d_usage')}</MethodLink> ·{' '}
                   </>
                 )}
-                <MethodLink term="MOD027">Scénario</MethodLink> ·{' '}
-                <MethodLink term="MOD028">Parcours de mobilisation</MethodLink>
+                <MethodLink term="MOD027">{ui('glossaryPage.scenario')}</MethodLink> ·{' '}
+                <MethodLink term="MOD028">{ui('glossaryPage.parcours_de_mobilisation')}</MethodLink>
               </nav>
             )}
             {termValues && (
               <section>
-                <h3>Valeurs</h3>
+                <h3>{ui('glossaryPage.valeurs')}</h3>
                 <dl>
                   {Object.entries(termValues).map(([label, definition]) => (
                     <div key={label}>
@@ -326,7 +333,7 @@ export function GlossaryPage({
             )}
             {term.examples && term.examples.length > 0 && (
               <section>
-                <h3>Exemples</h3>
+                <h3>{ui('glossaryPage.exemples')}</h3>
                 <ul>
                   {term.examples.map((example) => (
                     <li key={example}>
@@ -348,9 +355,11 @@ export function GlossaryPage({
           </article>
         ) : (
           <section className="glossary-empty">
-            <h2>{selected ? 'Terme absent de ce glossaire' : 'Aucun résultat'}</h2>
+            <h2>{selected ? ui('glossaryPage.terme_absent_de_ce_glossaire') : ui('glossaryPage.aucun_resultat')}</h2>
             <p>
-              {matches.length ? 'Choisis un terme dans la liste.' : 'Essaie un autre terme ou efface la recherche.'}
+              {matches.length
+                ? ui('glossaryPage.choisis_un_terme_dans_la_liste')
+                : ui('glossaryPage.essaie_un_autre_terme_ou_efface_la_recherche')}
             </p>
           </section>
         )}

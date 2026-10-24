@@ -125,16 +125,11 @@ function slotsFor(parent: AtlasNode | undefined, children: readonly AtlasNode[],
  * Older publications without this neighborhood keep their own deterministic generic arrangement.
  */
 function supplyNeighborhood(parent: AtlasNode | undefined, children: readonly Territory[]) {
-  if (parent?.id !== 'supply-chain-orchestration') return undefined;
+  const profile = parent?.reading?.neighborhood;
+  if (!profile || parent?.id !== profile.scope_id) return undefined;
   const byId = new Map(children.map((territory) => [territory.node.id, territory]));
-  if (!byId.has('domain-plan') || !byId.has('D01')) return undefined;
-  const columns = [
-    ['business-references', 'subdomain-service-orders'],
-    ['subdomain-integration'],
-    ['subdomain-policies', 'domain-plan'],
-    ['D04', 'D01', 'D03'],
-    ['subdomain-process-management', 'D06'],
-  ].filter((ids) => ids.some((id) => byId.has(id)));
+  if (!profile.required_ids.every((id) => byId.has(id))) return undefined;
+  const columns = profile.columns.filter((ids) => ids.some((id) => byId.has(id)));
   const xById = new Map<string, number>();
   let x = 0;
   for (const ids of columns) {
@@ -151,19 +146,13 @@ function supplyNeighborhood(parent: AtlasNode | undefined, children: readonly Te
       y += territory.height + CORRIDOR;
     }
   };
-  stack(['business-references', 'subdomain-service-orders']);
-  stack(['subdomain-process-management', 'D06']);
-  stack(['subdomain-policies']);
-  stack(['D04']);
-  const upperHeight = Math.max(byId.get('subdomain-policies')?.height || 0, byId.get('D04')?.height || 0);
+  for (const ids of profile.upper_stacks) stack(ids);
+  const upperHeight = Math.max(0, ...profile.upper_height_ids.map((id) => byId.get(id)?.height || 0));
   const coreY = upperHeight ? upperHeight + CORRIDOR : 0;
-  const integrationOffset = Math.max(
-    0,
-    ((byId.get('domain-plan')?.height || 0) - (byId.get('subdomain-integration')?.height || 0)) / 2,
-  );
-  stack(['subdomain-integration'], coreY + integrationOffset);
-  stack(['domain-plan'], coreY);
-  stack(['D01', 'D03'], coreY);
+  const centeredHeight = Math.max(0, ...profile.centered_stack.map((id) => byId.get(id)?.height || 0));
+  const centeredOffset = Math.max(0, ((byId.get(profile.centered_against)?.height || 0) - centeredHeight) / 2);
+  stack(profile.centered_stack, coreY + centeredOffset);
+  for (const ids of profile.core_stacks) stack(ids, coreY);
   const known = children.filter((child) => positions.has(child.node.id));
   const height = Math.max(...known.map((child) => (positions.get(child.node.id)?.y || 0) + child.height));
   const extra = children.filter((child) => !positions.has(child.node.id));
@@ -208,7 +197,7 @@ function arrange(
       ? 0
       : parent?.kind === 'area' || parent?.kind === 'group'
         ? INNER_GAP
-        : parent?.id === 'supply-chain-orchestration'
+        : parent && parent.id === parent.reading?.neighborhood?.scope_id
           ? CORRIDOR
           : Math.max(
               CORRIDOR,

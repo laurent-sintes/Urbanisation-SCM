@@ -11,6 +11,7 @@ import { useId, useState } from 'react';
 import { framingLabel } from '../hotspotFraming';
 import { filterMapHotspots, type HotspotMapFilters, isHotspotVisible } from '../hotspotMap';
 import type { Hotspot } from '../types';
+import { ui } from '../ui.ts';
 import { useHotspotFloating } from './HotspotDisplay';
 import { HotspotFilterFields } from './HotspotFilterFields';
 import { ModelText } from './ModelLinks';
@@ -54,8 +55,10 @@ export function MapHotspotPicker({
       >
         <Flame size={15} />
         <span>
-          Points chauds{' '}
-          <strong>{filters.enabled ? `${visibleHotspots.length}/${displayedScope.length}` : 'masqués'}</strong>
+          {ui('mapHotspotPicker.points_chauds')}{' '}
+          <strong>
+            {filters.enabled ? `${visibleHotspots.length}/${displayedScope.length}` : ui('mapHotspotPicker.masques')}
+          </strong>
         </span>
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
       </button>
@@ -69,28 +72,33 @@ export function MapHotspotPicker({
               id={id}
               className="hotspot-filter-popover"
               role="dialog"
-              aria-label="Filtres des points chauds"
+              aria-label={ui('mapHotspotPicker.filtres_des_points_chauds')}
             >
               <div className="hotspot-filter-header">
-                <strong>Points chauds de cette carte</strong>
-                <button type="button" aria-label="Fermer les filtres" onClick={() => setOpen(false)}>
+                <strong>{ui('mapHotspotPicker.points_chauds_de_cette_carte')}</strong>
+                <button
+                  type="button"
+                  aria-label={ui('mapHotspotPicker.fermer_les_filtres')}
+                  onClick={() => setOpen(false)}
+                >
                   <X size={16} />
                 </button>
               </div>
               <div className="hotspot-filter-layout">
                 <HotspotFilterFields filters={filters} onChange={onChange} showDisplayToggle />
-                <section className="hotspot-filter-results" aria-label="Liste des points chauds">
+                <section className="hotspot-filter-results" aria-label={ui('mapHotspotPicker.liste_des_points_chauds')}>
                   <div className="hotspot-filter-results-heading">
-                    <strong>
-                      {matchingHotspots.length} point{matchingHotspots.length > 1 ? 's' : ''} chaud
-                      {matchingHotspots.length > 1 ? 's' : ''}
-                    </strong>
-                    <span>sur {displayedScope.length} visibles dans ce périmètre</span>
+                    <strong>{ui('mapHotspotPicker.hotspot_count', { count: matchingHotspots.length })}</strong>
+                    <span>
+                      {ui('mapHotspotPicker.sur')}
+                      {displayedScope.length}
+                      {ui('mapHotspotPicker.visibles_dans_ce_perimetre')}
+                    </span>
                   </div>
                   <div
                     className="hotspot-filter-list"
                     role="group"
-                    aria-label="Points chauds correspondant aux filtres"
+                    aria-label={ui('mapHotspotPicker.points_chauds_correspondant_aux_filtres')}
                   >
                     {matchingHotspots.length ? (
                       matchingHotspots.map((hotspot) => (
@@ -114,8 +122,11 @@ export function MapHotspotPicker({
                                 <ModelText text={hotspot.problem} />
                               </span>
                               <small>
-                                {framingLabel(hotspot)} · Criticité{' '}
-                                {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+                                {framingLabel(hotspot)}
+                                {ui('mapHotspotPicker.criticite')}{' '}
+                                {hotspot.severity === 'unassessed'
+                                  ? ui('mapHotspotPicker.non_evaluee')
+                                  : hotspot.severity}
                               </small>
                             </span>
                           </button>
@@ -125,17 +136,19 @@ export function MapHotspotPicker({
                               className="hotspot-picker-open"
                               onClick={() => onOpenHotspot(hotspot.id)}
                             >
-                              Ouvrir la fiche
+                              {ui('mapHotspotPicker.ouvrir_la_fiche')}
                             </button>
                           )}
                         </div>
                       ))
                     ) : (
-                      <p>Aucun point chaud avec ces filtres.</p>
+                      <p>{ui('mapHotspotPicker.aucun_point_chaud_avec_ces_filtres')}</p>
                     )}
                     {hiddenHotspots.length > 0 && (
                       <>
-                        <div className="hotspot-hidden-separator">Non visibles — hors des filtres et de la carte</div>
+                        <div className="hotspot-hidden-separator">
+                          {ui('mapHotspotPicker.non_visibles_hors_des_filtres_et_de_la_carte')}
+                        </div>
                         {hiddenHotspots.map((hotspot) => (
                           <button
                             type="button"
@@ -146,7 +159,7 @@ export function MapHotspotPicker({
                           >
                             <span className="hotspot-filter-list-label">
                               <strong>{hotspot.title}</strong>
-                              <small>Non visible</small>
+                              <small>{ui('mapHotspotPicker.non_visible')}</small>
                             </span>
                           </button>
                         ))}

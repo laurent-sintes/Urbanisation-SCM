@@ -1,38 +1,31 @@
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { ModelText } from './ModelLinks';
 export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
   const policy = model.raw.hotspot_catalog?.criticality_policy;
   return (
     <details className="hotspot-assessment-guide">
-      <summary>Comment qualifier et évaluer un Hotspot ?</summary>
+      <summary>{ui('hotspotAssessmentGuide.comment_qualifier_et_evaluer_un_hotspot')}</summary>
       <dl className="hotspot-dimensions">
         <div>
-          <dt>Sujet</dt>
-          <dd>Découvert, partagé ou validé : reconnaissance du sujet, sans confirmer un dysfonctionnement.</dd>
+          <dt>{ui('hotspotAssessmentGuide.sujet')}</dt>
+          <dd>{ui('hotspotAssessmentGuide.decouvert_partage_ou_valide_reconnaissance_du_sujet_sans_confirme')}</dd>
         </div>
         <div>
-          <dt>Impact</dt>
-          <dd>
-            Modèle métier / Core System, praticité d’usage ou impact à qualifier. Le classement garde sa justification
-            et son niveau de preuve.
-          </dd>
+          <dt>{ui('hotspotAssessmentGuide.impact')}</dt>
+          <dd>{ui('hotspotAssessmentGuide.modele_metier_core_system_praticite_d_usage_ou_impact_a_qualifier')}</dd>
         </div>
         <div>
-          <dt>Criticité</dt>
-          <dd>
-            Croisement des difficultés d’arbitrage et d’implémentation ; distinct de l’urgence et de l’impact business.
-          </dd>
+          <dt>{ui('hotspotAssessmentGuide.criticite')}</dt>
+          <dd>{ui('hotspotAssessmentGuide.croisement_des_difficultes_d_arbitrage_et_d_implementation_distin')}</dd>
         </div>
         <div>
-          <dt>Cadrage</dt>
-          <dd>
-            À explorer, pistes identifiées, qualification, solution crédible. Une décision argumentée de non-convergence
-            peut résoudre le cadrage.
-          </dd>
+          <dt>{ui('hotspotAssessmentGuide.cadrage')}</dt>
+          <dd>{ui('hotspotAssessmentGuide.a_explorer_pistes_identifiees_qualification_solution_credible_une')}</dd>
         </div>
       </dl>
       <p>
-        <ModelText text="[Point chaud](method:MOD044) · [Analyse des écarts](method:MOD045)" />
+        <ModelText text={ui('hotspotAssessmentGuide.point_chaud_method_mod044_analyse_des_ecarts_method_mod045')} />
       </p>
       {policy ? (
         <>
@@ -41,10 +34,12 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
           </p>
           <div className="hotspot-matrix-scroll">
             <table className="hotspot-matrix">
-              <caption>Grille de criticité · arbitrage en lignes, implémentation en colonnes</caption>
+              <caption>
+                {ui('hotspotAssessmentGuide.grille_de_criticite_arbitrage_en_lignes_implementation_en_colonne')}
+              </caption>
               <thead>
                 <tr>
-                  <th scope="col">Arbitrage / implémentation</th>
+                  <th scope="col">{ui('hotspotAssessmentGuide.arbitrage_implementation')}</th>
                   {policy.levels.map((level) => (
                     <th scope="col" key={level}>
                       {level}
@@ -64,12 +59,16 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
               </tbody>
             </table>
           </div>
-          <p>Exemple : arbitrage L × implémentation XL → criticité XL.</p>
+          <p>{ui('hotspotAssessmentGuide.exemple_arbitrage_l_implementation_xl_criticite_xl')}</p>
           {Object.entries(policy.axes)
             .filter(([axis]) => axis !== 'political')
             .map(([axis, value]) => (
               <section key={axis}>
-                <h5>{axis === 'arbitration' ? 'Complexité d’arbitrage' : 'Complexité d’implémentation'}</h5>
+                <h5>
+                  {axis === 'arbitration'
+                    ? ui('hotspotAssessmentGuide.complexite_d_arbitrage')
+                    : ui('hotspotAssessmentGuide.complexite_d_implementation')}
+                </h5>
                 <p>{value.definition}</p>
                 <dl>
                   {Object.entries(value.guidance).map(([level, description]) => (
@@ -84,7 +83,7 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
           <p>{policy.assessment_note}</p>
         </>
       ) : (
-        <p>Cette version ne contient pas de grille détaillée.</p>
+        <p>{ui('hotspotAssessmentGuide.cette_version_ne_contient_pas_de_grille_detaillee')}</p>
       )}
     </details>
   );

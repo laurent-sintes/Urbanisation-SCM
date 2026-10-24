@@ -189,7 +189,7 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
     ...(route.view === 'relations'
       ? {
           level:
-            model?.nodes.some((n) => n.hierarchyLabel === 'Sous-domaine') && route.graphLevel === 'area'
+            model?.nodes.some((n) => n.hierarchyKind === 'subdomain') && route.graphLevel === 'area'
               ? 'subdomain'
               : model?.nodes.some((n) => n.kind === 'area') && route.graphLevel === 'universe'
                 ? 'domain'

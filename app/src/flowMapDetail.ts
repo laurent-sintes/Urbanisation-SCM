@@ -1,6 +1,7 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
 import { descendantsOf } from './model.ts';
 import type { AtlasRelation, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 /** A scoped map omits published exchanges whose other endpoint is outside its hierarchy. */
 export function flowMapBoundaryRelations(model: PublishedModel, scopeId?: string): AtlasRelation[] {
@@ -21,13 +22,13 @@ export function flowExchangeContract(relation: AtlasRelation): { label: string; 
   const meaning = relation.qualification.meaning?.trim();
   const purpose = relation.dataExchange?.purpose.trim();
   const sections: { label: string; texts: string[] }[] = [];
-  if (meaning) sections.push({ label: 'Sens métier', texts: [meaning] });
+  if (meaning) sections.push({ label: ui('flowMapDetail.sens_metier'), texts: [meaning] });
   if (purpose && normalize(purpose) !== normalize(meaning || ''))
-    sections.push({ label: 'Finalité', texts: [purpose] });
+    sections.push({ label: ui('flowMapDetail.finalite'), texts: [purpose] });
   for (const [key, label] of [
-    ['conditions', 'Conditions'],
-    ['effects', 'Effets'],
-    ['scope', 'Périmètre'],
+    ['conditions', ui('flowMapDetail.conditions')],
+    ['effects', ui('flowMapDetail.effets')],
+    ['scope', ui('flowMapDetail.perimetre')],
   ] as const) {
     const value = relation.qualification[key];
     const texts = (Array.isArray(value) ? value : [value])

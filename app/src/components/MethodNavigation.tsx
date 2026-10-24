@@ -1,5 +1,6 @@
 import { activeMethod, methodEntries } from '../methodNavigation';
 import type { ModelingGuide } from '../modelingGuide';
+import { ui } from '../ui.ts';
 import { MethodLink } from './ModelLinks';
 
 export function MethodNavigation({
@@ -20,13 +21,13 @@ export function MethodNavigation({
     return (
       <div className="method-compact-navigation">
         <label>
-          Rubrique
+          {ui('methodNavigation.rubrique')}
           <select
-            aria-label="Rubrique de la méthode"
+            aria-label={ui('methodNavigation.rubrique_de_la_methode')}
             value={activeMethod(guide, selected)}
             onChange={(event) => onSelect(event.target.value)}
           >
-            {['Parcours de lecture', 'Ressources'].map((group) => (
+            {[ui('methodNavigation.parcours_de_lecture'), ui('methodNavigation.ressources')].map((group) => (
               <optgroup label={group} key={group}>
                 {entries
                   .filter((item) => item.group === group && item.id !== 'glossary')
@@ -44,7 +45,10 @@ export function MethodNavigation({
     );
   return (
     <>
-      {(resourcesOnly ? ['Ressources'] : ['Parcours de lecture', 'Ressources']).map((group) => (
+      {(resourcesOnly
+        ? [ui('methodNavigation.ressources')]
+        : [ui('methodNavigation.parcours_de_lecture'), ui('methodNavigation.ressources')]
+      ).map((group) => (
         <div className="method-nav-group" key={group}>
           <strong>{group}</strong>
           {entries

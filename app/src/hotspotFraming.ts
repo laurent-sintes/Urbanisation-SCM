@@ -1,4 +1,5 @@
 import type { Hotspot } from './types.ts';
+import { ui } from './ui.ts';
 
 export function hotspotImpactScopes(hotspot: Hotspot): ('model' | 'transition' | 'usage')[] {
   const impact = hotspot.framing_impact;
@@ -10,19 +11,26 @@ export function framingLabel(hotspot: Hotspot): string {
   switch (hotspot.framing_impact?.category) {
     case 'structuring':
       if (hotspotImpactScopes(hotspot).includes('transition')) {
-        const scope = hotspotImpactScopes(hotspot).includes('model') ? 'modèle et transition' : 'transition';
+        const scope = hotspotImpactScopes(hotspot).includes('model')
+          ? ui('hotspotFraming.modele_et_transition')
+          : 'transition';
         return hotspot.framing_impact?.evidence_state === 'hypothesis'
-          ? `Impact ${scope} proposé`
-          : `Structurant pour ${scope === 'transition' ? 'la transition' : 'le modèle et la transition'}`;
+          ? ui('hotspotFraming.impact_propose', { scope: scope })
+          : ui('hotspotFraming.structurant_pour', {
+              value1:
+                scope === 'transition'
+                  ? ui('hotspotFraming.la_transition')
+                  : ui('hotspotFraming.le_modele_et_la_transition'),
+            });
       }
       return hotspot.framing_impact?.evidence_state === 'hypothesis'
-        ? 'Impact modèle proposé'
-        : 'Structurant pour le cadrage';
+        ? ui('hotspotFraming.impact_modele_propose')
+        : ui('hotspotFraming.structurant_pour_le_cadrage');
     case 'usage':
-      return 'Irritant d’usage · design produit';
+      return ui('hotspotFraming.irritant_d_usage_design_produit');
     case 'to_assess':
-      return 'Impact à qualifier';
+      return ui('hotspotFraming.impact_a_qualifier');
     default:
-      return 'Impact non renseigné';
+      return ui('hotspotFraming.impact_non_renseigne');
   }
 }

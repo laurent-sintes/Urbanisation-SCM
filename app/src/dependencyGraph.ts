@@ -1,5 +1,6 @@
 import { hasAreaLevels, isStructural } from './model.ts';
 import type { AtlasNode, AtlasRelation, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export type DependencyLevel = 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
 export type DependencyFamily = 'needs' | 'other';
@@ -58,25 +59,25 @@ const familyOf = (relation: AtlasRelation): DependencyFamily =>
 
 export function dependencyLevels(model: PublishedModel): { value: DependencyLevel; label: string }[] {
   const systems = model.nodes.some((node) => node.kind === 'business_system');
-  const purposeLabel = model.nodes.some((node) => node.kind === 'area' && node.hierarchyLabel === 'Purpose')
-    ? 'Purposes et référentiels'
-    : model.nodes.some((node) => node.kind === 'area' && node.hierarchyLabel === 'Sous-domaine')
-      ? 'Sous-domaines et référentiels'
-      : 'Areas et référentiels';
+  const purposeLabel = model.nodes.some((node) => node.kind === 'area' && node.hierarchyKind === 'purpose')
+    ? ui('dependencyGraph.purposes_et_referentiels')
+    : model.nodes.some((node) => node.kind === 'area' && node.hierarchyKind === 'subdomain')
+      ? ui('dependencyGraph.sous_domaines_et_referentiels')
+      : ui('dependencyGraph.areas_et_referentiels');
   return hasAreaLevels(model)
     ? [
-        { value: 'capability', label: 'Capacités' },
+        { value: 'capability', label: ui('dependencyGraph.capacites') },
         ...(model.nodes.some((n) => n.kind === 'business_area')
-          ? [{ value: 'business_area' as const, label: 'Business Areas et capacités directes' }]
+          ? [{ value: 'business_area' as const, label: ui('dependencyGraph.business_areas_et_capacites_directes') }]
           : []),
         { value: 'area', label: purposeLabel },
-        { value: 'domain', label: 'Domaines' },
-        ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : []),
+        { value: 'domain', label: ui('dependencyGraph.domaines') },
+        ...(systems ? [{ value: 'business_system' as const, label: ui('dependencyGraph.systemes_metier') }] : []),
       ]
     : [
-        { value: 'capability', label: 'Capacités' },
-        { value: 'domain', label: 'Domaines et référentiels' },
-        { value: 'universe', label: 'Univers' },
+        { value: 'capability', label: ui('dependencyGraph.capacites') },
+        { value: 'domain', label: ui('dependencyGraph.domaines_et_referentiels') },
+        { value: 'universe', label: ui('dependencyGraph.univers') },
       ];
 }
 
@@ -102,12 +103,14 @@ export function dependencyLevel(model: PublishedModel, requested: DependencyLeve
  */
 export function projectDependencies(model: PublishedModel, options: DependencyOptions): DependencyProjection {
   if (!['capability', 'business_area', 'area', 'domain', 'business_system', 'universe'].includes(options.level))
-    throw new Error('Niveau de dépendances inconnu.');
-  if (![0, 1, 2, 3].includes(options.depth)) throw new Error('La profondeur doit être 0, 1, 2 ou 3.');
-  if (!['both', 'incoming', 'outgoing'].includes(options.direction)) throw new Error('Sens de parcours inconnu.');
-  if (!['all', 'needs', 'other'].includes(options.family)) throw new Error('Famille de relations inconnue.');
+    throw new Error(ui('dependencyGraph.niveau_de_dependances_inconnu'));
+  if (![0, 1, 2, 3].includes(options.depth)) throw new Error(ui('dependencyGraph.la_profondeur_doit_etre_0_1_2_ou_3'));
+  if (!['both', 'incoming', 'outgoing'].includes(options.direction))
+    throw new Error(ui('dependencyGraph.sens_de_parcours_inconnu'));
+  if (!['all', 'needs', 'other'].includes(options.family))
+    throw new Error(ui('dependencyGraph.famille_de_relations_inconnue'));
   if (options.focusId && !model.nodeById.has(options.focusId))
-    throw new Error(`Nœud de focalisation absent : ${options.focusId}.`);
+    throw new Error(ui('dependencyGraph.n_ud_de_focalisation_absent', { focusId: options.focusId }));
   const level = dependencyLevel(model, options.level);
   const areaLevels = hasAreaLevels(model);
   const atLevel = (item: AtlasNode): boolean =>
@@ -133,7 +136,7 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
 
   function node(id: string): AtlasNode {
     const item = model.nodeById.get(id);
-    if (!item) throw new Error(`Extrémité absente de la publication : ${id}.`);
+    if (!item) throw new Error(ui('dependencyGraph.extremite_absente_de_la_publication', { id: id }));
     return item;
   }
 
@@ -141,7 +144,7 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
     if (node(id).kind !== 'behavior') return id;
     const parent = parents.get(id);
     if (parent?.type !== 'contains' || node(parent.sourceId).kind !== 'capability') {
-      throw new Error(`Comportement sans parent capacité explicite : ${id}.`);
+      throw new Error(ui('dependencyGraph.comportement_sans_parent_capacite_explicite', { id: id }));
     }
     return parent.sourceId;
   }
@@ -150,7 +153,7 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
     let cursor: string | undefined = id;
     const seen = new Set<string>();
     while (cursor !== undefined) {
-      if (seen.has(cursor)) throw new Error(`Cycle de rattachement explicite : ${cursor}.`);
+      if (seen.has(cursor)) throw new Error(ui('dependencyGraph.cycle_de_rattachement_explicite', { cursor: cursor }));
       seen.add(cursor);
       if (predicate(node(cursor))) return cursor;
       cursor = parents.get(cursor)?.sourceId;
@@ -269,7 +272,7 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
           source,
           target,
           family: entry.family,
-          label: entry.family === 'needs' ? 'A besoin de' : 'Relation métier',
+          label: entry.family === 'needs' ? ui('dependencyGraph.a_besoin_de') : ui('dependencyGraph.relation_metier'),
           count: 0,
           relationIds: [],
         },

@@ -8,8 +8,15 @@ import {
   startsCapabilityTypeSection,
 } from './src/capabilityTypes.ts';
 import { adaptPublication, childrenOf } from './src/model.ts';
+import { fixtureVocabulary } from './test-fixtures/reading.mjs';
 
-const node = (id, nature, kind = 'capability') => ({ id, name: id, kind, fields: { nature } });
+const node = (id, nature, kind = 'capability') => ({
+  id,
+  name: id,
+  kind,
+  fields: { nature },
+  reading: { nature: fixtureVocabulary.capability_natures[nature]?.label },
+});
 test('explicit types drive labels and ten distinct icons; never names or IDs', () => {
   assert.equal(Object.keys(capabilityTypes).length, 10);
   assert.equal(new Set(Object.values(capabilityTypes).map((type) => type.icon)).size, 10);
@@ -20,7 +27,7 @@ test('explicit types drive labels and ten distinct icons; never names or IDs', (
   assert.equal(capabilityTypeLabel(node('rules', 'policy')), 'Policy');
   assert.equal(capabilityNature(node('Decision by name only', undefined)), undefined);
   assert.equal(capabilityNature(node('Supply Policy', undefined)), undefined);
-  assert.equal(capabilityTypeLabel(node('Supply Policy', undefined)), 'Unspecified Type');
+  assert.equal(capabilityTypeLabel(node('Supply Policy', undefined)), 'Type non documenté');
   assert.equal(capabilityNature(node('D05.e', 'unsupported')), undefined);
   assert.equal(capabilityNature(node('rules', 'policy_strategy')), undefined);
   assert.equal(capabilityNature(node('toString', 'toString')), undefined);

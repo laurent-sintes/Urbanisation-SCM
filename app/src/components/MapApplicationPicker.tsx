@@ -10,6 +10,7 @@ import { ChevronDown, Layers3, X } from 'lucide-react';
 import { useId, useState } from 'react';
 import { contextName, productFor } from '../applicationCatalog';
 import type { ApplicationCatalog } from '../types';
+import { ui } from '../ui.ts';
 import { useHotspotFloating } from './HotspotDisplay';
 
 export function MapApplicationPicker({
@@ -53,8 +54,9 @@ export function MapApplicationPicker({
       >
         <Layers3 size={15} />
         <span>
-          Applications <strong>{product?.name || selected?.product_id || 'masquées'}</strong>
-          {product && !selected && <span> · Offre éditeur</span>}
+          {ui('mapApplicationPicker.applications')}
+          <strong>{product?.name || selected?.product_id || ui('mapApplicationPicker.masquees')}</strong>
+          {product && !selected && <span>{ui('mapApplicationPicker.offre_editeur')}</span>}
           {component && <span> · {component.name}</span>}
         </span>
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
@@ -69,26 +71,30 @@ export function MapApplicationPicker({
               id={id}
               className="application-picker-popover"
               role="dialog"
-              aria-label="Applications sur la carte"
+              aria-label={ui('mapApplicationPicker.applications_sur_la_carte')}
             >
               <div className="application-picker-heading">
-                <strong>Empreinte applicative</strong>
-                <button type="button" aria-label="Fermer les applications" onClick={() => setOpen(false)}>
+                <strong>{ui('mapApplicationPicker.empreinte_applicative')}</strong>
+                <button
+                  type="button"
+                  aria-label={ui('mapApplicationPicker.fermer_les_applications')}
+                  onClick={() => setOpen(false)}
+                >
                   <X size={16} />
                 </button>
               </div>
-              <p>Produits du marché : couverture de l’offre éditeur. Par SI : couverture documentée dans ce SI.</p>
+              <p>{ui('mapApplicationPicker.produits_du_marche_couverture_de_l_offre_editeur_par_si_couvertur')}</p>
               <button
                 type="button"
                 className="application-picker-option"
                 aria-pressed={!product && !selected}
                 onClick={() => choose('')}
               >
-                Masquer les applications
+                {ui('mapApplicationPicker.masquer_les_applications')}
               </button>
               <div className="application-picker-list">
                 <section>
-                  <h3>Produits du marché</h3>
+                  <h3>{ui('mapApplicationPicker.produits_du_marche')}</h3>
                   {catalog.products
                     .filter((item) => item.kind === 'vendor_product')
                     .map((item) => (
@@ -105,7 +111,7 @@ export function MapApplicationPicker({
                 </section>
                 {contexts.map((contextId) => (
                   <section key={contextId}>
-                    <h3>{contextName[contextId] || contextId}</h3>
+                    <h3>{contextName(catalog, contextId)}</h3>
                     {catalog.selections
                       .filter((item) => item.context_id === contextId)
                       .map((item) => (
@@ -123,15 +129,19 @@ export function MapApplicationPicker({
                 ))}
               </div>
               {product && product.components.length > 1 && (
-                <div className="application-picker-components" role="group" aria-label="Fonctionnalité affichée">
-                  <strong>Fonctionnalité affichée</strong>
+                <div
+                  className="application-picker-components"
+                  role="group"
+                  aria-label={ui('mapApplicationPicker.fonctionnalite_affichee')}
+                >
+                  <strong>{ui('mapApplicationPicker.fonctionnalite_affichee')}</strong>
                   <button
                     type="button"
                     className="application-picker-option"
                     aria-pressed={!component}
                     onClick={() => choose(selected?.id || product.id)}
                   >
-                    Tout le produit
+                    {ui('mapApplicationPicker.tout_le_produit')}
                   </button>
                   {product.components
                     .filter((item) => item.kind !== 'product')

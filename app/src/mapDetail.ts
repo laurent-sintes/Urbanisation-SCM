@@ -1,5 +1,6 @@
 import { type CardChildList, cardListedItems } from './model.ts';
 import type { AtlasNode } from './types.ts';
+import { ui } from './ui.ts';
 
 /** Count the objects actually shown, keeping Business Areas distinct from the entries they contain. */
 export function cardListStatistics(
@@ -13,19 +14,19 @@ export function cardListStatistics(
     ...listed,
     ...(detail >= 4 ? listed.flatMap((item) => behaviorsByCapability[item.id] || []) : []),
   ];
-  const areaLabel = visible.find((item) => item.kind === 'area')?.hierarchyLabel;
+  const areaKind = visible.find((item) => item.kind === 'area')?.hierarchyKind;
   const labels: Record<string, [string, string]> = {
-    domain: ['domaine', 'domaines'],
+    domain: [ui('mapDetail.domaine'), ui('mapDetail.domaines')],
     area:
-      areaLabel === 'Purpose'
-        ? ['Purpose', 'Purposes']
-        : areaLabel === 'Area'
-          ? ['Area', 'Areas']
-          : ['sous-domaine', 'sous-domaines'],
-    business_area: ['Business Area', 'Business Areas'],
-    capability: ['capacité', 'capacités'],
-    reference: ['référentiel', 'référentiels'],
-    behavior: ['comportement', 'comportements'],
+      areaKind === 'purpose'
+        ? [ui('mapDetail.purpose'), ui('mapDetail.purposes')]
+        : areaKind === 'area'
+          ? [ui('mapDetail.area'), ui('mapDetail.areas')]
+          : [ui('mapDetail.sous_domaine'), ui('mapDetail.sous_domaines')],
+    business_area: [ui('mapDetail.business_area'), ui('mapDetail.business_areas')],
+    capability: [ui('mapDetail.capacite'), ui('mapDetail.capacites')],
+    reference: [ui('mapDetail.referentiel'), ui('mapDetail.referentiels')],
+    behavior: [ui('mapDetail.comportement'), ui('mapDetail.comportements')],
   };
   const counts = new Map<string, number>();
   for (const item of visible) counts.set(item.kind, (counts.get(item.kind) || 0) + 1);

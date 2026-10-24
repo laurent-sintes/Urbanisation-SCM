@@ -10,31 +10,32 @@ import type {
   ApplicationSelection,
   PublishedModel,
 } from '../types';
+import { ui } from '../ui.ts';
 import './applications.css';
 import { ModelText } from './ModelLinks';
 
 const usageLabel: Record<string, string> = {
-  unknown: 'Usage non évalué',
-  declared: 'Usage déclaré',
-  historical_document: 'Document historique',
-  documented: 'Usage documenté',
-  confirmed: 'Usage confirmé',
-  no: 'Non utilisé, selon preuve',
+  unknown: ui('applicationCatalogPage.usage_non_evalue'),
+  declared: ui('applicationCatalogPage.usage_declare'),
+  historical_document: ui('applicationCatalogPage.document_historique'),
+  documented: ui('applicationCatalogPage.usage_documente'),
+  confirmed: ui('applicationCatalogPage.usage_confirme'),
+  no: ui('applicationCatalogPage.non_utilise_selon_preuve'),
 };
 const selectionStateLabel: Record<string, string> = {
-  unknown: 'inconnue',
-  declared: 'déclarée',
-  documented: 'documentée',
-  confirmed: 'confirmée',
-  no: 'non établie',
+  unknown: ui('applicationCatalogPage.selection_unknown'),
+  declared: ui('applicationCatalogPage.declaree'),
+  documented: ui('applicationCatalogPage.documentee'),
+  confirmed: ui('applicationCatalogPage.confirmee'),
+  no: ui('applicationCatalogPage.non_etablie'),
 };
 const evidenceLabel: Record<string, string> = {
-  candidate: 'Correspondance à vérifier',
-  declared: 'Correspondance déclarée',
-  historical_document: 'Document historique',
-  documented: 'Correspondance documentée',
-  confirmed: 'Correspondance confirmée',
-  planned: 'Périmètre cible',
+  candidate: ui('applicationCatalogPage.correspondance_a_verifier'),
+  declared: ui('applicationCatalogPage.correspondance_declaree'),
+  historical_document: ui('applicationCatalogPage.document_historique'),
+  documented: ui('applicationCatalogPage.correspondance_documentee'),
+  confirmed: ui('applicationCatalogPage.correspondance_confirmee'),
+  planned: ui('applicationCatalogPage.perimetre_cible'),
 };
 
 function ProductIdentity({
@@ -53,15 +54,20 @@ function ProductIdentity({
         <div className="application-logo">
           <img
             src={staticUrl(product.branding.logo_path)}
-            alt={`Logo ${product.branding.role === 'publisher' ? 'éditeur de ' : ''}${product.name}`}
+            alt={ui('applicationCatalogPage.logo', {
+              value1: product.branding.role === 'publisher' ? ui('applicationCatalogPage.editeur_de') : '',
+              name: product.name,
+            })}
             width="120"
             height="40"
           />
-          {product.branding.role === 'publisher' && <small>Logo de l’éditeur</small>}
+          {product.branding.role === 'publisher' && <small>{ui('applicationCatalogPage.logo_de_l_editeur')}</small>}
         </div>
       ) : (
         <span className="application-identity-mark" aria-hidden="true">
-          {product.kind === 'internal_product' ? 'Interne' : 'Logo à documenter'}
+          {product.kind === 'internal_product'
+            ? ui('applicationCatalogPage.interne')
+            : ui('applicationCatalogPage.logo_a_documenter')}
         </span>
       )}
       <div>
@@ -77,19 +83,19 @@ function ProductIdentity({
 function ProductFacts({ product }: { product: ApplicationProduct }) {
   const documentation = product.documentation;
   const channels = {
-    store: 'Vente en magasin',
-    online_b2c: 'Vente aux particuliers en ligne',
-    wholesale_b2b: 'Vente aux revendeurs',
+    store: ui('applicationCatalogPage.vente_en_magasin'),
+    online_b2c: ui('applicationCatalogPage.vente_aux_particuliers_en_ligne'),
+    wholesale_b2b: ui('applicationCatalogPage.vente_aux_revendeurs'),
   };
   return (
     <>
       <dl className="application-facts">
         <div>
-          <dt>Éditeur</dt>
+          <dt>{ui('applicationCatalogPage.editeur')}</dt>
           <dd>{product.publisher}</dd>
         </div>
         <div>
-          <dt>Périmètre produit</dt>
+          <dt>{ui('applicationCatalogPage.perimetre_produit')}</dt>
           <dd>
             <ModelText text={product.scope} />
           </dd>
@@ -97,33 +103,33 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
         {documentation ? (
           <>
             <div>
-              <dt>Mode d’exploitation</dt>
+              <dt>{ui('applicationCatalogPage.mode_d_exploitation')}</dt>
               <dd>
                 <ModelText text={documentation.deployment_model} />
               </dd>
             </div>
             {documentation.channels.length > 0 && (
               <div>
-                <dt>Canaux documentés</dt>
+                <dt>{ui('applicationCatalogPage.canaux_documentes')}</dt>
                 <dd>{documentation.channels.map((channel) => channels[channel]).join(' · ')}</dd>
               </div>
             )}
             <div>
-              <dt>Vérifié le</dt>
+              <dt>{ui('applicationCatalogPage.verifie_le')}</dt>
               <dd>{documentation.reviewed_on}</dd>
             </div>
           </>
         ) : (
           product.kind === 'vendor_product' && (
             <div>
-              <dt>Date de lancement</dt>
-              <dd>{product.launched_on || 'Non documentée'}</dd>
+              <dt>{ui('applicationCatalogPage.date_de_lancement')}</dt>
+              <dd>{product.launched_on || ui('applicationCatalogPage.non_documentee')}</dd>
             </div>
           )
         )}
         {!documentation && product.kind === 'vendor_product' && (
           <div>
-            <dt>Dernière version éditeur</dt>
+            <dt>{ui('applicationCatalogPage.derniere_version_editeur')}</dt>
             <dd>
               {product.latest_release ? (
                 <a href={product.latest_release.source_url} target="_blank" rel="noopener noreferrer">
@@ -131,28 +137,31 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
                   {product.latest_release.released_on ? ` · ${product.latest_release.released_on}` : ''}
                 </a>
               ) : (
-                'Non vérifiée'
+                ui('applicationCatalogPage.non_verifiee')
               )}
             </dd>
           </div>
         )}
         {product.website_url && (
           <div>
-            <dt>Site éditeur</dt>
+            <dt>{ui('applicationCatalogPage.site_editeur')}</dt>
             <dd>
               <a href={product.website_url} target="_blank" rel="noopener noreferrer">
-                Consulter
+                {ui('applicationCatalogPage.consulter')}
               </a>
             </dd>
           </div>
         )}
       </dl>
       {documentation && (
-        <section className="application-documentation" aria-label="Documentation du produit">
+        <section
+          className="application-documentation"
+          aria-label={ui('applicationCatalogPage.documentation_du_produit')}
+        >
           <div className="application-boundary">
             <ModelText text={documentation.scope_boundary} />
           </div>
-          <h3>Repères de dates</h3>
+          <h3>{ui('applicationCatalogPage.reperes_de_dates')}</h3>
           <ul className="application-history">
             {documentation.history.map((milestone) => (
               <li key={`${milestone.date}:${milestone.kind}`}>
@@ -160,14 +169,14 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
                 <span>
                   <ModelText text={milestone.title} />{' '}
                   <a href={milestone.source_url} target="_blank" rel="noopener noreferrer">
-                    Source
+                    {ui('applicationCatalogPage.source')}
                   </a>
                 </span>
               </li>
             ))}
           </ul>
           <div className="application-release-tracking">
-            <strong>Versions et mises à jour</strong>
+            <strong>{ui('applicationCatalogPage.versions_et_mises_a_jour')}</strong>
             <a href={documentation.release_tracking.source_url} target="_blank" rel="noopener noreferrer">
               {documentation.release_tracking.label}
             </a>
@@ -176,7 +185,7 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
             </p>
           </div>
           <details className="application-research-details">
-            <summary>Intégrations, sources et points à confirmer</summary>
+            <summary>{ui('applicationCatalogPage.integrations_sources_et_points_a_confirmer')}</summary>
             <p>
               <ModelText text={documentation.integration_summary} />
             </p>
@@ -192,7 +201,7 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
             </ul>
             {documentation.gaps.length > 0 && (
               <>
-                <h4>Points à confirmer</h4>
+                <h4>{ui('applicationCatalogPage.points_a_confirmer')}</h4>
                 <ul>
                   {documentation.gaps.map((gap) => (
                     <li key={gap}>
@@ -213,12 +222,20 @@ function SelectionFacts({ selection }: { selection: ApplicationSelection }) {
   return (
     <dl className="application-facts application-selection-facts">
       <div>
-        <dt>Version dans ce SI</dt>
-        <dd>{selection.perspective === 'target' ? 'À définir' : selection.deployed_version || 'À documenter'}</dd>
+        <dt>{ui('applicationCatalogPage.version_dans_ce_si')}</dt>
+        <dd>
+          {selection.perspective === 'target'
+            ? ui('applicationCatalogPage.a_definir')
+            : selection.deployed_version || ui('applicationCatalogPage.a_documenter')}
+        </dd>
       </div>
       <div>
-        <dt>Mise en service</dt>
-        <dd>{selection.perspective === 'target' ? 'À définir' : selection.deployed_on || 'À documenter'}</dd>
+        <dt>{ui('applicationCatalogPage.mise_en_service')}</dt>
+        <dd>
+          {selection.perspective === 'target'
+            ? ui('applicationCatalogPage.a_definir')
+            : selection.deployed_on || ui('applicationCatalogPage.a_documenter')}
+        </dd>
       </div>
     </dl>
   );
@@ -314,8 +331,10 @@ function ComponentCoverageBadge({
     const offering = offeringCoverageFor(product, component);
     return (
       <small>
-        {offering.length ? `${offering.length} lien${offering.length > 1 ? 's' : ''} de l’offre` : 'Offre à documenter'}
-        {coverage.length ? ` · ${coverage.length} lien${coverage.length > 1 ? 's' : ''} par SI` : ''}
+        {offering.length
+          ? ui('applicationCatalogPage.lien_de_l_offre', { count: offering.length })
+          : ui('applicationCatalogPage.offre_a_documenter')}
+        {coverage.length ? ui('applicationCatalogPage.lien_par_si', { count: coverage.length }) : ''}
       </small>
     );
   }
@@ -323,10 +342,10 @@ function ComponentCoverageBadge({
   const activated = state?.activated || 'unknown';
   const activationLabel =
     activated === 'no'
-      ? 'Désactivé'
+      ? ui('applicationCatalogPage.desactive')
       : activated === 'unknown'
-        ? 'Activation inconnue'
-        : `Activé · ${selectionStateLabel[activated]}`;
+        ? ui('applicationCatalogPage.activation_inconnue')
+        : ui('applicationCatalogPage.active', { activated: selectionStateLabel[activated] });
   const ActivationIcon = activated === 'no' ? CircleX : activated === 'unknown' ? CircleHelp : CircleCheck;
   return (
     <small className="application-component-status">
@@ -335,13 +354,16 @@ function ComponentCoverageBadge({
       </span>
       {state?.used === 'no' ? (
         <span>
-          <CircleMinus size={12} aria-hidden="true" /> Non utilisé
+          <CircleMinus size={12} aria-hidden="true" />
+          {ui('applicationCatalogPage.non_utilise')}
         </span>
       ) : state?.used && state.used !== 'unknown' ? (
         <span>{usageLabel[state.used]}</span>
       ) : null}
       <span>
-        {coverage.length ? `${coverage.length} lien${coverage.length > 1 ? 's' : ''} métier` : 'Carto à documenter'}
+        {coverage.length
+          ? ui('applicationCatalogPage.lien_metier', { count: coverage.length })
+          : ui('applicationCatalogPage.carto_a_documenter')}
       </span>
     </small>
   );
@@ -368,10 +390,16 @@ function ComponentDetail({
   const coverage = coverageFor(catalog, product, component, selection);
   const offeringCoverage = offeringCoverageFor(product, component);
   return (
-    <section className="application-component-detail" aria-label={`Détail de ${component.name}`} tabIndex={-1}>
+    <section
+      className="application-component-detail"
+      aria-label={ui('applicationCatalogPage.detail_de', { name: component.name })}
+      tabIndex={-1}
+    >
       {component.kind !== 'product' && <h4>{component.name}</h4>}
       {component.kind !== 'product' && (
-        <p className="application-kind">{component.kind === 'feature' ? 'Fonction documentée' : component.kind}</p>
+        <p className="application-kind">
+          {component.kind === 'feature' ? ui('applicationCatalogPage.fonction_documentee') : component.kind}
+        </p>
       )}
       {component.note && (
         <p>
@@ -380,23 +408,25 @@ function ComponentDetail({
       )}
       {component.source_url && (
         <a href={component.source_url} target="_blank" rel="noopener noreferrer">
-          Documentation éditeur
+          {ui('applicationCatalogPage.documentation_editeur')}
         </a>
       )}
       {selection && (
         <>
-          <h5>Dans ce SI</h5>
+          <h5>{ui('applicationCatalogPage.dans_ce_si')}</h5>
           <p className="application-state">
-            Acquisition : {state ? selectionStateLabel[state.acquired] || state.acquired : 'inconnue'} · Activation :{' '}
+            {ui('applicationCatalogPage.acquisition')}
+            {state ? selectionStateLabel[state.acquired] || state.acquired : 'inconnue'}
+            {ui('applicationCatalogPage.activation')}{' '}
             {state ? selectionStateLabel[state.activated] || state.activated : 'inconnue'} ·{' '}
-            {state ? usageLabel[state.used] || state.used : 'Usage non évalué'}
+            {state ? usageLabel[state.used] || state.used : ui('applicationCatalogPage.usage_non_evalue')}
           </p>
         </>
       )}
       {!selection && (
         <>
-          <h5>Périmètre possible de l’offre éditeur</h5>
-          <p>Chaque correspondance précise son niveau de preuve, sans prouver l’activation de l’offre dans un SI.</p>
+          <h5>{ui('applicationCatalogPage.perimetre_possible_de_l_offre_editeur')}</h5>
+          <p>{ui('applicationCatalogPage.chaque_correspondance_precise_son_niveau_de_preuve_sans_prouver_l')}</p>
           {offeringCoverage.length ? (
             offeringCoverage.map((mapping) => (
               <div className="application-mapping" data-offering-mapping={mapping.id} key={mapping.id}>
@@ -409,26 +439,30 @@ function ComponentDetail({
                 </span>
                 <div className="application-mapping-actions">
                   <button type="button" onClick={() => onShowBusinessNode(mapping.node_id)}>
-                    Voir dans la cartographie métier
+                    {ui('applicationCatalogPage.voir_dans_la_cartographie_metier')}
                   </button>
                   {mapping.source_url && (
                     <a href={mapping.source_url} target="_blank" rel="noopener noreferrer">
-                      Source éditeur
+                      {ui('applicationCatalogPage.source_editeur')}
                     </a>
                   )}
                 </div>
               </div>
             ))
           ) : (
-            <p>Aucune correspondance de l’offre suffisamment documentée pour cette fonctionnalité.</p>
+            <p>{ui('applicationCatalogPage.aucune_correspondance_de_l_offre_suffisamment_documentee_pour_cet')}</p>
           )}
         </>
       )}
-      <h5>{selection ? 'Couverture métier dans ce SI' : 'Correspondances documentées par SI'}</h5>
+      <h5>
+        {selection
+          ? ui('applicationCatalogPage.couverture_metier_dans_ce_si')
+          : ui('applicationCatalogPage.correspondances_documentees_par_si')}
+      </h5>
       {coverage.length ? (
         coverage.map(({ selection: context, mapping }) => (
           <div className="application-mapping" key={mapping.id}>
-            {!selection && <small>{contextName[context.context_id] || context.context_id}</small>}
+            {!selection && <small>{contextName(model.raw.application_catalog, context.context_id)}</small>}
             {component.id !== mapping.component_id && (
               <small>{product.components.find((item) => item.id === mapping.component_id)?.name}</small>
             )}
@@ -437,15 +471,15 @@ function ComponentDetail({
               {evidenceLabel[mapping.evidence_state]} · <ModelText text={mapping.note} />
             </span>
             <button type="button" onClick={() => onShowOnMap(context.id, mapping.component_id)}>
-              Voir sur la carte
+              {ui('applicationCatalogPage.voir_sur_la_carte')}
             </button>
           </div>
         ))
       ) : (
         <p>
           {selection
-            ? 'Aucune correspondance métier documentée pour cette fonctionnalité dans ce SI.'
-            : 'Aucune correspondance documentée dans un SI pour cette fonctionnalité. Les liens de l’offre ne prouvent pas son activation.'}
+            ? ui('applicationCatalogPage.aucune_correspondance_metier_documentee_pour_cette_fonctionnalite')
+            : ui('applicationCatalogPage.aucune_correspondance_documentee_dans_un_si_pour_cette_fonctionna')}
         </p>
       )}
     </section>
@@ -502,7 +536,7 @@ export function ApplicationCatalogPage({
       }
     });
   }, [selectedKey]);
-  if (!catalog) return <p>Aucun catalogue applicatif dans cette publication.</p>;
+  if (!catalog) return <p>{ui('applicationCatalogPage.aucun_catalogue_applicatif_dans_cette_publication')}</p>;
 
   const selection =
     mode === 'systems'
@@ -531,16 +565,25 @@ export function ApplicationCatalogPage({
   return (
     <div className={`application-page ${explicit ? 'application-has-selection' : ''}`}>
       <div className="application-explorer">
-        <nav className="application-rail" aria-label={mode === 'systems' ? 'SI et produits' : 'Produits du marché'}>
+        <nav
+          className="application-rail"
+          aria-label={
+            mode === 'systems'
+              ? ui('applicationCatalogPage.si_et_produits')
+              : ui('applicationCatalogPage.produits_du_marche')
+          }
+        >
           <h2 ref={listTitle} tabIndex={-1}>
-            {mode === 'systems' ? 'Systèmes d’information' : 'Produits'}
+            {mode === 'systems'
+              ? ui('applicationCatalogPage.systemes_d_information')
+              : ui('applicationCatalogPage.produits')}
           </h2>
           {mode === 'systems' ? (
             contexts
               .filter((context) => catalog.selections.some((item) => item.context_id === context))
               .map((context) => (
                 <section key={context} className="application-nav-group">
-                  <h3>{contextName[context] || context}</h3>
+                  <h3>{contextName(model.raw.application_catalog, context)}</h3>
                   <ul>
                     {catalog.selections
                       .filter((item) => item.context_id === context)
@@ -588,10 +631,12 @@ export function ApplicationCatalogPage({
         {product && component && (
           <article className="application-detail">
             <button className="application-back" type="button" onClick={backToList}>
-              ← Retour à la liste
+              {ui('applicationCatalogPage.retour_a_la_liste')}
             </button>
             <p className="application-detail-context">
-              {selection ? contextName[selection.context_id] || selection.context_id : 'Produit logiciel du marché'}
+              {selection
+                ? contextName(model.raw.application_catalog, selection.context_id)
+                : ui('applicationCatalogPage.produit_logiciel_du_marche')}
             </p>
             <div className="application-product-heading">
               <ProductIdentity product={product} headingRef={detailTitle} />
@@ -600,7 +645,7 @@ export function ApplicationCatalogPage({
                   type="button"
                   onClick={() => onShowOnMap(selection.id, component.id === root?.id ? undefined : component.id)}
                 >
-                  Voir sur la carte
+                  {ui('applicationCatalogPage.voir_sur_la_carte')}
                 </button>
               )}
             </div>
@@ -608,14 +653,14 @@ export function ApplicationCatalogPage({
               <>
                 <p>
                   {selection.perspective === 'target'
-                    ? 'Cible prévue'
+                    ? ui('applicationCatalogPage.cible_prevue')
                     : selection.presence === 'unknown'
-                      ? 'Présence à vérifier'
+                      ? ui('applicationCatalogPage.presence_a_verifier')
                       : selection.presence === 'documented'
-                        ? 'Présence documentée'
+                        ? ui('applicationCatalogPage.presence_documentee')
                         : selection.presence === 'confirmed'
-                          ? 'Présence confirmée'
-                          : 'Présence déclarée'}
+                          ? ui('applicationCatalogPage.presence_confirmee')
+                          : ui('applicationCatalogPage.presence_declaree')}
                 </p>
                 <SelectionFacts selection={selection} />
                 {selection.note && (
@@ -624,19 +669,19 @@ export function ApplicationCatalogPage({
                   </p>
                 )}
                 <details className="application-product-details">
-                  <summary>Fiche du produit</summary>
+                  <summary>{ui('applicationCatalogPage.fiche_du_produit')}</summary>
                   <ProductFacts product={product} />
                 </details>
               </>
             ) : (
               <>
                 <p>
-                  Inventaire{' '}
+                  {ui('applicationCatalogPage.inventaire')}{' '}
                   {product.inventory_status === 'partial'
                     ? 'partiel'
                     : product.inventory_status === 'complete'
                       ? 'complet'
-                      : 'à établir'}
+                      : ui('applicationCatalogPage.a_etablir')}
                 </p>
                 {product.note && !product.documentation && (
                   <p>
@@ -650,8 +695,11 @@ export function ApplicationCatalogPage({
               className={`application-composition ${product.components.length > 1 ? 'application-has-modules' : ''}`}
             >
               {root && product.components.length > 1 && (
-                <nav className="application-components" aria-label={`Modules de ${product.name}`}>
-                  <h3>Modules et fonctions</h3>
+                <nav
+                  className="application-components"
+                  aria-label={ui('applicationCatalogPage.modules_de', { name: product.name })}
+                >
+                  <h3>{ui('applicationCatalogPage.modules_et_fonctions')}</h3>
                   <ul className="application-component-list">
                     <li>
                       <button
@@ -659,7 +707,7 @@ export function ApplicationCatalogPage({
                         aria-current={component.id === root.id ? 'true' : undefined}
                         onClick={() => selectItem(selection?.id || '', root.id)}
                       >
-                        <span>Vue d’ensemble</span>
+                        <span>{ui('applicationCatalogPage.vue_d_ensemble')}</span>
                         <ComponentCoverageBadge
                           catalog={catalog}
                           product={product}

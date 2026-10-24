@@ -1,16 +1,8 @@
-import { publicText } from './publicText.ts';
 import type { MarketComparison, MarketInspiration } from './types.ts';
 
 /** The comparison is public; adoption history and review annotations stay internal. */
 export function marketText(text = ''): string {
-  return publicText(text)
-    .replace(/Comparaison proposée au titre de U\d+, sans validation ni réalisation installée déduites\./g, '')
-    .replace(/\bU\d+(?:\/U\d+)*\s*:\s*/g, '')
-    .replace(/\s+(?:adoptés?|adoptées?|validés?|validées?)\s+U\d+(?:\/U\d+)*/g, '')
-    .replace(/\s*\(?\b(?:U|CMP|ELM)\d+(?:\/(?:U|CMP|ELM)\d+)*\)?/g, '')
-    .replace(/Comparaison et frontière réexaminées[^;]*;\s*/g, '')
-    .replace(/[ \t]+/g, ' ')
-    .trim();
+  return text;
 }
 
 export function marketSearchText(entries?: readonly MarketComparison[], inspiration?: MarketInspiration): string {

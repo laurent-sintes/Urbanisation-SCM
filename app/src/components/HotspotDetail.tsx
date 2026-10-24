@@ -1,28 +1,34 @@
 import { BookOpen, CircleHelp, Download, FileText, Lightbulb, Maximize2, Minimize2, Scale } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
+import { contextName } from '../applicationCatalog';
 import { documentDownloadName, documentFormat, documentsForHotspot, documentUrl } from '../documentCatalog';
 import { framingLabel } from '../hotspotFraming';
 import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
 import type { Hotspot, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { ModelText } from './ModelLinks';
 
 const STATUS: Record<Hotspot['status'], string> = {
-  discovered: 'Découvert',
-  shared: 'Partagé',
-  validated: 'Validé',
-  resolved: 'Résolu',
+  discovered: ui('hotspots.status.discovered'),
+  shared: ui('hotspots.status.shared'),
+  validated: ui('hotspots.status.validated'),
+  resolved: ui('hotspots.status.resolved'),
 };
 const LEVEL: Record<string, string> = {
-  business_direction: 'Direction métier',
-  flow_internal: 'Interne programme FLOW',
-  flow_steering: 'Comité de pilotage FLOW',
-  to_confirm: 'À confirmer',
+  business_direction: ui('hotspotDetail.direction_metier'),
+  flow_internal: ui('hotspotDetail.interne_programme_flow'),
+  flow_steering: ui('hotspotDetail.comite_de_pilotage_flow'),
+  to_confirm: ui('hotspotDetail.a_confirmer'),
 };
-const EVIDENCE = { documented: 'Documentée', hypothesis: 'Hypothèse', to_investigate: 'À investiguer' };
-const size = (value: string) => (value === 'unassessed' ? 'Non évaluée' : value);
+const EVIDENCE = {
+  documented: ui('hotspotDetail.documentee'),
+  hypothesis: ui('hotspotDetail.hypothese'),
+  to_investigate: ui('hotspotDetail.a_investiguer'),
+};
+const size = (value: string) => (value === 'unassessed' ? ui('hotspotDetail.non_evaluee') : value);
 
 export function HotspotDetail({
   hotspot,
@@ -115,17 +121,19 @@ export function HotspotDetail({
       <header className="hotspot-detail-header" ref={header}>
         <div className="hotspot-detail-toolbar">
           <button type="button" onClick={() => onChange({ hotspot: '' })}>
-            ← {grouped ? 'Retour au groupe' : 'Tous les points chauds'}
+            ← {grouped ? ui('hotspotDetail.retour_au_groupe') : ui('hotspotDetail.tous_les_points_chauds')}
           </button>
           <button
             type="button"
             className="map-fullscreen-button"
-            aria-label={expanded ? 'Réduire la fiche' : 'Étendre la fiche'}
+            aria-label={expanded ? ui('hotspotDetail.reduire_la_fiche') : ui('hotspotDetail.etendre_la_fiche')}
             aria-pressed={expanded}
             onClick={onToggleFullscreen}
           >
             {expanded ? <Minimize2 size={16} aria-hidden="true" /> : <Maximize2 size={16} aria-hidden="true" />}
-            <span className="hotspot-fullscreen-label">{expanded ? 'Réduire la fiche' : 'Étendre la fiche'}</span>
+            <span className="hotspot-fullscreen-label">
+              {expanded ? ui('hotspotDetail.reduire_la_fiche') : ui('hotspotDetail.etendre_la_fiche')}
+            </span>
           </button>
         </div>
         <h3 id="hotspot-detail-title">
@@ -136,39 +144,57 @@ export function HotspotDetail({
         <div className="hotspot-story-context">
           {hotspot.consolidated_into && (
             <p className="hotspot-story-caption">
-              Sujet repris dans une fiche commune.{' '}
+              {ui('hotspotDetail.sujet_repris_dans_une_fiche_commune')}{' '}
               <button type="button" onClick={() => onChange({ hotspot: hotspot.consolidated_into })}>
-                Ouvrir {hotspot.consolidated_into}
+                {ui('hotspotDetail.ouvrir')}
+                {hotspot.consolidated_into}
               </button>{' '}
-              Cette fiche conserve son identité et ses preuves d’origine.
+              {ui('hotspotDetail.cette_fiche_conserve_son_identite_et_ses_preuves_d_origine')}
             </p>
           )}
           <p className="hotspot-kicker">
-            {model.raw.workshop ? 'Vue de travail · ' : ''}Publication {model.version} ·{' '}
-            {hotspot.kind === 'integration' ? 'Intégration' : 'Périmètre'} ·{' '}
-            {hasResolution && hotspot.status === 'resolved' ? 'Résolu en cadrage' : STATUS[hotspot.status]}
-            {pending ? ' · Modifications non enregistrées' : ''}
+            {model.raw.workshop ? ui('hotspotDetail.vue_de_travail') : ''}
+            {ui('hotspotDetail.publication')}
+            {model.version} ·{' '}
+            {hotspot.kind === 'integration' ? ui('hotspotDetail.integration') : ui('hotspotDetail.perimetre')} ·{' '}
+            {hasResolution && hotspot.status === 'resolved'
+              ? ui('hotspotDetail.resolu_en_cadrage')
+              : STATUS[hotspot.status]}
+            {pending ? ui('hotspotDetail.modifications_non_enregistrees') : ''}
           </p>
         </div>
 
         <section className="hotspot-story-overview" aria-labelledby="hotspot-signal-title">
-          <h4 id="hotspot-signal-title">Le signal initial</h4>
+          <h4 id="hotspot-signal-title">{ui('hotspotDetail.le_signal_initial')}</h4>
           <p className="hotspot-story-lead">
             <ModelText text={signalSummary} />
           </p>
           <div className="hotspot-criticality" role="group" aria-labelledby="hotspot-criticality-title">
-            <strong id="hotspot-criticality-title">Criticité · {size(hotspot.severity)}</strong>
-            <span>Complexité d’arbitrage · {size(hotspot.complexity.arbitration)}</span>
-            <span>Complexité d’implémentation · {size(hotspot.complexity.implementation)}</span>
+            <strong id="hotspot-criticality-title">
+              {ui('hotspotDetail.criticite')}
+              {size(hotspot.severity)}
+            </strong>
+            <span>
+              {ui('hotspotDetail.complexite_d_arbitrage')}
+              {size(hotspot.complexity.arbitration)}
+            </span>
+            <span>
+              {ui('hotspotDetail.complexite_d_implementation')}
+              {size(hotspot.complexity.implementation)}
+            </span>
             {canEdit && (
               <button type="button" onClick={(event) => onEdit(event, 'complexity')}>
-                Compléter l’évaluation
+                {ui('hotspotDetail.completer_l_evaluation')}
               </button>
             )}
           </div>
           {questions.length > 0 && (
             <div className="hotspot-question-index">
-              <h5>{questions.length === 1 ? 'La question à traiter' : `${questions.length} questions à traiter`}</h5>
+              <h5>
+                {questions.length === 1
+                  ? ui('hotspotDetail.la_question_a_traiter')
+                  : ui('hotspotDetail.questions_a_traiter', { length: questions.length })}
+              </h5>
               <div className="hotspot-question-index-list">
                 {questions.map((item, index) => (
                   <div key={item.id} className="hotspot-question-index-item">
@@ -181,8 +207,8 @@ export function HotspotDetail({
                       </strong>
                       <small>
                         {item.optionCount > 0
-                          ? `${item.optionCount} ${item.optionCount > 1 ? 'Options documentées' : 'Option documentée'}`
-                          : 'Aucune Option documentée'}
+                          ? `${item.optionCount} ${item.optionCount > 1 ? ui('hotspotDetail.options_documentees') : ui('hotspotDetail.option_documentee')}`
+                          : ui('hotspotDetail.aucune_option_documentee')}
                       </small>
                     </span>
                   </div>
@@ -192,12 +218,13 @@ export function HotspotDetail({
           )}
           <p className="hotspot-progress-stage">
             <Scale size={16} aria-hidden="true" />
-            {hasResolution ? RESOLUTION_STAGES[resolution.stage] : 'Avancement du cadrage non renseigné'}
+            {hasResolution
+              ? RESOLUTION_STAGES[resolution.stage]
+              : ui('hotspotDetail.avancement_du_cadrage_non_renseigne')}
           </p>
           {hotspot.visible === false && (
             <p className="hotspot-visibility-label">
-              Non visible dans la carte et les filtres. Le sujet reste conservé ; sa qualification et son avancement
-              sont inchangés.
+              {ui('hotspotDetail.non_visible_dans_la_carte_et_les_filtres_le_sujet_reste_conserve_')}
             </p>
           )}
         </section>
@@ -205,13 +232,16 @@ export function HotspotDetail({
         <section className="hotspot-story-section" aria-labelledby="hotspot-options-title">
           <h4 id="hotspot-options-title">
             <CircleHelp size={20} aria-hidden="true" />
-            Problèmes et Options
+            {ui('hotspotDetail.problemes_et_options')}
           </h4>
           {optionGroups.map((group, index) => (
             <section key={group.id} id={`hotspot-problem-${group.id}`} className="hotspot-problem">
               {group.title && (
                 <h5>
-                  <span className="hotspot-problem-number">Problème {index + 1}</span>
+                  <span className="hotspot-problem-number">
+                    {ui('hotspotDetail.probleme')}
+                    {index + 1}
+                  </span>
                   <ModelText text={group.title} />
                 </h5>
               )}
@@ -234,13 +264,18 @@ export function HotspotDetail({
                     className="hotspot-problem-document"
                     onClick={() => onChange({ view: 'documents', document: id, hotspot: '' })}
                   >
-                    <FileText size={16} aria-hidden="true" /> Lire l’analyse ({documentFormat(document)})
+                    <FileText size={16} aria-hidden="true" />
+                    {ui('hotspotDetail.lire_l_analyse')}
+                    {documentFormat(document)})
                   </button>
                 ) : null;
               })}
               {group.options.length > 0 && (
                 <p className="hotspot-problem-option-count">
-                  {group.options.length} {group.options.length > 1 ? 'Options documentées' : 'Option documentée'}
+                  {group.options.length}{' '}
+                  {group.options.length > 1
+                    ? ui('hotspotDetail.options_documentees')
+                    : ui('hotspotDetail.option_documentee')}
                 </p>
               )}
               {group.options.length > 0 ? (
@@ -257,16 +292,20 @@ export function HotspotDetail({
                           <ModelText text={option.title} />
                         </h5>
                         <div className="hotspot-option-labels">
-                          {option.id === selected?.id && <span className="hotspot-option-tag">Option retenue</span>}
-                          {resolution.stage === 'ready_for_arbitration' && option.id === recommended?.id && (
-                            <span className="hotspot-option-tag">À arbitrer</span>
+                          {option.id === selected?.id && (
+                            <span className="hotspot-option-tag">{ui('hotspotDetail.option_retenue')}</span>
                           )}
-                          {credibleIds.has(option.id) && <span className="hotspot-option-tag">Solution crédible</span>}
+                          {resolution.stage === 'ready_for_arbitration' && option.id === recommended?.id && (
+                            <span className="hotspot-option-tag">{ui('hotspotDetail.a_arbitrer')}</span>
+                          )}
+                          {credibleIds.has(option.id) && (
+                            <span className="hotspot-option-tag">{ui('hotspotDetail.solution_credible')}</span>
+                          )}
                           <span className="hotspot-story-caption">{EVIDENCE[option.evidence_state]}</span>
                         </div>
                       </div>
                       <p>
-                        {option.effect && <strong>Effet attendu : </strong>}
+                        {option.effect && <strong>{ui('hotspotDetail.effet_attendu')}</strong>}
                         <ModelText text={option.effect || option.principle} />
                       </p>
                     </section>
@@ -275,8 +314,8 @@ export function HotspotDetail({
               ) : !group.analysisSummary ? (
                 <p className="hotspot-story-empty">
                   {group.id === 'legacy'
-                    ? 'Aucune option documentée à ce stade.'
-                    : 'Options à définir pour cette question.'}
+                    ? ui('hotspotDetail.aucune_option_documentee_a_ce_stade')
+                    : ui('hotspotDetail.options_a_definir_pour_cette_question')}
                 </p>
               ) : null}
             </section>
@@ -286,43 +325,49 @@ export function HotspotDetail({
         <section className="hotspot-story-section" aria-labelledby="hotspot-choice-title">
           <div className="hotspot-story-heading">
             <h4 id="hotspot-choice-title">
-              <Scale size={20} aria-hidden="true" /> Décision et prochaine étape
+              <Scale size={20} aria-hidden="true" />
+              {ui('hotspotDetail.decision_et_prochaine_etape')}
             </h4>
             {canEdit && (
               <button type="button" onClick={(event) => onEdit(event, 'resolution')}>
-                Compléter l’avancement
+                {ui('hotspotDetail.completer_l_avancement')}
               </button>
             )}
           </div>
           {selected && (
             <p>
-              <strong>Option retenue : </strong>
+              <strong>{ui('hotspotDetail.option_retenue_2')}</strong>
               <ModelText text={selected.title} />
             </p>
           )}
           {hotspot.resolution_note && (
             <p>
-              <strong>Pourquoi ce choix : </strong>
+              <strong>{ui('hotspotDetail.pourquoi_ce_choix')}</strong>
               <ModelText text={hotspot.resolution_note} />
             </p>
           )}
           {resolution.stage === 'ready_for_arbitration' && recommended && (
             <p>
-              <strong>Option proposée à l’arbitrage : </strong>
+              <strong>{ui('hotspotDetail.option_proposee_a_l_arbitrage')}</strong>
               <ModelText text={recommended.title} />
             </p>
           )}
           <p className="hotspot-story-caption">
-            Arbitrage : {LEVEL[hotspot.arbitration_level] || hotspot.arbitration_level}
+            {ui('hotspotDetail.arbitrage')}
+            {LEVEL[hotspot.arbitration_level] || hotspot.arbitration_level}
           </p>
           <div className="hotspot-story-next">
-            <h5>Le prochain pas</h5>
+            <h5>{ui('hotspotDetail.le_prochain_pas')}</h5>
             <p>
-              {resolution.next_step ? <ModelText text={resolution.next_step} /> : 'Prochaine étape non documentée.'}
+              {resolution.next_step ? (
+                <ModelText text={resolution.next_step} />
+              ) : (
+                ui('hotspotDetail.prochaine_etape_non_documentee')
+              )}
             </p>
             {resolution.blocked_reason && (
               <p>
-                <strong>Blocage à lever : </strong>
+                <strong>{ui('hotspotDetail.blocage_a_lever')}</strong>
                 <ModelText text={resolution.blocked_reason} />
               </p>
             )}
@@ -332,27 +377,28 @@ export function HotspotDetail({
         <details className="hotspot-dossier">
           <summary>
             <BookOpen size={20} aria-hidden="true" />
-            <span>Voir les constats, les conditions et les documents</span>
+            <span>{ui('hotspotDetail.voir_les_constats_les_conditions_et_les_documents')}</span>
           </summary>
           <div className="hotspot-dossier-body">
             <section className="hotspot-story-section" aria-labelledby="hotspot-problem-title">
               <div className="hotspot-story-heading">
                 <h4 id="hotspot-problem-title">
-                  <BookOpen size={20} aria-hidden="true" /> Constats à vérifier
+                  <BookOpen size={20} aria-hidden="true" />
+                  {ui('hotspotDetail.constats_a_verifier')}
                 </h4>
                 {canEdit && (
                   <button type="button" onClick={(event) => onEdit(event, 'location')}>
-                    Préciser le périmètre
+                    {ui('hotspotDetail.preciser_le_perimetre')}
                   </button>
                 )}
               </div>
               {hotspot.framing_impact && (
                 <p className="hotspot-story-caption">
                   <span className="hotspot-framing-marker">{framingLabel(hotspot)}</span>
-                  {hotspot.framing_impact.evidence_state === 'hypothesis' && ' · Hypothèse'}
+                  {hotspot.framing_impact.evidence_state === 'hypothesis' && ui('hotspotDetail.hypothese_2')}
                 </p>
               )}
-              <div className="hotspot-anchors" role="group" aria-label="Périmètres concernés">
+              <div className="hotspot-anchors" role="group" aria-label={ui('hotspotDetail.perimetres_concernes')}>
                 {hotspot.location.node_ids.map((id) => {
                   const node = model.nodeById.get(id);
                   return (
@@ -364,7 +410,7 @@ export function HotspotDetail({
                   );
                 })}
               </div>
-              <h5>Cas concrets</h5>
+              <h5>{ui('hotspotDetail.cas_concrets')}</h5>
               {hotspot.examples.length > 0 ? (
                 <ul className="hotspot-story-examples">
                   {hotspot.examples.map((example) => (
@@ -374,17 +420,17 @@ export function HotspotDetail({
                   ))}
                 </ul>
               ) : (
-                <p className="hotspot-story-empty">Aucun cas concret documenté.</p>
+                <p className="hotspot-story-empty">{ui('hotspotDetail.aucun_cas_concret_documente')}</p>
               )}
               {hotspot.gap_analysis?.map((gap) => (
                 <article key={gap.id} className="hotspot-gap-analysis">
                   <p className="hotspot-story-caption">
                     {new Set(gap.observations_by_context.map((item) => item.context_id)).size === 1
-                      ? 'Écart dans un même SI'
+                      ? ui('hotspotDetail.ecart_dans_un_meme_si')
                       : new Set(gap.observations_by_context.map((item) => item.context_id)).size <
                           gap.observations_by_context.length
-                        ? 'Écart entre SI et entre périmètres'
-                        : 'Écart entre SI'}
+                        ? ui('hotspotDetail.ecart_entre_si_et_entre_perimetres')
+                        : ui('hotspotDetail.ecart_entre_si')}
                   </p>
                   <h5>
                     <ModelText text={gap.title} />
@@ -396,11 +442,7 @@ export function HotspotDetail({
                     {gap.observations_by_context.map((observation) => (
                       <li key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
                         <strong>
-                          {observation.context_id === 'beaumanoir-historique'
-                            ? 'Marques Historiques'
-                            : observation.context_id === 'boardriders'
-                              ? 'Boardriders'
-                              : 'Sarenza'}
+                          {contextName(model.raw.application_catalog, observation.context_id, model.version)}
                           {observation.observation_scope && (
                             <>
                               {' '}
@@ -411,17 +453,17 @@ export function HotspotDetail({
                         </strong>
                         <ModelText text={observation.handling} />
                         {observation.evidence_state === 'hypothesis' && (
-                          <span className="hotspot-story-caption"> · Hypothèse</span>
+                          <span className="hotspot-story-caption">{ui('hotspotDetail.hypothese_2')}</span>
                         )}
                         {observation.evidence_state === 'to_investigate' && (
-                          <span className="hotspot-story-caption"> · À instruire</span>
+                          <span className="hotspot-story-caption">{ui('hotspotDetail.a_instruire')}</span>
                         )}
                       </li>
                     ))}
                   </ul>
                   {gap.business_effects[0] && (
                     <p className="hotspot-story-caption">
-                      <strong>Enjeu : </strong>
+                      <strong>{ui('hotspotDetail.enjeu')}</strong>
                       <ModelText text={gap.business_effects[0]} />
                     </p>
                   )}
@@ -431,7 +473,8 @@ export function HotspotDetail({
 
             <section className="hotspot-story-section" aria-labelledby="hotspot-market-title">
               <h4 id="hotspot-market-title">
-                <BookOpen size={20} aria-hidden="true" /> Repères du marché
+                <BookOpen size={20} aria-hidden="true" />
+                {ui('hotspotDetail.reperes_du_marche')}
               </h4>
               {hotspot.market_view ? (
                 <div className="hotspot-story-support">
@@ -452,7 +495,9 @@ export function HotspotDetail({
                   </ul>
                 </div>
               ) : (
-                <p className="hotspot-story-empty">Comparaison marché non documentée pour ce point chaud.</p>
+                <p className="hotspot-story-empty">
+                  {ui('hotspotDetail.comparaison_marche_non_documentee_pour_ce_point_chaud')}
+                </p>
               )}
             </section>
 
@@ -462,7 +507,8 @@ export function HotspotDetail({
                 aria-labelledby="hotspot-option-details-title"
               >
                 <h4 id="hotspot-option-details-title">
-                  <Lightbulb size={20} aria-hidden="true" /> Conditions et compromis des Options
+                  <Lightbulb size={20} aria-hidden="true" />
+                  {ui('hotspotDetail.conditions_et_compromis_des_options')}
                 </h4>
                 <div className="hotspot-option-detail-list">
                   {hotspot.resolution_options.map((option) => (
@@ -471,29 +517,30 @@ export function HotspotDetail({
                         <ModelText text={option.title} />
                       </h5>
                       <p>
-                        <strong>Principe : </strong>
+                        <strong>{ui('hotspotDetail.principe')}</strong>
                         <ModelText text={option.principle} />
                       </p>
                       {option.effect && (
                         <p>
-                          <strong>Effet attendu : </strong>
+                          <strong>{ui('hotspotDetail.effet_attendu')}</strong>
                           <ModelText text={option.effect} />
                         </p>
                       )}
                       {!!option.conditions?.length && (
                         <p>
-                          <strong>Conditions : </strong>
+                          <strong>{ui('hotspotDetail.conditions')}</strong>
                           <ModelText text={option.conditions.join(' · ')} />
                         </p>
                       )}
                       {!!option.tradeoffs?.length && (
                         <p>
-                          <strong>Compromis : </strong>
+                          <strong>{ui('hotspotDetail.compromis')}</strong>
                           <ModelText text={option.tradeoffs.join(' · ')} />
                         </p>
                       )}
                       <p className="hotspot-story-caption">
-                        Difficulté d’implémentation : {size(option.implementation_complexity)}
+                        {ui('hotspotDetail.difficulte_d_implementation')}
+                        {size(option.implementation_complexity)}
                       </p>
                     </article>
                   ))}
@@ -503,7 +550,8 @@ export function HotspotDetail({
 
             <section className="hotspot-story-section" aria-labelledby="hotspot-evidence-title">
               <h4 id="hotspot-evidence-title">
-                <FileText size={20} aria-hidden="true" /> Documents
+                <FileText size={20} aria-hidden="true" />
+                {ui('hotspotDetail.documents')}
               </h4>
               {documents.length > 0 && (
                 <ul className="hotspot-documents">
@@ -518,7 +566,8 @@ export function HotspotDetail({
                       {' · '}
                       <a href={documentUrl(model, document)} download={documentDownloadName(document)}>
                         <Download size={16} aria-hidden="true" />
-                        Télécharger le {documentFormat(document)}
+                        {ui('hotspotDetail.telecharger_le')}
+                        {documentFormat(document)}
                       </a>
                     </li>
                   ))}

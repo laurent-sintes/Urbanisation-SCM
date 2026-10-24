@@ -8,6 +8,7 @@ import {
 } from '@floating-ui/react';
 import { ChevronDown, Route, X } from 'lucide-react';
 import { useId, useState } from 'react';
+import { ui } from '../ui.ts';
 import { useHotspotFloating } from './HotspotDisplay';
 
 export type FlowType = 'shares-data' | 'provides-knowledge';
@@ -37,12 +38,12 @@ export function MapFlowPicker({
     useRole(context, { role: 'dialog' }),
   ]);
   const state = !enabled
-    ? 'masqués'
+    ? ui('mapFlowPicker.masques')
     : !types.length
       ? 'aucun'
       : types.length === 1
         ? types[0] === 'shares-data'
-          ? 'données'
+          ? ui('mapFlowPicker.donnees')
           : 'connaissance'
         : 'tous';
   return (
@@ -57,7 +58,8 @@ export function MapFlowPicker({
       >
         <Route size={15} />
         <span>
-          Flux <strong>{state}</strong>
+          {ui('mapFlowPicker.flux')}
+          <strong>{state}</strong>
         </span>
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
       </button>
@@ -71,24 +73,36 @@ export function MapFlowPicker({
               id={id}
               className="flow-filter-popover"
               role="dialog"
-              aria-label="Filtres des flux"
+              aria-label={ui('mapFlowPicker.filtres_des_flux')}
             >
               <div className="flow-filter-heading">
-                <strong>Flux de cette carte</strong>
-                <button type="button" aria-label="Fermer les filtres des flux" onClick={() => setOpen(false)}>
+                <strong>{ui('mapFlowPicker.flux_de_cette_carte')}</strong>
+                <button
+                  type="button"
+                  aria-label={ui('mapFlowPicker.fermer_les_filtres_des_flux')}
+                  onClick={() => setOpen(false)}
+                >
                   <X size={16} />
                 </button>
               </div>
               <label className="flow-display-toggle">
                 <input type="checkbox" checked={enabled} onChange={(event) => onEnabledChange(event.target.checked)} />
-                Afficher les flux
+                {ui('mapFlowPicker.afficher_les_flux')}
               </label>
               <fieldset>
-                <legend>Types de flux</legend>
+                <legend>{ui('mapFlowPicker.types_de_flux')}</legend>
                 {(
                   [
-                    ['shares-data', 'Partage de données', 'Transmettre des informations entre deux périmètres.'],
-                    ['provides-knowledge', 'Apport de connaissance', 'Éclairer une décision ou un calcul.'],
+                    [
+                      'shares-data',
+                      ui('mapFlowPicker.partage_de_donnees'),
+                      ui('mapFlowPicker.transmettre_des_informations_entre_deux_perimetres'),
+                    ],
+                    [
+                      'provides-knowledge',
+                      ui('mapFlowPicker.apport_de_connaissance'),
+                      ui('mapFlowPicker.eclairer_une_decision_ou_un_calcul'),
+                    ],
                   ] as const
                 ).map(([type, label, description]) => (
                   <label key={type}>
@@ -109,13 +123,13 @@ export function MapFlowPicker({
               </fieldset>
               {!!destinations.length && onOpenDestination && (
                 <fieldset className="flow-external-destinations">
-                  <legend>Explorer les échanges externes</legend>
+                  <legend>{ui('mapFlowPicker.explorer_les_echanges_externes')}</legend>
                   {destinations.map((destination) => (
                     <button
                       key={destination.scopeId}
                       type="button"
                       className="flow-external-destination"
-                      aria-label={`Voir les échanges dans ${destination.name}`}
+                      aria-label={ui('mapFlowPicker.voir_les_echanges_dans', { name: destination.name })}
                       onClick={() => {
                         setOpen(false);
                         onOpenDestination(destination.scopeId);
@@ -127,7 +141,7 @@ export function MapFlowPicker({
                   ))}
                 </fieldset>
               )}
-              {enabled && !types.length && <p>Aucun type de flux sélectionné.</p>}
+              {enabled && !types.length && <p>{ui('mapFlowPicker.aucun_type_de_flux_selectionne')}</p>}
             </div>
           </FloatingFocusManager>
         </FloatingPortal>

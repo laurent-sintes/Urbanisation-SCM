@@ -2157,6 +2157,18 @@
       "additionalProperties": false,
       "properties": {
         "schema_version": { "const": 1 },
+        "contexts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 }
+            },
+            "required": ["id", "name"]
+          }
+        },
         "source_refs": { "$ref": "#/$defs/applicationSourceRefs" },
         "products": {
           "type": "array",

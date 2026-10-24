@@ -1,5 +1,15 @@
 # FLOW Atlas — SPA statique
 
+## Textes et vocabulaire de lecture
+
+Les textes d’interface sont dans `locales/fr/ui.json` : menus, titres, messages, aides, accessibilité et pluriels. Les composants utilisent des clés typées, avec leurs paramètres. Après une modification des ressources, exécuter `pnpm --dir app resources:types`. `check:code` et `build` contrôlent l’absence de nouveaux textes lecteur dans les sources, les attributs, les CSS et les parties Python du lecteur.
+
+Les noms et définitions métier restent dans la publication sélectionnée. Les libellés des types et des natures sont résolus depuis son métamodèle et son vocabulaire associé, par identifiant stable. Le prochain guide préparé embarque `modeles/backlog/atlas-reader-vocabulary.yaml` avec ses autres dépendances vérifiées ; Atlas ne lit jamais ce fichier de travail directement.
+
+Les [profils de lecture](content/README.md) expliquent les données de compatibilité des anciennes éditions, les icônes et le placement de Flux. Les anciennes substitutions rédactionnelles ne sont plus dans le navigateur. Les exports conservent les valeurs originales et portent séparément les projections publiques déclarées et vérifiées. `modeles/backlog/atlas-reader-content.yaml` reprend uniquement des présentations historiques déjà figées, par référence et empreinte du champ source ; la préparation les résout et les fige dans le nouveau guide. Lorsqu’un champ est réécrit, retirer sa référence historique et rédiger directement le texte public dans le modèle canonique. Le contrôle refuse une référence devenue périmée ; aucun nettoyage de phrase n’est inventé.
+
+Le HTML initial reçoit ses textes par le build. Les erreurs de l’atelier local portent un code stable et ses paramètres ; le champ `error` lisible reste présent pour la compatibilité. Les métadonnées du PDF SCM sont dans `output/pdf/scm-study.json`, près de la source unique du document ; le PDF et son contenu ne changent pas lors d’une simple extraction de ces métadonnées.
+
 ## Navigation et recherche
 
 Le menu regroupe cinq entrées : Cartographie, Scénarios métier, Points chauds, Applications et Comprendre. Les deux dernières ouvrent un sous-menu, un seul groupe à la fois. La colonne gauche reste réservée aux destinations générales ; les choix et sommaires propres à une page restent près de son contenu. Sur ordinateur, sa largeur est ajustable ; sur mobile, elle s’ouvre dans un panneau.

@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import type { GuideChapter } from '../modelingGuide';
+import { ui } from '../ui.ts';
 
 /** The labels and meaning travel with the publication, not with live assets. */
 export function MethodVisual({ visual }: { visual: NonNullable<GuideChapter['visual']> }) {
@@ -11,14 +12,14 @@ export function MethodVisual({ visual }: { visual: NonNullable<GuideChapter['vis
         <figcaption>{visual.title}</figcaption>
         <img className="method-overview-image" src={source} alt={visual.title} aria-describedby={`${id}-description`} />
         <details className="method-overview-zoom">
-          <summary>Lire le schéma en grand format</summary>
-          <div tabIndex={0} role="region" aria-label={`Vue agrandie : ${visual.title}`}>
+          <summary>{ui('methodVisual.lire_le_schema_en_grand_format')}</summary>
+          <div tabIndex={0} role="region" aria-label={ui('methodVisual.vue_agrandie', { title: visual.title })}>
             <img src={source} alt={visual.title} />
           </div>
         </details>
         <p id={`${id}-description`}>{visual.description}</p>
         <details>
-          <summary>Repères textuels du schéma</summary>
+          <summary>{ui('methodVisual.reperes_textuels_du_schema')}</summary>
           <p>{visual.center}</p>
           <ul>
             {visual.items.map((item) => (
@@ -81,7 +82,11 @@ export function MethodVisual({ visual }: { visual: NonNullable<GuideChapter['vis
           {dimensions ? (
             <path d="M400 50V338 M375 68H425 M375 178H425 M375 288H425" fill="none" stroke="#236159" strokeWidth="2" />
           ) : (
-            ['M335 108L240 153', 'M465 108L560 153', 'M380 200H420'].map((d) => (
+            [
+              ui('methodVisual.m335_108l240_153'),
+              ui('methodVisual.m465_108l560_153'),
+              ui('methodVisual.m380_200h420'),
+            ].map((d) => (
               <path
                 key={d}
                 d={d}

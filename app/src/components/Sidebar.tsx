@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { RouteState } from '../navigation';
 import { staticUrl } from '../publication';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 
 interface Props {
   model: PublishedModel;
@@ -95,27 +96,33 @@ export function Sidebar({
     onClose();
   };
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
-  const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
+  const publicationLabel = ui('sidebar.version_du_modele_complet', {
+    revision: revision,
+    version: model.version,
+    value3: route.version
+      ? ui('sidebar.publication_fixe')
+      : ui('sidebar.publication_courante_actualisee_automatiquement'),
+  });
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: The mobile aside becomes a modal dialog at runtime.
     <aside
       ref={panel}
       id="atlas-tree-panel"
       className={`sidebar ${open ? 'open' : ''}`}
-      aria-label="Navigation Atlas"
+      aria-label={ui('sidebar.navigation_atlas')}
       inert={mobile && !open}
       aria-hidden={mobile && !open ? true : undefined}
       aria-modal={mobile && open ? true : undefined}
       role={mobile && open ? 'dialog' : undefined}
     >
       <div className="sidebar-heading">
-        <span className="root-link">Explorer</span>
-        <button type="button" className="drawer-close" aria-label="Fermer le panneau" onClick={onClose}>
+        <span className="root-link">{ui('sidebar.explorer')}</span>
+        <button type="button" className="drawer-close" aria-label={ui('sidebar.fermer_le_panneau')} onClick={onClose}>
           <PanelLeftClose size={20} />
         </button>
       </div>
       <div className="sidebar-scroll">
-        <nav className="primary-spaces" aria-label="Espaces Atlas">
+        <nav className="primary-spaces" aria-label={ui('sidebar.espaces_atlas')}>
           <button
             type="button"
             aria-current={
@@ -124,7 +131,7 @@ export function Sidebar({
             onClick={() => onNavigate('')}
           >
             <Compass size={18} />
-            Cartographie
+            {ui('sidebar.cartographie')}
           </button>
           {!!model.raw.scenario_catalog && (
             <button
@@ -145,7 +152,7 @@ export function Sidebar({
               }
             >
               <Route size={18} />
-              Scénarios métier
+              {ui('sidebar.scenarios_metier')}
             </button>
           )}
           {!!model.raw.hotspot_catalog && (
@@ -155,7 +162,7 @@ export function Sidebar({
               onClick={() => visit({ view: 'hotspots', hotspot: '', hotspotGroup: '', status: '' })}
             >
               <Flame size={18} />
-              Points chauds
+              {ui('sidebar.points_chauds')}
             </button>
           )}
           {!!model.raw.application_catalog && (
@@ -170,7 +177,7 @@ export function Sidebar({
             >
               <summary className={apps ? 'is-active' : ''}>
                 <Boxes size={18} />
-                Applications
+                {ui('sidebar.applications')}
                 <ChevronDown size={15} />
               </summary>
               <div className="navigation-submenu">
@@ -181,7 +188,7 @@ export function Sidebar({
                     visit({ view: 'applications', appView: 'products', appSelection: '', appComponent: '' })
                   }
                 >
-                  Logiciels du marché
+                  {ui('sidebar.logiciels_du_marche')}
                 </button>
                 <button
                   type="button"
@@ -190,7 +197,7 @@ export function Sidebar({
                     visit({ view: 'applications', appView: 'systems', appSelection: '', appComponent: '' })
                   }
                 >
-                  SI à faire converger
+                  {ui('sidebar.si_a_faire_converger')}
                 </button>
               </div>
             </details>
@@ -206,7 +213,7 @@ export function Sidebar({
           >
             <summary className={understand ? 'is-active' : ''}>
               <BookOpen size={18} />
-              Comprendre
+              {ui('sidebar.comprendre')}
               <ChevronDown size={15} />
             </summary>
             <div className="navigation-submenu">
@@ -215,14 +222,14 @@ export function Sidebar({
                 aria-current={route.view === 'design-principles' ? 'page' : undefined}
                 onClick={() => visit({ view: 'design-principles' })}
               >
-                Principes directeurs
+                {ui('sidebar.principes_directeurs')}
               </button>
               <button
                 type="button"
                 aria-current={route.view === 'glossary' ? 'page' : undefined}
                 onClick={() => onOpenGlossary('model')}
               >
-                Glossaire métier
+                {ui('sidebar.glossaire_metier')}
               </button>
               <button
                 type="button"
@@ -230,7 +237,7 @@ export function Sidebar({
                 onClick={() => visit({ view: 'documents', document: '', hotspot: '' })}
               >
                 <FileText size={15} />
-                Documents
+                {ui('sidebar.documents')}
               </button>
               <button
                 type="button"
@@ -238,7 +245,7 @@ export function Sidebar({
                 onClick={onOpenPrinciples}
               >
                 <Lightbulb size={15} />
-                Méthode de transformation
+                {ui('sidebar.methode_de_transformation')}
               </button>
               <button
                 type="button"
@@ -246,7 +253,7 @@ export function Sidebar({
                 onClick={() => visit({ view: 'help', helpTopic: 'start' })}
               >
                 <HelpCircle size={15} />
-                Aide à la lecture
+                {ui('sidebar.aide_a_la_lecture')}
               </button>
             </div>
           </details>
@@ -256,7 +263,8 @@ export function Sidebar({
         <div className="sidebar-stats">
           <span id="fa-version" className="model-version" data-version={model.version} title={publicationLabel}>
             <span className={`live-dot ${route.version ? 'fixed' : ''}`} aria-hidden="true" />
-            Modèle · {revision}
+            {ui('sidebar.modele')}
+            {revision}
             <span className="sr-only">{publicationLabel}</span>
           </span>
         </div>
@@ -265,7 +273,7 @@ export function Sidebar({
           src={staticUrl('assets/beaumanoir-original.png')}
           width="1564"
           height="605"
-          alt="Groupe Beaumanoir"
+          alt={ui('sidebar.groupe_beaumanoir')}
         />
       </div>
     </aside>

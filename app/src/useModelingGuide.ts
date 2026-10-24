@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchModelingGuide, type GuideResponse } from './modelingGuide';
+import { ui } from './ui.ts';
 export type GuideState =
   | { status: 'loading'; version?: string }
   | { status: 'error'; version: string; message: string }
@@ -22,7 +23,7 @@ export function useModelingGuide(version?: string, expectedSha256?: string) {
           setState({
             status: 'error',
             version,
-            message: error instanceof Error ? error.message : 'Méta modèle indisponible.',
+            message: error instanceof Error ? error.message : ui('useModelingGuide.meta_modele_indisponible'),
           });
       });
     return () => controller.abort();

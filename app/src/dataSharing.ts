@@ -1,12 +1,14 @@
 import type { MapSlot } from './mapPlacement.ts';
 import type { AtlasRelation, DataExchange, Hotspot, PublishedModel, RawRelation } from './types.ts';
+import { ui } from './ui.ts';
 
 export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet<string>): DataExchange | undefined {
   const raw = relation.fields?.data_exchange;
   if (relation.type !== 'shares-data') {
-    if (raw !== undefined) throw new Error(`Partage de données sur une relation incompatible : ${relation.id}.`);
+    if (raw !== undefined)
+      throw new Error(ui('dataSharing.partage_de_donnees_sur_une_relation_incompatible', { id: relation.id }));
     if (relation.fields?.summary_label !== undefined)
-      throw new Error(`Synthèse de partage sur une relation incompatible : ${relation.id}.`);
+      throw new Error(ui('dataSharing.synthese_de_partage_sur_une_relation_incompatible', { id: relation.id }));
     return undefined;
   }
   const exchange = raw as DataExchange | undefined;
@@ -34,7 +36,7 @@ export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet
     ) ||
     new Set(exchange.contents.map((content) => content.name)).size !== exchange.contents.length
   )
-    throw new Error(`Contenu de partage de données invalide : ${relation.id}.`);
+    throw new Error(ui('dataSharing.contenu_de_partage_de_donnees_invalide', { id: relation.id }));
   return exchange;
 }
 
@@ -137,7 +139,7 @@ export function systemDataSharing(model: PublishedModel): SystemDataSharing[] {
           .filter((label): label is string => typeof label === 'string'),
       ),
     ];
-    if (summaries.length > 1) throw new Error(`Libellés de synthèse contradictoires : ${id}.`);
+    if (summaries.length > 1) throw new Error(ui('dataSharing.libelles_de_synthese_contradictoires', { id: id }));
     const detailLabel = [...new Set(relations.map((r) => r.label))].join(' · ');
     groups.set(id, {
       id,

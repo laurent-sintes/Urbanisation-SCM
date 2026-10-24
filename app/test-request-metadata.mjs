@@ -3,6 +3,7 @@ import test from 'node:test';
 import { adaptPublication, childrenOf } from './src/model.ts';
 import { behaviorAspect, behaviorReadingGroups, requestOrigins } from './src/requestMetadata.ts';
 import { searchPublication } from './src/search.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const node = (id, kind, fields = {}) => ({ id, name: id, kind, fields });
 
@@ -50,7 +51,7 @@ test('reading groups retain unclassified behaviors and preserve published struct
       target_id: id,
     })),
   };
-  const model = adaptPublication(raw);
+  const model = adaptPublication(readingFixture(raw));
   const children = childrenOf(model, 'REQUEST');
   const groups = behaviorReadingGroups(children);
   assert.deepEqual(
@@ -65,7 +66,7 @@ test('reading groups retain unclassified behaviors and preserve published struct
     children.map((item) => item.id),
     ['ACT1', 'LEGACY', 'TRIGGER', 'ACT2', 'UNKNOWN'],
   );
-  assert.deepEqual(model.raw, raw);
+  assert.deepEqual(model.raw, readingFixture(raw));
   assert.equal(new Set(groups.flatMap((group) => group.behaviors)).size, children.length);
   assert.ok(groups.flatMap((group) => group.behaviors).every((item) => model.nodeById.get(item.id) === item));
   assert.deepEqual(behaviorReadingGroups([]), []);
@@ -80,11 +81,11 @@ test('origins and reading angles are searchable only when present in the selecte
     nodes: [node('TRANSFER', 'capability'), node('AREA', 'area'), node('B', 'behavior')],
     relations: [{ id: 'R', type: 'contains', source_id: 'TRANSFER', target_id: 'B' }],
   };
-  const historical = adaptPublication(raw);
+  const historical = adaptPublication(readingFixture(raw));
   raw.nodes[0].fields.request_origins = ['frontoffice', 'backoffice', 'privatevalue'];
   raw.nodes[1].fields.request_origins = ['backoffice'];
   raw.nodes[2].fields.behavior_aspect = 'trigger';
-  const current = adaptPublication(raw);
+  const current = adaptPublication(readingFixture(raw));
   for (const query of ['Frontoffice', 'Backoffice', 'Sollicitation initiée']) {
     assert.deepEqual(
       searchPublication(current, query).map((item) => item.id),

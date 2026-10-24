@@ -48,6 +48,7 @@ import {
 } from './model';
 import { kindLabel } from './presentation';
 import type { ApplicationMapping, AtlasNode, Hotspot, PublishedModel } from './types';
+import { ui } from './ui.ts';
 import '@xyflow/react/dist/style.css';
 
 export interface ReactFlowPaneProps {
@@ -666,7 +667,7 @@ function Canvas(props: ReactFlowPaneProps) {
             .join('|'),
           x,
           y,
-          title: hotspot.workshop ? `Atelier · ${hotspot.title}` : hotspot.title,
+          title: hotspot.workshop ? ui('reactFlowPane.atelier', { title: hotspot.title }) : hotspot.title,
           titles: [hotspot.title],
           hotspotIds: [hotspot.id],
           count: 1,
@@ -876,7 +877,7 @@ function Canvas(props: ReactFlowPaneProps) {
             applicationRelatedIds: [...applicationIds],
           },
           className:
-            `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ' hotspot-related' : ''}${applicationIds.has(node.id.replace(/^group:/, '')) ? ' application-related' : ''}`.trim(),
+            `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ui('reactFlowPane.hotspot_related') : ''}${applicationIds.has(node.id.replace(/^group:/, '')) ? ui('reactFlowPane.application_related') : ''}`.trim(),
         }))
       : nodes;
   const select = useCallback(
@@ -900,7 +901,7 @@ function Canvas(props: ReactFlowPaneProps) {
         <p>
           <ModelText text={emptyScope.definition} />
         </p>
-        <h3>Capacités liées à ce référentiel</h3>
+        <h3>{ui('reactFlowPane.capacites_liees_a_ce_referentiel')}</h3>
         <ul>
           {referenceCapabilities.map((capability) => (
             <li key={capability.id}>
@@ -921,13 +922,14 @@ function Canvas(props: ReactFlowPaneProps) {
       <div ref={container} className="graph-canvas empty-state" style={{ height: 'auto', minHeight: minimumHeight }}>
         <NodeIcon node={emptyScope} size={38} />
         <h2>{emptyScope.name}</h2>
-        <p>Aucun élément publié dans ce périmètre.</p>
+        <p>{ui('reactFlowPane.aucun_element_publie_dans_ce_perimetre')}</p>
       </div>
     );
   if (error)
     return (
       <div className="empty-state" role="alert">
-        Le placement a échoué : {error}
+        {ui('reactFlowPane.le_placement_a_echoue')}
+        {error}
       </div>
     );
   // Page mode keeps a fixed viewport so fitView can frame the complete map.
@@ -1010,7 +1012,7 @@ function Canvas(props: ReactFlowPaneProps) {
       {!graph.nodes.length && (
         <div className="empty-state">
           <FileText />
-          Ce périmètre est réservé.
+          {ui('reactFlowPane.ce_perimetre_est_reserve')}
         </div>
       )}
     </div>

@@ -60,6 +60,7 @@ import { staticUrl } from './publication';
 import { revealSection } from './readerNavigation';
 import { searchResultRoute } from './searchPresentation';
 import type { MarketComparison, MarketGap, MarketInspiration } from './types';
+import { ui } from './ui.ts';
 import { useAtlasLocation } from './useAtlasLocation';
 import { useBuildUpdate } from './useBuildUpdate';
 import type { GuideState } from './useModelingGuide';
@@ -101,7 +102,9 @@ export function App() {
       ? principleDestination(model, route.principle || '')?.principle
       : undefined;
   const isReadingGuide = Boolean(selectedReadingGuide?.reading_children?.length);
-  const directingPrinciplesTitle = isReadingGuide ? 'Comment lire la cartographie' : 'Principes directeurs';
+  const directingPrinciplesTitle = isReadingGuide
+    ? ui('app.comment_lire_la_cartographie')
+    : ui('app.principes_directeurs');
   const { state: guideState, retry: retryGuide } = useModelingGuide(
     model?.version,
     catalog?.releases.find((entry) => entry.version === model?.version)?.guide_sha256,
@@ -128,10 +131,10 @@ export function App() {
             schema_version: '1.0.0',
             publication_version: model?.version || '',
             status: 'unavailable',
-            message: 'Aucun document de métamodèle associé à cette publication.',
+            message: ui('app.aucun_document_de_metamodele_associe_a_cette_publication'),
           },
         };
-  const methodTitle = activeGuide?.title || 'Méthodologie';
+  const methodTitle = activeGuide?.title || ui('app.methodologie');
   const methodCrumb = methodEntries(activeGuide).find(
     (item) => item.id === activeMethod(activeGuide, route.principle),
   )?.title;
@@ -150,10 +153,10 @@ export function App() {
     : route.glossary || 'model';
   const glossaryTitle =
     glossaryMode === 'meta'
-      ? 'Glossaire du métamodèle'
+      ? ui('app.glossaire_du_metamodele')
       : glossaryMode === 'transformation'
-        ? 'Glossaire de transformation'
-        : 'Glossaire métier';
+        ? ui('app.glossaire_de_transformation')
+        : ui('app.glossaire_metier');
   const mobile = useMobile();
   const [drawer, setDrawer] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(() => preference('sidebar-open', true));
@@ -199,7 +202,7 @@ export function App() {
   const previousDrawerDestination = useRef(drawerDestination);
   const [fullPath, setFullPath] = useState(false);
   const universeNode = model?.nodes.find((node) => node.kind === 'universe');
-  const rootName = universeNode?.name || 'Univers';
+  const rootName = universeNode?.name || ui('app.univers');
   const selected = model?.nodeById.get(route.node) || (!route.node ? universeNode : undefined);
   const view: View =
     route.view ||
@@ -246,8 +249,20 @@ export function App() {
   const universeDepth = Math.min(route.mapDepth ?? defaultMapDepth('universe'), 2);
   const detailLabels =
     scope?.kind === 'domain'
-      ? ['Domaine', 'Sous-domaines', 'Business Areas', 'Capacités', 'Comportements']
-      : ['Domaines', 'Sous-domaines', 'Business Areas', 'Capacités', 'Comportements'];
+      ? [
+          ui('app.domaine'),
+          ui('app.sous_domaines'),
+          ui('app.business_areas'),
+          ui('app.capacites'),
+          ui('app.comportements'),
+        ]
+      : [
+          ui('app.domaines'),
+          ui('app.sous_domaines'),
+          ui('app.business_areas'),
+          ui('app.capacites'),
+          ui('app.comportements'),
+        ];
   const parentScope =
     scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
   const viewParent =
@@ -418,12 +433,12 @@ export function App() {
   useEffect(() => savePreference('sidebar-open', sidebarOpen), [sidebarOpen]);
   useEffect(() => {
     if (model && route.node && !model.nodeById.has(route.node)) {
-      setAnnouncement(`L’élément ${route.node} n’existe pas dans cette publication. Retour à la cartographie.`);
+      setAnnouncement(
+        ui('app.l_element_n_existe_pas_dans_cette_publication_retour_a_la_cartogr', { node: route.node }),
+      );
       changeRoute({ node: '', scope: '', view: view === 'flows' ? 'flows' : 'map', relation: '' }, true);
     } else if (model && route.scope && route.scope !== '@root' && !model.nodeById.has(route.scope)) {
-      setAnnouncement(
-        'Le périmètre de cette carte n’existe pas dans la publication. Le contexte de l’élément est rétabli.',
-      );
+      setAnnouncement(ui('app.le_perimetre_de_cette_carte_n_existe_pas_dans_la_publication_le_c'));
       changeRoute({ scope: '' }, true);
     }
   }, [model, route.node, route.scope, view, changeRoute]);
@@ -574,46 +589,46 @@ export function App() {
       const pinned = { ...route, version: model?.version || route.version };
       const hash = routeHash(pinned, model);
       await navigator.clipboard.writeText(`${location.origin}${location.pathname}${hash}`);
-      setAnnouncement('Lien copié vers cette publication.');
+      setAnnouncement(ui('app.lien_copie_vers_cette_publication'));
     } catch {
-      setAnnouncement('La copie est indisponible. Tu peux copier l’adresse dans le navigateur.');
+      setAnnouncement(ui('app.la_copie_est_indisponible_tu_peux_copier_l_adresse_dans_le_naviga'));
     }
   };
   const atMapHome = cartographicView && !headingNode;
   const statistics = model && headingNode ? scopeStatistics(model, headingNode) : [];
   const referenceLabel =
     view === 'help'
-      ? 'Aide à la lecture'
+      ? ui('app.aide_a_la_lecture')
       : view === 'hotspots'
-        ? 'Points chauds'
+        ? ui('app.points_chauds')
         : view === 'applications'
           ? route.appView === 'products'
-            ? 'Logiciels du marché'
-            : 'SI à faire converger'
+            ? ui('app.logiciels_du_marche')
+            : ui('app.si_a_faire_converger')
           : view === 'documents'
-            ? 'Documents'
+            ? ui('app.documents')
             : view === 'scenarios'
-              ? 'Scénarios métier'
+              ? ui('app.scenarios_metier')
               : view === 'metamodel'
-                ? 'Métamodèle FLOW'
+                ? ui('app.metamodele_flow')
                 : view === 'design-principles'
                   ? directingPrinciplesTitle
                   : view === 'principles'
                     ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
                     : glossaryTitle;
   const breadcrumbs = (
-    <nav className="breadcrumb" aria-label="Fil d’Ariane">
+    <nav className="breadcrumb" aria-label={ui('app.fil_d_ariane')}>
       {referenceView ? (
         <>
           <button type="button" onClick={() => navigate('')}>
-            Atlas
+            {ui('app.atlas')}
           </button>
           {['documents', 'glossary', 'design-principles', 'principles', 'help', 'metamodel', 'applications'].includes(
             view,
           ) && (
             <span>
               <ChevronRight size={12} />
-              <span>{view === 'applications' ? 'Applications' : 'Comprendre'}</span>
+              <span>{view === 'applications' ? ui('app.applications') : ui('app.comprendre')}</span>
             </span>
           )}
           <span>
@@ -655,12 +670,12 @@ export function App() {
     <button
       type="button"
       className="share-button"
-      aria-label="Copier le lien"
-      title="Copier le lien"
+      aria-label={ui('app.copier_le_lien')}
+      title={ui('app.copier_le_lien')}
       onClick={copyLink}
     >
       <Copy size={16} />
-      <span>Copier le lien</span>
+      <span>{ui('app.copier_le_lien')}</span>
     </button>
   );
   return (
@@ -678,8 +693,8 @@ export function App() {
                 type="button"
                 id="fa-tree-open"
                 className="mobile-menu"
-                aria-label={mobile || !sidebarOpen ? 'Ouvrir le panneau' : 'Replier le panneau'}
-                title={mobile || !sidebarOpen ? 'Ouvrir le panneau' : 'Replier le panneau'}
+                aria-label={mobile || !sidebarOpen ? ui('app.ouvrir_le_panneau') : ui('app.replier_le_panneau')}
+                title={mobile || !sidebarOpen ? ui('app.ouvrir_le_panneau') : ui('app.replier_le_panneau')}
                 aria-expanded={mobile ? drawer : sidebarOpen}
                 aria-controls="atlas-tree-panel"
                 onClick={() => (mobile ? setDrawer(true) : setSidebarOpen((open) => !open))}
@@ -687,7 +702,12 @@ export function App() {
                 {mobile || !sidebarOpen ? <PanelLeft size={20} /> : <PanelLeftClose size={20} />}
               </button>
             )}
-            <button type="button" className="brand" onClick={() => navigate('')} aria-label="FLOW Atlas, accueil">
+            <button
+              type="button"
+              className="brand"
+              onClick={() => navigate('')}
+              aria-label={ui('app.flow_atlas_accueil')}
+            >
               <span className="brand-symbol" aria-hidden="true">
                 <img
                   className="flow-source-mark"
@@ -698,7 +718,8 @@ export function App() {
                 />
               </span>
               <strong>
-                FLOW <b>Atlas</b>
+                {ui('app.flow')}
+                <b>{ui('app.atlas')}</b>
               </strong>
             </button>
           </div>
@@ -706,7 +727,7 @@ export function App() {
             <button
               type="button"
               className="global-search-trigger"
-              aria-label="Rechercher dans Atlas"
+              aria-label={ui('app.rechercher_dans_atlas')}
               aria-haspopup="dialog"
               onClick={() => {
                 setDrawer(false);
@@ -714,21 +735,23 @@ export function App() {
               }}
             >
               <Search size={18} />
-              <span>Rechercher dans Atlas…</span>
-              <kbd>Ctrl K</kbd>
+              <span>{ui('app.rechercher_dans_atlas_2')}</span>
+              <kbd>{ui('app.ctrl_k')}</kbd>
             </button>
           )}
           {model && (
             <DismissibleDetails className="publication-picker">
               <summary>
-                <span className="publication-mode">{route.version ? 'Modèle figé' : 'Modèle courant'}</span>
+                <span className="publication-mode">
+                  {route.version ? ui('app.modele_fige') : ui('app.modele_courant')}
+                </span>
                 <span>{model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version}</span>
               </summary>
               <div>
                 <label>
-                  Publication consultée
+                  {ui('app.publication_consultee')}
                   <select
-                    aria-label="Choisir la publication"
+                    aria-label={ui('app.choisir_la_publication')}
                     value={route.version || ''}
                     onChange={(event) => {
                       changeRoute({
@@ -741,28 +764,35 @@ export function App() {
                       event.currentTarget.closest('details')?.removeAttribute('open');
                     }}
                   >
-                    <option value="">Courante · actualisée automatiquement</option>
+                    <option value="">{ui('app.courante_actualisee_automatiquement')}</option>
                     {catalog?.releases.map((entry) => (
                       <option key={entry.version} value={entry.version}>
-                        {entry.revision ? `v${String(entry.revision).padStart(3, '0')} · ` : ''}
+                        {entry.revision ? ui('app.v', { value1: String(entry.revision).padStart(3, '0') }) : ''}
                         {entry.version}
                       </option>
                     ))}
                   </select>
                 </label>
                 <p>
-                  {route.version ? 'Cette édition est fixe.' : 'La dernière publication est suivie automatiquement.'}
+                  {route.version
+                    ? ui('app.cette_edition_est_fixe')
+                    : ui('app.la_derniere_publication_est_suivie_automatiquement')}
                 </p>
                 <p className="publication-statistics">
-                  {model.nodes.length} éléments · {model.nodes.filter((node) => node.kind === 'capability').length}{' '}
-                  capacités
+                  {model.nodes.length}
+                  {ui('app.elements')}
+                  {model.nodes.filter((node) => node.kind === 'capability').length} {ui('app.capacites_2')}
                   {model.nodes.some((node) => node.kind === 'behavior') && (
-                    <> · {model.nodes.filter((node) => node.kind === 'behavior').length} comportements</>
+                    <>
+                      {' '}
+                      · {model.nodes.filter((node) => node.kind === 'behavior').length}
+                      {ui('app.comportements_2')}
+                    </>
                   )}
                 </p>
                 <button type="button" className="publication-refresh" onClick={reload} disabled={loading}>
                   <RefreshCw size={15} />
-                  Actualiser la publication
+                  {ui('app.actualiser_la_publication')}
                 </button>
               </div>
             </DismissibleDetails>
@@ -771,8 +801,8 @@ export function App() {
             type="button"
             id="fa-refresh"
             className={`topbar-icon ${loading ? 'loading' : ''}`}
-            aria-label="Actualiser la publication"
-            title="Actualiser"
+            aria-label={ui('app.actualiser_la_publication')}
+            title={ui('app.actualiser')}
             disabled={loading}
             onClick={reload}
           >
@@ -800,7 +830,7 @@ export function App() {
             className="rail-resizer"
             role="separator"
             tabIndex={0}
-            aria-label="Largeur du panneau"
+            aria-label={ui('app.largeur_du_panneau')}
             aria-orientation="vertical"
             aria-valuemin={220}
             aria-valuemax={340}
@@ -831,7 +861,7 @@ export function App() {
             type="button"
             className="drawer-scrim"
             tabIndex={-1}
-            aria-label="Fermer le panneau"
+            aria-label={ui('app.fermer_le_panneau')}
             onClick={closeDrawer}
           />
         )}
@@ -858,7 +888,7 @@ export function App() {
               {error || notice || announcement}
               <button
                 type="button"
-                aria-label="Masquer le message"
+                aria-label={ui('app.masquer_le_message')}
                 onClick={() => setAnnouncement('')}
                 hidden={!announcement}
               >
@@ -869,11 +899,15 @@ export function App() {
           {!model ? (
             <div className="empty-state">
               <Compass size={34} />
-              <h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1>
-              <p>{loading ? 'Chargement de la cartographie publiée.' : 'Réessaie de charger la publication.'}</p>
+              <h1>{loading ? ui('app.ouverture_du_modele') : ui('app.publication_indisponible')}</h1>
+              <p>
+                {loading
+                  ? ui('app.chargement_de_la_cartographie_publiee')
+                  : ui('app.reessaie_de_charger_la_publication')}
+              </p>
               {!loading && (
                 <button type="button" className="secondary-button" onClick={reload}>
-                  Réessayer
+                  {ui('app.reessayer')}
                 </button>
               )}
             </div>
@@ -888,30 +922,30 @@ export function App() {
                 )}
                 {softwareUpdate && (
                   <aside className="publication-selection" role="status">
-                    <span>Une nouvelle version de l’interface Atlas est disponible.</span>
+                    <span>{ui('app.une_nouvelle_version_de_l_interface_atlas_est_disponible')}</span>
                     <button type="button" onClick={() => window.location.reload()}>
-                      Recharger l’application
+                      {ui('app.recharger_l_application')}
                     </button>
                   </aside>
                 )}
                 {route.version && (
-                  <aside className="publication-selection" aria-label="Publication consultée">
+                  <aside className="publication-selection" aria-label={ui('app.publication_consultee')}>
                     <span>
                       <strong>
-                        <span className="publication-fixed-long">Publication figée</span>
-                        <span className="publication-fixed-short">Figée</span> · {route.version}
+                        <span className="publication-fixed-long">{ui('app.publication_figee')}</span>
+                        <span className="publication-fixed-short">{ui('app.figee')}</span> · {route.version}
                       </strong>
                       <span className="publication-explanation">
                         {' '}
                         —{' '}
                         {catalog?.current !== route.version
-                          ? 'Une version plus récente est disponible.'
-                          : 'Ce lien restera sur cette édition.'}
+                          ? ui('app.une_version_plus_recente_est_disponible')
+                          : ui('app.ce_lien_restera_sur_cette_edition')}
                       </span>
                     </span>
                     <button
                       type="button"
-                      aria-label="Suivre la version courante"
+                      aria-label={ui('app.suivre_la_version_courante')}
                       onClick={() =>
                         changeRoute({
                           version: '',
@@ -922,9 +956,9 @@ export function App() {
                         })
                       }
                     >
-                      <span className="publication-follow-long">Suivre la version courante</span>
+                      <span className="publication-follow-long">{ui('app.suivre_la_version_courante')}</span>
                       <span className="publication-follow-short" aria-hidden="true">
-                        Suivre le courant
+                        {ui('app.suivre_le_courant')}
                       </span>
                     </button>
                   </aside>
@@ -938,7 +972,8 @@ export function App() {
                         aria-expanded={fullPath}
                         onClick={() => setFullPath(!fullPath)}
                       >
-                        Chemin {fullPath ? '−' : '…'}
+                        {ui('app.chemin')}
+                        {fullPath ? '−' : '…'}
                       </button>
                       {breadcrumbs}
                     </div>
@@ -948,9 +983,9 @@ export function App() {
                 {cartographicView || hotspotDetail || view === 'relations' ? (
                   <h1 id="page-title" className="sr-only" ref={heading} tabIndex={-1}>
                     {hotspotDetail
-                      ? 'Points chauds'
+                      ? ui('app.points_chauds')
                       : view === 'relations'
-                        ? `Relations : ${headingNode?.name || rootName}`
+                        ? ui('app.relations', { value1: headingNode?.name || rootName })
                         : scope?.name || rootName}
                   </h1>
                 ) : (
@@ -980,26 +1015,26 @@ export function App() {
                         ) : (
                           <span>
                             {view === 'help'
-                              ? 'AIDE À LA LECTURE'
+                              ? ui('app.aide_a_la_lecture_2')
                               : view === 'metamodel'
-                                ? 'LE MÉTAMODÈLE'
+                                ? ui('app.le_metamodele')
                                 : view === 'design-principles'
                                   ? isReadingGuide
-                                    ? 'REPÈRES DE LECTURE'
-                                    : 'LES CHOIX DE CONCEPTION'
+                                    ? ui('app.reperes_de_lecture')
+                                    : ui('app.les_choix_de_conception')
                                   : view === 'principles'
-                                    ? 'LA DÉMARCHE DE TRANSFORMATION'
+                                    ? ui('app.la_demarche_de_transformation')
                                     : view === 'glossary'
-                                      ? 'LE VOCABULAIRE PUBLIÉ'
+                                      ? ui('app.le_vocabulaire_publie')
                                       : view === 'applications'
-                                        ? 'LES APPLICATIONS PUBLIÉES'
+                                        ? ui('app.les_applications_publiees')
                                         : view === 'documents'
-                                          ? 'LES DOCUMENTS PUBLIÉS'
-                                          : 'LE MODÈLE PUBLIÉ'}
+                                          ? ui('app.les_documents_publies')
+                                          : ui('app.le_modele_publie')}
                           </span>
                         )}
                         {headingNode && (
-                          <span title={`Identifiant : ${headingNode.id}`}>
+                          <span title={ui('app.identifiant', { id: headingNode.id })}>
                             {headingNode.displayCode ?? headingNode.id}
                           </span>
                         )}
@@ -1007,27 +1042,27 @@ export function App() {
                       <h1 id="page-title" ref={heading} tabIndex={-1}>
                         {view === 'help'
                           ? route.helpTopic === 'workshop'
-                            ? 'Mode atelier'
-                            : 'Par où commencer ?'
+                            ? ui('app.mode_atelier')
+                            : ui('app.par_ou_commencer')
                           : view === 'hotspots'
-                            ? 'Points chauds'
+                            ? ui('app.points_chauds')
                             : view === 'applications'
                               ? route.appView === 'products'
-                                ? 'Logiciels du marché'
-                                : 'SI à faire converger'
+                                ? ui('app.logiciels_du_marche')
+                                : ui('app.si_a_faire_converger')
                               : view === 'documents'
-                                ? 'Documents'
+                                ? ui('app.documents')
                                 : view === 'scenarios'
-                                  ? 'Scénarios métier'
+                                  ? ui('app.scenarios_metier')
                                   : view === 'metamodel'
-                                    ? 'Métamodèle FLOW'
+                                    ? ui('app.metamodele_flow')
                                     : view === 'design-principles'
                                       ? directingPrinciplesTitle
                                       : view === 'principles'
                                         ? methodTitle
                                         : view === 'glossary'
                                           ? glossaryTitle
-                                          : headingNode?.name || 'Cartographie'}
+                                          : headingNode?.name || ui('app.cartographie')}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
@@ -1035,32 +1070,43 @@ export function App() {
                             text={
                               view === 'help'
                                 ? route.helpTopic === 'workshop'
-                                  ? 'Préparer une séance de travail collective autour de la cartographie.'
-                                  : 'Un parcours rapide pour explorer le modèle publié.'
+                                  ? ui('app.preparer_une_seance_de_travail_collective_autour_de_la_cartograph')
+                                  : ui('app.un_parcours_rapide_pour_explorer_le_modele_publie')
                                 : view === 'hotspots'
-                                  ? 'Un point chaud est un sujet qui demande une clarification ou un arbitrage. Il peut révéler un écart, une responsabilité à préciser ou une décision de convergence à prendre.'
+                                  ? ui('app.un_point_chaud_est_un_sujet_qui_demande_une_clarification_ou_un_a')
                                   : view === 'applications'
                                     ? route.appView === 'products'
-                                      ? 'Choisis un logiciel pour explorer son offre et ses modules documentés.'
-                                      : 'Explore les usages documentés par SI ; la présence d’un produit ne prouve pas l’activation de tous ses modules.'
+                                      ? ui('app.choisis_un_logiciel_pour_explorer_son_offre_et_ses_modules_docume')
+                                      : ui('app.explore_les_usages_documentes_par_si_la_presence_d_un_produit_ne_')
                                     : view === 'documents'
-                                      ? 'Consulter les études FLOW et les documents associés à cette publication.'
+                                      ? ui('app.consulter_les_etudes_flow_et_les_documents_associes_a_cette_publi')
                                       : view === 'scenarios'
-                                        ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
+                                        ? ui('app.explorer_les_situations_metier_leurs_flux_de_valeur_et_les_capaci')
                                         : view === 'metamodel'
-                                          ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
+                                          ? metaGuide?.subtitle || ui('app.comprendre_les_objets_et_regles_du_modele')
                                           : view === 'design-principles'
                                             ? isReadingGuide
-                                              ? `${selectedReadingGuide?.reading_children?.length} bonnes pratiques pour comprendre les responsabilités, les frontières et les liens de la carte.`
-                                              : 'Comprendre les choix qui structurent la cartographie, leurs raisons et leurs limites.'
+                                              ? ui(
+                                                  'app.bonnes_pratiques_pour_comprendre_les_responsabilites_les_frontier',
+                                                  { value1: selectedReadingGuide?.reading_children?.length },
+                                                )
+                                              : ui(
+                                                  'app.comprendre_les_choix_qui_structurent_la_cartographie_leurs_raison',
+                                                )
                                             : view === 'principles'
-                                              ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                              ? activeGuide?.subtitle || ui('app.comprendre_la_demarche_et_ses_reperes')
                                               : view === 'glossary'
-                                                ? 'Les notions et leurs définitions dans la publication consultée.'
+                                                ? ui(
+                                                    'app.les_notions_et_leurs_definitions_dans_la_publication_consultee',
+                                                  )
                                                 : headingNode?.purpose ||
                                                   (headingNode
-                                                    ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                                    : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                                                    ? ui(
+                                                        'app.explore_cet_element_et_ses_relations_dans_le_modele_publie',
+                                                      )
+                                                    : ui(
+                                                        'app.parcours_le_modele_explore_les_capacites_et_decouvre_les_liens_qu',
+                                                      ))
                             }
                           />
                         </p>
@@ -1068,8 +1114,8 @@ export function App() {
                       {statistics.length > 0 && (
                         <ul
                           className="scope-statistics"
-                          aria-label="Contenu du périmètre"
-                          title="Totaux des objets contenus dans ce périmètre, tous niveaux confondus, dans la publication consultée."
+                          aria-label={ui('app.contenu_du_perimetre')}
+                          title={ui('app.totaux_des_objets_contenus_dans_ce_perimetre_tous_niveaux_confond')}
                         >
                           {statistics.map((stat) => (
                             <li key={stat.kind}>
@@ -1134,7 +1180,8 @@ export function App() {
                           cartographicView ? openMapLevel(parentScope?.id || '') : navigate(viewParent?.id || '')
                         }
                       >
-                        <ArrowLeft size={14} /> Remonter vers{' '}
+                        <ArrowLeft size={14} />
+                        {ui('app.remonter_vers')}{' '}
                         {cartographicView ? parentScope?.name || rootName : viewParent?.name || rootName}
                       </button>
                     )}
@@ -1146,7 +1193,7 @@ export function App() {
                 ref={content}
                 tabIndex={0}
                 role="region"
-                aria-label="Contenu de la vue"
+                aria-label={ui('app.contenu_de_la_vue')}
                 onScrollCapture={(event) => {
                   const target = event.target as HTMLElement;
                   if (target !== readingViewport(content.current)) return;
@@ -1222,7 +1269,7 @@ export function App() {
                   ) : view === 'scenarios' ? (
                     <ScenarioCatalogPage model={model} route={route} onChange={changeRoute} />
                   ) : view === 'metamodel' ? (
-                    <Suspense fallback={<p role="status">Ouverture du métamodèle…</p>}>
+                    <Suspense fallback={<p role="status">{ui('app.ouverture_du_metamodele')}</p>}>
                       <ModelingGuidePage
                         key={`${model.version}:metamodel`}
                         model={model}
@@ -1241,7 +1288,7 @@ export function App() {
                       onSelect={(principle) => changeRoute({ principle, section: '', scroll: '' })}
                     />
                   ) : view === 'principles' ? (
-                    <Suspense fallback={<p role="status">Ouverture de la méthodologie…</p>}>
+                    <Suspense fallback={<p role="status">{ui('app.ouverture_de_la_methodologie')}</p>}>
                       <ModelingGuidePage
                         key={model.version}
                         model={model}
@@ -1276,7 +1323,9 @@ export function App() {
                       />
                     </article>
                   ) : view === 'relations' ? (
-                    <Suspense fallback={<div className="graph-canvas empty-state">Ouverture des relations…</div>}>
+                    <Suspense
+                      fallback={<div className="graph-canvas empty-state">{ui('app.ouverture_des_relations')}</div>}
+                    >
                       <DependenciesPane
                         key={`${model.version}:${route.node}`}
                         model={model}
@@ -1320,7 +1369,11 @@ export function App() {
                       }
                     />
                   ) : (
-                    <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la cartographie…</div>}>
+                    <Suspense
+                      fallback={
+                        <div className="graph-canvas empty-state">{ui('app.ouverture_de_la_cartographie')}</div>
+                      }
+                    >
                       <CartographyPanel
                         key={view === 'flows' ? `${model.version}:${scopeId || '@root'}` : 'catalogue'}
                         model={displayModel || model}
@@ -1362,8 +1415,10 @@ export function App() {
                   )}
                 </div>
                 <footer className="workspace-footer">
-                  Cartographie ·{' '}
-                  {route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}
+                  {ui('app.cartographie_2')}{' '}
+                  {route.version
+                    ? ui('app.publication_fixe')
+                    : ui('app.publication_courante_actualisee_automatiquement')}
                 </footer>
               </div>
             </>

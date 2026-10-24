@@ -8,6 +8,7 @@ import {
   standardFlowCamera,
   visibleFlowHotspotAnchor,
 } from './src/flowMapViewport.ts';
+import { fixtureNeighborhood } from './test-fixtures/reading.mjs';
 
 const bounds = { width: 390, height: 180 };
 const camera = { x: -400, y: -300, zoom: 1 };
@@ -36,7 +37,7 @@ test('locked flow framing fits the actual canvas after shrinking, expanding and 
 const territory = (id, kind, geometry = {}, parentId) =>
   Object.freeze({
     id,
-    node: Object.freeze({ kind }),
+    node: Object.freeze({ kind, reading: { neighborhood: fixtureNeighborhood } }),
     x: 32,
     y: 32,
     width: 288,

@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react';
 import type { MapZoomChoice } from '../mapZoom';
+import { ui } from '../ui.ts';
 import './catalogue-navigator.css';
 
 export interface CatalogueNavigatorProps {
@@ -42,9 +43,8 @@ interface Geometry {
   blocks: Block[];
 }
 
-const BLOCKS =
-  '.business-card[data-node-id], .overview-system[data-node-id], .overview-domain-link[data-map-item-id], .overview-subdomain-link[data-map-item-id]';
-const CONTENT = '.graph-canvas, .map-flow-surface, .react-flow__viewport, .overview-map-frame, .urbanisation-overview';
+const BLOCKS = ui('catalogueNavigator.business_card_data_node_id_overview_system_data_node_id_overview_');
+const CONTENT = ui('catalogueNavigator.graph_canvas_map_flow_surface_react_flow_viewport_overview_map_fr');
 const MAJOR_KINDS = new Set(['business_system', 'domain', 'area', 'group']);
 const EMPTY: Geometry = {
   width: 1,
@@ -133,7 +133,7 @@ export function CatalogueNavigator({
   viewportRef,
   geometryKey,
   framing = 'auto',
-  label = 'Navigateur de carte',
+  label = ui('catalogueNavigator.navigateur_de_carte'),
   className = '',
 }: CatalogueNavigatorProps) {
   const [geometry, setGeometry] = useState(EMPTY);
@@ -352,14 +352,18 @@ export function CatalogueNavigator({
         className="catalogue-navigator-toggle"
         aria-expanded={open}
         aria-controls={open ? `${id}-panel` : undefined}
-        aria-label={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
-        title={`${open ? 'Réduire' : 'Afficher'} le navigateur de carte`}
+        aria-label={ui('catalogueNavigator.le_navigateur_de_carte', {
+          value1: open ? ui('catalogueNavigator.reduire') : ui('catalogueNavigator.afficher'),
+        })}
+        title={ui('catalogueNavigator.le_navigateur_de_carte', {
+          value1: open ? ui('catalogueNavigator.reduire') : ui('catalogueNavigator.afficher'),
+        })}
         onClick={() => {
           setOpen(!open);
         }}
       >
         <MapIcon size={16} aria-hidden="true" />
-        <span>Navigateur</span>
+        <span>{ui('catalogueNavigator.navigateur')}</span>
         {open ? <ChevronDown size={14} aria-hidden="true" /> : <ChevronUp size={14} aria-hidden="true" />}
       </button>
       {open && (
@@ -368,7 +372,7 @@ export function CatalogueNavigator({
             className="catalogue-navigator-surface"
             role="region"
             tabIndex={0}
-            aria-label="Déplacer la zone visible de la carte"
+            aria-label={ui('catalogueNavigator.deplacer_la_zone_visible_de_la_carte')}
             aria-describedby={`${id}-help ${id}-position`}
             onKeyDown={keyboard}
             onPointerDown={pointerDown}
@@ -409,13 +413,15 @@ export function CatalogueNavigator({
               />
             </svg>
           </div>
-          <small aria-hidden="true">Cliquer ou glisser</small>
+          <small aria-hidden="true">{ui('catalogueNavigator.cliquer_ou_glisser')}</small>
           <span className="catalogue-navigator-sr" id={`${id}-help`}>
-            Flèches pour déplacer la carte. Page précédente et suivante pour avancer. Majuscule pour le déplacement
-            horizontal. Début et Fin pour les extrémités ; Contrôle pour les deux axes. Échap pour réduire.
+            {ui('catalogueNavigator.fleches_pour_deplacer_la_carte_page_precedente_et_suivante_pour_a')}
           </span>
           <span className="catalogue-navigator-sr" id={`${id}-position`}>
-            Position verticale {verticalPosition} %, horizontale {horizontalPosition} %.
+            {ui('catalogueNavigator.position_verticale')}
+            {verticalPosition}
+            {ui('catalogueNavigator.horizontale')}
+            {horizontalPosition} %.
           </span>
         </div>
       )}

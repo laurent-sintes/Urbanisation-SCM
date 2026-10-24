@@ -6,7 +6,19 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["src/**", "test-*.mjs", "verify-*.mjs", "package.json", "biome.json"]
+    "includes": [
+      "src/**",
+      "test-*.mjs",
+      "verify-*.mjs",
+      "package.json",
+      "biome.json",
+      "!src/ui-schema.d.ts",
+      "check-labels.mjs",
+      "label-resources.mjs",
+      "vite.config.ts",
+      "test-fixtures/*.mjs",
+      "locales/fr/ui.json"
+    ]
   },
   "formatter": {
     "enabled": true,

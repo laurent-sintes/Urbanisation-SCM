@@ -16,6 +16,7 @@ import { publicText } from './publicText.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
 import { catalogOf, scenarioSearchText, valueStreamSearchText } from './scenarioCatalog.ts';
 import type { AtlasNode, GlossaryTerm, MarketComparison, MarketInspiration, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface SearchResult {
   id: string;
@@ -117,7 +118,7 @@ function index(model: PublishedModel): SearchResult[] {
       id: p.id,
       kind: 'guide' as const,
       document: 'design-principles' as const,
-      name: 'Comment lire la cartographie',
+      name: ui('search.comment_lire_la_cartographie'),
       excerpt: [
         principleTitle(p),
         principleSearchText(p),

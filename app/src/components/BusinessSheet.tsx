@@ -20,6 +20,7 @@ import {
 } from '../scmStudy';
 import { sheetSections } from '../sheetSections';
 import type { AtlasNode, AtlasRelation, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import './details.css';
 import './ux-reading.css';
 import { capabilityTypeLabel, startsCapabilityTypeSection } from '../capabilityTypes';
@@ -28,44 +29,54 @@ import { NodeIcon } from '../icons';
 import { childrenOf, relatedTo } from '../model';
 import {
   behaviorAspect,
-  behaviorAspectLabels,
+  behaviorAspectLabel,
   behaviorReadingGroups,
-  requestOriginLabels,
+  requestOrigin,
   requestOrigins,
 } from '../requestMetadata';
 import { catalogOf, pathsForNode, scenariosForNode } from '../scenarioCatalog';
 import { BusinessExamples } from './BusinessExamples';
 import { BusinessPedagogy } from './BusinessPedagogy';
-import { CatalogLink, DesignPrincipleLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
+import {
+  CatalogLink,
+  DesignPrincipleLink,
+  MethodLink,
+  ModelText,
+  ReferenceLink,
+  useReadingVocabulary,
+} from './ModelLinks';
 
 const labels: Record<string, string> = {
-  name: 'Libellé',
-  finality: 'Finalité',
-  definition: 'Définition',
-  scope: 'Périmètre',
-  nature: 'Nature',
-  independence: 'Indépendance',
-  mastership: 'Maîtrise des informations',
-  decomposition_rationale: 'Pourquoi décomposer cette capacité',
-  market_comparisons: 'Sources d’inspiration',
-  label: 'Libellé',
-  verb: 'Verbe de relation',
-  meaning: 'Sens métier',
-  role: 'Rôle',
-  conditions: 'Conditions',
-  effects: 'Effets',
-  state: 'État',
-  note: 'Réserve',
-  source_refs: 'Sources',
-  approved_fields: 'Champs adoptés',
-  proposed_fields: 'Champs proposés',
-  validated_fields: 'Champs validés dans le cycle',
-  recorded_by: 'Enregistré par',
-  recorded_at: 'Date d’enregistrement',
-  author: 'Auteur',
-  date: 'Date',
+  name: ui('businessSheet.libelle'),
+  finality: ui('businessSheet.finalite'),
+  definition: ui('businessSheet.definition'),
+  scope: ui('businessSheet.perimetre'),
+  nature: ui('businessSheet.nature'),
+  independence: ui('businessSheet.independance'),
+  mastership: ui('businessSheet.maitrise_des_informations'),
+  decomposition_rationale: ui('businessSheet.pourquoi_decomposer_cette_capacite'),
+  market_comparisons: ui('businessSheet.sources_d_inspiration'),
+  label: ui('businessSheet.libelle'),
+  verb: ui('businessSheet.verbe_de_relation'),
+  meaning: ui('businessSheet.sens_metier'),
+  role: ui('businessSheet.role'),
+  conditions: ui('businessSheet.conditions'),
+  effects: ui('businessSheet.effets'),
+  state: ui('businessSheet.etat'),
+  note: ui('businessSheet.reserve'),
+  source_refs: ui('businessSheet.sources'),
+  approved_fields: ui('businessSheet.champs_adoptes'),
+  proposed_fields: ui('businessSheet.champs_proposes'),
+  validated_fields: ui('businessSheet.champs_valides_dans_le_cycle'),
+  recorded_by: ui('businessSheet.enregistre_par'),
+  recorded_at: ui('businessSheet.date_d_enregistrement'),
+  author: ui('businessSheet.auteur'),
+  date: ui('businessSheet.date'),
 };
-const fieldName = (key: string) => labels[key] || key;
+function useFieldName() {
+  const vocabulary = useReadingVocabulary();
+  return (key: string) => vocabulary?.field_labels?.[key] ?? labels[key] ?? ui('common.field_unavailable');
+}
 function hasValue(value: unknown) {
   return value !== undefined && value !== null && value !== '' && (!Array.isArray(value) || value.length > 0);
 }
@@ -80,8 +91,9 @@ function keyedValues(values: readonly unknown[]) {
 }
 
 function Value({ value }: { value: unknown }): ReactNode {
+  const fieldName = useFieldName();
   if (value === undefined || value === null || value === '')
-    return <span className="detail-muted">Non renseigné.</span>;
+    return <span className="detail-muted">{ui('businessSheet.non_renseigne')}</span>;
   if (Array.isArray(value))
     return value.length ? (
       <ul>
@@ -92,7 +104,7 @@ function Value({ value }: { value: unknown }): ReactNode {
         ))}
       </ul>
     ) : (
-      <span className="detail-muted">Aucun élément renseigné.</span>
+      <span className="detail-muted">{ui('businessSheet.aucun_element_renseigne')}</span>
     );
   if (typeof value === 'object')
     return (
@@ -109,11 +121,16 @@ function Value({ value }: { value: unknown }): ReactNode {
     );
   return (
     <span className="detail-text">
-      <ModelText text={publicText(typeof value === 'boolean' ? (value ? 'Oui' : 'Non') : String(value))} />
+      <ModelText
+        text={publicText(
+          typeof value === 'boolean' ? (value ? ui('businessSheet.oui') : ui('businessSheet.non')) : String(value),
+        )}
+      />
     </span>
   );
 }
 export function BusinessSheet({ model, node }: { model: PublishedModel; node: AtlasNode }) {
+  const fieldName = useFieldName();
   const parents = model.relations.filter((r) => ['contains', 'presents'].includes(r.type) && r.targetId === node.id);
   const children = childrenOf(model, node.id);
   const behaviors = children.filter((child) => child.kind === 'behavior');
@@ -142,40 +159,45 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   };
   const groups = [
     {
-      label: 'A besoin de',
+      label: ui('businessSheet.a_besoin_de'),
       items: relations.filter((r) => r.qualification.role === 'needs' && r.sourceId === node.id),
     },
     {
-      label: 'Est utilisée par',
+      label: ui('businessSheet.est_utilisee_par'),
       items: relations.filter((r) => r.qualification.role === 'needs' && r.targetId === node.id),
     },
-    { label: 'Autres interactions', items: relations.filter((r) => r.qualification.role !== 'needs') },
+    {
+      label: ui('businessSheet.autres_interactions'),
+      items: relations.filter((r) => r.qualification.role !== 'needs'),
+    },
   ];
   return (
     <article
       key={node.id}
       className="business-sheet sheet"
       data-testid="business-sheet"
-      aria-label={`Fiche métier de ${node.name}`}
+      aria-label={ui('businessSheet.fiche_metier_de', { name: node.name })}
     >
       {['capability', 'behavior'].includes(node.kind) && (
         <p>
           <MethodLink term={node.kind === 'capability' ? 'MOD015' : 'MOD006'}>
-            {node.kind === 'capability' ? 'Qu’est-ce qu’une capacité ?' : 'Comprendre les comportements'}
+            {node.kind === 'capability'
+              ? ui('businessSheet.qu_est_ce_qu_une_capacite')
+              : ui('businessSheet.comprendre_les_comportements')}
           </MethodLink>
         </p>
       )}
       {node.kind === 'behavior' && (
         <p className="behavior-context">
-          Comportement de{' '}
+          {ui('businessSheet.comportement_de')}{' '}
           <ReferenceLink target={parents[0].sourceId}>{model.nodeById.get(parents[0].sourceId)?.name}</ReferenceLink>
         </p>
       )}
       {sections.length > 0 && (
         <label className="sheet-mobile-toc">
-          Dans cette fiche
-          <select aria-label="Dans cette fiche" value="" onChange={(e) => jump(e.target.value)}>
-            <option value="">Aller à une section…</option>
+          {ui('businessSheet.dans_cette_fiche')}
+          <select aria-label={ui('businessSheet.dans_cette_fiche')} value="" onChange={(e) => jump(e.target.value)}>
+            <option value="">{ui('businessSheet.aller_a_une_section')}</option>
             {sections.map(([id, label]) => (
               <option value={id} key={id}>
                 {label}
@@ -187,7 +209,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
       <div className="sheet-main">
         {fields.finality && fields.finality !== fields.definition ? (
           <section id={`field-${node.id}-finality`} className="detail-finality">
-            <h2>À quoi cela sert</h2>
+            <h2>{ui('businessSheet.a_quoi_cela_sert')}</h2>
             <div className="business-copy">
               <Value value={fields.finality} />
             </div>
@@ -196,17 +218,17 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           <span id={`field-${node.id}-finality`} />
         )}
         {origins.length > 0 && (
-          <section className="sheet-request-origins" aria-label="Origines possibles de la demande">
-            <h2>Origines possibles de la demande</h2>
+          <section className="sheet-request-origins" aria-label={ui('businessSheet.origines_possibles_de_la_demande')}>
+            <h2>{ui('businessSheet.origines_possibles_de_la_demande')}</h2>
             <dl className="request-origin-list">
               {origins.map((origin) => (
                 <div key={origin}>
                   <dt>
                     <span className={`request-origin-badge request-origin-${origin}`}>
-                      {requestOriginLabels[origin].label}
+                      {requestOrigin(node, origin).label}
                     </span>
                   </dt>
-                  <dd>{requestOriginLabels[origin].description}</dd>
+                  <dd>{requestOrigin(node, origin).description}</dd>
                 </div>
               ))}
             </dl>
@@ -215,14 +237,14 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         <BusinessPedagogy model={model} node={node} />
         {pedagogyOf(node) ? (
           <details id={`field-${node.id}-definition`} className="sheet-definition">
-            <summary>Définition de référence</summary>
+            <summary>{ui('businessSheet.definition_de_reference')}</summary>
             <div className="business-copy">
               <Value value={fields.definition} />
             </div>
           </details>
         ) : (
           <section id={`field-${node.id}-definition`}>
-            <h2>Définition</h2>
+            <h2>{ui('businessSheet.definition')}</h2>
             <div className="business-copy">
               <Value value={fields.definition} />
             </div>
@@ -230,7 +252,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         )}
         {hasPrinciples && (
           <section id={`field-${node.id}-principles`} tabIndex={-1} className="sheet-principles">
-            <h2>Principes expliquant ce périmètre</h2>
+            <h2>{ui('businessSheet.principes_expliquant_ce_perimetre')}</h2>
             {principles.length > 0 && (
               <ul>
                 {principles.map((p) => (
@@ -242,8 +264,11 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
             )}
             {inheritedPrinciples.length > 0 && (
               <details key={node.id} className="inherited-principles">
-                <summary>Principes hérités ({inheritedPrinciples.length})</summary>
-                <p>Ces principes concernent les périmètres qui englobent cette fiche.</p>
+                <summary>
+                  {ui('businessSheet.principes_herites')}
+                  {inheritedPrinciples.length})
+                </summary>
+                <p>{ui('businessSheet.ces_principes_concernent_les_perimetres_qui_englobent_cette_fiche')}</p>
                 <ul>
                   {inheritedPrinciples.map((p) => (
                     <li key={p.id}>
@@ -257,15 +282,18 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         )}
         {hasScmStudy && (
           <section id={`field-${node.id}-study`} tabIndex={-1} className="sheet-study">
-            <h2>Pour approfondir</h2>
+            <h2>{ui('businessSheet.pour_approfondir')}</h2>
             <h3>{scmStudyFullTitle}</h3>
             <p>{scmStudyDescription}</p>
             <p className="detail-muted">
-              PDF · {scmStudyPages} pages · {scmStudyDate} · {scmStudyAuthor}
+              {ui('businessSheet.pdf')}
+              {scmStudyPages}
+              {ui('businessSheet.pages')}
+              {scmStudyDate} · {scmStudyAuthor}
             </p>
             <a className="sheet-study-download" href={scmStudyUrl} download={scmStudyFilename}>
               <Download size={17} aria-hidden="true" />
-              Télécharger le dossier (PDF)
+              {ui('businessSheet.telecharger_le_dossier_pdf')}
             </a>
             <p className="detail-muted">{scmStudyTemporalLabel}</p>
           </section>
@@ -274,7 +302,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           <div className="sheet-parent">
             {parents.map((relation) => (
               <span key={relation.id}>
-                {relation.type === 'presents' ? 'Présenté dans' : 'Rattaché à'}{' '}
+                {relation.type === 'presents' ? ui('businessSheet.presente_dans') : ui('businessSheet.rattache_a')}{' '}
                 <ReferenceLink target={relation.sourceId}>
                   {model.nodeById.get(relation.sourceId)?.name || relation.sourceId}
                 </ReferenceLink>
@@ -285,13 +313,17 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         {otherChildren.length > 0 && (
           <section id={`field-${node.id}-children`} tabIndex={-1} className="sheet-children">
             <h2>
-              Explorer ce périmètre <span>{otherChildren.length}</span>
+              {ui('businessSheet.explorer_ce_perimetre')}
+              <span>{otherChildren.length}</span>
             </h2>
             <div className="detail-children-list">
               {otherChildren.map((child, index) => (
                 <Fragment key={child.id}>
                   {startsCapabilityTypeSection(otherChildren, index) && (
-                    <hr className="capability-type-divider" aria-label="Changement de type de capacité" />
+                    <hr
+                      className="capability-type-divider"
+                      aria-label={ui('businessSheet.changement_de_type_de_capacite')}
+                    />
                   )}
                   <ReferenceLink target={child.id}>
                     <NodeIcon node={child} size={22} />
@@ -316,7 +348,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         />
         {fields.scope && (
           <section id={`field-${node.id}-scope`} tabIndex={-1} className="sheet-scope">
-            <h2>Périmètre</h2>
+            <h2>{ui('businessSheet.perimetre')}</h2>
             <div className="business-copy sheet-scope-summary">
               <Value value={scopeSummary} />
             </div>
@@ -331,25 +363,29 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           <dl className="sheet-facts">
             {fields.data_governance && (
               <div>
-                <dt>Gouvernance des données</dt>
+                <dt>{ui('businessSheet.gouvernance_des_donnees')}</dt>
                 <dd>{fields.data_governance}</dd>
               </div>
             )}
             {fields.nature && (
               <div>
-                <dt>{node.kind === 'behavior' ? 'Type de comportement' : 'Type de capacité'}</dt>
+                <dt>
+                  {node.kind === 'behavior'
+                    ? ui('businessSheet.type_de_comportement')
+                    : ui('businessSheet.type_de_capacite')}
+                </dt>
                 <dd>{node.kind === 'behavior' ? behaviorTypeLabel(node) : capabilityTypeLabel(node)}</dd>
               </div>
             )}
             {aspect && (
               <div>
-                <dt>Angle de lecture</dt>
-                <dd>{behaviorAspectLabels[aspect]}</dd>
+                <dt>{ui('businessSheet.angle_de_lecture')}</dt>
+                <dd>{behaviorAspectLabel(node, aspect)}</dd>
               </div>
             )}
             {fields.mastership && (
               <div>
-                <dt>Autorité sur les informations</dt>
+                <dt>{ui('businessSheet.autorite_sur_les_informations')}</dt>
                 <dd>
                   <Value
                     value={
@@ -363,7 +399,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
             )}
             {fields.independence && (
               <div>
-                <dt>Autonomie</dt>
+                <dt>{ui('businessSheet.autonomie')}</dt>
                 <dd>
                   <Value value={fields.independence} />
                 </dd>
@@ -376,10 +412,11 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
             id={`field-${node.id}-behaviors`}
             tabIndex={-1}
             className="behavior-section"
-            aria-label="Comportements de la capacité"
+            aria-label={ui('businessSheet.comportements_de_la_capacite')}
           >
             <h2>
-              Comportements <span>{behaviors.length}</span>
+              {ui('businessSheet.comportements')}
+              <span>{behaviors.length}</span>
             </h2>
             {behaviorGroups.map((group) => (
               <div className="behavior-reading-group" key={group.key}>
@@ -408,7 +445,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         <section id={`field-${node.id}-examples`} tabIndex={-1}>
           {(scenarioSection || scenarios.length > 0) && (
             <section id={`field-${node.id}-scenarios`} tabIndex={-1} className="scenario-links">
-              <h2>Scénarios mobilisant ce périmètre</h2>
+              <h2>{ui('businessSheet.scenarios_mobilisant_ce_perimetre')}</h2>
               {scenarios.length ? (
                 <ul>
                   {scenarios.map((s) => (
@@ -417,7 +454,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
                         {s.title}
                       </CatalogLink>
                       {scenarioPaths.some((path) => path.scenario_id === s.id) && (
-                        <ul aria-label={`Parcours mobilisant ce périmètre : ${s.title}`}>
+                        <ul aria-label={ui('businessSheet.parcours_mobilisant_ce_perimetre', { title: s.title })}>
                           {scenarioPaths
                             .filter((path) => path.scenario_id === s.id)
                             .map((path) => (
@@ -440,7 +477,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
                   ))}
                 </ul>
               ) : (
-                <p>Aucun scénario documenté pour ce périmètre.</p>
+                <p>{ui('businessSheet.aucun_scenario_documente_pour_ce_perimetre')}</p>
               )}
             </section>
           )}
@@ -448,7 +485,8 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
         {relations.length > 0 && (
           <section id={`field-${node.id}-interactions`} tabIndex={-1} className="sheet-interactions">
             <h2>
-              Responsabilités liées <span>{relations.length}</span>
+              {ui('businessSheet.responsabilites_liees')}
+              <span>{relations.length}</span>
             </h2>
             <div className="interaction-groups">
               {groups
@@ -491,6 +529,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
 }
 
 export function RelationDetails({ model, relation }: { model: PublishedModel; relation: AtlasRelation }) {
+  const fieldName = useFieldName();
   const principles = principlesForRelation(model, relation.id);
   const fields = Object.entries(businessFields(relation.fields)).filter(
     ([key, value]) => key !== 'name' && hasValue(value),
@@ -502,17 +541,20 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
     <section
       className="relation-inspector relation-details"
       data-testid="relation-inspector"
-      aria-label={`Relation entre ${model.nodeById.get(relation.sourceId)?.name || 'le périmètre source'} et ${model.nodeById.get(relation.targetId)?.name || 'le périmètre destinataire'}`}
+      aria-label={ui('businessSheet.relation_entre_et', {
+        value1: model.nodeById.get(relation.sourceId)?.name || ui('businessSheet.le_perimetre_source'),
+        value2: model.nodeById.get(relation.targetId)?.name || ui('businessSheet.le_perimetre_destinataire'),
+      })}
     >
       <div className="section-kicker">
         <GitBranch size={16} aria-hidden="true" />
-        Comprendre la relation
+        {ui('businessSheet.comprendre_la_relation')}
       </div>
       <div className="relation-endpoints">
         <ReferenceLink target={relation.sourceId}>
           {model.nodeById.get(relation.sourceId)?.name || relation.sourceId}
         </ReferenceLink>
-        <ArrowRight size={21} aria-label="vers" />
+        <ArrowRight size={21} aria-label={ui('businessSheet.vers')} />
         <ReferenceLink target={relation.targetId}>
           {model.nodeById.get(relation.targetId)?.name || relation.targetId}
         </ReferenceLink>
@@ -522,7 +564,7 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
       </p>
       {principles.length > 0 && (
         <section className="sheet-principles">
-          <h2>Principes expliquant cette relation</h2>
+          <h2>{ui('businessSheet.principes_expliquant_cette_relation')}</h2>
           <ul>
             {principles.map((p) => (
               <li key={p.id}>
@@ -535,7 +577,7 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
       <div className="relation-description">
         {relation.dataExchange && (
           <section>
-            <h2>Finalité du partage</h2>
+            <h2>{ui('businessSheet.finalite_du_partage')}</h2>
             <Value value={relation.dataExchange.purpose} />
           </section>
         )}

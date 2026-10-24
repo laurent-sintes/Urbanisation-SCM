@@ -2,50 +2,53 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { buildFlowMap, projectFlowMapExchanges } from './src/flowMapLayout.ts';
 import { adaptPublication, visibleAncestorId } from './src/model.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const node = (id, kind, name = id) => ({ id, kind, fields: { name } });
 const relation = (id, source_id, target_id, type = 'contains') => ({ id, source_id, target_id, type });
-const model = adaptPublication({
-  space: 'release',
-  version: 'flow-fixture',
-  nodes: [
-    node('universe', 'universe'),
-    node('system-design-development', 'business_system'),
-    node('system-business-operations', 'business_system'),
-    node('system-enterprise-management-control', 'business_system'),
-    node('domain-logistics-execution', 'business_system'),
-    node('domain-sourcing-procurement', 'domain'),
-    node('domain-sales', 'domain'),
-    node('supply-chain-orchestration', 'domain'),
-    node('subdomain', 'area'),
-    node('ba', 'business_area'),
-    node('ba-b', 'business_area'),
-    node('cap-a', 'capability'),
-    node('cap-b', 'capability'),
-    node('behavior', 'behavior'),
-    node('empty-domain', 'domain'),
-  ],
-  relations: [
-    ...[
-      'system-design-development',
-      'system-business-operations',
-      'system-enterprise-management-control',
-      'domain-logistics-execution',
-    ].map((id) => relation(`root-${id}`, 'universe', id)),
-    ...['domain-sourcing-procurement', 'domain-sales', 'supply-chain-orchestration'].map((id) =>
-      relation(`domain-${id}`, 'system-business-operations', id),
-    ),
-    relation('domain-empty', 'system-design-development', 'empty-domain'),
-    relation('sub', 'supply-chain-orchestration', 'subdomain'),
-    relation('business-area', 'subdomain', 'ba'),
-    relation('business-area-b', 'subdomain', 'ba-b'),
-    relation('cap-a-parent', 'ba', 'cap-a'),
-    relation('cap-b-parent', 'ba-b', 'cap-b'),
-    relation('behavior-parent', 'cap-a', 'behavior'),
-    relation('knowledge', 'behavior', 'cap-b', 'provides-knowledge'),
-    relation('other-relation', 'cap-b', 'cap-a', 'depends-on'),
-  ],
-});
+const model = adaptPublication(
+  readingFixture({
+    space: 'release',
+    version: 'flow-fixture',
+    nodes: [
+      node('universe', 'universe'),
+      node('system-design-development', 'business_system'),
+      node('system-business-operations', 'business_system'),
+      node('system-enterprise-management-control', 'business_system'),
+      node('domain-logistics-execution', 'business_system'),
+      node('domain-sourcing-procurement', 'domain'),
+      node('domain-sales', 'domain'),
+      node('supply-chain-orchestration', 'domain'),
+      node('subdomain', 'area'),
+      node('ba', 'business_area'),
+      node('ba-b', 'business_area'),
+      node('cap-a', 'capability'),
+      node('cap-b', 'capability'),
+      node('behavior', 'behavior'),
+      node('empty-domain', 'domain'),
+    ],
+    relations: [
+      ...[
+        'system-design-development',
+        'system-business-operations',
+        'system-enterprise-management-control',
+        'domain-logistics-execution',
+      ].map((id) => relation(`root-${id}`, 'universe', id)),
+      ...['domain-sourcing-procurement', 'domain-sales', 'supply-chain-orchestration'].map((id) =>
+        relation(`domain-${id}`, 'system-business-operations', id),
+      ),
+      relation('domain-empty', 'system-design-development', 'empty-domain'),
+      relation('sub', 'supply-chain-orchestration', 'subdomain'),
+      relation('business-area', 'subdomain', 'ba'),
+      relation('business-area-b', 'subdomain', 'ba-b'),
+      relation('cap-a-parent', 'ba', 'cap-a'),
+      relation('cap-b-parent', 'ba-b', 'cap-b'),
+      relation('behavior-parent', 'cap-a', 'behavior'),
+      relation('knowledge', 'behavior', 'cap-b', 'provides-knowledge'),
+      relation('other-relation', 'cap-b', 'cap-a', 'depends-on'),
+    ],
+  }),
+);
 
 test('fixed territories contain every descendant and leave sibling corridors', () => {
   const layout = buildFlowMap(model);
@@ -160,21 +163,23 @@ test('both supported relation types retain their own identities without invented
 });
 
 test('historical groups remain territories while documentary reference scopes reveal their ancestor', () => {
-  const historical = adaptPublication({
-    space: 'release',
-    version: 'historical-group',
-    nodes: [
-      node('domain', 'domain'),
-      node('business-references', 'group'),
-      node('reference', 'reference'),
-      node('cap', 'capability'),
-    ],
-    relations: [
-      relation('group-parent', 'domain', 'business-references'),
-      relation('reference-parent', 'business-references', 'reference'),
-      relation('cap-parent', 'reference', 'cap'),
-    ],
-  });
+  const historical = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'historical-group',
+      nodes: [
+        node('domain', 'domain'),
+        node('business-references', 'group'),
+        node('reference', 'reference'),
+        node('cap', 'capability'),
+      ],
+      relations: [
+        relation('group-parent', 'domain', 'business-references'),
+        relation('reference-parent', 'business-references', 'reference'),
+        relation('cap-parent', 'reference', 'cap'),
+      ],
+    }),
+  );
   const boxes = buildFlowMap(historical, 'domain').boxes;
   assert.deepEqual(
     boxes.map((box) => box.id),
@@ -226,7 +231,7 @@ function supplyFixture(extra = false, integration = true) {
     nodes.push(node('new-published-territory', 'area'));
     relations.push(relation('new-parent', 'supply-chain-orchestration', 'new-published-territory'));
   }
-  return adaptPublication({ space: 'release', version: 'supply-neighborhood', nodes, relations });
+  return adaptPublication(readingFixture({ space: 'release', version: 'supply-neighborhood', nodes, relations }));
 }
 
 test('Business Areas have a fixed footprint independent of their capability count', () => {
@@ -245,17 +250,23 @@ test('Business Areas have a fixed footprint independent of their capability coun
 });
 
 test('Business Area titles reserve two or three compact text lines at publication time', () => {
-  const publication = adaptPublication({
-    space: 'release',
-    version: 'compact-titles',
-    nodes: [
-      node('short', 'business_area', 'Order Promising'),
-      node('two-lines', 'business_area', 'Physical Stock Configuration Optimization'),
-      node('three-lines', 'business_area', 'Commercial Transaction Processing and Supply Chain Settlement Management'),
-      node('terminal-area', 'area', 'Context'),
-    ],
-    relations: [],
-  });
+  const publication = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'compact-titles',
+      nodes: [
+        node('short', 'business_area', 'Order Promising'),
+        node('two-lines', 'business_area', 'Physical Stock Configuration Optimization'),
+        node(
+          'three-lines',
+          'business_area',
+          'Commercial Transaction Processing and Supply Chain Settlement Management',
+        ),
+        node('terminal-area', 'area', 'Context'),
+      ],
+      relations: [],
+    }),
+  );
   const boxes = new Map(buildFlowMap(publication).boxes.map((box) => [box.id, box]));
   assert.equal(boxes.get('short').height, 60);
   assert.equal(boxes.get('two-lines').height, 60);
@@ -268,17 +279,19 @@ test('Business Area titles reserve two or three compact text lines at publicatio
 });
 
 test('terminal territories use compact label footprints and never reserve a heading larger than their box', () => {
-  const publication = adaptPublication({
-    space: 'release',
-    version: 'terminal-footprints',
-    nodes: [
-      node('system', 'business_system', 'System'),
-      node('domain', 'domain', 'Domain'),
-      node('area', 'area', 'Context'),
-      node('group', 'group', 'Historical Context'),
-    ],
-    relations: [],
-  });
+  const publication = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'terminal-footprints',
+      nodes: [
+        node('system', 'business_system', 'System'),
+        node('domain', 'domain', 'Domain'),
+        node('area', 'area', 'Context'),
+        node('group', 'group', 'Historical Context'),
+      ],
+      relations: [],
+    }),
+  );
   const boxes = new Map(buildFlowMap(publication).boxes.map((box) => [box.id, box]));
   assert.equal(boxes.get('system').height, 120);
   assert.equal(boxes.get('system').headerHeight, 120);
@@ -300,21 +313,23 @@ test('enclosing territories end after their real descendants rather than growing
 
 test('adding capabilities, behaviors or documentary references never changes Flux geography', () => {
   const publication = supplyFixture();
-  const changed = adaptPublication({
-    ...publication.raw,
-    nodes: [
-      ...publication.raw.nodes,
-      node('additional-capability', 'capability'),
-      node('additional-behavior', 'behavior'),
-      node('additional-reference', 'reference'),
-    ],
-    relations: [
-      ...publication.raw.relations,
-      relation('additional-capability-parent', 'domain-plan-ba-1', 'additional-capability'),
-      relation('additional-behavior-parent', 'additional-capability', 'additional-behavior'),
-      relation('additional-reference-parent', 'domain-plan-ba-1', 'additional-reference'),
-    ],
-  });
+  const changed = adaptPublication(
+    readingFixture({
+      ...publication.raw,
+      nodes: [
+        ...publication.raw.nodes,
+        node('additional-capability', 'capability'),
+        node('additional-behavior', 'behavior'),
+        node('additional-reference', 'reference'),
+      ],
+      relations: [
+        ...publication.raw.relations,
+        relation('additional-capability-parent', 'domain-plan-ba-1', 'additional-capability'),
+        relation('additional-behavior-parent', 'additional-capability', 'additional-behavior'),
+        relation('additional-reference-parent', 'domain-plan-ba-1', 'additional-reference'),
+      ],
+    }),
+  );
   const geometry = (layout) => layout.boxes.map(({ node: _node, ...box }) => box);
   assert.deepEqual(geometry(buildFlowMap(changed)), geometry(buildFlowMap(publication)));
   assert.deepEqual(
@@ -411,11 +426,13 @@ test('an additional published territory remains visible without moving the known
 
 test('large systems and domains keep bounded headings without changing their inner neighborhood', () => {
   const publication = supplyFixture();
-  const wrapped = adaptPublication({
-    ...publication.raw,
-    nodes: [node('system', 'business_system'), ...publication.raw.nodes],
-    relations: [relation('system-supply', 'system', 'supply-chain-orchestration'), ...publication.raw.relations],
-  });
+  const wrapped = adaptPublication(
+    readingFixture({
+      ...publication.raw,
+      nodes: [node('system', 'business_system'), ...publication.raw.nodes],
+      relations: [relation('system-supply', 'system', 'supply-chain-orchestration'), ...publication.raw.relations],
+    }),
+  );
   const layout = buildFlowMap(wrapped);
   const system = layout.boxes.find((box) => box.id === 'system');
   const supply = layout.boxes.find((box) => box.id === 'supply-chain-orchestration');
@@ -533,15 +550,17 @@ test('overview exchanges and overlay anchors retain the original relation and pu
 });
 
 test('hidden deeper publication detail cannot enlarge an overview territory', () => {
-  const extended = adaptPublication({
-    ...model.raw,
-    nodes: [...model.raw.nodes, node('new-subdomain', 'area'), node('new-ba', 'business_area')],
-    relations: [
-      ...model.raw.relations,
-      relation('new-subdomain-parent', 'domain-sourcing-procurement', 'new-subdomain'),
-      relation('new-ba-parent', 'new-subdomain', 'new-ba'),
-    ],
-  });
+  const extended = adaptPublication(
+    readingFixture({
+      ...model.raw,
+      nodes: [...model.raw.nodes, node('new-subdomain', 'area'), node('new-ba', 'business_area')],
+      relations: [
+        ...model.raw.relations,
+        relation('new-subdomain-parent', 'domain-sourcing-procurement', 'new-subdomain'),
+        relation('new-ba-parent', 'new-subdomain', 'new-ba'),
+      ],
+    }),
+  );
   const geometry = (layout) => layout.boxes.map(({ node: _node, ...box }) => box);
   for (const scope of [undefined, 'system-business-operations'])
     assert.deepEqual(

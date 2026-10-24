@@ -8,9 +8,11 @@ import tempfile
 try:
     from .structured_io import read, loads, dumps
     from .modeling_guide_publication import VERSION
+    from .atlas_reader_content import compile_reader_content, verify_legacy_inputs
 except ImportError:
     from structured_io import read, loads, dumps
     from modeling_guide_publication import VERSION
+    from atlas_reader_content import compile_reader_content, verify_legacy_inputs
 
 
 def digest(path):
@@ -43,9 +45,34 @@ def compile_draft(root, source):
     raw = source.read_bytes()
     guide = loads(raw.decode('utf-8-sig'), '.yaml')
     dependencies = {source.relative_to(root).as_posix(): sha256(raw).hexdigest()}
+    model_content = None
+    vocabulary_source = guide.pop('reader_vocabulary_source', None)
+    if vocabulary_source is not None:
+        if vocabulary_source != 'modeles/backlog/atlas-reader-vocabulary.yaml':
+            raise ValueError('Unknown reader vocabulary source')
+        vocabulary_bytes = (root / vocabulary_source).read_bytes()
+        guide['reader_vocabulary'] = loads(vocabulary_bytes.decode('utf-8-sig'), '.yaml')
+        dependencies[vocabulary_source] = sha256(vocabulary_bytes).hexdigest()
+    reader_source = guide.pop('reader_content_source', None)
+    if reader_source is not None:
+        if reader_source != 'modeles/backlog/atlas-reader-content.yaml':
+            raise ValueError('Unknown reader content source')
+        verify_legacy_inputs(root, required=True)
+        reader_bytes = (root / reader_source).read_bytes()
+        dependencies[reader_source] = sha256(reader_bytes).hexdigest()
+        model_content = (root / 'modeles/backlog/model.yaml').read_bytes()
+        glossary_content = (root / 'modeles/backlog/glossary.yaml').read_bytes()
+        dependencies['modeles/backlog/model.yaml'] = sha256(model_content).hexdigest()
+        dependencies['modeles/backlog/glossary.yaml'] = sha256(glossary_content).hexdigest()
+        legacy = 'app/content/legacy-reader-projections.json'
+        dependencies[legacy] = digest(root / legacy)
+        model = loads(model_content.decode('utf-8-sig'), '.yaml')
+        model['glossary'] = loads(glossary_content.decode('utf-8-sig'), '.yaml')
+        guide['reader_content'] = compile_reader_content(root, loads(reader_bytes.decode('utf-8-sig'), '.yaml'), model)
     glossary = guide.get('glossary', {})
     if 'canonical_source' not in glossary:
-        return raw, validate(raw), dependencies
+        content = dumps(guide).encode('utf-8') if vocabulary_source is not None or reader_source is not None else raw
+        return content, validate(content), dependencies
     if glossary.pop('canonical_source') != CANONICAL_GLOSSARY:
         raise ValueError('Unknown canonical methodology glossary')
     glossary_path = (root / CANONICAL_GLOSSARY).resolve()
@@ -73,7 +100,7 @@ def compile_draft(root, source):
         except ImportError:
             from methodology_alignment import validate_examples
         model_path = root / 'modeles/backlog/model.yaml'
-        model_content = model_path.read_bytes()
+        model_content = model_content if model_content is not None else model_path.read_bytes()
         dependencies['modeles/backlog/model.yaml'] = sha256(model_content).hexdigest()
         errors = validate_examples(guide, loads(model_content.decode('utf-8-sig'), '.yaml'))
         if errors:

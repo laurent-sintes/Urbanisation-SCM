@@ -6,6 +6,7 @@ import { filterMapHotspots, type HotspotMapFilters, isHotspotVisible, severityFo
 import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
 import type { RouteState } from '../navigation';
 import type { Hotspot, HotspotResolution, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import type { WorkshopStage, WorkshopTableChange } from '../workshop';
 import { HotspotAssessmentGuide } from './HotspotAssessmentGuide';
 import { HotspotDetail } from './HotspotDetail';
@@ -16,18 +17,18 @@ import { ModelText } from './ModelLinks';
 import './hotspots.css';
 
 const STATUS: Record<Hotspot['status'], string> = {
-  discovered: 'Découvert',
-  shared: 'Partagé',
-  validated: 'Validé',
-  resolved: 'Résolu',
+  discovered: ui('hotspots.status.discovered'),
+  shared: ui('hotspots.status.shared'),
+  validated: ui('hotspots.status.validated'),
+  resolved: ui('hotspots.status.resolved'),
 };
 const LEVEL: Record<string, string> = {
-  business_direction: 'Direction métier',
-  flow_internal: 'Interne programme FLOW',
-  flow_steering: 'Comité de pilotage FLOW',
-  to_confirm: 'À confirmer',
+  business_direction: ui('hotspotCatalogPage.direction_metier'),
+  flow_internal: ui('hotspotCatalogPage.interne_programme_flow'),
+  flow_steering: ui('hotspotCatalogPage.comite_de_pilotage_flow'),
+  to_confirm: ui('hotspotCatalogPage.a_confirmer'),
 };
-const SIZE = (value: string) => (value === 'unassessed' ? 'Non évaluée' : value);
+const SIZE = (value: string) => (value === 'unassessed' ? ui('hotspotCatalogPage.non_evaluee') : value);
 const SIZE_RANK = ['unassessed', 'S', 'M', 'L', 'XL'];
 type SortKey =
   | 'title'
@@ -158,7 +159,7 @@ export function HotspotCatalogPage({
         await page.current?.requestFullscreen();
       }
     } catch {
-      setSaveMessage('Le plein écran est indisponible dans ce navigateur.');
+      setSaveMessage(ui('hotspotCatalogPage.le_plein_ecran_est_indisponible_dans_ce_navigateur'));
     }
   };
   const storageKey = workshopStage ? `atlas-hotspot-drafts:${model.version}:${workshopStage.session_id}` : '';
@@ -186,9 +187,7 @@ export function HotspotCatalogPage({
       setDraftBases({});
       setDraftRevision(null);
       setStorageReadFailedKey(storageKey);
-      setStorageWarning(
-        'Le stockage local est indisponible. Les brouillons restent accessibles jusqu’à ce que tu quittes ce tableau.',
-      );
+      setStorageWarning(ui('hotspotCatalogPage.le_stockage_local_est_indisponible_les_brouillons_restent_accessi'));
     }
     setRestoredKey(storageKey);
   }, [storageKey, restoredKey, hotspots]);
@@ -200,9 +199,7 @@ export function HotspotCatalogPage({
       else sessionStorage.removeItem(storageKey);
       setStorageWarning('');
     } catch {
-      setStorageWarning(
-        'Le stockage local est indisponible. Les brouillons restent accessibles jusqu’à ce que tu quittes ce tableau.',
-      );
+      setStorageWarning(ui('hotspotCatalogPage.le_stockage_local_est_indisponible_les_brouillons_restent_accessi'));
     }
   }, [storageKey, restoredKey, storageReadFailedKey, drafts, draftBases, draftRevision]);
   useEffect(() => {
@@ -383,24 +380,25 @@ export function HotspotCatalogPage({
       )
       .map(
         (key) =>
-          `${item.title} · ${key === 'arbitration' ? 'd’arbitrage' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : key === 'resolution' ? 'avancement du cadrage' : 'titre'}`,
+          `${item.title} · ${key === 'arbitration' ? ui('hotspotCatalogPage.d_arbitrage') : key === 'implementation' ? ui('hotspotCatalogPage.implementation') : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? ui('hotspotCatalogPage.perimetre') : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? ui('hotspotCatalogPage.option_retenue') : key === 'resolution_note' ? ui('hotspotCatalogPage.note_de_resolution') : key === 'resolution' ? ui('hotspotCatalogPage.avancement_du_cadrage') : 'titre'}`,
       );
   });
   const draftErrors = Object.entries(drafts).flatMap(([id, draft]) => {
     const item = hotspots.find((hotspot) => hotspot.id === id);
     if (!item) return [];
     const errors: string[] = [];
-    if (!draft.title.trim()) errors.push('titre requis');
+    if (!draft.title.trim()) errors.push(ui('hotspotCatalogPage.titre_requis'));
     if (draft.kind === 'integration' && draft.node_ids.length !== 2)
-      errors.push('deux objets requis pour une intégration');
-    if (draft.kind === 'scope' && draft.node_ids.length < 1) errors.push('un objet requis pour un périmètre');
+      errors.push(ui('hotspotCatalogPage.deux_objets_requis_pour_une_integration'));
+    if (draft.kind === 'scope' && draft.node_ids.length < 1)
+      errors.push(ui('hotspotCatalogPage.un_objet_requis_pour_un_perimetre'));
     if ((draft.arbitration !== 'unassessed' || draft.implementation !== 'unassessed') && !draft.rationale.trim())
-      errors.push('justification des complexités requise');
+      errors.push(ui('hotspotCatalogPage.justification_des_complexites_requise'));
     errors.push(...resolutionErrors(effective(item)));
     if (draft.status === 'resolved' && !effective(item).resolution) {
       if (!item.resolution_options.some((option) => option.id === draft.selected_option_id))
-        errors.push('option retenue requise');
-      if (!draft.resolution_note.trim()) errors.push('note de résolution requise');
+        errors.push(ui('hotspotCatalogPage.option_retenue_requise'));
+      if (!draft.resolution_note.trim()) errors.push(ui('hotspotCatalogPage.note_de_resolution_requise'));
     }
     return errors.map((error) => `${item.title} : ${error}`);
   });
@@ -419,7 +417,9 @@ export function HotspotCatalogPage({
     const resolution = { ...draft.resolution, ...updates };
     if (resolution.stage !== 'unassessed') {
       resolution.assessed_on ||= new Date().toLocaleDateString('sv-SE');
-      resolution.assessment_source ||= `Atelier Atlas ${workshopStage?.session_id || ''}`;
+      resolution.assessment_source ||= ui('hotspotCatalogPage.atelier_atlas', {
+        value1: workshopStage?.session_id || '',
+      });
     }
     if (resolution.stage !== 'credible') resolution.credible_option_ids = [];
     if (resolution.stage !== 'ready_for_arbitration' && resolution.stage !== 'credible') {
@@ -459,10 +459,15 @@ export function HotspotCatalogPage({
         setDraftRevision(null);
       }
       setSaveMessage(
-        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance${hasLaterEdits ? '. Des modifications plus récentes restent à examiner avant un nouvel enregistrement.' : ' — à intégrer au modèle en préparation.'}`,
+        ui('hotspotCatalogPage.point_chaud_enregistre_dans_la_seance', {
+          count: changes.length,
+          value5: hasLaterEdits
+            ? ui('hotspotCatalogPage.des_modifications_plus_recentes_restent_a_examiner_avant_un_nouve')
+            : ui('hotspotCatalogPage.a_integrer_au_modele_en_preparation'),
+        }),
       );
     } catch (error) {
-      setSaveMessage(error instanceof Error ? error.message : 'Enregistrement impossible.');
+      setSaveMessage(error instanceof Error ? error.message : ui('hotspotCatalogPage.enregistrement_impossible'));
     } finally {
       setSaving(false);
     }
@@ -519,55 +524,60 @@ export function HotspotCatalogPage({
     </th>
   );
   return (
-    <section className="hotspot-page" ref={page} aria-label="Points chauds de la publication">
+    <section className="hotspot-page" ref={page} aria-label={ui('hotspotCatalogPage.points_chauds_de_la_publication')}>
       {!chosen && (
         <header className="hotspot-page-header">
           <div>
             <p className="hotspot-list-count">
               <strong>{displayedCount}</strong>{' '}
-              {`point${displayedCount > 1 ? 's' : ''} chaud${displayedCount > 1 ? 's' : ''} affiché${displayedCount > 1 ? 's' : ''}`}
-              {displayedHiddenCount ? ` · ${displayedHiddenCount} masqué${displayedHiddenCount > 1 ? 's' : ''}` : ''}
-              {workshopCount ? ` · ${workshopCount} en atelier` : ''}
+              {ui('hotspotCatalogPage.point_chaud_affiche', { count: displayedCount })}
+              {displayedHiddenCount ? ui('hotspotCatalogPage.masque', { count: displayedHiddenCount }) : ''}
+              {workshopCount ? ui('hotspotCatalogPage.en_atelier', { workshopCount: workshopCount }) : ''}
             </p>
           </div>
           {!chosen && (
             <div className="hotspot-page-tools">
               <label>
-                <span className="sr-only">Rechercher un point chaud</span>
+                <span className="sr-only">{ui('hotspotCatalogPage.rechercher_un_point_chaud')}</span>
                 <input
                   type="search"
                   value={query}
-                  placeholder="Rechercher un sujet…"
+                  placeholder={ui('hotspotCatalogPage.rechercher_un_sujet')}
                   onChange={(event) => setQuery(event.target.value)}
                 />
               </label>
               <button type="button" aria-expanded={filtersOpen} onClick={() => setFiltersOpen((open) => !open)}>
-                Filtres <ChevronDown size={15} className={filtersOpen ? 'is-open' : ''} />
+                {ui('hotspotCatalogPage.filtres')}
+                <ChevronDown size={15} className={filtersOpen ? 'is-open' : ''} />
               </button>
             </div>
           )}
         </header>
       )}
       {!chosen && filtersOpen && (
-        <div className="hotspot-catalog-filters" role="group" aria-label="Filtres des points chauds">
+        <div
+          className="hotspot-catalog-filters"
+          role="group"
+          aria-label={ui('hotspotCatalogPage.filtres_des_points_chauds')}
+        >
           <HotspotFilterFields filters={filters} onChange={onFiltersChange} />
         </div>
       )}
       {changes.length > 0 && (
         <div className="hotspot-edit-bar" role="status">
           <span>
-            <strong>
-              {changes.length} ligne{changes.length > 1 ? 's' : ''} modifiée{changes.length > 1 ? 's' : ''}
-            </strong>
+            <strong>{ui('hotspotCatalogPage.changed_count', { count: changes.length })}</strong>
             {staleDrafts
               ? conflicts.length
-                ? ` · La séance a changé aussi sur : ${conflicts.join(', ')}.`
-                : ' · La séance a changé sur d’autres champs : tes saisies peuvent être reprises.'
-              : ' · Saisies non enregistrées dans la séance.'}
+                ? ui('hotspotCatalogPage.la_seance_a_change_aussi_sur', { value1: conflicts.join(', ') })
+                : ui('hotspotCatalogPage.la_seance_a_change_sur_d_autres_champs_tes_saisies_peuvent_etre_r')
+              : ui('hotspotCatalogPage.saisies_non_enregistrees_dans_la_seance')}
           </span>
           {staleDrafts && workshopStage && (
             <button type="button" onClick={rebaseDrafts}>
-              {conflicts.length ? 'Conserver mes valeurs sur ces champs' : 'Reprendre mes saisies'}
+              {conflicts.length
+                ? ui('hotspotCatalogPage.conserver_mes_valeurs_sur_ces_champs')
+                : ui('hotspotCatalogPage.reprendre_mes_saisies')}
             </button>
           )}
           <button
@@ -579,7 +589,7 @@ export function HotspotCatalogPage({
               setSaveMessage('');
             }}
           >
-            Annuler
+            {ui('hotspotCatalogPage.annuler')}
           </button>
           <button
             type="button"
@@ -587,7 +597,7 @@ export function HotspotCatalogPage({
             disabled={staleDrafts || invalidDrafts || saving}
             onClick={() => void save()}
           >
-            {saving ? 'Enregistrement…' : 'Enregistrer les modifications'}
+            {saving ? ui('hotspotCatalogPage.enregistrement') : ui('hotspotCatalogPage.enregistrer_les_modifications')}
           </button>
         </div>
       )}
@@ -610,15 +620,18 @@ export function HotspotCatalogPage({
         <p className="hotspot-workshop-note">
           {workshopMessage}{' '}
           <button type="button" onClick={() => onChange({ view: 'help', helpTopic: 'workshop' })}>
-            Aide mode atelier
+            {ui('hotspotCatalogPage.aide_mode_atelier')}
           </button>
         </p>
       )}
       {groupIds.size > 0 && (
         <div className="hotspot-group-filter" role="status">
-          <strong>{groupHotspots.length} points chauds de ce groupe</strong>
+          <strong>
+            {groupHotspots.length}
+            {ui('hotspotCatalogPage.points_chauds_de_ce_groupe')}
+          </strong>
           <button type="button" onClick={() => onChange({ hotspot: '', hotspotGroup: '' })}>
-            Voir tous les points chauds
+            {ui('hotspotCatalogPage.voir_tous_les_points_chauds')}
           </button>
         </div>
       )}
@@ -635,14 +648,19 @@ export function HotspotCatalogPage({
           onEdit={(event, mode) => openDialog(event, chosen, mode)}
         />
       ) : (
-        <div className="hotspot-table-scroll" role="region" aria-label="Tableau des points chauds" tabIndex={0}>
+        <div
+          className="hotspot-table-scroll"
+          role="region"
+          aria-label={ui('hotspotCatalogPage.tableau_des_points_chauds')}
+          tabIndex={0}
+        >
           <table className="hotspot-table">
             <thead>
               <tr>
-                {sortHeader('title', 'Sujet et impact')}
-                {sortHeader('scope', 'Périmètre')}
-                {sortHeader('severity', 'Criticité')}
-                {sortHeader('resolution', 'Qualification et avancement')}
+                {sortHeader('title', ui('hotspotCatalogPage.sujet_et_impact'))}
+                {sortHeader('scope', ui('hotspotCatalogPage.perimetre_2'))}
+                {sortHeader('severity', ui('hotspotCatalogPage.criticite'))}
+                {sortHeader('resolution', ui('hotspotCatalogPage.qualification_et_avancement'))}
               </tr>
             </thead>
             <tbody>
@@ -661,36 +679,47 @@ export function HotspotCatalogPage({
                 const progress = (
                   <>
                     <span className={`hotspot-progress-badge status-${draft.status}`}>
-                      <StatusIcon size={15} aria-hidden="true" /> Sujet {STATUS[draft.status]}
+                      <StatusIcon size={15} aria-hidden="true" />
+                      {ui('hotspotCatalogPage.sujet')}
+                      {STATUS[draft.status]}
                     </span>
                     <span className={`hotspot-progress-badge stage-${draft.resolution.stage}`}>
                       <StageIcon size={15} aria-hidden="true" /> {RESOLUTION_STAGES[draft.resolution.stage]}
                     </span>
                     {draft.resolution.stage === 'ready_for_arbitration' && recommendedOption && (
-                      <span className="hotspot-option-to-arbitrate">À arbitrer : {recommendedOption.title}</span>
+                      <span className="hotspot-option-to-arbitrate">
+                        {ui('hotspotCatalogPage.a_arbitrer')}
+                        {recommendedOption.title}
+                      </span>
                     )}
                     {draft.resolution.stage === 'credible' &&
                       credibleOptions.length > 0 &&
                       !draft.selected_option_id && (
                         <span className="hotspot-option-to-arbitrate">
-                          Solutions crédibles : {credibleOptions.map((option) => option.title).join(' · ')}
+                          {ui('hotspotCatalogPage.solutions_credibles')}
+                          {credibleOptions.map((option) => option.title).join(' · ')}
                         </span>
                       )}
-                    {draft.resolution.blocked_reason && <span>Bloqué : {draft.resolution.blocked_reason}</span>}
+                    {draft.resolution.blocked_reason && (
+                      <span>
+                        {ui('hotspotCatalogPage.bloque')}
+                        {draft.resolution.blocked_reason}
+                      </span>
+                    )}
                   </>
                 );
                 return (
                   <Fragment key={item.id}>
                     {!isHotspotVisible(item) && (index === 0 || isHotspotVisible(filtered[index - 1])) && (
                       <tr className="hotspot-hidden-separator">
-                        <td colSpan={4}>Non visibles — hors des filtres et de la carte</td>
+                        <td colSpan={4}>{ui('hotspotCatalogPage.non_visibles_hors_des_filtres_et_de_la_carte')}</td>
                       </tr>
                     )}
                     <tr
                       data-hotspot-id={item.id}
                       className={`${changes.some((change) => change.id === item.id) ? 'is-draft' : ''} ${!isHotspotVisible(item) ? 'hotspot-is-hidden' : ''}`}
                     >
-                      <td className="hotspot-table-subject" data-label="Sujet et impact">
+                      <td className="hotspot-table-subject" data-label={ui('hotspotCatalogPage.sujet_et_impact')}>
                         <div className="hotspot-list-heading">
                           <button
                             type="button"
@@ -699,11 +728,13 @@ export function HotspotCatalogPage({
                           >
                             {item.title}
                           </button>
-                          {!isHotspotVisible(item) && <span className="hotspot-visibility-label">Non visible</span>}
+                          {!isHotspotVisible(item) && (
+                            <span className="hotspot-visibility-label">{ui('hotspotCatalogPage.non_visible')}</span>
+                          )}
                           <HotspotTooltipButton
                             type="button"
                             className="hotspot-summary-trigger"
-                            aria-label={`Résumé de ${item.title}`}
+                            aria-label={ui('hotspotCatalogPage.resume_de', { title: item.title })}
                             tip={
                               <>
                                 <strong>{item.title}</strong>
@@ -720,15 +751,19 @@ export function HotspotCatalogPage({
                           <ModelText text={item.problem} />
                         </p>
                         <HotspotImpact item={item} />
-                        {item.workshop && <small>Atelier</small>}
+                        {item.workshop && <small>{ui('hotspotCatalogPage.atelier')}</small>}
                       </td>
-                      <td className="hotspot-table-scope" data-label="Périmètre">
-                        <small>{draft.kind === 'integration' ? 'Intégration' : 'Sujet de périmètre'}</small>
+                      <td className="hotspot-table-scope" data-label={ui('hotspotCatalogPage.perimetre_2')}>
+                        <small>
+                          {draft.kind === 'integration'
+                            ? ui('hotspotCatalogPage.integration')
+                            : ui('hotspotCatalogPage.sujet_de_perimetre')}
+                        </small>
                         {canEdit ? (
                           <button
                             type="button"
                             className="hotspot-cell-edit"
-                            aria-label={`Modifier le périmètre de ${item.title}`}
+                            aria-label={ui('hotspotCatalogPage.modifier_le_perimetre_de', { title: item.title })}
                             onClick={(event) => openDialog(event, item, 'location')}
                           >
                             {draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')}
@@ -737,20 +772,28 @@ export function HotspotCatalogPage({
                           draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')
                         )}
                       </td>
-                      <td data-label="Criticité">
+                      <td data-label={ui('hotspotCatalogPage.criticite')}>
                         <HotspotTooltipButton
                           type="button"
                           className={`hotspot-table-criticality severity-${severity}`}
-                          aria-label={`Criticité et complexités de ${item.title}`}
+                          aria-label={ui('hotspotCatalogPage.criticite_et_complexites_de', { title: item.title })}
                           onClick={canEdit ? (event) => openDialog(event, item, 'complexity') : undefined}
                           tip={
                             <>
-                              <strong>Criticité : {SIZE(severity)}</strong>
+                              <strong>
+                                {ui('hotspotCatalogPage.criticite_2')}
+                                {SIZE(severity)}
+                              </strong>
                               <span>
-                                Arbitrage : {SIZE(draft.arbitration)} · Implémentation : {SIZE(draft.implementation)}
+                                {ui('hotspotCatalogPage.arbitrage')}
+                                {SIZE(draft.arbitration)}
+                                {ui('hotspotCatalogPage.implementation_2')}
+                                {SIZE(draft.implementation)}
                               </span>
                               <span>
-                                <ModelText text={draft.rationale || 'Justification non documentée.'} />
+                                <ModelText
+                                  text={draft.rationale || ui('hotspotCatalogPage.justification_non_documentee')}
+                                />
                               </span>
                             </>
                           }
@@ -759,21 +802,21 @@ export function HotspotCatalogPage({
                         </HotspotTooltipButton>
                         <dl className="hotspot-list-complexities">
                           <div>
-                            <dt>Arbitrage</dt>
+                            <dt>{ui('hotspotCatalogPage.arbitrage_2')}</dt>
                             <dd>{SIZE(draft.arbitration)}</dd>
                           </div>
                           <div>
-                            <dt>Implémentation</dt>
+                            <dt>{ui('hotspotCatalogPage.implementation_3')}</dt>
                             <dd>{SIZE(draft.implementation)}</dd>
                           </div>
                         </dl>
                       </td>
-                      <td data-label="Qualification et avancement">
+                      <td data-label={ui('hotspotCatalogPage.qualification_et_avancement')}>
                         {canEdit ? (
                           <button
                             type="button"
                             className="hotspot-qualification"
-                            aria-label={`Qualification et avancement de ${item.title}`}
+                            aria-label={ui('hotspotCatalogPage.qualification_et_avancement_de', { title: item.title })}
                             onClick={(event) => openDialog(event, item, 'resolution')}
                           >
                             {progress}
@@ -789,7 +832,7 @@ export function HotspotCatalogPage({
               {filtered.length === 0 && (
                 <tr>
                   <td colSpan={4} className="hotspot-table-empty">
-                    Aucun point chaud avec ces filtres.
+                    {ui('hotspotCatalogPage.aucun_point_chaud_avec_ces_filtres')}
                   </td>
                 </tr>
               )}
@@ -823,15 +866,15 @@ export function HotspotCatalogPage({
                   <div>
                     <h3 id="hotspot-dialog-title">
                       {dialog.mode === 'location'
-                        ? 'Type et périmètre'
+                        ? ui('hotspotCatalogPage.type_et_perimetre')
                         : dialog.mode === 'resolution'
-                          ? 'Qualification et avancement'
-                          : 'Complexités'}{' '}
+                          ? ui('hotspotCatalogPage.qualification_et_avancement')
+                          : ui('hotspotCatalogPage.complexites')}{' '}
                       · {item.title}
                     </h3>
-                    <p>Modifications en attente du bouton « Enregistrer les modifications ».</p>
+                    <p>{ui('hotspotCatalogPage.modifications_en_attente_du_bouton_enregistrer_les_modifications')}</p>
                   </div>
-                  <button type="button" onClick={closeDialog} aria-label="Fermer">
+                  <button type="button" onClick={closeDialog} aria-label={ui('hotspotCatalogPage.fermer')}>
                     ×
                   </button>
                 </header>
@@ -843,18 +886,15 @@ export function HotspotCatalogPage({
                         checked={draft.visible}
                         onChange={(event) => editFields(item, { visible: event.target.checked })}
                       />
-                      Visible dans la carte et les filtres
+                      {ui('hotspotCatalogPage.visible_dans_la_carte_et_les_filtres')}
                     </label>
-                    <p>
-                      Un sujet non visible reste accessible en fin de liste, grisé. Cette préférence ne change ni sa
-                      qualification ni sa résolution.
-                    </p>
+                    <p>{ui('hotspotCatalogPage.un_sujet_non_visible_reste_accessible_en_fin_de_liste_grise_cette')}</p>
                     <label>
-                      Intitulé du sujet
+                      {ui('hotspotCatalogPage.intitule_du_sujet')}
                       <input value={draft.title} onChange={(event) => edit(item, 'title', event.target.value)} />
                     </label>
                     <label>
-                      Type{' '}
+                      {ui('hotspotCatalogPage.type')}{' '}
                       <select
                         ref={(element) => {
                           dialogFocus.current = element;
@@ -862,14 +902,14 @@ export function HotspotCatalogPage({
                         value={draft.kind}
                         onChange={(event) => editFields(item, { kind: event.target.value as Hotspot['kind'] })}
                       >
-                        <option value="scope">Périmètre</option>
-                        <option value="integration">Intégration</option>
+                        <option value="scope">{ui('hotspotCatalogPage.perimetre_2')}</option>
+                        <option value="integration">{ui('hotspotCatalogPage.integration')}</option>
                       </select>
                     </label>
                     <p>
                       {draft.kind === 'integration'
-                        ? 'Choisis exactement deux objets entre lesquels se situe le sujet.'
-                        : 'Choisis au moins un objet concerné.'}
+                        ? ui('hotspotCatalogPage.choisis_exactement_deux_objets_entre_lesquels_se_situe_le_sujet')
+                        : ui('hotspotCatalogPage.choisis_au_moins_un_objet_concerne')}
                     </p>
                     <div className="hotspot-selected-nodes">
                       {draft.node_ids.map((id) => (
@@ -877,22 +917,26 @@ export function HotspotCatalogPage({
                           type="button"
                           key={id}
                           onClick={() => editFields(item, { node_ids: draft.node_ids.filter((value) => value !== id) })}
-                          aria-label={`Retirer ${model.nodeById.get(id)?.name || id}`}
+                          aria-label={ui('hotspotCatalogPage.retirer', { value1: model.nodeById.get(id)?.name || id })}
                         >
                           {model.nodeById.get(id)?.name || id} ×
                         </button>
                       ))}
                     </div>
                     <label>
-                      Rechercher un objet{' '}
+                      {ui('hotspotCatalogPage.rechercher_un_objet')}{' '}
                       <input
                         type="search"
                         value={nodeQuery}
                         onChange={(event) => setNodeQuery(event.target.value)}
-                        placeholder="Nom ou code…"
+                        placeholder={ui('hotspotCatalogPage.nom_ou_code')}
                       />
                     </label>
-                    <div className="hotspot-node-options" role="group" aria-label="Objets du modèle">
+                    <div
+                      className="hotspot-node-options"
+                      role="group"
+                      aria-label={ui('hotspotCatalogPage.objets_du_modele')}
+                    >
                       {nodes.map((node) => (
                         <label key={node.id}>
                           <input
@@ -919,14 +963,11 @@ export function HotspotCatalogPage({
                 )}
                 {dialog.mode === 'resolution' && (
                   <div className="hotspot-dialog-body hotspot-resolution-fields">
-                    <p>
-                      Une option recommandée attend l’arbitrage ; une solution crédible clôt le cadrage. Le choix
-                      définitif reste distinct.
-                    </p>
+                    <p>{ui('hotspotCatalogPage.une_option_recommandee_attend_l_arbitrage_une_solution_credible_c')}</p>
                     <label>
-                      Qualification du sujet
+                      {ui('hotspotCatalogPage.qualification_du_sujet')}
                       <select
-                        aria-label="Qualification du sujet"
+                        aria-label={ui('hotspotCatalogPage.qualification_du_sujet')}
                         value={draft.status}
                         onChange={(event) => {
                           const status = event.target.value as Hotspot['status'];
@@ -956,7 +997,7 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     <label>
-                      Instance d’arbitrage
+                      {ui('hotspotCatalogPage.instance_d_arbitrage')}
                       <select
                         value={draft.arbitration_level}
                         onChange={(event) => edit(item, 'arbitration_level', event.target.value)}
@@ -969,7 +1010,7 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     <label>
-                      Avancement du cadrage
+                      {ui('hotspotCatalogPage.avancement_du_cadrage_2')}
                       <select
                         ref={(element) => {
                           dialogFocus.current = element;
@@ -992,7 +1033,7 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     <label>
-                      Synthèse d’avancement
+                      {ui('hotspotCatalogPage.synthese_d_avancement')}
                       <textarea
                         value={draft.resolution.summary}
                         onChange={(event) => editResolution(item, { summary: event.target.value })}
@@ -1000,14 +1041,14 @@ export function HotspotCatalogPage({
                     </label>
                     {draft.resolution.stage === 'ready_for_arbitration' && (
                       <fieldset>
-                        <legend>Proposition à soumettre à l’arbitrage</legend>
+                        <legend>{ui('hotspotCatalogPage.proposition_a_soumettre_a_l_arbitrage')}</legend>
                         <label>
-                          Option recommandée
+                          {ui('hotspotCatalogPage.option_recommandee')}
                           <select
                             value={draft.resolution.recommended_option_id || ''}
                             onChange={(event) => editResolution(item, { recommended_option_id: event.target.value })}
                           >
-                            <option value="">Choisir une option</option>
+                            <option value="">{ui('hotspotCatalogPage.choisir_une_option')}</option>
                             {item.resolution_options.map((option) => (
                               <option key={option.id} value={option.id}>
                                 {option.title}
@@ -1016,7 +1057,7 @@ export function HotspotCatalogPage({
                           </select>
                         </label>
                         <label>
-                          Pourquoi cette option ? Hypothèses et réserves
+                          {ui('hotspotCatalogPage.pourquoi_cette_option_hypotheses_et_reserves')}
                           <textarea
                             value={draft.resolution.recommendation_note || ''}
                             onChange={(event) => editResolution(item, { recommendation_note: event.target.value })}
@@ -1026,7 +1067,7 @@ export function HotspotCatalogPage({
                     )}
                     {draft.resolution.stage === 'credible' && (
                       <fieldset>
-                        <legend>Solutions crédibles (au moins une)</legend>
+                        <legend>{ui('hotspotCatalogPage.solutions_credibles_au_moins_une')}</legend>
                         {item.resolution_options.map((option) => (
                           <label key={option.id}>
                             <input
@@ -1044,7 +1085,7 @@ export function HotspotCatalogPage({
                           </label>
                         ))}
                         <label>
-                          Crédibilité, hypothèses et réserves
+                          {ui('hotspotCatalogPage.credibilite_hypotheses_et_reserves')}
                           <textarea
                             value={draft.resolution.credibility_note}
                             onChange={(event) => editResolution(item, { credibility_note: event.target.value })}
@@ -1053,7 +1094,7 @@ export function HotspotCatalogPage({
                       </fieldset>
                     )}
                     <label>
-                      Raison du blocage (facultative)
+                      {ui('hotspotCatalogPage.raison_du_blocage_facultative')}
                       <textarea
                         disabled={
                           draft.resolution.stage === 'credible' || draft.resolution.stage === 'ready_for_arbitration'
@@ -1063,14 +1104,14 @@ export function HotspotCatalogPage({
                       />
                     </label>
                     <label>
-                      Prochaine étape
+                      {ui('hotspotCatalogPage.prochaine_etape')}
                       <textarea
                         value={draft.resolution.next_step}
                         onChange={(event) => editResolution(item, { next_step: event.target.value })}
                       />
                     </label>
                     <label>
-                      Date d’évaluation
+                      {ui('hotspotCatalogPage.date_d_evaluation')}
                       <input
                         type="date"
                         value={draft.resolution.assessed_on || ''}
@@ -1078,20 +1119,20 @@ export function HotspotCatalogPage({
                       />
                     </label>
                     <label>
-                      Source d’évaluation
+                      {ui('hotspotCatalogPage.source_d_evaluation')}
                       <input
                         value={draft.resolution.assessment_source}
                         onChange={(event) => editResolution(item, { assessment_source: event.target.value })}
                       />
                     </label>
                     <label>
-                      Option retenue (choix définitif facultatif){' '}
+                      {ui('hotspotCatalogPage.option_retenue_choix_definitif_facultatif')}{' '}
                       <select
                         value={draft.selected_option_id}
                         disabled={draft.resolution.stage === 'ready_for_arbitration'}
                         onChange={(event) => edit(item, 'selected_option_id', event.target.value)}
                       >
-                        <option value="">Aucun choix définitif</option>
+                        <option value="">{ui('hotspotCatalogPage.aucun_choix_definitif')}</option>
                         {item.resolution_options.map((option) => (
                           <option key={option.id} value={option.id}>
                             {option.title}
@@ -1100,14 +1141,16 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     {item.resolution_options.length === 0 && (
-                      <p>Aucune option n’est documentée. Ajoute d’abord une option avec Codex.</p>
+                      <p>
+                        {ui('hotspotCatalogPage.aucune_option_n_est_documentee_ajoute_d_abord_une_option_avec_cod')}
+                      </p>
                     )}
                     <label>
-                      Note du choix définitif (facultative){' '}
+                      {ui('hotspotCatalogPage.note_du_choix_definitif_facultative')}{' '}
                       <textarea
                         value={draft.resolution_note}
                         onChange={(event) => edit(item, 'resolution_note', event.target.value)}
-                        placeholder="Décision, portée et conditions retenues…"
+                        placeholder={ui('hotspotCatalogPage.decision_portee_et_conditions_retenues')}
                         rows={5}
                       />
                     </label>
@@ -1117,22 +1160,22 @@ export function HotspotCatalogPage({
                   <div className="hotspot-dialog-body">
                     <HotspotAssessmentGuide model={model} />
                     <label>
-                      Justification d’arbitrage
+                      {ui('hotspotCatalogPage.justification_d_arbitrage')}
                       <textarea
                         value={draft.arbitration_rationale}
                         onChange={(event) => edit(item, 'arbitration_rationale', event.target.value)}
                       />
                     </label>
                     <label>
-                      Justification d’implémentation
+                      {ui('hotspotCatalogPage.justification_d_implementation')}
                       <textarea
                         value={draft.implementation_rationale}
                         onChange={(event) => edit(item, 'implementation_rationale', event.target.value)}
                       />
                     </label>
-                    <p>La criticité est calculée à partir des deux complexités.</p>
+                    <p>{ui('hotspotCatalogPage.la_criticite_est_calculee_a_partir_des_deux_complexites')}</p>
                     <label>
-                      Complexité d’arbitrage{' '}
+                      {ui('hotspotCatalogPage.complexite_d_arbitrage')}{' '}
                       <select
                         ref={(element) => {
                           dialogFocus.current = element;
@@ -1148,7 +1191,7 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     <label>
-                      Complexité d’implémentation{' '}
+                      {ui('hotspotCatalogPage.complexite_d_implementation')}{' '}
                       <select
                         value={draft.implementation}
                         onChange={(event) => edit(item, 'implementation', event.target.value)}
@@ -1161,7 +1204,7 @@ export function HotspotCatalogPage({
                       </select>
                     </label>
                     <label>
-                      Justification{' '}
+                      {ui('hotspotCatalogPage.justification')}{' '}
                       <textarea
                         value={draft.rationale}
                         onChange={(event) => edit(item, 'rationale', event.target.value)}
@@ -1172,7 +1215,7 @@ export function HotspotCatalogPage({
                 )}
                 <footer>
                   <button type="button" onClick={closeDialog}>
-                    Terminer
+                    {ui('hotspotCatalogPage.terminer')}
                   </button>
                 </footer>
               </section>

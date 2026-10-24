@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { revealSection } from '../readerNavigation';
 import { sheetSections } from '../sheetSections';
 import type { AtlasNode, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 
 export function SheetNavigation({
   model,
@@ -31,8 +32,8 @@ export function SheetNavigation({
     return () => pane.removeEventListener('scroll', update);
   }, [node.id, sections]);
   return (
-    <nav className="space-navigation sheet-navigation" aria-label="Dans cette fiche">
-      <h2>Dans cette fiche</h2>
+    <nav className="space-navigation sheet-navigation" aria-label={ui('sheetNavigation.dans_cette_fiche')}>
+      <h2>{ui('sheetNavigation.dans_cette_fiche')}</h2>
       {sections.map(([id, label]) => (
         <button
           type="button"

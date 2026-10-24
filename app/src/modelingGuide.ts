@@ -1,5 +1,6 @@
 import { type FetchLike, fetchJson, guideUrl } from './publication.ts';
 import type { PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface GuideSource {
   readonly id: string;
@@ -92,43 +93,9 @@ export interface GuideResponse {
   readonly guide?: ModelingGuide;
 }
 
-/** Reader labels follow the displayed hierarchy; stored historical guides are untouched. */
-export function lessonForPublication(lesson: GuideLesson, model: PublishedModel): GuideLesson {
-  if (!model.nodes.some((node) => node.kind === 'business_system')) return lesson;
-  const labels: Record<string, string> = {
-    Commerce: 'Sales / Sourcing and Procurement',
-    Supply: model.nodes.find((n) => n.id === 'supply-chain-orchestration')?.name || 'Supply Chain Orchestration',
-    Logistique: model.nodes.find((n) => n.id === 'domain-logistics-execution')?.name || 'Logistics',
-  };
-  const hierarchy = (text: string) =>
-    text
-      .replace(
-        'Domain → Purpose → Capability → Behavior',
-        'Business System → Domain → Subdomain → Capability → Behavior',
-      )
-      .replace(
-        'Domain · Purpose · Capacité · Comportement · Relation',
-        'Système métier · Domaine · Sous-domaine · Capacité · Comportement · Relation',
-      );
-  return {
-    ...lesson,
-    rule: hierarchy(lesson.rule),
-    scene: {
-      ...lesson.scene,
-      items: lesson.scene.items.map((item) => ({
-        ...item,
-        label: labels[item.label] || item.label,
-        text: hierarchy(item.text),
-      })),
-    },
-    contributor: {
-      ...lesson.contributor,
-      boundary:
-        lesson.id === 'meaningful-links'
-          ? 'Les référentiels restent distincts et présentent les capacités de leur sujet. Les rattachements suivent la publication affichée. Une relation de présentation ne fusionne pas les références et ne crée pas un niveau métier supplémentaire.'
-          : lesson.contributor.boundary,
-    },
-  };
+/** Lessons retain exactly the content of their associated frozen guide. */
+export function lessonForPublication(lesson: GuideLesson, _model: PublishedModel): GuideLesson {
+  return lesson;
 }
 
 /** Every read is pinned to the displayed publication, including live-current mode. */
@@ -153,7 +120,7 @@ export async function fetchModelingGuide(
         !Array.isArray(raw.guide.glossary?.terms) ||
         !Array.isArray(raw.guide.glossary?.model_term_ids)))
   ) {
-    throw new Error('Le guide reçu ne correspond pas à cette publication.');
+    throw new Error(ui('modelingGuide.le_guide_recu_ne_correspond_pas_a_cette_publication'));
   }
   return raw;
 }

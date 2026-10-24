@@ -1,5 +1,6 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
 import { type FlowRoutedExchange, flowScreenStroke } from './flowMapRouting.ts';
+import { ui } from './ui.ts';
 
 export interface FlowRectangle {
   x: number;
@@ -220,5 +221,5 @@ export function placeFlowAnnotations(
     const result = attempt(badges, shortTitles);
     if (result.complete || shortTitles) return result;
   }
-  throw new Error('Placement des annotations indisponible.');
+  throw new Error(ui('flowMapCaptions.placement_des_annotations_indisponible'));
 }

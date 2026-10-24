@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRightLeft, BookOpen, ChevronDown, FileText, GitBranch, LayoutGrid } from 'lucide-react';
 import { useRef } from 'react';
 import type { View } from '../navigation';
+import { ui } from '../ui.ts';
 import { DismissibleDetails } from './DismissibleDetails';
 
 export function ModelViewTabs({
@@ -22,11 +23,11 @@ export function ModelViewTabs({
 }) {
   const more = useRef<HTMLDetailsElement>(null);
   const tabs = [
-    { id: 'map', label: 'Carte', Icon: LayoutGrid },
-    { id: 'sheet', label: 'Fiche', Icon: FileText },
-    { id: 'flows', label: 'Flux', Icon: ArrowRightLeft },
-    { id: 'relations', label: 'Relations', Icon: GitBranch },
-    { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen },
+    { id: 'map', label: ui('modelViewTabs.carte'), Icon: LayoutGrid },
+    { id: 'sheet', label: ui('modelViewTabs.fiche'), Icon: FileText },
+    { id: 'flows', label: ui('modelViewTabs.flux'), Icon: ArrowRightLeft },
+    { id: 'relations', label: ui('modelViewTabs.relations'), Icon: GitBranch },
+    { id: 'market', label: ui('modelViewTabs.sources_d_inspiration'), Icon: BookOpen },
   ] as const;
   const available = tabs.filter((tab) => hasNode || !['sheet', 'market'].includes(tab.id));
   const primary = available.filter((tab) => !mobile || !['market', 'relations'].includes(tab.id));
@@ -34,7 +35,7 @@ export function ModelViewTabs({
   const activeMore = secondary.find((tab) => tab.id === view);
   return (
     <div className="model-view-navigation">
-      <div className="view-tabs" role="tablist" aria-label="Vue du modèle">
+      <div className="view-tabs" role="tablist" aria-label={ui('modelViewTabs.vue_du_modele')}>
         {primary.map((tab, index) => (
           <button
             type="button"
@@ -80,7 +81,7 @@ export function ModelViewTabs({
           }}
         >
           <summary id="view-more-label" className={activeMore ? 'is-active' : ''}>
-            {activeMore?.label || 'Plus'}
+            {activeMore?.label || ui('modelViewTabs.plus')}
             <ChevronDown size={14} />
           </summary>
           <div className="view-more-options">
@@ -108,7 +109,8 @@ export function ModelViewTabs({
                 }}
               >
                 <ArrowLeft size={16} />
-                Remonter vers {parentLabel}
+                {ui('modelViewTabs.remonter_vers')}
+                {parentLabel}
               </button>
             )}
           </div>

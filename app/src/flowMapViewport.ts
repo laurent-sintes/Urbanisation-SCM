@@ -107,12 +107,13 @@ export function standardFlowCamera(
       : Math.min(1.2, Math.max(targetWidth / medianWidth, headingZoom, systemDetailZoom));
 
   // Use the same published corridor whatever overlays are active; nested Supply does not move a system's origin.
-  const coreIds = new Set(['subdomain-integration', 'domain-plan', 'D01']);
+  const profile = first.node.reading?.neighborhood;
+  const coreIds = new Set(profile?.core_ids ?? []);
   const core = territories.filter((box) => coreIds.has(box.id));
   const hasSupplyCore =
-    (!scopeId || scopeId === 'supply-chain-orchestration') &&
-    core.some((box) => box.id === 'domain-plan') &&
-    core.some((box) => box.id === 'D01');
+    profile &&
+    (!scopeId || scopeId === profile.scope_id) &&
+    profile.required_ids.every((id) => core.some((box) => box.id === id));
   const originX = hasSupplyCore ? Math.min(...core.map((box) => box.x)) : first.x;
   const originY = hasSupplyCore ? Math.min(...core.map((box) => box.y)) : first.y;
   const leftInset = Math.min(24, Math.max(0, bounds.width) * 0.08);

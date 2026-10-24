@@ -1,0 +1,196 @@
+{
+  "GUIDE_TERMS": {
+    "universe": "MOD043",
+    "business_system": "MOD022",
+    "domain": "MOD008",
+    "area": "MOD013",
+    "business_area": "MOD039",
+    "reference": "MOD009",
+    "capability": "MOD015",
+    "behavior": "MOD006"
+  },
+  "RELATION_ROLES": {
+    "contains": "composition",
+    "presents": "presentation",
+    "relates-to": "interaction",
+    "uses-reference": "interaction",
+    "supplies-reference": "interaction",
+    "provides-knowledge": "interaction",
+    "provides-conditions": "interaction"
+  },
+  "FIELD_MEANINGS": {
+    "relations.fields.summary_label": "Libellé de synthèse explicite des échanges ayant ces extrémités orientées ; les libellés et contenus détaillés des relations restent conservés.",
+    "relations.fields.data_exchange": "Contenus métier typés et finalité du partage orienté ; références au glossaire de cette publication, sans protocole technique implicite.",
+    "nodes": "Objets de cette publication ; kind indique leur type.",
+    "relations": "Liens orientés entre objets ; source_id et target_id désignent des nodes.id.",
+    "nodes.id": "Identifiant persistant, distinct du nom et du code de lecture.",
+    "nodes.kind": "Type de l’objet, déclaré dans metamodel.node_types.",
+    "nodes.fields": "Contenu de la fiche de cet objet dans la publication.",
+    "relations.type": "Type du lien, déclaré dans metamodel.relation_types.",
+    "relations.qualification": "Sens, rôle, conditions et effets propres à ce lien.",
+    "display_index": "Ordre, parenté de lecture et codes figés pour cette publication.",
+    "scenario_catalog.paths.steps.context_participants": "Participants de contexte documentés à leur profondeur déclarée, distincts des contributions de capacités et sans appartenance hiérarchique induite.",
+    "hotspot_catalog.hotspots": "Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.",
+    "hotspot_catalog.hotspots.status": "Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.",
+    "hotspot_catalog.hotspots.visible": "Visibilité technique, vraie par défaut. Faux masque halos et filtres ; le sujet reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement de qualification ou de résolution.",
+    "hotspot_catalog.hotspots.framing_impact": "Portées cumulables Modèle, Transition et Usage ; indépendantes de la criticité. Un impact non établi reste inconnu.",
+    "hotspot_catalog.hotspots.framing_impact.scopes": "Modèle durable, trajectoire de transition ou praticité d’usage ; plusieurs portées possibles.",
+    "hotspot_catalog.hotspots.consolidated_into": "Hotspot commun qui reprend le sujet ; identité et preuves d’origine conservées, accès discret.",
+    "hotspot_catalog.hotspots.gap_analysis": "Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.",
+    "hotspot_catalog.hotspots.resolution": "Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.",
+    "hotspot_catalog.criticality_policy": "Grille matrix-v1 figée avec la publication, ses axes, repères et limites ; aucun calcul d’urgence.",
+    "hotspot_catalog.sources": "Intitulés et accès documentés des sources internes ; les identifiants de provenance restent conservés."
+  },
+  "RELATION_MEANINGS": {
+    "shares-data": "Le producteur source partage les informations métier décrites dans fields.data_exchange avec le destinataire cible, sans restriction de niveau ni preuve d’interface installée.",
+    "contains": "Décomposition ou appartenance structurelle du parent vers l’enfant.",
+    "presents": "Présentation d’un objet sous un autre, sans créer une responsabilité métier supplémentaire.",
+    "relates-to": "Interaction métier qualifiée ; son sens précis est dans qualification.",
+    "uses-reference": "La capacité source utilise les données du référentiel cible.",
+    "supplies-reference": "La capacité source alimente le référentiel cible avec des apports qualifiés.",
+    "provides-knowledge": "Le périmètre source apporte une connaissance au périmètre cible.",
+    "provides-conditions": "La référence source apporte des conditions au périmètre cible."
+  },
+  "CATALOG_TERMS": [
+    [
+      "hotspot_catalog.hotspots",
+      "MOD044",
+      "Hotspot",
+      "Sujet à creuser et arbitrer, avec ou sans écart entre modes de fonctionnement."
+    ],
+    [
+      "hotspot_catalog.hotspots.gap_analysis",
+      "MOD045",
+      "Gap Analysis",
+      "Comparaison inter-SI ou intra-SI d’une responsabilité métier commune ; observations et réserves restent explicites."
+    ],
+    [
+      "hotspot_catalog.hotspots.gap_analysis.observations_by_context",
+      null,
+      "Gap Observation",
+      "Observation située et sourcée d’un mode de fonctionnement, avec sa preuve et ses limites."
+    ],
+    [
+      "hotspot_catalog.hotspots.resolution_options",
+      null,
+      "Hotspot Resolution Option",
+      "Option à instruire ; être crédible, être retenue et être mise en œuvre sont trois choses distinctes."
+    ],
+    [
+      "scenario_catalog.value_streams",
+      "MOD029",
+      "Value Stream",
+      null
+    ],
+    [
+      "scenario_catalog.value_streams.stages",
+      "MOD030",
+      "Value Stream Stage",
+      null
+    ],
+    [
+      "scenario_catalog.scenarios",
+      "MOD027",
+      "Business Scenario",
+      null
+    ],
+    [
+      "scenario_catalog.paths",
+      "MOD028",
+      "Capability Mobilization Path",
+      null
+    ],
+    [
+      "scenario_catalog.paths.steps",
+      "MOD031",
+      "Capability Mobilization Step",
+      null
+    ],
+    [
+      "scenario_catalog.paths.steps.context_participants",
+      "MOD051",
+      "Context Participation",
+      "Responsabilité de contexte participant à une étape, avec rôle, conditions et sources, sans capacité artificielle ni nouvelle hiérarchie."
+    ],
+    [
+      "scenario_catalog.facets",
+      null,
+      "Scenario Facet",
+      "Valeur de classement utilisée pour retrouver des scénarios par événement, objet métier ou type de situation."
+    ],
+    [
+      "scenario_catalog.legacy_links",
+      null,
+      "Legacy Scenario Link",
+      "Correspondance de lecture entre une ancienne illustration locale et un scénario autonome de cette publication."
+    ],
+    [
+      "information_catalog.items",
+      "MOD012",
+      "Information",
+      null
+    ],
+    [
+      "information_catalog.links",
+      null,
+      "Information Link",
+      "Relation orientée et qualifiée entre deux informations métier distinctes."
+    ],
+    [
+      "document_catalog.documents",
+      null,
+      "Publication Document",
+      "Document téléchargeable figé avec une publication et éventuellement lié à un point chaud."
+    ],
+    [
+      "application_catalog.products",
+      null,
+      "Application Product",
+      "Produit logiciel de référence, indépendant de ses sélections et usages dans chaque SI."
+    ],
+    [
+      "application_catalog.products.components",
+      null,
+      "Application Component",
+      "Produit, module, option, extension ou fonction dans l’arbre de référence du produit."
+    ],
+    [
+      "application_catalog.selections",
+      null,
+      "Application Selection",
+      "Présence d’un produit dans un SI ou dans la cible, avec états d’acquisition, d’activation et d’usage distincts."
+    ],
+    [
+      "application_catalog.selections.mappings",
+      null,
+      "Application Mapping",
+      "Lien qualifié et sourcé entre un composant logiciel choisi dans un SI et un élément métier."
+    ],
+    [
+      "glossary.terms",
+      null,
+      "Business Glossary Term",
+      "Terme du vocabulaire métier de cette publication, avec définition et statut de revue."
+    ],
+    [
+      "principles",
+      null,
+      "Model Principle",
+      "Règle ou choix de modélisation applicable à cette publication, identifié et sourcé."
+    ]
+  ],
+  "ROOT_BINDINGS": {
+    "2026-10-09.4": {
+      "glossary_ref": "TER203",
+      "legacy_label": "Enterprise Architecture"
+    },
+    "2026-10-09.3": {
+      "glossary_ref": "TER203",
+      "legacy_label": "Univers"
+    },
+    "2026-10-09.2": {
+      "glossary_ref": "TER203",
+      "legacy_label": "Univers"
+    }
+  }
+}

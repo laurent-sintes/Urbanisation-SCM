@@ -1,6 +1,7 @@
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 import type { SystemDataSharing } from '../dataSharing';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 
 type Box = { x: number; y: number; width: number; height: number };
 export type ExchangeMarkerAnchor = { exchangeId: string; x: number; y: number };
@@ -31,14 +32,38 @@ const ribbon = (length: number, body: number, head: number, tip: number) => {
   const neck = length - tip;
   const half = body / 2;
   const wing = head / 2;
-  return `M 8 ${-half}
-    H ${neck - 5} Q ${neck} ${-half} ${neck} ${-half - 5}
-    V ${-wing + 5} Q ${neck} ${-wing - 2} ${neck + 6} ${-wing + 3}
-    L ${length - 3} -3 Q ${length + 1} 0 ${length - 3} 3
-    L ${neck + 6} ${wing - 3} Q ${neck} ${wing + 2} ${neck} ${wing - 5}
-    V ${half + 5} Q ${neck} ${half} ${neck - 5} ${half}
-    H 8 Q 0 ${half} 0 ${half - 8}
-    V ${-half + 8} Q 0 ${-half} 8 ${-half} Z`;
+  return ui('systemDataSharingMap.m_8_h_q_v_q_l_3_q_0_3_l_q_v_q_h_8_q_0_0_v_q_0_8_z', {
+    value1: -half,
+    value2: neck - 5,
+    neck: neck,
+    value4: -half,
+    neck5: neck,
+    value6: -half - 5,
+    value7: -wing + 5,
+    neck8: neck,
+    value9: -wing - 2,
+    value10: neck + 6,
+    value11: -wing + 3,
+    value12: length - 3,
+    value13: length + 1,
+    value14: length - 3,
+    value15: neck + 6,
+    value16: wing - 3,
+    neck17: neck,
+    value18: wing + 2,
+    neck19: neck,
+    value20: wing - 5,
+    value21: half + 5,
+    neck22: neck,
+    half: half,
+    value24: neck - 5,
+    half25: half,
+    half26: half,
+    value27: half - 8,
+    value28: -half + 8,
+    value29: -half,
+    value30: -half,
+  });
 };
 
 export function SystemDataSharingMap({
@@ -98,7 +123,7 @@ export function SystemDataSharingMap({
           arrows.push({
             exchange,
             path: ribbon(length, 88, 136, 56),
-            transform: `translate(${x} ${start}) rotate(${down ? 90 : -90})`,
+            transform: ui('systemDataSharingMap.translate_rotate', { x: x, start: start, value3: down ? 90 : -90 }),
             x,
             y: start + (down ? 1 : -1) * (length - 56) * (marked ? 0.82 : 0.5) + 4 - ((lines.length - 1) * 16) / 2,
             lines,
@@ -124,7 +149,7 @@ export function SystemDataSharingMap({
           arrows.push({
             exchange,
             path: ribbon(length, 44, 68, 42),
-            transform: `translate(${startX} ${y}) rotate(${right ? 0 : 180})`,
+            transform: ui('systemDataSharingMap.translate_rotate_2', { startX: startX, y: y, value3: right ? 0 : 180 }),
             x: startX + (right ? 1 : -1) * (length - 42) * (marked ? 0.25 : 0.5),
             y: y + 5 - ((lines.length - 1) * 16) / 2,
             lines,
@@ -152,9 +177,9 @@ export function SystemDataSharingMap({
       width={drawing.width}
       height={drawing.height}
       role="img"
-      aria-label="Partages de données orientés entre systèmes métier"
+      aria-label={ui('systemDataSharingMap.partages_de_donnees_orientes_entre_systemes_metier')}
     >
-      <title>Partages de données métier — sens et contenus issus de la publication consultée</title>
+      <title>{ui('systemDataSharingMap.partages_de_donnees_metier_sens_et_contenus_issus_de_la_publicati')}</title>
       <defs>
         <linearGradient id={`${paintId}-forward`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--exchange-forward-start)" />

@@ -1,5 +1,6 @@
 import { ChevronDown, Settings2 } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
+import { ui } from '../ui.ts';
 import { DismissibleDetails } from './DismissibleDetails';
 import { useHotspotFloating } from './HotspotDisplay';
 
@@ -15,12 +16,12 @@ export function MapDisplayOptions({ children, active }: { children: ReactNode; a
       <summary ref={refs.setReference}>
         <Settings2 size={15} />
         <span>
-          Affichage
+          {ui('mapDisplayOptions.affichage')}
           {active.length > 0 && (
             <>
               <b className="map-display-count">
                 {active.length}
-                <span className="sr-only"> surcouches actives</span>
+                <span className="sr-only">{ui('mapDisplayOptions.surcouches_actives')}</span>
               </b>
               <small> · {active.join(' · ')}</small>
             </>

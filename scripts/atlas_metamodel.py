@@ -5,66 +5,27 @@ observed in the selected snapshot; definitions come only from its associated,
 frozen methodology guide when that guide contains the matching term.
 """
 
+try:
+    from .atlas_text import text as ui_text
+except ImportError:
+    from atlas_text import text as ui_text
+
+import json
+from pathlib import Path
 from collections import Counter, defaultdict
 import re
 
 from scripts.validate_models import RELATION_KINDS
 
 
-GUIDE_TERMS = {
-    'universe': 'Enterprise Architecture',
-    'business_system': 'Business System',
-    'domain': 'Domain',
-    'area': 'Subdomain',
-    'business_area': 'Business Area',
-    'reference': 'Business Reference',
-    'capability': 'Capability',
-    'behavior': 'Capability Behavior',
-}
-PUBLICATION_TERMS = {'universe': 'Univers'}
-RELATION_ROLES = {
-    'contains': 'composition',
-    'presents': 'presentation',
-    'relates-to': 'interaction',
-    'uses-reference': 'interaction',
-    'supplies-reference': 'interaction',
-    'provides-knowledge': 'interaction',
-    'provides-conditions': 'interaction',
-}
-FIELD_MEANINGS = {
-    'relations.fields.summary_label': 'Libellé de synthèse explicite des échanges ayant ces extrémités orientées ; les libellés et contenus détaillés des relations restent conservés.',
-    'relations.fields.data_exchange': 'Contenus métier typés et finalité du partage orienté ; références au glossaire de cette publication, sans protocole technique implicite.',
-    'nodes': 'Objets de cette publication ; kind indique leur type.',
-    'relations': 'Liens orientés entre objets ; source_id et target_id désignent des nodes.id.',
-    'nodes.id': 'Identifiant persistant, distinct du nom et du code de lecture.',
-    'nodes.kind': 'Type de l’objet, déclaré dans metamodel.node_types.',
-    'nodes.fields': 'Contenu de la fiche de cet objet dans la publication.',
-    'relations.type': 'Type du lien, déclaré dans metamodel.relation_types.',
-    'relations.qualification': 'Sens, rôle, conditions et effets propres à ce lien.',
-    'display_index': 'Ordre, parenté de lecture et codes figés pour cette publication.',
-    'scenario_catalog.paths.steps.context_participants': 'Participants de contexte documentés à leur profondeur déclarée, distincts des contributions de capacités et sans appartenance hiérarchique induite.',
-    'hotspot_catalog.hotspots': 'Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.',
-    'hotspot_catalog.hotspots.status': 'Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.',
-    'hotspot_catalog.hotspots.visible': 'Visibilité technique, vraie par défaut. Faux masque halos et filtres ; le sujet reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement de qualification ou de résolution.',
-    'hotspot_catalog.hotspots.framing_impact': 'Portées cumulables Modèle, Transition et Usage ; indépendantes de la criticité. Un impact non établi reste inconnu.',
-    'hotspot_catalog.hotspots.framing_impact.scopes': 'Modèle durable, trajectoire de transition ou praticité d’usage ; plusieurs portées possibles.',
-    'hotspot_catalog.hotspots.consolidated_into': 'Hotspot commun qui reprend le sujet ; identité et preuves d’origine conservées, accès discret.',
-    'hotspot_catalog.hotspots.gap_analysis': 'Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.',
-    'hotspot_catalog.hotspots.resolution': 'Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.',
-    'hotspot_catalog.criticality_policy': 'Grille matrix-v1 figée avec la publication, ses axes, repères et limites ; aucun calcul d’urgence.',
-    'hotspot_catalog.sources': 'Intitulés et accès documentés des sources internes ; les identifiants de provenance restent conservés.',
-}
+_DESCRIPTORS = json.loads((Path(__file__).resolve().parents[1] / 'app/content/metamodel-export.json').read_bytes())
 
-RELATION_MEANINGS = {
-    'shares-data': 'Le producteur source partage les informations métier décrites dans fields.data_exchange avec le destinataire cible, sans restriction de niveau ni preuve d’interface installée.',
-    'contains': 'Décomposition ou appartenance structurelle du parent vers l’enfant.',
-    'presents': 'Présentation d’un objet sous un autre, sans créer une responsabilité métier supplémentaire.',
-    'relates-to': 'Interaction métier qualifiée ; son sens précis est dans qualification.',
-    'uses-reference': 'La capacité source utilise les données du référentiel cible.',
-    'supplies-reference': 'La capacité source alimente le référentiel cible avec des apports qualifiés.',
-    'provides-knowledge': 'Le périmètre source apporte une connaissance au périmètre cible.',
-    'provides-conditions': 'La référence source apporte des conditions au périmètre cible.',
-}
+GUIDE_TERMS = _DESCRIPTORS['GUIDE_TERMS']
+ROOT_BINDINGS = _DESCRIPTORS['ROOT_BINDINGS']
+RELATION_ROLES = _DESCRIPTORS['RELATION_ROLES']
+FIELD_MEANINGS = _DESCRIPTORS['FIELD_MEANINGS']
+
+RELATION_MEANINGS = _DESCRIPTORS['RELATION_MEANINGS']
 
 
 def _plain(text):
@@ -111,18 +72,18 @@ def _constraints(model):
                       if node['kind'] == 'universe'), 'Univers')
     rules = [
         {'id': 'structural-acyclic', 'applies_to': 'contains/presents',
-         'rule': 'Aucun cycle dans les liens de décomposition ou de présentation.',
+         'rule': ui_text('metamodelExport.aucun_cycle_dans_les_liens_de_decomposition_ou_de_presentation'),
          'source': 'validation'},
         {'id': 'behavior-parent', 'applies_to': 'behavior',
          'cardinality': {'parent': {'min': 1, 'max': 1}, 'children': {'min': 0, 'max': 0}},
-         'rule': 'Chaque comportement a exactement une capacité par contains et aucun enfant structurel.',
+         'rule': ui_text('metamodelExport.chaque_comportement_a_exactement_une_capacite_par_contains_et_auc'),
          'source': 'validation'},
         {'id': 'qualified-dependencies', 'applies_to': 'relates-to/uses-reference/supplies-reference',
-         'rule': 'Chaque lien porte qualification.meaning non vide ; conditions et effets, s’ils existent, sont des listes de textes. Le rôle needs oriente la flèche du consommateur vers le fournisseur.',
-         'source': 'validation et convention de lecture'},
+         'rule': ui_text('metamodelExport.chaque_lien_porte_qualification_meaning_non_vide_conditions_et_ef'),
+         'source': ui_text('metamodelExport.validation_et_convention_de_lecture')},
         {'id': 'reference-dependency', 'applies_to': 'uses-reference/supplies-reference',
-         'rule': 'Ces liens décrivent usage et apport de données ; ils ne créent ni parent hiérarchique ni transfert implicite de maîtrise.',
-         'source': 'méthodologie associée'},
+         'rule': ui_text('metamodelExport.ces_liens_decrivent_usage_et_apport_de_donnees_ils_ne_creent_ni_p'),
+         'source': ui_text('metamodelExport.methodologie_associee')},
     ]
 
     def add(principle, ident, applies_to, rule, cardinality=None):
@@ -133,122 +94,103 @@ def _constraints(model):
             rules.append(entry)
 
     add('PRINCIPLE-TARGET-UNIVERSE', 'target-universe', 'universe',
-        f'Une seule racine {root_name} ; elle contient une fois chaque Business System et n’a pas de parent.',
+        ui_text('metamodelExport.une_seule_racine_elle_contient_une_fois_chaque_business_system_et', root_name=root_name),
         {'instances': {'min': 1, 'max': 1}, 'parent': {'min': 0, 'max': 0}})
     add('PRINCIPLE-TARGET-UNIVERSE', 'business-system-parent', 'business_system',
-        f'Chaque Business System a exactement un parent {root_name} par contains.',
+        ui_text('metamodelExport.chaque_business_system_a_exactement_un_parent_par_contains', root_name=root_name),
         {'parent': {'min': 1, 'max': 1}})
     add('PRINCIPLE-BUSINESS-SYSTEM', 'domain-parent', 'domain',
-        'Chaque Domain a exactement un parent Business System par presents.',
+        ui_text('metamodelExport.chaque_domain_a_exactement_un_parent_business_system_par_presents'),
         {'parent': {'min': 1, 'max': 1}})
     add('PRINCIPLE-BUSINESS-AREA', 'business-area-parent', 'business_area',
-        'Chaque Business Area a exactement un parent Subdomain (kind area) par contains.',
+        ui_text('metamodelExport.chaque_business_area_a_exactement_un_parent_subdomain_kind_area_p'),
         {'parent': {'min': 1, 'max': 1}})
     context_domains = [n['id'] for n in model.get('nodes', []) if n.get('kind') == 'domain'
                        and n.get('fields', {}).get('modeling_depth') == 'business_areas'
                        and 'PRINCIPLE-ORCHESTRATION-DETAIL' in principles]
     area_cardinality = {'children': {'min': 1, 'max': None}}
-    area_statement = 'Chaque Business Area contient au moins une capacité ou présente au moins une référence.'
+    area_statement = ui_text('metamodelExport.chaque_business_area_contient_au_moins_une_capacite_ou_presente_a')
     if context_domains:
         area_cardinality['context_domain_exception'] = {'domain_ids': context_domains, 'children_min': 0}
-        area_statement += ' Dans un domaine de contexte explicitement limité aux Business Areas, elle peut rester terminale sans capacité artificielle.'
+        area_statement += ui_text('metamodelExport.dans_un_domaine_de_contexte_explicitement_limite_aux_business_are')
     add('PRINCIPLE-BUSINESS-AREA', 'business-area-children', 'business_area',
         area_statement, area_cardinality)
     add('PRINCIPLE-BUSINESS-AREA', 'reference-presentation-parent', 'reference',
-        'Toute référence présentée par une Business Area a un seul parent de présentation.',
+        ui_text('metamodelExport.toute_reference_presentee_par_une_business_area_a_un_seul_parent_'),
         {'presentation_parent_when_business_area': {'min': 1, 'max': 1}})
     add('PRINCIPLE-REQUIRED-BUSINESS-AREA', 'capability-parent', 'capability',
-        'Chaque capacité a exactement une Business Area par contains ; aucun rattachement direct au sous-domaine.',
+        ui_text('metamodelExport.chaque_capacite_a_exactement_une_business_area_par_contains_aucun'),
         {'parent': {'min': 1, 'max': 1}})
     capability_domains = [n['id'] for n in model.get('nodes', []) if n.get('kind') == 'domain'
                           and n.get('fields', {}).get('modeling_depth') == 'capabilities']
-    depth_statement = 'Supply Chain Orchestration est détaillé jusqu’aux comportements.'
+    detailed_domains = [n.get('fields', {}).get('name', n['id']) for n in model.get('nodes', [])
+                        if n.get('kind') == 'domain' and n.get('fields', {}).get('modeling_depth') == 'behaviors']
+    depth_statement = (ui_text('metamodelExport.behavior_depth', domains=', '.join(detailed_domains))
+                       if detailed_domains else ui_text('metamodelExport.declared_depth'))
     if capability_domains:
-        depth_statement += ' Les domaines ' + ', '.join(capability_domains) + ' sont détaillés jusqu’aux capacités.'
+        depth_statement += ui_text('metamodelExport.les_domaines') + ', '.join(capability_domains) + ui_text('metamodelExport.sont_detailles_jusqu_aux_capacites')
     if context_domains:
-        depth_statement += ' Les domaines explicitement marqués business_areas peuvent décrire des Business Areas terminales de contexte.'
-    depth_statement += ' Les autres restent limités à leur profondeur déclarée.'
+        depth_statement += ui_text('metamodelExport.les_domaines_explicitement_marques_business_areas_peuvent_decrire')
+    depth_statement += ui_text('metamodelExport.les_autres_restent_limites_a_leur_profondeur_declaree')
     add('PRINCIPLE-ORCHESTRATION-DETAIL', 'orchestration-detail-scope', 'business_area/capability/behavior',
         depth_statement)
     add('PRINCIPLE-DIFFERENTIATING-BEHAVIORS', 'capability-behaviors', 'capability',
-        'Une capacité possède zéro ou au moins deux comportements différenciants.',
+        ui_text('metamodelExport.une_capacite_possede_zero_ou_au_moins_deux_comportements_differen'),
         {'behavior_children': {'allowed': [0, '2..*']}})
     add('PRINCIPLE-JUSTIFIED-BEHAVIOR', 'behavior-rationale', 'capability',
-        'Une capacité décomposée en comportements justifie cette décomposition dans fields.decomposition_rationale.')
+        ui_text('metamodelExport.une_capacite_decomposee_en_comportements_justifie_cette_decomposi'))
     add('PRINCIPLE-DOMAIN-SUBDOMAIN', 'capability-subdomain', 'capability',
-        'Chaque capacité a exactement un ancêtre Subdomain (kind area).',
+        ui_text('metamodelExport.chaque_capacite_a_exactement_un_ancetre_subdomain_kind_area'),
         {'subdomain_ancestors': {'min': 1, 'max': 1}})
     if model.get('scenario_catalog') is not None:
         rules.extend([
             {'id': 'scenario-streams', 'applies_to': 'scenario_catalog.scenarios',
              'cardinality': {'value_streams': {'min': 1, 'max': None}},
-             'rule': 'Chaque scénario référence au moins un flux de valeur existant.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.chaque_scenario_reference_au_moins_un_flux_de_valeur_existant'), 'source': 'validation'},
             {'id': 'scenario-paths', 'applies_to': 'scenario_catalog.scenarios',
              'cardinality': {'paths': {'min': 1, 'max': None}},
-             'rule': 'Chaque scénario possède au moins un parcours de mobilisation.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.chaque_scenario_possede_au_moins_un_parcours_de_mobilisation'), 'source': 'validation'},
             {'id': 'path-scenario', 'applies_to': 'scenario_catalog.paths',
              'cardinality': {'scenario': {'min': 1, 'max': 1}},
-             'rule': 'Chaque parcours référence un scénario existant.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.chaque_parcours_reference_un_scenario_existant'), 'source': 'validation'},
             {'id': 'step-contributions', 'applies_to': 'scenario_catalog.paths.steps',
              'cardinality': {'contributions': {'min': 1, 'max': None}},
-             'rule': 'Chaque étape mobilise au moins une capacité ou référence publiée ; ses dépendances pointent vers des étapes du même parcours.',
+             'rule': ui_text('metamodelExport.chaque_etape_mobilise_au_moins_une_capacite_ou_reference_publiee_'),
              'source': 'validation'},
         ])
         if any(step.get('context_participants') for path in model['scenario_catalog'].get('paths', [])
                for step in path.get('steps', [])):
             rules.append({'id': 'step-context-participants', 'applies_to': 'scenario_catalog.paths.steps.context_participants',
-                          'rule': 'Une participation de contexte vise un Domain, Subdomain ou Business Area à la profondeur de contexte déclarée ; rôle, conditions et sources sont explicites. Elle ne devient ni mobilisation de capacité ni parent métier.',
+                          'rule': ui_text('metamodelExport.une_participation_de_contexte_vise_un_domain_subdomain_ou_busines'),
                           'source': 'validation'})
     if model.get('information_catalog') is not None:
         rules.extend([
             {'id': 'information-capability-roles', 'applies_to': 'information_catalog.items',
              'cardinality': {'capability_roles': {'min': 1, 'max': None}},
-             'rule': 'Chaque information est reliée à au moins une capacité publiée, avec un rôle qualifié.',
+             'rule': ui_text('metamodelExport.chaque_information_est_reliee_a_au_moins_une_capacite_publiee_ave'),
              'source': 'validation'},
             {'id': 'information-links', 'applies_to': 'information_catalog.links',
-             'rule': 'Chaque lien va d’une information existante vers une autre information distincte.',
+             'rule': ui_text('metamodelExport.chaque_lien_va_d_une_information_existante_vers_une_autre_informa'),
              'source': 'validation'},
         ])
     if model.get('hotspot_catalog') is not None:
         rules.extend([
             {'id': 'hotspot-location', 'applies_to': 'hotspot_catalog.hotspots',
-             'rule': 'Un sujet de périmètre possède au moins un ancrage ; un sujet d’intégration exactement deux ancrages publiés. Ces ancrages ne créent pas de parent métier.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.un_sujet_de_perimetre_possede_au_moins_un_ancrage_un_sujet_d_inte'), 'source': 'validation'},
             {'id': 'hotspot-gap-optional', 'applies_to': 'hotspot_catalog.hotspots.gap_analysis',
              'cardinality': {'gaps': {'min': 0, 'max': None}},
-             'rule': 'Une analyse d’écarts est facultative. Son sujet est une Business Area, capacité ou comportement ; plusieurs observations du même SI exigent des périmètres distincts.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.une_analyse_d_ecarts_est_facultative_son_sujet_est_une_business_a'), 'source': 'validation'},
             {'id': 'hotspot-independent-dimensions', 'applies_to': 'hotspot_catalog.hotspots',
-             'rule': 'Qualification du sujet, impact du cadrage, criticité et avancement restent distincts. Un écart ne prouve pas un dysfonctionnement et une décision de non-convergence peut résoudre le cadrage.', 'source': 'conventions Hotspot et Gap Analysis'},
+             'rule': ui_text('metamodelExport.qualification_du_sujet_impact_du_cadrage_criticite_et_avancement_'), 'source': ui_text('metamodelExport.conventions_hotspot_et_gap_analysis')},
             {'id': 'hotspot-impact-scopes', 'applies_to': 'hotspot_catalog.hotspots.framing_impact.scopes',
-             'rule': 'Modèle, Transition et Usage sont cumulables. Une transition structurante peut ne pas déclarer de cible de modèle ; une cible business_model ou core_system exige la portée Modèle.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.modele_transition_et_usage_sont_cumulables_une_transition_structu'), 'source': 'validation'},
             {'id': 'hotspot-consolidation', 'applies_to': 'hotspot_catalog.hotspots.consolidated_into',
-             'rule': 'La destination est une fiche indépendante existante. La fiche source garde son identité et ses preuves, avec accès discret en fin de liste.', 'source': 'validation'},
+             'rule': ui_text('metamodelExport.la_destination_est_une_fiche_independante_existante_la_fiche_sour'), 'source': 'validation'},
         ])
     return rules
 
 
-CATALOG_TERMS = (
-    ('hotspot_catalog.hotspots', 'Hotspot', 'Sujet à creuser et arbitrer, avec ou sans écart entre modes de fonctionnement.'),
-    ('hotspot_catalog.hotspots.gap_analysis', 'Gap Analysis', 'Comparaison inter-SI ou intra-SI d’une responsabilité métier commune ; observations et réserves restent explicites.'),
-    ('hotspot_catalog.hotspots.gap_analysis.observations_by_context', 'Gap Observation', 'Observation située et sourcée d’un mode de fonctionnement, avec sa preuve et ses limites.'),
-    ('hotspot_catalog.hotspots.resolution_options', 'Hotspot Resolution Option', 'Option à instruire ; être crédible, être retenue et être mise en œuvre sont trois choses distinctes.'),
-    ('scenario_catalog.value_streams', 'Value Stream', None),
-    ('scenario_catalog.value_streams.stages', 'Value Stream Stage', None),
-    ('scenario_catalog.scenarios', 'Business Scenario', None),
-    ('scenario_catalog.paths', 'Capability Mobilization Path', None),
-    ('scenario_catalog.paths.steps', 'Capability Mobilization Step', None),
-    ('scenario_catalog.paths.steps.context_participants', 'Context Participation', 'Responsabilité de contexte participant à une étape, avec rôle, conditions et sources, sans capacité artificielle ni nouvelle hiérarchie.'),
-    ('scenario_catalog.facets', 'Scenario Facet', 'Valeur de classement utilisée pour retrouver des scénarios par événement, objet métier ou type de situation.'),
-    ('scenario_catalog.legacy_links', 'Legacy Scenario Link', 'Correspondance de lecture entre une ancienne illustration locale et un scénario autonome de cette publication.'),
-    ('information_catalog.items', 'Information', None),
-    ('information_catalog.links', 'Information Link', 'Relation orientée et qualifiée entre deux informations métier distinctes.'),
-    ('document_catalog.documents', 'Publication Document', 'Document téléchargeable figé avec une publication et éventuellement lié à un point chaud.'),
-    ('application_catalog.products', 'Application Product', 'Produit logiciel de référence, indépendant de ses sélections et usages dans chaque SI.'),
-    ('application_catalog.products.components', 'Application Component', 'Produit, module, option, extension ou fonction dans l’arbre de référence du produit.'),
-    ('application_catalog.selections', 'Application Selection', 'Présence d’un produit dans un SI ou dans la cible, avec états d’acquisition, d’activation et d’usage distincts.'),
-    ('application_catalog.selections.mappings', 'Application Mapping', 'Lien qualifié et sourcé entre un composant logiciel choisi dans un SI et un élément métier.'),
-    ('glossary.terms', 'Business Glossary Term', 'Terme du vocabulaire métier de cette publication, avec définition et statut de revue.'),
-    ('principles', 'Model Principle', 'Règle ou choix de modélisation applicable à cette publication, identifié et sourcé.'),
-)
+CATALOG_TERMS = _DESCRIPTORS['CATALOG_TERMS']
 
 
 def _catalog_types(model, terms):
@@ -284,13 +226,13 @@ def _catalog_types(model, terms):
         'principles': len(model.get('principles', [])),
     }
     result = []
-    for path, term_name, fallback in CATALOG_TERMS:
+    for path, term_ref, legacy_label, fallback in CATALOG_TERMS:
         if path.split('.')[0] not in model:
             continue
         if path.endswith('.context_participants') and not counts[path]:
             continue  # Historical snapshots do not acquire a new catalogue type.
-        term = terms.get(term_name)
-        result.append({'path': path, 'label': term_name,
+        term = terms.get(term_ref)
+        result.append({'path': path, 'label': term['name'] if term else legacy_label,
                        'definition': _plain(term['definition']) if term else fallback,
                        'definition_source': f"method:{term['id']}" if term else 'export-format' if fallback else None})
     return result, counts
@@ -299,22 +241,27 @@ def _catalog_types(model, terms):
 def describe_metamodel(model, guide_response, snapshot_schema=None):
     """Return a self-contained structural header without changing the snapshot."""
     guide = guide_response.get('guide') if guide_response.get('status') == 'available' else None
-    terms = {term['name']: term for term in (guide or {}).get('glossary', {}).get('terms', [])
+    terms = {term['id']: term for term in (guide or {}).get('glossary', {}).get('terms', [])
              if term.get('status') != 'retired'}
-    publication_terms = {term['name']: term for term in model.get('glossary', {}).get('terms', [])
+    publication_terms = {term['id']: term for term in model.get('glossary', {}).get('terms', [])
                          if not term.get('historical')}
     kinds = Counter(node['kind'] for node in model.get('nodes', []))
     node_types = []
     for kind in sorted(kinds):
-        root_name = next((node.get('fields', {}).get('name') for node in model.get('nodes', [])
-                          if node['kind'] == 'universe'), None) if kind == 'universe' else None
-        term = terms.get(GUIDE_TERMS.get(kind)) if kind != 'universe' or root_name == 'Enterprise Architecture' else None
-        publication_term = publication_terms.get(root_name or PUBLICATION_TERMS.get(kind)) if not term else None
+        root_binding = ROOT_BINDINGS.get(model['version']) if kind == 'universe' else None
+        term = terms.get(GUIDE_TERMS.get(kind)) if not root_binding else None
+        publication_term = publication_terms.get(root_binding.get('glossary_ref')) if root_binding else None
+        if kind == 'universe' and not term and not root_binding:
+            root_name = next((node.get('fields', {}).get('name') for node in model.get('nodes', [])
+                              if node['kind'] == kind), None)
+            matching_terms = [candidate for candidate in publication_terms.values() if candidate['name'] == root_name]
+            publication_term = matching_terms[0] if len(matching_terms) == 1 else None
         semantic_term = term or publication_term
         node_types.append({
             'kind': kind,
-            'label': semantic_term['name'] if semantic_term else kind.replace('_', ' ').title(),
+            'label': semantic_term['name'] if semantic_term else root_binding['legacy_label'] if root_binding else kind.replace('_', ' ').title(),
             'definition': _plain(semantic_term['definition']) if semantic_term else None,
+            'short_description': _plain(semantic_term.get('short_description') or semantic_term['definition']) if semantic_term else None,
             'definition_source': (f"method:{term['id']}" if term else
                                   f"glossary:{publication_term['id']}" if publication_term else None),
         })
@@ -335,7 +282,7 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
             'type': relation_type,
             'role': RELATION_ROLES.get(relation_type, 'interaction'),
             'definition': RELATION_MEANINGS.get(relation_type),
-            'direction': 'source_id → target_id',
+            'direction': ui_text('metamodelExport.source_id_target_id'),
             'allowed_endpoints': _allowed_pairs(relation_type, set(kinds), principles),
             'allowed_endpoints_source': 'published_hierarchy' if current_hierarchy and relation_type in {'contains', 'presents'} else 'validator',
         })
@@ -354,7 +301,7 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
 
     return {
         'schema_version': '1.0.0',
-        'scope': 'Types et liens observés dans cette publication ; les couples observés ne définissent pas à eux seuls les liens autorisés.',
+        'scope': ui_text('metamodelExport.types_et_liens_observes_dans_cette_publication_les_couples_observ'),
         'publication_version': model['version'],
         'methodology': {
             'status': guide_response['status'],
@@ -363,7 +310,7 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
         },
         'fields': FIELD_MEANINGS,
         'snapshot_schema': snapshot_schema,
-        'snapshot_schema_scope': 'Contrat général du contenu publié ; profile indique les types et liens réellement présents dans cette édition. sourcePath et metamodel sont ajoutés par Atlas.' if snapshot_schema else None,
+        'snapshot_schema_scope': ui_text('metamodelExport.contrat_general_du_contenu_publie_profile_indique_les_types_et_li') if snapshot_schema else None,
         'node_types': node_types,
         'catalog_types': catalog_types,
         'relation_types': relation_types,

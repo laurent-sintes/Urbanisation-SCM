@@ -1,4 +1,5 @@
 import type { AtlasNode, BusinessExample, MarketComparison, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface PedagogicalDescription {
   explanation: string;
@@ -10,7 +11,7 @@ export interface PedagogicalDescription {
 
 /** The short description is always the definition of this published instance. */
 export function shortNodeDescription(node: AtlasNode): string {
-  return node.definition || 'Description non renseignée dans cette publication.';
+  return node.definition || ui('pedagogy.description_non_renseignee_dans_cette_publication');
 }
 
 export function pedagogyOf(node: AtlasNode): PedagogicalDescription | undefined {

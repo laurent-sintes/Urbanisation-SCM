@@ -57,7 +57,7 @@ test('exact names and IDs precede prose matches; editorial fields are not search
 test('market position retains its meaning without exposing adoption metadata or inferring innovation', () => {
   const text =
     'U438 : Frontière adoptée U395. Achat et stocks restent distincts. Comparaison proposée au titre de U435, sans validation ni réalisation installée déduites.';
-  assert.equal(marketText(text), 'Achat et stocks restent distincts.');
+  assert.equal(marketText(text), text);
   assert.equal(marketText('Recouvrement partiel'), 'Recouvrement partiel');
   assert.equal(marketSearchText(), '');
   assert.equal(

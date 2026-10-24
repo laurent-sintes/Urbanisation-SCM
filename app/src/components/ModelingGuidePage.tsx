@@ -4,6 +4,7 @@ import { activeMethod, isTransformationGuide } from '../methodNavigation';
 import { type GuideLesson, lessonForPublication, type ModelingGuide } from '../modelingGuide';
 import { revealSection } from '../readerNavigation';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import type { GuideState } from '../useModelingGuide';
 import { MethodNavigation } from './MethodNavigation';
 import { CatalogLink, MethodLink, MethodReturn, ModelText, ReferenceLink } from './ModelLinks';
@@ -57,8 +58,9 @@ function Lesson({
     <article className="guide-lesson" aria-labelledby={titleId}>
       <div className="guide-lesson-heading">
         <p className="guide-kicker">
-          Clé {String(index + 1).padStart(2, '0')} / {String(guide.lessons.length).padStart(2, '0')}
-          <span>Découvrir</span>
+          {ui('modelingGuidePage.cle')}
+          {String(index + 1).padStart(2, '0')} / {String(guide.lessons.length).padStart(2, '0')}
+          <span>{ui('modelingGuidePage.decouvrir')}</span>
         </p>
         <h2 id={titleId}>{lesson.title}</h2>
         <p className="guide-rule">{lesson.rule}</p>
@@ -68,7 +70,7 @@ function Lesson({
         <ModelText text={lesson.explanation} />
       </p>
       <details className="guide-exercise">
-        <summary>Tester ma compréhension</summary>
+        <summary>{ui('modelingGuidePage.tester_ma_comprehension')}</summary>
         <h3 id={questionId}>{lesson.question}</h3>
         <div className="guide-choices" role="group" aria-labelledby={questionId}>
           {lesson.choices.map((item, itemIndex) => (
@@ -88,24 +90,27 @@ function Lesson({
         <div id={answerId} className={`guide-answer${answer ? ' is-visible' : ''}`} role="status" aria-atomic="true">
           {answer && <p>{answer}</p>}
         </div>
-        <p>Les réponses ne sont pas enregistrées.</p>
+        <p>{ui('modelingGuidePage.les_reponses_ne_sont_pas_enregistrees')}</p>
       </details>
       <section className="guide-contribute">
-        <h3>Pour contribuer</h3>
+        <h3>{ui('modelingGuidePage.pour_contribuer')}</h3>
         <div className="guide-contributor-content">
           <div className="guide-detail-grid">
             <section>
-              <h3>Le critère utile</h3>
+              <h3>{ui('modelingGuidePage.le_critere_utile')}</h3>
               <p>{lesson.contributor.criterion}</p>
             </section>
             <section>
-              <h3>La frontière à préserver</h3>
+              <h3>{ui('modelingGuidePage.la_frontiere_a_preserver')}</h3>
               <p>{lesson.contributor.boundary}</p>
             </section>
           </div>
           {lesson.model_links.length > 0 && (
             <section className="guide-model-links">
-              <h3>Dans la publication {model.version}</h3>
+              <h3>
+                {ui('modelingGuidePage.dans_la_publication')}
+                {model.version}
+              </h3>
               {modelLinks.length > 0 && (
                 <ul>
                   {modelLinks.map((link) => (
@@ -121,8 +126,10 @@ function Lesson({
               {missingLinks.length > 0 && (
                 <p className="guide-unpublished">
                   {missingLinks.map((link) => link.label).join(' · ')} :{' '}
-                  {missingLinks.length === 1 ? 'exemple absent' : 'exemples absents'} de cette publication.
-                  L’illustration ci-dessus reste pédagogique.
+                  {missingLinks.length === 1
+                    ? ui('modelingGuidePage.exemple_absent')
+                    : ui('modelingGuidePage.exemples_absents')}
+                  {ui('modelingGuidePage.de_cette_publication_l_illustration_ci_dessus_reste_pedagogique')}
                 </p>
               )}
             </section>
@@ -151,19 +158,22 @@ function GuideContent({
   if (state.version !== model.version || state.status === 'loading')
     return (
       <section className="guide-status" role="status" aria-live="polite">
-        <p>Chargement de la méthodologie pour {model.version}…</p>
+        <p>
+          {ui('modelingGuidePage.chargement_de_la_methodologie_pour')}
+          {model.version}…
+        </p>
       </section>
     );
   if (state.status === 'error')
     return (
       <section className="guide-status">
         <div role="alert">
-          <h2>Le guide n’est pas accessible</h2>
+          <h2>{ui('modelingGuidePage.le_guide_n_est_pas_accessible')}</h2>
           <p>{state.message}</p>
         </div>
         <button type="button" className="secondary-button" onClick={retry}>
           <RefreshCw size={16} aria-hidden="true" />
-          Réessayer
+          {ui('modelingGuidePage.reessayer')}
         </button>
       </section>
     );
@@ -172,9 +182,12 @@ function GuideContent({
     return (
       <section className="guide-status">
         <BookOpen size={28} aria-hidden="true" />
-        <h2>Guide non associé à cette publication</h2>
+        <h2>{ui('modelingGuidePage.guide_non_associe_a_cette_publication')}</h2>
         <p>{response.message}</p>
-        <small>Publication {model.version}</small>
+        <small>
+          {ui('modelingGuidePage.publication')}
+          {model.version}
+        </small>
       </section>
     );
   const { guide } = response;
@@ -192,20 +205,19 @@ function GuideContent({
     <div className="modeling-guide-page">
       <MethodReturn />
       <p className="guide-edition">
-        {guide.title} · {guide.version} — associée au modèle {model.version}
+        {guide.title} · {guide.version}
+        {ui('modelingGuidePage.associee_au_modele')}
+        {model.version}
       </p>
       {guide.chapters && !home && (
-        <nav className="method-chapters" aria-label="Rubriques de la méthode">
+        <nav className="method-chapters" aria-label={ui('modelingGuidePage.rubriques_de_la_methode')}>
           <MethodNavigation guide={guide} selected={selected} onSelect={onSelect} compact />
         </nav>
       )}
       {home && (
         <article className="guide-lesson method-home">
-          <h2>Une démarche, plusieurs portes d’entrée</h2>
-          <p>
-            Comprendre ensemble, éprouver les options et décider progressivement. Ce parcours organise la lecture ; les
-            dimensions du travail s’instruisent ensemble.
-          </p>
+          <h2>{ui('modelingGuidePage.une_demarche_plusieurs_portes_d_entree')}</h2>
+          <p>{ui('modelingGuidePage.comprendre_ensemble_eprouver_les_options_et_decider_progressiveme')}</p>
           <div className="method-home-cards">
             {reading.map((c) => (
               <button type="button" key={c.id} onClick={() => onSelect(c.id)}>
@@ -215,26 +227,26 @@ function GuideContent({
             ))}
           </div>
           <details className="method-home-resources">
-            <summary>Ressources de la méthode</summary>
+            <summary>{ui('modelingGuidePage.ressources_de_la_methode')}</summary>
             <MethodNavigation guide={guide} selected={selected} onSelect={onSelect} resourcesOnly />
           </details>
           {reading[0]?.visual && <MethodVisual visual={reading[0].visual} />}
         </article>
       )}
       {(home || chapter?.id === 'start') && (
-        <nav className="method-entry-links" aria-label="Espaces liés">
-          <a href={mapHref}>Explorer la cartographie</a>
-          {!!model.raw.scenario_catalog && <CatalogLink>Parcourir les scénarios</CatalogLink>}
-          <MethodLink index>Ouvrir le glossaire méthodologique</MethodLink>
+        <nav className="method-entry-links" aria-label={ui('modelingGuidePage.espaces_lies')}>
+          <a href={mapHref}>{ui('modelingGuidePage.explorer_la_cartographie')}</a>
+          {!!model.raw.scenario_catalog && <CatalogLink>{ui('modelingGuidePage.parcourir_les_scenarios')}</CatalogLink>}
+          <MethodLink index>{ui('modelingGuidePage.ouvrir_le_glossaire_methodologique')}</MethodLink>
         </nav>
       )}
       {codes && (
         <section className="guide-lesson">
-          <h2>Codes et identifiants</h2>
+          <h2>{ui('modelingGuidePage.codes_et_identifiants')}</h2>
           {model.raw.display_index ? (
             <ReadingHelp model={model} />
           ) : (
-            <p>Cette publication ne définit pas de codes de lecture.</p>
+            <p>{ui('modelingGuidePage.cette_publication_ne_definit_pas_de_codes_de_lecture')}</p>
           )}
         </section>
       )}
@@ -244,7 +256,7 @@ function GuideContent({
           <p>
             <ModelText text={chapter.intro} />
           </p>
-          <nav className="method-section-index" aria-label="Dans cette rubrique">
+          <nav className="method-section-index" aria-label={ui('modelingGuidePage.dans_cette_rubrique')}>
             {chapter.sections.map((item, i) => (
               <button
                 type="button"
@@ -272,7 +284,7 @@ function GuideContent({
               )}
               {item.detail && (
                 <details>
-                  <summary>Précisions et points d’attention</summary>
+                  <summary>{ui('modelingGuidePage.precisions_et_points_d_attention')}</summary>
                   <p>
                     <ModelText text={item.detail} />
                   </p>
@@ -280,7 +292,8 @@ function GuideContent({
               )}
               {item.url && (
                 <a href={item.url} target="_blank" rel="noreferrer">
-                  Consulter la référence : {item.title}
+                  {ui('modelingGuidePage.consulter_la_reference')}
+                  {item.title}
                 </a>
               )}
             </section>
@@ -291,9 +304,9 @@ function GuideContent({
       {!home && !codes && (!chapter || chapter.id === 'metamodel') && (
         <>
           <p>
-            <MethodLink index>Ouvrir le glossaire méthodologique</MethodLink>
+            <MethodLink index>{ui('modelingGuidePage.ouvrir_le_glossaire_methodologique')}</MethodLink>
           </p>
-          <nav className="guide-topics" aria-label="Choisir un principe">
+          <nav className="guide-topics" aria-label={ui('modelingGuidePage.choisir_un_principe')}>
             {guide.lessons.map((item, itemIndex) => (
               <button
                 type="button"
@@ -319,15 +332,19 @@ function GuideContent({
           ) : (
             !chapter && (
               <section className="guide-status">
-                <h2>Principe absent de ce guide</h2>
-                <p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p>
+                <h2>{ui('modelingGuidePage.principe_absent_de_ce_guide')}</h2>
+                <p>
+                  {ui('modelingGuidePage.la_reference')}
+                  {selected}
+                  {ui('modelingGuidePage.ne_figure_pas_dans_cette_version_choisis_l_un_des_reperes_ci_dess')}
+                </p>
               </section>
             )
           )}
         </>
       )}
       {readingIndex >= 0 && (
-        <nav className="method-reading-path" aria-label="Parcours de lecture">
+        <nav className="method-reading-path" aria-label={ui('modelingGuidePage.parcours_de_lecture')}>
           {readingIndex > 0 && (
             <button type="button" onClick={() => onSelect(reading[readingIndex - 1].id)}>
               ← {reading[readingIndex - 1].title}
@@ -335,7 +352,8 @@ function GuideContent({
           )}
           {readingIndex < reading.length - 1 && (
             <button type="button" onClick={() => onSelect(reading[readingIndex + 1].id)}>
-              Continuer : {reading[readingIndex + 1].title} →
+              {ui('modelingGuidePage.continuer')}
+              {reading[readingIndex + 1].title} →
             </button>
           )}
         </nav>
@@ -349,17 +367,17 @@ function GuideContent({
             )
           }
         >
-          Retour à l’accueil{' '}
+          {ui('modelingGuidePage.retour_a_l_accueil')}{' '}
           {guide.id === 'flow-atlas-metamodel'
-            ? 'du métamodèle'
+            ? ui('modelingGuidePage.du_metamodele')
             : isTransformationGuide(guide)
-              ? 'de la méthodologie de transformation'
-              : 'de la méthode'}
+              ? ui('modelingGuidePage.de_la_methodologie_de_transformation')
+              : ui('modelingGuidePage.de_la_methode')}
         </button>
       </p>
       <p className="guide-footer">
         <button type="button" onClick={() => onSelect('codes')}>
-          Comprendre les codes et identifiants
+          {ui('modelingGuidePage.comprendre_les_codes_et_identifiants')}
         </button>
       </p>
     </div>

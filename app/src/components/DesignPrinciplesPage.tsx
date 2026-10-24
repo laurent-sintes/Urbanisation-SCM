@@ -15,6 +15,7 @@ import type { RouteState } from '../navigation';
 import { routeHash } from '../navigation';
 import { revealSection } from '../readerNavigation';
 import type { ArchitecturePrinciple, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { ModelText, ReferenceLink, readingOrigin } from './ModelLinks';
 import './design-principles.css';
 
@@ -79,46 +80,59 @@ export function DesignPrinciplesPage({
   );
   if (!selected)
     return (
-      <section className="design-principles" aria-label="Référentiel des principes directeurs">
-        {route.principle && <p role="status">Ce principe n’est pas présenté dans cette publication.</p>}
+      <section
+        className="design-principles"
+        aria-label={ui('designPrinciplesPage.referentiel_des_principes_directeurs')}
+      >
+        {route.principle && (
+          <p role="status">{ui('designPrinciplesPage.ce_principe_n_est_pas_presente_dans_cette_publication')}</p>
+        )}
         <div className="principle-overview">
           <section className="principle-choices">
             <div className="principle-index-heading">
               <h2>
                 <span className="principle-total">{choices.length}</span>{' '}
-                {choices.length > 1 ? 'principes directeurs' : 'principe directeur'}
+                {choices.length > 1
+                  ? ui('designPrinciplesPage.principes_directeurs')
+                  : ui('designPrinciplesPage.principe_directeur')}
               </h2>
               {guides.map((p) => (
                 <a className="principle-reading-link" key={p.id} href={link(p.id)}>
                   <BookOpen size={18} aria-hidden="true" />
-                  Comment lire la cartographie
+                  {ui('designPrinciplesPage.comment_lire_la_cartographie')}
                 </a>
               ))}
             </div>
             {choices.length > 0 && list(choices)}
           </section>
         </div>
-        {!choices.length && <p>Aucun principe directeur présenté dans cette publication.</p>}
+        {!choices.length && (
+          <p>{ui('designPrinciplesPage.aucun_principe_directeur_presente_dans_cette_publication')}</p>
+        )}
       </section>
     );
   return (
     <article className="design-principles principle-detail" aria-label={principleTitle(selected)}>
       <button type="button" onClick={() => onSelect('')}>
-        Tous les principes directeurs
+        {ui('designPrinciplesPage.tous_les_principes_directeurs')}
       </button>
       <p className="eyebrow">
-        {isGuide ? 'Guide de lecture' : principleCategories[selected.category || ''] || 'Règle du modèle'}
+        {isGuide
+          ? ui('designPrinciplesPage.guide_de_lecture')
+          : principleCategories[selected.category || ''] || ui('designPrinciplesPage.regle_du_modele')}
       </p>
       <h2>{principleTitle(selected)}</h2>
       <section>
-        <h3>{isGuide ? 'Lire une cartographie métier' : 'Le principe'}</h3>
+        <h3>
+          {isGuide ? ui('designPrinciplesPage.lire_une_cartographie_metier') : ui('designPrinciplesPage.le_principe')}
+        </h3>
         <p>
           <PrincipleText text={selected.statement} />
         </p>
       </section>
       {selected.reading_children?.length && (
         <section className="principle-practices">
-          <h3>Bonnes pratiques de cartographie</h3>
+          <h3>{ui('designPrinciplesPage.bonnes_pratiques_de_cartographie')}</h3>
           {principleChildren(model, selected).map((child) => (
             <section key={child.id} id={`principle-${child.id}`} tabIndex={-1} className="principle-practice">
               <h4>{principleTitle(child)}</h4>
@@ -130,14 +144,24 @@ export function DesignPrinciplesPage({
         </section>
       )}
       <section>
-        <h3>{isGuide ? 'À quoi servent ces repères' : 'Pourquoi ce choix'}</h3>
+        <h3>
+          {isGuide
+            ? ui('designPrinciplesPage.a_quoi_servent_ces_reperes')
+            : ui('designPrinciplesPage.pourquoi_ce_choix')}
+        </h3>
         <p>
-          <PrincipleText text={selected.rationale || 'Justification non renseignée dans cette publication.'} />
+          <PrincipleText
+            text={selected.rationale || ui('designPrinciplesPage.justification_non_renseignee_dans_cette_publication')}
+          />
         </p>
       </section>
       {selected.implications && (
         <section>
-          <h3>{isGuide ? 'Parcourir le modèle' : 'Ce que cela change dans la carte'}</h3>
+          <h3>
+            {isGuide
+              ? ui('designPrinciplesPage.parcourir_le_modele')
+              : ui('designPrinciplesPage.ce_que_cela_change_dans_la_carte')}
+          </h3>
           <p>
             <PrincipleText text={selected.implications} />
           </p>
@@ -145,7 +169,11 @@ export function DesignPrinciplesPage({
       )}
       {(selected.examples || []).map((e) => (
         <section key={`${e.kind}:${e.text}`} className={`principle-example ${e.kind}`}>
-          <h3>{e.kind === 'illustration' ? 'Exemple illustratif' : 'Contre-exemple'}</h3>
+          <h3>
+            {e.kind === 'illustration'
+              ? ui('designPrinciplesPage.exemple_illustratif')
+              : ui('designPrinciplesPage.contre_exemple')}
+          </h3>
           <p>
             <PrincipleText text={e.text} />
           </p>
@@ -153,7 +181,7 @@ export function DesignPrinciplesPage({
       ))}
       {selected.tradeoffs && (
         <section>
-          <h3>Limites et compromis</h3>
+          <h3>{ui('designPrinciplesPage.limites_et_compromis')}</h3>
           <p>
             <PrincipleText text={selected.tradeoffs} />
           </p>
@@ -161,13 +189,17 @@ export function DesignPrinciplesPage({
       )}
       {selected.scope && (
         <section>
-          <h3>{isGuide ? 'Points d’entrée dans la cartographie' : 'Périmètres concernés'}</h3>
+          <h3>
+            {isGuide
+              ? ui('designPrinciplesPage.points_d_entree_dans_la_cartographie')
+              : ui('designPrinciplesPage.perimetres_concernes')}
+          </h3>
           <p>
             {isGuide
-              ? 'Ces liens permettent de mettre les repères de lecture en pratique.'
+              ? ui('designPrinciplesPage.ces_liens_permettent_de_mettre_les_reperes_de_lecture_en_pratique')
               : selected.scope.kind === 'global'
-                ? 'Orientation applicable à l’ensemble de la carte. Les liens suivants donnent des points d’entrée.'
-                : 'Orientation ciblée sur les responsabilités suivantes et leurs composantes.'}
+                ? ui('designPrinciplesPage.orientation_applicable_a_l_ensemble_de_la_carte_les_liens_suivant')
+                : ui('designPrinciplesPage.orientation_ciblee_sur_les_responsabilites_suivantes_et_leurs_com')}
           </p>
           <ul>
             {selected.scope.targets.map((t) => (
@@ -197,11 +229,15 @@ export function DesignPrinciplesPage({
       )}
       {readingsForPrinciple(model, selected.id).length > 0 && (
         <section className="principle-readings">
-          <h3>{isGuide ? 'Descriptions qui citent ces repères' : 'Descriptions qui citent ce principe'}</h3>
+          <h3>
+            {isGuide
+              ? ui('designPrinciplesPage.descriptions_qui_citent_ces_reperes')
+              : ui('designPrinciplesPage.descriptions_qui_citent_ce_principe')}
+          </h3>
           <p>
             {isGuide
-              ? 'Ces descriptions renvoient aux bonnes pratiques du guide.'
-              : 'Ces renvois expliquent un passage ; ils n’étendent pas le périmètre d’application du principe.'}
+              ? ui('designPrinciplesPage.ces_descriptions_renvoient_aux_bonnes_pratiques_du_guide')
+              : ui('designPrinciplesPage.ces_renvois_expliquent_un_passage_ils_n_etendent_pas_le_perimetre')}
           </p>
           <ul>
             {readingsForPrinciple(model, selected.id).map((r) => (
@@ -248,7 +284,12 @@ export function DesignPrinciplesPage({
                 )}
                 <small>
                   {' '}
-                  · {r.collection === 'nodes' ? 'Fiche' : r.collection === 'terms' ? 'Glossaire' : 'Relation'}
+                  ·{' '}
+                  {r.collection === 'nodes'
+                    ? ui('designPrinciplesPage.fiche')
+                    : r.collection === 'terms'
+                      ? ui('designPrinciplesPage.glossaire')
+                      : ui('designPrinciplesPage.relation')}
                 </small>
               </li>
             ))}
@@ -256,7 +297,9 @@ export function DesignPrinciplesPage({
         </section>
       )}
       <section>
-        <h3>{isGuide ? 'Références de méthode' : 'Recherche et marché'}</h3>
+        <h3>
+          {isGuide ? ui('designPrinciplesPage.references_de_methode') : ui('designPrinciplesPage.recherche_et_marche')}
+        </h3>
         {selected.references?.length ? (
           <ul className="principle-references">
             {selected.references.map((r) => (
@@ -265,33 +308,36 @@ export function DesignPrinciplesPage({
                   {r.publisher} — {r.title}
                 </a>
                 <p>
-                  {r.edition} · consulté le {r.consulted_on} · {r.locator}
+                  {r.edition}
+                  {ui('designPrinciplesPage.consulte_le')}
+                  {r.consulted_on} · {r.locator}
                 </p>
                 <p>
-                  <strong>Apport observé : </strong>
+                  <strong>{ui('designPrinciplesPage.apport_observe')}</strong>
                   <PrincipleText text={r.observed} />
                 </p>
                 <p>
-                  <strong>Utilisation : </strong>
+                  <strong>{ui('designPrinciplesPage.utilisation')}</strong>
                   <PrincipleText text={r.role} />
                 </p>
                 <p>
-                  <strong>Limites : </strong>
+                  <strong>{ui('designPrinciplesPage.limites')}</strong>
                   <PrincipleText text={r.limits} />
                 </p>
               </li>
             ))}
           </ul>
         ) : (
-          <p>
-            Aucun appui externe documenté dans cette publication. Le principe exprime un choix de conception de la
-            carte.
-          </p>
+          <p>{ui('designPrinciplesPage.aucun_appui_externe_documente_dans_cette_publication_le_principe_')}</p>
         )}
       </section>
       {related.length > 0 ? (
         <section>
-          <h3>{isGuide ? 'Principes directeurs à explorer' : 'Autres principes directeurs'}</h3>
+          <h3>
+            {isGuide
+              ? ui('designPrinciplesPage.principes_directeurs_a_explorer')
+              : ui('designPrinciplesPage.autres_principes_directeurs')}
+          </h3>
           <ul>
             {related.map((p) => (
               <li key={p.id}>
@@ -303,7 +349,7 @@ export function DesignPrinciplesPage({
       ) : null}
       {selected.exceptions?.length ? (
         <section>
-          <h3>Exceptions documentées</h3>
+          <h3>{ui('designPrinciplesPage.exceptions_documentees')}</h3>
           <ul>
             {selected.exceptions.map((s) => (
               <li key={s}>
@@ -315,7 +361,7 @@ export function DesignPrinciplesPage({
       ) : null}
       {!isGuide && selected.review_trigger && (
         <section>
-          <h3>Quand réexaminer ce choix</h3>
+          <h3>{ui('designPrinciplesPage.quand_reexaminer_ce_choix')}</h3>
           <p>
             <PrincipleText text={selected.review_trigger} />
           </p>

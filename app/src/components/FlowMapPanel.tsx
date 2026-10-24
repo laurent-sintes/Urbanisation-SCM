@@ -23,6 +23,7 @@ import { layoutHotspots } from '../hotspotPlacement';
 import { childrenOf, visibleAncestorId } from '../model';
 import { kindLabel } from '../presentation';
 import type { AtlasRelation, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { savedFlowMap, useFlowMapLayout } from '../useFlowMapLayout';
 import { FlowScrollbars } from './FlowScrollbars';
 import { COMPACT_HOTSPOT_DIAMETER, COMPACT_HOTSPOT_TOUCH_DIAMETER, HotspotMapMarker } from './HotspotDisplay';
@@ -75,7 +76,8 @@ function titleTypography(box: FlowMapBox, zoom: number, hasChildren: boolean) {
   const fontFamily = getComputedStyle(document.body).fontFamily;
   const fontWeight = hasChildren ? 650 : 600;
   const measure = (text: string, font: number) => {
-    if (titleMeasure) titleMeasure.font = `${fontWeight} ${font}px ${fontFamily}`;
+    if (titleMeasure)
+      titleMeasure.font = ui('flowMapPanel.px', { fontWeight: fontWeight, font: font, fontFamily: fontFamily });
     return titleMeasure?.measureText(text).width ?? text.length * font * 0.54;
   };
   const preferred =
@@ -104,12 +106,12 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
         className={data.externalTitle ? 'spatial-object-hit nodrag' : 'spatial-object-title nodrag'}
         tabIndex={data.externalTitle ? -1 : 0}
         aria-pressed={active}
-        aria-label={`Ouvrir ${box.node.name}`}
+        aria-label={ui('flowMapPanel.ouvrir', { name: box.node.name })}
         onClick={(event) => {
           event.stopPropagation();
           data.onSelect(box.id);
         }}
-        title={`${box.node.name} · ${kindLabel(box.node)} · Ouvrir ce périmètre`}
+        title={ui('flowMapPanel.ouvrir_ce_perimetre', { name: box.node.name, value2: kindLabel(box.node) })}
         style={{
           fontSize: labelSize / zoom,
           padding: `${padding / zoom}px ${horizontalPadding / zoom}px`,
@@ -145,8 +147,8 @@ interface ExchangeGroup {
 const exchangeLabel = (relation: AtlasRelation) =>
   relation.label === relation.type
     ? relation.type === 'shares-data'
-      ? 'Partage de données'
-      : 'Apport de connaissance'
+      ? ui('flowMapPanel.partage_de_donnees')
+      : ui('flowMapPanel.apport_de_connaissance')
     : relation.label;
 
 function projectedExchanges(model: PublishedModel, relations: readonly AtlasRelation[], boxes: FlowMapBox[]) {
@@ -887,20 +889,22 @@ export function FlowMapPanel(props: MapPanelProps) {
   }, [layout, viewport.zoom, exchanges, annotations]);
 
   const exchangeDetail = selectedExchange && (
-    <aside className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`} aria-label="Détail du flux">
+    <aside
+      className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`}
+      aria-label={ui('flowMapPanel.detail_du_flux')}
+    >
       <header>
         <strong>
           {selectedExchange.source.node.name}
           <ArrowRight size={14} />
           {selectedExchange.target.node.name}
         </strong>
-        <button type="button" aria-label="Fermer le détail du flux" onClick={closeExchange}>
+        <button type="button" aria-label={ui('flowMapPanel.fermer_le_detail_du_flux')} onClick={closeExchange}>
           <X size={16} />
         </button>
       </header>
       <p className="flow-relation-context">
-        Les synthèses entre systèmes et les échanges détaillés peuvent décrire un même apport. Les relations d’origine
-        figurent ci-dessous ; leur nombre ne dénombre pas les interfaces installées.
+        {ui('flowMapPanel.les_syntheses_entre_systemes_et_les_echanges_detailles_peuvent_de')}
       </p>
       {selectedExchange.relations.map((relation) => {
         const source = model.nodeById.get(relation.sourceId);
@@ -909,7 +913,9 @@ export function FlowMapPanel(props: MapPanelProps) {
         return (
           <div key={relation.id} data-relation-id={relation.id}>
             <strong>{exchangeLabel(relation)}</strong>
-            <small>{systemSummary ? 'Synthèse entre systèmes' : 'Échange détaillé'}</small>
+            <small>
+              {systemSummary ? ui('flowMapPanel.synthese_entre_systemes') : ui('flowMapPanel.echange_detaille')}
+            </small>
             <small>
               <ReferenceLink target={relation.sourceId}>{source?.name || relation.sourceId}</ReferenceLink>
               {source && (
@@ -927,7 +933,10 @@ export function FlowMapPanel(props: MapPanelProps) {
                 </>
               )}
             </small>
-            <small>Relation publiée : {relation.id}</small>
+            <small>
+              {ui('flowMapPanel.relation_publiee')}
+              {relation.id}
+            </small>
             {flowExchangeContract(relation).map((section) => (
               <section className="flow-contract-section" key={section.label}>
                 <h3>{section.label}</h3>
@@ -948,7 +957,7 @@ export function FlowMapPanel(props: MapPanelProps) {
             ))}
             {!!relation.dataExchange?.contents.length && (
               <section className="flow-contract-section">
-                <h3>Informations partagées</h3>
+                <h3>{ui('flowMapPanel.informations_partagees')}</h3>
                 {relation.dataExchange.contents.map((content) => (
                   <div key={content.name}>
                     <p>
@@ -959,7 +968,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                     </p>
                     {!!content.glossary_refs.length && (
                       <small>
-                        Termes :{' '}
+                        {ui('flowMapPanel.termes')}{' '}
                         {content.glossary_refs.map((termId, index) => (
                           <span key={termId}>
                             {index > 0 && ' · '}
@@ -984,7 +993,7 @@ export function FlowMapPanel(props: MapPanelProps) {
     <section
       className="map-panel flow-map-panel"
       ref={panel}
-      aria-label="Carte spatiale des flux"
+      aria-label={ui('flowMapPanel.carte_spatiale_des_flux')}
       onKeyDown={(event) => {
         if (!event.defaultPrevented && event.key === 'Escape' && selectedExchange) {
           event.preventDefault();
@@ -995,7 +1004,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       <div className="map-toolbar flow-map-toolbar">
         <div>
           <strong>{scope?.name || rootName}</strong>
-          <span className="flow-toolbar-note">Flux documentés</span>
+          <span className="flow-toolbar-note">{ui('flowMapPanel.flux_documentes')}</span>
         </div>
         <div className="map-actions">
           <MapFlowPicker
@@ -1052,14 +1061,14 @@ export function FlowMapPanel(props: MapPanelProps) {
           <button
             type="button"
             className="map-fullscreen-button"
-            aria-label={expanded ? 'Réduire la carte' : 'Étendre la carte'}
-            title={expanded ? 'Réduire la carte' : 'Étendre la carte'}
+            aria-label={expanded ? ui('flowMapPanel.reduire_la_carte') : ui('flowMapPanel.etendre_la_carte')}
+            title={expanded ? ui('flowMapPanel.reduire_la_carte') : ui('flowMapPanel.etendre_la_carte')}
             onClick={() => {
               if (expanded) void document.exitFullscreen();
               else
                 void panel.current
                   ?.requestFullscreen()
-                  .catch(() => onAnnouncement('Le plein écran est indisponible dans ce navigateur.'));
+                  .catch(() => onAnnouncement(ui('flowMapPanel.le_plein_ecran_est_indisponible_dans_ce_navigateur')));
             }}
           >
             {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -1077,7 +1086,7 @@ export function FlowMapPanel(props: MapPanelProps) {
           } as CSSProperties
         }
         role="region"
-        aria-label="Exploration spatiale des flux, flèches pour déplacer, plus et moins pour zoomer"
+        aria-label={ui('flowMapPanel.exploration_spatiale_des_flux_fleches_pour_deplacer_plus_et_moins')}
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
@@ -1196,9 +1205,9 @@ export function FlowMapPanel(props: MapPanelProps) {
             className="flow-exchanges"
             width={size.width}
             height={size.height}
-            aria-label="Échanges orientés de la publication"
+            aria-label={ui('flowMapPanel.echanges_orientes_de_la_publication')}
           >
-            <title>Partages de données et apports de connaissance documentés</title>
+            <title>{ui('flowMapPanel.partages_de_donnees_et_apports_de_connaissance_documentes')}</title>
             <defs>
               <marker
                 id={`${paintId}-arrow`}
@@ -1251,7 +1260,11 @@ export function FlowMapPanel(props: MapPanelProps) {
                         : -1
                     }
                     aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
-                    aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
+                    aria-label={ui('flowMapPanel.vers', {
+                      name: exchange.source.node.name,
+                      name2: exchange.target.node.name,
+                      label: exchange.label,
+                    })}
                     onFocus={() => setHoveredExchangeId(exchange.id)}
                     onBlur={() => setHoveredExchangeId('')}
                     onClick={(event) => toggleExchange(exchange, event.currentTarget)}
@@ -1297,8 +1310,15 @@ export function FlowMapPanel(props: MapPanelProps) {
                             justifyContent: 'center',
                           }}
                           tabIndex={-1}
-                          title={`${exchange.label} · ${exchange.relations.length} relation${exchange.relations.length > 1 ? 's' : ''}`}
-                          aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
+                          title={ui('flowMapPanel.relation', {
+                            count: exchange.relations.length,
+                            label: exchange.label,
+                          })}
+                          aria-label={ui('flowMapPanel.vers', {
+                            name: exchange.source.node.name,
+                            name2: exchange.target.node.name,
+                            label: exchange.label,
+                          })}
                           aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
                           onMouseEnter={() => setHoveredExchangeId(exchange.id)}
                           onMouseLeave={() => setHoveredExchangeId('')}
@@ -1339,8 +1359,8 @@ export function FlowMapPanel(props: MapPanelProps) {
                 data-node-id={id}
                 data-title-display={annotations.shortTitles ? 'compact' : 'full'}
                 aria-pressed={displayedSelectionId === id}
-                aria-label={`Ouvrir ${box.node.name}`}
-                title={`${box.node.name} · Ouvrir ce périmètre`}
+                aria-label={ui('flowMapPanel.ouvrir', { name: box.node.name })}
+                title={ui('flowMapPanel.ouvrir_ce_perimetre_2', { name: box.node.name })}
                 onClick={() => enterObject(id)}
                 style={{
                   position: 'absolute',
@@ -1361,7 +1381,7 @@ export function FlowMapPanel(props: MapPanelProps) {
         </div>
         {layoutPending && (
           <p className="flow-map-note" role="status">
-            Préparation de la carte…
+            {ui('flowMapPanel.preparation_de_la_carte')}
           </p>
         )}
         {layoutError && (
@@ -1370,14 +1390,16 @@ export function FlowMapPanel(props: MapPanelProps) {
           </p>
         )}
         {!layoutPending && !layoutError && !layout.boxes.length && (
-          <p className="flow-map-note">Aucun périmètre cartographiable dans cette publication.</p>
+          <p className="flow-map-note">{ui('flowMapPanel.aucun_perimetre_cartographiable_dans_cette_publication')}</p>
         )}
         {!!layout.boxes.length && !layout.exchanges.length && (
-          <p className="flow-map-note">Aucun échange documenté pour ce périmètre.</p>
+          <p className="flow-map-note">{ui('flowMapPanel.aucun_echange_documente_pour_ce_perimetre')}</p>
         )}
         {arrows && !!layout.exchanges.length && !exchanges.length && (
           <p className="flow-map-note">
-            {!flowTypes.length ? 'Aucun type de flux sélectionné.' : 'Aucun flux de ces types dans ce cadrage.'}
+            {!flowTypes.length
+              ? ui('flowMapPanel.aucun_type_de_flux_selectionne')
+              : ui('flowMapPanel.aucun_flux_de_ces_types_dans_ce_cadrage')}
           </p>
         )}
         <div className="flow-map-hotspots">
@@ -1423,10 +1445,10 @@ export function FlowMapPanel(props: MapPanelProps) {
             }}
           />
         )}
-        <div className="flow-camera-tools" role="group" aria-label="Cadrage des flux">
+        <div className="flow-camera-tools" role="group" aria-label={ui('flowMapPanel.cadrage_des_flux')}>
           <select
             className="flow-framing-select"
-            aria-label="Cadrage des flux"
+            aria-label={ui('flowMapPanel.cadrage_des_flux')}
             value={framing}
             onChange={(event) => {
               if (event.target.value === 'standard') standard();
@@ -1436,17 +1458,17 @@ export function FlowMapPanel(props: MapPanelProps) {
           >
             {framing === 'custom' && (
               <option value="custom" disabled>
-                Libre
+                {ui('flowMapPanel.libre')}
               </option>
             )}
-            <option value="standard">Standard</option>
-            <option value="width">Largeur</option>
-            <option value="all">Tout cadrer</option>
+            <option value="standard">{ui('flowMapPanel.standard')}</option>
+            <option value="width">{ui('flowMapPanel.largeur')}</option>
+            <option value="all">{ui('flowMapPanel.tout_cadrer')}</option>
           </select>
           <div className="flow-zoom-tools">
             <button
               type="button"
-              aria-label="Zoom arrière"
+              aria-label={ui('flowMapPanel.zoom_arriere')}
               onClick={() => {
                 rememberFraming('custom');
                 void instance.current?.zoomOut({ duration: motionDuration(150) });
@@ -1454,10 +1476,10 @@ export function FlowMapPanel(props: MapPanelProps) {
             >
               <Minus size={16} />
             </button>
-            <output aria-label="Zoom des flux">{Math.round(viewport.zoom * 100)} %</output>
+            <output aria-label={ui('flowMapPanel.zoom_des_flux')}>{Math.round(viewport.zoom * 100)} %</output>
             <button
               type="button"
-              aria-label="Zoom avant"
+              aria-label={ui('flowMapPanel.zoom_avant')}
               onClick={() => {
                 rememberFraming('custom');
                 void instance.current?.zoomIn({ duration: motionDuration(150) });
@@ -1466,24 +1488,21 @@ export function FlowMapPanel(props: MapPanelProps) {
               <Plus size={16} />
             </button>
           </div>
-          <MapOverlayPanel label="Options de navigation" icon={<Focus size={16} />}>
+          <MapOverlayPanel label={ui('flowMapPanel.options_de_navigation')} icon={<Focus size={16} />}>
             <div className="map-recenter-actions">
               {selectedBoxId && (
                 <button type="button" onClick={() => center(selectedId)}>
-                  Centrer la sélection
+                  {ui('flowMapPanel.centrer_la_selection')}
                 </button>
               )}
               {product && (applicationBoxIds.size > 0 || applicationAtScope) && (
                 <button type="button" onClick={centerApplication}>
-                  Centrer l’application
+                  {ui('flowMapPanel.centrer_l_application')}
                 </button>
               )}
             </div>
-            <p>Glisser pour se déplacer. Cliquer sur un objet pour entrer dans son périmètre.</p>
-            <p>
-              Molette pour se déplacer ; Ctrl ou ⌘ + molette, pincement ou boutons + et − pour zoomer. Au clavier :
-              flèches et Page précédente / suivante pour déplacer, + et − pour zoomer, Début pour tout cadrer.
-            </p>
+            <p>{ui('flowMapPanel.glisser_pour_se_deplacer_cliquer_sur_un_objet_pour_entrer_dans_so')}</p>
+            <p>{ui('flowMapPanel.molette_pour_se_deplacer_ctrl_ou_molette_pincement_ou_boutons_et_')}</p>
           </MapOverlayPanel>
         </div>
         <div className="map-overlay-tools">
@@ -1506,10 +1525,14 @@ export function FlowMapPanel(props: MapPanelProps) {
             <button
               type="button"
               className="map-overlay-toggle flow-navigator-toggle"
-              aria-label={showMiniMap ? 'Réduire le navigateur de carte' : 'Afficher le navigateur de carte'}
+              aria-label={
+                showMiniMap
+                  ? ui('flowMapPanel.reduire_le_navigateur_de_carte')
+                  : ui('flowMapPanel.afficher_le_navigateur_de_carte')
+              }
               aria-expanded={showMiniMap}
               aria-controls={showMiniMap ? `${navigatorOwner}-preview` : undefined}
-              title="Navigateur de carte"
+              title={ui('flowMapPanel.navigateur_de_carte')}
               onKeyDown={(event) => {
                 if (event.key === 'Escape' && showMiniMap) {
                   event.preventDefault();
@@ -1522,7 +1545,7 @@ export function FlowMapPanel(props: MapPanelProps) {
               }}
             >
               <MapIcon size={16} />
-              <span>Navigateur</span>
+              <span>{ui('flowMapPanel.navigateur')}</span>
             </button>
           </div>
         )}

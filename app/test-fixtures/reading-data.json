@@ -1,0 +1,168 @@
+{
+  "profile": {
+    "scope_id": "supply-chain-orchestration",
+    "required_ids": [
+      "domain-plan",
+      "D01"
+    ],
+    "columns": [
+      [
+        "business-references",
+        "subdomain-service-orders"
+      ],
+      [
+        "subdomain-integration"
+      ],
+      [
+        "subdomain-policies",
+        "domain-plan"
+      ],
+      [
+        "D04",
+        "D01",
+        "D03"
+      ],
+      [
+        "subdomain-process-management",
+        "D06"
+      ]
+    ],
+    "upper_stacks": [
+      [
+        "business-references",
+        "subdomain-service-orders"
+      ],
+      [
+        "subdomain-process-management",
+        "D06"
+      ],
+      [
+        "subdomain-policies"
+      ],
+      [
+        "D04"
+      ]
+    ],
+    "upper_height_ids": [
+      "subdomain-policies",
+      "D04"
+    ],
+    "core_stacks": [
+      [
+        "domain-plan"
+      ],
+      [
+        "D01",
+        "D03"
+      ]
+    ],
+    "centered_stack": [
+      "subdomain-integration"
+    ],
+    "centered_against": "domain-plan",
+    "core_ids": [
+      "subdomain-integration",
+      "domain-plan",
+      "D01"
+    ]
+  },
+  "vocabulary": {
+    "capability_natures": {
+      "integration": {
+        "label": "Integration"
+      },
+      "action": {
+        "label": "Action"
+      },
+      "management": {
+        "label": "Management"
+      },
+      "ledger": {
+        "label": "Ledger"
+      },
+      "knowledge": {
+        "label": "Knowledge / Visibility"
+      },
+      "orchestration": {
+        "label": "Orchestration"
+      },
+      "planning": {
+        "label": "Planning"
+      },
+      "policy": {
+        "label": "Policy"
+      },
+      "evaluation": {
+        "label": "Evaluation"
+      },
+      "decision": {
+        "label": "Decision"
+      }
+    },
+    "behavior_natures": {
+      "policy_strategy": {
+        "label": "Policy / Strategy"
+      },
+      "process_variant": {
+        "label": "Process Variant"
+      },
+      "intervention_mechanism": {
+        "label": "Intervention Mechanism"
+      },
+      "business_scope": {
+        "label": "Business Scope"
+      },
+      "decision_dimension": {
+        "label": "Decision Dimension"
+      },
+      "business_effect": {
+        "label": "Business Effect"
+      },
+      "planning_practice": {
+        "label": "Planning Practice"
+      }
+    },
+    "request_origins": {
+      "frontoffice": {
+        "label": "Frontoffice",
+        "description": "Sollicitation initiée à l’extérieur du Domain."
+      },
+      "backoffice": {
+        "label": "Backoffice",
+        "description": "Sollicitation initiée à l’intérieur du Domain."
+      }
+    },
+    "behavior_aspects": {
+      "trigger": {
+        "label": "Déclenchement"
+      },
+      "activity": {
+        "label": "Activité"
+      }
+    },
+    "field_labels": {
+      "name": "Libellé",
+      "finality": "Finalité",
+      "definition": "Définition",
+      "scope": "Périmètre",
+      "nature": "Nature",
+      "independence": "Indépendance",
+      "mastership": "Maîtrise des informations",
+      "decomposition_rationale": "Pourquoi décomposer cette capacité",
+      "meaning": "Sens métier",
+      "role": "Rôle",
+      "conditions": "Conditions",
+      "effects": "Effets",
+      "label": "Libellé",
+      "verb": "Verbe de relation"
+    },
+    "presentation_roles": {
+      "universe": {
+        "label": "Universe"
+      },
+      "urbanism_level": {
+        "label": "Urbanism Level"
+      }
+    }
+  }
+}

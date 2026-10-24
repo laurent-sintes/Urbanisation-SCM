@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { ReaderExample } from '../examples';
+import { ui } from '../ui.ts';
 import { MethodLink, ModelText, ReferenceLink } from './ModelLinks';
 import './examples.css';
 
@@ -17,7 +18,7 @@ function ExampleDetail({ example, children }: { example: ReaderExample; children
     .split(/\s+/).length;
   return example.steps?.length || words > 120 ? (
     <details className="scenario-details">
-      <summary>Détails de cet exemple</summary>
+      <summary>{ui('businessExamples.details_de_cet_exemple')}</summary>
       {children}
     </details>
   ) : (
@@ -40,12 +41,14 @@ export function BusinessExamples({
       id={id}
       tabIndex={-1}
       className="business-examples"
-      aria-label={illustrations ? 'Illustrations métier' : 'Scénarios métier'}
+      aria-label={illustrations ? ui('businessExamples.illustrations_metier') : ui('businessExamples.scenarios_metier')}
     >
-      <h2>{illustrations ? 'Illustrations métier' : 'Scénarios métier'}</h2>
+      <h2>{illustrations ? ui('businessExamples.illustrations_metier') : ui('businessExamples.scenarios_metier')}</h2>
       <p>
         <MethodLink term={illustrations ? 'MOD027' : 'MOD026'}>
-          {illustrations ? 'Comprendre scénarios et parcours' : 'Comprendre les cas d’usage et leurs parcours'}
+          {illustrations
+            ? ui('businessExamples.comprendre_scenarios_et_parcours')
+            : ui('businessExamples.comprendre_les_cas_d_usage_et_leurs_parcours')}
         </MethodLink>
       </p>
       <div className="example-cards">
@@ -58,13 +61,13 @@ export function BusinessExamples({
             {example.sourceNode && (
               <p>
                 <ReferenceLink target={example.sourceNode} anchor="examples">
-                  Scénario partagé — fiche d’origine
+                  {ui('businessExamples.scenario_partage_fiche_d_origine')}
                 </ReferenceLink>
               </p>
             )}
             {example.contribution && (
               <p>
-                <strong>Contribution de cette fiche. </strong>
+                <strong>{ui('businessExamples.contribution_de_cette_fiche')}</strong>
                 <ModelText text={example.contribution} />
               </p>
             )}
@@ -80,19 +83,19 @@ export function BusinessExamples({
               <ExampleDetail example={example}>
                 {example.trigger && (
                   <p>
-                    <strong>Déclencheur. </strong>
+                    <strong>{ui('businessExamples.declencheur')}</strong>
                     <ModelText text={example.trigger} />
                   </p>
                 )}
                 {example.objective && (
                   <p>
-                    <strong>Résultat recherché. </strong>
+                    <strong>{ui('businessExamples.resultat_recherche')}</strong>
                     <ModelText text={example.objective} />
                   </p>
                 )}
                 {!!example.constraints?.length && (
                   <>
-                    <h4>Contraintes</h4>
+                    <h4>{ui('businessExamples.contraintes')}</h4>
                     <ul>
                       {example.constraints.map((text) => (
                         <li key={text}>
@@ -104,7 +107,7 @@ export function BusinessExamples({
                 )}
                 {!!example.options?.length && (
                   <>
-                    <h4>Options examinées</h4>
+                    <h4>{ui('businessExamples.options_examinees')}</h4>
                     <ul>
                       {example.options.map((option) => (
                         <li key={`${option.title}:${option.description}`}>
@@ -117,7 +120,7 @@ export function BusinessExamples({
                 )}
                 {!!example.steps?.length && (
                   <div className="scenario-story">
-                    <h4>Comment ce cas est résolu</h4>
+                    <h4>{ui('businessExamples.comment_ce_cas_est_resolu')}</h4>
                     <ol>
                       {example.steps.map((step) => (
                         <li key={`${step.title}:${step.description}`}>
@@ -125,7 +128,10 @@ export function BusinessExamples({
                           <p>
                             <ModelText text={step.description} />
                           </p>
-                          <ul className="scenario-capabilities" aria-label={`Capacités mobilisées : ${step.title}`}>
+                          <ul
+                            className="scenario-capabilities"
+                            aria-label={ui('businessExamples.capacites_mobilisees', { title: step.title })}
+                          >
                             {step.contributions.map((c) => (
                               <li key={`${c.node_id}:${c.role}`}>
                                 <ReferenceLink target={c.node_id}>{c.name || c.node_id}</ReferenceLink>
@@ -137,7 +143,7 @@ export function BusinessExamples({
                             ))}
                           </ul>
                           <p className="scenario-result">
-                            <strong>Résultat de cette étape. </strong>
+                            <strong>{ui('businessExamples.resultat_de_cette_etape')}</strong>
                             <ModelText text={step.outcome} />
                           </p>
                         </li>
@@ -147,7 +153,7 @@ export function BusinessExamples({
                 )}
                 {!!example.contributions?.length && (
                   <>
-                    <h4>Contributions métier</h4>
+                    <h4>{ui('businessExamples.contributions_metier')}</h4>
                     <ul>
                       {example.contributions.map((c) => (
                         <li key={`${c.node_id}:${c.role}`}>
@@ -160,19 +166,19 @@ export function BusinessExamples({
                 )}
                 {example.outcome && (
                   <p>
-                    <strong>Ce qui se passe. </strong>
+                    <strong>{ui('businessExamples.ce_qui_se_passe')}</strong>
                     <ModelText text={example.outcome} />
                   </p>
                 )}
                 {example.lesson && (
                   <p className="example-lesson">
-                    <strong>Ce que cela illustre. </strong>
+                    <strong>{ui('businessExamples.ce_que_cela_illustre')}</strong>
                     <ModelText text={example.lesson} />
                   </p>
                 )}
                 {!!example.validation_points?.length && (
                   <>
-                    <h4>Ce que ce cas permet de vérifier</h4>
+                    <h4>{ui('businessExamples.ce_que_ce_cas_permet_de_verifier')}</h4>
                     <ul>
                       {example.validation_points.map((text) => (
                         <li key={text}>

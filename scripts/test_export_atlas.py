@@ -52,6 +52,7 @@ class StaticExportTests(unittest.TestCase):
             self.assertEqual(metamodel['methodology']['status'], 'unavailable')
             self.assertEqual(metamodel['node_types'], [])
             self.assertEqual(metamodel['relation_types'], [])
+            self.assertEqual(model.pop('presentation'), {'icons': {}, 'flow_neighborhood': None})
             archived = json.loads((self.release / version / 'model.json').read_bytes())
             self.assertEqual(model, archived)
             self.assertEqual(hashlib.sha256(payload).hexdigest(), entry['model_sha256'])

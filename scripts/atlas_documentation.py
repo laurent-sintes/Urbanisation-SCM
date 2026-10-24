@@ -1,5 +1,10 @@
 """Separate a frozen combined guide into publication-owned documents."""
 
+try:
+    from .atlas_text import text as ui_text
+except ImportError:
+    from atlas_text import text as ui_text
+
 from copy import deepcopy
 
 
@@ -38,8 +43,8 @@ def separate_documentation(guide_response, model):
     metamodel_document = {
         'id': 'flow-atlas-metamodel', 'version': guide['version'],
         'as_of': guide.get('as_of', model.get('as_of', '')),
-        'title': 'Métamodèle FLOW',
-        'subtitle': 'Objets, relations et règles de lecture de cette publication.',
+        'title': ui_text('documentationExport.metamodele_flow'),
+        'subtitle': ui_text('documentationExport.objets_relations_et_regles_de_lecture_de_cette_publication'),
         'source_refs': deepcopy(guide.get('source_refs', [])),
         'sources': deepcopy(guide.get('sources', [])),
         'chapters': deepcopy([chapter for chapter in guide.get('chapters', [])

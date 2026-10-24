@@ -22,6 +22,7 @@ from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide, guide_validation_batch
 from scripts.atlas_metamodel import describe_metamodel
 from scripts.atlas_documentation import separate_documentation
+from scripts.atlas_reader_content import reading_projection, reader_vocabulary, presentation_profile, reader_content_inputs, application_contexts
 from scripts.document_catalog import asset_bytes, document_extension
 from scripts.structured_io import dumps as dump_yaml, read as read_document
 from scripts import parsed_cache
@@ -29,7 +30,7 @@ from scripts import parsed_cache
 
 EXPORT_NAMES = ('model.yaml', 'model.json', 'guide.json')
 # Deliberate output-contract migration, independent of incidental code edits.
-EXPORT_FORMAT_VERSION = 1
+EXPORT_FORMAT_VERSION = 2
 
 
 def cached_export(receipt, sources, *, with_source=False):
@@ -141,6 +142,7 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
             raise ValueError('Export staging changed before activation')
         return content
 
+    reading_inputs = reader_content_inputs(root)
     for entry in result['versions']:
         version = entry['version']
         if not isinstance(version, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}\.[1-9]\d*', version):
@@ -153,7 +155,8 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
         guide_seconds += perf_counter() - step
         step = perf_counter()
         key = hashlib.sha256(encoded({'format': EXPORT_FORMAT_VERSION,
-                                     'descriptor': descriptor, 'guide': complete_guide})).hexdigest()
+                                     'descriptor': descriptor, 'guide': complete_guide,
+                                     'reading': reading_inputs})).hexdigest()
         receipt = root / '.runtime/atlas-export-receipts' / (key + '.json')
         cached = cached_export(receipt, [source / version for source in sources], with_source=True) if incremental else None
         payloads, payload_source = cached if cached is not None else (None, None)
@@ -167,6 +170,13 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
                      'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
             if metamodel_document:
                 model['metamodel']['documentation'] = metamodel_document
+            model['metamodel']['vocabulary'] = reader_vocabulary(root, raw, complete_guide)
+            model['presentation'] = presentation_profile(root, raw)
+            if model.get('application_catalog'):
+                model['application_catalog'] = {**model['application_catalog'], 'contexts': application_contexts(root, raw)}
+            projection = reading_projection(root, raw, complete_guide)
+            if projection is not None:
+                model['reader_projection'] = projection
             model_json, guide_json = encoded(model), encoded(guide)
             # One-time migration from code-dependent receipts. Reuse only a
             # previously checksummed payload whose model and guide are identical.
@@ -211,6 +221,8 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
         serialization_seconds += perf_counter() - step
     if index_path.read_bytes() != before:
         raise ValueError('Publication index changed during static export; retry.')
+    if reader_content_inputs(root) != reading_inputs:
+        raise ValueError('Reading data changed during static export; retry.')
     reader.verify_descriptors()
     if require_cached:
         source = sources[0]

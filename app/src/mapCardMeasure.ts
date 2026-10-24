@@ -1,3 +1,4 @@
+import { ui } from './ui.ts';
 /** Measure wrapped card content at a candidate width without changing the visible map. */
 export function measureMapCards(
   container: HTMLElement | null,
@@ -14,7 +15,7 @@ export function measureMapCards(
   );
   if (!sourceCards.size) return heights;
   const stage = document.createElement('div');
-  stage.className = 'graph-canvas zoom-width';
+  stage.className = ui('mapCardMeasure.graph_canvas_zoom_width');
   stage.setAttribute('aria-hidden', 'true');
   stage.inert = true;
   Object.assign(stage.style, {

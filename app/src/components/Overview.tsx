@@ -17,6 +17,7 @@ import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { resolveMapZoom, stablePageFitZoom } from '../mapZoom';
 import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from '../model';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { CatalogueNavigator } from './CatalogueNavigator';
 import { HotspotMapMarker } from './HotspotDisplay';
@@ -407,7 +408,7 @@ export function Overview({
     <section
       ref={section}
       className="universe-overview"
-      aria-label={`${universe?.name || 'Univers'} des systèmes métier`}
+      aria-label={ui('overview.des_systemes_metier', { value1: universe?.name || ui('overview.univers') })}
     >
       <div className="universe-toolbar">
         <h2>
@@ -417,11 +418,15 @@ export function Overview({
               {universe.name}
             </MapNodeButton>
           ) : (
-            'Systèmes métier'
+            ui('overview.systemes_metier')
           )}
         </h2>
         <div className="map-actions">
-          <MapDetailPicker labels={['Systèmes', 'Domaines', 'Sous-domaines']} value={detail} onChange={onDepthChange} />
+          <MapDetailPicker
+            labels={[ui('overview.systemes'), ui('overview.domaines'), ui('overview.sous_domaines')]}
+            value={detail}
+            onChange={onDepthChange}
+          />
           <MapDisplayOptions
             active={[
               ...(hotspotFilters.enabled ? ['Points chauds'] : []),
@@ -453,14 +458,14 @@ export function Overview({
           <button
             type="button"
             className="map-fullscreen-button"
-            aria-label={expanded ? 'Réduire la carte' : 'Étendre la carte'}
-            title={expanded ? 'Réduire la carte' : 'Étendre la carte'}
+            aria-label={expanded ? ui('overview.reduire_la_carte') : ui('overview.etendre_la_carte')}
+            title={expanded ? ui('overview.reduire_la_carte') : ui('overview.etendre_la_carte')}
             onClick={() => {
               if (expanded) void document.exitFullscreen();
               else
                 void section.current
                   ?.requestFullscreen()
-                  .catch(() => onAnnouncement('Le plein écran est indisponible dans ce navigateur.'));
+                  .catch(() => onAnnouncement(ui('overview.le_plein_ecran_est_indisponible_dans_ce_navigateur')));
             }}
           >
             {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -473,16 +478,19 @@ export function Overview({
           className="overview-map-scroll"
           data-framing={zoomChoice}
           role="region"
-          aria-label="Carte des systèmes métier"
+          aria-label={ui('overview.carte_des_systemes_metier')}
           tabIndex={0}
         >
           {rootHotspots.length > 0 && (
             <div
               className="overview-global-hotspots"
               role="group"
-              aria-label="Sujets transversaux à Enterprise Architecture"
+              aria-label={ui('overview.sujets_transversaux_a_enterprise_architecture')}
             >
-              <p>Sujets transversaux · {universe?.name}</p>
+              <p>
+                {ui('overview.sujets_transversaux')}
+                {universe?.name}
+              </p>
               {rootHotspots.map((item) => (
                 <div className="overview-global-hotspot" key={item.id}>
                   <div className="overview-global-marker">
@@ -614,17 +622,15 @@ export function Overview({
                           <ModelText text={plainDefinition(system.definition)} />
                         </p>
                       )}
-                      <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
-                        <span>
-                          {domains.length} domaine{domains.length > 1 ? 's' : ''}
-                        </span>
-                        <span>
-                          {subdomains.length} sous-domaine{subdomains.length > 1 ? 's' : ''}
-                        </span>
+                      <div
+                        className="overview-stats"
+                        role="group"
+                        aria-label={ui('overview.contenu_publie_de', { name: system.name })}
+                      >
+                        <span>{ui('overview.domains_count', { count: domains.length })}</span>
+                        <span>{ui('overview.subdomains_count', { count: subdomains.length })}</span>
                         {capabilities.length > 0 && (
-                          <span>
-                            {capabilities.length} capacité{capabilities.length > 1 ? 's' : ''}
-                          </span>
+                          <span>{ui('overview.capabilities_count', { count: capabilities.length })}</span>
                         )}
                       </div>
                       {detail > 0 && (
@@ -685,7 +691,7 @@ export function Overview({
                               })}
                             </ul>
                           ) : (
-                            <p>Aucun domaine détaillé dans cette publication.</p>
+                            <p>{ui('overview.aucun_domaine_detaille_dans_cette_publication')}</p>
                           )}
                         </div>
                       )}

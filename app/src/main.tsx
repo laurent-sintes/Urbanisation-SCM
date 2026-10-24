@@ -3,6 +3,7 @@ import { HashRouter } from 'react-router';
 import { App } from './App';
 import { ReaderBoundary } from './components/ReaderBoundary';
 import { preference, readRoute, routeHash } from './navigation';
+import { ui } from './ui.ts';
 import './styles.css';
 import './brand.css';
 import './reader.css';
@@ -15,7 +16,7 @@ if (!location.hash) {
 }
 
 const root = document.getElementById('root');
-if (!root) throw new Error('Racine Atlas introuvable.');
+if (!root) throw new Error(ui('main.racine_atlas_introuvable'));
 createRoot(root).render(
   <ReaderBoundary>
     <HashRouter>

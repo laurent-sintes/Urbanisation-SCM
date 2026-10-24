@@ -13,6 +13,27 @@ DRAFT = 'modeles/backlog/atlas-transformation-methodology.yaml'
 
 
 class GuideSourceTests(unittest.TestCase):
+    def test_standalone_guide_also_freezes_its_external_vocabulary(self):
+        draft = deepcopy(self.expected)
+        source = 'modeles/backlog/atlas-reader-vocabulary.yaml'
+        draft['reader_vocabulary_source'] = source
+        (self.root / source).write_text(dumps({'field_labels': {'name': 'Standalone label'}}), encoding='utf-8')
+        (self.root / DRAFT).write_text(dumps(draft), encoding='utf-8')
+        content, frozen, dependencies = guide.compile_draft(self.root, DRAFT)
+        self.assertEqual(frozen['reader_vocabulary']['field_labels']['name'], 'Standalone label')
+        self.assertIn(source, dependencies)
+        self.assertNotIn(b'reader_vocabulary_source', content)
+
+    def test_reader_vocabulary_is_frozen_and_its_source_is_a_preparation_dependency(self):
+        draft = read(self.root / DRAFT)
+        source = 'modeles/backlog/atlas-reader-vocabulary.yaml'
+        draft['reader_vocabulary_source'] = source
+        (self.root / source).write_text(dumps({'field_labels': {'name': 'Libellé de cette édition'}}), encoding='utf-8')
+        (self.root / DRAFT).write_text(dumps(draft), encoding='utf-8')
+        _, frozen, dependencies = guide.compile_draft(self.root, DRAFT)
+        self.assertEqual(frozen['reader_vocabulary']['field_labels']['name'], 'Libellé de cette édition')
+        self.assertIn(source, dependencies)
+        self.assertNotIn('reader_vocabulary_source', frozen)
     def test_current_draft_includes_canonical_hotspot_definitions(self):
         frozen = guide.load_draft(ROOT, DRAFT)
         terms = {term['id']: term for term in frozen['glossary']['terms']}

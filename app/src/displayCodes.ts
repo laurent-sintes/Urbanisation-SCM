@@ -1,11 +1,12 @@
 import type { RawPublication } from './types.ts';
+import { ui } from './ui.ts';
 
 /** Frozen order belongs to the snapshot, never to search/filter/layout state. */
 export function validateDisplayIndex(raw: RawPublication): void {
   const index = raw.display_index;
   if (!raw.display_policy && !index) return;
   function fail(): never {
-    throw new Error('Codes de lecture ou ordre de publication invalides.');
+    throw new Error(ui('displayCodes.codes_de_lecture_ou_ordre_de_publication_invalides'));
   }
   if (
     raw.display_policy !== 'typed-tree-v1' ||

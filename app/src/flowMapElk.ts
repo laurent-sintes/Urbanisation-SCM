@@ -16,6 +16,7 @@ import {
   flowLabelSize,
   spaceFlowMap,
 } from './flowMapSpacing.ts';
+import { ui } from './ui.ts';
 
 export interface FlowLayoutEngine {
   layout(graph: ElkNode): Promise<ElkNode>;
@@ -25,7 +26,7 @@ const keyOf = (edge: { sourceId: string; targetId: string; type: string }) =>
   `${edge.sourceId}/${edge.targetId}/${edge.type}`;
 function required<T>(map: ReadonlyMap<string, T>, id: string): T {
   const value = map.get(id);
-  if (value === undefined) throw new Error(`Élément de routage absent : ${id}`);
+  if (value === undefined) throw new Error(ui('flowMapElk.element_de_routage_absent', { id: id }));
   return value;
 }
 
@@ -143,7 +144,7 @@ export async function layoutElkFlowMap(seed: FlowMapLayout, engine: FlowLayoutEn
   for (const edge of inputs) {
     const ranks = (['source', 'target'] as const).map((end, index) => {
       const port = proposed.get(edge[end].id)?.ports?.find((port) => port.id === `${edge.id}/${index}`);
-      if (!port) throw new Error('ELK n’a pas attribué toutes les attaches.');
+      if (!port) throw new Error(ui('flowMapElk.elk_n_a_pas_attribue_toutes_les_attaches'));
       return required(sides, edge.id)[index] < 2 ? port.y || 0 : port.x || 0;
     });
     portRanks.set(edge.id, [ranks[0], ranks[1]]);
@@ -172,7 +173,7 @@ export async function layoutElkFlowMap(seed: FlowMapLayout, engine: FlowLayoutEn
     if (!best || betterFlowScore(score, best.score)) best = { routes, score };
   }
   if (!best || best.score[0] || best.score[1] || best.score[2])
-    throw new Error('Le routage contraint ne couvre pas tous les échanges et leurs libellés.');
+    throw new Error(ui('flowMapElk.le_routage_contraint_ne_couvre_pas_tous_les_echanges_et_leurs_lib'));
   return flowMapWithRoutes(seed, boxes, best.routes);
 }
 

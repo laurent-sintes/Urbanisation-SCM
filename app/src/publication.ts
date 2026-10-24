@@ -1,5 +1,6 @@
 import { adaptPublication } from './model.ts';
 import type { PublishedModel, RawPublication } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface ReleaseEntry {
   readonly version: string;
@@ -40,12 +41,12 @@ export async function fetchJson(
   const interrupted = new Promise<never>((_, reject) => {
     cancel = () => {
       controller.abort();
-      reject(signal?.reason ?? new Error('Chargement annulé.'));
+      reject(signal?.reason ?? new Error(ui('publication.chargement_annule')));
     };
     signal?.addEventListener('abort', cancel, { once: true });
     timer = setTimeout(() => {
       controller.abort();
-      reject(new Error('Le chargement prend trop de temps. Réessaie dans quelques instants.'));
+      reject(new Error(ui('publication.le_chargement_prend_trop_de_temps_reessaie_dans_quelques_instants')));
     }, timeoutMs);
   });
   try {
@@ -64,11 +65,11 @@ export async function fetchJson(
           } else body = await response.json();
         } catch (error) {
           if (error instanceof Error && error.message === 'integrity')
-            throw new Error(
-              'Le contenu reçu ne correspond pas à l’empreinte publiée. Réessaie pour recharger cette publication.',
-            );
+            throw new Error(ui('publication.le_contenu_recu_ne_correspond_pas_a_l_empreinte_publiee_reessaie_'));
           throw new Error(
-            response.ok ? 'Le fichier JSON reçu est invalide.' : `Chargement impossible (HTTP ${response.status}).`,
+            response.ok
+              ? ui('publication.le_fichier_json_recu_est_invalide')
+              : ui('publication.chargement_impossible_http', { status: response.status }),
           );
         }
         if (!response.ok) {
@@ -80,7 +81,9 @@ export async function fetchJson(
                 ? (error as Record<string, unknown>).message
                 : undefined;
           throw new Error(
-            typeof message === 'string' ? message : `Le serveur répond avec une erreur ${response.status}.`,
+            typeof message === 'string'
+              ? message
+              : ui('publication.le_serveur_repond_avec_une_erreur', { status: response.status }),
           );
         }
         return body;
@@ -93,23 +96,23 @@ export async function fetchJson(
 }
 
 export function adaptCatalog(input: unknown): PublicationCatalog {
-  if (!input || typeof input !== 'object') throw new Error('Catalogue des publications invalide.');
+  if (!input || typeof input !== 'object') throw new Error(ui('publication.catalogue_des_publications_invalide'));
   const raw = input as { current_version?: unknown; versions?: unknown };
   if (typeof raw.current_version !== 'string' || !raw.current_version || !Array.isArray(raw.versions))
-    throw new Error('Catalogue des publications invalide.');
+    throw new Error(ui('publication.catalogue_des_publications_invalide'));
   const entries = raw.versions.map((value) => {
     if (!value || typeof value !== 'object' || typeof value.version !== 'string' || !value.version)
-      throw new Error('Identité de publication invalide.');
+      throw new Error(ui('publication.identite_de_publication_invalide'));
     for (const field of ['model_sha256', 'model_yaml_sha256', 'guide_sha256']) {
       if (value[field] !== undefined && (typeof value[field] !== 'string' || !/^[a-f0-9]{64}$/.test(value[field])))
-        throw new Error('Empreinte de publication invalide.');
+        throw new Error(ui('publication.empreinte_de_publication_invalide'));
     }
     return Object.freeze({ ...value }) as ReleaseEntry;
   });
   if (new Set(entries.map((entry) => entry.version)).size !== entries.length)
-    throw new Error('Publication dupliquée dans le catalogue.');
+    throw new Error(ui('publication.publication_dupliquee_dans_le_catalogue'));
   if (!entries.some((entry) => entry.version === raw.current_version))
-    throw new Error('La publication courante est absente du catalogue.');
+    throw new Error(ui('publication.la_publication_courante_est_absente_du_catalogue'));
   return Object.freeze({ current: raw.current_version, releases: Object.freeze(entries) });
 }
 
@@ -118,7 +121,8 @@ export function staticUrl(path: string): string {
   return (import.meta.env?.BASE_URL ?? './') + path;
 }
 export function publicationUrl(version: string): string {
-  if (!/^[A-Za-z0-9][A-Za-z0-9.-]*$/.test(version) || version.includes('..')) throw new Error('Version invalide.');
+  if (!/^[A-Za-z0-9][A-Za-z0-9.-]*$/.test(version) || version.includes('..'))
+    throw new Error(ui('publication.version_invalide'));
   return staticUrl(`data/${version}/model.json`);
 }
 export function publicationYamlUrl(version: string): string {
@@ -162,7 +166,7 @@ export function createPublicationClient(fetcher: FetchLike = fetch) {
         if (!isLatest()) return;
         const target = selection || nextCatalog.current;
         if (!nextCatalog.releases.some((entry) => entry.version === target))
-          throw new Error(`La publication ${target} est absente du catalogue.`);
+          throw new Error(ui('publication.la_publication_est_absente_du_catalogue', { target: target }));
         if (!force && state.model?.version === target && !state.notice) {
           if (state.loading || state.error || JSON.stringify(state.catalog) !== JSON.stringify(nextCatalog)) {
             emit({ ...state, catalog: nextCatalog, loading: false, error: '', notice: '' });
@@ -178,7 +182,8 @@ export function createPublicationClient(fetcher: FetchLike = fetch) {
           nextCatalog.releases.find((entry) => entry.version === target)?.model_sha256,
         )) as RawPublication;
         if (!isLatest()) return;
-        if (raw?.version !== target) throw new Error(`Le modèle reçu ne correspond pas à la publication ${target}.`);
+        if (raw?.version !== target)
+          throw new Error(ui('publication.le_modele_recu_ne_correspond_pas_a_la_publication', { target: target }));
         const model = adaptPublication(raw);
         emit({ model, catalog: nextCatalog, loading: false, error: '', notice: '' });
       } catch (error) {
@@ -191,7 +196,10 @@ export function createPublicationClient(fetcher: FetchLike = fetch) {
             catalog,
             loading: false,
             error: '',
-            notice: `Actualisation impossible : ${message} La publication ${state.model.version} reste affichée. Une nouvelle tentative sera automatique.`,
+            notice: ui('publication.actualisation_impossible_la_publication_reste_affichee_une_nouvel', {
+              message: message,
+              version: state.model.version,
+            }),
           });
         } else {
           emit({ catalog, loading: false, error: message, notice: '' });

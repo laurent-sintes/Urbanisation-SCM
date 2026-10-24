@@ -5,6 +5,7 @@ import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../h
 import { NodeIcon } from '../icons';
 import { lineageOf } from '../model';
 import type { AtlasNode, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { CatalogueNavigator } from './CatalogueNavigator';
 import { MapApplicationPicker } from './MapApplicationPicker';
@@ -70,7 +71,7 @@ export function MapPanel({
     model.version,
     scopeId,
     restoreViewport,
-    '[data-testid="react-flow-canvas"] .react-flow__node-business',
+    ui('mapPanel.data_testid_react_flow_canvas_react_flow_node_business'),
   );
   const [expanded, setExpanded] = useState(false);
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
@@ -99,12 +100,12 @@ export function MapPanel({
       return;
     }
     void panel.current?.requestFullscreen().catch(() => {
-      onAnnouncement('Le plein écran est indisponible dans ce navigateur.');
+      onAnnouncement(ui('mapPanel.le_plein_ecran_est_indisponible_dans_ce_navigateur'));
     });
   };
 
   return (
-    <section className="map-panel" ref={panel} aria-label="Carte du modèle">
+    <section className="map-panel" ref={panel} aria-label={ui('mapPanel.carte_du_modele')}>
       <div className="map-toolbar">
         <div>
           <strong>
@@ -121,12 +122,16 @@ export function MapPanel({
             )}
           </strong>
           {scope?.kind === 'domain' && mapMaxDepth === 0 && (
-            <span className="toolbar-note">Aucun sous-domaine décrit dans cette version.</span>
+            <span className="toolbar-note">{ui('mapPanel.aucun_sous_domaine_decrit_dans_cette_version')}</span>
           )}
         </div>
         <div className="map-actions">
           <MapDetailPicker
-            labels={scope ? detailLabels.slice(0, mapMaxDepth + 1) : ['Systèmes', 'Domaines', 'Sous-domaines']}
+            labels={
+              scope
+                ? detailLabels.slice(0, mapMaxDepth + 1)
+                : [ui('mapPanel.systemes'), ui('mapPanel.domaines'), ui('mapPanel.sous_domaines')]
+            }
             value={mapDepth}
             onChange={onDepthChange}
           />
@@ -163,8 +168,8 @@ export function MapPanel({
           <button
             type="button"
             className="map-fullscreen-button"
-            aria-label={expanded ? 'Réduire la carte' : 'Étendre la carte'}
-            title={expanded ? 'Réduire la carte' : 'Étendre la carte'}
+            aria-label={expanded ? ui('mapPanel.reduire_la_carte') : ui('mapPanel.etendre_la_carte')}
+            title={expanded ? ui('mapPanel.reduire_la_carte') : ui('mapPanel.etendre_la_carte')}
             onClick={toggleFullscreen}
           >
             {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -177,10 +182,10 @@ export function MapPanel({
           className="map-scroll-viewport"
           data-framing={zoomChoice}
           role="region"
-          aria-label="Défilement de la carte"
+          aria-label={ui('mapPanel.defilement_de_la_carte')}
           tabIndex={0}
         >
-          <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
+          <Suspense fallback={<div className="graph-canvas empty-state">{ui('mapPanel.ouverture_de_la_carte')}</div>}>
             <ReactFlowPane
               model={model}
               selectedId={selectedId}

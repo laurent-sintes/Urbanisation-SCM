@@ -9,7 +9,6 @@ import { loadPublication } from '../scripts/load-publication.mjs';
 import { openNavigationGroup } from './browser-navigation.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
-import { lessonForPublication } from './src/modelingGuide.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = resolve(root, 'app/dist');
@@ -164,7 +163,7 @@ try {
     }
     const contribution = await page.locator('.guide-contributor-content').innerText();
     assert.ok(contribution.includes(lesson.contributor.criterion));
-    assert.ok(contribution.includes(lessonForPublication(lesson, current).contributor.boundary));
+    assert.ok(contribution.includes(lesson.contributor.boundary));
     for (const link of lesson.model_links.filter((link) => ids.has(link.id))) {
       const href = await page
         .locator('.guide-model-links a')

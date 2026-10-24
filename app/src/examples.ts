@@ -1,5 +1,6 @@
 import { publicText } from './publicText.ts';
 import type { AtlasNode, JsonRecord, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export interface ScenarioContribution {
   node_id: string;
@@ -140,7 +141,7 @@ function localExamples(fields: Readonly<JsonRecord>): ReaderExample[] {
       );
     if (!marker) return [];
     const situation = paragraph.slice(marker.index + marker[0].length).trim();
-    return situation ? [{ title: 'Exemple illustratif', situation }] : [];
+    return situation ? [{ title: ui('examples.exemple_illustratif'), situation }] : [];
   });
   return examples.filter(
     (example, index) => examples.findIndex((other) => other.situation === example.situation) === index,

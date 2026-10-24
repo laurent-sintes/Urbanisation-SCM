@@ -97,7 +97,11 @@ try {
   }
   await page.goto(`${base}#/principles?version=${version}&principle=codes`);
   await page.getByRole('heading', { name: 'Identité et codes de lecture', exact: true }).waitFor();
-  assert.ok((await page.getByRole('region', { name: 'Identité et codes de lecture' }).innerText()).includes('CAP-025'));
+  const codeHelp = await page.getByRole('region', { name: 'Identité et codes de lecture' }).innerText();
+  assert.ok(codeHelp.includes('CAP-025'));
+  for (const prefix of new Set(Object.values(raw.display_index.codes).map((code) => code.split('-')[0]))) {
+    assert.ok(codeHelp.includes(`${prefix} —`), `Missing published prefix in reading help: ${prefix}`);
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${base}#/sheet?version=${version}&node=${capacity.id}`);
   await page.getByTestId('business-sheet').waitFor();

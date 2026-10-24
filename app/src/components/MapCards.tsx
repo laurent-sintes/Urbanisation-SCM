@@ -10,6 +10,7 @@ import type { CardChildList, scopeStatistics } from '../model';
 import { kindLabel } from '../presentation';
 import { roleOf } from '../subdomainRoles';
 import type { AtlasNode } from '../types';
+import { ui } from '../ui.ts';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 export type MapChildList = CardChildList & { subdomainChildren?: Record<string, CardChildList> };
 type Card = Node<
@@ -45,20 +46,20 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
     : [];
   const listLabel =
     data.item.kind === 'domain'
-      ? 'Sous-domaines'
+      ? ui('mapCards.sous_domaines')
       : data.childList?.businessAreaChildren
         ? data.detail >= 3
-          ? 'Business Areas et capacités'
-          : 'Business Areas'
+          ? ui('mapCards.business_areas_et_capacites')
+          : ui('mapCards.business_areas')
         : data.childList?.kind === 'domain'
-          ? 'Domaines'
+          ? ui('mapCards.domaines')
           : data.childList?.kind === 'mixed'
-            ? 'Périmètres et éléments'
+            ? ui('mapCards.perimetres_et_elements')
             : data.childList?.kind === 'reference'
-              ? 'Référentiels'
+              ? ui('mapCards.referentiels')
               : data.childList?.kind === 'behavior'
-                ? 'Comportements'
-                : 'Capacités';
+                ? ui('mapCards.comportements')
+                : ui('mapCards.capacites');
   const title = (
     <h3>
       <MapNodeButton
@@ -88,7 +89,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
         <ArrowUpRight size={12} className="child-arrow" />
       </MapNodeButton>
       {data.detail >= 4 && data.behaviorsByCapability[child.id]?.length ? (
-        <ul className="card-behavior-list" aria-label={`Comportements de ${child.name}`}>
+        <ul className="card-behavior-list" aria-label={ui('mapCards.comportements_de', { name: child.name })}>
           {data.behaviorsByCapability[child.id].map((behavior) => (
             <li key={behavior.id}>
               <MapNodeButton
@@ -128,7 +129,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
             </MapNodeButton>
           </div>
           {data.detail >= 3 && (
-            <ul aria-label={`Capacités de ${child.name}`}>
+            <ul aria-label={ui('mapCards.capacites_de', { name: child.name })}>
               {(list.businessAreaChildren?.[child.id] || []).map((capability) => (
                 <li key={capability.id}>{childLink(capability)}</li>
               ))}
@@ -190,14 +191,18 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
         <span
           className="subdomain-role"
           data-role={dominantRole.id}
-          title="Finalité dominante ; les autres responsabilités du sous-domaine restent applicables."
+          title={ui('mapCards.finalite_dominante_les_autres_responsabilites_du_sous_domaine_res')}
         >
           {dominantRole.display_name}
         </span>
       )}
       <p>
         <ModelText
-          text={data.item.purpose || data.item.definition || 'Description non renseignée dans cette publication.'}
+          text={
+            data.item.purpose ||
+            data.item.definition ||
+            ui('mapCards.description_non_renseignee_dans_cette_publication')
+          }
         />
       </p>
       {data.childList && (
@@ -210,7 +215,11 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
             if (['Enter', ' '].includes(event.key)) event.stopPropagation();
           }}
         >
-          <div className="child-list-heading" role="group" aria-label={`Contenu affiché de ${data.item.name}`}>
+          <div
+            className="child-list-heading"
+            role="group"
+            aria-label={ui('mapCards.contenu_affiche_de', { name: data.item.name })}
+          >
             {listStatistics.map((stat) => (
               <span key={stat.kind}>
                 {stat.count} {stat.label}
@@ -218,13 +227,16 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
             ))}
           </div>
           {data.childList.items.length ? (
-            <ul aria-label={`${listLabel} de ${data.item.name}`}>
+            <ul aria-label={ui('mapCards.de', { listLabel: listLabel, name: data.item.name })}>
               {data.childList.subdomainChildren
                 ? data.childList.items.map((subdomain) => (
                     <li key={subdomain.id} className="domain-subdomain-group">
                       <h4 className="domain-subdomain-title">{childLink(subdomain)}</h4>
                       {data.detail >= 2 && data.childList?.subdomainChildren?.[subdomain.id] && (
-                        <ul className="domain-subdomain-contents" aria-label={`Business Areas de ${subdomain.name}`}>
+                        <ul
+                          className="domain-subdomain-contents"
+                          aria-label={ui('mapCards.business_areas_de', { name: subdomain.name })}
+                        >
                           {areaItems(data.childList.subdomainChildren[subdomain.id], subdomain)}
                         </ul>
                       )}
@@ -233,13 +245,17 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
                 : areaItems(data.childList, data.item)}
             </ul>
           ) : (
-            <p>Aucun élément publié.</p>
+            <p>{ui('mapCards.aucun_element_publie')}</p>
           )}
         </div>
       )}
       {data.item.kind === 'area' ? (
         data.statistics.length > 0 && (
-          <div className="subdomain-stats" role="group" aria-label={`Contenu publié de ${data.item.name}`}>
+          <div
+            className="subdomain-stats"
+            role="group"
+            aria-label={ui('mapCards.contenu_publie_de', { name: data.item.name })}
+          >
             {data.statistics.map((stat) => (
               <span key={stat.kind}>
                 {stat.count} {stat.label}
@@ -278,7 +294,13 @@ function GroupCard({ data }: NodeProps<Container>) {
   );
 }
 function CapabilityTypeDivider() {
-  return <div className="map-capability-type-divider" role="separator" aria-label="Changement de type de capacité" />;
+  return (
+    <div
+      className="map-capability-type-divider"
+      role="separator"
+      aria-label={ui('mapCards.changement_de_type_de_capacite')}
+    />
+  );
 }
 function CategoryBanner({ data }: NodeProps<Node<{ caption: string; area?: AtlasNode }, 'categoryBanner'>>) {
   return (

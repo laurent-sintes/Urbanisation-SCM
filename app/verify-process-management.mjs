@@ -18,7 +18,7 @@ const generated = spawnSync(
     '-X',
     'utf8',
     '-c',
-    "import json; from pathlib import Path; from scripts.structured_io import read; from scripts.publish_release import compile_snapshot; from scripts.guide_candidate import load_draft; m=read(Path('modeles/backlog/model.yaml')); m['glossary']=read(Path('modeles/backlog/glossary.yaml')); print(json.dumps({'model':compile_snapshot(m,{'decisions':[]},'2026-10-07.999',[]),'guide':load_draft(Path.cwd(),Path('modeles/backlog/atlas-transformation-methodology.yaml'))},ensure_ascii=True))",
+    "import json; from pathlib import Path; from scripts.structured_io import read; from scripts.publish_release import compile_snapshot; from scripts.guide_candidate import load_draft; from scripts.atlas_metamodel import describe_metamodel; from scripts.atlas_documentation import separate_documentation; from scripts.atlas_reader_content import reading_projection; m=read(Path('modeles/backlog/model.yaml')); m['glossary']=read(Path('modeles/backlog/glossary.yaml')); raw=compile_snapshot(m,{'decisions':[]},'2026-10-07.999',[]); guide=load_draft(Path.cwd(),Path('modeles/backlog/atlas-transformation-methodology.yaml')); response={'status':'available','guide':guide}; meta,_=separate_documentation(response,raw); raw['metamodel']=describe_metamodel(raw,response); raw['metamodel']['documentation']=meta; raw['metamodel']['vocabulary']=guide.get('reader_vocabulary',{}); raw['reader_projection']=reading_projection(Path.cwd(),raw,response); print(json.dumps({'model':raw,'guide':guide},ensure_ascii=True))",
   ],
   { cwd: root, encoding: 'utf8', maxBuffer: 30 * 1024 * 1024 },
 );
@@ -108,7 +108,10 @@ try {
   await subdomainType.hover();
   const typeHelp = page.locator('.metamodel-tooltip');
   await typeHelp.waitFor();
-  assert.ok((await typeHelp.innerText()).includes('Regroupement cohérent de capacités'));
+  assert.equal(
+    await typeHelp.locator('span').innerText(),
+    plainInlineText(raw.metamodel.node_types.find((type) => type.kind === 'area').short_description),
+  );
   await page.mouse.move(0, 0);
   await typeHelp.waitFor({ state: 'hidden' });
   await subdomainType.focus();
@@ -121,7 +124,10 @@ try {
   await businessAreaType.scrollIntoViewIfNeeded();
   await businessAreaType.hover();
   await typeHelp.waitFor();
-  assert.ok((await typeHelp.innerText()).includes('Périmètre de responsabilité obligatoire'));
+  assert.equal(
+    await typeHelp.locator('span').innerText(),
+    plainInlineText(raw.metamodel.node_types.find((type) => type.kind === 'business_area').short_description),
+  );
   await visit({
     scope: 'supply-chain-orchestration',
     node: 'subdomain-process-management',

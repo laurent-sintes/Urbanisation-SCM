@@ -33,6 +33,7 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     from scripts.export_atlas import encoded
     from scripts.atlas_metamodel import describe_metamodel
     from scripts.atlas_documentation import separate_documentation
+    from scripts.atlas_reader_content import reading_projection, reader_vocabulary, presentation_profile, application_contexts
     from scripts.release_catalog import PublicationReader
     from scripts.structured_io import read as read_document
     from app.modeling_guide import _load_associated_guide
@@ -59,6 +60,13 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
                 'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
     if metamodel_document:
         expected['metamodel']['documentation'] = metamodel_document
+    expected['metamodel']['vocabulary'] = reader_vocabulary(root, raw, complete_guide)
+    expected['presentation'] = presentation_profile(root, raw)
+    if expected.get('application_catalog'):
+        expected['application_catalog'] = {**expected['application_catalog'], 'contexts': application_contexts(root, raw)}
+    projection = reading_projection(root, raw, complete_guide)
+    if projection is not None:
+        expected['reader_projection'] = projection
     actual, model_payload = document('/data/' + version + '/model.json')
     if not isinstance(actual, dict) or actual.get('version') != version or actual.get('sourcePath') != expected['sourcePath']:
         raise ValueError('Atlas serves another publication')

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { MapZoomChoice } from '../mapZoom';
 import { preference, savePreference } from '../navigation';
+import { ui } from '../ui.ts';
 
 export function useMapZoomChoice() {
   const [choice, setChoice] = useState<MapZoomChoice>(() => {
@@ -19,12 +20,12 @@ export function MapZoomPicker({
   onChange: (choice: MapZoomChoice) => void;
 }) {
   return (
-    <div className="map-zoom-choice" role="group" aria-label="Cadrage de la carte">
+    <div className="map-zoom-choice" role="group" aria-label={ui('mapZoomPicker.cadrage_de_la_carte')}>
       {(
         [
-          { id: 'auto', label: 'Auto' },
-          { id: 'page', label: 'Pleine page' },
-          { id: 'width', label: 'Pleine largeur' },
+          { id: 'auto', label: ui('mapZoomPicker.auto') },
+          { id: 'page', label: ui('mapZoomPicker.pleine_page') },
+          { id: 'width', label: ui('mapZoomPicker.pleine_largeur') },
         ] as const
       ).map((option) => (
         <span key={option.id} className="map-zoom-option">

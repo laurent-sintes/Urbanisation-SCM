@@ -20,6 +20,7 @@ import type { RouteState } from '../navigation';
 import { readRoute, routeHash } from '../navigation';
 import { publicText } from '../publicText';
 import type { AtlasNode, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import './glossary.css';
 import { resolveGlossaryTerm } from '../glossary';
 import { shortNodeDescription } from '../pedagogy';
@@ -35,6 +36,9 @@ type LinksContext = {
   onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void;
 };
 const Context = createContext<LinksContext | null>(null);
+export function useReadingVocabulary() {
+  return useContext(Context)?.model?.raw.metamodel?.vocabulary;
+}
 export const ModelLinksProvider = Context.Provider;
 
 function useTooltipHost(open: boolean): Element {
@@ -156,7 +160,7 @@ export function CatalogLink({
         }
       }}
     >
-      {children || 'Scénarios métier'}
+      {children || ui('modelLinks.scenarios_metier')}
     </a>
   );
 }
@@ -172,26 +176,33 @@ export function ContextReturn() {
       : context.model.nodes.find((node) => node.kind === 'universe')?.name || '';
   const label =
     origin.view === 'flows'
-      ? `Retour à la carte Flux${scopeName ? ` : ${scopeName}` : ''}`
+      ? ui('modelLinks.retour_a_la_carte_flux', { value1: scopeName ? ` : ${scopeName}` : '' })
       : origin.view === 'map'
-        ? `Retour à la carte${scopeName ? ` : ${scopeName}` : ''}`
+        ? ui('modelLinks.retour_a_la_carte', { value1: scopeName ? ` : ${scopeName}` : '' })
         : origin.view === 'relations'
-          ? `Retour aux relations${origin.node && context.model.nodeById.has(origin.node) ? ` : ${context.model.nodeById.get(origin.node)?.name}` : ''}`
+          ? ui('modelLinks.retour_aux_relations', {
+              value1:
+                origin.node && context.model.nodeById.has(origin.node)
+                  ? ` : ${context.model.nodeById.get(origin.node)?.name}`
+                  : '',
+            })
           : origin.view === 'scenarios'
             ? origin.scenario
-              ? 'Retour au scénario'
-              : 'Retour au catalogue'
+              ? ui('modelLinks.retour_au_scenario')
+              : ui('modelLinks.retour_au_catalogue')
             : origin.view === 'metamodel'
-              ? 'Retour au métamodèle'
+              ? ui('modelLinks.retour_au_metamodele')
               : origin.view === 'design-principles'
-                ? 'Retour aux principes directeurs'
+                ? ui('modelLinks.retour_aux_principes_directeurs')
                 : origin.view === 'principles'
                   ? context.metaGuide
-                    ? 'Retour à la transformation'
-                    : 'Retour à la méthode'
+                    ? ui('modelLinks.retour_a_la_transformation')
+                    : ui('modelLinks.retour_a_la_methode')
                   : origin.view === 'glossary'
-                    ? 'Retour au glossaire'
-                    : `Retour à la fiche : ${context.model.nodeById.get(origin.node)?.name || origin.node}`;
+                    ? ui('modelLinks.retour_au_glossaire')
+                    : ui('modelLinks.retour_a_la_fiche', {
+                        value1: context.model.nodeById.get(origin.node)?.name || origin.node,
+                      });
   return (
     <p className="context-return">
       <a href={context.route.returnTo}>{label}</a>
@@ -204,9 +215,9 @@ export function DesignPrincipleLink({ id, anchor, children }: { id: string; anch
   if (!context?.model) return <>{children}</>;
   if (anchor || !context.model.raw.principles?.some((p) => p.id === id))
     return (
-      <span className="unresolved-reference" title={`Principe ${id} absent de cette publication`}>
+      <span className="unresolved-reference" title={ui('modelLinks.principe_absent_de_cette_publication', { id: id })}>
         {children}
-        <span className="sr-only"> (référence absente)</span>
+        <span className="sr-only">{ui('modelLinks.reference_absente')}</span>
       </span>
     );
   const model = context.model;
@@ -239,29 +250,12 @@ export function DesignPrincipleLink({ id, anchor, children }: { id: string; anch
   );
 }
 
-const metamodelTermNames: Record<string, string> = {
-  universe: 'Enterprise Architecture',
-  business_system: 'Business System',
-  domain: 'Domain',
-  area: 'Subdomain',
-  business_area: 'Business Area',
-  capability: 'Capability',
-  behavior: 'Capability Behavior',
-  reference: 'Business Reference',
-};
-
 /** Explain the type from the selected publication, on hover and keyboard focus. */
 export function MetaTypeLabel({ node }: { node: AtlasNode }) {
   const context = useContext(Context);
   const { id, anchor, tooltip, open, setOpen, host, position } = useAnchoredTooltip<HTMLButtonElement>();
-  const historicalArea = node.kind === 'area' && node.hierarchyLabel !== 'Sous-domaine';
-  const published = historicalArea
-    ? undefined
-    : context?.model?.raw.metamodel?.node_types?.find((type) => type.kind === node.kind);
-  const methodName =
-    node.kind === 'universe' && node.name !== 'Enterprise Architecture' ? node.name : metamodelTermNames[node.kind];
-  const fallback = historicalArea ? undefined : context?.metaGlossary?.terms.find((term) => term.name === methodName);
-  const definition = published?.definition || fallback?.short_description || fallback?.definition;
+  const published = context?.model?.raw.metamodel?.node_types?.find((type) => type.kind === node.kind);
+  const definition = published?.short_description || published?.definition;
   const label = kindLabel(node);
   return (
     <>
@@ -270,7 +264,7 @@ export function MetaTypeLabel({ node }: { node: AtlasNode }) {
           type="button"
           ref={anchor}
           className="metamodel-type"
-          aria-label={`Définition du type ${label}`}
+          aria-label={ui('modelLinks.definition_du_type', { label: label })}
           aria-describedby={open ? id : undefined}
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
@@ -474,9 +468,12 @@ export function ReferenceLink({
   if (!context) return <>{children}</>;
   if (!item || !model)
     return (
-      <span className="unresolved-reference" title={`Référence ${target} absente de cette publication`}>
+      <span
+        className="unresolved-reference"
+        title={ui('modelLinks.reference_absente_de_cette_publication', { target: target })}
+      >
         {children}
-        <span className="sr-only"> (référence absente)</span>
+        <span className="sr-only">{ui('modelLinks.reference_absente')}</span>
       </span>
     );
   const term = kind === 'glossary' ? model.glossaryById.get(target) : undefined;
@@ -494,7 +491,7 @@ export function ReferenceLink({
           ? node.definition
           : term?.short_description ||
             term?.definition ||
-            String(node ? shortNodeDescription(node) : 'Description non renseignée.')),
+            String(node ? shortNodeDescription(node) : ui('modelLinks.description_non_renseignee'))),
     ),
   );
   const href = routeHash({
@@ -580,7 +577,7 @@ export function ReferenceLink({
             <span>{description}</span>
             {behaviors.length > 0 && (
               <div className="tooltip-behaviors">
-                <b>Comportements</b>
+                <b>{ui('modelLinks.comportements')}</b>
                 <ul>
                   {behaviors.map((behavior) => (
                     <li key={behavior.id}>{behavior.name}</li>
@@ -591,12 +588,12 @@ export function ReferenceLink({
             <small>
               {node?.displayCode ?? target} ·{' '}
               {kind === 'guide'
-                ? 'Référence méthodologique'
+                ? ui('modelLinks.reference_methodologique')
                 : kind === 'method'
-                  ? 'Glossaire méthodologique'
+                  ? ui('modelLinks.glossaire_methodologique')
                   : kind === 'glossary'
-                    ? 'Glossaire'
-                    : 'Fiche du modèle'}
+                    ? ui('modelLinks.glossaire')
+                    : ui('modelLinks.fiche_du_modele')}
             </small>
           </div>
         </FloatingPortal>
@@ -666,7 +663,10 @@ export function MethodReturn() {
   const node = context?.model?.nodeById.get(context.route.node);
   return node ? (
     <p className="method-return">
-      <ReferenceLink target={node.id}>Retour à la fiche : {node.name}</ReferenceLink>
+      <ReferenceLink target={node.id}>
+        {ui('modelLinks.retour_a_la_fiche_2')}
+        {node.name}
+      </ReferenceLink>
     </p>
   ) : null;
 }

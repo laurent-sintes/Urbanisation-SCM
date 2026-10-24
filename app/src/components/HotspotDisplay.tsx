@@ -40,13 +40,20 @@ import { framingLabel } from '../hotspotFraming';
 import { isClosedHotspot, isFramingResolved, RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { MAP_PANEL_EVENT } from '../mapOverlayEvents';
 import type { Hotspot, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { ModelText } from './ModelLinks';
 
-const STATUS = { discovered: 'Découvert', shared: 'Partagé', validated: 'Sujet validé', resolved: 'Résolu' };
+const STATUS = {
+  discovered: ui('hotspots.status.discovered'),
+  shared: ui('hotspots.status.shared'),
+  validated: ui('hotspotDisplay.sujet_valide'),
+  resolved: ui('hotspots.status.resolved'),
+};
 const FLAMES = ['first', 'second', 'third', 'fourth'];
 export const COMPACT_HOTSPOT_DIAMETER = 32;
 export const COMPACT_HOTSPOT_TOUCH_DIAMETER = 44;
-export const severityLabel = (severity: string) => (severity === 'unassessed' ? 'non évaluée' : severity);
+export const severityLabel = (severity: string) =>
+  severity === 'unassessed' ? ui('hotspotDisplay.non_evaluee') : severity;
 
 function useFloatingHost() {
   const subscribe = useCallback((changed: () => void) => {
@@ -247,7 +254,9 @@ export function HotspotTooltipButton({
         <FloatingPortal root={tooltipRoot || host}>
           <div {...getFloatingProps()} id={id} ref={refs.setFloating} className={tooltipClass} style={floatingStyles}>
             {touchHint && (
-              <span className="hotspot-touch-hint">Touche à nouveau cette pastille pour ouvrir sa fiche.</span>
+              <span className="hotspot-touch-hint">
+                {ui('hotspotDisplay.touche_a_nouveau_cette_pastille_pour_ouvrir_sa_fiche')}
+              </span>
             )}
             {tip}
           </div>
@@ -504,7 +513,7 @@ export function HotspotMapMarker({
     motion.current = [...floating.querySelectorAll<HTMLElement>('.hotspot-expanded-item')].map((element, index) =>
       element.animate(hotspotClusterMotion(positions.anchor, positions.center, positions.points[index]), {
         duration: HOTSPOT_CLUSTER_MOTION_MS,
-        easing: 'cubic-bezier(0.2, 0.65, 0.25, 1)',
+        easing: ui('hotspotDisplay.cubic_bezier_0_2_0_65_0_25_1'),
         fill: 'both',
       }),
     );
@@ -537,7 +546,7 @@ export function HotspotMapMarker({
     'unassessed';
   const grouped = items.length > 1;
   const compact = variant === 'compact';
-  const title = grouped ? `${items.length} points chauds regroupés` : items[0].title;
+  const title = grouped ? ui('hotspotDisplay.points_chauds_regroupes', { length: items.length }) : items[0].title;
   const locations = [
     ...new Set(items.flatMap((item) => item.location.node_ids).map((node) => model.nodeById.get(node)?.name || node)),
   ];
@@ -551,40 +560,48 @@ export function HotspotMapMarker({
       )}
       {!grouped && items[0].gap_analysis?.[0]?.convergence_question && (
         <span>
-          <strong>À arbitrer : </strong>
+          <strong>{ui('hotspotDisplay.a_arbitrer')}</strong>
           <ModelText text={items[0].gap_analysis[0].convergence_question} />
         </span>
       )}
       {!grouped && <span>{framingLabel(items[0])}</span>}
       <span>
-        Criticité {grouped ? 'maximale ' : ''}
+        {ui('hotspotDisplay.criticite')}
+        {grouped ? ui('hotspotDisplay.maximale') : ''}
         {severityLabel(severity)}
       </span>
       <span>{locations.join(' · ')}</span>
       {!grouped && (
         <span>
-          {items[0].kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[items[0].status]}
-          {items[0].workshop ? ' · Atelier' : ''}
+          {items[0].kind === 'integration' ? ui('hotspotDisplay.integration') : ui('hotspotDisplay.perimetre')} ·{' '}
+          {STATUS[items[0].status]}
+          {items[0].workshop ? ui('hotspotDisplay.atelier') : ''}
         </span>
       )}
       {!grouped && (
         <span>
-          Arbitrage {severityLabel(items[0].complexity.arbitration)} · Implémentation{' '}
-          {severityLabel(items[0].complexity.implementation)}
+          {ui('hotspotDisplay.arbitrage')}
+          {severityLabel(items[0].complexity.arbitration)}
+          {ui('hotspotDisplay.implementation')} {severityLabel(items[0].complexity.implementation)}
         </span>
       )}
       {!grouped && (
         <span>
           {RESOLUTION_STAGES[resolutionFor(items[0]).stage]}
-          {resolutionFor(items[0]).blocked_reason ? ` · Bloqué : ${resolutionFor(items[0]).blocked_reason}` : ''}
+          {resolutionFor(items[0]).blocked_reason
+            ? ui('hotspotDisplay.bloque', { blocked_reason: resolutionFor(items[0]).blocked_reason })
+            : ''}
         </span>
       )}
       {grouped && (
         <span>
-          {openItems.length} ouverts / {items.length} au total
+          {openItems.length}
+          {ui('hotspotDisplay.ouverts')}
+          {items.length}
+          {ui('hotspotDisplay.au_total')}
         </span>
       )}
-      {grouped && <span>Cliquer pour déployer les points de ce groupe.</span>}
+      {grouped && <span>{ui('hotspotDisplay.cliquer_pour_deployer_les_points_de_ce_groupe')}</span>}
     </>
   );
   const highlightFromPointer = (active: boolean, ids: string[]) => {
@@ -597,7 +614,14 @@ export function HotspotMapMarker({
     className: 'hotspot-map-marker',
     'data-id': `hotspot:${id}`,
     'data-hotspot-ids': items.map((item) => item.id).join('|'),
-    'aria-label': `${title}, criticité ${grouped ? 'maximale ' : ''}${severityLabel(severity)}${grouped ? `, ${openItems.length} ouverts sur ${items.length}. Déployer le groupe.` : `, ${RESOLUTION_STAGES[resolutionFor(items[0]).stage]}${resolutionFor(items[0]).blocked_reason ? ', bloqué' : ''}`}`,
+    'aria-label': ui('hotspotDisplay.criticite_2', {
+      title: title,
+      value2: grouped ? ui('hotspotDisplay.maximale') : '',
+      value3: severityLabel(severity),
+      value4: grouped
+        ? ui('hotspotDisplay.ouverts_sur_deployer_le_groupe', { length: openItems.length, length2: items.length })
+        : `, ${RESOLUTION_STAGES[resolutionFor(items[0]).stage]}${resolutionFor(items[0]).blocked_reason ? ui('hotspotDisplay.bloque_2') : ''}`,
+    }),
     onMouseEnter: () =>
       highlightFromPointer(
         true,
@@ -647,7 +671,12 @@ export function HotspotMapMarker({
         </button>
       )}
       {!compact && (
-        <HotspotTooltipButton pinOnClick className="hotspot-info-button" aria-label={`Résumé de ${title}`} tip={tip}>
+        <HotspotTooltipButton
+          pinOnClick
+          className="hotspot-info-button"
+          aria-label={ui('hotspotDisplay.resume_de', { title: title })}
+          tip={tip}
+        >
           <Info size={16} aria-hidden="true" />
         </HotspotTooltipButton>
       )}
@@ -699,9 +728,13 @@ export function HotspotMapMarker({
                 <header>
                   <div>
                     <strong>{title}</strong>
-                    <p>Choisis un point · Échap ou clic hors des points pour fermer</p>
+                    <p>{ui('hotspotDisplay.choisis_un_point_echap_ou_clic_hors_des_points_pour_fermer')}</p>
                   </div>
-                  <button type="button" aria-label="Replier le groupe" onClick={() => closeGroup(false)}>
+                  <button
+                    type="button"
+                    aria-label={ui('hotspotDisplay.replier_le_groupe')}
+                    onClick={() => closeGroup(false)}
+                  >
                     <X size={18} />
                   </button>
                 </header>
@@ -717,12 +750,12 @@ export function HotspotMapMarker({
                   data-compact={layout.centerSize < 60}
                 >
                   {layout.centerSize > 6 && items.length}
-                  {layout.centerSize >= 60 && <small>points</small>}
+                  {layout.centerSize >= 60 && <small>{ui('hotspotDisplay.points')}</small>}
                 </span>
                 <div
                   className="hotspot-expanded-grid"
                   role="group"
-                  aria-label="Points chauds du groupe"
+                  aria-label={ui('hotspotDisplay.points_chauds_du_groupe')}
                   onClick={(event) => {
                     if (event.target === event.currentTarget) closeGroup(false);
                   }}
@@ -764,7 +797,12 @@ export function HotspotMapMarker({
                           onMouseLeave={() => highlightFromPointer(false, [])}
                           onFocus={() => onHighlight?.(true, [item.id])}
                           onBlur={() => onHighlight?.(false, [])}
-                          aria-label={`${item.title}, criticité ${severityLabel(item.severity)}, ${RESOLUTION_STAGES[resolutionFor(item).stage]}${resolutionFor(item).blocked_reason ? ', bloqué' : ''}`}
+                          aria-label={ui('hotspotDisplay.criticite_3', {
+                            title: item.title,
+                            value2: severityLabel(item.severity),
+                            value3: RESOLUTION_STAGES[resolutionFor(item).stage],
+                            value4: resolutionFor(item).blocked_reason ? ui('hotspotDisplay.bloque_2') : '',
+                          })}
                           onClick={() => {
                             requestClose(() => onOpen(item.id));
                           }}
@@ -778,7 +816,7 @@ export function HotspotMapMarker({
                           tooltipRoot={elements.floating}
                           className="hotspot-info-button hotspot-expanded-info"
                           style={point ? { left: point.x + 5, top: point.y + 5 } : undefined}
-                          aria-label={`Résumé de ${item.title}`}
+                          aria-label={ui('hotspotDisplay.resume_de', { title: item.title })}
                           tip={
                             <>
                               <strong>{item.title}</strong>
@@ -787,16 +825,20 @@ export function HotspotMapMarker({
                               </span>
                               {item.gap_analysis?.[0]?.convergence_question && (
                                 <span>
-                                  À arbitrer : <ModelText text={item.gap_analysis[0].convergence_question} />
+                                  {ui('hotspotDisplay.a_arbitrer')}
+                                  <ModelText text={item.gap_analysis[0].convergence_question} />
                                 </span>
                               )}
                               <span>{framingLabel(item)}</span>
                               <span>
-                                {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]} · Criticité{' '}
-                                {severityLabel(item.severity)}
+                                {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]}
+                                {ui('hotspotDisplay.criticite_4')} {severityLabel(item.severity)}
                               </span>
                               {resolutionFor(item).blocked_reason && (
-                                <span>Bloqué : {resolutionFor(item).blocked_reason}</span>
+                                <span>
+                                  {ui('hotspotDisplay.bloque_3')}
+                                  {resolutionFor(item).blocked_reason}
+                                </span>
                               )}
                               <span>
                                 {item.location.node_ids
@@ -813,10 +855,14 @@ export function HotspotMapMarker({
                   })}
                 </div>
                 {pageCount > 1 && (
-                  <div className="hotspot-cluster-pagination" role="group" aria-label="Parcourir les pastilles">
+                  <div
+                    className="hotspot-cluster-pagination"
+                    role="group"
+                    aria-label={ui('hotspotDisplay.parcourir_les_pastilles')}
+                  >
                     <button
                       type="button"
-                      aria-label="Pastilles précédentes"
+                      aria-label={ui('hotspotDisplay.pastilles_precedentes')}
                       disabled={activePage === 0}
                       onClick={(event) => changePage(activePage - 1, event.detail === 0)}
                     >
@@ -827,13 +873,20 @@ export function HotspotMapMarker({
                         {activePage + 1} / {pageCount}
                       </span>
                       <span className="sr-only">
-                        Page {activePage + 1} sur {pageCount}, pastilles {activePage * fullLayout.capacity + 1} à{' '}
-                        {Math.min(items.length, (activePage + 1) * fullLayout.capacity)} sur {items.length}
+                        {ui('hotspotDisplay.page')}
+                        {activePage + 1}
+                        {ui('hotspotDisplay.sur')}
+                        {pageCount}
+                        {ui('hotspotDisplay.pastilles')}
+                        {activePage * fullLayout.capacity + 1}
+                        {ui('hotspotDisplay.a')} {Math.min(items.length, (activePage + 1) * fullLayout.capacity)}
+                        {ui('hotspotDisplay.sur')}
+                        {items.length}
                       </span>
                     </span>
                     <button
                       type="button"
-                      aria-label="Pastilles suivantes"
+                      aria-label={ui('hotspotDisplay.pastilles_suivantes')}
                       disabled={activePage === pageCount - 1}
                       onClick={(event) => changePage(activePage + 1, event.detail === 0)}
                     >

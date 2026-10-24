@@ -1,40 +1,24 @@
-import { behaviorTypeLabel } from './behaviorTypes.ts';
-import { capabilityTypeLabel } from './capabilityTypes.ts';
 import { plainInlineText } from './inlineLinks.ts';
 import type { AtlasNode, AtlasRelation } from './types';
+import { ui } from './ui.ts';
 export function kindLabel(node: AtlasNode) {
-  if (node.kind === 'universe')
-    return node.name === 'Enterprise Architecture' || node.name === 'Univers' ? node.name : 'Universe';
-  if (node.kind === 'business_system') return 'Business System';
-  if (node.groupRole === 'urbanism_level') return node.levelRef === 'universe' ? 'Universe' : 'Urbanism Level';
-  if (node.kind === 'capability') return `Capability · ${capabilityTypeLabel(node)}`;
-  if (node.kind === 'behavior') return `Behavior · ${behaviorTypeLabel(node)}`;
-  if (node.kind === 'area') return node.hierarchyLabel === 'Sous-domaine' ? 'Subdomain' : node.hierarchyLabel || 'Area';
-  return (
-    (
-      {
-        domain: 'Domain',
-        area: 'Area',
-        business_area: 'Business Area',
-        reference: 'Business Reference',
-        group: 'Presentation Group',
-        object: 'Business Object',
-        document: 'Document',
-        event: 'Event',
-      } as Record<string, string>
-    )[node.kind] || node.kind
-  );
+  if (node.groupRole === 'urbanism_level') {
+    const role = node.levelRef === 'universe' ? 'universe' : 'urbanism_level';
+    return node.reading?.vocabulary?.presentation_roles?.[role]?.label ?? ui('common.type_unavailable');
+  }
+  const label = node.reading?.kind ?? ui('common.type_unavailable');
+  return node.reading?.nature ? [label, node.reading.nature].join(' · ') : label;
 }
 export function statusLabel(element: AtlasNode | AtlasRelation) {
   return (
     (
       {
-        accepted: 'Validé dans sa portée',
-        partial: 'Partiellement validé',
-        proposed: 'Proposé',
-        under_review: 'En réexamen',
+        accepted: ui('presentation.valide_dans_sa_portee'),
+        partial: ui('presentation.partiellement_valide'),
+        proposed: ui('presentation.propose'),
+        under_review: ui('presentation.en_reexamen'),
       } as Record<string, string>
-    )[element.status] || 'À qualifier'
+    )[element.status] || ui('presentation.a_qualifier')
   );
 }
 export function shortText(text: string, length = 145) {

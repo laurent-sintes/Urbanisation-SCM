@@ -1,3 +1,4 @@
+import { ui } from './ui.ts';
 /** A readable map keeps text close to its native size before using vertical scroll. */
 export const MIN_READABLE_ZOOM = 0.85;
 
@@ -9,7 +10,7 @@ export interface LayoutCandidate {
 
 /** Maximize the fitted page scale; width framing favours space for nested content. */
 export function chooseLayoutCandidate<T extends LayoutCandidate>(candidates: readonly T[], mode: 'page' | 'width'): T {
-  if (!candidates.length) throw new Error('A layout needs at least one candidate');
+  if (!candidates.length) throw new Error(ui('adaptiveLayout.a_layout_needs_at_least_one_candidate'));
   return candidates.reduce((best, candidate) => {
     if (mode === 'page') {
       if (candidate.pageZoom > best.pageZoom + 0.01) return candidate;

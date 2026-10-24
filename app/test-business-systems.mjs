@@ -4,32 +4,35 @@ import { dependencyLevel, dependencyLevels, projectDependencies } from './src/de
 import { adaptPublication, cardChildListOf, childrenOf, hasCapabilityCards, lineageOf, rootsOf } from './src/model.ts';
 import { readRoute, routeHash } from './src/navigation.ts';
 import { kindLabel } from './src/presentation.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const node = (id, kind, depth) => ({ id, kind, fields: { name: id, ...(depth ? { modeling_depth: depth } : {}) } });
 const edge = (id, type, source_id, target_id) => ({ id, type, source_id, target_id });
 function fixture() {
-  return adaptPublication({
-    space: 'release',
-    version: 'fixture',
-    nodes: [
-      node('design', 'business_system', 'context'),
-      node('operations', 'business_system', 'domains'),
-      node('control', 'business_system', 'context'),
-      node('sales', 'domain', 'domains'),
-      node('orchestration', 'domain', 'behaviors'),
-      node('orders', 'area'),
-      node('order', 'capability'),
-      node('promise', 'capability'),
-    ],
-    relations: [
-      edge('sales-parent', 'presents', 'operations', 'sales'),
-      edge('sc-parent', 'presents', 'operations', 'orchestration'),
-      edge('area-parent', 'presents', 'orchestration', 'orders'),
-      edge('cap-parent', 'contains', 'orders', 'order'),
-      edge('promise-parent', 'contains', 'orders', 'promise'),
-      edge('business-link', 'relates-to', 'order', 'promise'),
-    ],
-  });
+  return adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'fixture',
+      nodes: [
+        node('design', 'business_system', 'context'),
+        node('operations', 'business_system', 'domains'),
+        node('control', 'business_system', 'context'),
+        node('sales', 'domain', 'domains'),
+        node('orchestration', 'domain', 'behaviors'),
+        node('orders', 'area'),
+        node('order', 'capability'),
+        node('promise', 'capability'),
+      ],
+      relations: [
+        edge('sales-parent', 'presents', 'operations', 'sales'),
+        edge('sc-parent', 'presents', 'operations', 'orchestration'),
+        edge('area-parent', 'presents', 'orchestration', 'orders'),
+        edge('cap-parent', 'contains', 'orders', 'order'),
+        edge('promise-parent', 'contains', 'orders', 'promise'),
+        edge('business-link', 'relates-to', 'order', 'promise'),
+      ],
+    }),
+  );
 }
 
 test('overview shows explicit domains, compact contexts and complete breadcrumbs', () => {
@@ -80,12 +83,14 @@ test('dependency system level preserves original business relations and route', 
 });
 
 test('historical publications keep roots and fallback for a shared system-level URL', () => {
-  const historical = adaptPublication({
-    space: 'release',
-    version: 'old',
-    nodes: [node('domain', 'domain'), node('area', 'area')],
-    relations: [edge('parent', 'presents', 'domain', 'area')],
-  });
+  const historical = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'old',
+      nodes: [node('domain', 'domain'), node('area', 'area')],
+      relations: [edge('parent', 'presents', 'domain', 'area')],
+    }),
+  );
   assert.equal(kindLabel(historical.nodeById.get('domain')), 'Domain');
   assert.equal(rootsOf(historical)[0].id, 'domain');
   assert.equal(
@@ -96,27 +101,29 @@ test('historical publications keep roots and fallback for a shared system-level 
 });
 
 test('published Universe is the navigable root above the systems', () => {
-  const model = adaptPublication({
-    space: 'release',
-    version: 'universe-fixture',
-    nodes: [
-      node('universe', 'universe'),
-      node('design', 'business_system'),
-      node('operations', 'business_system'),
-      node('control', 'business_system'),
-      node('orchestration', 'domain'),
-      node('orders', 'area'),
-      node('order', 'capability'),
-    ],
-    relations: [
-      edge('u-design', 'contains', 'universe', 'design'),
-      edge('u-operations', 'contains', 'universe', 'operations'),
-      edge('u-control', 'contains', 'universe', 'control'),
-      edge('o-domain', 'presents', 'operations', 'orchestration'),
-      edge('domain-area', 'presents', 'orchestration', 'orders'),
-      edge('area-cap', 'contains', 'orders', 'order'),
-    ],
-  });
+  const model = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'universe-fixture',
+      nodes: [
+        node('universe', 'universe'),
+        node('design', 'business_system'),
+        node('operations', 'business_system'),
+        node('control', 'business_system'),
+        node('orchestration', 'domain'),
+        node('orders', 'area'),
+        node('order', 'capability'),
+      ],
+      relations: [
+        edge('u-design', 'contains', 'universe', 'design'),
+        edge('u-operations', 'contains', 'universe', 'operations'),
+        edge('u-control', 'contains', 'universe', 'control'),
+        edge('o-domain', 'presents', 'operations', 'orchestration'),
+        edge('domain-area', 'presents', 'orchestration', 'orders'),
+        edge('area-cap', 'contains', 'orders', 'order'),
+      ],
+    }),
+  );
   assert.deepEqual(
     rootsOf(model).map((n) => n.id),
     ['universe'],
@@ -130,11 +137,14 @@ test('published Universe is the navigable root above the systems', () => {
     ['universe', 'operations', 'orchestration', 'orders', 'order'],
   );
   assert.equal(kindLabel(model.nodeById.get('universe')), 'Universe');
-  const renamed = adaptPublication({
-    space: 'release',
-    version: 'renamed-root',
-    nodes: [{ id: 'beaumanoir-target-universe', kind: 'universe', fields: { name: 'Enterprise Architecture' } }],
-    relations: [],
-  });
+  const renamed = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'renamed-root',
+      metamodel: { node_types: [{ kind: 'universe', label: 'Enterprise Architecture' }] },
+      nodes: [{ id: 'beaumanoir-target-universe', kind: 'universe', fields: { name: 'Enterprise Architecture' } }],
+      relations: [],
+    }),
+  );
   assert.equal(kindLabel(renamed.nodeById.get('beaumanoir-target-universe')), 'Enterprise Architecture');
 });

@@ -26197,3 +26197,14 @@ Verbatim : « Go pour intégrer ce neuvième principe dans le modèle et Atlas, 
 Portée : appliquer la proposition U1163, ses bénéfices conditionnels, frontières et appuis documentés, avec des liens de lecture depuis Master Plan et son terme métier. Finaliser aussi le recentrage U1161 (neuf choix structurants, socle regroupant les bonnes pratiques, filtres et conventions internes masqués) et les clarifications U1162 sur les données de décision et le résultat global de la Supply. Conserver les tooltips simples, les identités, les portées normatives existantes et les publications historiques. L’accord couvre les propositions discutées ; les nouveaux compléments de mise en œuvre ne sont pas adoptés par extension. Aucune release, commit ou push demandé.
 
 Application : [intégration des neuf principes et des améliorations de lecture](../modeles/backlog/directing-principles-integration-U1164.yaml).
+
+
+## U1165
+
+Date : 2026-10-24. Source : Laurent, application et publication de l’audit technique des contenus et libellés Atlas.
+
+Verbatims : « Go pour appliquer les préconisations de l’audit dans l’ordre proposé : fidélité des contenus, vocabulaire publié, externalisation des libellés, puis contrôles automatiques. Garde les tooltips simples. » Puis : « Commit & Release & push ».
+
+Portée : livrer les corrections techniques de l’audit, figer le vocabulaire et les présentations de lecture avec une nouvelle édition du guide, publier localement puis pousser et vérifier Atlas distant. Les libellés de contexte déjà affichés sont rendus explicites dans le catalogue applicatif. Aucune nouvelle définition métier, relation ou portée d’accord n’est déduite de cette livraison ; les publications historiques restent figées.
+
+Audit technique : [fidélité des contenus et externalisation des libellés](../app/audits/2026-10-24-code-libelles.md).

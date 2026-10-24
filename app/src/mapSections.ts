@@ -1,11 +1,12 @@
 import { childrenOf } from './model.ts';
 import type { AtlasNode, PublishedModel } from './types';
+import { ui } from './ui.ts';
 
 /** Direct references share a visible heading; historical capabilities keep theirs. */
 export function directSectionCaption(items: AtlasNode[]): string {
   return items.length && items.every((item) => item.kind === 'reference')
-    ? 'Référentiels communs'
-    : 'Rattachement direct au sous-domaine';
+    ? ui('mapSections.referentiels_communs')
+    : ui('mapSections.rattachement_direct_au_sous_domaine');
 }
 
 export function startsDirectSection(items: AtlasNode[], index: number): boolean {

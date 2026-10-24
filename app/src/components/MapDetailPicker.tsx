@@ -1,6 +1,7 @@
 import { FloatingFocusManager, FloatingPortal, useClick, useDismiss, useInteractions } from '@floating-ui/react';
 import { ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
+import { ui } from '../ui.ts';
 import { useHotspotFloating } from './HotspotDisplay';
 
 export function MapDetailPicker({
@@ -30,7 +31,8 @@ export function MapDetailPicker({
       >
         <SlidersHorizontal size={15} />
         <span>
-          Détail <strong>{labels[value]}</strong>
+          {ui('mapDetailPicker.detail')}
+          <strong>{labels[value]}</strong>
         </span>
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
       </button>
@@ -44,10 +46,11 @@ export function MapDetailPicker({
               id={optionsId}
               className="detail-popover"
               role="group"
-              aria-label="Niveau de détail de la carte"
+              aria-label={ui('mapDetailPicker.niveau_de_detail_de_la_carte')}
             >
               <div className="detail-popover-heading">
-                Niveau de détail <strong>{labels[value]}</strong>
+                {ui('mapDetailPicker.niveau_de_detail')}
+                <strong>{labels[value]}</strong>
               </div>
               <input
                 ref={range}
@@ -57,7 +60,7 @@ export function MapDetailPicker({
                 max={max}
                 step={1}
                 value={value}
-                aria-label="Niveau de détail de la carte"
+                aria-label={ui('mapDetailPicker.niveau_de_detail_de_la_carte')}
                 aria-valuetext={labels[value]}
                 disabled={max === 0}
                 style={{ '--detail-progress': `${max ? (value / max) * 100 : 0}%` } as React.CSSProperties}
@@ -75,7 +78,7 @@ export function MapDetailPicker({
                   </button>
                 ))}
               </div>
-              {max === 0 && <p>Aucun détail supplémentaire disponible.</p>}
+              {max === 0 && <p>{ui('mapDetailPicker.aucun_detail_supplementaire_disponible')}</p>}
             </div>
           </FloatingFocusManager>
         </FloatingPortal>

@@ -1,13 +1,14 @@
 import { businessFields, businessQualification } from './businessContent.ts';
 import { inlineParts, plainInlineText } from './inlineLinks.ts';
 import type { ArchitecturePrinciple, PublishedModel } from './types.ts';
+import { ui } from './ui.ts';
 
 export const principleCategories: Record<string, string> = {
-  architecture: 'Structure métier',
-  information: 'Informations et faits',
-  decision: 'Décisions et engagements',
-  scope: 'Périmètre de la carte',
-  convention: 'Convention',
+  architecture: ui('designPrinciples.structure_metier'),
+  information: ui('designPrinciples.informations_et_faits'),
+  decision: ui('designPrinciples.decisions_et_engagements'),
+  scope: ui('designPrinciples.perimetre_de_la_carte'),
+  convention: ui('designPrinciples.convention'),
 };
 export const principleTitle = (p: ArchitecturePrinciple) => p.label_fr || p.name || p.id;
 export function designPrinciples(model: PublishedModel) {
@@ -176,7 +177,14 @@ export function principleSearchText(p: ArchitecturePrinciple) {
 /** Resolve jargon against this edition only, preserving explicit authored links. */
 export function annotatePrincipleText(model: PublishedModel, text: string) {
   const terms = new Map<string, { kind: string; id: string }>();
-  const ordinaryWords = new Set(['gestion', 'activité', 'résultat', 'valeur', 'besoin', 'rôle']);
+  const ordinaryWords = new Set([
+    'gestion',
+    ui('designPrinciples.activite'),
+    ui('designPrinciples.resultat'),
+    'valeur',
+    'besoin',
+    ui('designPrinciples.role'),
+  ]);
   const add = (label: string | undefined, kind: string, id: string) => {
     const plain = plainInlineText(label || '').trim();
     if (
@@ -200,8 +208,8 @@ export function annotatePrincipleText(model: PublishedModel, text: string) {
     add(term.label_fr, 'method', term.id);
   }
   for (const [label, id] of [
-    ['capacité', 'MOD015'],
-    ['capacités', 'MOD015'],
+    [ui('designPrinciples.capacite'), 'MOD015'],
+    [ui('designPrinciples.capacites'), 'MOD015'],
     ['comportement', 'MOD006'],
     ['comportements', 'MOD006'],
   ])

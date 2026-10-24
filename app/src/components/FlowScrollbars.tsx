@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { FLOW_SCROLLBAR_SIZE, type flowScrollGeometry } from '../flowMapScroll';
+import { ui } from '../ui.ts';
 import './flow-scrollbars.css';
 
 export function FlowScrollbars({
@@ -45,7 +46,9 @@ export function FlowScrollbars({
             className={`flow-scrollbar is-${axis}`}
             role="scrollbar"
             tabIndex={0}
-            aria-label={`Défilement ${horizontalAxis ? 'horizontal' : 'vertical'} de la carte`}
+            aria-label={ui('flowScrollbars.defilement_de_la_carte', {
+              value1: horizontalAxis ? 'horizontal' : 'vertical',
+            })}
             aria-controls={canvasId}
             aria-orientation={axis}
             aria-valuemin={0}

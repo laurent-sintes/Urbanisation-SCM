@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-23.6
+# Urbanisation 2026-10-24.1
 
-116 capacités. Sources : U1164.
+116 capacités. Sources : U1165.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 

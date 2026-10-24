@@ -18,9 +18,10 @@ import {
 } from './src/model.ts';
 import { readRoute, routeHash } from './src/navigation.ts';
 import { kindLabel } from './src/presentation.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const current = await loadPublication({ version: '2026-09-13.5' });
-const model = adaptPublication(current.raw);
+const model = adaptPublication(readingFixture(current.raw));
 const relationId = 'REL-EXECUTION-FACTS-ORDER-RECONCILIATION';
 const ids = (nodes) => nodes.map((node) => node.id);
 
@@ -31,11 +32,11 @@ test('subdomain naming is selected by the snapshot without changing historical l
   raw.principles = (raw.principles || []).filter(
     (p) => !['PRINCIPLE-DOMAIN-PURPOSE', 'PRINCIPLE-DOMAIN-SUBDOMAIN'].includes(p.id),
   );
-  assert.equal(adaptPublication(raw).nodeById.get(area.id).hierarchyLabel, 'Area');
+  assert.equal(adaptPublication(readingFixture(raw)).nodeById.get(area.id).hierarchyLabel, 'Area');
   raw.principles.push({ id: 'PRINCIPLE-DOMAIN-PURPOSE', statement: 'Historical fixture', source_refs: [] });
-  assert.equal(adaptPublication(raw).nodeById.get(area.id).hierarchyLabel, 'Purpose');
+  assert.equal(adaptPublication(readingFixture(raw)).nodeById.get(area.id).hierarchyLabel, 'Purpose');
   raw.principles.push({ id: 'PRINCIPLE-DOMAIN-SUBDOMAIN', statement: 'Current fixture', source_refs: [] });
-  assert.equal(adaptPublication(raw).nodeById.get(area.id).hierarchyLabel, 'Sous-domaine');
+  assert.equal(adaptPublication(readingFixture(raw)).nodeById.get(area.id).hierarchyLabel, 'Sous-domaine');
   assert.equal(model.nodeById.get(area.id).kind, 'domain');
 });
 
@@ -45,7 +46,7 @@ test('visible market comparisons are searchable only in their own immutable publ
   raw.nodes[0].fields.market_comparisons = [
     { vendor: 'RELEX', element_name: 'In-season fill-in', differences: 'SeuilsCapsulesTest' },
   ];
-  const enriched = adaptPublication(raw);
+  const enriched = adaptPublication(readingFixture(raw));
   assert.deepEqual(ids(searchModel(enriched, 'RELEX SeuilsCapsulesTest')), [id]);
   assert.equal(searchModel(model, 'SeuilsCapsulesTest').length, 0);
   assert.equal(enriched.nodeById.get(id).fields.market_comparisons[0].vendor, 'RELEX');
@@ -75,7 +76,7 @@ function behaviorFixture() {
   return raw;
 }
 test('behavior has explicit lineage, searchable content and stays out of capability counts', () => {
-  const withBehavior = adaptPublication(behaviorFixture());
+  const withBehavior = adaptPublication(readingFixture(behaviorFixture()));
   assert.equal(
     withBehavior.nodes.filter((n) => n.kind === 'capability').length,
     model.nodes.filter((n) => n.kind === 'capability').length,
@@ -99,13 +100,13 @@ test('behavior rejects orphan, domain parent and recursive children', () => {
   ]) {
     const raw = behaviorFixture();
     mutate(raw);
-    assert.throws(() => adaptPublication(raw));
+    assert.throws(() => adaptPublication(readingFixture(raw)));
   }
 });
 
 test('the live current pointer projects exactly the published file it designates', async () => {
   const live = await loadPublication();
-  const projected = adaptPublication(live.raw);
+  const projected = adaptPublication(readingFixture(live.raw));
   assert.equal(projected.version, live.descriptor.version);
   assert.deepEqual(
     ids(projected.nodes),
@@ -194,7 +195,7 @@ for (const kind of ['area', 'group'])
         });
       }
     });
-    const publication = adaptPublication(raw);
+    const publication = adaptPublication(readingFixture(raw));
     const scope = publication.nodeById.get('reference-scope');
     assert.equal(kindLabel(scope), kind === 'area' ? 'Area' : 'Presentation Group');
     assert.equal(parentRelationOf(publication, scope.id).type, 'presents');
@@ -226,7 +227,11 @@ for (const kind of ['area', 'group'])
     assert.equal(new Set(ids(capabilities)).size, 12);
     assert.deepEqual(ids(focusGraph(publication, scope.id).nodes), [scope.id, ...ids(references.items)]);
     assert.equal(descendantsOf(publication, scope.id).length, 18);
-    assert.deepEqual(publication.raw, raw, 'Rendering must preserve historical types and relation kinds.');
+    assert.deepEqual(
+      publication.raw,
+      readingFixture(raw),
+      'Rendering must preserve historical types and relation kinds.',
+    );
   });
 
 test('relation qualification, sources and partial validations survive projection intact', () => {
@@ -254,7 +259,7 @@ test('search uses published fields and published ancestry without backlog comple
   const raw = structuredClone(current.raw);
   raw.backlogAliases = { 'D04.h': 'synonyme-interdit-backlog' };
   raw.excluded_nodes.push({ id: 'synonyme-interdit-backlog' });
-  assert.equal(searchModel(adaptPublication(raw), 'synonyme-interdit-backlog').length, 0);
+  assert.equal(searchModel(adaptPublication(readingFixture(raw)), 'synonyme-interdit-backlog').length, 0);
 });
 
 test('real local graph follows published direction without adding structural dependencies', () => {
@@ -273,7 +278,7 @@ test('real local graph follows published direction without adding structural dep
 test('helpers and attempted renderer edits cannot mutate the input publication', () => {
   const input = structuredClone(current.raw);
   const before = JSON.stringify(input);
-  const projection = adaptPublication(input);
+  const projection = adaptPublication(readingFixture(input));
   childrenOf(projection, 'D01').reverse();
   descendantsOf(projection, 'universe-supply').reverse();
   neighborhood(projection, 'D07.c', { depth: 2 });
@@ -332,7 +337,7 @@ function syntheticFixture() {
 }
 
 test('synthetic deeper model keeps arbitrary depth, actual types and explicit presentation', () => {
-  const fixture = adaptPublication(syntheticFixture());
+  const fixture = adaptPublication(readingFixture(syntheticFixture()));
   assert.deepEqual(ids(lineageOf(fixture, 'deep-leaf')), ['universe', 'domain', 'level-three', 'deep-leaf']);
   assert.equal(descendantsOf(fixture, 'universe').length, 5);
   assert.equal(fixture.nodeById.get('deep-leaf').kind, 'object');
@@ -344,7 +349,7 @@ test('synthetic deeper model keeps arbitrary depth, actual types and explicit pr
 });
 
 test('synthetic 1/2 hop traversal handles direction, branching and filtered edge types', () => {
-  const fixture = adaptPublication(syntheticFixture());
+  const fixture = adaptPublication(readingFixture(syntheticFixture()));
   assert.deepEqual(new Set(ids(neighborhood(fixture, 'deep-leaf').nodes)), new Set(['deep-leaf', 'event']));
   assert.equal(neighborhood(fixture, 'deep-leaf').hiddenRelationCount, 2);
   assert.deepEqual(
@@ -364,7 +369,7 @@ test('invalid topology is rejected instead of silently repairing or inferring pa
   const mutate = (change) => {
     const fixture = syntheticFixture();
     change(fixture);
-    return () => adaptPublication(fixture);
+    return () => adaptPublication(readingFixture(fixture));
   };
   assert.throws(
     mutate((fixture) => {
@@ -402,7 +407,7 @@ test('invalid topology is rejected instead of silently repairing or inferring pa
 
 test('historical publication is selected explicitly and never filled from current', async () => {
   const historical = await loadPublication({ version: '2026-09-13.4' });
-  const older = adaptPublication(historical.raw);
+  const older = adaptPublication(readingFixture(historical.raw));
   assert.equal(older.version, '2026-09-13.4');
   assert.equal(older.nodeById.has('universe-supply'), false);
   assert.equal(older.nodeById.has('D04.h'), false);

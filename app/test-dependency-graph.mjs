@@ -11,6 +11,7 @@ import {
   isStructural,
 } from './src/model.ts';
 import { kindLabel } from './src/presentation.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const options = { level: 'capability', depth: 0, direction: 'both', family: 'all' };
 test('a shared reference and policy Purpose keeps both kinds of children visible', () => {
@@ -27,7 +28,7 @@ test('a shared reference and policy Purpose keeps both kinds of children visible
       { id: 'cap', type: 'contains', source_id: 'purpose', target_id: 'policy' },
     ],
   };
-  const model = adaptPublication(raw);
+  const model = adaptPublication(readingFixture(raw));
   const list = cardChildListOf(model, model.nodeById.get('purpose'));
   assert.equal(list.kind, 'mixed');
   assert.deepEqual(
@@ -45,15 +46,15 @@ test('Purpose labels follow the selected snapshot without relabeling historical 
   const next = structuredClone(old);
   next.version = 'new-purpose';
   next.principles = [{ id: 'PRINCIPLE-DOMAIN-PURPOSE' }];
-  const historical = adaptPublication(old),
-    current = adaptPublication(next);
+  const historical = adaptPublication(readingFixture(old)),
+    current = adaptPublication(readingFixture(next));
   assert.equal(kindLabel(historical.nodeById.get('a')), 'Area');
   assert.equal(kindLabel(current.nodeById.get('a')), 'Purpose');
   assert.equal(dependencyLevels(historical)[1].label, 'Areas et référentiels');
   assert.equal(dependencyLevels(current)[1].label, 'Purposes et référentiels');
-  const subdomain = adaptPublication({ ...next, principles: [{ id: 'PRINCIPLE-DOMAIN-SUBDOMAIN' }] });
+  const subdomain = adaptPublication(readingFixture({ ...next, principles: [{ id: 'PRINCIPLE-DOMAIN-SUBDOMAIN' }] }));
   assert.equal(dependencyLevels(subdomain)[1].label, 'Sous-domaines et référentiels');
-  assert.equal(kindLabel(adaptPublication(old).nodeById.get('a')), 'Area');
+  assert.equal(kindLabel(adaptPublication(readingFixture(old)).nodeById.get('a')), 'Area');
 });
 const n = (id, kind, extra = {}) => ({ id, kind, layer: 'transactional', fields: { name: id }, ...extra });
 const parent = (source_id, target_id, type = 'contains') => ({ id: `parent:${target_id}`, type, source_id, target_id });
@@ -126,7 +127,7 @@ function rawFixture() {
     ],
   };
 }
-const fixture = () => adaptPublication(rawFixture());
+const fixture = () => adaptPublication(readingFixture(rawFixture()));
 const project = (model, overrides = {}) => projectDependencies(model, { ...options, ...overrides });
 const nodeIds = (projection) => projection.nodes.map((node) => node.id);
 const relationIds = (projection) => projection.relations.map((relation) => relation.id);
@@ -145,7 +146,7 @@ function areaFixture() {
     }
   }
   raw.nodes.find((node) => node.id === 'business-references').fields.name = 'Authoritative Data';
-  return adaptPublication(raw);
+  return adaptPublication(readingFixture(raw));
 }
 
 test('Domain / Area groups each relation at its published level while preserving reference and presentation kinds', () => {
@@ -234,7 +235,7 @@ test('explicit needs labels and verbs describe the original direction, with a sa
   for (const fields of [{ label: 'Consomme le scénario retenu' }, { verb: 'Consomme le scénario retenu' }]) {
     const raw = rawFixture();
     for (const id of ['a-b', 'behavior-b']) raw.relations.find((relation) => relation.id === id).fields = fields;
-    const model = adaptPublication(raw);
+    const model = adaptPublication(readingFixture(raw));
     const edge = project(model).edges.find((item) => item.relationIds.includes('a-b'));
     assert.equal(edge.label, 'Consomme le scénario retenu');
     assert.equal(edge.family, 'needs');
@@ -247,7 +248,7 @@ test('explicit needs labels and verbs describe the original direction, with a sa
     const raw = rawFixture();
     raw.relations.find((relation) => relation.id === 'a-b').fields = { label: 'Consomme le scénario retenu' };
     if (secondFields) raw.relations.find((relation) => relation.id === 'behavior-b').fields = secondFields;
-    const model = adaptPublication(raw);
+    const model = adaptPublication(readingFixture(raw));
     const edge = project(model).edges.find((item) => item.relationIds.includes('a-b'));
     assert.equal(edge.label, 'A besoin de');
     assert.deepEqual(edge.relationIds, ['a-b', 'behavior-b']);
@@ -358,25 +359,27 @@ test('universe identity follows levelRef, and empty groups remain inspectable', 
 });
 
 test('the current Enterprise Architecture root explores its descendants and preserves published relation identities', () => {
-  const model = adaptPublication({
-    space: 'release',
-    version: 'root-kind',
-    nodes: [
-      n('EA', 'universe'),
-      n('S1', 'business_system'),
-      n('S2', 'business_system'),
-      n('C1', 'capability'),
-      n('C2', 'capability'),
-    ],
-    relations: [
-      parent('EA', 'S1'),
-      parent('EA', 'S2'),
-      parent('S1', 'C1'),
-      parent('S2', 'C2'),
-      r('exchange', 'C1', 'C2'),
-      r('summary', 'S1', 'S2'),
-    ],
-  });
+  const model = adaptPublication(
+    readingFixture({
+      space: 'release',
+      version: 'root-kind',
+      nodes: [
+        n('EA', 'universe'),
+        n('S1', 'business_system'),
+        n('S2', 'business_system'),
+        n('C1', 'capability'),
+        n('C2', 'capability'),
+      ],
+      relations: [
+        parent('EA', 'S1'),
+        parent('EA', 'S2'),
+        parent('S1', 'C1'),
+        parent('S2', 'C2'),
+        r('exchange', 'C1', 'C2'),
+        r('summary', 'S1', 'S2'),
+      ],
+    }),
+  );
   const projection = project(model, { focusId: 'EA', depth: 1, level: 'business_system' });
   assert.deepEqual(relationIds(projection).sort(), ['exchange', 'summary']);
   assert.deepEqual(projection.edges[0].relationIds.sort(), ['exchange', 'summary']);
@@ -408,7 +411,7 @@ test('all projections leave frozen publication data and source objects unchanged
 test('real historical and current publications retain their own direct links, nodes and original qualifications', async () => {
   for (const version of ['2026-09-13.5', '2026-09-16.2']) {
     const publication = await loadPublication({ version });
-    const model = adaptPublication(publication.raw);
+    const model = adaptPublication(readingFixture(publication.raw));
     const before = JSON.stringify(model.raw);
     const business = model.relations.filter((relation) => !isStructural(relation));
     for (const level of ['capability', 'domain', 'universe']) {

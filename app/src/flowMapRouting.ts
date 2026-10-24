@@ -1,5 +1,6 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
 import { FLOW_STUB, FLOW_TRACK, flowFacingSides, flowLabelSize } from './flowMapSpacing.ts';
+import { ui } from './ui.ts';
 
 /** Screen pixels: overview paths stay distinct without filling the small map. */
 export const flowScreenStroke = (zoom: number) => Math.max(1.5, Math.min(8, zoom * 24));
@@ -634,7 +635,7 @@ export function roundedFlowPath(points: readonly FlowRoutePoint[], radius = 10):
   const path = cleanPoints(points);
   if (path.length < 2) return '';
   const limit = Number.isFinite(radius) ? Math.max(0, radius) : 0;
-  const commands = [`M ${coordinates(path[0])}`];
+  const commands = [ui('flowMapRouting.m', { value1: coordinates(path[0]) })];
   for (let index = 1; index < path.length - 1; index++) {
     const before = path[index - 1];
     const point = path[index];
@@ -647,14 +648,16 @@ export function roundedFlowPath(points: readonly FlowRoutePoint[], radius = 10):
     const lengthB = Math.hypot(bx, by);
     const corner = Math.min(limit, lengthA / 2, lengthB / 2);
     if (!corner || Math.abs(ax * by - ay * bx) < EPSILON) {
-      commands.push(`L ${coordinates(point)}`);
+      commands.push(ui('flowMapRouting.l', { value1: coordinates(point) }));
       continue;
     }
     const start = { x: point.x - (ax / lengthA) * corner, y: point.y - (ay / lengthA) * corner };
     const end = { x: point.x + (bx / lengthB) * corner, y: point.y + (by / lengthB) * corner };
-    commands.push(`L ${coordinates(start)} Q ${coordinates(point)} ${coordinates(end)}`);
+    commands.push(
+      ui('flowMapRouting.l_q', { value1: coordinates(start), value2: coordinates(point), value3: coordinates(end) }),
+    );
   }
-  commands.push(`L ${coordinates(path[path.length - 1])}`);
+  commands.push(ui('flowMapRouting.l', { value1: coordinates(path[path.length - 1]) }));
   return commands.join(' ');
 }
 
@@ -704,8 +707,11 @@ export function flowRibbonPath(points: readonly FlowRoutePoint[], width = 10, he
     { x: base.x + last.y * halfWidth, y: base.y - last.x * halfWidth },
     ...right,
   ];
-  return `M ${coordinates(polygon[0])} ${polygon
-    .slice(1)
-    .map((point) => `L ${coordinates(point)}`)
-    .join(' ')} Z`;
+  return ui('flowMapRouting.m_z', {
+    value1: coordinates(polygon[0]),
+    value2: polygon
+      .slice(1)
+      .map((point) => ui('flowMapRouting.l', { value1: coordinates(point) }))
+      .join(' '),
+  });
 }

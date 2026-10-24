@@ -13,6 +13,7 @@ import {
   scmStudyUrl,
 } from '../scmStudy';
 import type { PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { downloadWorkingModel, workshopUrl } from '../workshop';
 import './documents.css';
 
@@ -38,18 +39,19 @@ export function DocumentCatalogPage({
     : [];
 
   return (
-    <section className="documents-page" aria-label="Documents et études FLOW">
+    <section className="documents-page" aria-label={ui('documentCatalogPage.documents_et_etudes_flow')}>
       <details className="publication-downloads">
         <summary>
           <Download size={17} aria-hidden="true" />
-          Télécharger le modèle et les fichiers de séance
+          {ui('documentCatalogPage.telecharger_le_modele_et_les_fichiers_de_seance')}
         </summary>
         <a
           className="documents-download"
           href={publicationYamlUrl(model.version)}
           download={`flow-atlas-model-${model.version}.yaml`}
         >
-          Modèle complet (YAML) · {model.version}
+          {ui('documentCatalogPage.modele_complet_yaml')}
+          {model.version}
         </a>
         {model.raw.workshop && (
           <>
@@ -58,10 +60,10 @@ export function DocumentCatalogPage({
               href={workshopUrl()}
               download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}
             >
-              Fichier de séance (JSON)
+              {ui('documentCatalogPage.fichier_de_seance_json')}
             </a>
             <button type="button" className="documents-download" onClick={() => downloadWorkingModel(model)}>
-              Modèle de travail (JSON)
+              {ui('documentCatalogPage.modele_de_travail_json')}
             </button>
           </>
         )}
@@ -69,7 +71,7 @@ export function DocumentCatalogPage({
       {selected ? (
         <article className="documents-detail">
           <button type="button" onClick={() => onChange({ document: '' })}>
-            ← Tous les documents
+            {ui('documentCatalogPage.tous_les_documents')}
           </button>
           <p className="documents-category">
             {DOCUMENT_CATEGORY[selected.category]} · {documentFormat(selected)}
@@ -83,11 +85,12 @@ export function DocumentCatalogPage({
             download={documentDownloadName(selected)}
           >
             <Download size={17} aria-hidden="true" />
-            Télécharger le {documentFormat(selected)}
+            {ui('documentCatalogPage.telecharger_le')}
+            {documentFormat(selected)}
           </a>
           {relatedHotspots.length > 0 && (
             <section>
-              <h3>Points chauds liés</h3>
+              <h3>{ui('documentCatalogPage.points_chauds_lies')}</h3>
               <ul>
                 {relatedHotspots.map((hotspot) => (
                   <li key={hotspot.id}>
@@ -106,32 +109,32 @@ export function DocumentCatalogPage({
       ) : (
         <>
           <section className="documents-studies" aria-labelledby="flow-studies-title">
-            <h2 id="flow-studies-title">Études FLOW</h2>
-            <p>Des dossiers transversaux, communs aux différentes versions du modèle.</p>
+            <h2 id="flow-studies-title">{ui('documentCatalogPage.etudes_flow')}</h2>
+            <p>{ui('documentCatalogPage.des_dossiers_transversaux_communs_aux_differentes_versions_du_mod')}</p>
             <article className="documents-study">
               <p className="documents-category">
-                Dossier de pilotage · PDF · {scmStudyPages} pages · {scmStudyDate}
+                {ui('documentCatalogPage.dossier_de_pilotage_pdf')}
+                {scmStudyPages}
+                {ui('documentCatalogPage.pages')}
+                {scmStudyDate}
               </p>
               <h3>{scmStudyFullTitle}</h3>
-              <p>
-                Sept indicateurs prioritaires, six questions de pilotage et des cas concrets, des achats aux retours et
-                au déstockage. Plomberie, délais de décision, CTP et conditionnements, Lean et impacts pour FLOW.
-              </p>
+              <p>{ui('documentCatalogPage.sept_indicateurs_prioritaires_six_questions_de_pilotage_et_des_ca')}</p>
               <p className="documents-study-author">{scmStudyAuthor}</p>
               <a className="documents-download" href={scmStudyUrl} download={scmStudyFilename}>
                 <Download size={17} aria-hidden="true" />
-                Télécharger « {scmStudyTitle} » (PDF)
+                {ui('documentCatalogPage.telecharger')}
+                {scmStudyTitle}
+                {ui('documentCatalogPage.pdf')}
               </a>
             </article>
           </section>
-          <h2>Documents de la publication</h2>
-          <p>
-            {documents.length} document{documents.length > 1 ? 's' : ''} dans la publication {model.version}.
-          </p>
-          {documents.length === 0 && <p>Aucun document n’est publié dans cette version.</p>}
+          <h2>{ui('documentCatalogPage.documents_de_la_publication')}</h2>
+          <p>{ui('documentCatalogPage.document_count', { count: documents.length, version: model.version })}</p>
+          {documents.length === 0 && <p>{ui('documentCatalogPage.aucun_document_n_est_publie_dans_cette_version')}</p>}
           {documents.length > 0 && (
             <label className="documents-search">
-              Rechercher un document
+              {ui('documentCatalogPage.rechercher_un_document')}
               <input value={query} onChange={(event) => setQuery(event.target.value)} />
             </label>
           )}
@@ -146,7 +149,7 @@ export function DocumentCatalogPage({
               </button>
             ))}
           </div>
-          {documents.length > 0 && filtered.length === 0 && <p>Aucun document trouvé.</p>}
+          {documents.length > 0 && filtered.length === 0 && <p>{ui('documentCatalogPage.aucun_document_trouve')}</p>}
         </>
       )}
     </section>

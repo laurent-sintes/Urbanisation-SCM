@@ -78,6 +78,12 @@ def validate_catalog(model, *, require_function_mapping=False, panorama_records=
     if catalog is None:
         return []  # Historical releases predate this optional catalogue.
     errors = []
+    if 'contexts' in catalog:
+        contexts = [context['id'] for context in catalog['contexts']]
+        if len(set(contexts)) != len(contexts):
+            errors.append('application_catalog: duplicate context descriptor')
+        if any(selection['context_id'] not in contexts for selection in catalog['selections']):
+            errors.append('application_catalog: selection context has no descriptor')
     panorama_refs = any(selection.get('panorama_ref') for selection in catalog['selections'])
     if panorama_refs and panorama_records is None:
         try:

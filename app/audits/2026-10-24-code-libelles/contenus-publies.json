@@ -1,0 +1,439 @@
+{
+  "date": "2026-10-24",
+  "sourceCommit": "1102b26c2043a5dc50de19ba2054ad818dd1bbec",
+  "version": "2026-10-23.6",
+  "model_sha256": "e29fcd8a678709dc77ac228ba151fa4e493f55d4d6ed5edde2e85ee1fb7c2abc",
+  "publicTextScope": "BUSINESS_FIELDS des nodes, qualification des relations (meaning, role, conditions, effects, scope), context des termes. Les seuls changements d’espaces en bordure sont exclus. Ne couvre pas tous les appels du lecteur.",
+  "excerptPolicy": "Première différence et contexte court ; valeurs entières identifiées par empreinte SHA-256, sans copie de catalogue.",
+  "publicTextChanges": [
+    {
+      "collection": "nodes",
+      "id": "D02.c",
+      "field": "fields.scope",
+      "original_sha256": "7a819bfa9ae6ae71fe12d9cdb7ab6ad5a2dde090d74605c4193d6d06da3e04d4",
+      "displayed_sha256": "8f6a8f3162d911f1d1a92647af30835ca5ed5e77b5be270dfd1abc67a9f3c792",
+      "firstDifference": 86,
+      "original_excerpt": "Exemple fictif : Un droit exclusif sur 40 peut précéder l’affectation du lot précis.\n\nU436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de grou",
+      "displayed_excerpt": "Exemple fictif : Un droit exclusif sur 40 peut précéder l’affectation du lot précis.\n\nseule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe cons"
+    },
+    {
+      "collection": "nodes",
+      "id": "D03.m",
+      "field": "fields.scope",
+      "original_sha256": "e65c4ce2aed40e577aff275a82a9c89b4363feaf606ce7ac7cac95bc56ada2d2",
+      "displayed_sha256": "cb9199eafdef1e25220a7417c470f994d8045ae5e43fcbf60e318a0eabb5cec6",
+      "firstDifference": 1556,
+      "original_excerpt": "t dans Supply Policy Management ; leur application contextualisée participe à l’arbitrage du plan.\n\nU750 : Demand Prioritization conserve le classement des [Orders](glossary:TER012) et explicite aussi les priorités des besoins prévisionnels résiduels présents dans le périmètre. Une prévision ne devient pas un [Order](g",
+      "displayed_excerpt": "t dans Supply Policy Management ; leur application contextualisée participe à l’arbitrage du plan.\n\nDemand Prioritization conserve le classement des [Orders](glossary:TER012) et explicite aussi les priorités des besoins prévisionnels résiduels présents dans le périmètre. Une prévision ne devient pas un [Order](glossary"
+    },
+    {
+      "collection": "nodes",
+      "id": "D04.j",
+      "field": "fields.scope",
+      "original_sha256": "efa55986341c4c3619b17218e19e0c0c79e81100b095c03d89b120829be2eb3d",
+      "displayed_sha256": "8694e9a23c4d70f47ee91aab7b04d57f005ed0b07a91e5550ebc70a2142fd74f",
+      "firstDifference": 2759,
+      "original_excerpt": "pport en mobilisant [CTP](model:D03.j).\n\nLaurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’[affermissement](glossary:TER197). La documentation Microsoft SCM décrit une génération des commandes opé",
+      "displayed_excerpt": "pport en mobilisant [CTP](model:D03.j).\n\nLaurent confirme que MAP envoie des Planned Purchase Orders. Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’[affermissement](glossary:TER197). La documentation Microsoft SCM décrit une génération des commandes opérationn"
+    },
+    {
+      "collection": "nodes",
+      "id": "D04.l",
+      "field": "fields.scope",
+      "original_sha256": "60adcadfa3d626333b17198faed3470b48a1ffab9b09f551cfb95e97781193b1",
+      "displayed_sha256": "230c0904dcfc45bac0655bd89faa12cbf2261cc9fa540364dcaa67d29d3c1a50",
+      "firstDifference": 282,
+      "original_excerpt": "té d’action ; [Return Order](glossary:TER072) reste l’objet métier associé.\n\nLes cinq comportements adoptés U385 sont des parcours métier combinables : Return to Stock, Repair and Refurbishment, Return to Supplier, Return to Customer et Scrapping. Une réparation peut précéder remise en stock ou restitution au client. L",
+      "displayed_excerpt": "té d’action ; [Return Order](glossary:TER072) reste l’objet métier associé.\n\nLes cinq comportements sont des parcours métier combinables : Return to Stock, Repair and Refurbishment, Return to Supplier, Return to Customer et Scrapping. Une réparation peut précéder remise en stock ou restitution au client. Les différents"
+    },
+    {
+      "collection": "nodes",
+      "id": "D04.m",
+      "field": "fields.scope",
+      "original_sha256": "86255c51798634823ef57dd9b8847b5f1db320541d5c6be4994fec06a448ff99",
+      "displayed_sha256": "e2c0b27b09f638c0de79b017a0942c0808b0d463e072781aabf599fe4af694e4",
+      "firstDifference": 332,
+      "original_excerpt": "associé.\n\nTrois comportements combinables sont retenus : Return for Credit et Return for Replacement adoptés U387, complétés par Return for Repair demandé U388. Return for Credit ne prévoit pas de remplacement pour les quantités reprises. Return for Replacement conserve un apport attendu et le lien entre le sortant et ",
+      "displayed_excerpt": "associé.\n\nTrois comportements combinables sont retenus : Return for Credit et Return for Replacement, complétés par Return for Repair. Return for Credit ne prévoit pas de remplacement pour les quantités reprises. Return for Replacement conserve un apport attendu et le lien entre le sortant et le remplacement. Un même r"
+    },
+    {
+      "collection": "nodes",
+      "id": "D04.n",
+      "field": "fields.scope",
+      "original_sha256": "fa48a708a924caa7ef2b4ca008e0b6a73489b15c6cedb55a6ebafbab85ebc645",
+      "displayed_sha256": "677ac628725d13135e77532b00f04dc0925d3dc6f069981140fd3e5d6b05e680",
+      "firstDifference": 450,
+      "original_excerpt": "une ouverture magasin ; fusionner deux achats encore modifiables de 30 et 20 en une demande de 50.\n\nLes deux derniers comportements et la formulation simplifiée sont proposés à la suite de U439/U440/U442. Les conditions de compatibilité et d’autorisation restent à instruire ; la fusion n’est pas réputée applicable à to",
+      "displayed_excerpt": "une ouverture magasin ; fusionner deux achats encore modifiables de 30 et 20 en une demande de 50.\n\n Les conditions de compatibilité et d’autorisation restent à instruire ; la fusion n’est pas réputée applicable à tous les types et états d’[Orders](glossary:TER012).\n\nOrganiser les découpages et compositions des [Orders"
+    },
+    {
+      "collection": "nodes",
+      "id": "D05.c",
+      "field": "fields.scope",
+      "original_sha256": "afa6313652d387e02d66dbc0dfa8173b9e884f6c5a98cffb75035926461987da",
+      "displayed_sha256": "0c79860293c798143506aa89dc38c33bda08d280004419d21482c7aa30fcff29",
+      "firstDifference": 2192,
+      "original_excerpt": " [Replenishment](glossary:TER074) sans corriger deux fois le manque ; aucun transport réalisé ici.\n\nU318 : [Inventory Rebalancing](model:BHV024) détermine les transferts vers les lieux qui en ont davantage besoin, en préservant les donneurs ; [Stock Consolidation](model:BHV025) détermine où regrouper des stocks dispers",
+      "displayed_excerpt": " [Replenishment](glossary:TER074) sans corriger deux fois le manque ; aucun transport réalisé ici.\n\n[Inventory Rebalancing](model:BHV024) détermine les transferts vers les lieux qui en ont davantage besoin, en préservant les donneurs ; [Stock Consolidation](model:BHV025) détermine où regrouper des stocks dispersés pour"
+    },
+    {
+      "collection": "nodes",
+      "id": "D14",
+      "field": "fields.scope",
+      "original_sha256": "9a56bb603b1208b127a6337753bb5e330d8bc431bf73521b2bb666e25698a87d",
+      "displayed_sha256": "a960aa2a7227351c75d366e4a44a19c80d0a5695a8a41f5d771e3ea398a06d5a",
+      "firstDifference": 1571,
+      "original_excerpt": "les accords maîtres et Catalog les offres commerciales. Aucun protocole ni endpoint unique imposé.\n\nConvention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel",
+      "displayed_excerpt": "les accords maîtres et Catalog les offres commerciales. Aucun protocole ni endpoint unique imposé.\n\nle Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est "
+    },
+    {
+      "collection": "nodes",
+      "id": "D06.b",
+      "field": "fields.scope",
+      "original_sha256": "6dac4a664a6c869af910e4563b4a5a0b5bdf2b9495749792d7417151443176bd",
+      "displayed_sha256": "2888e7e7c50cb384ce335e12134983b9dc9fc74307c3c4c020f2c44cfa804c8b",
+      "firstDifference": 1457,
+      "original_excerpt": "ER075) Selection Decision et [Fulfilment Adaptation Decision](glossary:TER177) peuvent la mobiliser. Le nom est adopté U246 ; les détails de représentation et contrats restent proposés.\n\nPrécision éditoriale U435 : contextualiser les créneaux et dates communiqués avec leur calendrier applicable, fuseau et éventuelle he",
+      "displayed_excerpt": "ER075) Selection Decision et [Fulfilment Adaptation Decision](glossary:TER177) peuvent la mobiliser.\n\ncontextualiser les créneaux et dates communiqués avec leur calendrier applicable, fuseau et éventuelle heure limite. Une fermeture ou une information périmée doit rester visible aux décisions consommatrices ; aucun dis"
+    },
+    {
+      "collection": "nodes",
+      "id": "D07.c",
+      "field": "fields.scope",
+      "original_sha256": "36e61e8d92de65b1dfe6005e0382eb44a16d847b8cc250d95019d9f1b390cee4",
+      "displayed_sha256": "5105182f8fc1a42642be7ec66d3cd85b71720bf08cc906fa2c2215129d324699",
+      "firstDifference": 639,
+      "original_excerpt": "cinq contributions existantes vers les capacités par type d’[Order](glossary:TER012) sont conservées, avec leur statut proposé. Operations Tracking intègre les faits ; Operations Visibility restitue l’avancement ; Service Reconciliation qualifie le réalisé au regard de l’attendu.\n\nFrontière : Reliquat prestation différ",
+      "displayed_excerpt": "cinq contributions existantes vers les capacités par type d’[Order](glossary:TER012) sont conservées. Operations Tracking intègre les faits ; Operations Visibility restitue l’avancement ; Service Reconciliation qualifie le réalisé au regard de l’attendu.\n\nFrontière : Reliquat prestation différent du reliquat [Order](gl"
+    },
+    {
+      "collection": "nodes",
+      "id": "D06.d",
+      "field": "fields.scope",
+      "original_sha256": "cd2642b49217828909882e609945c6182ea2ce84ae32e8deb6ee14d750bb46b9",
+      "displayed_sha256": "2475d18671e671a7f791cba7e2de5fb0d57e970738740bfe9f9a9c6525594244",
+      "firstDifference": 1014,
+      "original_excerpt": "lfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.\n\nConvention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel",
+      "displayed_excerpt": "lfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.\n\nle Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est "
+    },
+    {
+      "collection": "nodes",
+      "id": "D06.f",
+      "field": "fields.scope",
+      "original_sha256": "680268c2d007cf5fcc90912093f190a84c83d5e6e9531b4e0d108f4683258b51",
+      "displayed_sha256": "2de909cbb1550fcbd8322269785260ccbc110776d095bb5517adc13435faa6a6",
+      "firstDifference": 1219,
+      "original_excerpt": "ility](glossary:TER112) peut réexaminer les possibilités de promesse sans décider le transporteur.\n\nConvention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel",
+      "displayed_excerpt": "ility](glossary:TER112) peut réexaminer les possibilités de promesse sans décider le transporteur.\n\nle Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est "
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV025",
+      "field": "fields.scope",
+      "original_sha256": "7547f461119e746905ad2736d9184366b1d1c395b51fa54c6d2d73ae8552cd86",
+      "displayed_sha256": "b842fcfa7500a09819584d1e81bb3af133dec6ba00d271e41b9ae6833bf23eba",
+      "firstDifference": 293,
+      "original_excerpt": "est une recommandation de transferts, pas une manutention interne d’entrepôt.\n\nDeux cas sont retenus U318. Reconstituer des assortiments de tailles dans certains magasins peut rendre un ensemble de pièces plus utile commercialement que des tailles isolées sur plusieurs sites. Regrouper les reliquats vers des lieux adap",
+      "displayed_excerpt": "est une recommandation de transferts, pas une manutention interne d’entrepôt.\n\nDeux cas sont retenus. Reconstituer des assortiments de tailles dans certains magasins peut rendre un ensemble de pièces plus utile commercialement que des tailles isolées sur plusieurs sites. Regrouper les reliquats vers des lieux adaptés p"
+    },
+    {
+      "collection": "nodes",
+      "id": "D05.h",
+      "field": "fields.scope",
+      "original_sha256": "028b17086a28fae4278d869341a3c590f7802f98f587b47c754d64eb78c106a4",
+      "displayed_sha256": "b2a652a5684846b0aad71ee63e2433560a22af84e83f7ebf17c4d313867cee38",
+      "firstDifference": 873,
+      "original_excerpt": "ion contextuelle et la révision de ses paramètres ne sont pas confondues.\n\nLes quatre comportements adoptés U343 se combinent sans constituer une séquence. Les variables de sortie sont communes : elles ne donnent pas lieu à un comportement par seuil, durée, écran ou opération. Les règles doivent expliciter le résultat ",
+      "displayed_excerpt": "ion contextuelle et la révision de ses paramètres ne sont pas confondues.\n\nLes quatre comportements se combinent sans constituer une séquence. Les variables de sortie sont communes : elles ne donnent pas lieu à un comportement par seuil, durée, écran ou opération. Les règles doivent expliciter le résultat lorsque les c"
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV035",
+      "field": "fields.scope",
+      "original_sha256": "747acb22c870b333e02d15d185b3018c591411aa792e79f876b06340ff6871b2",
+      "displayed_sha256": "2cc5e5b37d3498f864fcd2935fe5df192c2b773cb5a2adacdd6aace6d68cc2ae",
+      "firstDifference": 1929,
+      "original_excerpt": " et adaptations voisines IBM/SAP ; aucun moteur standard de sélection du jalon par risque démontré. Proposition FLOW issue de U341, sans revendication d’innovation exclusive.",
+      "displayed_excerpt": " et adaptations voisines IBM/SAP ; aucun moteur standard de sélection du jalon par risque démontré. sans revendication d’innovation exclusive."
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV044",
+      "field": "fields.scope",
+      "original_sha256": "b1f6b19fc941110af3f3897ffd89c83fb11977e3559987f8e35f1a34984d1f1e",
+      "displayed_sha256": "2d43bad53010e5bbf6cc20dc4575ebf5cf401c84b67158c8813adf9846fbebb4",
+      "firstDifference": 959,
+      "original_excerpt": "ultérieur, sans les confondre. Le clonage peut ajouter une nouvelle demande ; il n’est pas un split. Nom développé Order Splitting éditorial, notion Split adoptée U362/U363.\n\nU438 : Order Splitting reste sous Order Structuring D04.n, désormais dans D04. Ce rattachement à D04 remplace U417 ; identité, parent de comporte",
+      "displayed_excerpt": "ultérieur, sans les confondre. Le clonage peut ajouter une nouvelle demande ; il n’est pas un split.\n\nOrder Splitting reste sous Order Structuring D04.n, désormais dans D04. Ce rattachement à D04 remplace U417 ; identité, parent de comportement et définition sont conservés."
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV048",
+      "field": "fields.scope",
+      "original_sha256": "48c0bc08bdc233b78761d91844e3943528f608c719d47112fa7c4344e18330f0",
+      "displayed_sha256": "d6bd868516d65a3cd356a850096e074d035128890dd00b0f92b8dccb1948fa0a",
+      "firstDifference": 755,
+      "original_excerpt": "aintes obligatoires restent applicables, même si une autre issue paraît plus rentable. Libellé FLOW adopté U383 ; aucun catalogue éditeur commun portant ce nom n’est revendiqué. Exemples fictifs, sans preuve de pratique Beaumanoir.\n\nLe périmètre inclut les biens déjà en stock, sans retour client. Exemple fictif : une i",
+      "displayed_excerpt": "aintes obligatoires restent applicables, même si une autre issue paraît plus rentable. Libellé FLOW ; aucun catalogue éditeur commun portant ce nom n’est revendiqué. Exemples fictifs, sans preuve de pratique Beaumanoir.\n\nLe périmètre inclut les biens déjà en stock, sans retour client. Exemple fictif : une inspection co"
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV049",
+      "field": "fields.scope",
+      "original_sha256": "42411c9dce6b2282fe39e931d54b670bfb85b96c624e93de30442bf0f73e3055",
+      "displayed_sha256": "84118eed7f8b7360e26075e66afb6d39fbf239038b9d59c35a24aa6730e955db",
+      "firstDifference": 836,
+      "original_excerpt": "aintes obligatoires restent applicables, même si une autre issue paraît plus rentable. Libellé FLOW adopté U383 ; aucun catalogue éditeur commun portant ce nom n’est revendiqué. Exemples fictifs, sans preuve de pratique Beaumanoir.\n\nComparer aussi les traitements de biens abîmés hors retour : remise en état, renvoi aut",
+      "displayed_excerpt": "aintes obligatoires restent applicables, même si une autre issue paraît plus rentable. Libellé FLOW ; aucun catalogue éditeur commun portant ce nom n’est revendiqué. Exemples fictifs, sans preuve de pratique Beaumanoir.\n\nComparer aussi les traitements de biens abîmés hors retour : remise en état, renvoi autorisé ou reb"
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV060",
+      "field": "fields.scope",
+      "original_sha256": "d08ad5324f311b229f15a97307fb80e23e82e5ef01e1e2ffef6545a88c15e409",
+      "displayed_sha256": "ebeb2833c3788f474d077aa6bb1a30ff9ad076aa0d3633dc2b07403db229beb3",
+      "firstDifference": 431,
+      "original_excerpt": "lité et négociation contractuelle hors périmètre. Purchase Order couvre les biens et les prestations depuis U391.\n\nLes mutations communes mobilisent [les familles d’Orders](model:D04), la composition [Order Structuring](model:D04.n) et la conservation [la conservation des Orders](model:D04). Aucune négociation de contr",
+      "displayed_excerpt": "lité et négociation contractuelle hors périmètre. Purchase Order couvre les biens et les prestations.\n\nLes mutations communes mobilisent [les familles d’Orders](model:D04), la composition [Order Structuring](model:D04.n) et la conservation [la conservation des Orders](model:D04). Aucune négociation de contrat, réalisat"
+    },
+    {
+      "collection": "nodes",
+      "id": "BHV081",
+      "field": "fields.scope",
+      "original_sha256": "fe073692c5b1c341357bcf4e6d866f8a0430eae9aa878b9b785f0ec99912debe",
+      "displayed_sha256": "8a2e511e0dcc198b68e0896888d0ed63c834cb6bb7262db3a334b5d184219b44",
+      "firstDifference": 118,
+      "original_excerpt": "ception magasin, passage en réserve, mise en rayon et réassort de la surface de vente. Le périmètre adopté ne s’étend pas à toutes les ventes ou à l’ensemble de l’activité du magasin.\n\nExemple fictif : 100 pièces sont reçues, 60 restent en réserve et 40 sont mises en rayon. Livré au magasin ne signifie pas accessible a",
+      "displayed_excerpt": "ception magasin, passage en réserve, mise en rayon et réassort de la surface de vente. Le périmètre ne s’étend pas à toutes les ventes ou à l’ensemble de l’activité du magasin.\n\nExemple fictif : 100 pièces sont reçues, 60 restent en réserve et 40 sont mises en rayon. Livré au magasin ne signifie pas accessible au clien"
+    },
+    {
+      "collection": "terms",
+      "id": "TER017",
+      "field": "context",
+      "original_sha256": "106f4aadf9e0b9d7178244add930087a9af06e1a0eae63cf8aeb92a794048970",
+      "displayed_sha256": "f61167b9949c0a767baf129bc024b2147c59ca53e86d50be59f3dfa0a0e8eeaa",
+      "firstDifference": 53,
+      "original_excerpt": "Ressources et commandes ou autres besoins identifiés ; choix lexical Assignment confirmé U275, stabilisé U289.\n\nAffecter : Établir un lien entre une ressource et une demande ou un bénéficiaire précis. Qualifier ressource ou tâche ; ne pas confondre avec une promesse commer",
+      "displayed_excerpt": "Ressources et commandes ou autres besoins identifiés .\n\nAffecter : Établir un lien entre une ressource et une demande ou un bénéficiaire précis. Qualifier ressource ou tâche ; ne pas confondre avec une promesse commerciale.\n\nRéaffecter : Modifier une affectation existante "
+    },
+    {
+      "collection": "terms",
+      "id": "TER022",
+      "field": "context",
+      "original_sha256": "ac5654821309da52581b83ee8c1c48e81001fc8a809902db6ee0c0b34c84089b",
+      "displayed_sha256": "e699c4985b7c4cf7f05079ff17565117c728244f2f3fd1710b64c263bdc7ea40",
+      "firstDifference": 0,
+      "original_excerpt": "Sens métier précisé en U260 ; distinct de la convention de description du glossaire de modélisation et de la couverture de stock.",
+      "displayed_excerpt": "distinct de la convention de description du glossaire de modélisation et de la couverture de stock."
+    },
+    {
+      "collection": "terms",
+      "id": "TER033",
+      "field": "context",
+      "original_sha256": "d4ea4dc3b6d4f280dd6d9298cf80d06f18ccf4b6175a8a43e654d69bf4b15673",
+      "displayed_sha256": "01fcde388faf3cd31e78100d38a4ef6a763ad165a8887426c1228a36029dac58",
+      "firstDifference": 744,
+      "original_excerpt": "un apport fondé sur [CTP](model:D03.j).\n\nLaurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’af",
+      "displayed_excerpt": "un apport fondé sur [CTP](model:D03.j).\n\nLaurent confirme que MAP envoie des Planned Purchase Orders. Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermiss"
+    },
+    {
+      "collection": "terms",
+      "id": "TER070",
+      "field": "context",
+      "original_sha256": "36257993604651bca9d5c8469abfcafdbbc2a9f2cd2abd55d7f4f6cb7a1c3291",
+      "displayed_sha256": "4ff5ed44705a44945ad7264f6c7e7deb3c9b8553a4915289303ee73eef7745de",
+      "firstDifference": 0,
+      "original_excerpt": "Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.\n\n[Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du ",
+      "displayed_excerpt": "[Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités"
+    },
+    {
+      "collection": "terms",
+      "id": "TER073",
+      "field": "context",
+      "original_sha256": "76c4cc7cc5da2d7ed833d33f6a3b33eaf18b7371c39f14aeebe58676ff9ff4b4",
+      "displayed_sha256": "c9d55b5b82b3f6b05b637caa5b848d0b2ba8561d7a923084d0e20396c9e35c3f",
+      "firstDifference": 0,
+      "original_excerpt": "Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.\n\nQuand le fournisseur est une société du groupe, relier le retour aux achats et ventes réciproques et au retour cli",
+      "displayed_excerpt": "Quand le fournisseur est une société du groupe, relier le retour aux achats et ventes réciproques et au retour client lorsqu’il existe. Distinguer quantités expédiées, reçues, acceptées pour reprise et crédit reconnu. Un"
+    },
+    {
+      "collection": "terms",
+      "id": "TER076",
+      "field": "context",
+      "original_sha256": "f43ea5554e51b11f8b7a74ed77f20be3202af354c349b2cf789e9c7fb9b11cb6",
+      "displayed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firstDifference": 0,
+      "original_excerpt": "Définition métier proposée pour la refonte U244 ; pas de nouveau type d’objet instancié.",
+      "displayed_excerpt": ""
+    },
+    {
+      "collection": "terms",
+      "id": "TER077",
+      "field": "context",
+      "original_sha256": "57ec95d65f98121898201c84799bf7d87e584f4e645d30816a6401224ad8a935",
+      "displayed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firstDifference": 0,
+      "original_excerpt": "Sens métier proposé en U260 pour distinguer l’indicateur de stock de la couverture d’une demande identifiée.",
+      "displayed_excerpt": ""
+    },
+    {
+      "collection": "terms",
+      "id": "TER079",
+      "field": "context",
+      "original_sha256": "bb4cf84a96f85cd977a502ec12b2bc6c719f9a9e6ab5c1a33eada0a66d1c0f75",
+      "displayed_sha256": "694c33c2d5b060918fcece77eddccf3c99bde1f73ca450d81bd2a5f6b43fb1b6",
+      "firstDifference": 23,
+      "original_excerpt": "Terme métier Beaumanoir défini par Laurent U310.",
+      "displayed_excerpt": "Terme métier Beaumanoir."
+    },
+    {
+      "collection": "terms",
+      "id": "TER080",
+      "field": "context",
+      "original_sha256": "80628d0f2f67a44fe1d4ffa5e14b4b5c87f2b02a5b3b9348dee9d8eaf49303c8",
+      "displayed_sha256": "0d2ec0968e107fcbe13f2c84bdffa922d10c636e7a5c4e28544866b307b25a59",
+      "firstDifference": 23,
+      "original_excerpt": "Terme métier Beaumanoir défini par Laurent U310.\n\nDans ce vocabulaire local, le réassort désigne l’alimentation continue des stocks magasin guidée par des seuils. [Replenishment](glossary:TER074) couvre plus largement la reconstitution de ress",
+      "displayed_excerpt": "Terme métier Beaumanoir.\n\nDans ce vocabulaire local, le réassort désigne l’alimentation continue des stocks magasin guidée par des seuils. [Replenishment](glossary:TER074) couvre plus largement la reconstitution de ressources ; il ne se limite"
+    },
+    {
+      "collection": "terms",
+      "id": "TER081",
+      "field": "context",
+      "original_sha256": "264beddd4af2f966fad127865a705b6b7f11db8b44bd0193ade348361af3c606",
+      "displayed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firstDifference": 0,
+      "original_excerpt": "Convention U362 intégrée U363 ; formulations développées éditoriales.",
+      "displayed_excerpt": ""
+    },
+    {
+      "collection": "terms",
+      "id": "TER082",
+      "field": "context",
+      "original_sha256": "264beddd4af2f966fad127865a705b6b7f11db8b44bd0193ade348361af3c606",
+      "displayed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firstDifference": 0,
+      "original_excerpt": "Convention U362 intégrée U363 ; formulations développées éditoriales.",
+      "displayed_excerpt": ""
+    },
+    {
+      "collection": "terms",
+      "id": "TER097",
+      "field": "context",
+      "original_sha256": "c5fd1579a2998abada9e6c4003ad97f186b4645a92544c746432c889c8eb021e",
+      "displayed_sha256": "96ecea1ac4aa4709ea203dec92d439afe91a031241a55ad90ab06faccef76e4f",
+      "firstDifference": 51,
+      "original_excerpt": "Terme générique ; deux références métier distinctes depuis U863.",
+      "displayed_excerpt": "Terme générique ; deux références métier distinctes."
+    },
+    {
+      "collection": "terms",
+      "id": "TER119",
+      "field": "context",
+      "original_sha256": "749041374ee8ca95d90070e3a72c1371d4992669ed79573b13eea36037b6e019",
+      "displayed_sha256": "fe72daa090ff7f50d920141dc75ae4f2aea2ff89a2deea2b37b1ee5fe52f82d6",
+      "firstDifference": 375,
+      "original_excerpt": "tif reste distinct. Le terme métier est conservé ; il ne désigne plus une capacité du modèle courant depuis U981.",
+      "displayed_excerpt": "tif reste distinct. Le terme métier est conservé ; il ne désigne plus une capacité du modèle courant."
+    },
+    {
+      "collection": "terms",
+      "id": "TER134",
+      "field": "context",
+      "original_sha256": "1676360af15a450cbf1428b88ac39a5d913d24cd2ae31b75a367a7dd6a641424",
+      "displayed_sha256": "5c7947ea8a5b600aee7f5785a616cdcd68a4857edb90c4ce3504eb9e2d64a3dd",
+      "firstDifference": 118,
+      "original_excerpt": "mètre d’arbitrage collectif, regroupé sous [Master Plan Management](model:ba-master-plan-management) en U1009. Les savoir-faire et identités des capacités sont conservés ; les publications historiques gardent leur découpage.",
+      "displayed_excerpt": "mètre d’arbitrage collectif, regroupé sous [Master Plan Management](model:ba-master-plan-management). Les savoir-faire et identités des capacités sont conservés ; les publications historiques gardent leur découpage."
+    },
+    {
+      "collection": "terms",
+      "id": "TER176",
+      "field": "context",
+      "original_sha256": "cd2642b49217828909882e609945c6182ea2ce84ae32e8deb6ee14d750bb46b9",
+      "displayed_sha256": "2475d18671e671a7f791cba7e2de5fb0d57e970738740bfe9f9a9c6525594244",
+      "firstDifference": 1014,
+      "original_excerpt": "lfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.\n\nConvention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel",
+      "displayed_excerpt": "lfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.\n\nle Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est "
+    },
+    {
+      "collection": "terms",
+      "id": "TER177",
+      "field": "context",
+      "original_sha256": "680268c2d007cf5fcc90912093f190a84c83d5e6e9531b4e0d108f4683258b51",
+      "displayed_sha256": "2de909cbb1550fcbd8322269785260ccbc110776d095bb5517adc13435faa6a6",
+      "firstDifference": 1219,
+      "original_excerpt": "ility](glossary:TER112) peut réexaminer les possibilités de promesse sans décider le transporteur.\n\nConvention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel",
+      "displayed_excerpt": "ility](glossary:TER112) peut réexaminer les possibilités de promesse sans décider le transporteur.\n\nle Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est "
+    }
+  ],
+  "lessonChanges": [
+    {
+      "id": "meaningful-links",
+      "fields": [
+        {
+          "field": "contributor.boundary",
+          "original": "Les référentiels restent distincts et présentent les capacités de leur sujet. Une relation de présentation ne fusionne pas les références et ne crée pas un niveau métier supplémentaire.",
+          "displayed": "Les référentiels restent distincts et présentent les capacités de leur sujet. Les rattachements suivent la publication affichée. Une relation de présentation ne fusionne pas les références et ne crée pas un niveau métier supplémentaire."
+        }
+      ]
+    }
+  ],
+  "publishedNodeTypes": [
+    {
+      "kind": "area",
+      "label": "Subdomain",
+      "definition": "Périmètre cohérent de responsabilités métier au sein d’un Domain. Ses capacités appartiennent chacune à une Business Area de ce sous-domaine.",
+      "definition_source": "method:MOD013"
+    },
+    {
+      "kind": "behavior",
+      "label": "Capability Behavior",
+      "definition": "Manière identifiable dont une capacité agit dans une situation donnée. Elle précise ce qui change dans son action ou dans le résultat attendu.",
+      "definition_source": "method:MOD006"
+    },
+    {
+      "kind": "business_area",
+      "label": "Business Area",
+      "definition": "Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats et ses frontières. Elle porte des capacités ou des références documentaires ; dans un domaine explicitement limité à ce niveau, elle peut rester un périmètre de contexte sans descendants.",
+      "definition_source": "method:MOD039"
+    },
+    {
+      "kind": "business_system",
+      "label": "Business System",
+      "definition": "Ensemble de domaines métier qui coopèrent pour une finalité commune, indépendamment de leur organisation et de leurs applications.",
+      "definition_source": "method:MOD022"
+    },
+    {
+      "kind": "capability",
+      "label": "Capability",
+      "definition": "Une capacité est une aptitude durable de l’entreprise à produire un résultat métier identifiable, indépendamment de son organisation et de ses outils. Elle exprime ce que l’entreprise sait faire pour agir, décider, tenir des engagements ou des actifs métier, et produire ou exploiter une connaissance.\n\nSon périmètre permet d’identifier sa contribution propre dans des scénarios métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses comportements précisent les manières significatives dont elle s’exerce.",
+      "definition_source": "method:MOD015"
+    },
+    {
+      "kind": "domain",
+      "label": "Domain",
+      "definition": "Grand périmètre cohérent de responsabilités métier au sein d’un Business System. La profondeur de description dépend du périmètre. Lorsqu’un domaine est détaillé jusqu’aux capacités, ses sous-domaines les regroupent obligatoirement dans des Business Areas.",
+      "definition_source": "method:MOD008"
+    },
+    {
+      "kind": "reference",
+      "label": "Business Reference",
+      "definition": "Données de référence décrivant un sujet métier et nécessaires aux capacités pour exercer leurs responsabilités.",
+      "definition_source": "method:MOD009"
+    },
+    {
+      "kind": "universe",
+      "label": "Enterprise Architecture",
+      "definition": "Objet racine du modèle cible. Il réunit les Business Systems par des relations explicites et permet de situer chaque responsabilité dans la cible, sans décrire à lui seul les applications qui les réaliseront.",
+      "definition_source": "method:MOD043"
+    }
+  ],
+  "applicationCatalogKeys": [
+    "schema_version",
+    "source_refs",
+    "products",
+    "selections"
+  ],
+  "missingPublishedContexts": true
+}

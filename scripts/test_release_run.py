@@ -189,6 +189,8 @@ class AtlasDownloadChecks(unittest.TestCase):
             guide = {'status': 'unavailable', 'publication_version': version}
             expected = {**raw, 'sourcePath': f'modeles/release/{version}/model.yaml',
                         'metamodel': describe_metamodel(raw, guide)}
+            expected['metamodel']['vocabulary'] = {}
+            expected['presentation'] = {'icons': {}, 'flow_neighborhood': None}
             model_bytes = encoded(expected)
             yaml_bytes = dumps(expected).encode('utf-8')
             guide_bytes = encoded(guide)

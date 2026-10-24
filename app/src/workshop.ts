@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { type FetchLike, fetchJson, staticUrl } from './publication.ts';
 import type { Hotspot, PublishedModel, RawPublication } from './types.ts';
+import { apiErrorMessage, ui } from './ui.ts';
 
 export interface WorkshopOperation {
   sequence: number;
@@ -55,11 +56,11 @@ export async function readWorkshopStage(
     },
     timeoutMs,
   );
-  if (!value || typeof value !== 'object') throw new Error('Fichier de séance invalide.');
+  if (!value || typeof value !== 'object') throw new Error(ui('workshop.fichier_de_seance_invalide'));
   const stage = value as WorkshopStage;
   if (!stage.active) return null;
   if (!Array.isArray(stage.operations) || typeof stage.base_version !== 'string')
-    throw new Error('Fichier de séance invalide.');
+    throw new Error(ui('workshop.fichier_de_seance_invalide'));
   return stage;
 }
 
@@ -111,7 +112,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
       } catch (cause) {
         if (!stopped) {
           setStage(null);
-          setError(cause instanceof Error ? cause.message : 'Séance indisponible.');
+          setError(cause instanceof Error ? cause.message : ui('workshop.seance_indisponible'));
         }
       } finally {
         pending = false;
@@ -132,7 +133,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
   );
   const saveHotspotChanges = useCallback(
     async (changes: WorkshopTableChange[]) => {
-      if (!active) throw new Error('Aucun atelier actif sur cette publication.');
+      if (!active) throw new Error(ui('workshop.aucun_atelier_actif_sur_cette_publication'));
       const response = await fetch(staticUrl('__atlas__/workshop/hotspots/batch'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Atlas-Workshop': '1' },
@@ -143,7 +144,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
         }),
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || `Enregistrement impossible (HTTP ${response.status}).`);
+      if (!response.ok) throw new Error(apiErrorMessage(result));
       setStage(result as WorkshopStage);
     },
     [active],

@@ -9,6 +9,7 @@ import {
 import { X } from 'lucide-react';
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { announceMapPanel, MAP_PANEL_EVENT } from '../mapOverlayEvents';
+import { ui } from '../ui.ts';
 import { useHotspotFloating } from './HotspotDisplay';
 import './map-overlays.css';
 
@@ -90,7 +91,7 @@ export function MapOverlayPanel({
                 <strong>{label}</strong>
                 <button
                   type="button"
-                  aria-label={`Fermer le panneau ${label.toLowerCase()}`}
+                  aria-label={ui('mapOverlayPanel.fermer_le_panneau', { value1: label.toLowerCase() })}
                   onClick={() => setOpen(false)}
                 >
                   <X size={16} />

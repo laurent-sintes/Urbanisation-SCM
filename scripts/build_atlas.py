@@ -73,6 +73,7 @@ def main():
     if not pnpm:
         raise ValueError('pnpm is required to build Atlas')
     with atlas_lock(ROOT):
+        subprocess.run([pnpm, 'run', 'check:labels'], cwd=ROOT / 'app', check=True)
         # A failed type check must not update the data served by the old build.
         subprocess.run([pnpm, 'exec', 'tsc', '--noEmit'], cwd=ROOT / 'app', check=True)
         print('Atlas: checking published data', flush=True)

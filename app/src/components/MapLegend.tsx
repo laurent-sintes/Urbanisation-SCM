@@ -4,6 +4,7 @@ import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { NodeIcon } from '../icons';
 import { kindLabel } from '../presentation';
 import type { AtlasNode, Hotspot, PublishedModel } from '../types';
+import { ui } from '../ui.ts';
 import { HotspotGlyph, HotspotResolutionGlyph, severityLabel } from './HotspotDisplay';
 import { MapOverlayPanel } from './MapOverlayPanel';
 
@@ -73,10 +74,10 @@ export function MapLegend({
   );
   const stages = [...new Map(hotspots.map((item) => [resolutionFor(item).stage, item])).entries()];
   return (
-    <MapOverlayPanel label="Légende" icon={<Info size={16} />} className="map-legend">
+    <MapOverlayPanel label={ui('mapLegend.legende')} icon={<Info size={16} />} className="map-legend">
       {levels.length > 0 && (
         <section className="map-legend-section">
-          <h3>Structure</h3>
+          <h3>{ui('mapLegend.structure')}</h3>
           {levels.map((node) => (
             <div key={node.kind} className="map-legend-entry">
               <NodeIcon node={node} size={18} />
@@ -87,36 +88,36 @@ export function MapLegend({
       )}
       {flowTypes.length > 0 && (
         <section className="map-legend-section">
-          <h3>Flux</h3>
+          <h3>{ui('mapLegend.flux')}</h3>
           {flowTypes.map((type) => (
             <div className="map-legend-entry" key={type}>
               <i className={`map-legend-flow${type === 'provides-knowledge' ? ' is-knowledge' : ''}`} />
-              {type === 'shares-data' ? 'Partage de données' : 'Apport de connaissance'}
+              {type === 'shares-data' ? ui('mapLegend.partage_de_donnees') : ui('mapLegend.apport_de_connaissance')}
             </div>
           ))}
           {flowIdentifiers && (
-            <p>Les numéros repèrent les flux. Survole un repère ou ouvre-le pour lire son libellé complet.</p>
+            <p>{ui('mapLegend.les_numeros_reperent_les_flux_survole_un_repere_ou_ouvre_le_pour_')}</p>
           )}
         </section>
       )}
       {application && (
         <section className="map-legend-section">
-          <h3>Applications</h3>
+          <h3>{ui('mapLegend.applications')}</h3>
           <div className="map-legend-entry">
             <i className="map-legend-application" />
             <strong>{application.name}</strong>
           </div>
           <p>
             {application.documented
-              ? 'Couverture documentée dans le SI sélectionné.'
-              : 'Offre éditeur ; usage Beaumanoir non présumé.'}
+              ? ui('mapLegend.couverture_documentee_dans_le_si_selectionne')
+              : ui('mapLegend.offre_editeur_usage_beaumanoir_non_presume')}
           </p>
         </section>
       )}
       {hotspots.length > 0 && (
         <section className="map-legend-section">
-          <h3>Points chauds</h3>
-          <p>Criticité</p>
+          <h3>{ui('mapLegend.points_chauds')}</h3>
+          <p>{ui('mapLegend.criticite')}</p>
           {severities.map((severity) => (
             <div key={severity} className={`map-legend-entry hotspot-legend-level severity-${severity}`}>
               <span className={`map-legend-hotspot${compactMarkers ? ' is-compact' : ''}`} aria-hidden="true">
@@ -126,10 +127,10 @@ export function MapLegend({
             </div>
           ))}
           {compactMarkers ? (
-            <p>Une lettre indique la criticité. Un nombre indique plusieurs points chauds regroupés.</p>
+            <p>{ui('mapLegend.une_lettre_indique_la_criticite_un_nombre_indique_plusieurs_point')}</p>
           ) : (
             <>
-              <h3>Avancement du cadrage</h3>
+              <h3>{ui('mapLegend.avancement_du_cadrage')}</h3>
               {stages.map(([stage, item]) => (
                 <div key={stage} className={`map-legend-entry hotspot-legend-level severity-${item.severity}`}>
                   <span className="map-legend-hotspot" aria-hidden="true">
@@ -138,15 +139,17 @@ export function MapLegend({
                   {RESOLUTION_STAGES[stage]}
                 </div>
               ))}
-              {hotspots.some((item) => resolutionFor(item).blocked_reason.trim()) && <p>⏸ : cadrage bloqué.</p>}
-              <p>Un nombre indique plusieurs points chauds regroupés.</p>
+              {hotspots.some((item) => resolutionFor(item).blocked_reason.trim()) && (
+                <p>{ui('mapLegend.cadrage_bloque')}</p>
+              )}
+              <p>{ui('mapLegend.un_nombre_indique_plusieurs_points_chauds_regroupes')}</p>
             </>
           )}
-          {hotspots.some((item) => item.workshop) && <p>Contour discontinu : point chaud d’atelier.</p>}
+          {hotspots.some((item) => item.workshop) && <p>{ui('mapLegend.contour_discontinu_point_chaud_d_atelier')}</p>}
         </section>
       )}
       {!levels.length && !hotspots.length && !flowTypes.length && !application && (
-        <p>Aucun symbole supplémentaire affiché.</p>
+        <p>{ui('mapLegend.aucun_symbole_supplementaire_affiche')}</p>
       )}
     </MapOverlayPanel>
   );

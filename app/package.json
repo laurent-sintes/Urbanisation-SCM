@@ -10,7 +10,7 @@
     "build:frontend": "python ../scripts/build_atlas.py --frontend",
     "build:full": "python ../scripts/build_atlas.py --full-export",
     "test": "node --test --test-isolation=none test-*.mjs",
-    "check:code": "biome check --diagnostic-level=warn --error-on-warnings .",
+    "check:code": "pnpm run check:labels && biome check --diagnostic-level=warn --error-on-warnings .",
     "benchmark:search": "node benchmark-search.mjs",
     "format:code": "biome check --write .",
     "verify": "pnpm run check:code && python ../scripts/verify_atlas.py",
@@ -38,7 +38,9 @@
     "export": "python ../scripts/export_atlas.py",
     "export:full": "python ../scripts/export_atlas.py --full",
     "verify:static": "node verify-static.mjs",
-    "verify:serial": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-flow-map.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-navigation-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail && node verify-application-picker.mjs && node verify-catalogue-page.mjs --ci && node verify-catalogue-page.mjs --width --ci"
+    "verify:serial": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-flow-map.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-navigation-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail && node verify-application-picker.mjs && node verify-catalogue-page.mjs --ci && node verify-catalogue-page.mjs --width --ci",
+    "check:labels": "node check-labels.mjs && python ../scripts/check_atlas_text.py",
+    "resources:types": "node label-resources.mjs --write"
   },
   "dependencies": {
     "@floating-ui/react": "0.27.20",

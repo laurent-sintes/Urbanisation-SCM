@@ -14,6 +14,7 @@ import {
 import { readRoute } from './src/navigation.ts';
 import { kindLabel } from './src/presentation.ts';
 import { scenariosForNode } from './src/scenarioCatalog.ts';
+import { readingFixture } from './test-fixtures/reading.mjs';
 
 const raw = () => ({
   space: 'release',
@@ -49,7 +50,7 @@ test('overview counts listed content including direct nodes, excluding Area bann
   const source = raw();
   source.nodes.push({ id: 'second', kind: 'capability', fields: { name: 'Second' } });
   source.relations.push({ id: 'extra', type: 'contains', source_id: 'ba', target_id: 'second' });
-  const m = adaptPublication(source),
+  const m = adaptPublication(readingFixture(source)),
     sub = m.nodeById.get('sub');
   assert.deepEqual(
     new Set(cardListedItems(cardChildListOf(m, sub)).map((n) => n.id)),
@@ -60,7 +61,7 @@ test('overview counts listed content including direct nodes, excluding Area bann
   assert.equal(cardContentSummary(m, m.nodeById.get('cap')), '');
 });
 test('optional responsibility level remains visible in cards, lineage and labels', () => {
-  const m = adaptPublication(raw());
+  const m = adaptPublication(readingFixture(raw()));
   assert.equal(kindLabel(m.nodeById.get('ba')), 'Business Area');
   assert.deepEqual(
     new Set(cardChildListOf(m, m.nodeById.get('sub')).items.map((n) => n.id)),
@@ -79,7 +80,7 @@ test('optional responsibility level remains visible in cards, lineage and labels
   assert.equal(childrenOf(m, 'ref').length, 0);
 });
 test('scenarios aggregate across Business Areas without duplicates', () => {
-  const m = adaptPublication(raw());
+  const m = adaptPublication(readingFixture(raw()));
   assert.deepEqual(
     scenariosForNode(m, 'ba').map((s) => s.id),
     ['s'],
@@ -94,7 +95,7 @@ test('reference Areas retain documentary cards, grouping and navigation', () => 
   source.relations.find((r) => r.id === 'd').source_id = 'ba';
   source.relations = source.relations.filter((r) => r.id !== 'b' && r.id !== 'cooperation');
   source.nodes = source.nodes.filter((n) => n.id !== 'cap');
-  const m = adaptPublication(source);
+  const m = adaptPublication(readingFixture(source));
   const list = cardChildListOf(m, m.nodeById.get('ba'));
   assert.equal(list.kind, 'reference');
   assert.deepEqual(
@@ -117,7 +118,7 @@ test('reference Areas retain documentary cards, grouping and navigation', () => 
   );
 });
 test('map banners group actual children without changing parents or losing direct nodes', () => {
-  const m = adaptPublication(raw());
+  const m = adaptPublication(readingFixture(raw()));
   const sections = businessAreaSections(m, 'sub');
   assert.equal(sections[0].area.id, 'ba');
   assert.deepEqual(
@@ -134,7 +135,7 @@ test('common reference headings coexist with Business Areas without hiding or du
   source.relations = source.relations.filter((r) => !['c', 'doc', 'cooperation'].includes(r.id));
   source.nodes.push({ id: 'price', kind: 'reference', fields: { name: 'Product Price Book' } });
   source.relations.push({ id: 'price-parent', type: 'presents', source_id: 'sub', target_id: 'price' });
-  const m = adaptPublication(source),
+  const m = adaptPublication(readingFixture(source)),
     sub = m.nodeById.get('sub');
   const sections = businessAreaSections(m, 'sub');
   assert.deepEqual(
@@ -161,7 +162,7 @@ test('common reference headings coexist with Business Areas without hiding or du
   );
 });
 test('historical direct capabilities keep their label beside common references', () => {
-  const m = adaptPublication(raw()),
+  const m = adaptPublication(readingFixture(raw())),
     list = cardChildListOf(m, m.nodeById.get('sub'));
   const sections = businessAreaSections(m, 'sub');
   assert.deepEqual(
@@ -179,7 +180,7 @@ test('historical direct capabilities keep their label beside common references',
   assert.equal(parentRelationOf(m, 'direct').sourceId, 'sub');
 });
 test('relationship projection retains direct capabilities and reference links', () => {
-  const m = adaptPublication(raw());
+  const m = adaptPublication(readingFixture(raw()));
   assert.ok(dependencyLevels(m).some((x) => x.value === 'business_area'));
   const p = projectDependencies(m, { level: 'business_area', depth: 0, direction: 'both', family: 'all' });
   assert.ok(p.nodes.some((n) => n.id === 'ba'));
@@ -190,5 +191,5 @@ test('relationship projection retains direct capabilities and reference links', 
   old.nodes = old.nodes.filter((n) => n.id !== 'ba');
   old.relations = old.relations.filter((r) => r.id !== 'a');
   old.relations.find((r) => r.id === 'b').source_id = 'sub';
-  assert.equal(dependencyLevel(adaptPublication(old), 'business_area'), 'capability');
+  assert.equal(dependencyLevel(adaptPublication(readingFixture(old)), 'business_area'), 'capability');
 });

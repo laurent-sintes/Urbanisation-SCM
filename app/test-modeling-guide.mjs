@@ -28,10 +28,11 @@ test('guide presentation follows the displayed hierarchy without rewriting histo
   const before = structuredClone(lesson);
   assert.equal(lessonForPublication(lesson, { nodes: [] }), lesson);
   const current = lessonForPublication(lesson, { nodes: [{ kind: 'business_system' }] });
-  assert.equal(current.rule, 'Business System → Domain → Subdomain → Capability → Behavior');
-  assert.equal(current.scene.items[0].label, 'Sales / Sourcing and Procurement');
-  assert.match(current.scene.items[0].text, /Sous-domaine/);
-  assert.match(current.contributor.boundary, /publication affichée/);
+  assert.equal(current.rule, lesson.rule);
+  assert.equal(current.scene.items[0].label, 'Commerce');
+  assert.equal(current.scene.items[0].text, lesson.scene.items[0].text);
+  assert.equal(current.contributor.boundary, 'Historical boundary');
+  assert.equal(current, lesson);
   assert.deepEqual(lesson, before);
 });
 test('guide selection is pinned to the displayed publication and carries cancellation', async () => {

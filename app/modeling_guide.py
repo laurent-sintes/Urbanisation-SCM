@@ -6,6 +6,8 @@ business backlog or resolves a live source, and cannot change a model response.
 
 from __future__ import annotations
 
+from scripts.atlas_text import ReaderError, text as ui_text
+
 import hashlib
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -43,7 +45,7 @@ class ModelingGuideError(ValueError):
     """A guide or its publication cannot be safely and faithfully read."""
 
 
-def _require(condition, message="Structure du guide invalide."):
+def _require(condition, message=ui_text('guideApi.structure_du_guide_invalide')):
     if not condition:
         raise ModelingGuideError(message)
 
@@ -57,65 +59,84 @@ def _texts(value, *fields):
 def _read(folder: Path, relative: str, sha256: str | None = None):
     # Only these two shapes are accepted; no arbitrary path, symlink or junction.
     _require(relative == "index.yaml" or bool(re.fullmatch(r"versions/\d{4}-\d{2}-\d{2}\.[1-9]\d*\.yaml", relative)),
-             "Chemin de guide non autorisé.")
+             ui_text('guideApi.chemin_de_guide_non_autorise'))
     path = folder / relative
-    _require(folder.resolve() == folder and path.resolve() == path, "Chemin de guide non autorisé.")
+    _require(folder.resolve() == folder and path.resolve() == path, ui_text('guideApi.chemin_de_guide_non_autorise'))
     if sha256 is not None:
-        _require(bool(re.fullmatch(r"[a-f0-9]{64}", sha256)), "Empreinte de guide invalide.")
+        _require(bool(re.fullmatch(r"[a-f0-9]{64}", sha256)), ui_text('guideApi.empreinte_de_guide_invalide'))
     # The structured reader checks source bytes on every call while sharing
     # parsing across the many publications associated with the same guide.
     try:
         return read_document(path, expected_sha256=sha256)
     except ValueError as error:
-        raise ModelingGuideError('Le guide est invalide ou son empreinte ne correspond pas au fichier.') from error
+        raise ModelingGuideError(ui_text('guideApi.le_guide_est_invalide_ou_son_empreinte_ne_correspond_pas_au_fichi')) from error
 
 
 def _validate_guide(guide, version):
     _texts(guide, "id", "version", "as_of", "title", "subtitle")
-    _require(guide["version"] == version, "La version du guide ne correspond pas à son association.")
+    _require(guide["version"] == version, ui_text('guideApi.la_version_du_guide_ne_correspond_pas_a_son_association'))
+    if 'reader_vocabulary' in guide:
+        vocabulary = guide['reader_vocabulary']
+        _require(isinstance(vocabulary, dict), ui_text('guideApi.valeurs_methodologiques_invalides'))
+        for group, entries in vocabulary.items():
+            _require(isinstance(entries, dict), ui_text('guideApi.valeurs_methodologiques_invalides'))
+            for key, entry in entries.items():
+                _require(isinstance(key, str) and bool(key), ui_text('guideApi.valeurs_methodologiques_invalides'))
+                if group == 'field_labels':
+                    _require(isinstance(entry, str) and bool(entry.strip()), ui_text('guideApi.valeurs_methodologiques_invalides'))
+                else:
+                    _require(isinstance(entry, dict) and isinstance(entry.get('label'), str) and bool(entry['label'].strip()), ui_text('guideApi.valeurs_methodologiques_invalides'))
+    if 'reader_content' in guide:
+        content = guide['reader_content']
+        _require(isinstance(content, dict) and content.get('schema_version') == 1 and isinstance(content.get('entries'), list), ui_text('guideApi.valeurs_methodologiques_invalides'))
+        for entry in content['entries']:
+            _require(isinstance(entry, dict) and entry.get('collection') in {'nodes', 'relations', 'terms', 'principles'}, ui_text('guideApi.valeurs_methodologiques_invalides'))
+            _require(isinstance(entry.get('id'), str) and isinstance(entry.get('text'), str), ui_text('guideApi.valeurs_methodologiques_invalides'))
+            _require(isinstance(entry.get('field_path'), list) and bool(entry['field_path']) and all(isinstance(key, str) and key for key in entry['field_path']), ui_text('guideApi.valeurs_methodologiques_invalides'))
+            _require(isinstance(entry.get('source_sha256'), str) and re.fullmatch(r'[a-f0-9]{64}', entry['source_sha256']), ui_text('guideApi.valeurs_methodologiques_invalides'))
     _require(isinstance(guide.get("sources"), list) and bool(guide["sources"]))
     source_ids = set()
     for source in guide["sources"]:
         _texts(source, "id", "title", "excerpt", "scope")
-        _require(source["id"] not in source_ids, "Source de guide dupliquée.")
+        _require(source["id"] not in source_ids, ui_text('guideApi.source_de_guide_dupliquee'))
         source_ids.add(source["id"])
 
     def refs(value):
         _require(isinstance(value, list) and bool(value))
-        _require(all(isinstance(item, str) and item in source_ids for item in value), "Source de guide non résolue.")
+        _require(all(isinstance(item, str) and item in source_ids for item in value), ui_text('guideApi.source_de_guide_non_resolue'))
 
     refs(guide.get("source_refs"))
     if 'chapters' in guide:
         chapters = guide['chapters']
-        _require(isinstance(chapters, list) and len(chapters) in (4, 8), 'Rubriques de méthode invalides.')
+        _require(isinstance(chapters, list) and len(chapters) in (4, 8), ui_text('guideApi.rubriques_de_methode_invalides'))
         _require([c.get('id') for c in chapters if isinstance(c, dict)] ==
                  (['start', 'metamodel', 'method', 'references'] if len(chapters) == 4 else
-                  ['start', 'explore', 'decisions', 'transform', 'sustain', 'metamodel', 'method', 'references']), 'Ordre des rubriques invalide.')
+                  ['start', 'explore', 'decisions', 'transform', 'sustain', 'metamodel', 'method', 'references']), ui_text('guideApi.ordre_des_rubriques_invalide'))
         for chapter in chapters:
             _texts(chapter, 'id', 'title', 'intro')
             if 'visual' in chapter:
                 visual = chapter['visual']
                 _texts(visual, 'kind', 'title', 'description', 'center')
-                _require(visual['kind'] in ('dimensions', 'governance'), 'Schéma de méthode invalide.')
+                _require(visual['kind'] in ('dimensions', 'governance'), ui_text('guideApi.schema_de_methode_invalide'))
                 _require(isinstance(visual.get('items'), list) and
                          len(visual['items']) == (6 if visual['kind'] == 'dimensions' else 3) and
                          all(isinstance(item, str) and item.strip() for item in visual['items']),
-                         'Éléments de schéma invalides.')
+                         ui_text('guideApi.elements_de_schema_invalides'))
                 if 'overview_svg' in visual:
                     _texts(visual, 'overview_svg')
                     svg = visual['overview_svg']
-                    _require('<!DOCTYPE' not in svg.upper() and '<!ENTITY' not in svg.upper(), 'SVG autonome requis.')
+                    _require('<!DOCTYPE' not in svg.upper() and '<!ENTITY' not in svg.upper(), ui_text('guideApi.svg_autonome_requis'))
                     try:
                         tree = ET.fromstring(svg)
                     except ET.ParseError as error:
-                        raise ModelingGuideError('SVG invalide.') from error
+                        raise ModelingGuideError(ui_text('guideApi.svg_invalide')) from error
                     allowed = {'svg', 'title', 'desc', 'defs', 'style', 'marker', 'path', 'rect', 'text', 'tspan', 'g', 'line', 'circle'}
-                    _require(tree.tag == '{http://www.w3.org/2000/svg}svg', 'SVG invalide.')
+                    _require(tree.tag == '{http://www.w3.org/2000/svg}svg', ui_text('guideApi.svg_invalide'))
                     for element in tree.iter():
-                        _require(element.tag in {'{http://www.w3.org/2000/svg}' + tag for tag in allowed}, 'Élément SVG interdit.')
-                        _require(all(not key.lower().startswith('on') and key not in ('href', '{http://www.w3.org/1999/xlink}href') for key in element.attrib), 'Attribut SVG interdit.')
-                    _require(not re.search(r'@import|https?:|javascript:|data:', svg.replace('http://www.w3.org/2000/svg', ''), re.I), 'Ressource SVG externe interdite.')
-                    _require(all(value.strip().startswith('#') for value in re.findall(r'url\(([^)]+)\)', svg)), 'Ressource SVG externe interdite.')
+                        _require(element.tag in {'{http://www.w3.org/2000/svg}' + tag for tag in allowed}, ui_text('guideApi.element_svg_interdit'))
+                        _require(all(not key.lower().startswith('on') and key not in ('href', '{http://www.w3.org/1999/xlink}href') for key in element.attrib), ui_text('guideApi.attribut_svg_interdit'))
+                    _require(not re.search(r'@import|https?:|javascript:|data:', svg.replace('http://www.w3.org/2000/svg', ''), re.I), ui_text('guideApi.ressource_svg_externe_interdite'))
+                    _require(all(value.strip().startswith('#') for value in re.findall(r'url\(([^)]+)\)', svg)), ui_text('guideApi.ressource_svg_externe_interdite'))
             _require(isinstance(chapter.get('sections'), list) and bool(chapter['sections']))
             for section in chapter['sections']:
                 _texts(section, 'title', 'text')
@@ -124,17 +145,17 @@ def _validate_guide(guide, version):
                         _texts(section, field)
                 if 'url' in section:
                     url = urlparse(section['url'])
-                    _require(url.scheme == 'https' and bool(url.hostname), 'Lien de référence invalide.')
+                    _require(url.scheme == 'https' and bool(url.hostname), ui_text('guideApi.lien_de_reference_invalide'))
     if 'glossary' in guide:
         glossary = guide['glossary']
         _require(isinstance(glossary, dict) and isinstance(glossary.get('terms'), list)
-                 and isinstance(glossary.get('model_term_ids'), list), 'Glossaire du méta modèle invalide.')
+                 and isinstance(glossary.get('model_term_ids'), list), ui_text('guideApi.glossaire_du_meta_modele_invalide'))
         ids = set()
         for term in glossary['terms']:
             _texts(term, 'id', 'name', 'definition')
             if 'short_description' in term:
                 _texts(term, 'short_description')
-            _require(bool(re.fullmatch(r'MOD\d+', term['id'])) and term['id'] not in ids, 'Identité de terme méthodologique invalide.')
+            _require(bool(re.fullmatch(r'MOD\d+', term['id'])) and term['id'] not in ids, ui_text('guideApi.identite_de_terme_methodologique_invalide'))
             ids.add(term['id'])
             if 'examples' in term:
                 _require(isinstance(term['examples'], list) and all(isinstance(value, str) for value in term['examples']))
@@ -143,35 +164,35 @@ def _validate_guide(guide, version):
             if 'editorial_notes' in term:
                 _require(isinstance(term['editorial_notes'], list) and all(isinstance(value, str) for value in term['editorial_notes']))
         _require(all(isinstance(value, str) and bool(re.fullmatch(r'TER\d+', value)) for value in glossary['model_term_ids']))
-        _require(len(set(glossary['model_term_ids'])) == len(glossary['model_term_ids']), 'Classement lexical dupliqué.')
+        _require(len(set(glossary['model_term_ids'])) == len(glossary['model_term_ids']), ui_text('guideApi.classement_lexical_duplique'))
         aliases = glossary.get('aliases', {})
-        _require(isinstance(aliases, dict) and all(k in glossary['model_term_ids'] and v in ids for k, v in aliases.items()), 'Renvoi méthodologique invalide.')
+        _require(isinstance(aliases, dict) and all(k in glossary['model_term_ids'] and v in ids for k, v in aliases.items()), ui_text('guideApi.renvoi_methodologique_invalide'))
         groups = glossary.get('groups', [])
         grouped = []
         for group in groups:
             _texts(group, 'id', 'label')
-            _require(isinstance(group.get('term_ids'), list), 'Groupe méthodologique invalide.')
+            _require(isinstance(group.get('term_ids'), list), ui_text('guideApi.groupe_methodologique_invalide'))
             grouped.extend(group['term_ids'])
         for term in glossary['terms']:
             if 'parent_term' in term:
-                _require(term['parent_term'] in ids and term['parent_term'] != term['id'], 'Type méthodologique non résolu.')
+                _require(term['parent_term'] in ids and term['parent_term'] != term['id'], ui_text('guideApi.type_methodologique_non_resolu'))
             if 'guide_section' in term:
-                _require(term['guide_section'] in ('method', 'codes'), 'Destination méthodologique invalide.')
+                _require(term['guide_section'] in ('method', 'codes'), ui_text('guideApi.destination_methodologique_invalide'))
             if 'values' in term:
-                _require(isinstance(term['values'], dict) and all(isinstance(k, str) and isinstance(v, str) and k.strip() and v.strip() for k, v in term['values'].items()), 'Valeurs méthodologiques invalides.')
+                _require(isinstance(term['values'], dict) and all(isinstance(k, str) and isinstance(v, str) and k.strip() and v.strip() for k, v in term['values'].items()), ui_text('guideApi.valeurs_methodologiques_invalides'))
         if groups:
             visible = {t['id'] for t in glossary['terms'] if t.get('status') != 'retired' and not t.get('parent_term') and not t.get('guide_section')} | (set(glossary['model_term_ids']) - set(aliases))
-            _require(len(set(grouped)) == len(grouped) and set(grouped) == visible, 'Groupes méthodologiques incomplets ou dupliqués.')
+            _require(len(set(grouped)) == len(grouped) and set(grouped) == visible, ui_text('guideApi.groupes_methodologiques_incomplets_ou_dupliques'))
         def method_links(value):
             if isinstance(value, str):
                 for chapter_id, section in re.findall(r'\]\(guide:([^#)]+)(?:#([^)]*))?\)', value):
                     chapter = next((c for c in guide.get('chapters', []) if c['id'] == chapter_id), None)
-                    _require(chapter is not None, 'Rubrique méthodologique non résolue : ' + chapter_id)
+                    _require(chapter is not None, ui_text('guideApi.rubrique_methodologique_non_resolue') + chapter_id)
                     if section:
                         match = re.fullmatch(r'method-section-(\d+)', section)
-                        _require(match is not None and int(match[1]) < len(chapter['sections']), 'Section méthodologique non résolue : ' + section)
+                        _require(match is not None and int(match[1]) < len(chapter['sections']), ui_text('guideApi.section_methodologique_non_resolue') + section)
                 for ident in re.findall(r'\]\(method:([^)#]+)(?:#[^)]*)?\)', value):
-                    _require(ident in ids, 'Notion méthodologique non résolue : ' + ident)
+                    _require(ident in ids, ui_text('guideApi.notion_methodologique_non_resolue') + ident)
             elif isinstance(value, list):
                 for item in value:
                     method_links(item)
@@ -185,7 +206,7 @@ def _validate_guide(guide, version):
     lesson_ids = set()
     for lesson in guide["lessons"]:
         _texts(lesson, "id", "label", "title", "rule", "established_at", "question", "explanation")
-        _require(lesson["id"] not in lesson_ids, "Clé de guide dupliquée.")
+        _require(lesson["id"] not in lesson_ids, ui_text('guideApi.cle_de_guide_dupliquee'))
         lesson_ids.add(lesson["id"])
         scene = lesson.get("scene")
         _texts(scene, "kind", "caption")
@@ -229,11 +250,11 @@ def load_modeling_guide(root=REPOSITORY_ROOT, version=None):
     """
     root = Path(root).resolve()
     if version is not None and (not isinstance(version, str) or not VERSION.fullmatch(version)):
-        raise ValueError("Version de publication invalide.")
+        raise ReaderError('guideApi.version_de_publication_invalide')
     try:
         publication = resolve_release(root / "modeles/release", version)
     except (ValueError, KeyError, TypeError, OSError) as exc:
-        raise ModelingGuideError("Publication inconnue ou non vérifiable pour ce guide.") from exc
+        raise ModelingGuideError(ui_text('guideApi.publication_inconnue_ou_non_verifiable_pour_ce_guide')) from exc
     return _load_associated_guide(root, publication['version'])
 
 
@@ -245,7 +266,7 @@ def _load_associated_guide(root, publication_version):
     """
     response = {
         "schema_version": "1.0.0", "publication_version": publication_version,
-        "status": "unavailable", "message": "Aucun guide n’est associé à cette publication.",
+        "status": "unavailable", "message": ui_text('guideApi.aucun_guide_n_est_associe_a_cette_publication'),
     }
     folder = root / "modeles/modeling-guides"
     if not (folder / "index.yaml").exists():
@@ -258,13 +279,13 @@ def _load_associated_guide(root, publication_version):
         for item in index["guides"]:
             _texts(item, "version", "path", "sha256")
             _require(bool(VERSION.fullmatch(item["version"])) and item["version"] not in guides)
-            _require(item["path"] == "versions/" + item["version"] + ".yaml", "Chemin de guide non autorisé.")
+            _require(item["path"] == "versions/" + item["version"] + ".yaml", ui_text('guideApi.chemin_de_guide_non_autorise'))
             guides[item["version"]] = item
         associations = {}
         for item in index["associations"]:
             _texts(item, "publication_version", "guide_version", "scope", "note")
             _require(bool(VERSION.fullmatch(item["publication_version"])) and item["publication_version"] not in associations)
-            _require(item["guide_version"] in guides, "Guide associé absent de l’index.")
+            _require(item["guide_version"] in guides, ui_text('guideApi.guide_associe_absent_de_l_index'))
             associations[item["publication_version"]] = item
         association = associations.get(publication_version)
         if association is None:
@@ -280,10 +301,10 @@ def _load_associated_guide(root, publication_version):
             if cache is not None:
                 cache[key] = deepcopy(guide)
         return {
-            **response, "status": "available", "message": "Guide méthodologique associé à cette publication.",
+            **response, "status": "available", "message": ui_text('guideApi.guide_methodologique_associe_a_cette_publication'),
             "association": {key: association[key] for key in ("scope", "note")}, "guide": guide,
         }
     except ModelingGuideError:
         raise
     except (ValueError, KeyError, TypeError, OSError, UnicodeError) as exc:
-        raise ModelingGuideError("Le guide associé est indisponible ou invalide.") from exc
+        raise ModelingGuideError(ui_text('guideApi.le_guide_associe_est_indisponible_ou_invalide')) from exc

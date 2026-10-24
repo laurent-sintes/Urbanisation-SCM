@@ -4,6 +4,7 @@ import { readDataExchange } from './dataSharing.ts';
 import { validateDisplayIndex } from './displayCodes.ts';
 import { resolveGlossaryTerm } from './glossary.ts';
 import { plainInlineText } from './inlineLinks.ts';
+import { readerPublication } from './readerContent.ts';
 import { searchPublication } from './search.ts';
 import type {
   AtlasNode,
@@ -14,6 +15,7 @@ import type {
   RawPublication,
   StructuralRelationType,
 } from './types.ts';
+import { ui } from './ui.ts';
 
 const structuralTypes = new Set<string>(['contains', 'presents']);
 export const isStructural = (relation: AtlasRelation): boolean => structuralTypes.has(relation.type);
@@ -36,7 +38,7 @@ function uniqueMap<T extends { id: string }>(items: readonly T[], label: string)
   const index = new Map<string, T>();
   for (const item of items) {
     if (typeof item.id !== 'string' || !item.id.trim() || index.has(item.id)) {
-      throw new Error(`${label} : identifiant absent ou dupliqué (${item.id}).`);
+      throw new Error(ui('model.identifiant_absent_ou_duplique', { label: label, id: item.id }));
     }
     index.set(item.id, item);
   }
@@ -46,10 +48,10 @@ function uniqueMap<T extends { id: string }>(items: readonly T[], label: string)
 /** Accept an API response or the raw snapshot loaded by load-publication.mjs. */
 export function adaptPublication(input: RawPublication): PublishedModel {
   if (input?.space !== 'release' || !input.version || !Array.isArray(input.nodes) || !Array.isArray(input.relations)) {
-    throw new Error('Une publication release explicite avec nodes et relations est requise.');
+    throw new Error(ui('model.une_publication_release_explicite_avec_nodes_et_relations_est_req'));
   }
   // Cloning prevents either renderer from altering the API response or another view.
-  const normalized = structuredClone(input);
+  const normalized = readerPublication(input);
   // Published snapshots retain their original field names. Adapt older hotspots for current views.
   for (const hotspot of normalized.hotspot_catalog?.hotspots ?? []) {
     // Headings are plain text; glossary links remain available in the hotspot body.
@@ -83,13 +85,31 @@ export function adaptPublication(input: RawPublication): PublishedModel {
   }
   const nodes: AtlasNode[] = raw.nodes.map((node) => {
     const fields = node.fields ?? {};
+    const vocabulary = raw.metamodel?.vocabulary;
+    const nature = typeof fields.nature === 'string' ? fields.nature : '';
     return freezeDeep({
+      reading: {
+        kind: raw.metamodel?.node_types?.find((type) => type.kind === node.kind)?.label,
+        nature: (node.kind === 'behavior' ? vocabulary?.behavior_natures : vocabulary?.capability_natures)?.[nature]
+          ?.label,
+        vocabulary,
+        icon: raw.presentation?.icons?.[node.id],
+        neighborhood: raw.presentation?.flow_neighborhood,
+      },
       id: node.id,
       displayCode: raw.display_index?.codes[node.id],
       name: plainInlineText(textField(fields.name)) || node.id,
       kind: node.kind,
+      hierarchyKind:
+        node.kind === 'area' ? (usesSubdomains ? 'subdomain' : usesPurposes ? 'purpose' : 'area') : undefined,
       hierarchyLabel:
-        node.kind === 'area' ? (usesSubdomains ? 'Sous-domaine' : usesPurposes ? 'Purpose' : 'Area') : undefined,
+        node.kind === 'area'
+          ? usesSubdomains
+            ? ui('model.sous_domaine')
+            : usesPurposes
+              ? ui('model.purpose')
+              : ui('model.area')
+          : undefined,
       referenceParentName: node.kind === 'capability' ? referenceByChild.get(node.id) : undefined,
       groupRole: node.group_role,
       levelRef: node.level_ref,
@@ -113,34 +133,34 @@ export function adaptPublication(input: RawPublication): PublishedModel {
   });
   const nodeById = uniqueMap(nodes, 'Nœud');
   const glossary = raw.glossary?.terms ?? [];
-  if (!Array.isArray(glossary)) throw new Error('Glossaire publié invalide.');
-  const glossaryById = uniqueMap(glossary, 'Terme');
+  if (!Array.isArray(glossary)) throw new Error(ui('model.glossaire_publie_invalide'));
+  const glossaryById = uniqueMap(glossary, ui('model.terme'));
   for (const term of glossary) {
     if (
       term.alias_of &&
       (!resolveGlossaryTerm(glossaryById, term.id) || resolveGlossaryTerm(glossaryById, term.id)?.presentation)
     )
-      throw new Error(`Alias de glossaire invalide : ${term.id}`);
+      throw new Error(ui('model.alias_de_glossaire_invalide', { id: term.id }));
     if (term.presentation && !['historical', 'method'].includes(term.presentation))
-      throw new Error(`Présentation de glossaire invalide : ${term.id}`);
+      throw new Error(ui('model.presentation_de_glossaire_invalide', { id: term.id }));
     if (
       (term.presentation === 'method' || term.guide_section) &&
       (term.presentation !== 'method' || term.guide_section !== 'method')
     )
-      throw new Error(`Destination méthodologique invalide : ${term.id}`);
+      throw new Error(ui('model.destination_methodologique_invalide', { id: term.id }));
   }
   const catalogue = raw.information_catalog;
   if (catalogue !== undefined && (!catalogue || !Array.isArray(catalogue.items) || !Array.isArray(catalogue.links))) {
-    throw new Error('Catalogue d’informations publié invalide.');
+    throw new Error(ui('model.catalogue_d_informations_publie_invalide'));
   }
   const information = catalogue?.items ?? [],
     informationLinks = catalogue?.links ?? [];
-  const informationById = uniqueMap(information, 'Information');
-  const informationLinkById = uniqueMap(informationLinks, 'Lien d’information');
+  const informationById = uniqueMap(information, ui('model.information'));
+  const informationLinkById = uniqueMap(informationLinks, ui('model.lien_d_information'));
   const allIds = new Set([...nodeById.keys(), ...raw.relations.map((r) => r.id)]);
   for (const id of [...(catalogue ? [catalogue.id] : []), ...informationById.keys(), ...informationLinkById.keys()]) {
-    if (typeof id !== 'string' || !id.trim()) throw new Error('Identité d’information absente.');
-    if (allIds.has(id)) throw new Error(`Identité partagée par une information : ${id}.`);
+    if (typeof id !== 'string' || !id.trim()) throw new Error(ui('model.identite_d_information_absente'));
+    if (allIds.has(id)) throw new Error(ui('model.identite_partagee_par_une_information', { id: id }));
     allIds.add(id);
   }
   for (const item of information) {
@@ -161,24 +181,24 @@ export function adaptPublication(input: RawPublication): PublishedModel {
           !Array.isArray(item[key as keyof typeof item]) || !(item[key as keyof typeof item] as unknown[]).length,
       )
     ) {
-      throw new Error(`Information publiée incomplète : ${item.id}.`);
+      throw new Error(ui('model.information_publiee_incomplete', { id: item.id }));
     }
     const roles = new Set<string>();
     for (const role of item.capability_roles) {
       if (nodeById.get(role.capability_ref)?.kind !== 'capability' || roles.has(role.capability_ref)) {
-        throw new Error(`Rôle de capacité invalide pour l’information ${item.id}.`);
+        throw new Error(ui('model.role_de_capacite_invalide_pour_l_information', { id: item.id }));
       }
       roles.add(role.capability_ref);
     }
   }
   for (const link of informationLinks) {
     if (!informationById.has(link.from_ref) || !informationById.has(link.to_ref) || link.from_ref === link.to_ref) {
-      throw new Error(`Extrémité inconnue pour le lien d’information ${link.id}.`);
+      throw new Error(ui('model.extremite_inconnue_pour_le_lien_d_information', { id: link.id }));
     }
   }
   const relations: AtlasRelation[] = raw.relations.map((relation) => {
     if (!nodeById.has(relation.source_id) || !nodeById.has(relation.target_id)) {
-      throw new Error(`Extrémité inconnue pour la relation ${relation.id}.`);
+      throw new Error(ui('model.extremite_inconnue_pour_la_relation', { id: relation.id }));
     }
     return freezeDeep({
       id: relation.id,
@@ -203,12 +223,12 @@ export function adaptPublication(input: RawPublication): PublishedModel {
       raw: relation,
     });
   });
-  const relationById = uniqueMap(relations, 'Relation');
+  const relationById = uniqueMap(relations, ui('model.relation'));
   // An ambiguous/cyclic hierarchy cannot be resolved by guessing from identifiers.
   const parentByChild = new Map<string, string>();
   for (const relation of relations.filter(isStructural)) {
     if (parentByChild.has(relation.targetId))
-      throw new Error(`Plusieurs parents explicites pour ${relation.targetId}.`);
+      throw new Error(ui('model.plusieurs_parents_explicites_pour', { targetId: relation.targetId }));
     parentByChild.set(relation.targetId, relation.sourceId);
   }
   for (const node of nodes) {
@@ -216,16 +236,16 @@ export function adaptPublication(input: RawPublication): PublishedModel {
       const parent = nodeById.get(parentByChild.get(node.id) ?? '');
       const relation = relations.find((edge) => isStructural(edge) && edge.targetId === node.id);
       if (parent?.kind !== 'capability' || relation?.type !== 'contains') {
-        throw new Error(`Comportement sans rattachement unique à une capacité : ${node.id}.`);
+        throw new Error(ui('model.comportement_sans_rattachement_unique_a_une_capacite', { id: node.id }));
       }
       if (relations.some((edge) => isStructural(edge) && edge.sourceId === node.id)) {
-        throw new Error(`Un comportement est un niveau terminal : ${node.id}.`);
+        throw new Error(ui('model.un_comportement_est_un_niveau_terminal', { id: node.id }));
       }
     }
     const seen = new Set<string>();
     let cursor: string | undefined = node.id;
     while (cursor !== undefined) {
-      if (seen.has(cursor)) throw new Error(`Cycle de navigation explicite à ${cursor}.`);
+      if (seen.has(cursor)) throw new Error(ui('model.cycle_de_navigation_explicite_a', { cursor: cursor }));
       seen.add(cursor);
       cursor = parentByChild.get(cursor);
     }
@@ -257,7 +277,7 @@ export function structuralRelations(model: PublishedModel, type?: StructuralRela
 
 export function requiredNode(model: PublishedModel, id: string): AtlasNode {
   const node = model.nodeById.get(id);
-  if (!node) throw new Error(`Objet publié introuvable : ${id}`);
+  if (!node) throw new Error(ui('model.objet_publie_introuvable', { id: id }));
   return node;
 }
 
@@ -311,20 +331,20 @@ export function scopeStatistics(
   model: PublishedModel,
   node: AtlasNode,
 ): { kind: string; count: number; label: string }[] {
-  const areaLabel = model.nodes.find((item) => item.kind === 'area')?.hierarchyLabel;
+  const areaKind = model.nodes.find((item) => item.kind === 'area')?.hierarchyKind;
   const labels: Record<string, [string, string]> = {
-    business_system: ['système métier', 'systèmes métier'],
-    domain: ['domaine', 'domaines'],
+    business_system: [ui('model.systeme_metier'), ui('model.systemes_metier')],
+    domain: [ui('model.domaine'), ui('model.domaines')],
     area:
-      areaLabel === 'Sous-domaine'
-        ? ['sous-domaine', 'sous-domaines']
-        : areaLabel === 'Purpose'
-          ? ['Purpose', 'Purposes']
-          : ['Area', 'Areas'],
-    business_area: ['Business Area', 'Business Areas'],
-    reference: ['référentiel', 'référentiels'],
-    capability: ['capacité', 'capacités'],
-    behavior: ['comportement', 'comportements'],
+      areaKind === 'subdomain'
+        ? [ui('model.sous_domaine_2'), ui('model.sous_domaines')]
+        : areaKind === 'purpose'
+          ? [ui('model.purpose'), ui('model.purposes')]
+          : [ui('model.area'), ui('model.areas')],
+    business_area: [ui('model.business_area'), ui('model.business_areas')],
+    reference: [ui('model.referentiel'), ui('model.referentiels')],
+    capability: [ui('model.capacite'), ui('model.capacites')],
+    behavior: [ui('model.comportement'), ui('model.comportements')],
   };
   const counts = new Map<string, number>();
   const seen = new Set([node.id]);
@@ -368,17 +388,20 @@ export function cardContentSummary(model: PublishedModel, node: AtlasNode): stri
   const list = cardChildListOf(model, node);
   const items = list ? cardListedItems(list) : childrenOf(model, node.id);
   const labels: Record<string, [string, string]> = {
-    domain: ['domaine', 'domaines'],
-    area: ['sous-domaine', 'sous-domaines'],
-    business_area: ['Business Area', 'Business Areas'],
-    capability: ['capacité', 'capacités'],
-    reference: ['référentiel', 'référentiels'],
-    behavior: ['comportement', 'comportements'],
+    domain: [ui('model.domaine'), ui('model.domaines')],
+    area: [ui('model.sous_domaine_2'), ui('model.sous_domaines')],
+    business_area: [ui('model.business_area'), ui('model.business_areas')],
+    capability: [ui('model.capacite'), ui('model.capacites')],
+    reference: [ui('model.referentiel'), ui('model.referentiels')],
+    behavior: [ui('model.comportement'), ui('model.comportements')],
   };
   const counts = new Map<string, number>();
   for (const item of items) counts.set(item.kind, (counts.get(item.kind) || 0) + 1);
   return [...counts]
-    .map(([kind, count]) => `${count} ${(labels[kind] || ['élément', 'éléments'])[count === 1 ? 0 : 1]}`)
+    .map(
+      ([kind, count]) =>
+        `${count} ${(labels[kind] || [ui('model.element'), ui('model.elements')])[count === 1 ? 0 : 1]}`,
+    )
     .join(' · ');
 }
 
@@ -478,10 +501,10 @@ export function relatedTo(model: PublishedModel, id: string, includeStructural =
 
 /** Breadth-first local exploration. Traversing an edge never changes its published direction. */
 export function neighborhood(model: PublishedModel, id: string, options: NeighborhoodOptions = {}): GraphProjection {
-  if (!model.nodeById.has(id)) throw new Error(`Nœud de focalisation absent : ${id}.`);
+  if (!model.nodeById.has(id)) throw new Error(ui('model.n_ud_de_focalisation_absent', { id: id }));
   const depth = options.depth ?? 1;
   const direction = options.direction ?? 'both';
-  if (![1, 2].includes(depth)) throw new Error('La profondeur du voisinage doit être 1 ou 2.');
+  if (![1, 2].includes(depth)) throw new Error(ui('model.la_profondeur_du_voisinage_doit_etre_1_ou_2'));
   const eligible = model.relations.filter(
     (relation) =>
       (options.includeStructural || !isStructural(relation)) &&

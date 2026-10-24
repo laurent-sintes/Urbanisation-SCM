@@ -1,11 +1,12 @@
 import { staticUrl } from './publication.ts';
 import type { AtlasDocument, PublishedModel } from './types';
+import { ui } from './ui.ts';
 
 export const DOCUMENT_CATEGORY: Record<AtlasDocument['category'], string> = {
-  analysis: 'Analyse',
-  source: 'Source',
-  decision: 'Décision',
-  guide: 'Guide',
+  analysis: ui('documentCatalog.analyse'),
+  source: ui('documentCatalog.source'),
+  decision: ui('documentCatalog.decision'),
+  guide: ui('documentCatalog.guide'),
 };
 
 export function documentUrl(model: PublishedModel, document: AtlasDocument): string {

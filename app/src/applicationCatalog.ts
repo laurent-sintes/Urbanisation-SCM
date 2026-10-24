@@ -1,3 +1,4 @@
+import legacyReading from '../content/legacy-vocabulary.json' with { type: 'json' };
 import { lineageOf, visibleAncestorId } from './model.ts';
 import type {
   ApplicationCatalog,
@@ -7,13 +8,14 @@ import type {
   ApplicationSelection,
   PublishedModel,
 } from './types';
+import { ui } from './ui.ts';
 
-export const contextName: Record<string, string> = {
-  'beaumanoir-historique': 'SI Beaumanoir Marques Historiques',
-  boardriders: 'SI Boardriders',
-  sarenza: 'SI Sarenza',
-  'flow-platform': 'SI Beaumanoir cible',
-};
+export function contextName(catalog: ApplicationCatalog | undefined, id: string, version?: string): string {
+  if (!catalog?.contexts && version && legacyReading.publication_versions.includes(version)) {
+    return (legacyReading.contexts as Record<string, string>)[id] ?? ui('common.context_unavailable');
+  }
+  return catalog?.contexts?.find((context) => context.id === id)?.name ?? ui('common.context_unavailable');
+}
 
 export function productFor(
   catalog: ApplicationCatalog,

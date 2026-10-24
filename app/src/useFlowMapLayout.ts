@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { flowLayoutsFor } from './flowMapCache';
 import type { FlowMapLayout } from './flowMapLayout';
 import type { PublishedModel } from './types';
+import { ui } from './ui.ts';
 
 const EMPTY: FlowMapLayout = { boxes: [], exchanges: [], width: 0, height: 0 };
 export const savedFlowMap = (model: PublishedModel, scopeId?: string) => flowLayoutsFor(model).get(scopeId || '');
@@ -28,7 +29,7 @@ export function useFlowMapLayout(model: PublishedModel, scopeId?: string) {
     const engine = new ELK({
       workerFactory: () => {
         const elkWorker = new Worker(elkWorkerUrl);
-        elkWorker.onerror = () => fail('Le moteur de placement est indisponible.');
+        elkWorker.onerror = () => fail(ui('useFlowMapLayout.le_moteur_de_placement_est_indisponible'));
         return elkWorker;
       },
     });
@@ -50,7 +51,7 @@ export function useFlowMapLayout(model: PublishedModel, scopeId?: string) {
         return;
       }
       if (event.data.error || !event.data.layout) {
-        fail(event.data.error || 'Placement indisponible.');
+        fail(event.data.error || ui('useFlowMapLayout.placement_indisponible'));
         return;
       }
       layouts.set(scopeId || '', event.data.layout);
@@ -58,7 +59,7 @@ export function useFlowMapLayout(model: PublishedModel, scopeId?: string) {
       worker.terminate();
       engine.terminateWorker();
     };
-    worker.onerror = () => fail('Le calcul de la carte a échoué.');
+    worker.onerror = () => fail(ui('useFlowMapLayout.le_calcul_de_la_carte_a_echoue'));
     worker.postMessage({ raw: model.raw, scopeId });
     return () => {
       active = false;

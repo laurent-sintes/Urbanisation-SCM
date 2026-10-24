@@ -8,9 +8,6 @@ import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { candidateFixture } from './candidate-fixture.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
-import { adaptPublication } from './src/model.ts';
-import { lessonForPublication } from './src/modelingGuide.ts';
-import { publicText } from './src/publicText.ts';
 
 const dist = resolve(import.meta.dirname, 'dist');
 const preview = process.argv.includes('--candidate');
@@ -29,8 +26,18 @@ const guideBytes = fixture?.guideBytes ?? (await readFile(resolve(dist, `data/${
 const entry = index.versions.find((v) => v.version === version);
 assert.equal(createHash('sha256').update(bytes).digest('hex'), entry.model_sha256);
 assert.equal(createHash('sha256').update(guideBytes).digest('hex'), entry.guide_sha256);
-const model = JSON.parse(bytes),
-  guide = JSON.parse(guideBytes).guide,
+// Independent acceptance: source bytes plus explicitly declared edition patches.
+// Do not call the production prose/reader adapters to construct expected text.
+const model = JSON.parse(bytes);
+for (const patch of model.reader_projection?.patches ?? []) {
+  assert.equal(model.reader_projection.publication_version, version);
+  let parent = model;
+  for (const key of patch.path.slice(0, -1)) parent = parent[key];
+  const key = patch.path.at(-1);
+  assert.equal(createHash('sha256').update(parent[key]).digest('hex'), patch.source_sha256);
+  parent[key] = patch.text;
+}
+const guide = JSON.parse(guideBytes).guide,
   metamodel = model.metamodel?.documentation,
   catalog = model.scenario_catalog;
 assert.ok(
@@ -219,7 +226,7 @@ try {
     await page.getByTestId('business-sheet').waitFor();
     const actual = await content('[data-testid="business-sheet"]');
     for (const key of ['definition', 'scope', 'finality'])
-      contains(actual, publicText(node.fields[key] || ''), `${node.id}/${key}`);
+      contains(actual, node.fields[key] || '', `${node.id}/${key}`);
     await cleanReferences(node.id);
     const statisticCounts = await page.locator('.scope-statistics li').allTextContents();
     for (const [kind, label] of [
@@ -271,7 +278,7 @@ try {
       counts.chapters++;
     }
   for (const original of metamodel.lessons) {
-    const lesson = lessonForPublication(original, adaptPublication(model));
+    const lesson = original;
     await visit({ view: 'metamodel', principle: lesson.id });
     await page.getByRole('heading', { name: lesson.title, exact: true }).waitFor();
     const actual = await content('.guide-lesson:not(.method-chapter)');
