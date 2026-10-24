@@ -50,7 +50,7 @@ export interface DependencyProjection {
 }
 
 type EndpointRelation = { relation: AtlasRelation; source: string; target: string; family: DependencyFamily };
-const isUniverse = (node: AtlasNode): boolean => node.levelRef === 'universe';
+const isUniverse = (node: AtlasNode): boolean => node.kind === 'universe' || node.levelRef === 'universe';
 const isGrouping = (node: AtlasNode): boolean =>
   ['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(node.kind) || isUniverse(node);
 const familyOf = (relation: AtlasRelation): DependencyFamily =>

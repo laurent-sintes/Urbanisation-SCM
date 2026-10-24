@@ -230,7 +230,7 @@ try {
   await page.getByRole('heading', { name: 'La lecture d’Atlas a été interrompue', exact: true }).waitFor();
   failGuideModule = false;
   await page.getByRole('button', { name: 'Recharger Atlas', exact: true }).click();
-  await page.locator('.method-chapters').waitFor();
+  await page.locator('.method-home').waitFor();
   await page.goto(base);
   await page.locator(`#fa-version[data-version="${version}"]`).waitFor({ state: 'attached' });
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();

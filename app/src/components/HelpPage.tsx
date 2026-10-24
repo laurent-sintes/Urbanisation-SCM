@@ -114,7 +114,7 @@ export function HelpPage({
   return (
     <div className="help-page">
       <section>
-        <h2>Par où commencer ?</h2>
+        <h2>Explorer en quelques étapes</h2>
         <ol>
           <li>
             <button type="button" className="help-link" onClick={() => onNavigate('map')}>

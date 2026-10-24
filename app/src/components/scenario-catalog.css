@@ -116,7 +116,27 @@
   grid-column: 1 / -1;
 }
 .scenario-advanced-filters summary {
-  display: none;
+  display: list-item;
+  cursor: pointer;
+  width: fit-content;
+  padding: 8px 0;
+  color: var(--flow-green);
+  font-weight: 600;
+}
+.scenario-active-filters {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.scenario-active-filters button {
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  color: var(--flow-green);
+  text-align: left;
 }
 .scenario-advanced-grid {
   display: grid;

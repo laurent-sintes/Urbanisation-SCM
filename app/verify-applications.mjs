@@ -147,7 +147,7 @@ try {
   assert.ok((await detail.locator('.application-mapping').count()) > 0);
 
   await openNavigationGroup(desktop, 'Applications');
-  await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
+  await desktop.getByRole('button', { name: 'Logiciels du marché' }).click();
   const products = desktop.getByRole('navigation', { name: 'Produits du marché' });
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
   assert.equal(
@@ -169,7 +169,7 @@ try {
   assert.ok((await desktop.evaluate(() => location.hash)).includes('scope=domain-sales'));
   assert.ok(!(await desktop.evaluate(() => location.hash)).includes('app='));
   await openNavigationGroup(desktop, 'Applications');
-  await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
+  await desktop.getByRole('button', { name: 'Logiciels du marché' }).click();
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
   await products.getByRole('button', { name: 'SoCloz' }).click();
   await detail.getByRole('heading', { name: 'SoCloz' }).waitFor();
@@ -343,7 +343,7 @@ try {
   await mobile.waitForFunction(() => document.activeElement?.textContent?.includes('Systèmes d’information'));
   await mobile.getByRole('button', { name: 'Ouvrir le panneau' }).click();
   await openNavigationGroup(mobile, 'Applications');
-  await mobile.getByRole('button', { name: 'Produits logiciels du marché' }).click();
+  await mobile.getByRole('button', { name: 'Logiciels du marché' }).click();
   const mobileProducts = mobile.getByRole('navigation', { name: 'Produits du marché' });
   await mobileProducts.getByRole('button', { name: 'SoCloz' }).waitFor();
   assert.equal(await mobileProducts.getByRole('button', { name: 'Flow Core System' }).count(), 0);
@@ -364,7 +364,7 @@ try {
 
   const historical = await openFixture({ width: 1280, height: 800 }, false);
   assert.equal(await historical.getByRole('button', { name: 'SI à faire converger' }).count(), 0);
-  assert.equal(await historical.getByRole('button', { name: 'Produits logiciels du marché' }).count(), 0);
+  assert.equal(await historical.getByRole('button', { name: 'Logiciels du marché' }).count(), 0);
   assert.equal(await historical.locator('.map-application-picker').count(), 0);
   assert.deepEqual(errors, []);
   console.log(

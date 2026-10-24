@@ -6,15 +6,45 @@ export function MethodNavigation({
   guide,
   selected,
   onSelect,
+  compact = false,
+  resourcesOnly = false,
 }: {
   guide?: ModelingGuide;
   selected?: string;
   onSelect: (id: string) => void;
+  compact?: boolean;
+  resourcesOnly?: boolean;
 }) {
   const entries = methodEntries(guide);
+  if (compact)
+    return (
+      <div className="method-compact-navigation">
+        <label>
+          Rubrique
+          <select
+            aria-label="Rubrique de la méthode"
+            value={activeMethod(guide, selected)}
+            onChange={(event) => onSelect(event.target.value)}
+          >
+            {['Parcours de lecture', 'Ressources'].map((group) => (
+              <optgroup label={group} key={group}>
+                {entries
+                  .filter((item) => item.group === group && item.id !== 'glossary')
+                  .map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  ))}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <MethodLink index>{entries.find((item) => item.id === 'glossary')?.title}</MethodLink>
+      </div>
+    );
   return (
     <>
-      {['Parcours de lecture', 'Ressources'].map((group) => (
+      {(resourcesOnly ? ['Ressources'] : ['Parcours de lecture', 'Ressources']).map((group) => (
         <div className="method-nav-group" key={group}>
           <strong>{group}</strong>
           {entries

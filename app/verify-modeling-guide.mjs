@@ -124,24 +124,21 @@ try {
   const panelToggle = page.locator('#fa-tree-open');
   if ((await panelToggle.getAttribute('aria-expanded')) === 'false') await panelToggle.click();
   await openNavigationGroup(page, 'Comprendre');
-  await page.getByRole('button', { name: guide.title, exact: true }).click();
+  await page.getByRole('button', { name: 'Méthode de transformation', exact: true }).click();
   if (guide.chapters) {
-    const chapters = page.locator('.method-chapters');
+    const firstChapter = guide.chapters.find((c) => !['metamodel', 'method', 'references'].includes(c.id));
+    await page
+      .locator('.method-home-cards')
+      .getByRole('button', { name: new RegExp(firstChapter.title) })
+      .click();
+    const chapters = page.getByRole('combobox', { name: 'Rubrique de la méthode', exact: true });
     await chapters.waitFor();
-    assert.equal(
-      (await chapters.getByRole('button').allTextContents()).filter((title) =>
-        guide.chapters.some((chapter) => chapter.title === title),
-      ).length,
-      guide.chapters.length,
-    );
     for (const chapter of guide.chapters) {
-      await chapters.getByRole('button', { name: chapter.title, exact: true }).click();
+      await chapters.selectOption(chapter.id);
       await page.getByRole('heading', { name: chapter.title, exact: true }).waitFor();
       assert.ok((await page.locator('.method-chapter').innerText()).includes(plainInlineText(chapter.intro)));
     }
-    await chapters
-      .getByRole('button', { name: guide.chapters.find((c) => c.id === 'metamodel').title, exact: true })
-      .click();
+    await chapters.selectOption(guide.chapters.find((c) => c.id === 'metamodel').id);
     await nav.getByRole('button').first().click();
     checks.push('Rubriques de l’édition figée, sans nombre imposé.');
   }

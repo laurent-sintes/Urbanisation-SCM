@@ -368,7 +368,7 @@ function ComponentDetail({
   const coverage = coverageFor(catalog, product, component, selection);
   const offeringCoverage = offeringCoverageFor(product, component);
   return (
-    <section className="application-component-detail" aria-label={`Détail de ${component.name}`}>
+    <section className="application-component-detail" aria-label={`Détail de ${component.name}`} tabIndex={-1}>
       {component.kind !== 'product' && <h4>{component.name}</h4>}
       {component.kind !== 'product' && (
         <p className="application-kind">{component.kind === 'feature' ? 'Fonction documentée' : component.kind}</p>
@@ -475,11 +475,23 @@ export function ApplicationCatalogPage({
   useEffect(() => {
     if (!selectedKey) return;
     requestAnimationFrame(() => {
-      if (window.matchMedia('(max-width: 850px)').matches) {
+      const rail = document.querySelector<HTMLElement>('.application-rail');
+      const composition = document.querySelector<HTMLElement>('.application-composition');
+      const currentModule = composition?.querySelector('.application-components button[aria-current="true"]');
+      const rootModule = composition?.querySelector('.application-component-list > li > button');
+      if (
+        composition &&
+        currentModule &&
+        currentModule !== rootModule &&
+        getComputedStyle(composition).gridTemplateColumns.split(' ').length === 1
+      ) {
+        const moduleDetail = composition.querySelector<HTMLElement>('.application-component-detail');
+        moduleDetail?.scrollIntoView({ block: 'start' });
+        moduleDetail?.focus({ preventScroll: true });
+      } else if (rail && getComputedStyle(rail).display === 'none') {
         detailTitle.current?.closest('.application-detail')?.scrollIntoView({ block: 'start' });
         detailTitle.current?.focus({ preventScroll: true });
       } else {
-        const rail = document.querySelector<HTMLElement>('.application-rail');
         const current = rail?.querySelector<HTMLElement>('button[aria-current="true"]');
         if (rail && current) {
           const bounds = current.getBoundingClientRect();
@@ -518,11 +530,6 @@ export function ApplicationCatalogPage({
 
   return (
     <div className={`application-page ${explicit ? 'application-has-selection' : ''}`}>
-      <p className="application-intro">
-        {mode === 'products'
-          ? 'Produits de marché connus. Sélectionne un produit pour voir sa fiche et ses modules.'
-          : 'Produits par SI. La présence d’un produit ne prouve pas que tous ses modules sont acquis, activés ou utilisés.'}
-      </p>
       <div className="application-explorer">
         <nav className="application-rail" aria-label={mode === 'systems' ? 'SI et produits' : 'Produits du marché'}>
           <h2 ref={listTitle} tabIndex={-1}>

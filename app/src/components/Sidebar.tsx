@@ -11,54 +11,43 @@ import {
   Route,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { featuredPrinciples, principleTitle, readingGuides } from '../designPrinciples';
-import type { ModelingGuide } from '../modelingGuide';
 import type { RouteState } from '../navigation';
 import { staticUrl } from '../publication';
-import { catalogOf } from '../scenarioCatalog';
-import type { AtlasNode, PublishedModel } from '../types';
-import { MethodNavigation } from './MethodNavigation';
-import { CatalogLink } from './ModelLinks';
-import { SheetNavigation } from './SheetNavigation';
+import type { PublishedModel } from '../types';
 
 interface Props {
-  guide?: ModelingGuide;
   model: PublishedModel;
   route: RouteState;
   open: boolean;
   mobile: boolean;
-  sheetNode?: AtlasNode;
   onClose: () => void;
   onNavigate: (id: string, focusHeading?: boolean) => void;
   onSearch: (changes: Partial<RouteState>) => void;
   onOpenGlossary: (mode: 'model' | 'meta' | 'transformation') => void;
-  onOpenMetamodel: () => void;
   onOpenPrinciples: () => void;
 }
 export function Sidebar({
   model,
-  guide,
   route,
   open,
   mobile,
-  sheetNode,
   onClose,
   onNavigate,
   onSearch,
   onOpenGlossary,
   onOpenPrinciples,
-  onOpenMetamodel,
 }: Props) {
   const panel = useRef<HTMLElement>(null);
   const apps = route.view === 'applications';
   const understand = ['documents', 'glossary', 'design-principles', 'principles', 'help', 'metamodel'].includes(
     route.view || '',
   );
-  const [appsOpen, setAppsOpen] = useState(apps);
-  const [understandOpen, setUnderstandOpen] = useState(understand);
+  const [expanded, setExpanded] = useState<'apps' | 'understand' | null>(
+    apps ? 'apps' : understand ? 'understand' : null,
+  );
   useEffect(() => {
-    if (apps) setAppsOpen(true);
-    if (understand) setUnderstandOpen(true);
+    setExpanded(apps ? 'apps' : understand ? 'understand' : null);
+    panel.current?.querySelector('.sidebar-scroll')?.scrollTo(0, 0);
   }, [apps, understand]);
   useEffect(() => {
     if (!open || !mobile) return;
@@ -172,8 +161,12 @@ export function Sidebar({
           {!!model.raw.application_catalog && (
             <details
               className="navigation-group"
-              open={appsOpen}
-              onToggle={(event) => setAppsOpen(event.currentTarget.open)}
+              name="atlas-navigation"
+              open={expanded === 'apps'}
+              onToggle={(event) => {
+                const next = event.currentTarget.open;
+                setExpanded((current) => (next ? 'apps' : current === 'apps' ? null : current));
+              }}
             >
               <summary className={apps ? 'is-active' : ''}>
                 <Boxes size={18} />
@@ -188,7 +181,7 @@ export function Sidebar({
                     visit({ view: 'applications', appView: 'products', appSelection: '', appComponent: '' })
                   }
                 >
-                  Produits logiciels du marché
+                  Logiciels du marché
                 </button>
                 <button
                   type="button"
@@ -204,8 +197,12 @@ export function Sidebar({
           )}
           <details
             className="navigation-group"
-            open={understandOpen}
-            onToggle={(event) => setUnderstandOpen(event.currentTarget.open)}
+            name="atlas-navigation"
+            open={expanded === 'understand'}
+            onToggle={(event) => {
+              const next = event.currentTarget.open;
+              setExpanded((current) => (next ? 'understand' : current === 'understand' ? null : current));
+            }}
           >
             <summary className={understand ? 'is-active' : ''}>
               <BookOpen size={18} />
@@ -233,7 +230,7 @@ export function Sidebar({
                 onClick={() => visit({ view: 'documents', document: '', hotspot: '' })}
               >
                 <FileText size={15} />
-                Documents et téléchargements
+                Documents
               </button>
               <button
                 type="button"
@@ -241,7 +238,7 @@ export function Sidebar({
                 onClick={onOpenPrinciples}
               >
                 <Lightbulb size={15} />
-                {guide?.title || 'Méthode de transformation'}
+                Méthode de transformation
               </button>
               <button
                 type="button"
@@ -249,163 +246,11 @@ export function Sidebar({
                 onClick={() => visit({ view: 'help', helpTopic: 'start' })}
               >
                 <HelpCircle size={15} />
-                Aide et repères de lecture
+                Aide à la lecture
               </button>
             </div>
           </details>
         </nav>
-        {sheetNode ? (
-          <SheetNavigation model={model} node={sheetNode} onClose={onClose} />
-        ) : ['scenarios', 'glossary', 'design-principles', 'principles', 'metamodel', 'help'].includes(
-            route.view || '',
-          ) ? (
-          <nav className="space-navigation" aria-label="Navigation de cet espace">
-            {route.view === 'glossary' && (
-              <>
-                <button
-                  type="button"
-                  aria-current={route.glossary === 'model' || !route.glossary ? 'page' : undefined}
-                  onClick={() => onOpenGlossary('model')}
-                >
-                  Glossaire métier
-                </button>
-                <button
-                  type="button"
-                  aria-current={route.glossary === 'meta' ? 'page' : undefined}
-                  onClick={() => onOpenGlossary('meta')}
-                >
-                  Glossaire du métamodèle
-                </button>
-                <button
-                  type="button"
-                  aria-current={route.glossary === 'transformation' ? 'page' : undefined}
-                  onClick={() => onOpenGlossary('transformation')}
-                >
-                  Glossaire de transformation
-                </button>
-              </>
-            )}
-            {route.view === 'design-principles' && (
-              <>
-                <h2>Principes directeurs</h2>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onSearch({ principle: '', scroll: '' });
-                    onClose();
-                  }}
-                  aria-current={!route.principle ? 'page' : undefined}
-                >
-                  Tous les principes
-                </button>
-                {featuredPrinciples(model).map((p) => (
-                  <button
-                    type="button"
-                    key={p.id}
-                    aria-current={route.principle === p.id ? 'page' : undefined}
-                    onClick={() => {
-                      onSearch({ principle: p.id, scroll: '' });
-                      onClose();
-                    }}
-                  >
-                    {principleTitle(p)}
-                  </button>
-                ))}
-                {readingGuides(model).length > 0 && <h2>Repères de lecture</h2>}
-                {readingGuides(model).map((p) => (
-                  <button
-                    type="button"
-                    key={p.id}
-                    aria-current={
-                      route.principle === p.id || p.reading_children?.includes(route.principle || '')
-                        ? 'page'
-                        : undefined
-                    }
-                    onClick={() => {
-                      onSearch({ principle: p.id, scroll: '' });
-                      onClose();
-                    }}
-                  >
-                    Comment lire la cartographie
-                  </button>
-                ))}
-              </>
-            )}
-            {route.view === 'principles' && (
-              <MethodNavigation
-                guide={guide}
-                selected={route.principle}
-                onSelect={(principle) => {
-                  onSearch({ principle, scroll: '' });
-                  onClose();
-                }}
-              />
-            )}
-            {(route.view === 'help' || route.view === 'metamodel') && (
-              <>
-                <h2>Aide</h2>
-                <button
-                  type="button"
-                  aria-current={route.view === 'help' && route.helpTopic !== 'workshop' ? 'page' : undefined}
-                  onClick={() => {
-                    onSearch({ view: 'help', helpTopic: 'start', principle: '', section: '' });
-                    onClose();
-                  }}
-                >
-                  Par où commencer
-                </button>
-                <button
-                  type="button"
-                  aria-current={route.view === 'help' && route.helpTopic === 'workshop' ? 'page' : undefined}
-                  onClick={() => {
-                    onSearch({ view: 'help', helpTopic: 'workshop', principle: '', section: '' });
-                    onClose();
-                  }}
-                >
-                  Mode atelier
-                </button>
-                <button
-                  type="button"
-                  aria-current={route.view === 'metamodel' ? 'page' : undefined}
-                  onClick={onOpenMetamodel}
-                >
-                  Métamodèle FLOW
-                </button>
-              </>
-            )}
-            {route.view === 'metamodel' && (
-              <>
-                <h2>Rubriques du métamodèle</h2>
-                <MethodNavigation
-                  guide={model.raw.metamodel?.documentation}
-                  selected={route.principle}
-                  onSelect={(principle) => {
-                    onSearch({ principle, scroll: '' });
-                    onClose();
-                  }}
-                />
-              </>
-            )}
-            {route.view === 'scenarios' && (
-              <>
-                <h2>Flux de valeur</h2>
-                <CatalogLink stream="">Tous les scénarios</CatalogLink>
-                {catalogOf(model)?.value_streams.map((v) => (
-                  <CatalogLink key={v.id} stream={v.id}>
-                    {v.label_fr}
-                  </CatalogLink>
-                ))}
-              </>
-            )}
-          </nav>
-        ) : route.view === 'documents' ? (
-          <nav className="space-navigation" aria-label="Dans les documents">
-            <h2>Documents</h2>
-            <button type="button" onClick={() => visit({ view: 'documents', document: '' })}>
-              Études FLOW et publication
-            </button>
-          </nav>
-        ) : null}
       </div>
       <div className="sidebar-bottom">
         <div className="sidebar-stats">
@@ -413,13 +258,6 @@ export function Sidebar({
             <span className={`live-dot ${route.version ? 'fixed' : ''}`} aria-hidden="true" />
             Modèle · {revision}
             <span className="sr-only">{publicationLabel}</span>
-          </span>
-          <span>{model.nodes.length} éléments</span>
-          <span>
-            {model.nodes.filter((n) => n.kind === 'capability').length} capacités
-            {model.nodes.some((n) => n.kind === 'behavior') && (
-              <> · {model.nodes.filter((n) => n.kind === 'behavior').length} comportements</>
-            )}
           </span>
         </div>
         <img

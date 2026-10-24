@@ -322,8 +322,8 @@ try {
   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).has('version'), false);
   // Current navigation must remain current, even through glossary detours.
   await page
-    .locator('.method-chapters')
-    .getByRole('link', { name: 'Glossaire de transformation', exact: true })
+    .locator('.method-entry-links')
+    .getByRole('link', { name: 'Ouvrir le glossaire méthodologique', exact: true })
     .click();
   await page.getByRole('heading', { name: 'Glossaire de transformation', exact: true }).waitFor();
   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).has('version'), false);

@@ -357,6 +357,34 @@ test('universe identity follows levelRef, and empty groups remain inspectable', 
   assert.equal(empty.relations.length, 0);
 });
 
+test('the current Enterprise Architecture root explores its descendants and preserves published relation identities', () => {
+  const model = adaptPublication({
+    space: 'release',
+    version: 'root-kind',
+    nodes: [
+      n('EA', 'universe'),
+      n('S1', 'business_system'),
+      n('S2', 'business_system'),
+      n('C1', 'capability'),
+      n('C2', 'capability'),
+    ],
+    relations: [
+      parent('EA', 'S1'),
+      parent('EA', 'S2'),
+      parent('S1', 'C1'),
+      parent('S2', 'C2'),
+      r('exchange', 'C1', 'C2'),
+      r('summary', 'S1', 'S2'),
+    ],
+  });
+  const projection = project(model, { focusId: 'EA', depth: 1, level: 'business_system' });
+  assert.deepEqual(relationIds(projection).sort(), ['exchange', 'summary']);
+  assert.deepEqual(projection.edges[0].relationIds.sort(), ['exchange', 'summary']);
+  assert.equal(projection.edges[0].source, 'S1');
+  assert.equal(projection.edges[0].target, 'S2');
+  for (const relation of projection.relations) assert.equal(relation, model.relationById.get(relation.id));
+});
+
 test('an unknown focus or option fails explicitly, with no fallback to another publication', () => {
   const model = fixture();
   assert.throws(() => project(model, { focusId: 'backlog-only-id' }), /absent/);

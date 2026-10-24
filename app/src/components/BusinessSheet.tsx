@@ -184,15 +184,6 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
           </select>
         </label>
       )}
-      {sections.length > 0 && (
-        <nav className="sheet-toc" aria-label="Dans cette fiche">
-          {sections.map(([id, label]) => (
-            <button type="button" key={id} onClick={() => jump(id)}>
-              {label}
-            </button>
-          ))}
-        </nav>
-      )}
       <div className="sheet-main">
         {fields.finality && fields.finality !== fields.definition ? (
           <section id={`field-${node.id}-finality`} className="detail-finality">

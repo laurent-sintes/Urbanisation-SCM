@@ -81,10 +81,6 @@ export function DesignPrinciplesPage({
     return (
       <section className="design-principles" aria-label="Référentiel des principes directeurs">
         {route.principle && <p role="status">Ce principe n’est pas présenté dans cette publication.</p>}
-        <p className="principle-invitation">
-          Pourquoi ces frontières métier ? Pourquoi rendre certaines notions configurables ? Chaque principe explique un
-          choix et ce qu’il apporte.
-        </p>
         <div className="principle-overview">
           <section className="principle-choices">
             <div className="principle-index-heading">

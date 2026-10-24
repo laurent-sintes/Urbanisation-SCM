@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { RouteState } from '../navigation';
 import { catalogOf, filterScenarios, scenarioCapabilities } from '../scenarioCatalog';
 import type { PublishedModel } from '../types';
@@ -23,15 +23,7 @@ export function ScenarioCatalogPage({
   route: RouteState;
   onChange: (v: Partial<RouteState>) => void;
 }) {
-  const [advancedOpen, setAdvancedOpen] = useState(
-    () => typeof matchMedia === 'function' && matchMedia('(min-width: 701px)').matches,
-  );
-  useEffect(() => {
-    const media = matchMedia('(min-width: 701px)');
-    const update = () => setAdvancedOpen(media.matches);
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
   const catalog = catalogOf(model);
   if (!catalog)
     return (
@@ -54,6 +46,23 @@ export function ScenarioCatalogPage({
     query: route.scenarioQuery,
   });
   const advancedCount = [route.event, route.object, route.situation, route.capability].filter(Boolean).length;
+  const activeFilters = [
+    ...(['events', 'objects', 'situations'] as const).map((facet, index) => {
+      const key = (['event', 'object', 'situation'] as const)[index];
+      return {
+        key,
+        label: ['Événement', 'Objet métier', 'Situation'][index],
+        value: route[key],
+        text: catalog.facets[facet].find((item) => item.id === route[key])?.label || route[key],
+      };
+    }),
+    {
+      key: 'capability',
+      label: 'Capacité',
+      value: route.capability,
+      text: model.nodeById.get(route.capability || '')?.name || route.capability,
+    },
+  ].filter((filter) => filter.value);
   const cards = (items: typeof catalog.scenarios) => (
     <ul className="scenario-cards">
       {items.map((s) => (
@@ -278,7 +287,10 @@ export function ScenarioCatalogPage({
               onToggle={(e) => setAdvancedOpen(e.currentTarget.open)}
             >
               <summary>
-                Plus de filtres{advancedCount ? ` · ${advancedCount} actif${advancedCount > 1 ? 's' : ''}` : ''}
+                Affiner
+                {advancedCount
+                  ? ` · ${advancedCount} filtre${advancedCount > 1 ? 's' : ''} actif${advancedCount > 1 ? 's' : ''}`
+                  : ''}
               </summary>
               <div className="scenario-advanced-grid">
                 {(['events', 'objects', 'situations'] as const).map((facet, i) => {
@@ -318,6 +330,20 @@ export function ScenarioCatalogPage({
                       ))}
                   </select>
                 </label>
+              </div>
+            </details>
+            {(activeFilters.length > 0 || route.stream || route.scenarioQuery) && (
+              <div className="scenario-active-filters" role="group" aria-label="Filtres actifs">
+                {activeFilters.map((filter) => (
+                  <button
+                    key={filter.key}
+                    type="button"
+                    aria-label={`Retirer le filtre ${filter.label}`}
+                    onClick={() => change({ [filter.key]: '' })}
+                  >
+                    {filter.label} : {filter.text} ×
+                  </button>
+                ))}
                 <button
                   type="button"
                   onClick={() =>
@@ -327,7 +353,7 @@ export function ScenarioCatalogPage({
                   Effacer les filtres
                 </button>
               </div>
-            </details>
+            )}
           </div>
           {filtered.length ? (
             cards(filtered)

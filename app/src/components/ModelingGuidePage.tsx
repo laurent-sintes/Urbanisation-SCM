@@ -194,9 +194,9 @@ function GuideContent({
       <p className="guide-edition">
         {guide.title} · {guide.version} — associée au modèle {model.version}
       </p>
-      {guide.chapters && (
+      {guide.chapters && !home && (
         <nav className="method-chapters" aria-label="Rubriques de la méthode">
-          <MethodNavigation guide={guide} selected={selected} onSelect={onSelect} />
+          <MethodNavigation guide={guide} selected={selected} onSelect={onSelect} compact />
         </nav>
       )}
       {home && (
@@ -214,6 +214,10 @@ function GuideContent({
               </button>
             ))}
           </div>
+          <details className="method-home-resources">
+            <summary>Ressources de la méthode</summary>
+            <MethodNavigation guide={guide} selected={selected} onSelect={onSelect} resourcesOnly />
+          </details>
           {reading[0]?.visual && <MethodVisual visual={reading[0].visual} />}
         </article>
       )}

@@ -15,6 +15,7 @@ import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEf
 import { ApplicationCatalogPage } from './components/ApplicationCatalogPage';
 import { BusinessSheet } from './components/BusinessSheet';
 import { DesignPrinciplesPage } from './components/DesignPrinciplesPage';
+import { DismissibleDetails } from './components/DismissibleDetails';
 import { DocumentCatalogPage } from './components/DocumentCatalogPage';
 import { GlobalSearch } from './components/GlobalSearch';
 import { GlossaryPage } from './components/GlossaryPage';
@@ -402,27 +403,6 @@ export function App() {
     setDrawer(false);
     setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
   }, [changeRoute]);
-  const openMetamodel = useCallback(() => {
-    changeRoute({
-      returnTo: '',
-      catalogReturn: '',
-      scroll: '',
-      view: 'metamodel',
-      principle: '',
-      node: '',
-      term: '',
-      section: '',
-      scope: '',
-      relation: '',
-      source: '',
-      anchor: '',
-      sourceId: '',
-      query: '',
-      status: '',
-    });
-    setDrawer(false);
-    setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
-  }, [changeRoute]);
   useEffect(() => {
     if (!route.section || !model || view === 'principles' || view === 'metamodel') return;
     const timer = requestAnimationFrame(() => {
@@ -601,57 +581,73 @@ export function App() {
   };
   const atMapHome = cartographicView && !headingNode;
   const statistics = model && headingNode ? scopeStatistics(model, headingNode) : [];
+  const referenceLabel =
+    view === 'help'
+      ? 'Aide à la lecture'
+      : view === 'hotspots'
+        ? 'Points chauds'
+        : view === 'applications'
+          ? route.appView === 'products'
+            ? 'Logiciels du marché'
+            : 'SI à faire converger'
+          : view === 'documents'
+            ? 'Documents'
+            : view === 'scenarios'
+              ? 'Scénarios métier'
+              : view === 'metamodel'
+                ? 'Métamodèle FLOW'
+                : view === 'design-principles'
+                  ? directingPrinciplesTitle
+                  : view === 'principles'
+                    ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                    : glossaryTitle;
   const breadcrumbs = (
     <nav className="breadcrumb" aria-label="Fil d’Ariane">
-      {atMapHome || (view === 'sheet' && selected?.kind === 'universe') ? (
-        <span aria-current="page">{rootName}</span>
-      ) : (
-        <button type="button" onClick={() => navigate('')}>
-          {rootName}
-        </button>
-      )}
-      {headingNode &&
-        model &&
-        lineageOf(model, headingNode.id)
-          .filter((node) => node.kind !== 'universe')
-          .map((node) => (
-            <span key={node.id}>
+      {referenceView ? (
+        <>
+          <button type="button" onClick={() => navigate('')}>
+            Atlas
+          </button>
+          {['documents', 'glossary', 'design-principles', 'principles', 'help', 'metamodel', 'applications'].includes(
+            view,
+          ) && (
+            <span>
               <ChevronRight size={12} />
-              <button
-                type="button"
-                title={node.name}
-                onClick={() => (cartographicView ? openMapLevel(node.id) : navigate(node.id))}
-                aria-current={headingNode.id === node.id ? 'page' : undefined}
-              >
-                {node.name}
-              </button>
+              <span>{view === 'applications' ? 'Applications' : 'Comprendre'}</span>
             </span>
-          ))}
-      {referenceView && (
-        <span>
-          <ChevronRight size={12} />
-          <span aria-current="page">
-            {view === 'help'
-              ? 'Aide'
-              : view === 'hotspots'
-                ? 'Points chauds'
-                : view === 'applications'
-                  ? route.appView === 'products'
-                    ? 'Produits logiciels du marché'
-                    : 'Systèmes d’information à faire converger'
-                  : view === 'documents'
-                    ? 'Documents'
-                    : view === 'scenarios'
-                      ? 'Scénarios métier'
-                      : view === 'metamodel'
-                        ? 'Métamodèle FLOW'
-                        : view === 'design-principles'
-                          ? directingPrinciplesTitle
-                          : view === 'principles'
-                            ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                            : glossaryTitle}
+          )}
+          <span>
+            <ChevronRight size={12} />
+            <span aria-current="page">{referenceLabel}</span>
           </span>
-        </span>
+        </>
+      ) : (
+        <>
+          {atMapHome || (view === 'sheet' && selected?.kind === 'universe') ? (
+            <span aria-current="page">{rootName}</span>
+          ) : (
+            <button type="button" onClick={() => navigate('')}>
+              {rootName}
+            </button>
+          )}
+          {headingNode &&
+            model &&
+            lineageOf(model, headingNode.id)
+              .filter((node) => node.kind !== 'universe')
+              .map((node) => (
+                <span key={node.id}>
+                  <ChevronRight size={12} />
+                  <button
+                    type="button"
+                    title={node.name}
+                    onClick={() => (cartographicView ? openMapLevel(node.id) : navigate(node.id))}
+                    aria-current={headingNode.id === node.id ? 'page' : undefined}
+                  >
+                    {node.name}
+                  </button>
+                </span>
+              ))}
+        </>
       )}
     </nav>
   );
@@ -723,7 +719,7 @@ export function App() {
             </button>
           )}
           {model && (
-            <details className="publication-picker">
+            <DismissibleDetails className="publication-picker">
               <summary>
                 <span className="publication-mode">{route.version ? 'Modèle figé' : 'Modèle courant'}</span>
                 <span>{model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version}</span>
@@ -757,12 +753,19 @@ export function App() {
                 <p>
                   {route.version ? 'Cette édition est fixe.' : 'La dernière publication est suivie automatiquement.'}
                 </p>
+                <p className="publication-statistics">
+                  {model.nodes.length} éléments · {model.nodes.filter((node) => node.kind === 'capability').length}{' '}
+                  capacités
+                  {model.nodes.some((node) => node.kind === 'behavior') && (
+                    <> · {model.nodes.filter((node) => node.kind === 'behavior').length} comportements</>
+                  )}
+                </p>
                 <button type="button" className="publication-refresh" onClick={reload} disabled={loading}>
                   <RefreshCw size={15} />
                   Actualiser la publication
                 </button>
               </div>
-            </details>
+            </DismissibleDetails>
           )}
           <button
             type="button"
@@ -782,13 +785,10 @@ export function App() {
             route={{ ...route, glossary: glossaryMode }}
             open={drawer}
             mobile={mobile}
-            guide={guideState.status === 'ready' ? guideState.response.guide : undefined}
-            sheetNode={view === 'sheet' ? selected : undefined}
             onClose={closeDrawer}
             onNavigate={navigate}
             onOpenGlossary={openGlossary}
             onOpenPrinciples={openPrinciples}
-            onOpenMetamodel={openMetamodel}
             onSearch={(changes) => {
               changeRoute(changes);
               setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
@@ -954,7 +954,7 @@ export function App() {
                         : scope?.name || rootName}
                   </h1>
                 ) : (
-                  <header className="page-heading">
+                  <header className={`page-heading${referenceView ? ' reference-heading' : ''}`}>
                     <div className="heading-icon">
                       {headingNode ? (
                         <NodeIcon node={headingNode} size={30} framed />
@@ -1013,8 +1013,8 @@ export function App() {
                             ? 'Points chauds'
                             : view === 'applications'
                               ? route.appView === 'products'
-                                ? 'Produits logiciels du marché'
-                                : 'Systèmes d’information à faire converger'
+                                ? 'Logiciels du marché'
+                                : 'SI à faire converger'
                               : view === 'documents'
                                 ? 'Documents'
                                 : view === 'scenarios'
@@ -1041,8 +1041,8 @@ export function App() {
                                   ? 'Un point chaud est un sujet qui demande une clarification ou un arbitrage. Il peut révéler un écart, une responsabilité à préciser ou une décision de convergence à prendre.'
                                   : view === 'applications'
                                     ? route.appView === 'products'
-                                      ? 'Explorer les offres logicielles connues et leurs composants documentés.'
-                                      : 'Parcourir les produits retenus dans chaque SI et leur positionnement métier connu.'
+                                      ? 'Choisis un logiciel pour explorer son offre et ses modules documentés.'
+                                      : 'Explore les usages documentés par SI ; la présence d’un produit ne prouve pas l’activation de tous ses modules.'
                                     : view === 'documents'
                                       ? 'Consulter les études FLOW et les documents associés à cette publication.'
                                       : view === 'scenarios'
@@ -1099,9 +1099,15 @@ export function App() {
                       }
                       relationCount={
                         selected &&
-                        !['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(
-                          selected.kind,
-                        )
+                        ![
+                          'universe',
+                          'business_system',
+                          'group',
+                          'domain',
+                          'area',
+                          'business_area',
+                          'reference',
+                        ].includes(selected.kind)
                           ? links.length
                           : undefined
                       }
@@ -1115,7 +1121,9 @@ export function App() {
                                 relation: '',
                                 section: '',
                               })
-                            : changeRoute({ view: next, relation: '', section: '' })
+                            : next === 'relations' && cartographicView
+                              ? changeRoute({ view: next, node: scopeId || '', relation: '', section: '' })
+                              : changeRoute({ view: next, relation: '', section: '' })
                       }
                     />
                     {!mobile && selected && selected.kind !== 'universe' && (
@@ -1272,7 +1280,7 @@ export function App() {
                       <DependenciesPane
                         key={`${model.version}:${route.node}`}
                         model={model}
-                        focusId={selected?.id}
+                        focusId={selected?.kind === 'universe' ? undefined : selected?.id}
                         relationId={route.relation}
                         settings={route}
                         onSettings={(changes) => changeRoute({ ...changes, relation: '' })}

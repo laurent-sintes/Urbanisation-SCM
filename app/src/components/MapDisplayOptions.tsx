@@ -1,5 +1,6 @@
 import { ChevronDown, Settings2 } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
+import { DismissibleDetails } from './DismissibleDetails';
 import { useHotspotFloating } from './HotspotDisplay';
 
 export function MapDisplayOptions({ children, active }: { children: ReactNode; active: string[] }) {
@@ -10,7 +11,7 @@ export function MapDisplayOptions({ children, active }: { children: ReactNode; a
     placement: 'bottom-end',
   });
   return (
-    <details className="map-display-options" onToggle={(event) => setOpen(event.currentTarget.open)}>
+    <DismissibleDetails className="map-display-options" onToggle={(event) => setOpen(event.currentTarget.open)}>
       <summary ref={refs.setReference}>
         <Settings2 size={15} />
         <span>
@@ -32,6 +33,6 @@ export function MapDisplayOptions({ children, active }: { children: ReactNode; a
           {children}
         </div>
       )}
-    </details>
+    </DismissibleDetails>
   );
 }

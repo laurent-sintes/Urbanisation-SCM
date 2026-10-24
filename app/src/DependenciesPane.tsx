@@ -36,7 +36,7 @@ export function DependenciesPane({
 }: Props) {
   const focus = focusId ? model.nodeById.get(focusId) : undefined;
   const defaultLevel =
-    focus?.kind === 'business_system'
+    (!focus && model.nodes.some((node) => node.kind === 'business_system')) || focus?.kind === 'business_system'
       ? 'business_system'
       : !focus || focus.levelRef === 'universe' || ['domain', 'area', 'reference'].includes(focus.kind)
         ? hasAreaLevels(model)

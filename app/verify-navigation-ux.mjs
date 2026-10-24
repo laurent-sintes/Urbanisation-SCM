@@ -64,15 +64,143 @@ const group = async (label) => {
   if (!(await summary.evaluate((element) => element.parentElement.open))) await summary.click();
 };
 try {
+  for (const height of [720, 650]) {
+    await page.setViewportSize({ width: 1280, height });
+    for (const view of ['design-principles', 'glossary', 'documents', 'principles', 'metamodel', 'help']) {
+      await visit(view);
+      await page.waitForFunction(() => document.querySelectorAll('.navigation-group[open]').length === 1);
+      assert.equal(await page.locator('.sidebar .space-navigation').count(), 0);
+      const nav = await page.locator('.sidebar-scroll').boundingBox();
+      const last = await page.locator('.navigation-submenu').last().getByRole('button').last().boundingBox();
+      assert.ok(last.y + last.height <= nav.y + nav.height + 1, `${view}: all destinations fit at 1280 × ${height}`);
+      assert.ok((await page.locator('.sidebar-bottom').boundingBox()).height <= 56);
+      assert.match(await page.locator('.breadcrumb').innerText(), /Atlas.*Comprendre/s);
+    }
+  }
+  await visit('applications', { catalog: 'products' });
+  await group('Comprendre');
+  assert.equal(await page.locator('.navigation-group[open]').count(), 1);
+  await page.getByRole('button', { name: 'Principes directeurs', exact: true }).click();
+  await page.locator('.principle-list').waitFor();
+  await page.setViewportSize({ width: 1280, height: 720 });
+  const principles = await page.locator('.principle-list > li').evaluateAll((elements) =>
+    elements.map((element) => {
+      const box = element.getBoundingClientRect();
+      return { top: box.top, bottom: box.bottom };
+    }),
+  );
+  assert.ok(principles.filter((box) => box.top >= 0 && box.bottom <= 720).length >= 3);
+  measurements.push({ page: 'principles', width: 1280, height: 720, entries: principles });
+  await page.screenshot({ path: resolve(out, 'principles-1280.png') });
+  await visit('sheet', { node: 'domain-plan' });
+  await page.waitForFunction(() => document.querySelectorAll('.navigation-group[open]').length === 0);
+  checks.push(
+    'Comprendre has no appended lists; one group opens at a time; destinations fit at 720px and 650px high; three principles are visible',
+  );
+
+  await visit('scenarios');
+  await page.locator('.scenario-cards').waitFor();
+  assert.equal(await page.locator('.scenario-advanced-filters').getAttribute('open'), null);
+  const firstScenario = await page.locator('.scenario-cards > li').first().boundingBox();
+  assert.ok(firstScenario.y + 80 < 720, 'A scenario and its purpose are visible before scrolling');
+  await page.locator('.scenario-advanced-filters > summary').click();
+  const eventFacet = raw.scenario_catalog.facets.events[0];
+  await page.getByRole('combobox', { name: 'Événement', exact: true }).selectOption(eventFacet.id);
+  await page.locator('.scenario-advanced-filters > summary').click();
+  await page.getByRole('button', { name: 'Retirer le filtre Événement', exact: true }).waitFor();
+  assert.match(await page.locator('.scenario-advanced-filters > summary').textContent(), /1 filtre actif/);
+  await page.getByRole('button', { name: 'Effacer les filtres', exact: true }).click();
+  await page.locator('.scenario-active-filters').waitFor({ state: 'detached' });
+  await page.screenshot({ path: resolve(out, 'scenarios-1280.png') });
+  checks.push('Scenario filters start collapsed, keep active values visible, and clear without reopening');
+
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await visit('applications', { catalog: 'products' });
+  await page.locator('.application-rail').getByRole('button', { name: 'Elastic Suite', exact: true }).click();
+  await page.locator('.application-component-detail').waitFor();
+  const moduleGeometry = await page.locator('.application-component-detail').evaluate((element) => {
+    const pane = document.querySelector('.workspace-content');
+    return {
+      width: element.getBoundingClientRect().width,
+      scroll: element.scrollWidth,
+      client: element.clientWidth,
+      paneScroll: pane.scrollWidth,
+      paneClient: pane.clientWidth,
+    };
+  });
+  assert.ok(moduleGeometry.width >= 320, 'Module detail has a readable width');
+  assert.ok(moduleGeometry.scroll <= moduleGeometry.client + 1, 'Module content fits internally');
+  assert.ok(moduleGeometry.paneScroll <= moduleGeometry.paneClient + 1, 'Application page has no horizontal scrollbar');
+  measurements.push({ page: 'applications', width: 1024, ...moduleGeometry });
+  await page
+    .getByRole('navigation', { name: 'Modules de Elastic Suite', exact: true })
+    .getByRole('button', { name: /^Whiteboard/ })
+    .click();
+  await page.locator('.application-component-detail:focus').waitFor();
+  const moduleTop = await page.locator('.application-component-detail').boundingBox();
+  assert.ok(moduleTop.y < 500, 'Selecting a stacked module brings its detail into view');
+  await page.screenshot({ path: resolve(out, 'applications-1024.png') });
+  await page.getByRole('button', { name: '← Retour à la liste', exact: true }).click();
+  await page.locator('.application-rail').waitFor({ state: 'visible' });
+  checks.push('Application modules use readable width at 1024px and return to the product list');
+
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await visit('flows');
+  await page.locator('.flow-exchange[data-relation-ids]').first().waitFor();
+  const flowIds = await page
+    .locator('.flow-exchange[data-relation-ids]')
+    .evaluateAll((elements) => [...new Set(elements.flatMap((element) => element.dataset.relationIds.split('|')))]);
+  assert.ok(flowIds.length > 0);
+  await page.getByRole('tab', { name: 'Relations', exact: true }).click();
+  await page.locator('.accessible-relations [data-relation-id]').first().waitFor();
+  const relationIds = await page
+    .locator('.accessible-relations [data-relation-id]')
+    .evaluateAll((elements) => elements.map((element) => element.dataset.relationId));
+  for (const id of flowIds) assert.ok(relationIds.includes(id), `Flux relation ${id} is available in Relations`);
+  assert.match(await page.locator('.dependency-summary').textContent(), /[1-9]\d* relations publiées/);
+  await page.screenshot({ path: resolve(out, 'root-relations.png') });
+  checks.push('Root Flux → Relations retains every represented original relation in the selected publication');
+
+  await visit('map');
+  await openMapDisplay(page);
+  await page.locator('.map-display-fields').waitFor();
+  await page.keyboard.press('Escape');
+  await page.locator('.map-display-options:not([open])').waitFor();
+  assert.equal(await page.locator('.map-display-options > summary:focus').count(), 1);
+  await openMapDisplay(page);
+  await page.locator('.map-hotspot-picker > button').click();
+  await page.locator('.hotspot-filter-popover').waitFor();
+  await page.locator('.hotspot-filter-popover input').first().click();
+  assert.equal(await page.locator('.map-display-options[open]').count(), 1);
+  await page.keyboard.press('Escape');
+  await page.locator('.hotspot-filter-popover').waitFor({ state: 'hidden' });
+  assert.equal(await page.locator('.map-display-options[open]').count(), 1);
+  await page.keyboard.press('Escape');
+  await page.locator('.map-display-options:not([open])').waitFor();
+  await openMapDisplay(page);
+  await page.locator('.breadcrumb').click();
+  await page.locator('.map-display-options:not([open])').waitFor();
+  await page.locator('.publication-picker > summary').click();
+  await page.keyboard.press('Escape');
+  await page.locator('.publication-picker:not([open])').waitFor();
+  assert.equal(await page.locator('.publication-picker > summary:focus').count(), 1);
+  await page.locator('.publication-picker > summary').click();
+  await search('stock');
+  await page.locator('.publication-picker:not([open])').waitFor();
+  assert.equal(await page.locator('#fa-search:focus').count(), 1);
+  await page.keyboard.press('Escape');
+  checks.push('Temporary panels close on Escape and outside press, preserve focus, and allow nested portalled filters');
+
+  await page.setViewportSize({ width: 1440, height: 900 });
   await visit('map');
   await page.locator('.universe-toolbar .map-display-options > summary').click();
   await page.locator('.universe-toolbar .map-application-picker > button').waitFor();
   await page.screenshot({ path: resolve(out, 'desktop-navigation.png') });
   await visit('sheet', { node: 'domain-plan' });
-  await page.locator('.sheet-navigation').waitFor();
+  await page.getByRole('combobox', { name: 'Dans cette fiche', exact: true }).waitFor();
   assert.equal(await page.locator('.primary-spaces > button, .primary-spaces > details').count(), 5);
   assert.equal(await page.locator('.sidebar input').count(), 0);
-  assert.equal(await page.locator('.sheet-toc').isVisible(), false);
+  assert.equal(await page.locator('.sidebar .space-navigation').count(), 0);
   const workspace = await page.locator('.workspace').boundingBox();
   await search('stock');
   const opened = await page.locator('.workspace').boundingBox();
@@ -134,7 +262,7 @@ try {
   checks.push('Perimeter filtering follows explicit snapshot hierarchy');
 
   await visit('sheet', { node: 'domain-plan' });
-  await page.locator('.sheet-navigation').getByRole('button', { name: 'Définition', exact: true }).click();
+  await page.getByRole('combobox', { name: 'Dans cette fiche', exact: true }).selectOption('definition');
   await page.locator('.sheet-definition[open]').waitFor();
   await visit('sheet', { node: 'domain-plan', section: 'definition' });
   await page.locator('.sheet-definition[open]').waitFor();
@@ -158,12 +286,12 @@ try {
   checks.push('Relations show readable text and grouped map settings keep their controls available');
 
   await group('Applications');
-  await page.getByRole('button', { name: 'Produits logiciels du marché', exact: true }).click();
+  await page.getByRole('button', { name: 'Logiciels du marché', exact: true }).click();
   await page.locator('.application-explorer').waitFor();
   await page.getByRole('button', { name: 'SI à faire converger', exact: true }).click();
   assert.equal(new URLSearchParams(page.url().split('?')[1]).get('catalog'), null);
   await group('Comprendre');
-  await page.getByRole('button', { name: 'Documents et téléchargements', exact: true }).click();
+  await page.getByRole('button', { name: 'Documents', exact: true }).click();
   await page.locator('.documents-page').waitFor();
   await page.locator('.publication-downloads > summary').click();
   assert.equal(await page.locator('.publication-downloads a[download$=".json"]').count(), 0);
@@ -192,6 +320,7 @@ try {
   for (const size of [
     { width: 1920, height: 1080 },
     { width: 1280, height: 720 },
+    { width: 1024, height: 768 },
     { width: 390, height: 844 },
     { width: 320, height: 740 },
   ]) {
@@ -227,6 +356,16 @@ try {
         );
       }
     if (size.width > 1000) {
+      await page.getByRole('tab', { name: 'Sources d’inspiration', exact: true }).waitFor();
+      assert.equal(await page.locator('.view-more').count(), 0, 'Desktop displays every available view directly');
+      await page.getByRole('tab', { name: 'Sources d’inspiration', exact: true }).click();
+      await page.locator('.market-page').waitFor();
+      assert.equal(
+        await page.getByRole('tab', { name: 'Sources d’inspiration', exact: true }).getAttribute('aria-selected'),
+        'true',
+      );
+      await page.getByRole('tab', { name: 'Fiche', exact: true }).click();
+      await page.getByTestId('business-sheet').waitFor();
       const sidebar = await page.locator('.sidebar-scroll').boundingBox();
       const last = await page.locator('.primary-spaces > details').last().boundingBox();
       assert.ok(last.y + last.height <= sidebar.y + sidebar.height);
@@ -234,7 +373,7 @@ try {
       assert.equal(await page.locator('.sidebar').isVisible(), false);
       await page.getByRole('button', { name: 'Ouvrir le panneau', exact: true }).click();
       await group('Comprendre');
-      await page.getByRole('button', { name: 'Documents et téléchargements', exact: true }).click();
+      await page.getByRole('button', { name: 'Documents', exact: true }).click();
       await page.locator('.documents-page').waitFor();
       assert.equal(await page.locator('.sidebar').isVisible(), false);
       await visit('sheet', { node: 'domain-plan' });
@@ -261,7 +400,7 @@ try {
     await visit('sheet', { node: 'domain-plan' });
     await page.screenshot({ path: resolve(out, `sheet-${size.width}.png`) });
   }
-  checks.push('Navigation, sheet, mobile overflow menu and global search work at four viewport sizes');
+  checks.push('Navigation, sheet, mobile overflow menu and global search work at five viewport sizes');
   for (const size of [
     { width: 1440, height: 900 },
     { width: 390, height: 844 },

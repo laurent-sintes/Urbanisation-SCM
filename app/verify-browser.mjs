@@ -143,7 +143,12 @@ try {
     (await page.locator('.overview-system').evaluateAll((items) => items.map((item) => item.dataset.nodeId))).sort(),
     children(universe.id).sort(),
   );
-  assert.ok((await page.locator('.sidebar-stats').textContent()).includes(`${model.nodes.length} éléments`));
+  await page.locator('.publication-picker > summary').click();
+  const publicationStatistics = page.locator('.publication-statistics');
+  await publicationStatistics.waitFor();
+  assert.ok((await publicationStatistics.textContent()).includes(`${model.nodes.length} éléments`));
+  await page.keyboard.press('Escape');
+  await page.locator('.publication-picker:not([open])').waitFor();
   await expectTooltip(page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`), system.fields.name);
   const historyBefore = await page.evaluate(() => history.length);
   await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();

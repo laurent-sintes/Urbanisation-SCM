@@ -170,7 +170,7 @@ try {
     .evaluateAll((els) => els.map((el) => el.dataset.relationId));
   assert.ok(relationIds.length > 10);
   assert.equal(new Set(relationIds).size, relationIds.length);
-  await page.locator('.sheet-toc').getByRole('button', { name: 'Comportements', exact: true }).click();
+  await page.getByRole('combobox', { name: 'Dans cette fiche', exact: true }).selectOption('behaviors');
   await page.screenshot({ path: resolve(output, 'behaviors.png') });
   await visit({ view: 'scenarios', capability: 'D05.e' });
   await page.locator('.scenario-cards').waitFor();

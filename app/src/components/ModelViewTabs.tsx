@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRightLeft, BookOpen, ChevronDown, FileText, GitBranch, LayoutGrid } from 'lucide-react';
 import { useRef } from 'react';
 import type { View } from '../navigation';
+import { DismissibleDetails } from './DismissibleDetails';
 
 export function ModelViewTabs({
   view,
@@ -28,7 +29,7 @@ export function ModelViewTabs({
     { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen },
   ] as const;
   const available = tabs.filter((tab) => hasNode || !['sheet', 'market'].includes(tab.id));
-  const primary = available.filter((tab) => tab.id !== 'market' && (!mobile || tab.id !== 'relations'));
+  const primary = available.filter((tab) => !mobile || !['market', 'relations'].includes(tab.id));
   const secondary = available.filter((tab) => !primary.includes(tab));
   const activeMore = secondary.find((tab) => tab.id === view);
   return (
@@ -67,7 +68,7 @@ export function ModelViewTabs({
         ))}
       </div>
       {secondary.length > 0 && (
-        <details
+        <DismissibleDetails
           ref={more}
           className="view-more"
           onKeyDown={(event) => {
@@ -111,7 +112,7 @@ export function ModelViewTabs({
               </button>
             )}
           </div>
-        </details>
+        </DismissibleDetails>
       )}
     </div>
   );

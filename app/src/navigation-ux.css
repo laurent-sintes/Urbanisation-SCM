@@ -167,7 +167,8 @@
   font-weight: 600;
 }
 .sidebar-bottom {
-  padding: 10px 13px;
+  padding: 8px 13px;
+  height: 52px;
 }
 .desktop-path {
   padding: 6px 0;
@@ -243,8 +244,22 @@
 .view-parent-button {
   font-size: 11px;
 }
-.atlas-shell:not(.sidebar-collapsed) .sheet-toc {
-  display: none;
+.sheet-mobile-toc {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0 0 18px;
+  font-size: 13px;
+}
+.sheet-mobile-toc select {
+  width: min(100%, 340px);
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: white;
+  color: var(--ink);
 }
 .business-sheet {
   max-width: 1020px;
@@ -264,6 +279,56 @@
   padding: 12px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+.reference-heading {
+  padding: 8px 0 12px;
+}
+.reference-heading .heading-icon,
+.reference-heading .eyebrow {
+  display: none;
+}
+.reference-heading h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.25;
+}
+.reference-heading p {
+  margin: 6px 0 0;
+  max-width: 85ch;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.method-compact-navigation,
+.method-compact-navigation label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.method-compact-navigation select {
+  max-width: 100%;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--ink);
+  background: white;
+}
+.method-home-resources {
+  margin-top: 18px;
+}
+.method-home-resources summary {
+  cursor: pointer;
+  padding: 8px 0;
+  color: var(--flow-green);
+}
+.method-home-resources .method-nav-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.method-home-resources .method-nav-group > strong {
+  display: none;
 }
 .sheet-definition > summary {
   min-height: 32px;
