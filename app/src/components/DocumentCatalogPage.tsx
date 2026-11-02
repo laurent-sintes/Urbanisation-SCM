@@ -43,7 +43,7 @@ export function DocumentCatalogPage({
       <details className="publication-downloads">
         <summary>
           <Download size={17} aria-hidden="true" />
-          {ui('documentCatalogPage.telecharger_le_modele_et_les_fichiers_de_seance')}
+          {ui('documentCatalogPage.telecharger_le_modele')}
         </summary>
         <a
           className="documents-download"
@@ -53,21 +53,25 @@ export function DocumentCatalogPage({
           {ui('documentCatalogPage.modele_complet_yaml')}
           {model.version}
         </a>
-        {model.raw.workshop && (
-          <>
-            <a
-              className="documents-download"
-              href={workshopUrl()}
-              download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}
-            >
-              {ui('documentCatalogPage.fichier_de_seance_json')}
-            </a>
-            <button type="button" className="documents-download" onClick={() => downloadWorkingModel(model)}>
-              {ui('documentCatalogPage.modele_de_travail_json')}
-            </button>
-          </>
-        )}
       </details>
+      {model.raw.workshop?.active && (
+        <details className="workshop-downloads">
+          <summary>
+            <Download size={17} aria-hidden="true" />
+            {ui('documentCatalogPage.exporter_l_atelier_en_cours')}
+          </summary>
+          <a
+            className="documents-download"
+            href={workshopUrl()}
+            download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}
+          >
+            {ui('documentCatalogPage.fichier_de_seance_json')}
+          </a>
+          <button type="button" className="documents-download" onClick={() => downloadWorkingModel(model)}>
+            {ui('documentCatalogPage.modele_de_travail_json')}
+          </button>
+        </details>
+      )}
       {selected ? (
         <article className="documents-detail">
           <button type="button" onClick={() => onChange({ document: '' })}>

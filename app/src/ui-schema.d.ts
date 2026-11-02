@@ -545,7 +545,8 @@ export interface UiArguments {
   "designPrinciplesPage.exceptions_documentees": {  };
   "designPrinciplesPage.quand_reexaminer_ce_choix": {  };
   "documentCatalogPage.documents_et_etudes_flow": {  };
-  "documentCatalogPage.telecharger_le_modele_et_les_fichiers_de_seance": {  };
+  "documentCatalogPage.telecharger_le_modele": {  };
+  "documentCatalogPage.exporter_l_atelier_en_cours": {  };
   "documentCatalogPage.modele_complet_yaml": {  };
   "documentCatalogPage.fichier_de_seance_json": {  };
   "documentCatalogPage.modele_de_travail_json": {  };
