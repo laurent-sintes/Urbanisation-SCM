@@ -145,7 +145,14 @@ class BusinessAreaTests(unittest.TestCase):
                            and nodes[r['target_id']]['kind'] == 'capability'}
         moved_preparation = {'demand-forecast-development', 'supply-plan-development',
                              'planning-scenario-reconciliation'}
-        self.assertEqual(len(u1079_additions | moved_preparation), 32)
+        master_data = read(root/'modeles/backlog/master-data-domain-U1166.yaml')
+        reference_retirements = set(master_data['publication_delivery']['absent_nodes'])
+        self.assertEqual(len(reference_retirements), 5)
+        self.assertTrue(reference_retirements.isdisjoint(nodes))
+        self.assertEqual(len(u1079_additions | moved_preparation | reference_retirements), 32)
+        mdm_additions = {item['id'] for item in master_data['publication_delivery']['required_nodes']
+                         if item.get('kind') == 'capability' and item['id'].startswith('cap-mdm-')}
+        self.assertEqual(len(mdm_additions), 33)
         u1089_additions = {r['target_id'] for r in m['relations'] if r['type'] == 'contains'
                            and r['id'].startswith('REL-U1089-')
                            and nodes[r['target_id']]['kind'] == 'capability'}
@@ -153,7 +160,7 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(((((initial_caps - retired) | process_additions | decision_additions | backlog_additions)
                            - later_retirements) - (control_references & initial_caps)) |
                          u1079_additions | u1089_additions | moved_preparation |
-                         {'demand-plan-development', 'process-ledger'}, caps)
+                         mdm_additions | {'demand-plan-development', 'process-ledger'}, caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
         self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
@@ -204,7 +211,7 @@ class BusinessAreaTests(unittest.TestCase):
         from scripts.model_depth import context_business_area_ids
         context_areas = context_business_area_ids(m)
         self.assertEqual(sum(n['kind']=='business_area' and n['id'] not in context_areas for n in nodes.values()),
-                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26-1-2-2+1)
+                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26-1-2-2+1+21)
         # U1089/U1103 group areas; U1113 replaces the two Integration areas
         # with Reference Maintenance near the operational references.
         for ident in caps:

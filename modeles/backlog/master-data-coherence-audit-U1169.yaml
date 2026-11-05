@@ -1,0 +1,298 @@
+schema_version: 1.0.0
+id: MASTER-DATA-COHERENCE-AUDIT-U1169
+date: '2026-11-05'
+status: completed_findings_proposed
+source_refs:
+- U1166
+- U1167
+- U1168
+- U1169
+scope: Nouvel audit du domaine Master Data corrigé U1168 et de son voisinage. Relecture sémantique des contrats en plus de
+  l’intégrité formelle, sans rejeu de l’audit historique des comportements.
+mutation_boundary: Contribution U1169, présent rapport et index des sources uniquement. Modèle, glossaire, accords, release
+  et As Is inchangés.
+audited_fingerprints:
+  model: 03337c6212936a663c24a1c97534bc1dad0ae0c51a4aaec3e7203bd421c8156c
+  glossary: 2d651843e343083b6351b2ebb97a84e2bde267a1a2b15482c01decf23e699352
+  agreements: 15d2017a6701de08dd85e3e2e11fbd11c3719a008549fcb3eded02da940742ec
+  release_index: 491b4290f2a11855ec7e63341600c6227a79bc35cf52e167832339414883982f
+  as_is_pointer: 8dbaa18de2e74f785409155b602d71503969248f8f780d7ce9aeab14bbda5b8c
+conclusion: Structure et accords cohérents, contrôle courant sans erreur. Les défauts structurels initiaux sont corrigés ;
+  trois réserves P2 subsistent dans les liens sémantiques et les boucles de retour. Aucune nouvelle anomalie P1 identifiée
+  dans ce périmètre. Le lot ne peut pas être qualifié de complet au niveau de ses contrats de retour.
+metrics:
+  nodes: 64
+  subdomains: 9
+  business_areas: 21
+  capabilities: 33
+  behaviors: 0
+  relations_by_type:
+    shares-data: 89
+    presents: 10
+    contains: 54
+  internal_business_relations: 68
+  external_incoming_relations: 17
+  external_outgoing_relations: 4
+  capabilities_without_business_relation: 0
+  active_agreements_current: 132
+  historical_predecessors_preserved: 130
+  consumer_receipt_returns_to_distribution: 0
+  source_correction_requests_to_documented_producers: 0
+  label_links_to_treatment_named_terms: 74
+previous_findings_review:
+- id: MDM-U1167-01
+  result: Couverture initiale des contributions, consommateurs, droits et signalements rétablie. Les retours de correction
+    vers la source et de suivi de livraison restent à expliciter.
+  follow_up:
+  - MDM-U1169-02
+  - MDM-U1169-03
+- id: MDM-U1167-02
+  result: 'Résolu à la maille des contributions : 68 échanges internes, aucune capacité isolée. Les liens ne constituent pas
+    un processus exécutable ni une preuve de contrôle logiciel.'
+- id: MDM-U1167-03
+  result: 'Résolu : Design et Finance contribuent à Master Data Ingestion, sources inchangées ; aucune exception directe vers
+    Reference Ingestion conservée.'
+- id: MDM-U1167-04
+  result: 'Résolu : TER184 décrit le concept commun et distingue les deux BA avec des liens explicites ; identités et noms
+    préservés.'
+- id: MDM-U1167-05
+  result: 'Correspondances requalifiées et alignées entre fiches et termes : SAP Retail natif distingué d’Utopia ; les appuis
+    partiels et limites restantes sont explicites. Une équivalence complète n’est pas démontrée ni annoncée.'
+verified:
+- Rattachements uniques, capacités sous Business Areas et profondeur Master Data limitée aux capacités ; 64 nœuds inchangés.
+- Les cinq capacités de stewardship retirées ne réapparaissent pas et n’ont plus de lien incident ; familles documentaires
+  et trois provenances Supply préservées.
+- Les droits de diffusion, la certification portant sur une version et la publication sont explicitement distincts dans les
+  contrats.
+- 'Enrichissement facultatif : une contribution intégrée peut être soumise au changement sans cette étape ; aucune exécution
+  universelle déduite du graphe.'
+- 132 captures actives conservent valeurs et contextes courants. Les 130 prédécesseurs restent intacts ; les nouveaux examens
+  n’élargissent pas leurs champs.
+- Les nouveaux contrats détaillés restent proposés ; les accords de routage Design/Finance ne valent pas adoption de tous
+  leurs champs.
+- Les frontières prix de référence/prix contextualisé/prix engagé, règles métier/configuration partagée, référence de conditionnement/unité
+  physique sont conservées.
+- Empreintes de la release et du pointeur As Is identiques à l’état précédant U1168. Aucune nouvelle source de vérité installée
+  déduite.
+observations:
+- kind: known_limit
+  subject: Autorités sources
+  finding: Les responsables par objet et attribut encore inconnus restent à documenter, notamment services, conditionnements
+    et biens internes. C’est une limite déclarée, pas une attribution implicite ni une nouvelle anomalie.
+- kind: known_limit
+  subject: Marché
+  finding: L’accord sémantique entre contributeurs et la couverture de toutes les listes de codes ne sont pas prouvés par
+    les seuls passages consultés. Les fiches le disent explicitement.
+- kind: not_a_defect
+  subject: Vues
+  finding: Les six échanges de versions publiées vers des sous-domaines sont des relations métier autorisées à ce niveau.
+    Ils ne créent pas une nouvelle hiérarchie ni une nouvelle capacité ; leur agrégation ne constitue pas à elle seule un
+    défaut.
+- kind: not_a_defect
+  subject: Scénarios
+  finding: Aucun scénario Master Data ajouté par U1168. Aucun usage n’est inventé pour compléter cette couverture documentaire.
+- kind: audit_limit
+  subject: Tests
+  finding: Les tests formels et de connectivité ne prouvent pas le sens des liens de glossaire, la fermeture des boucles de
+    correction ni une réalisation installée. Les réserves ci-dessus résultent de la relecture des contrats.
+findings:
+- id: MDM-U1169-01
+  priority: P2
+  category: glossary_link_semantics
+  title: Des données échangées renvoient à la définition du traitement qui les gère
+  observation: Approved assortment contributions est lié à TER426, Assortment Reference Management, dont la définition décrit
+    la consolidation. Reference content correction reports renvoie à TER397, le traitement de correction, et Reference access
+    and subscription requests à TER411, la tenue des droits. Le lien présente donc une activité comme définition de la donnée.
+    Le repérage trouve 74 libellés liés à des entrées nommées comme des traitements ; ce nombre est un indicateur de revue,
+    pas une validation sémantique automatique des 74 cas.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-assortment
+    fields:
+    - data_exchange.contents
+    line: 95014
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER426
+    fields:
+    - name
+    - definition
+    line: 47600
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-RETURN-commerce
+    fields:
+    - data_exchange.contents
+    line: 95383
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER397
+    fields:
+    - name
+    - definition
+    line: 45460
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-REQUEST-commerce
+    fields:
+    - data_exchange.contents
+    line: 95417
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER411
+    fields:
+    - name
+    - definition
+    line: 46466
+  impact: Le survol explique le savoir-faire au lieu du contenu échangé ; les contrats paraissent alignés parce que leurs
+    identifiants sont valides.
+  recommendation: Nommer les informations échangées comme des résultats métier et relier leurs notions au bon terme, par exemple
+    Assortment TER087. Réserver les liens vers une capacité au traitement effectivement nommé. Compléter le glossaire seulement
+    si une notion utile manque, sans créer mécaniquement un terme pour chaque message.
+  rationale: 'Cohérence du modèle : objet, résultat et savoir-faire sont distincts. Bénéfice : une définition utile au lecteur
+    sans nouvelle capacité ni catalogue technique de messages.'
+  approval: Proposition de correction ; aucun lien ni terme modifié par cet audit.
+- id: MDM-U1169-02
+  priority: P2
+  category: source_correction_loop
+  title: Les demandes de correction ne rejoignent pas les producteurs identifiés
+  observation: Les signalements des consommateurs rejoignent Quality Remediation. REL-U1168-COMMON-remediation-source transmet
+    ensuite une demande à Source Contribution Management pour obtenir une contribution corrigée. La seule sortie métier de
+    cette dernière rejoint Master Data Ingestion ; aucun contrat ne transmet la demande au producteur concerné. La branche
+    de correction autorisée dans Master Data existe, mais elle ne remplace pas une correction dont l’autorité est en source.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-quality-remediation
+    fields:
+    - definition
+    line: 69461
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-RETURN-supply
+    fields:
+    - source_id
+    - target_id
+    - data_exchange
+    line: 95511
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-COMMON-remediation-source
+    fields:
+    - source_id
+    - target_id
+    - data_exchange
+    line: 95958
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-COMMON-source-ingestion
+    fields:
+    - source_id
+    - target_id
+    - data_exchange
+    line: 95639
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-finance-credit-reference
+    fields:
+    - source_id
+    - target_id
+    - qualification
+    line: 89466
+  reproduction: 'Lire toutes les relations métier sortant de cap-mdm-source-contribution : une seule, vers cap-mdm-ingestion.
+    Aucun échange sortant Master Data vers un producteur ne porte une demande de correction de source.'
+  impact: Le parcours décrit comment demander une correction en interne, mais pas comment solliciter puis suivre le responsable
+    source lorsque lui seul peut changer la valeur.
+  recommendation: Pour les producteurs documentés, expliciter la demande de correction et le retour de décision ou de contribution
+    corrigée, avec référence, version, anomalie et autorité. Garder les corrections internes autorisées comme une branche
+    distincte. Ne pas imposer de réécriture automatique des systèmes sources ni de trajet identique pour tous les objets.
+  rationale: 'Frontière déjà retenue par U1166/U1168 : les autorités sources sont conservées. Bénéfice : une correction traçable
+    jusqu’au responsable ; compromis : distinguer correction en source et correction commune au lieu d’imposer un mécanisme
+    unique.'
+  approval: Complément relationnel à proposer ; aucune source inconnue ni interface installée déduite.
+- id: MDM-U1169-03
+  priority: P2
+  category: delivery_feedback_contract
+  title: Le suivi des livraisons manque de retours de réception explicites
+  observation: Master Data Distribution promet de suivre livraisons, échecs et reprises, et distingue livraison technique
+    et prise en compte métier. Ses seules entrées métier sont les versions publiées et les droits autorisés. Les consommateurs
+    signalent les anomalies de contenu à Quality Remediation et demandent leurs droits à Access & Subscription ; aucun contrat
+    ne renseigne Distribution sur la version reçue, le rejet ou la reprise attendue.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-distribution
+    fields:
+    - definition
+    - scope
+    line: 70847
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-COMMON-publication-distribution
+    fields:
+    - data_exchange
+    line: 96120
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1168-COMMON-access-distribution
+    fields:
+    - data_exchange
+    line: 96157
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    fields:
+    - data_exchange
+    - qualification
+    line: 94915
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - scope
+    line: 37935
+  reproduction: 'Examiner toutes les relations métier entrantes de cap-mdm-distribution : publication et droits uniquement
+    ; zéro retour depuis les consommateurs.'
+  impact: La carte décrit ce qui est envoyé, mais pas les informations permettant de distinguer une livraison réussie, une
+    version non reçue et un rejet. Elle ne suffit donc pas à expliquer le suivi annoncé.
+  recommendation: 'Préciser le résultat de livraison attendu et les retours nécessaires à son suivi : version, destinataire,
+    réception ou rejet et motif. Distinguer ces retours des anomalies de contenu ; une éventuelle prise en compte métier reste
+    séparée et ne se déduit pas de la réception. Ne pas imposer un protocole technique ou un accusé applicatif universel.'
+  rationale: Cohérence entre responsabilité déclarée et information reçue. Les mécanismes Dynamics et SAP consultés distinguent
+    aussi états de transfert et résultats ; ils appuient cette distinction sans imposer leur technologie à FLOW.
+  approval: Complément de contrat à proposer ; aucune réalisation installée présumée.
+market_cross_check:
+- vendor: Microsoft
+  product: Dynamics 365 Finance & Operations
+  title: Recurring integrations
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/data-entities/recurring-integrations
+  source_locator: API for acknowledgment ; API for getting message status
+  consulted_on: '2026-11-05'
+  reuse: Passages effectivement consultés dans cette conversation, réutilisés sans changement de périmètre.
+  comparison: Les états de réception et de traitement sont distingués. Cela éclaire le besoin de préciser le résultat suivi
+    par Distribution.
+  limit: Mécanisme technique produit ; aucune API Dynamics ou séquence imposée à FLOW.
+- vendor: SAP
+  product: SAP Master Data Governance on SAP S/4HANA
+  title: Introducing SAP Master Data Governance
+  url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-sap-master-data-governance
+  source_locator: Data Replication ; Replication Status Information
+  consulted_on: '2026-11-05'
+  reuse: Passages effectivement consultés dans cette conversation, réutilisés sans changement de périmètre.
+  comparison: Le suivi de distribution distingue réussite, réponse attendue et erreur. Appui partiel à un retour de livraison
+    explicite.
+  limit: Le suivi de réplication ne prouve ni application métier de la donnée ni réalisation Beaumanoir.
+recommended_order:
+- MDM-U1169-01
+- MDM-U1169-02
+- MDM-U1169-03
+validation:
+  backlog_command: python scripts/check_backlog.py
+  backlog_errors: []
+  pending_lots: []
+  prior_tests: '93 tests ciblés passés lors de U1168 ; 15 tests de glossaire et de références marché rejoués avec succès après
+    l’ajout de la preuve SAP Retail. Résultats réutilisés : aucun modèle, glossaire ni code modifié depuis ces contrôles.'
+  fresh_checks: Rattachements, retraits, incidence complète des relations, contrats entrants/sortants, correspondance des
+    preuves marché, valeurs et contextes des 132 accords, frontières et empreintes de release/As Is réexaminés pendant U1169.
+  no_release: true

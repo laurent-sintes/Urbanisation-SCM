@@ -169,8 +169,14 @@ export function GlobalSearch({ model, guide, open, query, fixed, onQuery, onClos
       </div>
       <div className="global-search-context">
         <p>
-          {fixed ? ui('globalSearch.publication_figee') : ui('globalSearch.publication_courante')} · {revision} ·{' '}
-          {model.version}
+          {model.raw.space === 'current' ? (
+            ui('app.modele_courant')
+          ) : (
+            <>
+              {fixed ? ui('globalSearch.publication_figee') : ui('globalSearch.publication_courante')} · {revision} ·{' '}
+              {model.version}
+            </>
+          )}
         </p>
         <div className="global-search-filters">
           <label>

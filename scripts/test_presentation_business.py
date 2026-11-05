@@ -66,8 +66,11 @@ class PresentationBusinessTests(unittest.TestCase):
         for item in current:
             for text in texts(item):
                 self.assertIsNone(obsolete.search(text), text)
-        self.assertIn('maîtrise d’entreprise externe', self.nodes['business-references']['fields']['mastership'])
-        self.assertIn('restent à qualifier', self.nodes['master-data-ingestion-finance']['fields']['scope'])
+        self.assertIn(('glossary', 'TER390'), references(self.nodes['business-references']['fields']['mastership']))
+        self.assertIn('Aucun transfert de la maîtrise des règles', self.nodes['business-references']['fields']['mastership'])
+        finance_scope = self.nodes['master-data-ingestion-finance']['fields']['scope']
+        self.assertIn(('model', 'cap-mdm-distribution'), references(finance_scope))
+        self.assertIn('Toute exception future exige un motif et un contrat explicites', finance_scope)
 
     def test_pickup_names_the_actual_responsibility_boundaries(self):
         node = self.nodes['D04.t']['fields']

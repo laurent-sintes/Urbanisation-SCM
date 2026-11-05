@@ -297,6 +297,23 @@ class HTTPTests(unittest.TestCase):
                       '/data/2026-09-26.2/guide.yaml', '/data/2026-09-26.2/model.yaml.bak']:
             self.assertEqual(self.request(route)[0], 404, route)
 
+    def test_current_model_routes_serve_only_expected_artifacts(self):
+        version = 'current-' + 'a' * 24
+        folder = self.dist / 'data' / version
+        (folder / 'documents').mkdir(parents=True)
+        for name, content in [('model.json', b'{"space":"current"}'),
+                              ('model.yaml', b'space: current\n'),
+                              ('guide.json', b'{"status":"available"}'),
+                              ('documents/DOC001.pdf', b'%PDF-1.4'),
+                              ('documents/DOC002.pptx', b'PK')]:
+            (folder / name).write_bytes(content)
+            status, _, body = self.request(f'/data/{version}/{name}')
+            self.assertEqual(status, 200, name)
+            self.assertEqual(body, content)
+        for route in [f'/data/{version}/secret.json', '/data/current-xyz/model.json',
+                      f'/data/{version}/../model.json', f'/data/{version}/guide.yaml']:
+            self.assertEqual(self.request(route)[0], 404, route)
+
     def test_static_delivery_manifest_is_served_for_build_update_detection(self):
         payload = b'{"schema_version":1,"files":{"index.html":"verified-build-hash"}}'
         (self.dist / 'delivery.json').write_bytes(payload)

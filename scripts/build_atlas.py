@@ -27,6 +27,7 @@ def promote_build(stage, destination):
     for name in ('index.html', 'data/index.json', 'delivery.json'):
         if not (stage / name).is_file():
             raise ValueError(f'Incomplete Atlas build: {name}')
+    catalog = json.loads((stage / 'data/index.json').read_bytes())
     deferred = {'index.html', 'data/index.json', 'delivery.json'}
     for path in sorted(p for p in stage.rglob('*') if p.is_file()):
         relative = path.relative_to(stage)
@@ -34,6 +35,9 @@ def promote_build(stage, destination):
             atomic_write(destination / relative, path.read_bytes())
     for name in ('data/index.json', 'delivery.json', 'index.html'):
         atomic_write(destination / name, (stage / name).read_bytes())
+    if catalog.get('mode') == 'current':
+        from scripts.current_model import prune_generated_history
+        prune_generated_history(destination / 'data', catalog['current_version'])
 
 
 def prune_old_assets(stage, destination, *, grace_days=14, now=None):
@@ -76,7 +80,7 @@ def main():
         subprocess.run([pnpm, 'run', 'check:labels'], cwd=ROOT / 'app', check=True)
         # A failed type check must not update the data served by the old build.
         subprocess.run([pnpm, 'exec', 'tsc', '--noEmit'], cwd=ROOT / 'app', check=True)
-        print('Atlas: checking published data', flush=True)
+        print('Atlas: generating model data', flush=True)
         exported = export_atlas(ROOT, [] if args.frontend else [ROOT / 'app/public/data'],
                                 incremental=not args.full_export, require_cached=args.frontend)
         print(json.dumps({'export': exported}), flush=True)
@@ -95,7 +99,19 @@ def main():
                 except OSError:
                     shutil.copy2(source, destination)
                 return destination
-            shutil.copytree(ROOT / 'app/public', stage, dirs_exist_ok=True, copy_function=stage_copy)
+            catalog = json.loads((ROOT / 'app/public/data/index.json').read_bytes())
+            if catalog.get('mode') == 'current':
+                public = ROOT / 'app/public'
+                shutil.copytree(public, stage, dirs_exist_ok=True, copy_function=stage_copy,
+                                ignore=lambda path, names: ['data'] if Path(path) == public else [])
+                (stage / 'data').mkdir(exist_ok=True)
+                shutil.copy2(public / 'data/index.json', stage / 'data/index.json')
+                version = catalog['current_version']
+                if not re.fullmatch(r'current-[a-f0-9]{24}', version):
+                    raise ValueError('Invalid current-model identity')
+                shutil.copytree(public / 'data' / version, stage / 'data' / version, copy_function=stage_copy)
+            else:
+                shutil.copytree(ROOT / 'app/public', stage, dirs_exist_ok=True, copy_function=stage_copy)
             write_manifest(ROOT, stage)
             promote_build(stage, ROOT / 'app/dist')
             print(json.dumps({'old_assets_removed': prune_old_assets(stage, ROOT / 'app/dist')}), flush=True)

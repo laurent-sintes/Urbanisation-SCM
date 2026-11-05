@@ -179,6 +179,8 @@ def _incomplete(root, version, error, timings):
 def run(root, version=None, source_refs=None, *, activate=False, review_path=None,
         decisions_path=None, guide_path=None, atlas_url='http://127.0.0.1:8765', verify_site=True):
     root = Path(root).resolve()
+    if (root / 'modeles/project.yaml').is_file():
+        raise ValueError('Le projet utilise le modèle courant unique : lancer pnpm build, sans release métier.')
     if (root / 'modeles/git-history.json').is_file():
         if __package__:
             from .lean_release import run as lean_run

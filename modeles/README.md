@@ -1,5 +1,11 @@
 # Modèles structurés
 
+## Modèle courant unique — 5 novembre 2026
+
+`project.yaml` désigne les sources courantes. Atlas est généré directement depuis le modèle, les deux glossaires, la méthode et les accords, sans activation d’une release métier. Le dossier `backlog/` conserve son nom historique pour les références existantes. `agreements.yaml` porte les accords migrés à valeurs identiques ; leurs empreintes de contexte empêchent le build de les étendre aux modifications suivantes. Les nouveaux accords explicites passent toujours par `record_decision.py` / `record_intents`.
+
+Le build produit un catalogue à une seule entrée, identifié par les empreintes de ses sources. Il ne modifie ni les sources, ni les accords, ni les publications historiques. Les exports sont des artefacts techniques. Les sections ci-dessous sur les releases décrivent le fonctionnement historique, conservé pour ses preuves et tests. Voir le [parcours de développement courant](../README.md#développer-tester-et-déployer).
+
 ## Description pédagogique des fiches — U1125
 
 `fields.definition` reste la description courte canonique. L’objet facultatif `fields.pedagogical_description` ajoute une `explanation`, des `example_refs` avec leur `contribution`, des `distinctions` avec le voisin identifié, des `market_comparison_refs` et des `source_refs`. Il décrit la fiche existante sans créer un objet de hiérarchie.

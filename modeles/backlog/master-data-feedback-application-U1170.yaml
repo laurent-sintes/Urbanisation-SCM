@@ -1,0 +1,1768 @@
+schema_version: 1.0.0
+id: MASTER-DATA-FEEDBACK-APPLICATION-U1170
+date: '2026-11-05'
+status: applied_to_backlog
+source_refs:
+- U1170
+- U1169
+scope: Application des trois corrections U1169 autorisées U1170 ; backlog uniquement, aucune release.
+approval_boundary: L’autorisation U1170 porte sur les trois corrections recommandées. Les valeurs antérieurement adoptées
+  sont réexaminées sans élargissement de champs ; les contrats détaillés et rapprochements rédigés ensuite restent proposés.
+baseline_fingerprints:
+  model: 03337c6212936a663c24a1c97534bc1dad0ae0c51a4aaec3e7203bd421c8156c
+  glossary: 2d651843e343083b6351b2ebb97a84e2bde267a1a2b15482c01decf23e699352
+  agreements: 15d2017a6701de08dd85e3e2e11fbd11c3719a008549fcb3eded02da940742ec
+  release_index: 491b4290f2a11855ec7e63341600c6227a79bc35cf52e167832339414883982f
+  as_is_pointer: 8dbaa18de2e74f785409155b602d71503969248f8f780d7ce9aeab14bbda5b8c
+finding_resolutions:
+- id: MDM-U1169-01
+  state: corrected
+  result: Libellés anglais de données distincts des noms de traitements ; liens de traitement explicitement nommés comme tels,
+    objets métier correctement liés. Trois concepts de retour réutilisables, sans capacité ni message technique nouveau.
+  relations:
+  - REL-U1166-MDM-TO-SUPPLY-REFERENCES
+  - REL-U1168-COMMON-access-distribution
+  - REL-U1168-COMMON-authority-certification
+  - REL-U1168-COMMON-authority-source
+  - REL-U1168-COMMON-certification-publication
+  - REL-U1168-COMMON-change-certification
+  - REL-U1168-COMMON-change-quality
+  - REL-U1168-COMMON-consolidation-change
+  - REL-U1168-COMMON-consolidation-enrichment
+  - REL-U1168-COMMON-enrichment-change
+  - REL-U1168-COMMON-identity-consolidation
+  - REL-U1168-COMMON-ingestion-identity
+  - REL-U1168-COMMON-publication-distribution
+  - REL-U1168-COMMON-quality-certification
+  - REL-U1168-COMMON-quality-remediation
+  - REL-U1168-COMMON-remediation-change
+  - REL-U1168-COMMON-remediation-source
+  - REL-U1168-COMMON-source-ingestion
+  - REL-U1168-COMMON-standards-quality
+  - REL-U1168-COMMON-standards-source
+  - REL-U1168-DELIVERY-commerce
+  - REL-U1168-DELIVERY-procurement
+  - REL-U1168-DELIVERY-supply-configuration
+  - REL-U1168-OBJECT-CHANGE-agreement
+  - REL-U1168-OBJECT-CHANGE-assortment
+  - REL-U1168-OBJECT-CHANGE-calendar
+  - REL-U1168-OBJECT-CHANGE-catalog
+  - REL-U1168-OBJECT-CHANGE-codes-classification
+  - REL-U1168-OBJECT-CHANGE-customer
+  - REL-U1168-OBJECT-CHANGE-internal-supplies
+  - REL-U1168-OBJECT-CHANGE-location-network
+  - REL-U1168-OBJECT-CHANGE-packaging-material
+  - REL-U1168-OBJECT-CHANGE-packaging-specification
+  - REL-U1168-OBJECT-CHANGE-product
+  - REL-U1168-OBJECT-CHANGE-product-pricing
+  - REL-U1168-OBJECT-CHANGE-service-catalog
+  - REL-U1168-OBJECT-CHANGE-service-pricing
+  - REL-U1168-OBJECT-CHANGE-shared-configuration
+  - REL-U1168-OBJECT-CHANGE-supplier
+  - REL-U1168-OBJECT-CHANGE-trade-item
+  - REL-U1168-OBJECT-CHANGE-unit-conversion
+  - REL-U1168-OBJECT-CHANGE-variant
+  - REL-U1168-OBJECT-IN-agreement
+  - REL-U1168-OBJECT-IN-assortment
+  - REL-U1168-OBJECT-IN-calendar
+  - REL-U1168-OBJECT-IN-catalog
+  - REL-U1168-OBJECT-IN-codes-classification
+  - REL-U1168-OBJECT-IN-customer
+  - REL-U1168-OBJECT-IN-internal-supplies
+  - REL-U1168-OBJECT-IN-location-network
+  - REL-U1168-OBJECT-IN-packaging-material
+  - REL-U1168-OBJECT-IN-packaging-specification
+  - REL-U1168-OBJECT-IN-product
+  - REL-U1168-OBJECT-IN-product-pricing
+  - REL-U1168-OBJECT-IN-service-catalog
+  - REL-U1168-OBJECT-IN-service-pricing
+  - REL-U1168-OBJECT-IN-shared-configuration
+  - REL-U1168-OBJECT-IN-supplier
+  - REL-U1168-OBJECT-IN-unit-conversion
+  - REL-U1168-OBJECT-LINK-assortment-catalog
+  - REL-U1168-OBJECT-LINK-material-specification
+  - REL-U1168-OBJECT-LINK-party-agreement
+  - REL-U1168-OBJECT-LINK-product-assortment
+  - REL-U1168-OBJECT-LINK-product-variant
+  - REL-U1168-OBJECT-LINK-service-pricing
+  - REL-U1168-OBJECT-LINK-variant-trade-item
+  - REL-U1168-REQUEST-commerce
+  - REL-U1168-REQUEST-procurement
+  - REL-U1168-REQUEST-supply
+  - REL-U1168-RETURN-commerce
+  - REL-U1168-RETURN-procurement
+  - REL-U1168-RETURN-supply
+  - REL-U1168-SOURCE-agreement
+  - REL-U1168-SOURCE-assortment
+  - REL-U1168-SOURCE-catalog
+  - REL-U1168-SOURCE-network
+  - REL-U1168-SOURCE-pricing
+  - REL-U1168-SOURCE-retail-customer
+  - REL-U1168-SOURCE-supplier
+  - REL-U1168-SOURCE-supply-configuration
+  - REL-U1168-SOURCE-wholesale-customer
+  - REL-U1168-VIEW-location-network
+  - REL-U1168-VIEW-packaging
+  - REL-U1168-VIEW-party-agreement
+  - REL-U1168-VIEW-product-commercial
+  - REL-U1168-VIEW-service
+  - REL-U1168-VIEW-shared-reference-configuration
+- id: MDM-U1169-02
+  state: corrected
+  result: Demandes et retours auprès des onze producteurs déjà documentés ; réception de la contribution et résolution vérifiée
+    séparées, information du signalant.
+  producer_pairs:
+  - producer: system-design-development
+    contribution_relation: REL-U1113-design-product-reference
+    request_relation: REL-U1170-CORRECTION-REQUEST-design-product-reference
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-design-product-reference
+  - producer: domain-finance
+    contribution_relation: REL-U1113-finance-credit-reference
+    request_relation: REL-U1170-CORRECTION-REQUEST-finance-credit-reference
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-finance-credit-reference
+  - producer: cap-sales-pricing-rule-management
+    contribution_relation: REL-U1168-SOURCE-pricing
+    request_relation: REL-U1170-CORRECTION-REQUEST-pricing
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-pricing
+  - producer: cap-assortment-eligibility-management
+    contribution_relation: REL-U1168-SOURCE-assortment
+    request_relation: REL-U1170-CORRECTION-REQUEST-assortment
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-assortment
+  - producer: cap-commercial-catalog-publication
+    contribution_relation: REL-U1168-SOURCE-catalog
+    request_relation: REL-U1170-CORRECTION-REQUEST-catalog
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-catalog
+  - producer: cap-supplier-eligibility-assessment
+    contribution_relation: REL-U1168-SOURCE-supplier
+    request_relation: REL-U1170-CORRECTION-REQUEST-supplier
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-supplier
+  - producer: cap-purchase-agreement-lifecycle-management
+    contribution_relation: REL-U1168-SOURCE-agreement
+    request_relation: REL-U1170-CORRECTION-REQUEST-agreement
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-agreement
+  - producer: cap-store-network-configuration-management
+    contribution_relation: REL-U1168-SOURCE-network
+    request_relation: REL-U1170-CORRECTION-REQUEST-network
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-network
+  - producer: cap-retail-customer-engagement-management
+    contribution_relation: REL-U1168-SOURCE-retail-customer
+    request_relation: REL-U1170-CORRECTION-REQUEST-retail-customer
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-retail-customer
+  - producer: cap-wholesale-account-stewardship
+    contribution_relation: REL-U1168-SOURCE-wholesale-customer
+    request_relation: REL-U1170-CORRECTION-REQUEST-wholesale-customer
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-wholesale-customer
+  - producer: subdomain-policies
+    contribution_relation: REL-U1168-SOURCE-supply-configuration
+    request_relation: REL-U1170-CORRECTION-REQUEST-supply-configuration
+    outcome_relation: REL-U1170-CORRECTION-OUTCOME-supply-configuration
+- id: MDM-U1169-03
+  state: corrected
+  result: Quatre retours de livraison alignés sur les quatre destinataires existants, contexte de suivi et règles de reprise
+    ; réception distincte de l’application métier.
+  delivery_pairs:
+  - delivery_relation: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    consumer: master-data-ingestion
+    status_relation: REL-U1170-DELIVERY-STATUS-supply-references
+  - delivery_relation: REL-U1168-DELIVERY-commerce
+    consumer: domain-sales
+    status_relation: REL-U1170-DELIVERY-STATUS-commerce
+  - delivery_relation: REL-U1168-DELIVERY-procurement
+    consumer: domain-sourcing-procurement
+    status_relation: REL-U1170-DELIVERY-STATUS-procurement
+  - delivery_relation: REL-U1168-DELIVERY-supply-configuration
+    consumer: subdomain-policies
+    status_relation: REL-U1170-DELIVERY-STATUS-supply-configuration
+invariants:
+- 64 nœuds Master Data et 33 capacités inchangés ; aucun nouveau comportement.
+- Aucun nouveau producteur, maître par attribut, système installé ou protocole technique déduit.
+- Les données corrigées repassent par ingestion, préparation et certification avant publication ; les états de retour ne transportent
+  pas de valeurs de référence.
+- Demande acceptée, correction annoncée, contribution reçue, résolution vérifiée et version publiée restent des états distincts.
+- Supply conserve une réception simple et signale ses anomalies sans chaîne locale de qualité.
+market_research:
+  sources:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance & Operations
+    title: Actions in workflow approval processes
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/workflow-actions
+    locator: Request change ; Actions that an approver can perform
+    observed: Demande de modification renvoyée à son auteur, approbation et rejet distincts.
+    limit: Workflow documentaire ; aucune interface de correction MDM vers un producteur externe démontrée.
+    consulted_on: '2026-11-05'
+  - vendor: SAP
+    product: SAP Master Data Governance on SAP S/4HANA
+    title: Exploring SAP Master Data Governance Principles
+    url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/exploring-sap-master-data-governance-principles
+    locator: The Governance Principle ; The Workflow Principle
+    observed: Demandes de changement instruites avec retours et décision autorisée.
+    limit: Gouvernance centrale ; le contrat inter-domaines FLOW reste un choix de modélisation.
+    consulted_on: '2026-11-05'
+  - vendor: SAP
+    product: SAP Master Data Governance on SAP S/4HANA
+    title: Explaining Process Analytics Overview and Details
+    url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/explaining-process-analytics-overview-and-details
+    locator: Rejected Change Requests ; Change Request Analysis
+    observed: États des demandes, refus et motifs suivis séparément.
+    limit: Le statut de la demande ne prouve pas la correction d’une donnée dans un système source Beaumanoir.
+    consulted_on: '2026-11-05'
+  - vendor: Microsoft
+    product: Dynamics 365 Finance & Operations
+    title: Recurring integrations
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/data-entities/recurring-integrations
+    locator: API for acknowledgment ; API for getting message status
+    observed: Réception et états du traitement sont distingués.
+    limit: Échange technique de fichiers ; aucune prise en compte métier déduite.
+    consulted_on: '2026-11-05'
+  - vendor: SAP
+    product: SAP Master Data Governance on SAP S/4HANA
+    title: Introducing SAP Master Data Governance
+    url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-sap-master-data-governance
+    locator: Data Replication ; Replication Status Information
+    observed: Distribution suivie avec réussite, réponse attendue et erreur.
+    limit: Réplication de données ; aucune application métier ni réalisation installée Beaumanoir prouvée.
+    consulted_on: '2026-11-05'
+  choice: La distinction entre demande, décision et livraison est appuyée par des mécanismes primaires Dynamics et SAP S/4HANA.
+    Les contrats inter-domaines sont justifiés par la cohérence des responsabilités FLOW ; aucune équivalence native complète
+    ni consensus affirmé.
+agreement_review: Réexamen des captures non publiées dont le contexte a changé ; valeurs précédemment adoptées vérifiées inchangées
+  et preuves antérieures préservées. Pas d’adoption implicite des contrats détaillés.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1170
+  summary: 'Correction des trois réserves U1169 : sémantique des liens et boucles de retour Master Data.'
+  required_nodes:
+  - id: ba-mdm-access-distribution
+    kind: business_area
+    field_sha256:
+      name: fef7e6e30cfab1f70eccf08318dfdb4540d1d4d5d03b77eef412dd612bc9ecfb
+      definition: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      scope: 7861d0ff4cf3a0552b6a67a83c9058bcf78059f6fbe61dcb68003f5489123885
+      market_comparisons: 9ca93d46c218b998b11d954f5f073b29c40d177cf3529a2df93f857094c36945
+      examples: f2e7458537086782abf81e886f0e6970ec16b15c67d058ff00f200867076b668
+      finality: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+  - id: ba-mdm-source-contribution
+    kind: business_area
+    field_sha256:
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      definition: 9167aa087a2204271775e5cefd590f27c9efbc89b363f5f26c10ca3d4e800c5e
+      scope: 4ed7bd92122bc24cd4b4fd3f3bd6057db6ab67409e641b3a2420ac46d17cf397
+      market_comparisons: 9e09d555e1f2758565197232668fb6c9b18bfcb52d253a6f36ab4dfa1f7d453f
+      examples: 77d03461ac5d740a345757c5c42f0e701dfdcab2715c9c990a4c44860f43626a
+      finality: 9167aa087a2204271775e5cefd590f27c9efbc89b363f5f26c10ca3d4e800c5e
+  - id: cap-mdm-distribution
+    kind: capability
+    field_sha256:
+      name: cb457233e6251e9b770357af62b7754aed8666dd54e07a4d6d690e753653a208
+      definition: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      scope: 8e1a3066e71c1646fdf0706f08e16da0163785c8395db5f130d5f9697a31f690
+      market_comparisons: fcc2645f3e082b70402fb96e5520efec58b9c55c9fe9360438542dd01047f95d
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      examples: bfcb3da2e5760036b4d7fc2fd143274102294731ca23c978f38ecf90aadef03e
+      finality: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+  - id: cap-mdm-ingestion
+    kind: capability
+    field_sha256:
+      name: ad50ab56d2bdec923960495290e32d0fba4403938146482109d0476710009acc
+      definition: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      scope: 5af55735423db5ca51c149aa91425b559e1dc484bb5d2c28196371edaceb946f
+      market_comparisons: 97c86cebce0ad9936ff787b7a621f438076d6c8c7b1b7951f96ba55eafc4e580
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      examples: aa482c3358f27a97531b59cccd92d7b129be71441000bbafa5d8b1163a6689ac
+      finality: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+  - id: cap-mdm-quality-remediation
+    kind: capability
+    field_sha256:
+      name: 718f5d94d9b5477638742cca0d515fa10647f6c390f1e69ae2e7f10440e664b1
+      definition: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      scope: de253d747de12697645f773772adda92c5180a104dc35b9dab566e5b5dbc3386
+      market_comparisons: 151c6ee4a46f589883ec8c69713675d2540c2676c2ed1091d96ee77427c90ee8
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: d5ddb2190b82cd3c16deba0bc833add844096c073d90fa0266afc43a92b85462
+      finality: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+  - id: cap-mdm-source-contribution
+    kind: capability
+    field_sha256:
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      definition: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      scope: eac32fd9cd27fef4f673e92effd20c65b854259ebb25bbfba3de29d0515c734e
+      market_comparisons: 1495cf692f1588d0c7dfa3478cead113dd08aad942df9aa70f10d4c452f8b3e1
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 7f68f6f5228e77c03512d3d37ce640288cfae8c3d6c0e55ed8c9697c92312e5e
+      finality: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+  - id: master-data-ingestion
+    kind: capability
+    field_sha256:
+      name: bfd655a204d816bec74d81d998f969f7eb38aadc5edc30d806e84d4d07d60f3c
+      definition: f6264a2f62b8d3ff0de0703d6163dc83dff2ad3472f67f9b2b8af91ef4fe1c07
+      finality: 3292e72c45c493a7d4615752882550c11ced6cd87dbe9f7ea1af944639da568c
+      scope: 53f6ef7616168b692aaee6c441c28dd300611bf1c859c5f91efd8ef21c5c700f
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      market_comparisons: c1738cb625300c3c07547e6610efa08b2cf7fd3af1e72e443f8e8b124c7fe208
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      mastership: 68ea0eb22413b8ee93bca6a12975a11ee812697541addf6b4e051f98fbd3d65f
+      decomposition_rationale: 7aa18707b63595d9f5dd0a46287b34f892362027767f821dbdab6997907c65b9
+      market_inspiration: 4a28ade89c303980869b451db6365a93ea8323acc2e42a68f2b1e10e07908ae0
+  required_relations:
+  - id: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    type: shares-data
+    source_id: cap-mdm-distribution
+    target_id: master-data-ingestion
+    field_sha256:
+      label: e1c90f44b721e2923b2dcf0bac05d85521771801dd3ed2c12d2f9b486cac83a4
+      data_exchange: 3bf9877abcb47e2c7deed94847df91aef8b5fa53993742e03ed08ef2887227e0
+  - id: REL-U1168-COMMON-access-distribution
+    type: shares-data
+    source_id: cap-mdm-access-subscription
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: da748d1e7c9c05af9bb80bbac9c8d0abb3539e38ab647a3f8c70d00728e91201
+      data_exchange: d8379a9cb7ec0c40a3ff8ee03f898fd7aafa9b48c7d41159de9758a5d2d84716
+  - id: REL-U1168-COMMON-authority-certification
+    type: shares-data
+    source_id: cap-mdm-authority
+    target_id: cap-mdm-certification
+    field_sha256:
+      label: 07510492dc2c72ddae0f8e9688dded3d13e75c4143aa90abbdadea6b42fcf95c
+      data_exchange: c9fef87e8b84e6c6aea4ee95a311e075eefb0cdbee67d488263f2efece708048
+  - id: REL-U1168-COMMON-authority-source
+    type: shares-data
+    source_id: cap-mdm-authority
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: 61c135f60157fc26d448b2bb357b0eab7d59c8f86d8fb71608c6ea3b44dd9231
+      data_exchange: f84acfa943a9521ac1b7196b2c09de753d5c098d620714e5bd5b4a241377f1a4
+  - id: REL-U1168-COMMON-certification-publication
+    type: shares-data
+    source_id: cap-mdm-certification
+    target_id: cap-mdm-publication
+    field_sha256:
+      label: 8e77b5869a4cbb7fe6ea75c8930a3d8e219238c4aa28f88d24c3fd0c35a6dd7e
+      data_exchange: 117a45bb39608d826bc0bfd44fc3d9c1f9a0137e2e3f3c1497d1ee96cf9efde7
+  - id: REL-U1168-COMMON-change-certification
+    type: shares-data
+    source_id: cap-mdm-change
+    target_id: cap-mdm-certification
+    field_sha256:
+      label: 3db001803b0f88c84a6ed04c2bb6f43a98b4f8e6e529b3270a698973fd626629
+      data_exchange: cc7b7a3f4512ddb51d95247ddba8a3de212c69ae3fa004aeb62edca58d4039f0
+  - id: REL-U1168-COMMON-change-quality
+    type: shares-data
+    source_id: cap-mdm-change
+    target_id: cap-mdm-quality-assessment
+    field_sha256:
+      label: 46ea03b4dab743e9bc55527414723d056d9af1aa0212cb3d9347da7d25d482f8
+      data_exchange: 886044ab5dcff6d278eab87c2e3ebcd40258a7e7175b60ec65f13d4ceffc08bd
+  - id: REL-U1168-COMMON-consolidation-change
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 3ef9501af19e5832ab4a83d9ff38a9bcc9e3be1e87dcbdbbd23a310a66fe4274
+      data_exchange: cd6dd3a8b4f45d988df5aa6438f9d38eb95e4cdfb5d8085b9355dbef7bc8e95e
+  - id: REL-U1168-COMMON-consolidation-enrichment
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-enrichment
+    field_sha256:
+      label: ee0455774a4e49e40923b7597a7e061d63cfa33b3125a393d76a6463bc730919
+      data_exchange: cdaa64dde5b2d749efc2df98cb60ea87eb983207cfdf386368453169cabb2fbc
+  - id: REL-U1168-COMMON-enrichment-change
+    type: shares-data
+    source_id: cap-mdm-enrichment
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 1b942f40a28ed43e055818c5ca01c8c6b142918e6e4a67eaa748f246e4637a8a
+      data_exchange: 437a0b0e5c03786d6896e6a1870a3dd2c5f86c69d6a9a3f5110a3ddd02fd74a7
+  - id: REL-U1168-COMMON-identity-consolidation
+    type: shares-data
+    source_id: cap-mdm-identity
+    target_id: cap-mdm-consolidation
+    field_sha256:
+      label: 0c4fd3c356b6515e9f79be09391fe1c9e78696ecfd7bb8b816cc63cf6b563c9a
+      data_exchange: 765912ee084c2a0735adc37c15ce5654c9893f6b03667792ef677c55abcd43b9
+  - id: REL-U1168-COMMON-ingestion-identity
+    type: shares-data
+    source_id: cap-mdm-ingestion
+    target_id: cap-mdm-identity
+    field_sha256:
+      label: 3f3cdb1843574e211786cacb2de55d9a32815aa6eae635776582c044ceb21f0d
+      data_exchange: b8bbefaa9f7daca4b7893067359f0d6dab43850b5706704773abdb80fd0d0f13
+  - id: REL-U1168-COMMON-publication-distribution
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: eac1bdd57c2b59496c9070c8e2ebc2544b3e8adc6df14a05c18e70b9d50f6a21
+      data_exchange: 641e14cfe82088265ae7bdc06da4b75915d2264a5dca5eaf859145461539d59b
+  - id: REL-U1168-COMMON-quality-certification
+    type: shares-data
+    source_id: cap-mdm-quality-assessment
+    target_id: cap-mdm-certification
+    field_sha256:
+      label: 153bd5b78da86cf269484e5b72855058ba449c65a1f8b688ff42953308d5744f
+      data_exchange: eaf0f1578bc47e3c38dcf30429ecad01d525331cb4b211825ba841000dac9b98
+  - id: REL-U1168-COMMON-quality-remediation
+    type: shares-data
+    source_id: cap-mdm-quality-assessment
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: 31959c4c72611df0bd1a9a31f7a3a48ad86f0b9ca3c04f596f237b177bead3e4
+      data_exchange: 8572691804f520247991fdec5b7a9b9edd19486a4138a366d83d7e0c951c0f06
+  - id: REL-U1168-COMMON-remediation-change
+    type: shares-data
+    source_id: cap-mdm-quality-remediation
+    target_id: cap-mdm-change
+    field_sha256:
+      label: c380f1c5b09832121809cea6cf4439c6b9ce8dd33aaddd7bd394a21dd2fbbbbd
+      data_exchange: d01e0f8992cacf8c7bfed91ffce9da4ab99331ba96b311a94afed454fad9786e
+  - id: REL-U1168-COMMON-remediation-source
+    type: shares-data
+    source_id: cap-mdm-quality-remediation
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: be8eb991fb81856c77623d36bbe9ad2a5cb24ccaeb5111194d21066737f0ccfc
+      data_exchange: 06a95307f895f5c0a8354899c07a5553f216a7550d7dfc58a7555843f7450d25
+  - id: REL-U1168-COMMON-source-ingestion
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: c71388a9ffa1e50a5a629a813d27abb26dee20d94c2445a1ff50bfeb1abec81e
+      data_exchange: 572057e2b998d8e0ac90f2c2c928ea2a6eef7b05814c63769c6a4def89330a79
+  - id: REL-U1168-COMMON-standards-quality
+    type: shares-data
+    source_id: cap-mdm-standards
+    target_id: cap-mdm-quality-assessment
+    field_sha256:
+      label: 5fadecd6608de73192f8a6b2d85d1863437cddb9d91d40cc3cc65bb17b6d1e90
+      data_exchange: 7221a7201acd84e7b3aea2bed7a9221d8b1d2ba851b8cc37d932d671061b9515
+  - id: REL-U1168-COMMON-standards-source
+    type: shares-data
+    source_id: cap-mdm-standards
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: 5fc0e943e79f72a3b8d7c776c7278a20df76024186d01fbba9c364616176e559
+      data_exchange: 0548fe79f97963ce8c5f263720c7a62aad3dce2b45e14fbf864db68a142fd19b
+  - id: REL-U1168-DELIVERY-commerce
+    type: shares-data
+    source_id: cap-mdm-distribution
+    target_id: domain-sales
+    field_sha256:
+      label: a29a8c1c2aa6eec7a6eca8682cabba3fcfc8697cb70a594d7b8edf5735604215
+      data_exchange: a1dbe018cf9ec8919b13c41d474c3b1360379d52d7b8778ab1fa449f25279780
+  - id: REL-U1168-DELIVERY-procurement
+    type: shares-data
+    source_id: cap-mdm-distribution
+    target_id: domain-sourcing-procurement
+    field_sha256:
+      label: 65e42f32e14d3c91a528341b69bf5a1e666835e58ac08d76b580e386d2f18263
+      data_exchange: 7822f5927e8ae0667bd176fa917ebfa7e2d171341d275bb9d1ba8e3831e303aa
+  - id: REL-U1168-DELIVERY-supply-configuration
+    type: shares-data
+    source_id: cap-mdm-distribution
+    target_id: subdomain-policies
+    field_sha256:
+      label: 723efd07322bb26ba9691b3e41d3fefc87fdb12ce1ed5af228a1c612851c8d6e
+      data_exchange: 5107df3616437edb9348d17473f4b77513a24e5abf8d6459170abbb313d7a130
+  - id: REL-U1168-OBJECT-CHANGE-agreement
+    type: shares-data
+    source_id: cap-mdm-agreement
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 0b7d8b58e17ea420b699f815a074146d072e102ff1d2f3c29284b357dbb8f5ed
+      data_exchange: a3c51898f9ba0439b746d626b15dd0c9845dfb5728af30c2ec06416e6a2733d5
+  - id: REL-U1168-OBJECT-CHANGE-assortment
+    type: shares-data
+    source_id: cap-mdm-assortment
+    target_id: cap-mdm-change
+    field_sha256:
+      label: c2a68973010e2f472c4dabb7db51f89be5c51a89bafe60bd0615970d013b0044
+      data_exchange: a6b506fa47ce2967274cf37f16d594719717ac52b37626084b193964250abb11
+  - id: REL-U1168-OBJECT-CHANGE-calendar
+    type: shares-data
+    source_id: cap-mdm-calendar
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 5631a8e3c70fc07773581a4b45e94b79ab5c1425be65bc82fbfb5081944ec080
+      data_exchange: ebd725021e00027de3d530d4651c835a67a016d4b4962414821730b1b263e2d5
+  - id: REL-U1168-OBJECT-CHANGE-catalog
+    type: shares-data
+    source_id: cap-mdm-catalog
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 8a0040380f29ee1de0b83b40599398cb28f3528743ba86088888598a41edb08d
+      data_exchange: 9efcfa57521543163412fa755229ae179efc9bfdd1028f960609976b3379c295
+  - id: REL-U1168-OBJECT-CHANGE-codes-classification
+    type: shares-data
+    source_id: cap-mdm-codes-classification
+    target_id: cap-mdm-change
+    field_sha256:
+      label: d8fef31c467835d9a719762f3bcf89fa2cccc887ba74c1786b65b90316449d2c
+      data_exchange: 03c4b1749f0404cbbe3d61c7d208f1afbcef8d92bed2406dfbfe466e516d518f
+  - id: REL-U1168-OBJECT-CHANGE-customer
+    type: shares-data
+    source_id: cap-mdm-customer
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 09827d6ffdd71fcafafd58ff5a06dcdf1535f755c0cad07e412abd740145b32a
+      data_exchange: cffd29f6aebf5ab13fcb5c8c2dc3c5a423488d8f31f7eb3d73dab0579478a0e8
+  - id: REL-U1168-OBJECT-CHANGE-internal-supplies
+    type: shares-data
+    source_id: cap-mdm-internal-supplies
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 2af2d3fb8d4c29c5d0eb22bb490310a9f9d76a0c42f6bac4d913b052293fcf79
+      data_exchange: 4097f76b140da8157c6c01603317fa18298d1a073516ad8721437520bbdadd2b
+  - id: REL-U1168-OBJECT-CHANGE-location-network
+    type: shares-data
+    source_id: cap-mdm-location-network
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 0e36eed611164b00ad5fdf566413296ca566599572ba27b99568d1c32745bf32
+      data_exchange: 990477e45d39c407ea3476bc1bc265e4012a047a0ca9b1687bffa72f957d4c16
+  - id: REL-U1168-OBJECT-CHANGE-packaging-material
+    type: shares-data
+    source_id: cap-mdm-packaging-material
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 4e84d96dd50771aadf5e04712edaafd25fb139986cdc7d4f94d2be440889a368
+      data_exchange: 1cd4fdb7022f54ec4be1d8bd43556be90aa5316712f9429f2d3d9bccd8dc227e
+  - id: REL-U1168-OBJECT-CHANGE-packaging-specification
+    type: shares-data
+    source_id: cap-mdm-packaging-specification
+    target_id: cap-mdm-change
+    field_sha256:
+      label: a33bb96df4bf20b1a214568bbbd1fdce463bf26aa55a82d409acd95b92b114cb
+      data_exchange: d2506c997e8c56f8d94132b0e6042cc9f86e3b1293bcd2552ba5ba2ac7c08f57
+  - id: REL-U1168-OBJECT-CHANGE-product
+    type: shares-data
+    source_id: cap-mdm-product
+    target_id: cap-mdm-change
+    field_sha256:
+      label: fb6b9fbcc178e55c8953d6597baaf964a3841bf9dad99c2aa8e9d0f05378892e
+      data_exchange: fa9f2e91d5d0bff4a757ed9e554063ab2e50a30bd0cbb56b2a14356bdb087b40
+  - id: REL-U1168-OBJECT-CHANGE-product-pricing
+    type: shares-data
+    source_id: cap-mdm-product-pricing
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 75db73817bf39adbe6a62555cae9f19b5f14f835f626e8602b4757e8698b0040
+      data_exchange: ffa4c361c6a314010588583c82119ad9d649450cf57d42c956e37dd063102b1d
+  - id: REL-U1168-OBJECT-CHANGE-service-catalog
+    type: shares-data
+    source_id: cap-mdm-service-catalog
+    target_id: cap-mdm-change
+    field_sha256:
+      label: eb778dd522932b295254a75ed46e485eb502cf9544ede9b840f64626ca275339
+      data_exchange: 07a30eed449f9d93288f44d1f118e3d505eb42edb659094c9f155713ec5dbf13
+  - id: REL-U1168-OBJECT-CHANGE-service-pricing
+    type: shares-data
+    source_id: cap-mdm-service-pricing
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 988014ab3d56e4958c75d74159865fd2faa12dab0af3583c93d613198d6f3a49
+      data_exchange: 25663d7433af9928474f7e5e94c69f6e9f8d1b5d267ae0c53839249ee08df0f0
+  - id: REL-U1168-OBJECT-CHANGE-shared-configuration
+    type: shares-data
+    source_id: cap-mdm-shared-configuration
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 0d90f7d3769cc3cdb82726b90d4724fff56e8bd9a75b8b879dde734e06ece451
+      data_exchange: ae7d34248252057c576b85736a9685b9ceb36667dff7a8327b95ae0cba9420c0
+  - id: REL-U1168-OBJECT-CHANGE-supplier
+    type: shares-data
+    source_id: cap-mdm-supplier
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 62c90ef3d6b7bc61d82fcc4930e73589101c6068ea77a5169daf24cdbb50845e
+      data_exchange: 9fccbebddaa70755ed2d2aa554513821011ef62a9004d72d8c789cd60644c0cd
+  - id: REL-U1168-OBJECT-CHANGE-trade-item
+    type: shares-data
+    source_id: cap-mdm-trade-item
+    target_id: cap-mdm-change
+    field_sha256:
+      label: c5ad08a2bcbe716d0f053cf1475ef44134ac6ff4f72955a988d0706630d248bb
+      data_exchange: 246f1ca6e20c1e18b6e05f6509e09b0f5881d6c74e0e126eda05ee1cd07bd878
+  - id: REL-U1168-OBJECT-CHANGE-unit-conversion
+    type: shares-data
+    source_id: cap-mdm-unit-conversion
+    target_id: cap-mdm-change
+    field_sha256:
+      label: d4e937bff89ae3298c56c8e89ccf9357680a2e8c545b152e453a8b897b2947b1
+      data_exchange: acb2f23eaeb51cc4a772a82d0a49c47f00fe51c83bf82994256b914684a7ef77
+  - id: REL-U1168-OBJECT-CHANGE-variant
+    type: shares-data
+    source_id: cap-mdm-variant
+    target_id: cap-mdm-change
+    field_sha256:
+      label: 1da124aa8623a49a8afe8b97ccaae4383d1c69f2acd33503d0f075f8cbbbb0f4
+      data_exchange: 400653d06d57d16fdb4ced80c39f464669ca5c2c92aa16dbfb00bec324c6e3f5
+  - id: REL-U1168-OBJECT-IN-agreement
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-agreement
+    field_sha256:
+      label: 17e00632472cdaf12d050fcb96ee035ed64ef2e39796d26494247f386b7fd665
+      data_exchange: 9b22873e4e0fcb4f18c32adcb9cb4c53344a046bd6a32c23efed8fe30d3d2de8
+  - id: REL-U1168-OBJECT-IN-assortment
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-assortment
+    field_sha256:
+      label: 43c222976103d45aebdd0db7200a2b189bddac3aead34546369684b32b63353b
+      data_exchange: a18e8c4df41599117905ffb2a07322c818b24b6c3bba611dada739befe8a003a
+  - id: REL-U1168-OBJECT-IN-calendar
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-calendar
+    field_sha256:
+      label: 50e2101361b3fb5964efe33250e6097cdefab93ea680e66eaf1b3f8287ca90b5
+      data_exchange: 1775a95f85497c6735831447e5a4f5bb93e17a8ddcd0682c20d253cd1b62365a
+  - id: REL-U1168-OBJECT-IN-catalog
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-catalog
+    field_sha256:
+      label: c34cb353ff0f5cc542bc504f67d6c624b037831f0968faeb7521c64b051ff565
+      data_exchange: 5c4babe383e4f4593e22ac19235392c28b7f31019dca7094f6a9037ed71fcadf
+  - id: REL-U1168-OBJECT-IN-codes-classification
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-codes-classification
+    field_sha256:
+      label: a3820daf1a57ffffad881eb2ee8a2bcac8b2c72024e108e7180cd1f0b1a47007
+      data_exchange: f02df1fd0df9da6dc708f428f5bb5b736c01ac5ce3fe734fcc6ff7a032d31c63
+  - id: REL-U1168-OBJECT-IN-customer
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-customer
+    field_sha256:
+      label: 9c3a32c37361b52dfe49c05c2661836731294cfee8361f5e7108240369304142
+      data_exchange: 789935f14a679ca1cc687b2a1926f225fc22039e4f69b2d0003aa40a112e263a
+  - id: REL-U1168-OBJECT-IN-internal-supplies
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-internal-supplies
+    field_sha256:
+      label: 3affdb964914927f6188f35c32a888f2d20fb58ef97285f27d9a905ea80efdeb
+      data_exchange: 08ac4d4dc10146684ae16ccdd0d40e278439bf8c90c23061c6d55960ce59fbde
+  - id: REL-U1168-OBJECT-IN-location-network
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-location-network
+    field_sha256:
+      label: 71f0cebcc10aaab7a58b9198b27c1d36fdcae365aba07529290b396f6bf6dd1f
+      data_exchange: 48cd41b6d612bf98a3c31bc75d3535d7aeec455ea0b7d99a6752aacbcb164617
+  - id: REL-U1168-OBJECT-IN-packaging-material
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-packaging-material
+    field_sha256:
+      label: d8dd0fcbdfefd5be7462b6c561b3db4ff6b6c2ef8ab703f4bf232f9bf1ece5a2
+      data_exchange: b57506512928ff854479a8613bf6363eecb7b47af4615bcca1cd62588a63571d
+  - id: REL-U1168-OBJECT-IN-packaging-specification
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-packaging-specification
+    field_sha256:
+      label: da0942f58d69be80b80789f6d00be91a098d43705cbedbba073ed302373249b4
+      data_exchange: 65ef01ed2411fb1a8af5588c72550f07772fad687a8d24d54c370652a944acf5
+  - id: REL-U1168-OBJECT-IN-product
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-product
+    field_sha256:
+      label: b39046910d4a2b054873b6e8bcca14407156c299d8d7b4aee4f0056c597f6e27
+      data_exchange: df7820f8ccc63581323171a7852761487a1c0428e2c796485dacc0c942ee1184
+  - id: REL-U1168-OBJECT-IN-product-pricing
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-product-pricing
+    field_sha256:
+      label: a0678d6ee791fecf95ef077f26c45039ee7fa4074b9a345f5021f96c22371890
+      data_exchange: 46a5fed1804901350189c27118aed16280d31d250b7b11fb35f8d9832d3ccf95
+  - id: REL-U1168-OBJECT-IN-service-catalog
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-service-catalog
+    field_sha256:
+      label: f5c8554f1e148d59a9667164c380d229fb58d5bfc684b22d03bbeb534a04ff67
+      data_exchange: 09aed81d038717b8f3de166e85369e45005c6435c3569093f581fc798e09901a
+  - id: REL-U1168-OBJECT-IN-service-pricing
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-service-pricing
+    field_sha256:
+      label: 482aacc5135a6ff16de8ea7676b36fbfe8d2dc18c2ce3c463b426e4b92a2f887
+      data_exchange: d6f2552118be311ee6d93419f1a11d375f77c8924f28b98704ade6847b1b8e59
+  - id: REL-U1168-OBJECT-IN-shared-configuration
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-shared-configuration
+    field_sha256:
+      label: 14184353b8fa69767dc542c5521d6f5f06f9121a8ad69bf001410e462b94aabc
+      data_exchange: e12deaee6c354b845f0c13ab6de02d827ef7f97f769f9190b4dc88f49d240d05
+  - id: REL-U1168-OBJECT-IN-supplier
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-supplier
+    field_sha256:
+      label: 1fa8ff21313cc843b74afb770fa0a856beda2520a8155233eb8d6c8df76281cd
+      data_exchange: a79b8440571c688b9bc12515008a78608f65fc100bc9058a73eaf9e4fddd773d
+  - id: REL-U1168-OBJECT-IN-unit-conversion
+    type: shares-data
+    source_id: cap-mdm-consolidation
+    target_id: cap-mdm-unit-conversion
+    field_sha256:
+      label: 72830aa962cd2038b0c8c1a4e8bcd7652cc39c3c2d259d681d5485919980f52d
+      data_exchange: c22de1fed17bbfec7c15a0d71b5a6aafac984f3e6125d09cfdb0500fbc73c445
+  - id: REL-U1168-OBJECT-LINK-assortment-catalog
+    type: shares-data
+    source_id: cap-mdm-assortment
+    target_id: cap-mdm-catalog
+    field_sha256:
+      label: f1f00324f885f4577124c59a44e44f4bf3551381a0da8dcd8331e85bedc3a4fe
+      data_exchange: 07fbcc0d1c3d9e60f1a4d76ac9427de52f913e3ae183ce01f5704d737f8edec5
+  - id: REL-U1168-OBJECT-LINK-material-specification
+    type: shares-data
+    source_id: cap-mdm-packaging-material
+    target_id: cap-mdm-packaging-specification
+    field_sha256:
+      label: 3ecdb463849eac72fe1fe16b515518d02a14825ea36191a0a174e8c5a2f6d427
+      data_exchange: 3760621f127e7175c5ad47a4d10ab83c0d1656557bb0c0c700b8b7074a69d8dc
+  - id: REL-U1168-OBJECT-LINK-party-agreement
+    type: shares-data
+    source_id: cap-mdm-supplier
+    target_id: cap-mdm-agreement
+    field_sha256:
+      label: 4fdaeaa36f338772950e99c216d601267f699822679e3ecbcd4d4816c9f0e9f0
+      data_exchange: d1daa57e4e5a184d6cc53f803db25e35ac10782a9d8dfc30dcb98e208326006f
+  - id: REL-U1168-OBJECT-LINK-product-assortment
+    type: shares-data
+    source_id: cap-mdm-product
+    target_id: cap-mdm-assortment
+    field_sha256:
+      label: ab590296b0b4995f993368a068f9629278de63e8adab87957c7d77cc127d8e9e
+      data_exchange: ebf0770652ea8055a83d7125bdbd7e57d5480a17e46fae96ddc05704140b7b54
+  - id: REL-U1168-OBJECT-LINK-product-variant
+    type: shares-data
+    source_id: cap-mdm-product
+    target_id: cap-mdm-variant
+    field_sha256:
+      label: 59bf7deb8b91d5d8aa5c62d4f4390931ccade99ba7c3dedc7159a61ef47bb674
+      data_exchange: 63589a78fae435f2c63ff925c51a10c1082a40fe3a28fc9ea7675cd0d50cd0ce
+  - id: REL-U1168-OBJECT-LINK-service-pricing
+    type: shares-data
+    source_id: cap-mdm-service-catalog
+    target_id: cap-mdm-service-pricing
+    field_sha256:
+      label: 1a645d0bffbbe7307a9c434657cbcd1958e706069fb2306772c81b15ecc9f046
+      data_exchange: 2e9dfc49af0226114e61f931a3c06641d8b049436ae83f860f32766b08422177
+  - id: REL-U1168-OBJECT-LINK-variant-trade-item
+    type: shares-data
+    source_id: cap-mdm-variant
+    target_id: cap-mdm-trade-item
+    field_sha256:
+      label: a421fd07a39f10ee43963871b3916306e58bf9e40007e443f058685c0b185422
+      data_exchange: cdb720e7152d9185f9a40155cf9c448faac0b251f547a56c7748a6a3baaefbc9
+  - id: REL-U1168-REQUEST-commerce
+    type: shares-data
+    source_id: domain-sales
+    target_id: cap-mdm-access-subscription
+    field_sha256:
+      label: 6bca7783e710e78c06e6c4450c6875347fd61fa41a62cdc6852fccc0d3bf95a9
+      data_exchange: 361f10552178eaa71ffa03aac8984f6d93a4001156dbca41996e681b24d0503a
+  - id: REL-U1168-REQUEST-procurement
+    type: shares-data
+    source_id: domain-sourcing-procurement
+    target_id: cap-mdm-access-subscription
+    field_sha256:
+      label: 6bca7783e710e78c06e6c4450c6875347fd61fa41a62cdc6852fccc0d3bf95a9
+      data_exchange: 361f10552178eaa71ffa03aac8984f6d93a4001156dbca41996e681b24d0503a
+  - id: REL-U1168-REQUEST-supply
+    type: shares-data
+    source_id: supply-chain-orchestration
+    target_id: cap-mdm-access-subscription
+    field_sha256:
+      label: 6bca7783e710e78c06e6c4450c6875347fd61fa41a62cdc6852fccc0d3bf95a9
+      data_exchange: 361f10552178eaa71ffa03aac8984f6d93a4001156dbca41996e681b24d0503a
+  - id: REL-U1168-RETURN-commerce
+    type: shares-data
+    source_id: domain-sales
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: cb5f6719984900ef783e890a0da71254bda321066af9cdec8d5644c590efe893
+      data_exchange: 13dd342fd6cb2fc2606487e8ee2a47945d6b97379e452ad95f32c2e8e8a42f42
+  - id: REL-U1168-RETURN-procurement
+    type: shares-data
+    source_id: domain-sourcing-procurement
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: cb5f6719984900ef783e890a0da71254bda321066af9cdec8d5644c590efe893
+      data_exchange: 13dd342fd6cb2fc2606487e8ee2a47945d6b97379e452ad95f32c2e8e8a42f42
+  - id: REL-U1168-RETURN-supply
+    type: shares-data
+    source_id: supply-chain-orchestration
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: cb5f6719984900ef783e890a0da71254bda321066af9cdec8d5644c590efe893
+      data_exchange: 13dd342fd6cb2fc2606487e8ee2a47945d6b97379e452ad95f32c2e8e8a42f42
+  - id: REL-U1168-SOURCE-agreement
+    type: shares-data
+    source_id: cap-purchase-agreement-lifecycle-management
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: e9b28a40d2f53b9eceebfa8ef4056e513d3bd701d7aad828771b940645a5fd52
+      data_exchange: 88fa833e3342140ad0fc8b0819634a273e1dd1e971d8a5551b6d5844fb38bc7e
+  - id: REL-U1168-SOURCE-assortment
+    type: shares-data
+    source_id: cap-assortment-eligibility-management
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: 6f8a8c3db72ee738d80b4d0d65e0046663de622f0531873a501f3b53df1a1f84
+      data_exchange: 1fad83ebc4ce47f640d5b94cb40d29115adc5cccfdd8d9219cc269b584996c46
+  - id: REL-U1168-SOURCE-catalog
+    type: shares-data
+    source_id: cap-commercial-catalog-publication
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: 0a4cf38969e3050db8bdfd8e3b5d7177e898d61afb1ea1316a6741e6ad2084d8
+      data_exchange: 1afab0c37f2d3f2064b0af9f87f6db9e280e85194bfcb7ca7c579ad1b423002f
+  - id: REL-U1168-SOURCE-network
+    type: shares-data
+    source_id: cap-store-network-configuration-management
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: 739327818ba21ff7967c26b8ab3899bffe15041bbc7fee8ed98c41f018ebbe1a
+      data_exchange: 2385f56889ab826a3d1d149423124e1dac769fc4ad7e55ce5b95c7fccd3dd96a
+  - id: REL-U1168-SOURCE-pricing
+    type: shares-data
+    source_id: cap-sales-pricing-rule-management
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: df45e5ce5aca38f4242021d1b52dd0249fdb582c242a91c50d08c532b518cecd
+      data_exchange: d6cb03232601eef8a3fab02dc3fb31cc00fbc0d6699f0c5c59e754c0945d79d3
+  - id: REL-U1168-SOURCE-retail-customer
+    type: shares-data
+    source_id: cap-retail-customer-engagement-management
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: ce4edd8571c1397dead3bb97222d371b4580b34cd7a166064149b7226d996164
+      data_exchange: dbf46d62e39446182356bd89f72a5cf35c13084c759829fc914455e3b5161520
+  - id: REL-U1168-SOURCE-supplier
+    type: shares-data
+    source_id: cap-supplier-eligibility-assessment
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: 5a5ef3cc35dcff22af80a4f120ca8aeec8d2f339b58c75b10f650afdd7dccf5f
+      data_exchange: 37200cc8e268e9861fab5bd326e3e62ca133ec4c1e2fefb7a1e23294d14c6e51
+  - id: REL-U1168-SOURCE-supply-configuration
+    type: shares-data
+    source_id: subdomain-policies
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: 58490e19b6c6dddfbe61c6a330b1a8acfe236014b1ed3721cad51ec27091c0db
+      data_exchange: edd19ac57dcfb207a5966e10f3c18da8580e7892e15edac8a53fe12cdb0498fe
+  - id: REL-U1168-SOURCE-wholesale-customer
+    type: shares-data
+    source_id: cap-wholesale-account-stewardship
+    target_id: cap-mdm-ingestion
+    field_sha256:
+      label: af0f73574d098ba3351831f3389bb67bb88dd6112c4b2f596c56b330aa2659ad
+      data_exchange: 522c11c05f1309f85c70158d85469887ebfc9c57dfd8e985a55dc425298a1429
+  - id: REL-U1168-VIEW-location-network
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-location-network
+    field_sha256:
+      label: c11d09900ed1785b57b5332d9672b4d201c2dd308685d2afc26354c93915064e
+      data_exchange: 052b65963ae15a396f828ea0e2501422a905952818f37a767ae4810944d2e06b
+  - id: REL-U1168-VIEW-packaging
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-packaging
+    field_sha256:
+      label: e216b789ca10909fd2be26e43e8065062823ac1209c497d3b6c9c02ceb117980
+      data_exchange: 0dcf10f82f3acb4f1e69bdebc947d3c874a24ade6dfbaff3e0826680daa9ba87
+  - id: REL-U1168-VIEW-party-agreement
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-party-agreement
+    field_sha256:
+      label: bcec96a2b79f5956993930f4fcd8dd429fa9631f1a509aa7a45e95f4727b4855
+      data_exchange: 14195b7a70418953f1b19e31348fc0a404daf83cbe43be48b0dd62a3d735f283
+  - id: REL-U1168-VIEW-product-commercial
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-product-commercial
+    field_sha256:
+      label: 889592fe1db04f9478a54fc33cfed91398369112af78523e28cf36716b52082e
+      data_exchange: 9a23694dfcf9f7ae9f02823c66f303c3d89a640319912c1bbfe7bfe268f3cb02
+  - id: REL-U1168-VIEW-service
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-service
+    field_sha256:
+      label: 4067f7bd722f759170651f4231ee57c6ea76f9205ea698b2f5f5dcb191cde735
+      data_exchange: 33f66e0c53ed87158b5c6d00a101253f776357d51022ecf44a8fe9dcc75bb18d
+  - id: REL-U1168-VIEW-shared-reference-configuration
+    type: shares-data
+    source_id: cap-mdm-publication
+    target_id: subdomain-mdm-shared-reference-configuration
+    field_sha256:
+      label: 6b020cd6e14d90811bfc7498ff3536f36af19522bc889ea9f25772f0996ac55a
+      data_exchange: 4bebe50e050e641308d596bae2560a7cf5320c38bd47ba1530e0be779233ac97
+  - id: REL-U1170-CORRECTION-REQUEST-design-product-reference
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: system-design-development
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: d5f20638cd8925cb53189173f13dfc4fb7a9018c6619bea71bd07488ba65d136
+  - id: REL-U1170-CORRECTION-OUTCOME-design-product-reference
+    type: shares-data
+    source_id: system-design-development
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-finance-credit-reference
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: domain-finance
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: dba357426685bf84c9c641166274f950f53f9b1fb4b956fdfa1c336999b9a211
+  - id: REL-U1170-CORRECTION-OUTCOME-finance-credit-reference
+    type: shares-data
+    source_id: domain-finance
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-pricing
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-sales-pricing-rule-management
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 5d62d83fb411114470e258d90366d5c63f050975a70f0979fe3bc371b2cb881d
+  - id: REL-U1170-CORRECTION-OUTCOME-pricing
+    type: shares-data
+    source_id: cap-sales-pricing-rule-management
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-assortment
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-assortment-eligibility-management
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 35bffc304f90293b29b5e53380d76c125828d713218c1c7d7b580aeefa027691
+  - id: REL-U1170-CORRECTION-OUTCOME-assortment
+    type: shares-data
+    source_id: cap-assortment-eligibility-management
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-catalog
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-commercial-catalog-publication
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 540d43f5c496ccae254d25249e93d32e01fd7a904ff42e1d2da09a8bf5f6b604
+  - id: REL-U1170-CORRECTION-OUTCOME-catalog
+    type: shares-data
+    source_id: cap-commercial-catalog-publication
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-supplier
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-supplier-eligibility-assessment
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: b0d6df1933298d754522a707edd2301682f582be1c7ee1a9736f95e56c6a73c1
+  - id: REL-U1170-CORRECTION-OUTCOME-supplier
+    type: shares-data
+    source_id: cap-supplier-eligibility-assessment
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-agreement
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-purchase-agreement-lifecycle-management
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 03af30729f61fffef479d6f3dcf7f85ebe8450fefd46e71d3172799b127de6fd
+  - id: REL-U1170-CORRECTION-OUTCOME-agreement
+    type: shares-data
+    source_id: cap-purchase-agreement-lifecycle-management
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-network
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-store-network-configuration-management
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: acb5619a6306b3ea38053945bd9962011e2a69c2497680e197d40708b4771556
+  - id: REL-U1170-CORRECTION-OUTCOME-network
+    type: shares-data
+    source_id: cap-store-network-configuration-management
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-retail-customer
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-retail-customer-engagement-management
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 9bc6ce2ad8941853563a7be6c8d34718821ff0fe811b126c01780d92f1f815e4
+  - id: REL-U1170-CORRECTION-OUTCOME-retail-customer
+    type: shares-data
+    source_id: cap-retail-customer-engagement-management
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-wholesale-customer
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-wholesale-account-stewardship
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 81004b4f611b9204c706a6c3f90c16f7277c1fba21bc900df3f96059c9e73bc6
+  - id: REL-U1170-CORRECTION-OUTCOME-wholesale-customer
+    type: shares-data
+    source_id: cap-wholesale-account-stewardship
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-CORRECTION-REQUEST-supply-configuration
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: subdomain-policies
+    field_sha256:
+      label: 66afe9885c866e64a92d80b9bd7e156d47b9d07cb0d1636c1e6b29e911215128
+      data_exchange: 0aa1ccabc880f31a56ae3fbc4165ba30f88e1c0a9c72b00a30a08f3a65a3cdbb
+  - id: REL-U1170-CORRECTION-OUTCOME-supply-configuration
+    type: shares-data
+    source_id: subdomain-policies
+    target_id: cap-mdm-source-contribution
+    field_sha256:
+      label: f16fef68ce425921748a9253e9327d197f2f8d517f28a049e1bb8200748ce8a5
+      data_exchange: 6f8999ff2d959e08360b1e6b432e5a6a168daa76d9503c69b4e5d6e6d81252d8
+  - id: REL-U1170-SOURCE-OUTCOMES-TO-REMEDIATION
+    type: shares-data
+    source_id: cap-mdm-source-contribution
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: 2afa8789b5b2c0423ff2b7cbddb197d442c1be346b6fa73a4aae9407a5b930c3
+      data_exchange: 0dd8f0c59a15bc6b3c612ad6df5a509e992413e65723cfe7f5aa97cf262a10fb
+  - id: REL-U1170-CORRECTED-CONTRIBUTION-RECEIPTS
+    type: shares-data
+    source_id: cap-mdm-ingestion
+    target_id: cap-mdm-quality-remediation
+    field_sha256:
+      label: 2303a312749ea3bda467e09aadd144598b78665ca3e5d1c3fc926c5cbea4acf3
+      data_exchange: 8794aeec8740926579cd3f0895170899c7a2919cdf120c8456f0d6b9f3ca151b
+  - id: REL-U1170-CORRECTION-FOLLOW-UP-commerce
+    type: shares-data
+    source_id: cap-mdm-quality-remediation
+    target_id: domain-sales
+    field_sha256:
+      label: 0ed4ac563071757bbd8a53e7cd51740761adc31acb30eb81d1206144d3f54242
+      data_exchange: 187e6366835948608dcc9dfab7bce2d3834004f11f68d8cd43fc2e491c572c1a
+  - id: REL-U1170-CORRECTION-FOLLOW-UP-procurement
+    type: shares-data
+    source_id: cap-mdm-quality-remediation
+    target_id: domain-sourcing-procurement
+    field_sha256:
+      label: 0ed4ac563071757bbd8a53e7cd51740761adc31acb30eb81d1206144d3f54242
+      data_exchange: 187e6366835948608dcc9dfab7bce2d3834004f11f68d8cd43fc2e491c572c1a
+  - id: REL-U1170-CORRECTION-FOLLOW-UP-supply
+    type: shares-data
+    source_id: cap-mdm-quality-remediation
+    target_id: supply-chain-orchestration
+    field_sha256:
+      label: 0ed4ac563071757bbd8a53e7cd51740761adc31acb30eb81d1206144d3f54242
+      data_exchange: 187e6366835948608dcc9dfab7bce2d3834004f11f68d8cd43fc2e491c572c1a
+  - id: REL-U1170-DELIVERY-STATUS-supply-references
+    type: shares-data
+    source_id: master-data-ingestion
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: 31cbc6fd4df9644b5c28edac5ad56eb24b4c2c5002e8fa25ba243d9582dfe261
+      data_exchange: de4d39816dca085662f3ad18e5c83a1a3da17702faba8e4c3ecbc16c83d5b6e9
+  - id: REL-U1170-DELIVERY-STATUS-commerce
+    type: shares-data
+    source_id: domain-sales
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: 31cbc6fd4df9644b5c28edac5ad56eb24b4c2c5002e8fa25ba243d9582dfe261
+      data_exchange: de4d39816dca085662f3ad18e5c83a1a3da17702faba8e4c3ecbc16c83d5b6e9
+  - id: REL-U1170-DELIVERY-STATUS-procurement
+    type: shares-data
+    source_id: domain-sourcing-procurement
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: 31cbc6fd4df9644b5c28edac5ad56eb24b4c2c5002e8fa25ba243d9582dfe261
+      data_exchange: de4d39816dca085662f3ad18e5c83a1a3da17702faba8e4c3ecbc16c83d5b6e9
+  - id: REL-U1170-DELIVERY-STATUS-supply-configuration
+    type: shares-data
+    source_id: subdomain-policies
+    target_id: cap-mdm-distribution
+    field_sha256:
+      label: 31cbc6fd4df9644b5c28edac5ad56eb24b4c2c5002e8fa25ba243d9582dfe261
+      data_exchange: de4d39816dca085662f3ad18e5c83a1a3da17702faba8e4c3ecbc16c83d5b6e9
+  required_glossary:
+  - id: TER050
+    field_sha256:
+      id: aa14ec648a407fb1253181a6920d9b02fcf50829f167ab04c96483e06ec2c00a
+      name: bfd655a204d816bec74d81d998f969f7eb38aadc5edc30d806e84d4d07d60f3c
+      short_description: db296787e8c1a9e761e432337972b52f3dceac4176ba4c4f4cf226524194b2cd
+      definition: f6264a2f62b8d3ff0de0703d6163dc83dff2ad3472f67f9b2b8af91ef4fe1c07
+      context: 26c305a3df112b5e367d2525dcf807d06ff8b9aca3b07b6cc4286d7fa2d69195
+      notes: c5b38e418045877cefe227834067c203b288deeaea7cccd8c8712ed8ce0808e6
+      market_comparisons: 0e3ac71301371686fe1ea94d63e9857ab0c5c499ac1e47f157c5e0601467d14b
+      market_inspiration: eccf15e9d0fa77517707e7e81485b2d5e2db4f559dfcdd61387f1e39994501e2
+  - id: TER397
+    field_sha256:
+      id: 83eee18e14b4486f59cf8a50c273cdc0d7ac92f89695594702760fb2e5a8df44
+      name: 718f5d94d9b5477638742cca0d515fa10647f6c390f1e69ae2e7f10440e664b1
+      short_description: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      definition: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      context: 48e88d4a891a7c721e565d2ad99be94430b3f935c33d958feb42c5010cc0c4c6
+      market_comparisons: 151c6ee4a46f589883ec8c69713675d2540c2676c2ed1091d96ee77427c90ee8
+  - id: TER399
+    field_sha256:
+      id: c2eef3f8782108fc39e40bdbb694209364fed6e5b0e2124ba1f58d0a47747799
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      short_description: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      definition: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      context: 6c369613fb3b96cbe380a36d989e10339a0a67231759fe156dce24f7a4b01ae0
+      market_comparisons: 1495cf692f1588d0c7dfa3478cead113dd08aad942df9aa70f10d4c452f8b3e1
+  - id: TER400
+    field_sha256:
+      id: 4c4674f033ea114b6ee3b0ca48e84d443dded67388e4038e648d32dfc2806f32
+      name: ad50ab56d2bdec923960495290e32d0fba4403938146482109d0476710009acc
+      short_description: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      definition: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      context: b8a9038f644c719e25e0e3bb1c0fb1ceb9b5cebfd7f1487450e55de7c6df2952
+      market_comparisons: 97c86cebce0ad9936ff787b7a621f438076d6c8c7b1b7951f96ba55eafc4e580
+  - id: TER410
+    field_sha256:
+      id: ae07569abb955c5f1272ac128eabe344704087c3fa15cd8c81d2c214447b4d0a
+      name: fef7e6e30cfab1f70eccf08318dfdb4540d1d4d5d03b77eef412dd612bc9ecfb
+      short_description: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      definition: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      context: 99672c700ab9a6273716a41b221bb8ec9a6ea6db3feb1f77675b519821de82ca
+      market_comparisons: 9ca93d46c218b998b11d954f5f073b29c40d177cf3529a2df93f857094c36945
+  - id: TER412
+    field_sha256:
+      id: 62a05386577065d7ad5205fe261dc9af5cd3ed83c3196bfe68898b30a6610ef2
+      name: cb457233e6251e9b770357af62b7754aed8666dd54e07a4d6d690e753653a208
+      short_description: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      definition: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      context: bea0282053e84c562e2e86f61b845e5d56e267d9a26a53c438c4a5fda6807b94
+      market_comparisons: fcc2645f3e082b70402fb96e5520efec58b9c55c9fe9360438542dd01047f95d
+  - id: TER466
+    field_sha256:
+      id: b4b3a9c732e060e77a1d11f1f289f71ce4ce85686559f688fea6f7f36b627e0d
+      name: cfde9432584b41495a5ab45163b0fc70f7e4003d12438487c4bd146cbcf59ddb
+      short_description: 6f704107e35530b3aeca3e1473baa01de3d47d11431c6f08deae4e31f83327b2
+      definition: ecee0dd906f3442bb30fbceaad3358c071e7175d91a99c9614ef36d61fafdecc
+      context: e6a9be6b31ee83de54cda19ded87c609c4d948158b4c1a99c0f7697b3e5f40b4
+  - id: TER467
+    field_sha256:
+      id: 7b6bc8fe6afba86db587e3638ca9aa519998e6bc22ef8b9bab9c6ebbe4f59e83
+      name: 36292b0923c767c9ca7e82fca11eb89f32a66807ea1f1636892f0d947c8d429a
+      short_description: ea72e432b0ffb8d1f82fba6dc31ef6b592c9a99fd21920cb277dd88937f81126
+      definition: ea72e432b0ffb8d1f82fba6dc31ef6b592c9a99fd21920cb277dd88937f81126
+      context: 5aab184d6ab462ab4dfa17f14aa027b881d4a3806d366eb337dd9d5cc4aa65c8
+      market_comparisons: 9628c8fbe0d20b2750a48eee0c59d75bbdf5a0371bf495b7ba64149ed7d97b4b
+  - id: TER468
+    field_sha256:
+      id: f69d827a8a4775b4c35904e5e508cdffa8f41d78ddb538369c4cfbf5a5afd18c
+      name: ccff42862490293bfb6ac40fef9d993c26aec428d29a293842609d3e238a25f6
+      short_description: a67002c847bf5abb8ade01e66b3a72303c1697922ac27bb2019fb8ff3bbf36bf
+      definition: a67002c847bf5abb8ade01e66b3a72303c1697922ac27bb2019fb8ff3bbf36bf
+      context: f0b3b0ee56004e55e562b5872a11e7460cbd82974221cfd15a676f1f5f1d31af
+      market_comparisons: 356c9c7e89f542be156622695b04833081ec127083a9946b082b56ab99612b9f
+  - id: TER469
+    field_sha256:
+      id: 7a322c887fd8302abdf4b4d0a533a69522f4f1c6cf80cc149787ad94f42166f1
+      name: 326eed1d6eab770c79e81b0c5edd5af8ac1fd9358fd820b6b497c78e61f3599d
+      short_description: 923a215bbadd96f55b29f8583abdb0366d11701463d229194cfcbc2b01830f57
+      definition: 923a215bbadd96f55b29f8583abdb0366d11701463d229194cfcbc2b01830f57
+      context: 6d1f323005e79c4284419826868cfdfd2cf70b8a795811987adc81e9aae1fc19
+      market_comparisons: 29c9cd841091e5f1d296295d446cee48b85faf4cdb5c7c3abfe40a566f8601d9
+  absent_nodes: []
+  absent_relations: []
+  supersedes_requirements:
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: nodes
+    id: ba-mdm-source-contribution
+    fields:
+    - scope
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: nodes
+    id: cap-mdm-source-contribution
+    fields:
+    - market_comparisons
+    - scope
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - market_inspiration
+    - scope
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-access-distribution
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-authority-certification
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-authority-source
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-certification-publication
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-change-certification
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-change-quality
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-consolidation-change
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-consolidation-enrichment
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-enrichment-change
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-identity-consolidation
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-ingestion-identity
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-publication-distribution
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-quality-certification
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-quality-remediation
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-remediation-change
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-remediation-source
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-source-ingestion
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-standards-quality
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-COMMON-standards-source
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-DELIVERY-commerce
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-DELIVERY-procurement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-DELIVERY-supply-configuration
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-agreement
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-assortment
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-calendar
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-catalog
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-codes-classification
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-customer
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-internal-supplies
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-location-network
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-packaging-material
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-packaging-specification
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-product
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-product-pricing
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-service-catalog
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-service-pricing
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-shared-configuration
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-supplier
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-trade-item
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-unit-conversion
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-CHANGE-variant
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-agreement
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-assortment
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-calendar
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-catalog
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-codes-classification
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-customer
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-internal-supplies
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-location-network
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-packaging-material
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-packaging-specification
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-product
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-product-pricing
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-service-catalog
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-service-pricing
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-shared-configuration
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-supplier
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-IN-unit-conversion
+    fields:
+    - data_exchange
+    - label
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-assortment-catalog
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-material-specification
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-party-agreement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-product-assortment
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-product-variant
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-service-pricing
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-OBJECT-LINK-variant-trade-item
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-REQUEST-commerce
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-REQUEST-procurement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-REQUEST-supply
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-RETURN-commerce
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-RETURN-procurement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-RETURN-supply
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-agreement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-assortment
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-catalog
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-network
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-pricing
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-retail-customer
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-supplier
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-supply-configuration
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-SOURCE-wholesale-customer
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-location-network
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-packaging
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-party-agreement
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-product-commercial
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-service
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: relations
+    id: REL-U1168-VIEW-shared-reference-configuration
+    fields:
+    - data_exchange
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: terms
+    id: TER050
+    fields:
+    - context
+    - market_inspiration
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: terms
+    id: TER399
+    fields:
+    - context
+    - market_comparisons
+  - annex: master-data-domain-U1166.yaml
+    collection: nodes
+    id: ba-mdm-access-distribution
+    fields:
+    - scope
+  - annex: master-data-domain-U1166.yaml
+    collection: nodes
+    id: cap-mdm-distribution
+    fields:
+    - scope
+  - annex: master-data-domain-U1166.yaml
+    collection: nodes
+    id: cap-mdm-ingestion
+    fields:
+    - scope
+  - annex: master-data-domain-U1166.yaml
+    collection: nodes
+    id: cap-mdm-quality-remediation
+    fields:
+    - scope
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER050
+    fields:
+    - market_inspiration
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER397
+    fields:
+    - context
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER400
+    fields:
+    - context
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER410
+    fields:
+    - context
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER412
+    fields:
+    - context
+  - annex: master-data-domain-U1166.yaml
+    collection: terms
+    id: TER466
+    fields:
+    - context

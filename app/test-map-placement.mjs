@@ -130,6 +130,16 @@ test('historical omissions remain absent and additional published domains are pr
   assert.equal(operationsMapSlots('system-business-operations', ['legacy-domain']), undefined);
 });
 
+test('current Master Data follows Supply without the empty former Logistics row', () => {
+  const ids = ['domain-sourcing-procurement', 'domain-sales', 'domain-master-data', 'supply-chain-orchestration'];
+  const slots = operationsMapSlots('system-business-operations', ids);
+  const supply = slots.find((slot) => ids[slot.index] === 'supply-chain-orchestration');
+  const master = slots.find((slot) => ids[slot.index] === 'domain-master-data');
+  assert.equal(master.row, supply.row + 1);
+  assert.deepEqual([...new Set(slots.map((slot) => slot.row))], [0, 1, 2]);
+  assert.equal(ids[2], 'domain-master-data');
+});
+
 test('domain focus keeps the standard automatic placement, even for the same identifiers', () => {
   assert.equal(operationsMapSlots('supply-chain-orchestration', domains), undefined);
   const sections = [{ heights: [280, 280, 280, 280, 280], headingHeight: 0 }];

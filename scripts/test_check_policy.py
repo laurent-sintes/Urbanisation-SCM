@@ -18,7 +18,7 @@ class CheckPolicyTests(unittest.TestCase):
     def test_main_push_runs_checks_before_deploy(self):
         workflow = read(ROOT / '.github/workflows/atlas-pages.yml')
         self.assertNotIn('pull_request', workflow['on'])
-        self.assertEqual(workflow['on']['push']['branches'], ['main'])
+        self.assertEqual(workflow['on']['push']['branches'], ['**'])
         self.assertNotIn('paths', workflow['on']['push'])
         gate = workflow['jobs']['checks']
         self.assertEqual(gate['name'], 'Atlas checks')
@@ -104,7 +104,7 @@ class CheckPolicyTests(unittest.TestCase):
     def test_frontend_python_and_global_config_select_conservative_checks(self):
         self.assertTrue(plan(['app/modeling_guide.py'])['contracts'])
         self.assertTrue(plan(['modeles/backlog/glossary.yaml'])['contracts'])
-        self.assertFalse(plan(['modeles/backlog/glossary.yaml'])['browser'])
+        self.assertTrue(plan(['modeles/backlog/glossary.yaml'])['browser'])
         self.assertTrue(plan(['modeles/release/index.json'])['browser'])
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['matrix'])
@@ -114,7 +114,7 @@ class CheckPolicyTests(unittest.TestCase):
             self.assertTrue(plan(['app/' + recipe])['matrix'])
         self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])
         self.assertFalse(plan(['app/src/components/glossary.css'])['matrix'])
-        self.assertEqual(plan(['modeles/backlog/model.yaml'])['contract_profile'], 'backlog')
+        self.assertEqual(plan(['modeles/backlog/model.yaml'])['contract_profile'], 'current')
         self.assertEqual(plan(['.github/workflows/atlas-pages.yml'])['contract_profile'], 'policy')
         self.assertTrue(plan(['.github/workflows/atlas-pages.yml'])['contracts'])
         self.assertEqual(plan(['scripts/export_atlas.py', 'modeles/backlog/model.yaml'])['contract_profile'], 'full')

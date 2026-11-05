@@ -1,17 +1,17 @@
 ---
 name: push
-description: Pousser directement les commits validés du projet Beaumanoir Cartographie sur main et vérifier la CI ainsi que le déploiement Atlas. À utiliser pour une demande de push de ce dépôt ; la release métier reste distincte.
+description: Pousser directement les commits validés du projet Beaumanoir Cartographie sur main et vérifier la CI ainsi que le déploiement Atlas. À utiliser pour une demande de push de ce dépôt ; les tests sont exécutés par GitHub après le push.
 ---
 
 # Push direct d'Urbanisation SCM
 
-Travailler dans `C:/Dev/Beaumanoir Cartographie` et lire `AGENTS.md`. Le seul distant autorisé est `laurent-sintes/Urbanisation-SCM` (HTTPS ou SSH), avec une seule URL d'envoi. Une demande de push autorise l'envoi des commits du lot sur `main` sans PR ni confirmation répétée. Si Laurent demande aussi un commit, suivre `skills/commit/SKILL.md` d'abord. Le push ne déclenche pas de release métier.
+Travailler dans `C:/Dev/Beaumanoir Cartographie` et lire `AGENTS.md`. Le seul distant autorisé est `laurent-sintes/Urbanisation-SCM` (HTTPS ou SSH), avec une seule URL d'envoi. Une demande de push autorise l'envoi des commits du lot sur `main` sans PR ni confirmation répétée. Si Laurent demande aussi un commit, suivre `skills/commit/SKILL.md` d'abord. Atlas est construit à partir du modèle courant, sans étape de release métier.
 
 ## Préparer
 
 Vérifier racine, branche, statut, commits à envoyer et URL de lecture/envoi d'`origin`. Faire `git fetch origin`, comparer `HEAD` à `origin/main`, puis examiner le diff du lot. Préserver les changements locaux sans rapport. Le travail validé sur une branche de travail rejoint `main` par avance rapide lorsque c'est possible ; ne pas créer de PR pour ce parcours. Si `main` a avancé, examiner ses changements avant intégration. Ne jamais forcer, écraser un historique ou résoudre un conflit métier sans fondement.
 
-Exécuter les contrôles proportionnés aux fichiers réellement modifiés, selon `AGENTS.md` et `scripts/plan_checks.py`. Réutiliser ceux déjà réussis si leurs entrées n'ont pas changé. Pour une modification du parcours de publication, tester les contrats concernés et le build ; pour un changement de carte ou de hotspots, exécuter aussi la matrice complète. `python scripts/preflight_push.py` peut servir au diagnostic Git, mais son mode `--run` complet n'est pas une étape systématique. Ne pas pousser si un contrôle nécessaire échoue.
+Ne lancer aucun test ni build local automatiquement pour une demande de push. Les tests sont exécutés sur GitHub après l’envoi ; les commandes locales restent manuelles. Ne pas employer `preflight_push.py --run` comme précondition au push. La revue du diff, la vérification du distant et la préservation du travail local restent nécessaires.
 
 ## Envoyer et vérifier
 

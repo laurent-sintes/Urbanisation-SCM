@@ -85,7 +85,7 @@ def validate_display_index(model):
         expected = build_display_index(model)
     except (ValueError, KeyError, TypeError) as exc:
         return [f'display_index: {exc}']
-    if model.get('space') == 'release' and index != expected:
+    if model.get('space') in ('current', 'release') and index != expected:
         return ['display_index: codes and reading order differ from the frozen snapshot']
     if model.get('space') == 'backlog' and index is not None:
         return ['display_index: generated at publication only; do not maintain a second catalogue']

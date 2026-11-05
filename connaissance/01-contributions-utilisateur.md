@@ -26208,3 +26208,84 @@ Verbatims : « Go pour appliquer les préconisations de l’audit dans l’ordre
 Portée : livrer les corrections techniques de l’audit, figer le vocabulaire et les présentations de lecture avec une nouvelle édition du guide, publier localement puis pousser et vérifier Atlas distant. Les libellés de contexte déjà affichés sont rendus explicites dans le catalogue applicatif. Aucune nouvelle définition métier, relation ou portée d’accord n’est déduite de cette livraison ; les publications historiques restent figées.
 
 Audit technique : [fidélité des contenus et externalisation des libellés](../app/audits/2026-10-24-code-libelles.md).
+
+## U1166
+
+Date : 2026-11-05. Source : Laurent, construction et validation du domaine Master Data dans cette conversation.
+
+Verbatim initial : « Je souhaite créer un nouveau domaine "Master Data" dans "Business Operations"
+
+Ce domaine est un MDM chargé d'ingérer les sources de données où les informations sont créés pour créer des référentiels agrégés qui seront les sources de vérité pour alimenter les autres domaines.
+Il doit falloir ingérer des données de plein de sources différentes (bronze), il faut les nettoyer et les intégrer dans un modèle silver. Ensuite on doit pouvoir faire une promotion des données au niveau Gold et les distribuer aux systèmes abonnés et autorisés ou alors alimenter des vues gérées par le domaine Master Data : Customer360, Supplier360, Product360, etc. On peut prévoir un BA spécialisée dans l'enrichissement, par exemple produire des ProductVariant avec un EAN associé pour alimenter des articles.
+
+Ce domaine doit pouvoir garantir une centralisation et une qualité des données opérationnelles de paramétrage / configuration pour tous les domaines de Business Operations.
+
+Ca doit pouvoir aussi alléger (peut être) "Operational references" de la SCM.
+
+Je voudrais ton avis avant toute modif. »
+
+Précisions et demandes successives, verbatim :
+
+- « Propose-moi la décomposition du domaine Master Data en sous-domaines, BA et capacités, en précisant ce qui reste dans Operational References. Toujours sans modifier le modèle. »
+- « Operational References est un référentiel simple, alors que Master Data est une usine à ingérer et produire une donnée de qualité. »
+- « Les 3 vues sont elles suffisantes ? Il me semble qu'il manque les assortiments et les prix aussi qui sont partagés entre Commerce et Supply »
+- « Quelles sont les vues 360 qu'on pourrait mettre ? Que dit le marché ? »
+- « Les vues pourrait être des capacités ? »
+- « Montre moi un tableau avec le résumé des entrées du domaine »
+- « Propose-moi le rattachement des capacités par objet dans des sous-domaines et BA, puis montre-moi le tableau complet, sans modifier le modèle. »
+- « Complète la proposition avec les accords, les services, les conditionnements et les configurations partagées, puis montre-moi le tableau complet, toujours sans modifier le modèle. »
+- « Ajoute aussi les fournitures et équipements internes à la proposition, puis montre-moi le tableau complet, toujours sans modifier le modèle. »
+
+Accord et demande d'application, verbatim : « Je valide cette proposition. Intègre le domaine Master Data dans le backlog, avec l’alignement du glossaire et la simplification d’Operational References, sans lancer de release. »
+
+Portée : appliquer le tableau final discuté (un domaine Master Data dans Business Operations, neuf sous-domaines, vingt et une Business Areas et trente-trois capacités), ses frontières et les compléments successifs. Simplifier Operational References en conservant ses cinq familles documentaires et Reference Maintenance / Reference Ingestion, avec retrait des cinq capacités de stewardship par famille. Master Data porte la consolidation, l'enrichissement, la qualité et les publications de référence ; les autorités métier, les engagements, l'exécution, la comptabilité et les publications historiques restent distincts. Les vues sont des résultats des capacités par objet, sans nouveaux nœuds de vue ni comportements implicites. Les détails éditoriaux, exemples et correspondances marché rédigés après cet accord restent proposés. Aucune release, commit ou push demandé.
+
+Application et périmètre exact : [intégration du domaine Master Data](../modeles/backlog/master-data-domain-U1166.yaml).
+
+## U1167
+
+Date : 2026-11-05. Source : Laurent, audit après l’intégration U1166.
+
+Verbatim : « Audit de cohérence (relation, etc) »
+
+Portée : auditer le domaine Master Data récemment intégré au backlog, ses rattachements, relations métier internes et transversales, frontières avec les domaines producteurs et consommateurs, glossaire, accords et simplification d’Operational References. Vérifier l’intégrité du modèle courant et distinguer les contrôles structurels des lacunes sémantiques. La demande d’audit n’étend pas l’accord U1166 et n’autorise pas de nouvelle responsabilité métier, de nouvelle relation ni de release.
+
+Résultat : [audit de cohérence Master Data](../modeles/backlog/master-data-coherence-audit-U1167.yaml).
+
+## U1168
+
+Date : 2026-11-05. Source : Laurent, accord sur la correction des cinq points de l’audit U1167.
+
+Verbatim : « Go pour corriger les cinq points de l’audit dans l’ordre proposé, en alignant modèle et glossaire. Garde les exceptions directes seulement si elles sont justifiées, sans lancer de release. »
+
+Portée : appliquer MDM-U1167-01 à MDM-U1167-05 dans cet ordre : échanges avec les producteurs et consommateurs, contributions entre capacités de l’usine, qualification des trajets directs historiques, distinction des deux responsabilités de fournitures internes dans le glossaire et correction des preuves marché trop générales. Préserver les identités et le découpage U1166 ; ne conserver un trajet direct que sur justification documentée. Ne pas déduire d’interface installée, de source Beaumanoir non prouvée, de séquence universelle ou d’autorité métier nouvelle. L’accord couvre ce lot de correction ; les compléments détaillés de contrats et de rédaction restent identifiés. Aucune release, commit ou push demandé.
+
+Application : [correction de l’audit Master Data](../modeles/backlog/master-data-coherence-application-U1168.yaml).
+
+## U1169
+
+Date : 2026-11-05. Source : Laurent, nouvel audit après application des corrections U1168.
+
+Verbatim : « Refais un audit »
+
+Portée : réexaminer l’état corrigé du domaine Master Data, ses relations internes et transversales, les contrats de données, le glossaire, les preuves marché, les accords et les frontières avec Operational References. Vérifier la résolution des cinq constats U1167 et rechercher les incohérences introduites ou restantes. Cette demande n’autorise aucune nouvelle correction du modèle, du glossaire ou des accords, ni aucune release.
+
+Résultat : [nouvel audit de cohérence Master Data](../modeles/backlog/master-data-coherence-audit-U1169.yaml).
+
+## U1170
+
+Date : 2026-11-05. Source : Laurent, autorisation de corriger les trois réserves de l’audit U1169.
+
+Verbatim : « Tu peux corriger ? »
+
+Portée : appliquer les corrections MDM-U1169-01 à MDM-U1169-03 : distinguer données et traitements dans les contrats et leurs liens de glossaire, expliciter les demandes et retours de correction auprès des producteurs documentés, et décrire les retours de réception ou rejet nécessaires au suivi de distribution. Aligner modèle et glossaire dans le même lot ; préserver les autorités sources, le référentiel simple Supply, les identités et le découpage. Aucun protocole technique, transfert de maîtrise ou déploiement installé déduit. La livraison reste limitée au backlog, sans release, commit ou push.
+
+Application : [correction des contrats Master Data](../modeles/backlog/master-data-feedback-application-U1170.yaml).
+
+## U1171
+
+Date : 2026-11-05. Source : Laurent, demande de publication locale du modèle.
+
+Verbatim : « Release »
+
+Portée : préparer et activer une nouvelle publication du backlog courant dans FLOW Atlas, incluant Master Data, l’alignement du glossaire, la simplification d’Operational References et les corrections U1168/U1170. La demande remplace la restriction antérieure « sans release » pour ce lot. Elle ne vaut ni nouvel accord métier sur les champs proposés, ni autorisation de commit, push ou déploiement distant.

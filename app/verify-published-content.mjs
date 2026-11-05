@@ -113,7 +113,9 @@ try {
   const visit = async (params) => {
     const { view = '', ...query } = params;
     await page.goto(`${base}#/${view}?${new URLSearchParams(query)}`);
-    await page.locator(`#fa-version[data-version="${params.version || version}"]`).waitFor({ state: 'attached' });
+    await page
+      .locator(`#fa-version[data-version="${index.mode === 'current' ? version : params.version || version}"]`)
+      .waitFor({ state: 'attached' });
   };
   const content = async (selector) => {
     const area = page.locator(selector);
@@ -322,9 +324,14 @@ try {
   }
   // Reproduce the reported pinned URL, then recover through the visible UI.
   await visit({ version: '2026-09-28.1', view: 'principles', principle: 'method' });
-  await page.getByRole('heading', { name: 'La méthode', exact: true }).waitFor();
-  await page.getByRole('complementary', { name: 'Publication consultée' }).waitFor();
-  await page.getByRole('button', { name: 'Suivre la version courante', exact: true }).click();
+  if (index.mode === 'current') {
+    assert.equal(await page.getByRole('complementary', { name: 'Publication consultée' }).count(), 0);
+    await visit({ view: 'principles' });
+  } else {
+    await page.getByRole('heading', { name: 'La méthode', exact: true }).waitFor();
+    await page.getByRole('complementary', { name: 'Publication consultée' }).waitFor();
+    await page.getByRole('button', { name: 'Suivre la version courante', exact: true }).click();
+  }
   await page.getByRole('heading', { name: guide.title, exact: true }).waitFor();
   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).has('version'), false);
   // Current navigation must remain current, even through glossary detours.

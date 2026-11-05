@@ -93,7 +93,7 @@ try {
     if ((await dossier.getAttribute('open')) === null) await dossier.locator('summary').click();
   };
   assert.equal(await page.locator('.workspace-header .page-heading').count(), 0, 'no duplicate visual title band');
-  assert.equal(await page.getByRole('heading', { level: 1, name: 'Points chauds', exact: true }).count(), 1);
+  await page.getByRole('heading', { level: 1, name: 'Points chauds', exact: true }).waitFor({ state: 'attached' });
   const verifyPinnedHeader = async (fullscreen, screenshot) => {
     const scroller = page.locator(fullscreen ? '.hotspot-page' : '.workspace-content');
     const geometry = () =>

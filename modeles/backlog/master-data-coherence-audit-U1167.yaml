@@ -1,0 +1,307 @@
+schema_version: 1.0.0
+id: MASTER-DATA-COHERENCE-AUDIT-U1167
+date: '2026-11-05'
+status: completed_findings_proposed
+source_refs:
+- U1166
+- U1167
+scope: Domaine Master Data U1166, référentiel Supply simplifié et voisinage des producteurs/consommateurs ; intégrité structurelle
+  globale du backlog. Pas de rejeu de l’audit historique des comportements ni d’étude des réalisations installées.
+mutation_boundary: Seuls la contribution utilisateur, le présent audit et l’index des sources sont mis à jour. Aucune correction
+  du modèle, du glossaire ou des accords ; aucune release.
+audited_fingerprints:
+  model: 7585a8c24b5818f30b86ac9a5cee345d6f78e3783b284cd54e861246ed239c45
+  glossary: b6f6b2b5d78987e1823fcc9aa70b6b31f60907480d610769b3340909f8cfe9e4
+  agreements: 30013e2a82db6202770c7da6d4664753444abb6335e4cb44c518fdd19f6f10c8
+  release_index: 491b4290f2a11855ec7e63341600c6227a79bc35cf52e167832339414883982f
+  as_is_pointer: 8dbaa18de2e74f785409155b602d71503969248f8f780d7ce9aeab14bbda5b8c
+conclusion: Structure et captures d’accord cohérentes ; réseau de relations métier incomplet et ambiguïté ciblée de glossaire.
+  Le lot ne peut pas être qualifié de complet du point de vue relationnel.
+metrics:
+  nodes: 64
+  subdomains: 9
+  business_areas: 21
+  capabilities: 33
+  behavior_nodes: 0
+  relations_by_type:
+    presents: 10
+    contains: 54
+    shares-data: 1
+  external_incoming_relations: 0
+  external_outgoing_relations: 1
+  internal_business_relations: 0
+  capabilities_without_business_relation: 32
+  u1166_agreements_current: 130
+  mdm_scenario_links: 0
+verified:
+- Un domaine rattaché à Business Operations, neuf sous-domaines, vingt et une BA et trente-trois capacités ; parent structurel
+  unique pour chaque entrée.
+- Toutes les capacités Master Data appartiennent à une BA ; aucun comportement ajouté, aucun cycle structurel ou lien irrésolu
+  signalé par le contrôle courant.
+- Les cinq capacités de stewardship retirées n’ont plus de nœud ni de relation ; leurs termes restent historiques.
+- Operational References conserve ses cinq familles documentaires, Reference Maintenance, Reference Ingestion et ses trois
+  comportements de provenance.
+- Les cent trente captures U1166 conservent leurs valeurs et leur contexte sémantique exacts.
+- Les frontières prix de référence/prix contextualisé/prix engagé, définition produit/variante opérationnelle, consigne/unité
+  physique et configuration/autorité métier sont préservées dans les textes.
+- Les sources Finance et les responsabilités produit restent qualifiées ; aucune réalisation installée ni Sarenza évalué n’est
+  déduit.
+observations:
+- kind: not_a_defect
+  subject: Scénarios
+  finding: Aucun lien de scénario n’est documenté pour les capacités Master Data. Cela ne prouve pas une absence d’usage ;
+    aucun scénario n’est inventé pour compléter l’arbre.
+- kind: naming_watch
+  subject: Noms partagés BA/capacité
+  finding: Source Contribution Management et Master Record Consolidation nomment chacun une BA et une capacité ; leur niveau
+    et leur parent les distinguent. Ce seul doublon ne prouve pas une erreur, mais les contextes de glossaire méritent une
+    lecture explicite.
+- kind: limit
+  subject: Autorités de données
+  finding: Le modèle cible ne vaut pas inventaire de sources installées. Les maîtres et responsabilités encore inconnus doivent
+    rester à documenter par objet et attribut, sans attribution implicite au nouveau domaine.
+findings:
+- id: MDM-U1167-01
+  priority: P1
+  category: external_business_relations
+  title: Les producteurs et la plupart des consommateurs de Master Data ne sont pas reliés
+  observation: 'Le domaine possède zéro relation métier entrante et une seule sortante : Master Data Distribution vers Reference
+    Ingestion Supply. Aucun lien ne décrit ses contributions reçues ni la fourniture des références à Commerce, Sourcing and
+    Procurement ou aux consommateurs des configurations partagées.'
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: domain-master-data
+    fields:
+    - scope
+    line: 68849
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-ingestion
+    fields:
+    - definition
+    line: 69769
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-distribution
+    fields:
+    - definition
+    line: 70825
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    fields:
+    - source_id
+    - target_id
+    - fields.data_exchange
+    line: 94851
+  impact: La carte ne permet pas de suivre la provenance ou le retour des données communes entre les domaines, alors que cette
+    responsabilité est décrite et validée.
+  recommendation: 'Documenter les échanges cibles par objet : données approuvées fournies à Master Data, versions certifiées
+    distribuées et signalements de correction. Identifier les responsabilités connues ; conserver explicitement les producteurs
+    restant à établir. Ne déduire aucune interface installée ni imposer un passage technique universel.'
+  approval: Relations et contrats à proposer avant application ; ne pas étendre automatiquement U1166.
+- id: MDM-U1167-02
+  priority: P1
+  category: internal_business_relations
+  title: Les capacités de l’usine sont rattachées mais leurs contributions ne sont pas reliées
+  observation: Les 64 liens de structure couvrent le rattachement du domaine et son arbre ; aucune relation métier ne relie
+    deux nœuds Master Data. Les 33 capacités existent, mais 32 ne participent à aucune relation métier explicite. Les textes
+    annoncent que les capacités par objet mobilisent les traitements communs sans porter ces contributions dans les relations.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: domain-master-data
+    fields:
+    - scope
+    line: 68849
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-consolidation
+    fields:
+    - scope
+    line: 70007
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-quality-assessment
+    fields:
+    - scope
+    line: 69366
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-certification
+    fields:
+    - scope
+    line: 70498
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-publication
+    fields:
+    - scope
+    line: 70581
+  impact: La carte relationnelle ne montre ni les résultats nécessaires à la certification, ni les versions publiées à distribuer,
+    ni le recours des capacités par objet aux fonctions communes.
+  recommendation: Décrire les données et décisions échangées entre préparation, capacités par objet, qualité, changement,
+    certification, publication et diffusion. Qualifier conditions, résultats et autorités. Éviter une séquence obligatoire
+    identique pour tous les objets, une dépendance à chaque capacité et un graphe complet artificiel.
+  approval: Complément de modélisation à soumettre ; aucune nouvelle capacité nécessaire par défaut.
+- id: MDM-U1167-03
+  priority: P2
+  category: legacy_route_boundary
+  title: Les apports directs Design et Finance vers la Supply restent à qualifier
+  observation: REL-U1113-design-product-reference et REL-U1113-finance-credit-reference alimentent encore directement Reference
+    Ingestion, en parallèle de la nouvelle relation depuis Master Data. Ce maintien n’est pas structurellement invalide, mais
+    chaque contrat ne dit pas s’il s’agit d’une exception directe autorisée ou d’un trajet cible à réviser avec l’usine commune.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-design-product-reference
+    fields:
+    - source_id
+    - target_id
+    - qualification
+    - fields.data_exchange
+    line: 89376
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-finance-credit-reference
+    fields:
+    - source_id
+    - target_id
+    - qualification
+    - fields.data_exchange
+    line: 89408
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - scope
+    line: 37935
+  impact: Deux lectures restent possibles sur la préparation et la qualité des données reçues ; le lecteur ne peut pas déterminer
+    le rôle de Master Data pour ces apports.
+  recommendation: 'Arbitrer contrat par contrat : contribution à Master Data puis distribution, ou apport spécialisé direct
+    avec autorité, qualité attendue et motif de dérogation documentés. Préserver la source financière et la définition produit
+    ; ne supprimer aucun flux existant par principe.'
+  approval: Arbitrage métier ciblé requis ; aucune preuve de flux installé déduite.
+- id: MDM-U1167-04
+  priority: P2
+  category: glossary_semantic_collision
+  title: Le glossaire confond les deux responsabilités portant les fournitures internes
+  observation: Les BA ba-internal-supplies-equipment-references et ba-mdm-internal-supplies portent le même nom Internal Supplies
+    & Equipment References. TER184 est partagé, mais son contexte renvoie uniquement à la BA Master Data et décrit la fabrication
+    commune. La perspective du référentiel simple Supply a disparu du contexte du terme.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - definition
+    - scope
+    line: 47474
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: ba-mdm-internal-supplies
+    fields:
+    - definition
+    - scope
+    line: 72358
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER184
+    fields:
+    - definition
+    - context
+    line: 31069
+  impact: Une aide de lecture du référentiel local peut présenter la responsabilité de l’usine MDM. La distinction explicitement
+    demandée par Laurent devient ambiguë.
+  recommendation: Conserver un terme documentaire commun avec un contexte expliquant et reliant les deux responsabilités si
+    le concept est identique. Si les sens sont distincts, proposer deux entrées qualifiées. Éviter un renommage automatique
+    des BA validées ou une nouvelle identité de bien.
+  approval: Alignement sémantique à proposer ; les identifiants et preuves historiques restent conservés.
+- id: MDM-U1167-05
+  priority: P2
+  category: market_evidence_granularity
+  title: Certaines paires de références satisfont le contrôle formel sans prouver la responsabilité fine
+  observation: Trade Item Identification cite Product identifiers côté Dynamics et Introducing SAP Master Data Governance
+    côté SAP. Le passage SAP enregistré porte sur le modèle général et la gouvernance, sans démonstration de l’attribution
+    des GTIN ; la page vérifiée ne contient pas GTIN. La fiche évoque une extension Utopia sans référencer sa preuve dans
+    sa propre comparaison. Les preuves de Source Contribution Management et Reference Code & Classification Management sont
+    également plus larges ou différentes que leur mandat fin.
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-trade-item
+    fields:
+    - fields.market_comparisons
+    line: 71860
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-source-contribution
+    fields:
+    - fields.market_comparisons
+    line: 69691
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: cap-mdm-codes-classification
+    fields:
+    - fields.market_comparisons
+    line: 73836
+  impact: Le succès du contrôle des familles Microsoft/SAP peut être pris à tort pour une conformité documentaire complète
+    ou une couverture native des fonctions.
+  recommendation: Requalifier les correspondances au niveau du résultat métier, compléter les passages directement pertinents
+    et déclarer les lacunes restantes. Pour les GTIN Retail, distinguer preuve native S/4HANA et extension Utopia ; préserver
+    la preuve Microsoft pertinente. Aucun nom, périmètre ni accord ne découle de la seule disponibilité d’un produit.
+  approval: Audit documentaire ciblé ; il ne remet pas automatiquement en cause le découpage métier validé.
+market_cross_check:
+- vendor: Microsoft
+  product: Dynamics 365 Customer Insights - Data
+  title: Data unification overview
+  url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/data-unification
+  consulted_on: '2026-11-05'
+  observed: Sources sélectionnées, déduplication, rapprochement et profil unifié sont distingués.
+  comparison: Ces responsabilités éclairent les échanges à expliciter entre fonctions communes et capacités par objet.
+  limit: Un cas client ; aucune taxonomie FLOW ni séquence universelle imposée.
+- vendor: SAP
+  product: SAP Master Data Governance on SAP S/4HANA
+  title: Explaining Consolidation in Master Data Governance
+  url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/explaining-consolidation-in-master-data-governance
+  consulted_on: '2026-11-05'
+  observed: Chargement, normalisation, rapprochement, choix des valeurs, validation et activation ; coexistence de responsabilités
+    centrales et locales.
+  comparison: Appui au besoin de contrats de contribution et de sortie entre responsabilités, tout en permettant plusieurs
+    parcours.
+  limit: Le processus produit ne devient pas automatiquement le processus FLOW ni une preuve d’interface installée.
+- vendor: SAP
+  product: SAP Master Data Governance on SAP S/4HANA
+  title: Introducing SAP Master Data Governance
+  url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-sap-master-data-governance
+  consulted_on: '2026-11-05'
+  observed: Gouvernance générale des données maîtres ; absence de passage GTIN dans le texte de la page vérifiée.
+  comparison: La source actuellement portée par Trade Item Identification ne suffit pas à démontrer ce mécanisme fin.
+  limit: Absence dans ce document uniquement ; aucune absence fonctionnelle SAP générale n’est déduite.
+recommended_order:
+- MDM-U1167-01
+- MDM-U1167-02
+- MDM-U1167-03
+- MDM-U1167-04
+- MDM-U1167-05
+validation:
+  backlog_check:
+    scope: backlog_only
+    errors: []
+    captured_intents: 0
+    nodes: 411
+    delivery_index:
+      files_verified: 272
+      declarations: 131
+      cache_hits: 271
+      parsed_files: 1
+    pending_lots: []
+    timings_seconds:
+      load: 0.0844
+      validate_backlog: 1.0393
+      delivery: 0.439
+      total: 1.5628
+  prior_tests: 79 tests concernés validés lors de U1166 ; non rejoués car aucun code ni contrat métier modifié pendant cet
+    audit.
+  no_release: true

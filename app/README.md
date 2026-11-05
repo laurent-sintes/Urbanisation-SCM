@@ -1,5 +1,11 @@
 # FLOW Atlas — SPA statique
 
+## Génération courante
+
+Atlas affiche uniquement le modèle courant. `pnpm --dir app dev` et `pnpm --dir app build` génèrent ses données depuis les sources définies dans `modeles/project.yaml`, avec son glossaire et sa méthode. La sélection de publications et la release métier sortent du parcours courant. Les fichiers historiques restent intacts comme preuves et fixtures.
+
+Les tests sont manuels dans le projet (`pnpm test` et commandes spécialisées depuis la racine) et automatiques sur les push GitHub. Aucun test n’est déclenché par un commit local. Voir le [parcours courant](../README.md#développer-tester-et-déployer). Les descriptions de publication ci-dessous sont historiques dans cette portée.
+
 ## Textes et vocabulaire de lecture
 
 Les textes sont répartis dans `locales/fr/` selon leur usage : `ui.json` pour l’interface, `core.json` pour les calculs de publication, recherche et carte, `server.json` pour l’API locale, `export.json` pour l’export et `bootstrap.json` pour le HTML initial. Chaque clé possède une seule source. Les modules de calcul utilisent `coreUi.ts` : les workers n’importent ni l’interface ni les messages du serveur. Les composants utilisent `ui.ts`, les erreurs structurées de l’atelier `apiErrors.ts`. Les classes CSS, sélecteurs DOM et expressions géométriques restent des constantes techniques dans le code.
@@ -75,7 +81,7 @@ Après l’atelier, conserver le staging et demander un aperçu avec `python scr
 
 Le catalogue autonome est figé dans `scenario_catalog` de chaque publication : flux de valeur, scénarios, parcours, contributions et filtres contrôlés. La navigation « Scénarios métier » s’affiche pour les publications qui possèdent le catalogue ; les autres gardent leurs illustrations locales. Les liens directs utilisent `#/scenarios?version=…&scenario=…&stream=…&path=…`. Les liens depuis les fiches sont dérivés des contributions du même snapshot.
 
-Recette de la publication réelle : `pnpm --dir app verify:content`, incluse dans la chaîne de livraison. L'ancienne fixture éditoriale est conservée dans `app/legacy/qa-retired-candidates/` ; elle ne contrôle pas l'interface actuelle. Tests unitaires : `app/test-scenario-catalog.mjs` et `scripts/test_scenario_catalog.py`.
+Recette des données réelles : `pnpm --dir app verify:content`, incluse dans la chaîne de livraison. L’ancienne fixture éditoriale est conservée dans Git, via l’[index des archives](../modeles/git-history.json) ; elle ne contrôle pas l’interface actuelle. Tests unitaires : `app/test-scenario-catalog.mjs` et `scripts/test_scenario_catalog.py`.
 
 ## Publication statique et GitHub Pages
 
@@ -181,7 +187,7 @@ React Router pilote l’historique et les vues avec `HashRouter`. Le chemin du f
 
 Les accès aux deux glossaires sont alignés à gauche dans la navigation ; le guide du méta modèle est sous **Aide**. La recherche porte sur tous les types et propose un filtre de lecture local par type ; les anciens paramètres `type` restent ignorés. Les préfixes de code sont acceptés et les définitions sont prioritaires sur les mentions dans les scénarios et les sources. La version du modèle complet apparaît une seule fois, sous la forme **Modèle · vNNN**, dans le pied de la navigation près des statistiques et du logo Beaumanoir. Son survol précise l’identifiant de publication et le suivi courant ou fixe ; elle n’est plus affichée dans le bandeau de chaque objet.
 
-Les contrôles navigateur courants sont décrits dans « Données statiques et contrôles » ci-dessous. Les recettes historiques du bandeau restent conservées dans `legacy/qa-before-static-repair/`.
+Les contrôles navigateur courants sont décrits dans « Données statiques et contrôles » ci-dessous. Les recettes historiques du bandeau sont conservées dans Git, via l’[index des archives](../modeles/git-history.json).
 
 L’ancienne recette `verify-shell.mjs` et son option `--baseline` documentent les contrôles de la précédente interface ; l’entrée actuelle lance la suite consolidée.
 
@@ -341,7 +347,7 @@ La commande `verify` orchestre désormais ces mêmes recettes avec `scripts/veri
 
 `scripts/plan_checks.py` sélectionne les contrôles du push direct sur `main`. Un changement limité au backlog valide le modèle et ses contrats ciblés ; un fichier de test Python isolé relance son module ; un test JavaScript isolé lance les tests sans build ; une modification des sources vérifie leur index ; un changement de workflow vérifie sa politique ; le code Python général garde la suite complète. La CI exécute un parcours navigateur court, étendu aux placements et hotspots pour une publication ; la matrice complète de 660 cas est réservée aux modifications de carte et de hotspots. Le préflight local applique les mêmes profils. Le statut global `Atlas checks` vérifie les jobs requis avant le déploiement. Celui-ci refuse d'activer un commit dépassé et vérifie les octets servis via le manifeste du build. Un push validé sans build est signalé « validated_only » par `scripts/follow_delivery.py --deploy`.
 
-Les anciennes recettes spécifiques sont archivées dans `legacy/qa-before-static-repair/`, `legacy/qa-superseded/` et `legacy/qa-retired-candidates/`. Leurs entrées de commande historiques, notamment `verify:behaviors`, `verify:market`, `verify:dependencies` et `verify:presentation`, lancent désormais la recette consolidée ; elles ne rejouent pas tous les scénarios historiques. Ces sources archivées sont des preuves de travail et ne font pas partie de la suite exécutable actuelle. Les archives et preuves datées ne sont jamais réécrites par les tests courants.
+Les anciennes recettes spécifiques ont quitté l’arbre courant ; leurs versions exactes sont référencées dans l’[index des archives Git](../modeles/git-history.json). Leurs entrées de commande historiques, notamment `verify:behaviors`, `verify:market`, `verify:dependencies` et `verify:presentation`, lancent désormais la recette consolidée ; elles ne rejouent pas tous les scénarios historiques. Ces sources archivées sont des preuves de travail et ne font pas partie de la suite exécutable actuelle. Les archives et preuves datées ne sont jamais réécrites par les tests courants.
 
 Le serveur de production sert exclusivement l’entrée et les ressources autorisées dans `app/dist/`. Le serveur expose les JSON générés et le YAML téléchargeable sous `data/`, mais pas les sources TypeScript, les dépendances, les source maps ni les fichiers du dépôt. Il conserve la vérification de l’hôte et de l’origine, l’absence de cache et les types de contenu explicites. La politique CSP limite scripts et feuilles de style aux fichiers locaux ; seuls les attributs de style nécessaires au placement React Flow sont autorisés en ligne. Elle n’autorise ni scripts en ligne ni évaluation dynamique.
 
@@ -401,7 +407,7 @@ Pour une évolution, créer une nouvelle version de guide puis actualiser volont
 
 Depuis U451, les comportements portent une forme principale dans `fields.nature` : politique/stratégie, variante de parcours, mécanisme, périmètre métier, dimension de raisonnement, effet métier ou pratique de planification. Chaque forme possède son pictogramme ; les types inconnus restent neutres. Les capacités contenues par les référentiels conservent une icône propre au référentiel, déterminée par leur parent explicite. Les décisions restent en fin de liste avec leur séparation légère.
 
-La recette U450 antérieure reste conservée dans `legacy/qa-before-static-repair/verify-atlas-presentation.mjs`. Le guide est désormais contrôlé par la recette maintenue `verify-modeling-guide.mjs`.
+La recette U450 antérieure reste conservée dans Git ; son chemin et son commit exact figurent dans l’[index des archives](../modeles/git-history.json). Le guide est désormais contrôlé par la recette maintenue `verify-modeling-guide.mjs`.
 
 Contrôles : `python -m unittest discover -s app -p test_modeling_guide.py`, `pnpm --dir app test`, `pnpm --dir app build`, puis `pnpm --dir app verify:principles`. La vérification navigateur sert les fichiers compilés dans son contexte de test et utilise les publications réelles en lecture seule ; elle ne nécessite pas de démarrer le serveur utilisateur.
 

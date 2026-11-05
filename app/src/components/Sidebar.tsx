@@ -95,16 +95,19 @@ export function Sidebar({
     });
     onClose();
   };
+  const currentOnly = model.raw.space === 'current';
   const revision = model.revision
     ? ui('common.publication_revision', { revision: String(model.revision).padStart(3, '0') })
     : model.version;
-  const publicationLabel = ui('sidebar.version_du_modele_complet', {
-    revision: revision,
-    version: model.version,
-    value3: route.version
-      ? ui('sidebar.publication_fixe')
-      : ui('sidebar.publication_courante_actualisee_automatiquement'),
-  });
+  const publicationLabel = currentOnly
+    ? ui('app.modele_courant')
+    : ui('sidebar.version_du_modele_complet', {
+        revision: revision,
+        version: model.version,
+        value3: route.version
+          ? ui('sidebar.publication_fixe')
+          : ui('sidebar.publication_courante_actualisee_automatiquement'),
+      });
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: The mobile aside becomes a modal dialog at runtime.
     <aside
@@ -265,8 +268,14 @@ export function Sidebar({
         <div className="sidebar-stats">
           <span id="fa-version" className="model-version" data-version={model.version} title={publicationLabel}>
             <span className={`live-dot ${route.version ? 'fixed' : ''}`} aria-hidden="true" />
-            {ui('sidebar.modele')}
-            {revision}
+            {currentOnly ? (
+              ui('app.modele_courant')
+            ) : (
+              <>
+                {ui('sidebar.modele')}
+                {revision}
+              </>
+            )}
             <span className="sr-only">{publicationLabel}</span>
           </span>
         </div>

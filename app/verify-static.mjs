@@ -13,7 +13,8 @@ const version = catalog.current_version;
 const currentModel = JSON.parse(await readFile(path.join(dist, 'data', version, 'model.json'), 'utf8'));
 const rootName = currentModel.nodes.find((node) => node.kind === 'universe')?.fields?.name;
 assert.ok(rootName, 'The selected publication has a named root');
-const historical = catalog.versions.find((item) => item.version !== version).version;
+const historical =
+  catalog.mode === 'current' ? version : catalog.versions.find((item) => item.version !== version).version;
 const prefix = '/Urbanisation/';
 const downloadFixture = await downloadServer(dist, prefix);
 const base = downloadFixture.base;
@@ -75,7 +76,7 @@ try {
   await page.goto(base);
   await page.getByRole('heading', { name: 'Ouverture du modèle…' }).waitFor();
   assert.equal(
-    requests.some((url) => url.includes(historical)),
+    requests.some((url) => url.includes(historical) && historical !== version),
     false,
     'History is not preloaded',
   );
@@ -152,8 +153,8 @@ try {
     studySource,
     'Actual study download preserves the complete current source PDF',
   );
-  for (const selectedVersion of [version, historical]) {
-    await page.setViewportSize({ width: selectedVersion === version ? 1440 : 390, height: 1000 });
+  for (const [viewIndex, selectedVersion] of [version, historical].entries()) {
+    await page.setViewportSize({ width: viewIndex === 0 ? 1440 : 390, height: 1000 });
     await page.goto(`${base}#/sheet?node=supply-chain-orchestration&version=${selectedVersion}`);
     const sheet = page.getByRole('article', { name: 'Fiche métier de Supply Chain Management', exact: true });
     await sheet.waitFor();
@@ -221,7 +222,10 @@ try {
   );
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
   assert.equal(new URL(page.url()).pathname, prefix);
-  assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('version'), historical);
+  assert.equal(
+    new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('version'),
+    catalog.mode === 'current' ? null : historical,
+  );
   // Trigger a catalog check while a historical selection is fixed.
   await page.evaluate(() => window.dispatchEvent(new Event('online')));
   assert.equal(await page.locator('#fa-version').getAttribute('data-version'), historical);

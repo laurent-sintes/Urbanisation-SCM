@@ -16,6 +16,9 @@ BACKLOG_MODULES = (
 )
 RELEASE_MODULES = tuple(sorted(set(BACKLOG_MODULES) | {
     'test_atlas_delivery', 'test_export_atlas', 'test_publish_release', 'test_release_run'}))
+CURRENT_MODULES = tuple(sorted(set(BACKLOG_MODULES) | {
+    'test_current_model', 'test_master_data_coherence', 'test_model_depth',
+    'test_data_sharing', 'test_record_decision', 'test_market_vendor_policy'}))
 
 
 def check(profile, *, full=False, modules=()):
@@ -34,10 +37,11 @@ def check(profile, *, full=False, modules=()):
         return 'passed'
     if profile == 'policy':
         return run(directory='scripts', full=full, modules=('test_check_policy', 'test_preflight_push'))['status']
-    if profile == 'backlog':
+    if profile in ('current', 'backlog'):
         subprocess.run([sys.executable, 'scripts/refresh_sources.py', '--check'], check=True)
         subprocess.run([sys.executable, 'scripts/validate_models.py'], check=True)
-        return run(directory='scripts', full=full, modules=BACKLOG_MODULES)['status']
+        selected = CURRENT_MODULES if profile == 'current' else BACKLOG_MODULES
+        return run(directory='scripts', full=full, modules=selected)['status']
     if profile == 'release':
         subprocess.run([sys.executable, 'scripts/refresh_sources.py', '--check'], check=True)
         subprocess.run([sys.executable, 'scripts/validate_models.py'], check=True)
@@ -59,7 +63,7 @@ def check(profile, *, full=False, modules=()):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=('policy', 'tests', 'backlog', 'release', 'sources', 'syntax', 'full'), required=True)
+    parser.add_argument('--profile', choices=('policy', 'tests', 'current', 'backlog', 'release', 'sources', 'syntax', 'full'), required=True)
     parser.add_argument('--modules', default='', help='Comma-separated directory:test_name entries for test-only changes')
     parser.add_argument('--full', action='store_true')
     args = parser.parse_args()

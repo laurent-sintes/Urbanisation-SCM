@@ -1,5 +1,13 @@
 # FLOW — instructions de travail
 
+## Processus courant — instruction de Laurent du 5 novembre 2026
+
+Le projet utilise un **modèle courant unique**. `modeles/project.yaml` désigne ses sources canoniques, dont `modeles/backlog/model.yaml` et ses glossaires ; le nom de ce dossier est conservé pour les références existantes. Il ne désigne plus un mode distinct de la release. `pnpm build` ou `pnpm dev` génère Atlas depuis ces sources, sans commande de release métier. Atlas affiche seulement le modèle courant ; les anciennes publications restent des preuves historiques et des fixtures, hors du parcours de lecture courant.
+
+Les tests automatiques sont exécutés **sur les push GitHub**, pour toutes les branches. Le déploiement suit uniquement les push sur `main` dont les contrôles passent. Aucun test automatique au commit, ni précontrôle de tests local imposé avant commit ou push. Les commandes de test locales sont **manuelles** : `pnpm test`, `pnpm test:python`, `pnpm test:frontend`, `pnpm test:browser` et `pnpm test:full`. GitHub Actions reste lançable manuellement. Lors d’un développement ou d’une correction, l’agent peut lancer explicitement les tests adaptés ; une simple demande de commit ou push ne les relance pas.
+
+Les accords métier restent distincts du build, des tests et du déploiement. `modeles/backlog/agreements.yaml` conserve les accords existants avec leurs empreintes de contexte ; `decision-intents.yaml` reçoit les nouveaux accords explicites. Le build ne modifie aucun accord et ne valide pas les nouvelles valeurs. Les règles ci-dessous de release, lecture exclusive des snapshots et tests obligatoires au commit sont historiques dans la portée remplacée par cette section. Ne plus invoquer le skill release pour mettre à jour Atlas ; suivre le build courant. Les procédures anciennes servent à lire et tester les preuves historiques.
+
 ## Priorités et sources d’autorité
 
 Échanger en français et tutoyer Laurent. Lire les éléments concernés avant de les modifier. Préserver le travail existant. Une instruction récente prime dans sa portée ; un historique ne réactive pas une règle remplacée.
@@ -7,7 +15,7 @@
 | Besoin | Autorité |
 | --- | --- |
 | Construire ou discuter le modèle | `modeles/backlog/model.yaml` ; annexes YAML pour propositions et arbitrages |
-| Modèle publié / Atlas | `modeles/release/index.json` → descripteur → snapshot ; aucun choix par tri ni complément backlog |
+| Modèle courant / Atlas | `modeles/project.yaml` → sources YAML → génération du modèle courant ; aucun repli sur une publication historique |
 | Vocabulaire métier | `modeles/backlog/glossary.yaml` |
 | Vocabulaire méthodologique, dont comportement | `modeles/backlog/modeling-glossary.yaml` ; distinct du glossaire métier |
 | Existant | `modeles/panorama-as-is/current.json` ; trois SI et contexte partagé |
@@ -27,6 +35,8 @@ Le YAML fait autorité pour le backlog et les nouvelles publications. Utiliser `
 Réutiliser les lectures, sources marché et contrôles déjà valables dans la session tant que leur contenu et leur périmètre restent pertinents. Un acquiescement ou une précision rédactionnelle n’impose pas une nouvelle étude. Conserver les preuves existantes ; capturer seulement les éléments modifiés si Git ne représente pas exactement l’état antérieur.
 
 ## Modélisation et cohérence
+
+**U1166 — domaine Master Data et référentiel Supply simple.** Business Operations contient désormais quatre domaines dans le backlog : Sourcing and Procurement, Commerce, Master Data et Supply Chain Orchestration. Master Data est décrit jusqu’aux capacités (9 sous-domaines, 21 BA, 33 capacités au lot initial). Il porte ingestion, consolidation, enrichissement, qualité, certification et diffusion des références communes dans son mandat. Operational References conserve ses cinq familles documentaires, Reference Maintenance et Reference Ingestion ; les cinq capacités locales de stewardship sont retirées. Les trois comportements de provenance de Reference Ingestion sont conservés. Les autorités métier, les décisions contextuelles et les règles Supply restent chez leurs responsables. Cette instruction remplace les descriptions antérieures d’une fabrication de qualité dans Operational References ; les publications historiques restent figées. Voir `modeles/backlog/master-data-domain-U1166.yaml`.
 
 Pour toute modification métier, lire les [invariants détaillés](CONVENTIONS-MODELE.md#invariants-de-travail-u772) et les sections de `CONVENTIONS-MODELE.md` concernées. Ces règles restent obligatoires ; les noms et parents du YAML courant priment sur les repères historiques.
 

@@ -4,6 +4,7 @@ import unittest
 from scripts.structured_io import read
 from scripts.glossary import references
 from scripts.scenario_catalog import validate_catalog
+from scripts.test_readability_contract import business_scope
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -46,7 +47,7 @@ class CreditCheckTests(unittest.TestCase):
         self.assertIn(('supplies-reference','master-data-ingestion',node['id']),edges)
         self.assertIn(('relates-to',node['id'],'D09'),edges)
         self.assertIn('ne sont pas des paramètres de référence',node['fields']['scope'])
-        self.assertIn('Finance conserve l’autorité',node['fields']['scope'])
+        self.assertIn('[Finance](glossary:TER117) conserve l’autorité',node['fields']['scope'])
         self.assertIn('ne vaut pas autorisation',node['fields']['scope'])
 
     def test_existing_scenario_preserves_external_control_and_indeterminate_result(self):
@@ -78,9 +79,16 @@ class CreditCheckTests(unittest.TestCase):
         self.assertNotIn('comprend le classement de risque et la limite',party['context'])
         profile=self.terms['TER190']
         scope = self.nodes['customer-credit-profile']['fields']['scope']
-        self.assertTrue(scope.startswith(profile['context'] + '\n\n'))
+        self.assertEqual(business_scope(scope, self.model), business_scope(profile['context'], self.model))
         self.assertIn(('glossary', 'TER198'), references(scope))
-        self.assertEqual(self.terms['TER145']['notes'],self.nodes['product-price-book']['fields']['scope'])
+        price_scope = self.nodes['product-price-book']['fields']['scope']
+        price_notes = self.terms['TER145']['notes']
+        # Notes retain provenance guidance; the sheet also explains the MDM boundary.
+        self.assertEqual(price_notes.split('\n\n')[:2], price_scope.split('\n\n')[:2])
+        internal_price = next(p for p in price_scope.split('\n\n') if 'glossary:TER384' in p)
+        self.assertIn(internal_price, price_notes)
+        for text in (price_scope, price_notes):
+            self.assertIn(('model', 'business-references'), references(text))
 
 
 if __name__=='__main__':

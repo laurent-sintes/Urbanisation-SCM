@@ -38,7 +38,7 @@ guide.publication_version = version;
 guide.guide = candidate.guide;
 const guideBody = JSON.stringify(guide);
 entry.guide_sha256 = createHash('sha256').update(guideBody).digest('hex');
-index.versions.push(entry);
+index.versions = index.mode === 'current' ? [entry] : [...index.versions, entry];
 index.current_version = version;
 const areas = childrenOf(model, 'subdomain-process-management');
 const caps = areas.flatMap((a) => childrenOf(model, a.id));
@@ -182,7 +182,7 @@ try {
   for (const query of ['BHV082', model.nodeById.get('BHV082').displayCode, 'Process Mining']) {
     const target = query === 'Process Mining' ? 'process-mining' : 'BHV082';
     await page.getByRole('button', { name: 'Rechercher dans Atlas', exact: true }).click();
-    await page.getByRole('searchbox', { name: 'Rechercher dans le modèle publié' }).fill(query);
+    await page.getByRole('searchbox', { name: 'Rechercher dans le modèle courant' }).fill(query);
     await page.locator(`[data-search-result="${target}"]`).click();
     await page.getByRole('heading', { level: 1, name: model.nodeById.get(target).name, exact: true }).waitFor();
   }
@@ -219,10 +219,16 @@ try {
   await page.getByTestId('business-sheet').waitFor();
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   await page.screenshot({ path: resolve(output, 'mobile.png') });
-  // Same persistent ID still resolves to its historical behavior in the real snapshot.
+  // Old links follow the current model; legacy catalogs retain their frozen behavior.
   await visit({ version: '2026-10-07.2', node: 'BHV082', view: 'sheet' });
-  await page.getByRole('heading', { level: 1, name: 'Process Visibility', exact: true }).waitFor();
-  assert.ok((await page.locator('.eyebrow').innerText()).includes('BHV-'));
+  await page
+    .getByRole('heading', {
+      level: 1,
+      name: index.mode === 'current' ? model.nodeById.get('BHV082').name : 'Process Visibility',
+      exact: true,
+    })
+    .waitFor();
+  assert.ok((await page.locator('.eyebrow').innerText()).includes(index.mode === 'current' ? 'CAP-' : 'BHV-'));
   assert.deepEqual(errors, []);
   console.log(
     JSON.stringify({

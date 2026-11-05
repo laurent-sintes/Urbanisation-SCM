@@ -87,6 +87,9 @@ def atomic_write(path, content):
 def export_atlas(root=ROOT, destinations=None, *, incremental=True, require_cached=False):
     root = Path(root).resolve()
     with atlas_lock(root), batch_reader(root), guide_validation_batch():
+        from scripts.current_model import enabled, export_current
+        if enabled(root):
+            return export_current(root, destinations, require_cached=require_cached)
         return _export_atlas(root, destinations, incremental=incremental, require_cached=require_cached)
 
 

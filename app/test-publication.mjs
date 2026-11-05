@@ -32,6 +32,24 @@ const response = (value, status = 200) =>
   new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json' } });
 const hash = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
+test('current-only catalogs always resolve old links to the current model', async () => {
+  const index = { ...catalog('current-a', ['current-a']), mode: 'current' };
+  const requests = [];
+  const client = createPublicationClient(async (url) => {
+    requests.push(url);
+    return response(url.endsWith('index.json') ? index : snapshot('current-a'));
+  });
+  await client.setVersion('2026-10-24.1');
+  assert.equal(client.getState().model.version, 'current-a');
+  assert.equal(client.getState().catalog.mode, 'current');
+  assert.equal(
+    requests.some((url) => url.includes('2026-10-24.1')),
+    false,
+  );
+  client.dispose();
+  assert.throws(() => adaptCatalog({ ...catalog(), mode: 'current' }), /Catalogue/);
+});
+
 test('published fingerprints reject truncated or substituted content even with the correct version', async () => {
   const original = snapshot('v3');
   const index = catalog();

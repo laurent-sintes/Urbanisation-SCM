@@ -35,6 +35,7 @@ const dist = path.join(root, 'dist');
 const output = path.join(root, '.runtime/qa-browser');
 await mkdir(output, { recursive: true });
 const catalog = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
+const currentOnly = catalog.mode === 'current';
 const model = JSON.parse(await readFile(path.join(dist, `data/${catalog.current_version}/model.json`), 'utf8'));
 const byId = new Map(model.nodes.map((node) => [node.id, node]));
 const children = (id) =>
@@ -85,9 +86,11 @@ try {
   page.on('pageerror', (error) => errors.push(error.message));
   await page.route('**/*', serveStatic);
   const visit = async (params) => {
-    const { view = '', ...query } = { version: model.version, ...params };
+    const { view = '', ...query } = { ...(currentOnly ? {} : { version: model.version }), ...params };
     await page.goto(`${base}#/${view}?${new URLSearchParams(query)}`);
-    await page.locator(`#fa-version[data-version="${params.version || model.version}"]`).waitFor({ state: 'attached' });
+    await page
+      .locator(`#fa-version[data-version="${currentOnly ? model.version : params.version || model.version}"]`)
+      .waitFor({ state: 'attached' });
   };
   const route = () => new URLSearchParams(new URL(page.url()).hash.split('?')[1] || '');
   const expectInputValue = async (locator, expected) => {
@@ -143,12 +146,17 @@ try {
     (await page.locator('.overview-system').evaluateAll((items) => items.map((item) => item.dataset.nodeId))).sort(),
     children(universe.id).sort(),
   );
-  await page.locator('.publication-picker > summary').click();
-  const publicationStatistics = page.locator('.publication-statistics');
-  await publicationStatistics.waitFor();
-  assert.ok((await publicationStatistics.textContent()).includes(`${model.nodes.length} éléments`));
-  await page.keyboard.press('Escape');
-  await page.locator('.publication-picker:not([open])').waitFor();
+  if (currentOnly) {
+    assert.equal(catalog.versions.length, 1);
+    assert.equal(await page.locator('.publication-picker').count(), 0);
+  } else {
+    await page.locator('.publication-picker > summary').click();
+    const publicationStatistics = page.locator('.publication-statistics');
+    await publicationStatistics.waitFor();
+    assert.ok((await publicationStatistics.textContent()).includes(`${model.nodes.length} éléments`));
+    await page.keyboard.press('Escape');
+    await page.locator('.publication-picker:not([open])').waitFor();
+  }
   await expectTooltip(page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`), system.fields.name);
   const historyBefore = await page.evaluate(() => history.length);
   await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();
@@ -994,68 +1002,76 @@ try {
   assert.ok(!requests.some((request) => /cytoscape[^/]*-[^/]+\.js$/.test(request)), 'No graph engine is requested');
   checks.push('Relations list preserves published links, filters, search and keyboard detail on desktop and mobile');
   await page.setViewportSize({ width: 1440, height: 1000 });
-  const oldest = catalog.versions.at(-1);
-  const historical = JSON.parse(await readFile(path.join(dist, `data/${oldest.version}/model.json`), 'utf8'));
-  const oldDomain = historical.nodes.find(
-    (node) =>
-      node.kind === 'domain' &&
-      historical.relations.some(
-        (relation) =>
-          relation.type === 'contains' &&
-          relation.source_id === node.id &&
-          historical.nodes.some((child) => child.id === relation.target_id && child.kind === 'capability'),
-      ),
-  );
-  assert.ok(oldDomain, 'A historical Domain with direct Capabilities is available for fallback verification');
-  await visit({ version: oldest.version, view: 'map', node: oldDomain.id, scope: oldDomain.id, mapDepth: '3' });
-  const directCapabilityIds = historical.relations
-    .filter((relation) => relation.type === 'contains' && relation.source_id === oldDomain.id)
-    .map((relation) => relation.target_id)
-    .filter((id) => historical.nodes.some((node) => node.id === id && node.kind === 'capability'));
-  await page.locator(`.business-card[data-node-id="${directCapabilityIds[0]}"]`).waitFor();
-  assert.deepEqual(
-    (
-      await page
-        .locator('.graph-canvas .business-card')
-        .evaluateAll((cards) => cards.map((card) => card.dataset.nodeId))
-    )
-      .filter((id) => directCapabilityIds.includes(id))
-      .sort(),
-    directCapabilityIds.sort(),
-    'Historical direct Capabilities remain in their own snapshot',
-  );
-  checks.push('Historical Domain fallback keeps direct published Capabilities');
-  // The earliest publication has no business links; this fixed historical sample does.
-  const historicalRelationVersion = '2026-10-12.6';
-  assert.ok(catalog.versions.some((entry) => entry.version === historicalRelationVersion));
-  const historicalRelationModel = adaptPublication(
-    JSON.parse(await readFile(path.join(dist, `data/${historicalRelationVersion}/model.json`), 'utf8')),
-  );
-  const historicalRelations = projectDependencies(historicalRelationModel, {
-    level: 'capability',
-    depth: 0,
-    direction: 'both',
-    family: 'all',
-  }).relations;
-  assert.ok(historicalRelations.length > 0, 'The historical publication retains its business relations');
-  await visit({
-    version: historicalRelationVersion,
-    view: 'relations',
-    node: '',
-    level: 'capability',
-    depth: '0',
-    relation: historicalRelations[0].id,
-  });
-  await page
-    .getByRole('region', {
-      name: `Relation entre ${historicalRelationModel.nodeById.get(historicalRelations[0].sourceId)?.name} et ${historicalRelationModel.nodeById.get(historicalRelations[0].targetId)?.name}`,
-      exact: true,
-    })
-    .waitFor();
-  assert.deepEqual((await idsInList()).sort(), historicalRelations.map((relation) => relation.id).sort());
-  assert.equal(route().get('version'), historicalRelationVersion);
-  assert.equal(await page.getByTestId('cytoscape-canvas').count(), 0);
-  checks.push('Historical relation deep links retain the original publication and complete list');
+  if (currentOnly) {
+    await visit({ version: '2026-10-24.1', view: 'map' });
+    await page.waitForFunction(() => !new URLSearchParams(location.hash.split('?')[1]).has('version'));
+    assert.equal(await page.locator('#fa-version').getAttribute('data-version'), model.version);
+    assert.equal(await page.locator('.publication-picker').count(), 0);
+    checks.push('Current model only; historical links resolve to the current model without a selector');
+  } else {
+    const oldest = catalog.versions.at(-1);
+    const historical = JSON.parse(await readFile(path.join(dist, `data/${oldest.version}/model.json`), 'utf8'));
+    const oldDomain = historical.nodes.find(
+      (node) =>
+        node.kind === 'domain' &&
+        historical.relations.some(
+          (relation) =>
+            relation.type === 'contains' &&
+            relation.source_id === node.id &&
+            historical.nodes.some((child) => child.id === relation.target_id && child.kind === 'capability'),
+        ),
+    );
+    assert.ok(oldDomain, 'A historical Domain with direct Capabilities is available for fallback verification');
+    await visit({ version: oldest.version, view: 'map', node: oldDomain.id, scope: oldDomain.id, mapDepth: '3' });
+    const directCapabilityIds = historical.relations
+      .filter((relation) => relation.type === 'contains' && relation.source_id === oldDomain.id)
+      .map((relation) => relation.target_id)
+      .filter((id) => historical.nodes.some((node) => node.id === id && node.kind === 'capability'));
+    await page.locator(`.business-card[data-node-id="${directCapabilityIds[0]}"]`).waitFor();
+    assert.deepEqual(
+      (
+        await page
+          .locator('.graph-canvas .business-card')
+          .evaluateAll((cards) => cards.map((card) => card.dataset.nodeId))
+      )
+        .filter((id) => directCapabilityIds.includes(id))
+        .sort(),
+      directCapabilityIds.sort(),
+      'Historical direct Capabilities remain in their own snapshot',
+    );
+    checks.push('Historical Domain fallback keeps direct published Capabilities');
+    // The earliest publication has no business links; this fixed historical sample does.
+    const historicalRelationVersion = '2026-10-12.6';
+    assert.ok(catalog.versions.some((entry) => entry.version === historicalRelationVersion));
+    const historicalRelationModel = adaptPublication(
+      JSON.parse(await readFile(path.join(dist, `data/${historicalRelationVersion}/model.json`), 'utf8')),
+    );
+    const historicalRelations = projectDependencies(historicalRelationModel, {
+      level: 'capability',
+      depth: 0,
+      direction: 'both',
+      family: 'all',
+    }).relations;
+    assert.ok(historicalRelations.length > 0, 'The historical publication retains its business relations');
+    await visit({
+      version: historicalRelationVersion,
+      view: 'relations',
+      node: '',
+      level: 'capability',
+      depth: '0',
+      relation: historicalRelations[0].id,
+    });
+    await page
+      .getByRole('region', {
+        name: `Relation entre ${historicalRelationModel.nodeById.get(historicalRelations[0].sourceId)?.name} et ${historicalRelationModel.nodeById.get(historicalRelations[0].targetId)?.name}`,
+        exact: true,
+      })
+      .waitFor();
+    assert.deepEqual((await idsInList()).sort(), historicalRelations.map((relation) => relation.id).sort());
+    assert.equal(route().get('version'), historicalRelationVersion);
+    assert.equal(await page.getByTestId('cytoscape-canvas').count(), 0);
+    checks.push('Historical relation deep links retain the original publication and complete list');
+  }
   assert.deepEqual(errors, []);
   assert.ok(!requests.some((request) => request.includes('/api/') || request.includes('backlog')));
   await writeFile(

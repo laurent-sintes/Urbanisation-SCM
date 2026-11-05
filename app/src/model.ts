@@ -47,7 +47,12 @@ function uniqueMap<T extends { id: string }>(items: readonly T[], label: string)
 
 /** Accept an API response or the raw snapshot loaded by load-publication.mjs. */
 export function adaptPublication(input: RawPublication): PublishedModel {
-  if (input?.space !== 'release' || !input.version || !Array.isArray(input.nodes) || !Array.isArray(input.relations)) {
+  if (
+    !['current', 'release'].includes(input?.space) ||
+    !input.version ||
+    !Array.isArray(input.nodes) ||
+    !Array.isArray(input.relations)
+  ) {
     throw new Error(ui('model.une_publication_release_explicite_avec_nodes_et_relations_est_req'));
   }
   // Cloning prevents either renderer from altering the API response or another view.

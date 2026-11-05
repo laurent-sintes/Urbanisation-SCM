@@ -19,7 +19,7 @@ class BuildActivationTests(unittest.TestCase):
                 (folder / 'data').mkdir()
             (live / 'index.html').write_bytes(b'old UI')
             (live / 'assets/old-lazy.js').write_bytes(b'old lazy module')
-            for name, body in {'index.html': b'new UI', 'data/index.json': b'new catalog',
+            for name, body in {'index.html': b'new UI', 'data/index.json': b'{"versions": []}',
                                'delivery.json': b'manifest', 'assets/new-lazy.js': b'new lazy module'}.items():
                 (stage / name).write_bytes(body)
             def interrupted(path, content):

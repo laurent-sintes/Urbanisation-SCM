@@ -180,15 +180,21 @@ try {
   await openMapDisplay(page);
   await page.locator('.breadcrumb').click();
   await page.locator('.map-display-options:not([open])').waitFor();
-  await page.locator('.publication-picker > summary').click();
-  await page.keyboard.press('Escape');
-  await page.locator('.publication-picker:not([open])').waitFor();
-  assert.equal(await page.locator('.publication-picker > summary:focus').count(), 1);
-  await page.locator('.publication-picker > summary').click();
-  await search('stock');
-  await page.locator('.publication-picker:not([open])').waitFor();
-  assert.equal(await page.locator('#fa-search:focus').count(), 1);
-  await page.keyboard.press('Escape');
+  if (index.mode !== 'current') {
+    await page.locator('.publication-picker > summary').click();
+    await page.keyboard.press('Escape');
+    await page.locator('.publication-picker:not([open])').waitFor();
+    assert.equal(await page.locator('.publication-picker > summary:focus').count(), 1);
+    await page.locator('.publication-picker > summary').click();
+    await search('stock');
+    await page.locator('.publication-picker:not([open])').waitFor();
+    assert.equal(await page.locator('#fa-search:focus').count(), 1);
+    await page.keyboard.press('Escape');
+  } else {
+    assert.equal(await page.locator('.publication-picker').count(), 0);
+    await search('stock');
+    await page.keyboard.press('Escape');
+  }
   checks.push('Temporary panels close on Escape and outside press, preserve focus, and allow nested portalled filters');
 
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -306,16 +312,24 @@ try {
   );
   checks.push('Application groups retain both catalogs; Documents retain YAML and the unchanged downloadable SCM PDF');
 
-  const historical = '2026-09-13.5';
-  await page.locator('.publication-picker > summary').click();
-  await page.getByRole('combobox', { name: 'Choisir la publication', exact: true }).selectOption(historical);
-  await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
-  await search('stock');
-  assert.ok((await page.locator('.global-search-context').textContent()).includes(historical));
-  assert.ok((await page.locator('.global-search-context').textContent()).includes('Publication figée'));
-  await page.keyboard.press('Escape');
-  assert.ok(page.url().includes(`version=${historical}`));
-  checks.push('Publication selection pins historical content, search and downloads to that edition');
+  if (index.mode === 'current') {
+    assert.equal(index.versions.length, 1);
+    await search('stock');
+    assert.ok(!(await page.locator('.global-search-context').textContent()).includes('Publication figée'));
+    await page.keyboard.press('Escape');
+    checks.push('Current model only in navigation, search and downloads');
+  } else {
+    const historical = '2026-09-13.5';
+    await page.locator('.publication-picker > summary').click();
+    await page.getByRole('combobox', { name: 'Choisir la publication', exact: true }).selectOption(historical);
+    await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
+    await search('stock');
+    assert.ok((await page.locator('.global-search-context').textContent()).includes(historical));
+    assert.ok((await page.locator('.global-search-context').textContent()).includes('Publication figée'));
+    await page.keyboard.press('Escape');
+    assert.ok(page.url().includes(`version=${historical}`));
+    checks.push('Publication selection pins historical content, search and downloads to that edition');
+  }
 
   for (const size of [
     { width: 1920, height: 1080 },
@@ -435,7 +449,7 @@ try {
   }
   checks.push('Display settings preserve the map viewport and stay inside desktop, mobile and landscape screens');
   assert.deepEqual(errors, []);
-  const report = { status: 'passed', version, historical, checks, measurements, errors };
+  const report = { status: 'passed', version, checks, measurements, errors };
   await writeFile(resolve(out, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report));
 } catch (error) {

@@ -44,7 +44,13 @@ def reader_content_inputs(root):
     return result
 
 
-def scoped_projection(model, content):
+def scoped_projection(model, content, *, inherited=False):
+    """Apply pinned legacy prose only while its canonical source is unchanged.
+
+    An explicitly carried guide may outlive the fields it annotated. In that
+    case the new published source takes precedence. Authoring and same-edition
+    bindings remain strict; malformed or duplicate bindings always fail.
+    """
     patches = []
     seen = set()
     for entry in content['entries']:
@@ -55,19 +61,34 @@ def scoped_projection(model, content):
                                                   'kind', 'review', 'lifecycle', 'source_refs', 'source_locator'}
                                          for key in entry['field_path']):
             raise ValueError('Invalid reader content field path')
+        identity = (collection, entry['id'], *entry['field_path'])
+        if identity in seen:
+            raise ValueError('Duplicate reader content target: ' + entry['id'])
+        seen.add(identity)
         prefix = ['glossary', 'terms'] if collection == 'terms' else [collection]
         items = model.get('glossary', {}).get('terms', []) if collection == 'terms' else model.get(collection, [])
         matches = [index for index, item in enumerate(items) if item.get('id') == entry['id']]
+        if not matches and inherited:
+            continue
         if len(matches) != 1:
             raise ValueError('Reader content target missing or ambiguous: ' + entry['id'])
         path = prefix + [str(matches[0])] + entry['field_path']
-        if tuple(path) in seen:
-            raise ValueError('Duplicate reader content target: ' + entry['id'])
-        seen.add(tuple(path))
         value = model
-        for key in path:
-            value = value[int(key)] if isinstance(value, list) else value[key]
+        try:
+            for key in path:
+                if isinstance(value, list):
+                    if not key.isdecimal():
+                        raise ValueError('Invalid reader content list index: ' + key)
+                    value = value[int(key)]
+                else:
+                    value = value[key]
+        except (IndexError, KeyError, TypeError) as error:
+            if inherited:
+                continue
+            raise ValueError('Reader content source field missing: ' + entry['id']) from error
         if not isinstance(value, str) or sha256(value.encode('utf-8')).hexdigest() != entry['source_sha256']:
+            if inherited:
+                continue
             raise ValueError('Reader content source differs; remove its legacy override after editing the public source: ' + entry['id'])
         patches.append({'path': path, 'source_sha256': entry['source_sha256'], 'text': entry['text']})
     return {'schema_version': 1, 'publication_version': model['version'], 'patches': patches}
@@ -93,7 +114,9 @@ def compile_reader_content(root, source, model):
 def reading_projection(root, model, guide_response=None):
     guide = (guide_response or {}).get('guide') or {}
     if 'reader_content' in guide:
-        return scoped_projection(model, guide['reader_content'])
+        inherited = ((guide_response or {}).get('association', {}).get('scope') == 'carried_frozen_methodology'
+                     and guide.get('version') != model['version'])
+        return scoped_projection(model, guide['reader_content'], inherited=inherited)
     data = _content(root, 'legacy-reader-projections.json')
     edition = data.get('versions', {}).get(model['version'])
     if edition is None:

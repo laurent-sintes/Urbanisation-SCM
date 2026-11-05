@@ -12,6 +12,7 @@ const output = resolve(import.meta.dirname, '.runtime/qa-flow-map');
 await mkdir(output, { recursive: true });
 const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const version = process.argv.find((arg) => arg.startsWith('--version='))?.slice(10) || catalog.current_version;
+const routeVersion = catalog.mode === 'current' ? null : version;
 const modelBytes = await readFile(resolve(dist, `data/${version}/model.json`));
 const model = JSON.parse(modelBytes);
 const byId = new Map(model.nodes.map((node) => [node.id, node]));
@@ -964,7 +965,7 @@ try {
   let route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
   assert.equal(route.get('node'), candidate, `Catalogue preserves selected object ${nameOf(byId.get(candidate))}`);
   assert.equal(route.get('scope'), selectedRoute.get('scope'), 'Catalogue preserves scope');
-  assert.equal(route.get('version'), version, 'Catalogue preserves the selected publication');
+  assert.equal(route.get('version'), routeVersion, 'Catalogue preserves the model selection');
   assert.equal(route.get('mapDepth'), '3', 'Catalogue preserves its explicitly chosen detail');
   await openMapDisplay(page);
   assert.equal(
@@ -977,7 +978,7 @@ try {
   route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
   assert.equal(route.get('node'), candidate);
   assert.equal(route.get('scope'), selectedRoute.get('scope'));
-  assert.equal(route.get('version'), version);
+  assert.equal(route.get('version'), routeVersion);
   const restoredCamera = await viewport(page);
   assert.ok(
     Math.hypot(restoredCamera.x - centeredCamera.x, restoredCamera.y - centeredCamera.y) < 0.2,
@@ -1037,7 +1038,14 @@ try {
         );
         await waitCameraIdle(page);
         const systemWorld = await world(page);
-        assert.equal(systemWorld.length, 3, 'Business Operations presents its three Domains');
+        assert.deepEqual(
+          systemWorld.map((box) => box.id).sort(),
+          model.nodes
+            .filter((node) => node.kind === 'domain' && parent.get(node.id) === businessSystem.id)
+            .map((node) => node.id)
+            .sort(),
+          'Business Operations presents every current Domain',
+        );
         assert.ok(systemWorld.every((box) => byId.get(box.id).kind === 'domain'));
         await page.waitForFunction(
           (ids) => {
@@ -1051,7 +1059,7 @@ try {
           exchangesWithSupply.map((relation) => relation.id),
         );
         const route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
-        assert.equal(route.get('version'), version);
+        assert.equal(route.get('version'), routeVersion);
         assert.equal(route.get('node'), businessSystem.id);
         assert.equal(route.get('mapFocus'), null, 'The previous selection cannot hide the other neighbor');
         assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-exchange-mode'), 'main');

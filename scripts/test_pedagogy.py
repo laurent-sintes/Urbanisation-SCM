@@ -15,7 +15,8 @@ class PedagogyTest(unittest.TestCase):
     def test_references_contract_and_rollout_coverage(self):
         self.assertEqual(validate_pedagogy(self.model), [])
         pilots = {'supply-chain-orchestration', 'D01', 'ba-inventory-position-management', 'D08', 'process-ledger', 'process-mining', 'D03.j', 'BHV004'}
-        scoped = {n['id'] for n in self.model['nodes'] if n['kind'] in ('business_system', 'domain', 'area', 'business_area')}
+        rollout = read('modeles/backlog/business-sheet-pedagogy-rollout-U1131.yaml')['publication_delivery']
+        scoped = {n['id'] for n in rollout['required_nodes'] if 'pedagogical_description' in n['field_sha256']}
         enriched = [n for n in self.model['nodes'] if 'pedagogical_description' in n['fields']]
         self.assertEqual({n['id'] for n in enriched}, scoped | pilots)
         for node in enriched:

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FLOW urbanism — structured backlog and qualified releases",
+  "title": "FLOW urbanism — current model and historical snapshots",
   "type": "object",
   "properties": {
     "schema_version": {
@@ -15,6 +15,7 @@
     },
     "space": {
       "enum": [
+        "current",
         "backlog",
         "release"
       ]

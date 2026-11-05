@@ -75,11 +75,15 @@ class ContextStructureTests(unittest.TestCase):
                        and r['id'].startswith('REL-U1079-') and self.nodes[r['target_id']]['kind']=='capability'}
                 moved_planning={'demand-forecast-development', 'supply-plan-development',
                                 'planning-scenario-reconciliation'}
-                self.assertEqual(len(u1079 | moved_planning),32)
+                retired = set(read(ROOT/'modeles/backlog/master-data-domain-U1166.yaml')['retired_nodes'])
+                self.assertEqual(len(u1079 | moved_planning),32 - len(retired))
+                self.assertTrue(retired.isdisjoint(current))
                 u1089={r['target_id'] for r in self.model['relations'] if r['type']=='contains'
                        and r['id'].startswith('REL-U1089-') and self.nodes[r['target_id']]['kind']=='capability'}
                 self.assertEqual(len(u1089),5)
-                self.assertEqual(current-historical, u1079 | moved_planning | u1089 |
+                master_data = set(self.descendants('domain-master-data', 'capability'))
+                self.assertEqual(len(master_data), 33)
+                self.assertEqual(current-historical, u1079 | moved_planning | u1089 | master_data |
                                  {'demand-plan-development', 'process-ledger'})
         contributions=lambda model:{p['id']:[c['node_id'] for s in p['steps'] for c in s['contributions']]
                                     for p in model['scenario_catalog']['paths']}

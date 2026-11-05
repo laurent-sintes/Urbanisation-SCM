@@ -1,0 +1,14 @@
+{
+  "name": "flow-atlas-workspace",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --dir app dev",
+    "build": "pnpm --dir app build",
+    "test": "node scripts/test-project.mjs --suite all",
+    "test:python": "node scripts/test-project.mjs --suite python",
+    "test:frontend": "node scripts/test-project.mjs --suite frontend",
+    "test:browser": "node scripts/test-project.mjs --suite browser",
+    "test:full": "node scripts/test-project.mjs --suite all --full --browser-mode full"
+  }
+}

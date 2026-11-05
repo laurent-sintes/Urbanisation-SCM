@@ -292,7 +292,8 @@ try {
       await page.getByRole('link', { name: /^Retour à la carte/ }).click();
       const restored = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
       const original = new URLSearchParams(hash.split('?')[1]);
-      for (const [key, value] of original) assert.equal(restored.get(key), value);
+      for (const [key, value] of original)
+        assert.equal(restored.get(key), key === 'version' && catalog.mode === 'current' ? null : value);
       await markers.first().waitFor();
       const cluster = page.locator(`${markerSelector}:has(.hotspot-map-count)`).first();
       if (await cluster.count()) {

@@ -22,10 +22,9 @@ def plan(paths):
             flags = {'contracts'}
             profile = 'sources'
         elif path.startswith('modeles/backlog/'):
-            # Atlas renders only activated snapshots. Backlog edits are checked by
-            # Python contracts; their future publication will trigger the UI gate.
-            flags = {'contracts'}
-            profile = 'backlog'
+            # These are the single current sources; every edit affects Atlas.
+            flags = {'contracts', 'frontend', 'browser'}
+            profile = 'current'
         elif path.startswith('modeles/'):
             flags = {'contracts', 'frontend', 'browser'}
             profile = 'release' if path.startswith(('modeles/release/', 'modeles/modeling-guides/')) or path == 'modeles/git-history.json' else 'full'
@@ -84,8 +83,8 @@ def plan(paths):
         for flag in flags:
             result[flag] = True
         current = result['contract_profile']
-        ranks = {'none': 0, 'syntax': 1, 'policy': 2, 'tests': 3, 'sources': 3, 'backlog': 4, 'release': 5, 'full': 6}
-        compatible_model_profiles = {'sources', 'backlog', 'release'}
+        ranks = {'none': 0, 'syntax': 1, 'policy': 2, 'tests': 3, 'sources': 3, 'backlog': 4, 'current': 4, 'release': 5, 'full': 6}
+        compatible_model_profiles = {'sources', 'current', 'backlog', 'release'}
         if current in compatible_model_profiles and profile in compatible_model_profiles:
             result['contract_profile'] = max((current, profile), key=ranks.__getitem__)
         elif current not in ('none', profile) and profile != 'none' and {current, profile} != {'policy', 'full'}:

@@ -85,7 +85,7 @@ try {
   const overviewOutput = path.join(app, '.runtime/qa-display-codes');
   await mkdir(overviewOutput, { recursive: true });
   await page.screenshot({ path: path.join(overviewOutput, 'overview.png') });
-  const search = page.getByRole('searchbox', { name: 'Rechercher dans le modèle publié' });
+  const search = page.getByRole('searchbox', { name: 'Rechercher dans le modèle courant' });
   for (const query of [capacity.displayCode, capacity.id]) {
     await page.getByRole('button', { name: 'Rechercher dans Atlas', exact: true }).click();
     await search.fill(query);
@@ -93,7 +93,10 @@ try {
     await page.getByTestId('business-sheet').waitFor();
     assert.ok((await page.locator('.eyebrow').innerText()).includes(capacity.displayCode));
     assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('node'), capacity.id);
-    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('version'), version);
+    assert.equal(
+      new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('version'),
+      catalog.mode === 'current' ? null : version,
+    );
   }
   await page.goto(`${base}#/principles?version=${version}&principle=codes`);
   await page.getByRole('heading', { name: 'Identité et codes de lecture', exact: true }).waitFor();

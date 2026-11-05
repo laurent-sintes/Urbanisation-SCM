@@ -1,0 +1,3032 @@
+schema_version: 1.0.0
+id: MASTER-DATA-DOMAIN-U1166
+date: '2026-11-05'
+status: applied_to_backlog
+source_refs:
+- U1166
+scope: Application du tableau final et des corrections U1166 ; aucune release, aucun accord sur une réalisation installée.
+approval_boundary: Noms, responsabilités explicitement discutées et rattachements du tableau final validés. Les compléments
+  rédactionnels, exemples, natures techniques et correspondances documentaires conservent leur qualification proposée.
+baseline:
+  git_commit: 522acf47ad992dbb4cceec6259885e920f6225f5
+  model_sha256: bd0d1e91b8f2b4e0f126cb14d621e73cb571dc2c66e4f7ad713a6ad6cc4331b7
+  glossary_sha256: 54c86395bc4f7236b8aca2f64e65503b8121aa877bc0ada276cd3b3c73030205
+counts:
+  domains: 1
+  subdomains: 9
+  business_areas: 21
+  capabilities: 33
+retired_nodes:
+- cap-internal-supplies-reference-stewardship
+- cap-merchandise-reference-stewardship
+- cap-packaging-reference-stewardship
+- cap-partner-agreement-reference-stewardship
+- cap-service-reference-stewardship
+retired_relations:
+- REL-U1079-ba-internal-supplies-equipment-references-cap
+- REL-U1079-ba-packaging-references-cap
+- REL-U1079-ba-partner-agreement-references-cap
+- REL-U1079-ba-product-references-cap
+- REL-U1079-ba-service-references-cap
+retirement_policy: Identités retirées non réutilisables ; fiches et accords antérieurs conservés dans Git et publications
+  historiques. Termes de stewardship conservés comme historiques.
+market_research:
+  reuse: Sources primaires effectivement consultées dans cette conversation, réutilisées dans leur périmètre. Les rapprochements
+    restent partiels et proposés ; aucun consensus ni déploiement déduit.
+  sources:
+  - id: U1166-ms-governance
+    vendor: Microsoft
+    product: Dynamics 365
+    title: Checklist for data management
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/data-management-check-list
+    locator: Data governance and architecture ; Data modeling ; Data quality
+    observed: Responsabilités de données, modèle documenté, contrôles et mesure de qualité.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-architecture
+    vendor: Microsoft
+    product: Dynamics 365
+    title: Manage your data effectively with the right architecture and modeling
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/data-management-architecture
+    locator: Data architecture ; Data modeling ; Data quality
+    observed: Organisation des données maîtres, sources, responsabilités et intégration.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-ingestion
+    vendor: Microsoft
+    product: Dynamics 365 Customer Insights - Data
+    title: Data sources overview
+    url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/data-sources
+    locator: Data connectors ; Data profiling
+    observed: Réception de sources multiples et profilage des données reçues.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-unify
+    vendor: Microsoft
+    product: Dynamics 365 Customer Insights - Data
+    title: Data unification overview
+    url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/data-unification
+    locator: Data unification process ; Customer ID
+    observed: Déduplication, rapprochement, profil unifié et changements d’identités par fusion ou séparation.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-enrichment
+    vendor: Microsoft
+    product: Dynamics 365 Customer Insights - Data
+    title: Data enrichment overview
+    url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/enrichment-hub
+    locator: Fix missing and inconsistent address data ; Enrichment tables
+    observed: Normalisation et attributs complémentaires reliés au profil, en préservant les données d’origine.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-export
+    vendor: Microsoft
+    product: Dynamics 365 Customer Insights - Data
+    title: Set up and manage exports
+    url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/export-manage
+    locator: Set up a new export ; Schedule and run exports
+    observed: Exports autorisés, planification et suivi des résultats.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-connections
+    vendor: Microsoft
+    product: Dynamics 365 Customer Insights - Data
+    title: Connections overview
+    url: https://learn.microsoft.com/en-us/dynamics365/customer-insights/data/connections
+    locator: Export connections
+    observed: Destinations autorisées et droits d’usage des connexions.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-party
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Vendor collaboration with customers
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-collaboration-work-customers-dynamics-365-operations
+    locator: Accessing vendor master data in the Vendor information workspace
+    observed: Références fournisseur, contacts, identifiants, catégories et certifications.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-product
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Product identifiers
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-identifiers
+    locator: Unique product number/product ID ; Product variants ; GTIN codes
+    observed: Identités produit et variantes, correspondances externes, unités et GTIN.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-assortment
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Assortment management
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+    locator: Assortment mapping ; Date effectivity
+    observed: Sélections de produits ou variantes affectées aux canaux et périodes.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-catalog
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Create Commerce catalogs for B2B sites
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites
+    locator: Catalog-specific metadata ; Channels
+    observed: Offres publiées par catalogue et canal, présentation et métadonnées.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-pricing
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Retail sales price management
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/price-management
+    locator: Base price ; Trade agreement prices ; Price groups
+    observed: Prix de référence et conditions selon les contextes commerciaux.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-location
+    vendor: Microsoft
+    product: Dynamics 365 Finance & Operations
+    title: Integrated sites and warehouses
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/data-entities/dual-write/sites-warehouses-mapping
+    locator: Templates
+    observed: Partage des références de sites et entrepôts entre applications.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-agreement
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Purchase agreements
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements
+    locator: Purchase agreements ; Validity and commitments
+    observed: Conditions, quantités ou valeurs convenues et commandes distinctes.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-service
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Service templates
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-template
+    locator: Service agreement templates
+    observed: Descriptions de prestations réutilisables dans accords et ordres de service.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-service-pricing
+    vendor: Microsoft
+    product: Dynamics 365 Sales
+    title: Define product pricing with price lists and price list items
+    url: https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    locator: What is a price list?
+    observed: Plusieurs tarifs de produits ou services, unités et contextes commerciaux.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-packaging
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Containerization
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wave-containerization
+    locator: Container types ; Packing strategies ; Mixing rules
+    observed: Types de contenants, capacités et règles de constitution utilisées par la cartonisation.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-supplies
+    vendor: Microsoft
+    product: Dynamics 365 SCM
+    title: Create purchase orders
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-creation
+    locator: Adding purchase order lines
+    observed: Achat de biens et services référencés ou par catégorie pour consommation directe.
+    consulted_on: '2026-11-05'
+  - id: U1166-ms-configuration
+    vendor: Microsoft
+    product: Dynamics 365
+    title: Manage configuration and migration data for Dynamics 365 projects
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/data-management-configuration-data-migration
+    locator: Use a configuration plan
+    observed: Données de configuration partagées ou propres à une entité, dépendances et versions à fournir.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-mdg
+    vendor: SAP
+    product: SAP Master Data Governance on SAP S/4HANA
+    title: Introducing SAP Master Data Governance
+    url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-sap-master-data-governance
+    locator: Integrated Object Model ; Governance and Collaboration ; Data Quality ; Data Replication
+    observed: Gouvernance des données partenaires et produits, approbation, activation et distribution aux systèmes consommateurs.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-consolidation
+    vendor: SAP
+    product: SAP Master Data Governance on SAP S/4HANA
+    title: Explaining Consolidation in Master Data Governance
+    url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/explaining-consolidation-in-master-data-governance
+    locator: Data Load ; Standardize ; Match ; Calculate Best Record ; Validate ; Activate
+    observed: Contributions multiples, règles de rapprochement, sélection des valeurs, validation et activation.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-assortment
+    vendor: SAP
+    product: SAP S/4HANA Cloud Private Edition Retail
+    title: Assortment
+    url: https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1
+    locator: Assortment management and listing
+    observed: Affectations entre articles, assortiments et sites avec périodes de validité.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-catalog
+    vendor: SAP
+    product: SAP S/4HANA Cloud Private Edition Retail
+    title: Assortment List
+    url: https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-list-1-1
+    locator: Assortment list
+    observed: Mise à disposition des informations commerciales des articles et assortiments pour leurs destinataires.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-pricing
+    vendor: SAP
+    product: SAP S/4HANA Sales
+    title: Using Reports for Condition Records
+    url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/using-reports-for-condition-records_eecd5ee0-856f-43ea-8aac-ce0a28977a0c
+    locator: Price Lists
+    observed: Conditions tarifaires consultables selon produits et clients, montants et validités.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-location
+    vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition Retail
+    title: Maintaining Sites for Retail (3I3)
+    url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/maintaining-sites-for-retail-3i3-
+    locator: Sites master data
+    observed: Références des sites Retail, caractéristiques et rattachements.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-agreement
+    vendor: SAP
+    product: SAP S/4HANA Sourcing & Procurement
+    title: Maintaining a Purchasing Contract
+    url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-procurement/maintaining-a-purchasing-contract
+    locator: Outline agreement ; Contract header and items
+    observed: Parties, conditions et validité contractuelle, commandes de consommation distinctes.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-service
+    vendor: SAP
+    product: SAP S/4HANA Service
+    title: Explaining the Need for Additional Master Data Objects
+    url: https://learning.sap.com/courses/discovering-sap-s-4hana-service/explaining-the-need-for-additional-master-data-objects_f108fad0-a71c-4fdb-ba60-5493f2d46124
+    locator: Service Products and Spare Parts
+    observed: Description maîtresse d’une prestation vendue et exécutée par un technicien.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-service-pricing
+    vendor: SAP
+    product: SAP S/4HANA Service and SAP S/4HANA Cloud Private Edition
+    title: Configuring Pricing for Service Transactions
+    url: https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    locator: Pricing for service transactions
+    observed: Conditions et détermination des prix des prestations.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-packaging
+    vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition Warehouse Management
+    title: Maintaining Packaging Information
+    url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+    locator: Packaging Material ; Packing Instruction
+    observed: Matières, poids et volumes, consignes de conditionnement simples ou à plusieurs niveaux.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-supplies
+    vendor: SAP
+    product: SAP S/4HANA
+    title: Describing Indirect Materials Procurement Process in SAP S/4HANA
+    url: https://learning.sap.com/courses/procurement-process-overview/describing-indirect-materials-procurement-process-in-sap-s-4hana
+    locator: Indirect materials ; Stock materials and consumable materials
+    observed: Fournitures et équipements de soutien aux opérations, références réduites ou achats sur texte.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-configuration
+    vendor: SAP
+    product: SAP S/4HANA Retail
+    title: Providing the Solution and Process Overview
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/providing-the-solution-and-process-overview_a98b6e58-64ec-4b38-a282-afa691b304be
+    locator: Customizing
+    observed: Unités, calendriers et paramètres de contrôle des données et processus.
+    consulted_on: '2026-11-05'
+  - id: U1166-sap-calendar
+    vendor: SAP
+    product: SAP S/4HANA Materials Management
+    title: Setting Up a Factory Calendar
+    url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/setting-up-a-factory-calendar
+    locator: Calendar structure ; Factory calendar ; Planning calendars
+    observed: Calendriers de référence, jours ouvrés et règles particulières ; distinction des calendriers de planification.
+    consulted_on: '2026-11-05'
+operational_references:
+  kept_families:
+  - ba-partner-agreement-references
+  - ba-product-references
+  - ba-packaging-references
+  - ba-internal-supplies-equipment-references
+  - ba-service-references
+  kept_maintenance: ba-reference-maintenance
+  kept_capability: master-data-ingestion
+  kept_behaviors:
+  - master-data-ingestion-commerce
+  - master-data-ingestion-finance
+  - master-data-ingestion-design
+  scope: Réception et actualisation simples ; provenance, version et validité conservées. Qualité et correction du contenu
+    dans Master Data ; autorités métier conservées.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1166
+  summary: 'Domaine Master Data validé : 9 sous-domaines, 21 BA, 33 capacités ; glossaire aligné et référentiel Supply simple.
+    Aucune release.'
+  required_nodes:
+  - id: system-business-operations
+    kind: business_system
+    field_sha256:
+      name: 62cff1fd7f252c9fb41ffa48f6054716c2fa9050f1a27a4bd5a3043bc79cd858
+      definition: 6ab29e33021163d0cb756d8c394f3151d8f2028102650a1fb2acd672b17f60e8
+      finality: 920ea00237ef09ca2edefcd31b7db2600eec8166bd00a62e1100eb7c088f0545
+      scope: 9aa62456b5fb237be6e902ad20f0f7e474452424611679e5f88c32525206d665
+      modeling_depth: 6035c7459e58f5795e86d8aa7cb4df5512416eef5bd82f758dbefe3c85aa4bce
+      examples: 6f6b8b0ecdb35b5d09b7953355a521be52b2c072c44dd5eaf6da76511e3eb50a
+      market_comparisons: 35f2ad73c7bc5445792ba880cfac5cc44699f3d6941f0f93f4d23f49e00417e2
+      pedagogical_description: f40e53d96b246767309fba7b9a9ef022d78f713e0fa2fff717990fe01bca4ec6
+  - id: business-references
+    kind: area
+    field_sha256:
+      name: e347e7c269ce6eef61b8e5f6cfb3938acc790d63ec9a215b1324f7969912df24
+      market_comparisons: 6dcd3f9d7088a7288d057b0bb43c791d522ee03f2a3d0b3f8526969b90735134
+      finality: b188ff090f1079aab3fce66615753af7ed1dd3681b81793f87e319b6b48b9b7e
+      definition: 65316cfe36dad93eac3f5f2332cb3614a73021d70bf539d22b17a515f1aa48da
+      scope: fa39091cc71d6bf364be362aa0a408a01ac68031476bfe609265d58252682ebf
+      mastership: a5c3fd67ac87aa0a74fe8c630a5b1d94a14b56b229fc05c9ca0929c9053ecdd8
+      dominant_role: 1f997599e274016080b63750a6b1700d7b70ea6ae85791fd23f4e52db4edcbb9
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      examples: 1aeb09162795c715bc338e4fee5ef97af8a7436daab261e287efa44b291421de
+      market_inspiration: 5e39152efebd51b187b7db0ea58f8ec4db58482365417f9ca281cfdd8faff37f
+      pedagogical_description: 9a46a230c072b3870ce84896d3dd0d29f5f459f82d8153d4a1962ccf251a3b79
+  - id: D08
+    kind: reference
+    field_sha256:
+      name: b58a6d301918c16c38f2addc399a7019a88cbfb53837b583bbcc42fd99b9ec93
+      definition: 815b4fa20a8b8d946fbfaf557f490e8e4220d1b4ad1e8d6b7d278afcf0cfdcdc
+      finality: 23596e55e918b8b9c479332ebe21a567d5e036495696d3d1efbf4f703ca627bd
+      independence: 0cf647d734a2cdde7084934bda7321b6acfae4803b25c9e4f168606811005064
+      market_comparisons: 91a9535be593e7aa41a9a6b274af76380745009beba416efa4abfe4e274f03a7
+      examples: b6bdf126f0955edf378179d0312bd5379db8aa71c9ada916e753dbcad87779eb
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      mastership: e16116bdd2e626e093ce6a075f63acc774a33f410b12e3250adc948b78f6f7f3
+      scope: 192cacc6511eff488fbdfeebe96b00ad1b2b560613e68adafeb67287065283c4
+      market_inspiration: d2c4111417217041779ba86a063a3629fff5c0df73dfc95c0e57cd6c9ff121bc
+      pedagogical_description: cbcf4e3f78a4fd2989147e27efa568ee7199e3d647ce02cbcb8c62289138a5b4
+  - id: D09
+    kind: reference
+    field_sha256:
+      name: 5f6904197651fbd8b14b37d6c6017a8de09525a325b6fb5de8d36395d01bfa02
+      definition: 1f315e7d344f848a7d57076c1263f83ca238dc4555ae8ed837604416e8fa2d2a
+      finality: 0908499f8cf4377d7483ea33e21c49d909944360b7c37a465615db433882f595
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      market_comparisons: c3a84dc621ec3ae7260ff529c3ea63e74bcc460e4635d2b77f4713214501a886
+      scope: c541eb2982233ef674a5d996105c43619ed63f5048c73e8a4e40f86e9913a2c4
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_inspiration: 0adf78fd17095b918dd21eceae46f130fb97981ca5e96801bc4447bd5a389e2c
+  - id: D12
+    kind: reference
+    field_sha256:
+      name: 9923015984fb0b3460653e29784a0086c551949c31b6cf957984a15e20cff591
+      definition: 81fb52e5a1adf4e0c05e6ff3b19af930e15456919edb2cbdf1b62a60f8a8288d
+      finality: 2256515805536b48668d9c891076f1b53c6f16a17ea390b1ce0a2003ba1eaf99
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      market_comparisons: ee9af1317da0e63dccc5f721dd56612627855855dc6501d70da751f2050fddf0
+      scope: 882729cafc4b7e57f6a39cdbf11846df82961279b00948758d6d377c1694dd6c
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_inspiration: f31c5467bdc462bda0af644660ba9def95ca0afcc47e0fa50253397eb485d837
+  - id: D16
+    kind: reference
+    field_sha256:
+      name: 9806ebff2bede3934d4b0cd6576f6393a83b3d4bc42aae5dface54dd09f7ba76
+      definition: 586e67e674d27513b92aaf9d5c6856636524582b5075eb8989457f220c5c7fa3
+      finality: 4d6f8d784ee43777357f2505059484e59cfc930ae0aced5435e5e3d911302b22
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      scope: 9976695d859d33d26a04fe36e28908712a917d21652095865d84e2fd19ecb296
+      market_comparisons: 32a7d72e2c9b6110c30d0a98cbc04fdfe8c233677f8e9d3644da8a23d4a22250
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_inspiration: 8a46d089235f3c31b4c53a34b2b34dff4627bc294245f9fc87018fb9c9ceddfb
+  - id: D11
+    kind: reference
+    field_sha256:
+      name: 45797799d3db17de1ba297aaa964be20c3e6160ade58398d009edcf78eb4d824
+      definition: b303f5c65ce8ed3935a0ae3e71417fb0a76b8c78bbe2eb834568572131064e80
+      finality: b6e2153f72c60cd07dd2a44889f1e26b683ed00ffddee0812509aa9151211a39
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      market_comparisons: abdd3021096551ad40aee1dfa19eda26d03b4fbad6c33de85616a1a8c4067865
+      scope: b5555dcb7015f089248215cfb7039ce45b4ed4badd99fbc1af324fafce190bf0
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_inspiration: ff1a5d4f3b0e019de516fdceecfb53e91a3081597b789a4e5e9ac65eec1499bd
+  - id: D13
+    kind: reference
+    field_sha256:
+      name: 25412f9ec51081c1d8c79878a74c82d137036115e21d03d08aa4f305bb06e332
+      definition: fa2a763d10a9cbdd40fa86815dcb093c81ffcbb2badef120e96a789fac3c1514
+      finality: 9660ca489949de32cbcc9647c20a44e24678b05053035da185b30e7d6c02cd3f
+      independence: 2093ef74bde62d6235e327806ee878c1051c56192d9f9633ff7f029b0bce0981
+      market_comparisons: f7f303f9e2e7efe20018b63dccedaebf0d39bc25b25e9b2c60876887563c2be2
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      mastership: e16116bdd2e626e093ce6a075f63acc774a33f410b12e3250adc948b78f6f7f3
+      scope: 7435f75a2dbe475244ada23b3d9918b147650668d59f7cadbe3ebd296eef0d50
+      market_inspiration: 0397af8deed561710246b3ed4886d0288d04750bca3907e528d2b6f3a2a84d34
+  - id: D14
+    kind: reference
+    field_sha256:
+      name: e1b8f1f7294a993f39f756478001d7f05aa1ba5f4474c5275d1450cebb04211b
+      definition: 7964d6105d40fc8acde839ab4cdf546b8d30f00818376c4a9467455c0cbc09ba
+      finality: 066c2a730071af5bbcabb5659ed79d2be1f333cd177ba07ebe66cf378d7613d0
+      scope: ccd3643c80899b1162e62e474b147395692856249b483c9060aa3199c75d9ece
+      mastership: e16116bdd2e626e093ce6a075f63acc774a33f410b12e3250adc948b78f6f7f3
+      market_comparisons: a2b5467d4588da295cb64a69235c52f8ba175c9958e58249f8193622f864d307
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_inspiration: bb385daa3821202030b256532eb057a610c29a9fec124c670b6e88ca3bd4280c
+  - id: master-data-ingestion
+    kind: capability
+    field_sha256:
+      name: bfd655a204d816bec74d81d998f969f7eb38aadc5edc30d806e84d4d07d60f3c
+      definition: f6264a2f62b8d3ff0de0703d6163dc83dff2ad3472f67f9b2b8af91ef4fe1c07
+      finality: 3292e72c45c493a7d4615752882550c11ced6cd87dbe9f7ea1af944639da568c
+      scope: 2c474b4b53a549a53972130779b5fa3c2b6f724548c49f5c54ed8719fc11d0e1
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      market_comparisons: c1738cb625300c3c07547e6610efa08b2cf7fd3af1e72e443f8e8b124c7fe208
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      mastership: 68ea0eb22413b8ee93bca6a12975a11ee812697541addf6b4e051f98fbd3d65f
+      decomposition_rationale: 7aa18707b63595d9f5dd0a46287b34f892362027767f821dbdab6997907c65b9
+      market_inspiration: 42849477aea72ff820fb598768545202ce8dada00a11be6d96e732f8f86eb889
+  - id: master-data-ingestion-commerce
+    kind: behavior
+    field_sha256:
+      name: ae72e4393dfad2b6401b80efc7ad37e43eda9a4e27b6c0b59251bd026dea3f69
+      definition: ddfe18630bb765180aba86cd8ae4a3115510ef367bab9104535331b856e314f8
+      scope: 8f227d99b7f2e1078ba06e377363340912ee6f5b7c2b506631e0705eb2c5a282
+      finality: 72dc963a39078351b1dfb60dd2f4f8fe3165c9f7c9616053eedb5e8318dd4bc5
+      nature: 4515dbcebc0a026dfb3fb29ee8fd7749992a432b1d3dac99dc91e2e92fa2e742
+      market_comparisons: 90ee640a92a3c90294da86a512872d6bb2bfacc6f4a427e9266ff73759c3a0a6
+      market_gaps: 3780583f45afc9fce5b9648c1605dedad0bce563f6e3f3a21a61f8307731ca8c
+  - id: master-data-ingestion-finance
+    kind: behavior
+    field_sha256:
+      name: 82012984ca3dc45f1469c067ecce0a5eff42ee4083d35846f58d0ed1c533f8d5
+      definition: ce00b69daa1eb844220f98c33d9633ee8a15e78fafa3ee2099a5511db770f5fc
+      scope: 8f227d99b7f2e1078ba06e377363340912ee6f5b7c2b506631e0705eb2c5a282
+      finality: 166db7d985a1583d9c792b783f2478dd93a6decdf7acc7da4be1e98b5e835f63
+      nature: 4515dbcebc0a026dfb3fb29ee8fd7749992a432b1d3dac99dc91e2e92fa2e742
+      market_comparisons: 5debd2a14b99bc4d35ea21d87197e57292dfccf7fff233d04c050f8f83462d93
+      market_gaps: 3780583f45afc9fce5b9648c1605dedad0bce563f6e3f3a21a61f8307731ca8c
+  - id: master-data-ingestion-design
+    kind: behavior
+    field_sha256:
+      name: 66627297920d6ad931727751109786ce0e891f3bce84a4d69ec2aaf2f1658e5f
+      definition: 8968cd0d3739877ea3a5d2da0289689e8d508ddf8012083708468d0c3fd1c1e4
+      scope: 8f227d99b7f2e1078ba06e377363340912ee6f5b7c2b506631e0705eb2c5a282
+      finality: 72dc963a39078351b1dfb60dd2f4f8fe3165c9f7c9616053eedb5e8318dd4bc5
+      nature: 4515dbcebc0a026dfb3fb29ee8fd7749992a432b1d3dac99dc91e2e92fa2e742
+      market_comparisons: 6c06d8ec3618b2821c1b3cc09a4346e4916c022cdd2f6de589f8c823347c6138
+      market_gaps: 3780583f45afc9fce5b9648c1605dedad0bce563f6e3f3a21a61f8307731ca8c
+  - id: product-price-book
+    kind: reference
+    field_sha256:
+      name: 1a640562eb291e048bb6c3cb753751f043418c854f1580da5371ce30628662bf
+      definition: 5d908dc2cc4546bc46c3c19f32b36e5aab89b9200bbb811168e254971d2f5347
+      finality: 057e52be636ea13e276eb83bdb854b4c08d723d4e547a44bbba25230d1130821
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      scope: 1d11a7d027e8eee92f0d8f895a7386dcc36d99754d8f5a50b8070e8b1fa5b857
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_comparisons: 13adb3be72f77f36fc5da673bdcd171b075c40ba869037f8ea1159d745c531eb
+      market_inspiration: 099a33af918c2092c062dd1694859be1a4e7192ac53f0ed3ee64edb8d87943bf
+  - id: service-price-book
+    kind: reference
+    field_sha256:
+      name: 6b538e3b3abc4c99e31fe2c3cc9d91c2cf9a6b987bfd1b6712b24673a1026507
+      definition: c84c3c8afae3c1f3cf3bf0174cadc54cc6bc85b761d5dbd3700e571a5f317cab
+      finality: d63a3beb66e4d37dcce74f9703447de108c3d6dc17ea39e69f7802a9d12194cf
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      scope: ac4af9b69c20dcc9a2aa729ad7e640eb1f11cc2896f1b7d7e9f3f7a4594764e9
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      market_comparisons: 9eab074dce1fedfaa6f4c49a85c8b052e5772c4bfbafd5440bd42fd16090b121
+      market_inspiration: f32c873981157ece7c43dda3fd3505b64c55bbc3a87b06a3d15e35d9d7e387ec
+  - id: ba-partner-agreement-references
+    kind: business_area
+    field_sha256:
+      name: 5e742330cf33e01b972a255f51b5360e7e3fed15113fa46bbbf994451ced443a
+      definition: 2be6e6506061040c26bb8c092ddd06bbc88bfea1dc6941ba55fcf9a3c79ac7b0
+      finality: 2b63cce0cb87a0906a34bef3c4bcb26850511abf846ed36ef0c0b129b96f0c8a
+      scope: 616953cf79ba0367fd2852741d0d3270eb66d5b42216b91ddbffa56c1660e2ff
+      market_comparisons: b14e012acfa8c77aa6be280933a031d89e12c27439f33cd511a5e31c1bcd7f3c
+      examples: ee67e06ee617af2632f3b3b5acbb8fc9880203319af96e1edddc9f91d4aa147e
+      pedagogical_description: 2ab0e7c6b043e45843cbbd4e24264d9c6477e6ad0d40cf092b1b77a5780b806a
+  - id: ba-product-references
+    kind: business_area
+    field_sha256:
+      name: d5db4c4cc694a27eacb7ded8f766df68527f33c3ddb60775cae2c90f9da8e3ef
+      definition: ac3ca756900e53fe0e2c5bb62fc0e33dbb080735dbd917112c2092e86270d876
+      finality: 4083cc564de57d5d83168625bf927de8ee2d459aee869f33d5762ed5cf53baea
+      scope: 59dc853495419221cba0db02c339b7ceedf5291bee8e125cff7cfb3171d036aa
+      market_comparisons: a36731c97042a5c062b5e4a97d357a07c71c490f1568d2d74032067a6e6d2f7a
+      examples: 9b96e46ca0ae84a111b9dac56e5f80fc21699c58754710a94f5f154edd75af04
+      pedagogical_description: 44298114751571b83d4db2ec7703117aa30a882757a828d3d6af72934c070a76
+  - id: ba-packaging-references
+    kind: business_area
+    field_sha256:
+      name: 258fdb4a5326ea2d3ab3c711364068b1abb3c6d2033c1e8a0bbe285e03d9ee18
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      finality: ad21c53b7f4d98b78d04a90d47eca2d846a9971823875bcda93dc2722c8872f8
+      scope: 2b2eedf7127c86d0d6332429a38a4a7447c36f64cbd8d56c2394aa836ba90a4e
+      market_comparisons: ce5754a1317b2db266430d94f81ecec86c0ba3af857ba68180838fd6e8dd5b46
+      examples: 822318ad63acc75a4926aaaf88907270b8c156bb133787ddf5ad0dc736a5f570
+      pedagogical_description: 292099b53ab2163bf0f18074b9e7dfa5b5b8adab95933492dc436d080c96b401
+  - id: ba-internal-supplies-equipment-references
+    kind: business_area
+    field_sha256:
+      name: e8df0d5dfdb10d9347f6a0ecdbbc1889839a5318fa68cb492bfa4fbbe978f9fb
+      definition: 7aaf400997af15df50bc11a519c87594f73949ae7986b24d18a8ad2db83c2c69
+      finality: 5a825f5542d0a356597b8ecb5a49e9aee37c57cc50d623cda2172f43036b0fc5
+      scope: d449d59abf5f3d2ce8457621c2e6ec8b32799ac98a7af0851593e9b66b91e92f
+      market_comparisons: f78442f7d2591e78bc0140599a6e0195faa74437d55df89ceb6da7a2bff6af3f
+      examples: 1624c69d98baa902a14a91256949b9c01c98b2375109cc92c81009f686b54a63
+      pedagogical_description: bb47138ead30c25f92bba6663556e340825e50379e19ce39ca4a4849c8601904
+  - id: ba-service-references
+    kind: business_area
+    field_sha256:
+      name: eaf4489bc51dfcf2a6f6ff5836cb19db218e3aab2188ee68133595a49b7df1ab
+      definition: 58564e238db4c6593e904be2107f0c08d34c4e5722f9a4e98e3e15c96ab0bcb1
+      finality: 351b34552f7db6f0f314cd7a61c557c2edb3a96c846944a671bd84a44d44898d
+      scope: a592d470e8c3dedf3d2eb4765f9ebb707ae12656e87d3181975235f2d249f41d
+      market_gaps: 63f5ae87ec06b6e881cf6c8006dee4407280ba4070d68cd28507f073378a2b10
+      examples: 25c44091a8e9cab0547d63ab186d30b4a1456781c25be43889c08326a8c855be
+      pedagogical_description: 288dd737f4e68667c0cb548f9e75d77b824ac814d4e2046ca734878b341a53e2
+  - id: packaging-material-reference
+    kind: reference
+    field_sha256:
+      name: da62a6366f568193db3eb62727f4ec1a9d75aa305bda5e5b8fdbd5944f1522b9
+      definition: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      finality: 1d227b90730c20b3b13c3dfb73de53f2c7a4c2bfe7d890e869aac4d43fe880d9
+      scope: eb286987f60c3f1cb7874d7ed5ad144091668fcf8648881207e608749175c392
+      market_comparisons: 80f9b9d906fa04ef99c7d9f17323eb7dc5f528ff08e5a71313dc10e79ad63fe8
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+  - id: packaging-specification
+    kind: reference
+    field_sha256:
+      name: 6b60c533ea93161f2815f3ede2cd404200144f91fab6c4b3a3ac9c61ed86314d
+      definition: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      finality: 57c6ed4c9c8d7e5c0e5b6e8130b2143753952d876daf568bace1161c60bd3be3
+      scope: 3a57674b64e55b85b06baf3fc97203cc0c8631ec0a28ced39a16f7649189d682
+      market_comparisons: 203752d013667448f1f8a9a7ee24decd487f7887e7acb41129af9b90843af170
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+  - id: internal-supplies-equipment-reference
+    kind: reference
+    field_sha256:
+      name: 29ce55eac115c94d5b7abf38a5e7a395ba8cd64b9f7453dd94e3b463a994a4fa
+      definition: 65347b1c49d8858e99aad6a8508b662c5d2df3453b4a16d69637a204eac4f00c
+      finality: 8c5e22c5511ca0bfb86f3efc821fcc79e696da0e5c8c6d78cad81fdf8ab83153
+      scope: b73ac00d8d00a5502698e7d335022831e713adf8199930e2c045108c22f31e69
+      market_comparisons: f36460a94c5e4c98fc6684be1e13c0c58c2b87d1534c0de63a414c7e6df0e46c
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+  - id: customer-credit-profile
+    kind: reference
+    field_sha256:
+      name: e8ca0f73b3894f264f4f4849af9c73c5a6feb2f5a31e09441b12fedde080dab4
+      definition: 84af38ade416494951c78954096b0f3b84ee93860d465a9213f08e9bbd5b75c6
+      finality: 112aa0cdc2bfa233cabcc24e67deba189ba026d09974e57bdac7707c5b1ce229
+      scope: 5d9cde5faac2d02a154bb123130027349b3bcf37084629f0b1a3dbc094ea6cd5
+      data_governance: d01cd36d3939abab25211b1605fd0b93908b87c3e8ba829f2730ce9280b52f9b
+      mastership: 6642997cfd51e8e04bb90c2c0e8f78c1a2972e578e34ea975ae8b10995191b25
+      market_comparisons: 174a74743bd724ccab51d0b3ff3b03a4ca5c5866e8e1affe7c7afadff7b8972c
+  - id: ba-reference-maintenance
+    kind: business_area
+    field_sha256:
+      name: c2a17cbdc1f37f7bf62f050812101b41679889cd34142dc11df30c206ea1da80
+      definition: ebebd57ec4718315e214a4b68644286237749858e5148ed4fb3527245535d223
+      finality: a53479b2f260091eee88fe2a66e0b9bbf873caba2c766925f7ce29a00927dc64
+      scope: 4355f1e26b5a08784cac869404cb44c89ac5ec0ad61ad7b2511098ea740921fb
+      market_comparisons: 78a8605e51a039bbd699c56d89b2502bd9b66c2af7707965f9dd891a3cb5eeb3
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      examples: 53d392451037176d83382dde96a002c16108e60ba6778f78209685ea074f0369
+      pedagogical_description: f63ec948d7c11f3dc8561a9edb6ea911749673b88706a68ff68a519a17544227
+  - id: domain-master-data
+    kind: domain
+    field_sha256:
+      name: 30a52e47337e6b82f6a9311d4d4f8fbe3c096996cbc0b8c7cd4c2af7743e3a9e
+      definition: f67e5de0c70f107374dcffe99b85d3a3d20b22efd3a473a5f0c1a74c8e9054f1
+      scope: 99e612bde210e74076db05099e12d137c015174700d150d8e1a228aa95198b06
+      market_comparisons: d67d2f204efb196195c84822938942995439450ada8f02c1cf1a05d9e478ac59
+      modeling_depth: 4f31b5df7c62162fac968b93a024c14f8456579dbc72b71daf8ab38a0c22043b
+      examples: 400f52f455cde7be4a023ef8ee517beb85314a2f11d823d6a5e12c4af80dcf44
+      finality: f67e5de0c70f107374dcffe99b85d3a3d20b22efd3a473a5f0c1a74c8e9054f1
+    parent: system-business-operations
+    parent_type: presents
+  - id: subdomain-mdm-governance-quality
+    kind: area
+    field_sha256:
+      name: 9a7734bf01d5337c9f8265c031a8d14778667e8439a2ffc19688d406362ed6f8
+      definition: 619f75407692215fd8c9311ea61b00e3dcdb04f3e2d4dd228829cab70a8219b9
+      scope: 31875e5c1e16977684d8c2e3482edc2c2343187ed546e6dd66108829bcfc594a
+      market_comparisons: 2fbefa450c1a9fdb9d3d9a273a9ea644a7eb816cd23e82c6c9dce6b32c9c07b4
+      examples: f4d45aa5f4200cea44921a9bc6b38d28f1f1b8137fdecc7349b999ca5b99f4e8
+      finality: 619f75407692215fd8c9311ea61b00e3dcdb04f3e2d4dd228829cab70a8219b9
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-governance
+    kind: business_area
+    field_sha256:
+      name: a95019767c2a7682ee5e14d9bb0bb53cdc8a0e842acfc5d541664f43d59e9663
+      definition: 7656196e82efb824c651bff90492574ccfc25d0e600a5201809f60dfaf9faa49
+      scope: b98c1dc9301380358aaad81c087353d923073ad83bde2a0f3f99516b42843d80
+      market_comparisons: 9aa7e7877a67ad8f87669d3cbc3cd611389fce3997b0472e370166c585bf9811
+      examples: 48cfa18ca2240f9f27e15f622f6eb2495ebe89a364f3538949a6282999339eff
+      finality: 7656196e82efb824c651bff90492574ccfc25d0e600a5201809f60dfaf9faa49
+    parent: subdomain-mdm-governance-quality
+    parent_type: contains
+  - id: cap-mdm-standards
+    kind: capability
+    field_sha256:
+      name: c3d7978071e64c300401932df164f07cde446e16a86e8964680600cabdeab9d3
+      definition: 66599f3ed0bbc432e727b186067f98a8a9cd822c83e16feb673ce17b5ad5fd71
+      scope: 3743e87589ba6882a8326f341ab47b3c967062c8705267670ea46d227babc794
+      market_comparisons: ec7adb52fc259eb41b3937ac6b406e1faa3ffd91611cc351095ac960b020f166
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: df81d7cdee4a017661af06a8cf7386be9c69535109ff1e7b77fb9614abbeee8c
+      finality: 66599f3ed0bbc432e727b186067f98a8a9cd822c83e16feb673ce17b5ad5fd71
+    parent: ba-mdm-governance
+    parent_type: contains
+  - id: cap-mdm-authority
+    kind: capability
+    field_sha256:
+      name: 9fa46552190d214bb44936b4e70b75fcc426584faaaef7609c67dd1f5f9f27ee
+      definition: 12477676ac49922c67d587a4d5c3c0866fb3960ad6d677ffd1ade066bca291ff
+      scope: 12477676ac49922c67d587a4d5c3c0866fb3960ad6d677ffd1ade066bca291ff
+      market_comparisons: 9bb45d46ae0276d6209a24e5943fa6cb9cd7def11f7a4cfc9a7d016fd9eca580
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: f4ebd54eb902357274e665aed6ff401264544125db636ad7aeea951a6431d01f
+      finality: 12477676ac49922c67d587a4d5c3c0866fb3960ad6d677ffd1ade066bca291ff
+    parent: ba-mdm-governance
+    parent_type: contains
+  - id: ba-mdm-quality
+    kind: business_area
+    field_sha256:
+      name: 9a4e2c2b1bc4fa31c74473fe9c4ab6d2d6490d9e9e289429d5d92f2614993dac
+      definition: 6f6e0ba7ddd78c86a85a7fd99899a3705e44500139692599fc4c3a94e2f57d61
+      scope: e4406ed71abdbb53f2d27393e82348eff20e00e3f21d2cc61366ee9a3ee1efe0
+      market_comparisons: 21492729b13cc66148ad556d22832f5d91720ca8d7db5fdb0b20ce2d022251d8
+      examples: e1d76709e589f40ff64b6493d024b91e84bfbc73cff1ef7df26d0bf392099317
+      finality: 6f6e0ba7ddd78c86a85a7fd99899a3705e44500139692599fc4c3a94e2f57d61
+    parent: subdomain-mdm-governance-quality
+    parent_type: contains
+  - id: cap-mdm-quality-assessment
+    kind: capability
+    field_sha256:
+      name: f637d2dad20f2c8475982e9c5bb3ef47ddd786af0750a52054effb16d6ed6ad8
+      definition: c514efd5fc31d01e5caa9d45503d1b6f334e5b97b04b8293f872df9fb3ced230
+      scope: c514efd5fc31d01e5caa9d45503d1b6f334e5b97b04b8293f872df9fb3ced230
+      market_comparisons: e5d818d0774c42eb2bbaf79f7fb12c7762a4dc83c3d301ebe53c710d4d15a8c9
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: 201eeb9a463d5303ec28f0cfbd13c6e8f8c84b92bffa0f5a00727ee37b975958
+      finality: c514efd5fc31d01e5caa9d45503d1b6f334e5b97b04b8293f872df9fb3ced230
+    parent: ba-mdm-quality
+    parent_type: contains
+  - id: cap-mdm-quality-remediation
+    kind: capability
+    field_sha256:
+      name: 718f5d94d9b5477638742cca0d515fa10647f6c390f1e69ae2e7f10440e664b1
+      definition: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      scope: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      market_comparisons: 151c6ee4a46f589883ec8c69713675d2540c2676c2ed1091d96ee77427c90ee8
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: d5ddb2190b82cd3c16deba0bc833add844096c073d90fa0266afc43a92b85462
+      finality: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+    parent: ba-mdm-quality
+    parent_type: contains
+  - id: subdomain-mdm-acquisition-preparation
+    kind: area
+    field_sha256:
+      name: ca544057390c2a89d3b85c659b3112f49ad2d16ac24992e6b84d84e934d1e054
+      definition: 3c9170f9efe79caa523201ba14cb9916d509bc06548d74c662baee88cb390f24
+      scope: 8cf03645a5ceb5b63e407e1df971d658f068e5e5e2972888cc7cd0e0e4fba449
+      market_comparisons: 5131bd32a2798269ed10efdcee7ada7928a01c61ecde369321a1b1883c264917
+      examples: 1aa8e303283a2bfc792de93e3c875a280758c193950da231d6512571e742951a
+      finality: 3c9170f9efe79caa523201ba14cb9916d509bc06548d74c662baee88cb390f24
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-source-contribution
+    kind: business_area
+    field_sha256:
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      definition: 9167aa087a2204271775e5cefd590f27c9efbc89b363f5f26c10ca3d4e800c5e
+      scope: 76c6f07f8cbb0b9257c575921989aef8f68ec94a3d0758977dad870ad50b0ea9
+      market_comparisons: 9e09d555e1f2758565197232668fb6c9b18bfcb52d253a6f36ab4dfa1f7d453f
+      examples: 77d03461ac5d740a345757c5c42f0e701dfdcab2715c9c990a4c44860f43626a
+      finality: 9167aa087a2204271775e5cefd590f27c9efbc89b363f5f26c10ca3d4e800c5e
+    parent: subdomain-mdm-acquisition-preparation
+    parent_type: contains
+  - id: cap-mdm-source-contribution
+    kind: capability
+    field_sha256:
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      definition: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      scope: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      market_comparisons: 63ff7f72a6cb21f4aa051c8401b12ba142ab2d1a7f1c1c226ce248a70ef42265
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 7f68f6f5228e77c03512d3d37ce640288cfae8c3d6c0e55ed8c9697c92312e5e
+      finality: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+    parent: ba-mdm-source-contribution
+    parent_type: contains
+  - id: cap-mdm-ingestion
+    kind: capability
+    field_sha256:
+      name: ad50ab56d2bdec923960495290e32d0fba4403938146482109d0476710009acc
+      definition: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      scope: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      market_comparisons: 97c86cebce0ad9936ff787b7a621f438076d6c8c7b1b7951f96ba55eafc4e580
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      examples: aa482c3358f27a97531b59cccd92d7b129be71441000bbafa5d8b1163a6689ac
+      finality: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+    parent: ba-mdm-source-contribution
+    parent_type: contains
+  - id: ba-mdm-consolidation
+    kind: business_area
+    field_sha256:
+      name: f8a4e793bd4991991b83d37a58eed8b8419b998860a8d79d003182396f1e1234
+      definition: e1c54a962dfa6139bf8b6b348eaa31e1844301b79c701b6d88a2f97dd53e9fc4
+      scope: ad993608239dd0ccbec0054954e96b157cecf9e81cc33f338b081a0ea83b6e6d
+      market_comparisons: b601b96d1c8599dbdf13e396bbdbd3d913d2a3fc78461fc7e455250af95cd5ac
+      examples: c22e60e34501c130e94a2a859518a7f6af2d6d66d473af923da9cc94dd369809
+      finality: e1c54a962dfa6139bf8b6b348eaa31e1844301b79c701b6d88a2f97dd53e9fc4
+    parent: subdomain-mdm-acquisition-preparation
+    parent_type: contains
+  - id: cap-mdm-identity
+    kind: capability
+    field_sha256:
+      name: 05c88fa4b9abc1571b24a410f490484610bb53f83d14652b84e88546351c8375
+      definition: 8ad9440bee17fa5ecd1276a0de8f84e8ca3a2606cfe0df91113bdaa6c8dd1477
+      scope: 8ad9440bee17fa5ecd1276a0de8f84e8ca3a2606cfe0df91113bdaa6c8dd1477
+      market_comparisons: 2b8c611078e551ca052dee09e64ed7bf1624f5911f1950a994d42a80eca88568
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 074eec197b2300bd0ba853ba7265376fbd2a929398db267c33c7137ce51114c0
+      finality: 8ad9440bee17fa5ecd1276a0de8f84e8ca3a2606cfe0df91113bdaa6c8dd1477
+    parent: ba-mdm-consolidation
+    parent_type: contains
+  - id: cap-mdm-consolidation
+    kind: capability
+    field_sha256:
+      name: f8a4e793bd4991991b83d37a58eed8b8419b998860a8d79d003182396f1e1234
+      definition: 00096f5880e155a02f48842761ddd06bcff16d001b53bc1e20b6d8527851cc06
+      scope: 00096f5880e155a02f48842761ddd06bcff16d001b53bc1e20b6d8527851cc06
+      market_comparisons: b1f04ea2851be8415d49d6de0791dcc7d4a66f929f93181560862fc47d9adf72
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: 0426a9832ef898c773ee9dc084c28d2c2f723a421bb008997b327eac87dd4ead
+      finality: 00096f5880e155a02f48842761ddd06bcff16d001b53bc1e20b6d8527851cc06
+    parent: ba-mdm-consolidation
+    parent_type: contains
+  - id: ba-mdm-enrichment
+    kind: business_area
+    field_sha256:
+      name: 716ac8397723edb113d0d258a074ef32b41832e1e4701f5bca6a088da3e58aa4
+      definition: 36a9d8c38fcc6762b645f6f27aa29c0abd71a954ce2a70b38527c8408f7d4871
+      scope: 18fdad68da5042959a606918b6d9b7542ae92072d52029c72c577659d35df32c
+      market_comparisons: 8f97c13bb8650e4e0a95200cb068ab15248a0a568b8a4dbe6d8ec6cdc0256c94
+      examples: 8d881f8505dc69d9e35c86ae9e24e89be2c40e04444e0586334331120e9b56ec
+      finality: 36a9d8c38fcc6762b645f6f27aa29c0abd71a954ce2a70b38527c8408f7d4871
+    parent: subdomain-mdm-acquisition-preparation
+    parent_type: contains
+  - id: cap-mdm-enrichment
+    kind: capability
+    field_sha256:
+      name: c28d6be5dc924e6befea83efa9112c692c3170033a22eaf5dc5c646d8b9ac259
+      definition: d52ab5cdb3412f6a2b8ff6037438ad0a7109a38be3cd14c8f19f4b1912215289
+      scope: d52ab5cdb3412f6a2b8ff6037438ad0a7109a38be3cd14c8f19f4b1912215289
+      market_comparisons: 1dd5bab43c04d81eccc1bcdadc3721370218da11c5f80886386f1301b4f2d6f5
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: 74b11a1bb7016012e770d2c9b8bfdc2e0664bdd3c6db5eeee6954161626934b4
+      finality: d52ab5cdb3412f6a2b8ff6037438ad0a7109a38be3cd14c8f19f4b1912215289
+    parent: ba-mdm-enrichment
+    parent_type: contains
+  - id: subdomain-mdm-lifecycle-delivery
+    kind: area
+    field_sha256:
+      name: 472f1f3fbdae50a8a69c9161edfa3699b95ca92f93997d31020548aa5986e877
+      definition: e6c7080e1d33c3d0678fd9bbc6f98dfb0d7b0eb948139315b3d4f73a721ce8f5
+      scope: 9ca7087fe6bb752aae9031d560bf6e9ef2ccad23452f8ceeada15a1f73743baa
+      market_comparisons: cea71f8b90548fb726a84cbb82e76d3f57630b5916763b2cde30b84faffb8852
+      examples: ef4c9941cf9acc6b96a46937d864e9715768750844d56dddb04ddc5e754c51ed
+      finality: e6c7080e1d33c3d0678fd9bbc6f98dfb0d7b0eb948139315b3d4f73a721ce8f5
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-certified-reference
+    kind: business_area
+    field_sha256:
+      name: cccd0746bd2d11dbfc30f78f4ba3724d6d8c6bdffcd32f9164ed47fea601ac0d
+      definition: abfeb09097d498739c52ca2d9a5629ccd539f06523f94c16aa94a776cfe4bfcd
+      scope: 7a69ea48bedcfadcbf6fa9ded1d295657760071d6f07107e8e00d6bf8ff9ea9f
+      market_comparisons: 0094ba97431ce820aed4166e9e350d9efdc0f757f029e3876f65d8b54299a7c7
+      examples: 5121591bd95aedb1875716c80cbbe2756c5a95bdf8d8baff506532a2c4452e60
+      finality: abfeb09097d498739c52ca2d9a5629ccd539f06523f94c16aa94a776cfe4bfcd
+    parent: subdomain-mdm-lifecycle-delivery
+    parent_type: contains
+  - id: cap-mdm-change
+    kind: capability
+    field_sha256:
+      name: f4d19e4b82ec9411e4842e2cf0d2c2c42ddede74cf3063c1a9f51b957740fa16
+      definition: 1b749ff5244603415539d2523ce07544d8c5b9ac4fee7e21860025f8c00a4b64
+      scope: 1b749ff5244603415539d2523ce07544d8c5b9ac4fee7e21860025f8c00a4b64
+      market_comparisons: 2157b4ffdf5ee45855e971232bde6d81021a9991bf58e9c710f71d40f924fdf0
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 13bc5b7a8a2e4fde1c790fd6332a8151eb5c7dca2b42c0f310a773569d6834b3
+      finality: 1b749ff5244603415539d2523ce07544d8c5b9ac4fee7e21860025f8c00a4b64
+    parent: ba-mdm-certified-reference
+    parent_type: contains
+  - id: cap-mdm-certification
+    kind: capability
+    field_sha256:
+      name: d3fa78271eeb98326267152647f32735b149439f467bece502c57015e6e526f0
+      definition: 3847e5017e7fbd8ceabc6d07d1eb82109e85737e4194dc4ba5b4819334194a17
+      scope: ab4f8fdff615a15197c6792e716976be722bd5d0f7104a0ac4da90913f869481
+      market_comparisons: 928f319e2f5cdff23691259a10655f1f18a212ee716ecbef903f50d3e2ed6b70
+      nature: 0807ce842aee519403b764131eee1dc3a4848c949a635ffabbf343abab61198e
+      examples: 94741005defacce4279d2a1154f719beb6bfef7724eff0801c2bec5c7f0a519d
+      finality: 3847e5017e7fbd8ceabc6d07d1eb82109e85737e4194dc4ba5b4819334194a17
+    parent: ba-mdm-certified-reference
+    parent_type: contains
+  - id: cap-mdm-publication
+    kind: capability
+    field_sha256:
+      name: 85bfbaab4c740d00454dc4589e6d65c038a80c445dc5d3f86b0f7338562324cd
+      definition: fea1526d4ea6833f0cdc4f3049f628e1040a21100a177abd6d64b6e36186c115
+      scope: fea1526d4ea6833f0cdc4f3049f628e1040a21100a177abd6d64b6e36186c115
+      market_comparisons: 4634c6c62339d848736e891c632e4e3fceadb30e388fb3cedb5f2dfad609a49b
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: 1e2ea9cc7091ad75c94d3da21535a53db55c9e51270d6a4c81d996851ba543a6
+      finality: fea1526d4ea6833f0cdc4f3049f628e1040a21100a177abd6d64b6e36186c115
+    parent: ba-mdm-certified-reference
+    parent_type: contains
+  - id: ba-mdm-access-distribution
+    kind: business_area
+    field_sha256:
+      name: fef7e6e30cfab1f70eccf08318dfdb4540d1d4d5d03b77eef412dd612bc9ecfb
+      definition: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      scope: a189b1aad362a366dae58527b0e13fbc2fcf73b015ffd68043c5bbcc79ded46c
+      market_comparisons: 9ca93d46c218b998b11d954f5f073b29c40d177cf3529a2df93f857094c36945
+      examples: f2e7458537086782abf81e886f0e6970ec16b15c67d058ff00f200867076b668
+      finality: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+    parent: subdomain-mdm-lifecycle-delivery
+    parent_type: contains
+  - id: cap-mdm-access-subscription
+    kind: capability
+    field_sha256:
+      name: d0957e0d65143619a029b113d86e2828acafdf0af66dd9f97fe5d4aeef5ac92a
+      definition: 46cbe1b30c492041e8362055df6ca7bb2cfa1a34ad870481109fc1e65c0f1e25
+      scope: 46cbe1b30c492041e8362055df6ca7bb2cfa1a34ad870481109fc1e65c0f1e25
+      market_comparisons: b8e3c524b680d143b689a9448632268d9baffff73f1530b90ca94bdd5d83e3d6
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 991057b027b33cec81dfadb179afbe64a94de077bc2b1699c518ae908bf28c6b
+      finality: 46cbe1b30c492041e8362055df6ca7bb2cfa1a34ad870481109fc1e65c0f1e25
+    parent: ba-mdm-access-distribution
+    parent_type: contains
+  - id: cap-mdm-distribution
+    kind: capability
+    field_sha256:
+      name: cb457233e6251e9b770357af62b7754aed8666dd54e07a4d6d690e753653a208
+      definition: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      scope: 3948925508e33b6cc3b10dd0931a036f5fed24aa19177edd8131eeb057b85c46
+      market_comparisons: fcc2645f3e082b70402fb96e5520efec58b9c55c9fe9360438542dd01047f95d
+      nature: f2860eb54ca77635af70dd0361ee5450c2a482fc6341d958450d8d7f9054d0de
+      examples: bfcb3da2e5760036b4d7fc2fd143274102294731ca23c978f38ecf90aadef03e
+      finality: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+    parent: ba-mdm-access-distribution
+    parent_type: contains
+  - id: subdomain-mdm-party-agreement
+    kind: area
+    field_sha256:
+      name: 0f419431d4de95de0c582101bd003fd6cecd3836fa3d25796206b9997d16c915
+      definition: f9900a675367eed8b1600fc29a23f29342260188f2bf6a225d8aab14997adc0e
+      scope: 90fde95e2b65545960812ad3a1a45e811d7c165af103292f1720a176042ac90c
+      market_comparisons: 512776aa018f4a5d51480caacf0abc3711f44992df9c08b7bced9c6b28620ce1
+      examples: 2b80c1876a2369d08300bf6250898c644b6f6296a44c7466d7fa5db448b7c64a
+      finality: f9900a675367eed8b1600fc29a23f29342260188f2bf6a225d8aab14997adc0e
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-customer
+    kind: business_area
+    field_sha256:
+      name: 61b7f06661987f8adb0e11c6af368ece618207c10d20aa432d903d5e29fab04b
+      definition: 452556f7203c95a7b8e896d9e9c637b36ac9e8102691244a16319c74715cbacd
+      scope: f755ae807aa560a16cf49df9d74e76fa2f674154547de6f8247ba22e5ee04587
+      market_comparisons: e9e0ab6259a35cfc46d1c6ff41aae5084d73f30c233edbfa9449f340be6b5d7b
+      examples: bf318bc90ae791e6f4be63eb7a275fbc1f87200f67798f6412ddb89693ae4aa0
+      finality: 452556f7203c95a7b8e896d9e9c637b36ac9e8102691244a16319c74715cbacd
+    parent: subdomain-mdm-party-agreement
+    parent_type: contains
+  - id: cap-mdm-customer
+    kind: capability
+    field_sha256:
+      name: e4dc8ad38c8a31c014f6369313867fb6af4edec206528150f117b3269fe6f08e
+      definition: a91d028c5638e2c1e6bbffb42cf4c0bdf20e90a928210e6d3ccca40ee8e324ce
+      scope: 36ef35b7435f1828ba03f054006ba008ffec240627d39838f693ae3fd9ac7bda
+      market_comparisons: d478549cff7646fabc641f56756850b55229fa70df99d6c9abe6947103d3b136
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 69c4b2a49f21a7e90bad6db97e18fad3fd9a8b539920cfc742e92ef3023a6113
+      finality: a91d028c5638e2c1e6bbffb42cf4c0bdf20e90a928210e6d3ccca40ee8e324ce
+    parent: ba-mdm-customer
+    parent_type: contains
+  - id: ba-mdm-supplier
+    kind: business_area
+    field_sha256:
+      name: 9fea66178c9b3fba6605be29c6ee3ea740dfe0317acfe5a7f56329b4d0b71817
+      definition: 71e004abd061f33e0407a28512b02fc04336da0808d7ee7185387003c99da4dd
+      scope: d2f31547710dce662dd7675d874ce03c6da47ba8327cb2a7a89c4d99bdbc78c9
+      market_comparisons: a4c4bb7873ba1324e5dfcf62c1e397efbf47e1f7cd1867312817130eeacb0908
+      examples: 07a31d5bf0e77e1a8873bf2e2952838629651ea18f5165a7ebc4855380e9d9cf
+      finality: 71e004abd061f33e0407a28512b02fc04336da0808d7ee7185387003c99da4dd
+    parent: subdomain-mdm-party-agreement
+    parent_type: contains
+  - id: cap-mdm-supplier
+    kind: capability
+    field_sha256:
+      name: 5a5b6e979a1eeea7ae03919ba38fa08579f77f71ea5a9f06d6e3f5f116cca295
+      definition: 6d626db991b19f4ddbc2c840fb1005f0e9f47fb3df75273bea2d5448b3f70f35
+      scope: b9a5730411d44952093ffb73dc62b1871ac3917afe83dbfd43bea78bdcac179c
+      market_comparisons: 94be7db7e88077acc14178ab9faf0ef8221f09437bf60b39b5c1c660ec8440c4
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 5011bebe98272746b3095beb24ce3eff81171d65145b65e286e93cbfae4d75bd
+      finality: 6d626db991b19f4ddbc2c840fb1005f0e9f47fb3df75273bea2d5448b3f70f35
+    parent: ba-mdm-supplier
+    parent_type: contains
+  - id: ba-mdm-agreement
+    kind: business_area
+    field_sha256:
+      name: 4bae7274e076ac6e942440ace3602001e9581b81005c92af9aec4fa479cfbcf3
+      definition: 240ab1599bd66d15f44df9a44f44956415b1fef241fe21d10abbc1b1471b7083
+      scope: eed7ee291098b4b11c94f6c67f5b8575e1328cfc38010e4694bc0305ebf79511
+      market_comparisons: bd7cb3403b6d5f1ba472b805e32ff3148489791efa63bde8f567efcbe01ce74b
+      examples: 326ce96859bd425a218bf7fcd165497f6ac12977f03cbe35c4cf13b4ada41dc0
+      finality: 240ab1599bd66d15f44df9a44f44956415b1fef241fe21d10abbc1b1471b7083
+    parent: subdomain-mdm-party-agreement
+    parent_type: contains
+  - id: cap-mdm-agreement
+    kind: capability
+    field_sha256:
+      name: 153d483a0719febe205e1c8b00ab2ab1a51d1a0f0a1508a445afdf9dbe24862f
+      definition: 5bba47cac6a2db2e9e81628b705b5ca2b973027bf5903bc2831e2960baf270c8
+      scope: f321c51d63dbb7b6139d043ede1d903067ca51ba100764705ff6e58f9543e1d5
+      market_comparisons: a7b284b3887e7f9b180168fe445563b735614ecdb56230bf678216cff987e0c6
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 54198b3bcf024e52eb5f1f94b7842ffb605b240e3214ceea5607da69fedaf5f4
+      finality: 5bba47cac6a2db2e9e81628b705b5ca2b973027bf5903bc2831e2960baf270c8
+    parent: ba-mdm-agreement
+    parent_type: contains
+  - id: subdomain-mdm-product-commercial
+    kind: area
+    field_sha256:
+      name: df541c9606ed9e163b425e19dbc506a4aa33331f0a5c8784b2e80edc940f4816
+      definition: 67609c6fe2275a7f162c7641ad5201df422bf20dddd00f89538f36288f7c13fc
+      scope: f49fb76a76a14c1337f244264b3f4c4a2f552276a03c68aa6d1464094706f641
+      market_comparisons: 375ab86843c91d8d7224f6f3a09fb2297d5451d4c48aeb6d92d91ab438b67c33
+      examples: 5b607b921ca46b83d5bb66b8d6802442ac5755f15c4d5fa3f2731308cfc908e5
+      finality: 67609c6fe2275a7f162c7641ad5201df422bf20dddd00f89538f36288f7c13fc
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-product
+    kind: business_area
+    field_sha256:
+      name: cfd8042f4e2d74bbd92e6178416bad6afe457367a2ba5087d3a309c79eb59e69
+      definition: efb73049a4d77e4426d3e645d596f7a49a710fa3ce91303f20d9da189bdaf1f1
+      scope: f0197d430e2d21eddae6427861c8f084419dbe37b4b5c7e4158483960beed2b7
+      market_comparisons: e315e9f44c91fc7e55620cd1d6617a50691038c6464cec78984dbfa1b17dde40
+      examples: 919cdca57bf01672128a17bd61c70c22116fade47e88dc9862c7dde3b669d648
+      finality: efb73049a4d77e4426d3e645d596f7a49a710fa3ce91303f20d9da189bdaf1f1
+    parent: subdomain-mdm-product-commercial
+    parent_type: contains
+  - id: cap-mdm-product
+    kind: capability
+    field_sha256:
+      name: 8d134000bd51775e7ab320a2c1223987138b25a5af7c2aa491dff7621949aa0c
+      definition: 8f00b2b0bac002e26b203665ed6b5e1406370a192c11090f99a52a9d9f81c5b7
+      scope: ce21da34d867e73146b269d564e93f72e3dfa55afb3f2902052469795e02178d
+      market_comparisons: 323d092cabbfdb97d32cb658250e33271f811da2995fbaf0eae4b005fdac35a3
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: fc148f9f82bca1b7a83dbf800df9e2b84dba957a9414629ba7fa975426e57efd
+      finality: 8f00b2b0bac002e26b203665ed6b5e1406370a192c11090f99a52a9d9f81c5b7
+    parent: ba-mdm-product
+    parent_type: contains
+  - id: cap-mdm-variant
+    kind: capability
+    field_sha256:
+      name: 88b6f336e70450d9c4f17ac3b6598fa7bf641fc69031eb9530fbcc0b0a142963
+      definition: 1e14a0a81bdf6a47880851b06e52df86fe68cd46f465e3a24b1ea52a503617d1
+      scope: 13353ea386aa474cd0ef3e7ca55ee54d8a8eb3737c39ecaf728cbcfccf3e805b
+      market_comparisons: d6fffde1635a1157c25d336f43da02ff538fc546b659dea65b9f80c39bd5974f
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: 8cd623b2501b93a1421d8754d0090513119d153ffccc0613aab5ded407988d83
+      finality: 1e14a0a81bdf6a47880851b06e52df86fe68cd46f465e3a24b1ea52a503617d1
+    parent: ba-mdm-product
+    parent_type: contains
+  - id: cap-mdm-trade-item
+    kind: capability
+    field_sha256:
+      name: 3e26c8a707151cc86cc7ddfe4ab8f51a731c2c659558b6ed8698ebff73a112c5
+      definition: 5ee0a79be6a0489a5612125af6f55fd6568d6c18d0c0374f1237246f9ea14026
+      scope: c9c49ace4a13cbc0456c665105f984e52ec11f1eed6a8a46e30977ed84500bb0
+      market_comparisons: 590f3c3f9c01c67935f446c8b522b6409d9adb912d9546f4ec70a60b68350ddf
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      examples: cbc2a8053c5c4bccc1f69f527d38aef43bebed52220dc7c56511c6ad02d8fd9b
+      finality: 5ee0a79be6a0489a5612125af6f55fd6568d6c18d0c0374f1237246f9ea14026
+    parent: ba-mdm-product
+    parent_type: contains
+  - id: ba-mdm-assortment-catalog
+    kind: business_area
+    field_sha256:
+      name: 3a66c8a733bc489114d8a57a65fae372d828b2171a4af875e9675d277177f714
+      definition: ccc129dd66a2030d40644c0688a10458fddd9dfc673fa79576f141b9c30daedb
+      scope: dc7b3f9ffb1c864cc7a14b00f79a858b74041283489a3f2bb45ef22004b3a6c9
+      market_comparisons: a25cf62380d6a15a93eceeb40f96a90ac7d55ee5622da8daab846d9214cd2017
+      examples: 794258f16e11c579478488c76080f336c528db0522db4781710e35c93cb41b76
+      finality: ccc129dd66a2030d40644c0688a10458fddd9dfc673fa79576f141b9c30daedb
+    parent: subdomain-mdm-product-commercial
+    parent_type: contains
+  - id: cap-mdm-assortment
+    kind: capability
+    field_sha256:
+      name: 90d639e886ab355855f23c278831ac7080aff50e1ffe3fe9d7913ededb8dba21
+      definition: b31b5fd01876e177e93773b07f1de6969af57641e1ebc2858c0592f26f536cbb
+      scope: 0618b761713aa0084b11e610d13686a3df3f4bbf63c27b9f09067f9db713b1f5
+      market_comparisons: 2978a04c2fdfb78628cda4049de3b2c4dd78bc5d6ee54bab44315d513119be33
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: df63dde824e74e3a710151a653ef2bfa0d0e5700be176e43689ea4e09ca2ce16
+      finality: b31b5fd01876e177e93773b07f1de6969af57641e1ebc2858c0592f26f536cbb
+    parent: ba-mdm-assortment-catalog
+    parent_type: contains
+  - id: cap-mdm-catalog
+    kind: capability
+    field_sha256:
+      name: ecd896e43ce30cc4866381bd8f59c073fd24e052c9212d0643174a1ae9b4d277
+      definition: 32d286ecdbb82b35da64b1c50f3180a34959ecc6d290688c395ec81ce5096a44
+      scope: cf65115065b4b82dedb4f43083cf4a22b77c53a5e3a23a520cc1924b1bed9777
+      market_comparisons: e2fb2745976fdd314fbac8a73db16efe3eb5fc2e0651f29e4ce0265e50756e13
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 9436daff8d1ea01b523932ca054ad049e77543970008cb2703c2f390ee8a950b
+      finality: 32d286ecdbb82b35da64b1c50f3180a34959ecc6d290688c395ec81ce5096a44
+    parent: ba-mdm-assortment-catalog
+    parent_type: contains
+  - id: ba-mdm-product-pricing
+    kind: business_area
+    field_sha256:
+      name: d1394d98ed934a089c8f7ea8e0c5a4726287a03335189e313f0deeecef288b40
+      definition: cc76f0d905ff8b9bde03471a814a305273c13e1e16fc3fa878be9e2bb5015185
+      scope: 686bfa5113506b6ab92c4a53c758d32c0108201b4ab3698c75bed9dfaf949c75
+      market_comparisons: c9c1f4450909e1c23c08721860e26075c33bdc04fa344a7fd8c940bd2cd5f6ae
+      examples: c211d0cb732e28c8daaaf292fd1873ff1193da3091a2b751baac7e078202ef91
+      finality: cc76f0d905ff8b9bde03471a814a305273c13e1e16fc3fa878be9e2bb5015185
+    parent: subdomain-mdm-product-commercial
+    parent_type: contains
+  - id: cap-mdm-product-pricing
+    kind: capability
+    field_sha256:
+      name: 9ce86d13482eda3bb951ffcb62ba7e75198bad105f546d26a810482eb94f6855
+      definition: d6c30945365550f9127670a961587e883c18dfe128e46755972f083af7d12578
+      scope: 6abfeb30e9c4920573c4866e6e2ae00fc756d8831006fafe6da658019b5ae749
+      market_comparisons: 6c22784346c9db4bbcdc5e97e0a828c665e233ac5eb0b17aad13f2fcd098570e
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 08a70b8a2a90beb5364aa8e39269297e5143098c19d5d7712f7b3d90cb18e387
+      finality: d6c30945365550f9127670a961587e883c18dfe128e46755972f083af7d12578
+    parent: ba-mdm-product-pricing
+    parent_type: contains
+  - id: ba-mdm-internal-supplies
+    kind: business_area
+    field_sha256:
+      name: e8df0d5dfdb10d9347f6a0ecdbbc1889839a5318fa68cb492bfa4fbbe978f9fb
+      definition: f7ad26b58a4095606d619cb91e09fbd8972a372d4339ba2eee474e5860d860a7
+      scope: c00964ed0b50defb257c59773c9d51ba7f3e23fe6e7db05d5f3abbd9743b7d5d
+      market_comparisons: a1a183b970515b8e7d4d1958c060a9791cc9b853d5adbf8b21bb82cb081caa97
+      examples: bad150ea6e0f881023354e26ddc78cb4191ffa4e14a86c0749632dd0d80db82c
+      finality: f7ad26b58a4095606d619cb91e09fbd8972a372d4339ba2eee474e5860d860a7
+    parent: subdomain-mdm-product-commercial
+    parent_type: contains
+  - id: cap-mdm-internal-supplies
+    kind: capability
+    field_sha256:
+      name: 8fda8d3a4a94fb7411895e24fb8037fdad589055b03b94d0ffd0b09a556dc31f
+      definition: f1e9ca1701fc17219b0ae050e2d3f2326d0d7e5bb70543a43bf623e6796141ae
+      scope: 51f8311218e08897a97afea4b849b16668786c9078d4195c38bb96c71568727b
+      market_comparisons: 75899a66ef0d80b7df3e2b821b8365f2e7ab4a7d95232b0109314fa0a3f4b321
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 130addcfbb86dd8d1b17d35097ddd9a21eff4fe22c5b1265ffbd7aed3900c819
+      finality: f1e9ca1701fc17219b0ae050e2d3f2326d0d7e5bb70543a43bf623e6796141ae
+    parent: ba-mdm-internal-supplies
+    parent_type: contains
+  - id: subdomain-mdm-location-network
+    kind: area
+    field_sha256:
+      name: 1b9855456a2f9bdfa602485e5b0aca66612deb869dadaf2bea199ae8983c3c7a
+      definition: ccbefb0eb6b510ac7626d233e2290401a0fd31f30b8d155a0eff51ccf5805ae5
+      scope: 5898f7b384f20fc303278da56f6bde23ab458b07ad5108e8754205c0556eb2d1
+      market_comparisons: 629caff43c8d2da6cf518cccd2dbafad7e06d4d00d539fe5b7cdb957ad106afc
+      examples: e7bcee66248438ad065f4d37c06ff2fa93a06abba1e0493bcf667701cd07c9c2
+      finality: ccbefb0eb6b510ac7626d233e2290401a0fd31f30b8d155a0eff51ccf5805ae5
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-location-network
+    kind: business_area
+    field_sha256:
+      name: 74e15428956250613d35cec72f71bfcda27c35b19ae5fdef7a2aad3954300f57
+      definition: 256f1aee47d89eb18459b2fd69cd7c15f4f43cd588b939aa98e0abf130038560
+      scope: 213576f499843d4aa140ef198e9ba0be438428917ded271e658da8dbab0a8cf8
+      market_comparisons: 1002d661e878f733bf3e491aac70de33a92369b539f197b978efad158e458e0f
+      examples: b1bc7285bd4d1fb0d8a59dcee2bedb4220f75d53fbf445232ea20f75d423226f
+      finality: 256f1aee47d89eb18459b2fd69cd7c15f4f43cd588b939aa98e0abf130038560
+    parent: subdomain-mdm-location-network
+    parent_type: contains
+  - id: cap-mdm-location-network
+    kind: capability
+    field_sha256:
+      name: 9c93d0386f093f001f10bf9136e74c4338b6d66dce2ee0feac4e57d908281842
+      definition: af7d7d734b7e8ee0bdf8e017b6c974bf51e10a0520d454dccdc6d25bb5237fce
+      scope: ae42a0d7e29d8ce969cca0504396596ac330bd605f0ddbc79ca0c44d944c1844
+      market_comparisons: 48821ce6d0a47766cc236efc6ab554316c4810e8f148c159482325ee08bb0690
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 4d52f9bdfd8fa042235827945f8104e12b1fb9d8cff571be55542ae729c4f30d
+      finality: af7d7d734b7e8ee0bdf8e017b6c974bf51e10a0520d454dccdc6d25bb5237fce
+    parent: ba-mdm-location-network
+    parent_type: contains
+  - id: subdomain-mdm-service
+    kind: area
+    field_sha256:
+      name: a7e334a00fbe16e96a40c09d4a3fab8e6b253ec6d31df8093bc4083a05c247ca
+      definition: ddce0d93ed9d470d648aceb8f2cb9971846085122968c853c174086000be8eaf
+      scope: 3dfd3eba37cae615d940f6092b598cb0da8af43a286829b94ce4a56ddbc63fcd
+      market_comparisons: 6d32824c19e46ac78c92e19edd3d421c4342ce5474f7c24e57bda325fa15f5f2
+      examples: 2daf0e9d396031232d290a27228129a89f9a5d9a2c8f52c6e602f65a8400b852
+      finality: ddce0d93ed9d470d648aceb8f2cb9971846085122968c853c174086000be8eaf
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-service-catalog
+    kind: business_area
+    field_sha256:
+      name: c2232c8b732abd298f1c72aec3dbb43115a3064574328fff224ae0db9067f5bb
+      definition: 04dfa5c679550c9a9f2d7b50f555d3b6c7f57772fc83e4381c9d07447d43e2a4
+      scope: a5edde2506f2e5628f87baa34a23ad02b9178e88d01ca3c67b179c9dae2538f3
+      market_comparisons: a3303a5b92153bbb854d56bad179fb20877e8f2f56c9110ae469152f4471aba7
+      examples: 7fc7ffd8a8efc27af2059957cba3f3e6d109679b1af53c917e616fbc75c3da41
+      finality: 04dfa5c679550c9a9f2d7b50f555d3b6c7f57772fc83e4381c9d07447d43e2a4
+    parent: subdomain-mdm-service
+    parent_type: contains
+  - id: cap-mdm-service-catalog
+    kind: capability
+    field_sha256:
+      name: a449b09063c25a2a172409effa8ee346f142ac1c67fbd45fcec1bf6e71fd53e3
+      definition: 48ecf3de187b2ff2a635a0db15d48ad132503c843e79a821b44966529f7d0d50
+      scope: 266ab9341a5de4d72d97274b6948539c32f1532b25fd0cb6153037e4bc315ee0
+      market_comparisons: e3538aadf1ae7533865cb10ee415b762ba2cfece0d37b53166149d8898c68466
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 5c551057726972830790a3080b66717e08a7f07aac152e237884da459e5a1baf
+      finality: 48ecf3de187b2ff2a635a0db15d48ad132503c843e79a821b44966529f7d0d50
+    parent: ba-mdm-service-catalog
+    parent_type: contains
+  - id: ba-mdm-service-pricing
+    kind: business_area
+    field_sha256:
+      name: e5363fd79fffcab6f8f5086cdf9c9e8df23132555fb678ff8011beff49df97e3
+      definition: c683ce7ab9e0038ac82af2e01121952742b5c48e3aa2d33e93fb47b6492cb46c
+      scope: 37263634699711a1db0611e601b7669bb7036aaa8bfee8ca04214f4b19193c4f
+      market_comparisons: ed3e79710f9423be1a1b90d52eafc8ca6399cf6c9874b686a99ace004c38e62a
+      examples: a4fc865e4ace72ed524aabfa3a7af757c8ca73a307920bd8a04306a24e4c2a5a
+      finality: c683ce7ab9e0038ac82af2e01121952742b5c48e3aa2d33e93fb47b6492cb46c
+    parent: subdomain-mdm-service
+    parent_type: contains
+  - id: cap-mdm-service-pricing
+    kind: capability
+    field_sha256:
+      name: dcb3739fd2c56356397b3223da822a63839321f5416cb8dc6dd41d43cd0ab12b
+      definition: 19428ca5874db564ebf7b32fb922e0b6b6ea252033bc6c9b123403f105359ba2
+      scope: d2a17f730ee77f28c5259eb6ed6f936690ea3b0f3845a4daef50641561bcc73a
+      market_comparisons: 8174b2c9f1cdca753c6da4e2da5333de68bbcbfa045b67096f1e9491f3c1f2ab
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 1c7cfe382b76141d7ef32ff292f0ecdda212c7973ad0e159fb0b4de33d41018f
+      finality: 19428ca5874db564ebf7b32fb922e0b6b6ea252033bc6c9b123403f105359ba2
+    parent: ba-mdm-service-pricing
+    parent_type: contains
+  - id: subdomain-mdm-packaging
+    kind: area
+    field_sha256:
+      name: 58d96800bf856e17eda50b891470c037d8f3a7aadcb8ee262c2ab3618e2d0f68
+      definition: afa030cff364eadf5511c88032230c1d9ddec01263767e8c05f9a6528ea582c4
+      scope: 4c1ad169f364d3c463f98644932efab3b50600b4dae87c0aa192ffa82e2a39ef
+      market_comparisons: ffb380ccffdcb4fc7840144e191e9a4cf909621c6b9a2a1fd74d155ef4ee35f0
+      examples: 5543759974fe68dab0966865de22e59e6c496064ba7ff96e551b200012ecf3b2
+      finality: afa030cff364eadf5511c88032230c1d9ddec01263767e8c05f9a6528ea582c4
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-packaging-material
+    kind: business_area
+    field_sha256:
+      name: 84606a0d85c84a7b9f6febd4eeb36ba12a342c1fd706a23c9a8c4589fb0a4bef
+      definition: 810f7fb30ec3d2b7daf03a02aa4e4ea21defe8064cbcef4a4dd4b8105dd3f698
+      scope: c243ae418ad67a622760ebacc075d8178fc9f3d2c6381667b98e8f51bee3c858
+      market_comparisons: 432e101d1db65f7bf10f879e7f9ac82d6bc37064c9df9d1d1285db361e5f0bbf
+      examples: 078e9d60fb42ff5791b392ac9992b19a61db987cecb18f02c01667e1954f65fc
+      finality: 810f7fb30ec3d2b7daf03a02aa4e4ea21defe8064cbcef4a4dd4b8105dd3f698
+    parent: subdomain-mdm-packaging
+    parent_type: contains
+  - id: cap-mdm-packaging-material
+    kind: capability
+    field_sha256:
+      name: 3c2b4a064cf2d67583fd2733c0056bcea01c5a5ce50e45b30b3c9e0bbff631fb
+      definition: 868e8a35075f9331c9aca62209809a8c9c21b0ad654b65bd66475d3697b6566c
+      scope: fdf9fa7a775020ff23cc979dd6a2e4423eb4f9d1399142ead798a4fc24aed604
+      market_comparisons: 920e268675a466733b1e0c13543b1fb75a746ca3802db9ed9b219b2876cbf6b2
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: e1e783621f4df52cf1e88c5e599b30ae719fb582e763ff735be96390e56106ee
+      finality: 868e8a35075f9331c9aca62209809a8c9c21b0ad654b65bd66475d3697b6566c
+    parent: ba-mdm-packaging-material
+    parent_type: contains
+  - id: ba-mdm-packaging-specification
+    kind: business_area
+    field_sha256:
+      name: c196b5035ff7378aff2b36b5a0dbc16dc594304002c42356dd8a734e4df0fc2a
+      definition: 01bd5d07de006352ebca686033cf5b950312f4a04ae717d0a002ac47c9d41e45
+      scope: 734f5414f65186f3047a57897a54f2470189db8678032e431f10f8f171eefe91
+      market_comparisons: 793aede08ce003212573c283bfdd461ee9260d09b9add2566191ffe1055271dc
+      examples: b2d2d7872e7597a021135e63cf040f64bfde02678b882adefa3e27414d01385e
+      finality: 01bd5d07de006352ebca686033cf5b950312f4a04ae717d0a002ac47c9d41e45
+    parent: subdomain-mdm-packaging
+    parent_type: contains
+  - id: cap-mdm-packaging-specification
+    kind: capability
+    field_sha256:
+      name: f649df6c075d5704a0942f807248572bb38d20608564789175e366e6c3a955f8
+      definition: 86b1aedbee41d133698a0de33182aa81fe3cd3d003440c8d7603c938b434cfba
+      scope: 106c77e75c43891243d348dba0b8921d3446b6149a370c2fd5dd0996e762fe79
+      market_comparisons: e143d4889a7f95634a0e79704d9427468b7b598d9bc4b2dfeea9ba929ac97ade
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 548e0aabbca458fa84f8653ca4fb1ddee7301a7e21503a9581181c2130ca028d
+      finality: 86b1aedbee41d133698a0de33182aa81fe3cd3d003440c8d7603c938b434cfba
+    parent: ba-mdm-packaging-specification
+    parent_type: contains
+  - id: subdomain-mdm-shared-reference-configuration
+    kind: area
+    field_sha256:
+      name: 863797ba7aa8bc9712f2b50504e050bcb9d44cc2c80664f89808cb01c03eef4f
+      definition: a367869a82be40c5d6e2767a5bed3a7b7074c36135f4ac2de397b04b47fc720b
+      scope: 8fc28e3f1c21da5bec42755a5dcb718dd153954ec3363675ba683911d6e82167
+      market_comparisons: 594c3388cd833ec327fbaea390029a9def9a07d9dd91035549cb316fe048e9aa
+      examples: a62b80a11f1ea9caa7990ad39d079ac6a75faf82ad8b966d316807ea4dace1de
+      finality: a367869a82be40c5d6e2767a5bed3a7b7074c36135f4ac2de397b04b47fc720b
+    parent: domain-master-data
+    parent_type: presents
+  - id: ba-mdm-shared-reference
+    kind: business_area
+    field_sha256:
+      name: a1580db31645ccdffb5deddafd5802750af10eba125036497daa12e95dadc35c
+      definition: c2da33eed266774187b6fa50171f12d4880e4fbbd4c3f0f094019ee6151a2856
+      scope: 3cd3ad3af18407375d2c8e2c061eedea7da4d08f39346129f445ff6df117ab8c
+      market_comparisons: 700477cb47a5d2a14c291fea69ee351995eb64ad5882e68c4eab72ca9ecbf130
+      examples: 99b0a4b326e4f28a00b5ba35ce828b5c5c357a615f681c7a04cfbdca37a54168
+      finality: c2da33eed266774187b6fa50171f12d4880e4fbbd4c3f0f094019ee6151a2856
+    parent: subdomain-mdm-shared-reference-configuration
+    parent_type: contains
+  - id: cap-mdm-codes-classification
+    kind: capability
+    field_sha256:
+      name: eb3cb9f1aa032f9a8d562c405e4fc1802a285efe704723f4cc8934a554c148e0
+      definition: d62981fa48cb98e39458d12fd12f72b7366ea5fb129c246442a8b0ecd99b2a0f
+      scope: 41b62db9fe28050820d17d235049539fde66fe4136ba286fe10b07f460dad999
+      market_comparisons: 5f686f69b310d4f74c61237ec840cf56ae253107b36882fe5a68d3f69f517862
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 67a5448e533cf6e7ee7a7f39a6b38c6347909d580a7b2da1adbe1801937beb46
+      finality: d62981fa48cb98e39458d12fd12f72b7366ea5fb129c246442a8b0ecd99b2a0f
+    parent: ba-mdm-shared-reference
+    parent_type: contains
+  - id: cap-mdm-unit-conversion
+    kind: capability
+    field_sha256:
+      name: e7bfc75fc6d53b99a0a9a13e9dff72691539b3434fbaa5f7ed494d4a294e7d0c
+      definition: c526a7f879cfc16fff9385495336dfb9be5e4f10830594730849ced5a643894e
+      scope: 9edad9d1ad033100e4fc1616d4b55157c2198968a295d56851a1e95ececc6aa9
+      market_comparisons: 4059369f69f5f3893fcc883c0b68714ef92a04d770d47293e470a4a0728fd9ba
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 6950a1112882db7376e3adf0bffc4753d49fee937e024dcba375d3091ba77f94
+      finality: c526a7f879cfc16fff9385495336dfb9be5e4f10830594730849ced5a643894e
+    parent: ba-mdm-shared-reference
+    parent_type: contains
+  - id: cap-mdm-calendar
+    kind: capability
+    field_sha256:
+      name: 03f7451ecd65d2036d6a98514a8f8c7c39ee211627e570706c31993abed88945
+      definition: 7afbee99bd7b04990f99a85a30c6d4a3e12f5d196cda33f3ec11eb50a71765ae
+      scope: 67a6cc85c315be7d7a6762d648ba44125d934d8bdd6e8d9f718197f95bdb35e6
+      market_comparisons: 41fb23f1e0c11261730dbecd477811e73d1369aca3903956d0d092a38d3222e7
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 42c7ccf8db7e1c854ca1fbf283d880267cc18bf5a99191972d7c1b3148c0618d
+      finality: 7afbee99bd7b04990f99a85a30c6d4a3e12f5d196cda33f3ec11eb50a71765ae
+    parent: ba-mdm-shared-reference
+    parent_type: contains
+  - id: ba-mdm-shared-configuration
+    kind: business_area
+    field_sha256:
+      name: 92a63472eb8d9a4d50f5a078404a7a2c0afa848cbd583e6309b8d540f3ef11f6
+      definition: c576953e43aa5b0a4e196086579d17518db5ace2fffc04d187694488ea23f939
+      scope: 3ee0a58d25f6682ea0ae9df4221fdaf5ffd3b8fd7218a186192c52e91a718981
+      market_comparisons: f455408a9379f08f0d306fc39fb894515bde09a83e04e8a3cf7441259fc85077
+      examples: 0879ec559b5dcfa051e7c87bed42ffd41bd77b25055b805041d552585ff3c0ff
+      finality: c576953e43aa5b0a4e196086579d17518db5ace2fffc04d187694488ea23f939
+    parent: subdomain-mdm-shared-reference-configuration
+    parent_type: contains
+  - id: cap-mdm-shared-configuration
+    kind: capability
+    field_sha256:
+      name: b012286d2c27befe17956e27f7be7fd0546695d008d1e653693436fd0ff1ae78
+      definition: dfe3f2629229d7198339b8bbd4f06d669df3a094bbccb54dd2f905cee6f479c6
+      scope: d3f72c948c98e2c1309fc7480706c5d79eaf0a2b571fde78762755eed9fdd56d
+      market_comparisons: 9e2a1ce66c42e3847d60188f15632b3bc3f6423fb7f2e09b223723430e744986
+      nature: 6d089caf129cd34dc77757ce8aa4d01c0d7ad38ef70d2f2433cd578d36a2ee35
+      examples: 21cce5e7d2e088cd915fe6af10fb3ebc0e46633a1379b0351b81b3627fabf09f
+      finality: dfe3f2629229d7198339b8bbd4f06d669df3a094bbccb54dd2f905cee6f479c6
+    parent: ba-mdm-shared-configuration
+    parent_type: contains
+  required_relations:
+  - id: REL-U858-REFERENCE-026
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D09
+  - id: REL-U858-REFERENCE-027
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D12
+  - id: REL-U858-REFERENCE-028
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D08
+  - id: REL-U858-REFERENCE-031
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D13
+  - id: REL-U858-REFERENCE-036
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D11
+  - id: REL-U858-REFERENCE-040
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D14
+  - id: REL-U858-REFERENCE-041
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: D16
+  - id: REL-U863-master-data-ingestion-product-price-book
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: product-price-book
+  - id: REL-U863-master-data-ingestion-service-price-book
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: service-price-book
+  - id: REL-U891-INGEST-packaging-material-reference
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: packaging-material-reference
+  - id: REL-U891-INGEST-packaging-specification
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: packaging-specification
+  - id: REL-U891-INGEST-internal-supplies-equipment-reference
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: internal-supplies-equipment-reference
+  - id: REL-U898-INGEST-CREDIT
+    type: supplies-reference
+    source_id: master-data-ingestion
+    target_id: customer-credit-profile
+  - id: REL-U1166-PARENT-domain-master-data
+    type: presents
+    source_id: system-business-operations
+    target_id: domain-master-data
+  - id: REL-U1166-PARENT-subdomain-mdm-governance-quality
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-governance-quality
+  - id: REL-U1166-PARENT-ba-mdm-governance
+    type: contains
+    source_id: subdomain-mdm-governance-quality
+    target_id: ba-mdm-governance
+  - id: REL-U1166-PARENT-cap-mdm-standards
+    type: contains
+    source_id: ba-mdm-governance
+    target_id: cap-mdm-standards
+  - id: REL-U1166-PARENT-cap-mdm-authority
+    type: contains
+    source_id: ba-mdm-governance
+    target_id: cap-mdm-authority
+  - id: REL-U1166-PARENT-ba-mdm-quality
+    type: contains
+    source_id: subdomain-mdm-governance-quality
+    target_id: ba-mdm-quality
+  - id: REL-U1166-PARENT-cap-mdm-quality-assessment
+    type: contains
+    source_id: ba-mdm-quality
+    target_id: cap-mdm-quality-assessment
+  - id: REL-U1166-PARENT-cap-mdm-quality-remediation
+    type: contains
+    source_id: ba-mdm-quality
+    target_id: cap-mdm-quality-remediation
+  - id: REL-U1166-PARENT-subdomain-mdm-acquisition-preparation
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-acquisition-preparation
+  - id: REL-U1166-PARENT-ba-mdm-source-contribution
+    type: contains
+    source_id: subdomain-mdm-acquisition-preparation
+    target_id: ba-mdm-source-contribution
+  - id: REL-U1166-PARENT-cap-mdm-source-contribution
+    type: contains
+    source_id: ba-mdm-source-contribution
+    target_id: cap-mdm-source-contribution
+  - id: REL-U1166-PARENT-cap-mdm-ingestion
+    type: contains
+    source_id: ba-mdm-source-contribution
+    target_id: cap-mdm-ingestion
+  - id: REL-U1166-PARENT-ba-mdm-consolidation
+    type: contains
+    source_id: subdomain-mdm-acquisition-preparation
+    target_id: ba-mdm-consolidation
+  - id: REL-U1166-PARENT-cap-mdm-identity
+    type: contains
+    source_id: ba-mdm-consolidation
+    target_id: cap-mdm-identity
+  - id: REL-U1166-PARENT-cap-mdm-consolidation
+    type: contains
+    source_id: ba-mdm-consolidation
+    target_id: cap-mdm-consolidation
+  - id: REL-U1166-PARENT-ba-mdm-enrichment
+    type: contains
+    source_id: subdomain-mdm-acquisition-preparation
+    target_id: ba-mdm-enrichment
+  - id: REL-U1166-PARENT-cap-mdm-enrichment
+    type: contains
+    source_id: ba-mdm-enrichment
+    target_id: cap-mdm-enrichment
+  - id: REL-U1166-PARENT-subdomain-mdm-lifecycle-delivery
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-lifecycle-delivery
+  - id: REL-U1166-PARENT-ba-mdm-certified-reference
+    type: contains
+    source_id: subdomain-mdm-lifecycle-delivery
+    target_id: ba-mdm-certified-reference
+  - id: REL-U1166-PARENT-cap-mdm-change
+    type: contains
+    source_id: ba-mdm-certified-reference
+    target_id: cap-mdm-change
+  - id: REL-U1166-PARENT-cap-mdm-certification
+    type: contains
+    source_id: ba-mdm-certified-reference
+    target_id: cap-mdm-certification
+  - id: REL-U1166-PARENT-cap-mdm-publication
+    type: contains
+    source_id: ba-mdm-certified-reference
+    target_id: cap-mdm-publication
+  - id: REL-U1166-PARENT-ba-mdm-access-distribution
+    type: contains
+    source_id: subdomain-mdm-lifecycle-delivery
+    target_id: ba-mdm-access-distribution
+  - id: REL-U1166-PARENT-cap-mdm-access-subscription
+    type: contains
+    source_id: ba-mdm-access-distribution
+    target_id: cap-mdm-access-subscription
+  - id: REL-U1166-PARENT-cap-mdm-distribution
+    type: contains
+    source_id: ba-mdm-access-distribution
+    target_id: cap-mdm-distribution
+  - id: REL-U1166-PARENT-subdomain-mdm-party-agreement
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-party-agreement
+  - id: REL-U1166-PARENT-ba-mdm-customer
+    type: contains
+    source_id: subdomain-mdm-party-agreement
+    target_id: ba-mdm-customer
+  - id: REL-U1166-PARENT-cap-mdm-customer
+    type: contains
+    source_id: ba-mdm-customer
+    target_id: cap-mdm-customer
+  - id: REL-U1166-PARENT-ba-mdm-supplier
+    type: contains
+    source_id: subdomain-mdm-party-agreement
+    target_id: ba-mdm-supplier
+  - id: REL-U1166-PARENT-cap-mdm-supplier
+    type: contains
+    source_id: ba-mdm-supplier
+    target_id: cap-mdm-supplier
+  - id: REL-U1166-PARENT-ba-mdm-agreement
+    type: contains
+    source_id: subdomain-mdm-party-agreement
+    target_id: ba-mdm-agreement
+  - id: REL-U1166-PARENT-cap-mdm-agreement
+    type: contains
+    source_id: ba-mdm-agreement
+    target_id: cap-mdm-agreement
+  - id: REL-U1166-PARENT-subdomain-mdm-product-commercial
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-product-commercial
+  - id: REL-U1166-PARENT-ba-mdm-product
+    type: contains
+    source_id: subdomain-mdm-product-commercial
+    target_id: ba-mdm-product
+  - id: REL-U1166-PARENT-cap-mdm-product
+    type: contains
+    source_id: ba-mdm-product
+    target_id: cap-mdm-product
+  - id: REL-U1166-PARENT-cap-mdm-variant
+    type: contains
+    source_id: ba-mdm-product
+    target_id: cap-mdm-variant
+  - id: REL-U1166-PARENT-cap-mdm-trade-item
+    type: contains
+    source_id: ba-mdm-product
+    target_id: cap-mdm-trade-item
+  - id: REL-U1166-PARENT-ba-mdm-assortment-catalog
+    type: contains
+    source_id: subdomain-mdm-product-commercial
+    target_id: ba-mdm-assortment-catalog
+  - id: REL-U1166-PARENT-cap-mdm-assortment
+    type: contains
+    source_id: ba-mdm-assortment-catalog
+    target_id: cap-mdm-assortment
+  - id: REL-U1166-PARENT-cap-mdm-catalog
+    type: contains
+    source_id: ba-mdm-assortment-catalog
+    target_id: cap-mdm-catalog
+  - id: REL-U1166-PARENT-ba-mdm-product-pricing
+    type: contains
+    source_id: subdomain-mdm-product-commercial
+    target_id: ba-mdm-product-pricing
+  - id: REL-U1166-PARENT-cap-mdm-product-pricing
+    type: contains
+    source_id: ba-mdm-product-pricing
+    target_id: cap-mdm-product-pricing
+  - id: REL-U1166-PARENT-ba-mdm-internal-supplies
+    type: contains
+    source_id: subdomain-mdm-product-commercial
+    target_id: ba-mdm-internal-supplies
+  - id: REL-U1166-PARENT-cap-mdm-internal-supplies
+    type: contains
+    source_id: ba-mdm-internal-supplies
+    target_id: cap-mdm-internal-supplies
+  - id: REL-U1166-PARENT-subdomain-mdm-location-network
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-location-network
+  - id: REL-U1166-PARENT-ba-mdm-location-network
+    type: contains
+    source_id: subdomain-mdm-location-network
+    target_id: ba-mdm-location-network
+  - id: REL-U1166-PARENT-cap-mdm-location-network
+    type: contains
+    source_id: ba-mdm-location-network
+    target_id: cap-mdm-location-network
+  - id: REL-U1166-PARENT-subdomain-mdm-service
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-service
+  - id: REL-U1166-PARENT-ba-mdm-service-catalog
+    type: contains
+    source_id: subdomain-mdm-service
+    target_id: ba-mdm-service-catalog
+  - id: REL-U1166-PARENT-cap-mdm-service-catalog
+    type: contains
+    source_id: ba-mdm-service-catalog
+    target_id: cap-mdm-service-catalog
+  - id: REL-U1166-PARENT-ba-mdm-service-pricing
+    type: contains
+    source_id: subdomain-mdm-service
+    target_id: ba-mdm-service-pricing
+  - id: REL-U1166-PARENT-cap-mdm-service-pricing
+    type: contains
+    source_id: ba-mdm-service-pricing
+    target_id: cap-mdm-service-pricing
+  - id: REL-U1166-PARENT-subdomain-mdm-packaging
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-packaging
+  - id: REL-U1166-PARENT-ba-mdm-packaging-material
+    type: contains
+    source_id: subdomain-mdm-packaging
+    target_id: ba-mdm-packaging-material
+  - id: REL-U1166-PARENT-cap-mdm-packaging-material
+    type: contains
+    source_id: ba-mdm-packaging-material
+    target_id: cap-mdm-packaging-material
+  - id: REL-U1166-PARENT-ba-mdm-packaging-specification
+    type: contains
+    source_id: subdomain-mdm-packaging
+    target_id: ba-mdm-packaging-specification
+  - id: REL-U1166-PARENT-cap-mdm-packaging-specification
+    type: contains
+    source_id: ba-mdm-packaging-specification
+    target_id: cap-mdm-packaging-specification
+  - id: REL-U1166-PARENT-subdomain-mdm-shared-reference-configuration
+    type: presents
+    source_id: domain-master-data
+    target_id: subdomain-mdm-shared-reference-configuration
+  - id: REL-U1166-PARENT-ba-mdm-shared-reference
+    type: contains
+    source_id: subdomain-mdm-shared-reference-configuration
+    target_id: ba-mdm-shared-reference
+  - id: REL-U1166-PARENT-cap-mdm-codes-classification
+    type: contains
+    source_id: ba-mdm-shared-reference
+    target_id: cap-mdm-codes-classification
+  - id: REL-U1166-PARENT-cap-mdm-unit-conversion
+    type: contains
+    source_id: ba-mdm-shared-reference
+    target_id: cap-mdm-unit-conversion
+  - id: REL-U1166-PARENT-cap-mdm-calendar
+    type: contains
+    source_id: ba-mdm-shared-reference
+    target_id: cap-mdm-calendar
+  - id: REL-U1166-PARENT-ba-mdm-shared-configuration
+    type: contains
+    source_id: subdomain-mdm-shared-reference-configuration
+    target_id: ba-mdm-shared-configuration
+  - id: REL-U1166-PARENT-cap-mdm-shared-configuration
+    type: contains
+    source_id: ba-mdm-shared-configuration
+    target_id: cap-mdm-shared-configuration
+  - id: REL-U1166-MDM-TO-SUPPLY-REFERENCES
+    type: shares-data
+    source_id: cap-mdm-distribution
+    target_id: master-data-ingestion
+    field_sha256:
+      label: e1c90f44b721e2923b2dcf0bac05d85521771801dd3ed2c12d2f9b486cac83a4
+      data_exchange: c60c459c3139dc0266fb3ed8e212ed8763e4bbd0c09cdb98450354d4921d5247
+  required_glossary:
+  - id: TER048
+    field_sha256:
+      id: 155c8b5a95dbbdb78a0dc76e66b64fcd0ab24270571bf01590ea29f9490b83d5
+      name: 45797799d3db17de1ba297aaa964be20c3e6160ade58398d009edcf78eb4d824
+      short_description: f579f6bbf9a10939374b43959a3d01e2c6d79bac5fe4bfd8318c40401736967f
+      definition: 4a62c87f2498bb3ac1d4efd71b51fdccaa4e8b93d6727604d764e07936b24cfc
+      context: b5555dcb7015f089248215cfb7039ce45b4ed4badd99fbc1af324fafce190bf0
+      notes: 15fec67dfdadda612351c562279609e1912c9179b2e588ea984321b89118abc3
+      previous_definition: 117c3c20358b72f6bbf66b2239fd8bfc4a36cc01d1e329e60b3bcd309169477a
+      market_comparisons: 48afc2f8bb04976ba6837dac22f9b916fa248eb71a3e1ef200ba67921609833d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      market_inspiration: 1423ac52bbfa68b8761995484c3f91e27efaa5ac2459a7bdacd1e7d1e284699d
+  - id: TER049
+    field_sha256:
+      id: 567ec6d3a7945b0d3c67cdd12d29a40ed4cfb27b4886ee7c11eeac8aa1f57c8d
+      name: 9923015984fb0b3460653e29784a0086c551949c31b6cf957984a15e20cff591
+      short_description: b302bf6fa6d9abc88c410f7292bf79cce526aa99b86445c2df6776cdc6935068
+      definition: 81fb52e5a1adf4e0c05e6ff3b19af930e15456919edb2cbdf1b62a60f8a8288d
+      context: 882729cafc4b7e57f6a39cdbf11846df82961279b00948758d6d377c1694dd6c
+      notes: 520d47c7924ef05fc9c2ffd8f34d5f6abe270130899ceecee84cb84b79cf9c5e
+      market_comparisons: ab5b865b5f0503e8ceaaa95ad23ea3a260a2692ad1d00840e948f0f613f3c1ee
+      market_inspiration: f31c5467bdc462bda0af644660ba9def95ca0afcc47e0fa50253397eb485d837
+  - id: TER050
+    field_sha256:
+      id: aa14ec648a407fb1253181a6920d9b02fcf50829f167ab04c96483e06ec2c00a
+      name: bfd655a204d816bec74d81d998f969f7eb38aadc5edc30d806e84d4d07d60f3c
+      short_description: db296787e8c1a9e761e432337972b52f3dceac4176ba4c4f4cf226524194b2cd
+      definition: f6264a2f62b8d3ff0de0703d6163dc83dff2ad3472f67f9b2b8af91ef4fe1c07
+      context: 2c474b4b53a549a53972130779b5fa3c2b6f724548c49f5c54ed8719fc11d0e1
+      notes: c5b38e418045877cefe227834067c203b288deeaea7cccd8c8712ed8ce0808e6
+      market_comparisons: 0e3ac71301371686fe1ea94d63e9857ab0c5c499ac1e47f157c5e0601467d14b
+      market_inspiration: 42849477aea72ff820fb598768545202ce8dada00a11be6d96e732f8f86eb889
+  - id: TER052
+    field_sha256:
+      id: 8ed4fd736224c137892289b6cc4bab69d4f947bad0661f6a49a1d6034874446a
+      name: b58a6d301918c16c38f2addc399a7019a88cbfb53837b583bbcc42fd99b9ec93
+      short_description: 6575891271fcff7716b9a59fc8ac1b305dbe38a6d0246b4f249a6a2428418c80
+      definition: 815b4fa20a8b8d946fbfaf557f490e8e4220d1b4ad1e8d6b7d278afcf0cfdcdc
+      context: 192cacc6511eff488fbdfeebe96b00ad1b2b560613e68adafeb67287065283c4
+      notes: 15fec67dfdadda612351c562279609e1912c9179b2e588ea984321b89118abc3
+      previous_definition: 06e3b55b0121459871516cd952bb68c70aa4231a7d266e65a4624b3e4b968e17
+      market_comparisons: aea935637c676cefaaeacc09c7a83a0554b767788485be756768c9b622d12730
+      market_inspiration: d2c4111417217041779ba86a063a3629fff5c0df73dfc95c0e57cd6c9ff121bc
+  - id: TER054
+    field_sha256:
+      id: 81d1fc940488cb825210cc7ecb04fa30eea070ff0ccbe5d3c44360da4f6359db
+      name: 25412f9ec51081c1d8c79878a74c82d137036115e21d03d08aa4f305bb06e332
+      short_description: fa2a763d10a9cbdd40fa86815dcb093c81ffcbb2badef120e96a789fac3c1514
+      definition: fa2a763d10a9cbdd40fa86815dcb093c81ffcbb2badef120e96a789fac3c1514
+      notes: a822dab4997f08d089720b2ccdcd0672486e341b57c70b5e7fac28c066b04fae
+      market_comparisons: d7e68389bd642b9f4bd8bc8d6c0633bfc3481c3b88dd35cdd638f10065a2b1c8
+      context: 7435f75a2dbe475244ada23b3d9918b147650668d59f7cadbe3ebd296eef0d50
+      market_inspiration: 0397af8deed561710246b3ed4886d0288d04750bca3907e528d2b6f3a2a84d34
+  - id: TER094
+    field_sha256:
+      id: 0ca2f4e419a9f2a7e02421e65e1d0df460c9ff09b3cb545af2b9fbe0bccd06ac
+      name: e1b8f1f7294a993f39f756478001d7f05aa1ba5f4474c5275d1450cebb04211b
+      short_description: 7964d6105d40fc8acde839ab4cdf546b8d30f00818376c4a9467455c0cbc09ba
+      definition: 7964d6105d40fc8acde839ab4cdf546b8d30f00818376c4a9467455c0cbc09ba
+      context: ccd3643c80899b1162e62e474b147395692856249b483c9060aa3199c75d9ece
+      notes: 7fd4c9e06ad0d274e7db33e31b9f4b166cad4392a7403600f1d03e64e9376240
+      market_comparisons: 56ea26ed6cbf756b306755c737622bec1510e9305ab9d55a88bd6d7cbb589c7c
+      market_inspiration: bb385daa3821202030b256532eb057a610c29a9fec124c670b6e88ca3bd4280c
+  - id: TER106
+    field_sha256:
+      id: ca0004e7d0b4a7b9e7032dea33a36dea753d69f54152017279ddf93337b893db
+      name: 62cff1fd7f252c9fb41ffa48f6054716c2fa9050f1a27a4bd5a3043bc79cd858
+      short_description: 6ab29e33021163d0cb756d8c394f3151d8f2028102650a1fb2acd672b17f60e8
+      definition: 6ab29e33021163d0cb756d8c394f3151d8f2028102650a1fb2acd672b17f60e8
+      context: 9aa62456b5fb237be6e902ad20f0f7e474452424611679e5f88c32525206d665
+      notes: 480d153109bf182bb605a301601ce6ae85cb3b38b739adaf8cced1b800d554d5
+      market_comparisons: af57e2be16a20efbddaae503cb815dc8364e485fc0ffd6289a1249338c73e98e
+  - id: TER123
+    field_sha256:
+      id: 57084150ffd4e7b212c2fcee1fcf40d6273b81979b8f854783e7ec2c6d6744d9
+      name: e347e7c269ce6eef61b8e5f6cfb3938acc790d63ec9a215b1324f7969912df24
+      definition: 65316cfe36dad93eac3f5f2332cb3614a73021d70bf539d22b17a515f1aa48da
+      short_description: 04cea573699c4e87d7194d1e5c40c65c00837591cd976421b7a6f81e95d67f1a
+      context: fa39091cc71d6bf364be362aa0a408a01ac68031476bfe609265d58252682ebf
+      notes: bd2dd87c7b915c3a647fd2ff50f77a7acf258fbafeb6d299d43148b49905be79
+      market_comparisons: 1760e24aec8b06c420e7b500dfc86fb88d96e0600540577993c679c9031d0623
+      market_inspiration: 5e39152efebd51b187b7db0ea58f8ec4db58482365417f9ca281cfdd8faff37f
+  - id: TER145
+    field_sha256:
+      id: 78a5a8e17e44abf540b7543b6f3b3a0b38e7b2c2f2fb31f57d0f9fb3b8417c2b
+      name: 1a640562eb291e048bb6c3cb753751f043418c854f1580da5371ce30628662bf
+      short_description: 5d908dc2cc4546bc46c3c19f32b36e5aab89b9200bbb811168e254971d2f5347
+      definition: 5d908dc2cc4546bc46c3c19f32b36e5aab89b9200bbb811168e254971d2f5347
+      context: 1d11a7d027e8eee92f0d8f895a7386dcc36d99754d8f5a50b8070e8b1fa5b857
+      notes: 93c247c0b6de9fad0bf7658fa64c634a995bfb9271bc4d7aac63fa9d99163a4e
+      market_comparisons: 86c2065c7a36dc17e47cb5d95582c2bc51569a0bdf9d61f49ce6f6cc903eca92
+      label_fr: 9bd6e994a7cd0e3704fb895b6f31efac3b2a10c7d60dc0799d8dcf34b04d273d
+      market_inspiration: 099a33af918c2092c062dd1694859be1a4e7192ac53f0ed3ee64edb8d87943bf
+  - id: TER146
+    field_sha256:
+      id: 786350f3e49ba6a8a3049e3ab92c60452623774bd8de6e2bc5923326210241d8
+      name: 6b538e3b3abc4c99e31fe2c3cc9d91c2cf9a6b987bfd1b6712b24673a1026507
+      short_description: c84c3c8afae3c1f3cf3bf0174cadc54cc6bc85b761d5dbd3700e571a5f317cab
+      definition: c84c3c8afae3c1f3cf3bf0174cadc54cc6bc85b761d5dbd3700e571a5f317cab
+      context: ac4af9b69c20dcc9a2aa729ad7e640eb1f11cc2896f1b7d7e9f3f7a4594764e9
+      notes: 011ea6ca7e5c6a59888328b4d07acbd68dba5d29e779e9fa7c603d6bc8e6fd1c
+      market_comparisons: 6101e015319ff22a84ac4a26d5691531337420496d4b8510641004e18309bcb8
+      label_fr: ce5334e9d5dfeb020e8d4594d4cdfbaf37edf4479c779f6335f3ff7b23d7ea7b
+      market_inspiration: f32c873981157ece7c43dda3fd3505b64c55bbc3a87b06a3d15e35d9d7e387ec
+  - id: TER147
+    field_sha256:
+      id: 209ba12c1cf9d6ef23c49c2417b76da7ec428553fd7c237c4940c70d766a29a3
+      name: 5e742330cf33e01b972a255f51b5360e7e3fed15113fa46bbbf994451ced443a
+      label_fr: 2d8a8e850ce9267d5114100357e587bc62febf0a434031fa930154dd7307f3a7
+      short_description: 2be6e6506061040c26bb8c092ddd06bbc88bfea1dc6941ba55fcf9a3c79ac7b0
+      definition: 2be6e6506061040c26bb8c092ddd06bbc88bfea1dc6941ba55fcf9a3c79ac7b0
+      context: 616953cf79ba0367fd2852741d0d3270eb66d5b42216b91ddbffa56c1660e2ff
+      market_comparisons: 7b7bbb155b7efe11728190e418d3a5da02c87765fb4f722cf3b858b5485edeb1
+  - id: TER148
+    field_sha256:
+      id: 10f498135235eccb509c98976e6399a44010aa1dbb4634c4a6a07ebc897f3b8f
+      name: d5db4c4cc694a27eacb7ded8f766df68527f33c3ddb60775cae2c90f9da8e3ef
+      label_fr: b6e10f301e57dcd760c127f5375aafc5f972a0de4b94a867c6906a05ec8985b5
+      short_description: fa0053a0b8333fcbfa1af2b7bfd31532c6648f6d570cdce4718e20da8c88e34a
+      definition: ac3ca756900e53fe0e2c5bb62fc0e33dbb080735dbd917112c2092e86270d876
+      context: 59dc853495419221cba0db02c339b7ceedf5291bee8e125cff7cfb3171d036aa
+      market_comparisons: 56b550051e16d72b2ecad14b6b94e2585ed3cc4aa34e476ee4332d04db1953c9
+  - id: TER149
+    field_sha256:
+      id: 32bcf95b084c4dc4eb596d5773722d284cdc27c1ffa8aa39f5587e6d8792c850
+      name: eaf4489bc51dfcf2a6f6ff5836cb19db218e3aab2188ee68133595a49b7df1ab
+      label_fr: c4ecd73e737f7213d187d6595de1cef4ccc935b66c24a24d5b7aaf65dbfd51c7
+      short_description: 58564e238db4c6593e904be2107f0c08d34c4e5722f9a4e98e3e15c96ab0bcb1
+      definition: 58564e238db4c6593e904be2107f0c08d34c4e5722f9a4e98e3e15c96ab0bcb1
+      context: a592d470e8c3dedf3d2eb4765f9ebb707ae12656e87d3181975235f2d249f41d
+      market_gaps: 63f5ae87ec06b6e881cf6c8006dee4407280ba4070d68cd28507f073378a2b10
+  - id: TER183
+    field_sha256:
+      id: a8c631c3a1eb5948f49b1db263243d6d24898c6042163459acdb692bd2d7194d
+      name: 258fdb4a5326ea2d3ab3c711364068b1abb3c6d2033c1e8a0bbe285e03d9ee18
+      label_fr: dc359ec916ff7217b9bad9a668c8384a03dd7190f87614a5d57b3cce234a560b
+      short_description: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      context: 2b2eedf7127c86d0d6332429a38a4a7447c36f64cbd8d56c2394aa836ba90a4e
+      market_comparisons: 126d0a457fc73bc1b5937e3563f89d081019b7247c4038063815ddf4e54b8081
+      lifecycle: 6b0706bdf7953c3446f4332d5b8c34fdc1cb889e1f7e22fdcf54e4b7cff3d21e
+  - id: TER184
+    field_sha256:
+      id: 71664ac8fab4c7cd91713b6ac0db67ac390959a02fec18425eaeeff82b75759f
+      name: e8df0d5dfdb10d9347f6a0ecdbbc1889839a5318fa68cb492bfa4fbbe978f9fb
+      label_fr: 98ec28f30e2c469939a6287af02943f409cb147d4cd14b845e227198343de3a7
+      short_description: f7ad26b58a4095606d619cb91e09fbd8972a372d4339ba2eee474e5860d860a7
+      definition: f7ad26b58a4095606d619cb91e09fbd8972a372d4339ba2eee474e5860d860a7
+      context: 2f67ce3dc55e2893f113e01a2d1979d05b1e92f90ec6ca19a9d615a6b8b20802
+      market_comparisons: eb379f32b0ca6e78aa0ddff9dca011658c9ed232fd639c0ef8ab1786d084dd7c
+      lifecycle: 6b0706bdf7953c3446f4332d5b8c34fdc1cb889e1f7e22fdcf54e4b7cff3d21e
+  - id: TER185
+    field_sha256:
+      id: e431efd954287059615a348d06d76bb253190319145dc33c343c55476018c8f0
+      name: da62a6366f568193db3eb62727f4ec1a9d75aa305bda5e5b8fdbd5944f1522b9
+      label_fr: 77fb6cde2752c591e10952a926ddf0aab54b0b6bbb83be11710927ecc49fe481
+      short_description: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      definition: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      context: eb286987f60c3f1cb7874d7ed5ad144091668fcf8648881207e608749175c392
+      market_comparisons: 071be8d442e466d77758b877943bbf5be7a4dbb93ff0f12bca834c835561cc2b
+      lifecycle: 6b0706bdf7953c3446f4332d5b8c34fdc1cb889e1f7e22fdcf54e4b7cff3d21e
+  - id: TER186
+    field_sha256:
+      id: e5e6e8d01d63e5343063f7119ce562d1a47d085fa6775a763631d52a3dbffb31
+      name: 6b60c533ea93161f2815f3ede2cd404200144f91fab6c4b3a3ac9c61ed86314d
+      label_fr: b07004e095deb5031e9893a10a5378fce361e9cf810d6c7b4f2a711ba6d6e1f7
+      short_description: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      definition: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      context: 3a57674b64e55b85b06baf3fc97203cc0c8631ec0a28ced39a16f7649189d682
+      market_comparisons: 19697dcd3477a9b8c810c6022299d4b90ab0cbffd2e4944820f28aaa40800421
+      lifecycle: 6b0706bdf7953c3446f4332d5b8c34fdc1cb889e1f7e22fdcf54e4b7cff3d21e
+  - id: TER187
+    field_sha256:
+      id: e9a11bd2f972649dc3cf5d0173db1b3278d22ecbe075768218ec78661605ef75
+      name: 29ce55eac115c94d5b7abf38a5e7a395ba8cd64b9f7453dd94e3b463a994a4fa
+      label_fr: 2d6b7aa520574592f34b6bdb81d2fe40c53077c46e2987fef5f3868024fadeb5
+      short_description: 65347b1c49d8858e99aad6a8508b662c5d2df3453b4a16d69637a204eac4f00c
+      definition: 65347b1c49d8858e99aad6a8508b662c5d2df3453b4a16d69637a204eac4f00c
+      context: b73ac00d8d00a5502698e7d335022831e713adf8199930e2c045108c22f31e69
+      market_comparisons: 1f66b3aee4b8e3c9fabbf79bd1916d74edcb66fbe902cba0b69e4b4e691d4398
+      lifecycle: 6b0706bdf7953c3446f4332d5b8c34fdc1cb889e1f7e22fdcf54e4b7cff3d21e
+  - id: TER190
+    field_sha256:
+      id: 43614f63d2cd897ee69729f1ef3a9d100c28a828609cb7491ef9ea3c8dd3a271
+      name: e8ca0f73b3894f264f4f4849af9c73c5a6feb2f5a31e09441b12fedde080dab4
+      label_fr: 87dbec35a1262480d82aa10eadb75baaab1f4c50c471590ae9bdada05a096251
+      short_description: 84af38ade416494951c78954096b0f3b84ee93860d465a9213f08e9bbd5b75c6
+      definition: 84af38ade416494951c78954096b0f3b84ee93860d465a9213f08e9bbd5b75c6
+      context: 5d9cde5faac2d02a154bb123130027349b3bcf37084629f0b1a3dbc094ea6cd5
+      market_comparisons: f2fa2fd6bccb60a42647dd19548109c0b0bc7c64894bb47a1ae3fc4ffa13c7ee
+      lifecycle: 9ff8ab535df747f4fc763a0a03b3e8a5dcb662f47d9c35bc1ef58eb4548a23c3
+  - id: TER250
+    field_sha256:
+      id: d52c15964d2ac61315cb0c51a6008cc4882f62a914a133a6ff978e0efe995ca8
+      name: 9806ebff2bede3934d4b0cd6576f6393a83b3d4bc42aae5dface54dd09f7ba76
+      short_description: 35be947104fc0b667d2834ca8dff10205e7c36db7660720e82dfd3729c05dd1d
+      definition: 586e67e674d27513b92aaf9d5c6856636524582b5075eb8989457f220c5c7fa3
+      context: 9976695d859d33d26a04fe36e28908712a917d21652095865d84e2fd19ecb296
+      notes: 0c963e4dad09f6fc636fa70d1dd00dd837d0d5dd61bf424ed9d48b059b844f92
+  - id: TER354
+    field_sha256:
+      id: 229ebcabefa47155e02e4d19bb57908aea76726460c20c35a63403468bf627c9
+      name: 8b95ba4526575682f28eea9ee9308dbee01e1f48373e785a17b2e843048740f9
+      definition: 290b31fc12c9f724c4824aab8af4426cb3d687f643a426d1bc5f3cd5b31875c7
+      short_description: 707d6eebcbffc4fde7f31cf6600c220df5045dda31403ab3fca71843e5d96efc
+      context: ed77aff4d1987591821ac0672d8738ec20de73247b01dacc14de89ea01980853
+      presentation: 1e573cd09004872234c556146aab838ddb563a9476581b94921aae207b306203
+      notes: fee214cbd7444b45184c74d6906de541676cd7b00579cd684e326ba6263a6d88
+  - id: TER355
+    field_sha256:
+      id: c624337404390ba8cdbb236a74dd15ffd3e85c4d95360f3bb5200edf2fd1cb68
+      name: e075a08c0e3cff190ecdf6516b1776e2442ffd621d0d8a5442f65597981b9438
+      definition: a2297c91d3c6c0671b0cc12ee7492bd038c29352281dc482229f8a8a4645772c
+      short_description: 21597aee4df686a678f457b5b8160e3b7c1f7bee649e783247d8751ec56fbd6f
+      context: d89cf3c28edb13c0bb7b8d3d1edfc01182ea6f90b170634d607c66693f796dde
+      presentation: 1e573cd09004872234c556146aab838ddb563a9476581b94921aae207b306203
+      notes: fee214cbd7444b45184c74d6906de541676cd7b00579cd684e326ba6263a6d88
+  - id: TER356
+    field_sha256:
+      id: 18be40657b4b8592f9df113b2540ecc9e320bb6056614437110e6304e699d537
+      name: ec03da219548ab69e310d71c0741c9d0582356c6346132859faffaeae6472d0c
+      definition: 5747a26d3ff2005f6c6fe2f8f6a102fc1cea0522ff169e37c88cb3cd8ee1fa77
+      short_description: 5747a26d3ff2005f6c6fe2f8f6a102fc1cea0522ff169e37c88cb3cd8ee1fa77
+      context: d5bde171158c30f456d39c34d1219fc9298e2e06fad8235090bfc03fcb49c2fe
+      presentation: 1e573cd09004872234c556146aab838ddb563a9476581b94921aae207b306203
+      notes: fee214cbd7444b45184c74d6906de541676cd7b00579cd684e326ba6263a6d88
+  - id: TER357
+    field_sha256:
+      id: f94d4da1a33b78c62ece25253ff0f1580654f3e25f5b954dd463a0891e66a0f6
+      name: 4a3aaea9e7b5fd2517d1312f1ae8c0475a20bcb0452e169b526e2f4697076b0d
+      definition: 08a9c525cc5868414ef8d892fbe2d6abf02b8d4eb3ef6c3533daf1c9faae9a9b
+      short_description: 08a9c525cc5868414ef8d892fbe2d6abf02b8d4eb3ef6c3533daf1c9faae9a9b
+      context: f0692e3e29809b7009be55f184565e1aadc1340c6573d74e0b48e36721b6b687
+      presentation: 1e573cd09004872234c556146aab838ddb563a9476581b94921aae207b306203
+      notes: fee214cbd7444b45184c74d6906de541676cd7b00579cd684e326ba6263a6d88
+  - id: TER358
+    field_sha256:
+      id: ef93480c84948788fc3b0be16d27218defbadc94f35231dc8d64974ab546e619
+      name: 5d8e00b4c61f07177f2ab5db8a12db1ae57e7ea34fbcf3077bc963a03535f25a
+      definition: b1a749a47437721b8209ef8e1189b97bf2d25285737aa06cccc0ad2d5937be50
+      short_description: b1a749a47437721b8209ef8e1189b97bf2d25285737aa06cccc0ad2d5937be50
+      context: 40db2090dec8d382d51c1b159aa9fba2531a3f02a04d2504d7138c5f8bcfad90
+      presentation: 1e573cd09004872234c556146aab838ddb563a9476581b94921aae207b306203
+      notes: fee214cbd7444b45184c74d6906de541676cd7b00579cd684e326ba6263a6d88
+  - id: TER380
+    field_sha256:
+      id: 527b885bfa6c0279f0c530af09125065640ef020bbfc19dac2f52d6e440222a9
+      name: c2a17cbdc1f37f7bf62f050812101b41679889cd34142dc11df30c206ea1da80
+      definition: ebebd57ec4718315e214a4b68644286237749858e5148ed4fb3527245535d223
+      short_description: b0ebc129bff90895ff271d879c5a02407fe90c861293a50e7130cc6c78597fb2
+      context: 4355f1e26b5a08784cac869404cb44c89ac5ec0ad61ad7b2511098ea740921fb
+      notes: ea1014ee88b5e22933d5ae80617bde48183f6a918b9b79454fe99485e1acfc65
+      market_comparisons: 44fe24ca2bf77d179ac95b0375b14b6d55f923c2c13fcea0627df15abf77fadf
+  - id: TER390
+    field_sha256:
+      id: e76a559c3e4dd5805484b6ccc1e51402d8c0db8b42882796657d877973b48db6
+      name: 30a52e47337e6b82f6a9311d4d4f8fbe3c096996cbc0b8c7cd4c2af7743e3a9e
+      short_description: f67e5de0c70f107374dcffe99b85d3a3d20b22efd3a473a5f0c1a74c8e9054f1
+      definition: f67e5de0c70f107374dcffe99b85d3a3d20b22efd3a473a5f0c1a74c8e9054f1
+      context: 7ef61419866eb0d18b3bf7624d5a33507a3645554a63f0fe935d26a104393a85
+      market_comparisons: d67d2f204efb196195c84822938942995439450ada8f02c1cf1a05d9e478ac59
+  - id: TER391
+    field_sha256:
+      id: af327464edc433a45ef0e74d0f9821ecd01e694b3efdb9b685ee5a4522aac8fe
+      name: 9a7734bf01d5337c9f8265c031a8d14778667e8439a2ffc19688d406362ed6f8
+      short_description: 619f75407692215fd8c9311ea61b00e3dcdb04f3e2d4dd228829cab70a8219b9
+      definition: 619f75407692215fd8c9311ea61b00e3dcdb04f3e2d4dd228829cab70a8219b9
+      context: fc680af4a36b3969781f7d8a0f5d4dfe50589f0e26db6dd165c83de088b65c7c
+      market_comparisons: 2fbefa450c1a9fdb9d3d9a273a9ea644a7eb816cd23e82c6c9dce6b32c9c07b4
+  - id: TER392
+    field_sha256:
+      id: a7509c66c3a82bfa149adeb2a2a47e7494af067aa803ee62d72f785e88b46034
+      name: a95019767c2a7682ee5e14d9bb0bb53cdc8a0e842acfc5d541664f43d59e9663
+      short_description: 7656196e82efb824c651bff90492574ccfc25d0e600a5201809f60dfaf9faa49
+      definition: 7656196e82efb824c651bff90492574ccfc25d0e600a5201809f60dfaf9faa49
+      context: 25cbb267e8b0ef8590a6c391965d212aa423ed0d530fc69c71d4d5772c32c6b3
+      market_comparisons: 9aa7e7877a67ad8f87669d3cbc3cd611389fce3997b0472e370166c585bf9811
+  - id: TER393
+    field_sha256:
+      id: 333b3e9a57311fe3010580581b3e1ed26f1952ca702843675cb2e244895632bb
+      name: c3d7978071e64c300401932df164f07cde446e16a86e8964680600cabdeab9d3
+      short_description: 66599f3ed0bbc432e727b186067f98a8a9cd822c83e16feb673ce17b5ad5fd71
+      definition: 66599f3ed0bbc432e727b186067f98a8a9cd822c83e16feb673ce17b5ad5fd71
+      context: c825e30e65ca60dc5a17369998d34d06df806bbc49ee8ed2ec56bae439ddc2ec
+      market_comparisons: ec7adb52fc259eb41b3937ac6b406e1faa3ffd91611cc351095ac960b020f166
+  - id: TER394
+    field_sha256:
+      id: ab2829aca2dc1d8e04f6d4374db5251624f3a021daad32c827a86994607ae8ba
+      name: 9fa46552190d214bb44936b4e70b75fcc426584faaaef7609c67dd1f5f9f27ee
+      short_description: 12477676ac49922c67d587a4d5c3c0866fb3960ad6d677ffd1ade066bca291ff
+      definition: 12477676ac49922c67d587a4d5c3c0866fb3960ad6d677ffd1ade066bca291ff
+      context: 7b6b7c7d6a1a21822ffdf7fd09194f48c4c4cfc438948d3f5fb290d7f1e90aaf
+      market_comparisons: 9bb45d46ae0276d6209a24e5943fa6cb9cd7def11f7a4cfc9a7d016fd9eca580
+  - id: TER395
+    field_sha256:
+      id: fac0f5636225d941769ae56d8bc862a831098c25533c7546c88f11e5d58dda4c
+      name: 9a4e2c2b1bc4fa31c74473fe9c4ab6d2d6490d9e9e289429d5d92f2614993dac
+      short_description: 6f6e0ba7ddd78c86a85a7fd99899a3705e44500139692599fc4c3a94e2f57d61
+      definition: 6f6e0ba7ddd78c86a85a7fd99899a3705e44500139692599fc4c3a94e2f57d61
+      context: 9a6c87065337e301dff74153a6c9b77091a17c3df5b09b210a9ef88d1375692a
+      market_comparisons: 21492729b13cc66148ad556d22832f5d91720ca8d7db5fdb0b20ce2d022251d8
+  - id: TER396
+    field_sha256:
+      id: f8afbc6e6f19daa2cf8f751aa774c5d4fc3385cc6eeb71e91133ec7ef27767c8
+      name: f637d2dad20f2c8475982e9c5bb3ef47ddd786af0750a52054effb16d6ed6ad8
+      short_description: c514efd5fc31d01e5caa9d45503d1b6f334e5b97b04b8293f872df9fb3ced230
+      definition: c514efd5fc31d01e5caa9d45503d1b6f334e5b97b04b8293f872df9fb3ced230
+      context: ab0ddcbd84b3ccebb4905bd638396edea173f8623eaf7ccce263111f2271d1fc
+      market_comparisons: e5d818d0774c42eb2bbaf79f7fb12c7762a4dc83c3d301ebe53c710d4d15a8c9
+  - id: TER397
+    field_sha256:
+      id: 83eee18e14b4486f59cf8a50c273cdc0d7ac92f89695594702760fb2e5a8df44
+      name: 718f5d94d9b5477638742cca0d515fa10647f6c390f1e69ae2e7f10440e664b1
+      short_description: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      definition: 9dc62924b230368d6dc9fcda714337f668b97c9522350a337c1f3ac9b2822cb8
+      context: dba62e85c543eaa2410b4a8b3448de0935b44422c380454374db6b8d0dad7f2a
+      market_comparisons: 151c6ee4a46f589883ec8c69713675d2540c2676c2ed1091d96ee77427c90ee8
+  - id: TER398
+    field_sha256:
+      id: 18c4cfa0ff0ccc0489e1dce7b5224072b774a508910c6ff92d39d6cfc0e172aa
+      name: ca544057390c2a89d3b85c659b3112f49ad2d16ac24992e6b84d84e934d1e054
+      short_description: 3c9170f9efe79caa523201ba14cb9916d509bc06548d74c662baee88cb390f24
+      definition: 3c9170f9efe79caa523201ba14cb9916d509bc06548d74c662baee88cb390f24
+      context: 268ee021d264ab8313b21351b36eb5df2fa2e50d61edfb16967aa5e963f92682
+      market_comparisons: 5131bd32a2798269ed10efdcee7ada7928a01c61ecde369321a1b1883c264917
+  - id: TER399
+    field_sha256:
+      id: c2eef3f8782108fc39e40bdbb694209364fed6e5b0e2124ba1f58d0a47747799
+      name: 9725cd2f9d238dddac7097bbb856420dd989ef751006c9ea71a121fb6150a00a
+      short_description: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      definition: 269aaee1279838418a4b2060e1aa03bcc310d352aad646a1877be618cde1d78d
+      context: f65802f67845a28e50c5c37e5652ea9963437871a5bb98756b6db4a958476731
+      market_comparisons: 9e09d555e1f2758565197232668fb6c9b18bfcb52d253a6f36ab4dfa1f7d453f
+  - id: TER400
+    field_sha256:
+      id: 4c4674f033ea114b6ee3b0ca48e84d443dded67388e4038e648d32dfc2806f32
+      name: ad50ab56d2bdec923960495290e32d0fba4403938146482109d0476710009acc
+      short_description: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      definition: 60a071a150d1c73269a753ac4ca449436e71bf3918df051a4fb3f5b039434545
+      context: f3cf9bd5bcca0ec7a9303de25e369f723441088598651ef327a48d423380971d
+      market_comparisons: 97c86cebce0ad9936ff787b7a621f438076d6c8c7b1b7951f96ba55eafc4e580
+  - id: TER401
+    field_sha256:
+      id: 3565f90b4972b3cd001f8517f157e49c0d0fbca95dcfc634927042673dd63195
+      name: f8a4e793bd4991991b83d37a58eed8b8419b998860a8d79d003182396f1e1234
+      short_description: 00096f5880e155a02f48842761ddd06bcff16d001b53bc1e20b6d8527851cc06
+      definition: 00096f5880e155a02f48842761ddd06bcff16d001b53bc1e20b6d8527851cc06
+      context: affb488601b85417efcbd34d54f11d7f25666a439ee3e27a8669ac056900ec5c
+      market_comparisons: b601b96d1c8599dbdf13e396bbdbd3d913d2a3fc78461fc7e455250af95cd5ac
+  - id: TER402
+    field_sha256:
+      id: 9fb7360cb6dcb4ec60cc676ff73b22b64ec7a6f697cdd214a4d5dee48e989b05
+      name: 05c88fa4b9abc1571b24a410f490484610bb53f83d14652b84e88546351c8375
+      short_description: 8ad9440bee17fa5ecd1276a0de8f84e8ca3a2606cfe0df91113bdaa6c8dd1477
+      definition: 8ad9440bee17fa5ecd1276a0de8f84e8ca3a2606cfe0df91113bdaa6c8dd1477
+      context: 02cf1074d06e6a31e9fa2ac949e9c57a1161b1178a7898ef57f36356bc5e5b7a
+      market_comparisons: 2b8c611078e551ca052dee09e64ed7bf1624f5911f1950a994d42a80eca88568
+  - id: TER403
+    field_sha256:
+      id: 5e23eb2ec94a018c5dc14ed1c3c177ec2c62393fb2a155df9daeb28d620d3b32
+      name: 716ac8397723edb113d0d258a074ef32b41832e1e4701f5bca6a088da3e58aa4
+      short_description: 36a9d8c38fcc6762b645f6f27aa29c0abd71a954ce2a70b38527c8408f7d4871
+      definition: 36a9d8c38fcc6762b645f6f27aa29c0abd71a954ce2a70b38527c8408f7d4871
+      context: 6aeca20f1194a97cb2bac3fea08dc57c506cae2b341b19a58d91138a01f2aa82
+      market_comparisons: 8f97c13bb8650e4e0a95200cb068ab15248a0a568b8a4dbe6d8ec6cdc0256c94
+  - id: TER404
+    field_sha256:
+      id: 2847ad4907b36043d192afeef076fd02aa4173859751f73e4fbd130c4dfbf6dd
+      name: c28d6be5dc924e6befea83efa9112c692c3170033a22eaf5dc5c646d8b9ac259
+      short_description: d52ab5cdb3412f6a2b8ff6037438ad0a7109a38be3cd14c8f19f4b1912215289
+      definition: d52ab5cdb3412f6a2b8ff6037438ad0a7109a38be3cd14c8f19f4b1912215289
+      context: 2c5aaef6dbf213a5f072561a2e3c942fc793d421d3348b3247a21250b77de298
+      market_comparisons: 1dd5bab43c04d81eccc1bcdadc3721370218da11c5f80886386f1301b4f2d6f5
+  - id: TER405
+    field_sha256:
+      id: bd21888521d55291484e927af4222c0e736ec653811def856a91af1f944fc2ca
+      name: 472f1f3fbdae50a8a69c9161edfa3699b95ca92f93997d31020548aa5986e877
+      short_description: e6c7080e1d33c3d0678fd9bbc6f98dfb0d7b0eb948139315b3d4f73a721ce8f5
+      definition: e6c7080e1d33c3d0678fd9bbc6f98dfb0d7b0eb948139315b3d4f73a721ce8f5
+      context: 11de9854c8dfb1d43b1c7e19548e3731359f826d91636ad28b228d3ca3b5ba90
+      market_comparisons: cea71f8b90548fb726a84cbb82e76d3f57630b5916763b2cde30b84faffb8852
+  - id: TER406
+    field_sha256:
+      id: 58eb00b69dd2e57e4db5b2bd5411d84aaaba9e79d57b2c777add81bce258aadd
+      name: cccd0746bd2d11dbfc30f78f4ba3724d6d8c6bdffcd32f9164ed47fea601ac0d
+      short_description: abfeb09097d498739c52ca2d9a5629ccd539f06523f94c16aa94a776cfe4bfcd
+      definition: abfeb09097d498739c52ca2d9a5629ccd539f06523f94c16aa94a776cfe4bfcd
+      context: 8f638308e16a9e115d57a0d98990bb3d06aeb3f14a3774acc1dd9bfc6d7cabfc
+      market_comparisons: 0094ba97431ce820aed4166e9e350d9efdc0f757f029e3876f65d8b54299a7c7
+  - id: TER407
+    field_sha256:
+      id: 498793bcd257cbd7ce13bf9b0cf13a932b59f4dfdc8edbd1026448351b3ea432
+      name: f4d19e4b82ec9411e4842e2cf0d2c2c42ddede74cf3063c1a9f51b957740fa16
+      short_description: 1b749ff5244603415539d2523ce07544d8c5b9ac4fee7e21860025f8c00a4b64
+      definition: 1b749ff5244603415539d2523ce07544d8c5b9ac4fee7e21860025f8c00a4b64
+      context: 5c8666adce2bcd518b48f9965ba01c134081eb4c88c07fb662d7c21820711b89
+      market_comparisons: 2157b4ffdf5ee45855e971232bde6d81021a9991bf58e9c710f71d40f924fdf0
+  - id: TER408
+    field_sha256:
+      id: 004c51555f1534d425ece0e046b3006a3718e9a4f7ac53b8644a7c516bddf908
+      name: d3fa78271eeb98326267152647f32735b149439f467bece502c57015e6e526f0
+      short_description: 3847e5017e7fbd8ceabc6d07d1eb82109e85737e4194dc4ba5b4819334194a17
+      definition: 3847e5017e7fbd8ceabc6d07d1eb82109e85737e4194dc4ba5b4819334194a17
+      context: 7aa0395ae144d3ab1f4104ce327ea38ff82fcd00d5e797c199dbf23b20a15742
+      market_comparisons: 928f319e2f5cdff23691259a10655f1f18a212ee716ecbef903f50d3e2ed6b70
+  - id: TER409
+    field_sha256:
+      id: f07e665b3785e512006b06158f7e78ea3970b33d87276839791c917ccbbb04aa
+      name: 85bfbaab4c740d00454dc4589e6d65c038a80c445dc5d3f86b0f7338562324cd
+      short_description: fea1526d4ea6833f0cdc4f3049f628e1040a21100a177abd6d64b6e36186c115
+      definition: fea1526d4ea6833f0cdc4f3049f628e1040a21100a177abd6d64b6e36186c115
+      context: 661b3802f8709b2f6b6d78795e89557969d5a83504c14f60d3a8bd8d24e8b980
+      market_comparisons: 4634c6c62339d848736e891c632e4e3fceadb30e388fb3cedb5f2dfad609a49b
+  - id: TER410
+    field_sha256:
+      id: ae07569abb955c5f1272ac128eabe344704087c3fa15cd8c81d2c214447b4d0a
+      name: fef7e6e30cfab1f70eccf08318dfdb4540d1d4d5d03b77eef412dd612bc9ecfb
+      short_description: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      definition: a22f4d8e1a3222080acd075298cd39d183c3c74ba3bb8a4023090155ea97f08b
+      context: 7fa82576ae10a01db26f00ffde46a552b92b0ed06af88a162fa0a1fb118abe54
+      market_comparisons: 9ca93d46c218b998b11d954f5f073b29c40d177cf3529a2df93f857094c36945
+  - id: TER411
+    field_sha256:
+      id: 03619cf514893ebe45ec02f90a273baed37adb8e3344ed96a504625159b3d561
+      name: d0957e0d65143619a029b113d86e2828acafdf0af66dd9f97fe5d4aeef5ac92a
+      short_description: 46cbe1b30c492041e8362055df6ca7bb2cfa1a34ad870481109fc1e65c0f1e25
+      definition: 46cbe1b30c492041e8362055df6ca7bb2cfa1a34ad870481109fc1e65c0f1e25
+      context: 11ff79d08964f8fed66ea2b876cc8ead4a67a33492b6bff7345b06a45d34db2f
+      market_comparisons: b8e3c524b680d143b689a9448632268d9baffff73f1530b90ca94bdd5d83e3d6
+  - id: TER412
+    field_sha256:
+      id: 62a05386577065d7ad5205fe261dc9af5cd3ed83c3196bfe68898b30a6610ef2
+      name: cb457233e6251e9b770357af62b7754aed8666dd54e07a4d6d690e753653a208
+      short_description: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      definition: 40eee0a72a445bf6cf8b0e956146a64e523dc9c9f060c472a7e05d5e9ad483dd
+      context: e292f418b560d36815e95c1d2f5c7ae40ee7efd6c0072bfb706789674238e5f2
+      market_comparisons: fcc2645f3e082b70402fb96e5520efec58b9c55c9fe9360438542dd01047f95d
+  - id: TER413
+    field_sha256:
+      id: 815b0a65bfcd76d671e5c2024996639e36e5a6cf295a31777f54e77552548bb9
+      name: 0f419431d4de95de0c582101bd003fd6cecd3836fa3d25796206b9997d16c915
+      short_description: f9900a675367eed8b1600fc29a23f29342260188f2bf6a225d8aab14997adc0e
+      definition: f9900a675367eed8b1600fc29a23f29342260188f2bf6a225d8aab14997adc0e
+      context: 34fa5573d2ebe853357cb9f52017423f31d315e2da090bf63d9534c68ea6f0f0
+      market_comparisons: 512776aa018f4a5d51480caacf0abc3711f44992df9c08b7bced9c6b28620ce1
+  - id: TER414
+    field_sha256:
+      id: cb2c96f3a0df3fa68267d498f0e1211c9665425a3f2875c0b2c9191b2914ec9f
+      name: 61b7f06661987f8adb0e11c6af368ece618207c10d20aa432d903d5e29fab04b
+      short_description: 452556f7203c95a7b8e896d9e9c637b36ac9e8102691244a16319c74715cbacd
+      definition: 452556f7203c95a7b8e896d9e9c637b36ac9e8102691244a16319c74715cbacd
+      context: 9e73b7d6c90baa03641dafb7ff5cbdbabd75bf0e9d98f610d04c423fccd66252
+      market_comparisons: e9e0ab6259a35cfc46d1c6ff41aae5084d73f30c233edbfa9449f340be6b5d7b
+  - id: TER415
+    field_sha256:
+      id: 57f8eeeacfe97303409c0c4664e69415bac03a5986eeee5e6f4bb7c6db0c9c32
+      name: e4dc8ad38c8a31c014f6369313867fb6af4edec206528150f117b3269fe6f08e
+      short_description: a91d028c5638e2c1e6bbffb42cf4c0bdf20e90a928210e6d3ccca40ee8e324ce
+      definition: a91d028c5638e2c1e6bbffb42cf4c0bdf20e90a928210e6d3ccca40ee8e324ce
+      context: 9ccfc08b37179a132e6fe3e316d715ecb043867a9397e334990d0b23057c6671
+      market_comparisons: d478549cff7646fabc641f56756850b55229fa70df99d6c9abe6947103d3b136
+  - id: TER416
+    field_sha256:
+      id: 23e01a6510ab6e104b4a887ac440cd4f26e94e861c3ab81bbfe4787620f12f64
+      name: 9fea66178c9b3fba6605be29c6ee3ea740dfe0317acfe5a7f56329b4d0b71817
+      short_description: 71e004abd061f33e0407a28512b02fc04336da0808d7ee7185387003c99da4dd
+      definition: 71e004abd061f33e0407a28512b02fc04336da0808d7ee7185387003c99da4dd
+      context: e3763ec042ebf8b011101e17793c42418ad1216c86c25c92cc07e0ee02c1ab67
+      market_comparisons: a4c4bb7873ba1324e5dfcf62c1e397efbf47e1f7cd1867312817130eeacb0908
+  - id: TER417
+    field_sha256:
+      id: e4fda5ba9a1f5738c7aea2c7ef4698bd191234c0cfa6d9464b2d9b44de1699eb
+      name: 5a5b6e979a1eeea7ae03919ba38fa08579f77f71ea5a9f06d6e3f5f116cca295
+      short_description: 6d626db991b19f4ddbc2c840fb1005f0e9f47fb3df75273bea2d5448b3f70f35
+      definition: 6d626db991b19f4ddbc2c840fb1005f0e9f47fb3df75273bea2d5448b3f70f35
+      context: 43f2fd9a459af6d6d7522ec30e99c4b84cf5145effdd8f7a72b95cf6c157762e
+      market_comparisons: 94be7db7e88077acc14178ab9faf0ef8221f09437bf60b39b5c1c660ec8440c4
+  - id: TER418
+    field_sha256:
+      id: 880d3f35cb227bbca5b19a1ddc2f397e9d825e6ba4562d0e1de3afe05ead0165
+      name: 4bae7274e076ac6e942440ace3602001e9581b81005c92af9aec4fa479cfbcf3
+      short_description: 240ab1599bd66d15f44df9a44f44956415b1fef241fe21d10abbc1b1471b7083
+      definition: 240ab1599bd66d15f44df9a44f44956415b1fef241fe21d10abbc1b1471b7083
+      context: 959276cd007c9017ccaf3a64cf665fc0ce22674942af97d9d41e6cc757c38a6a
+      market_comparisons: bd7cb3403b6d5f1ba472b805e32ff3148489791efa63bde8f567efcbe01ce74b
+  - id: TER419
+    field_sha256:
+      id: bf9629b9c1d04777f0db92fc3cda1c306a18196f5d7fddf8e39a7882ee82868f
+      name: 153d483a0719febe205e1c8b00ab2ab1a51d1a0f0a1508a445afdf9dbe24862f
+      short_description: 5bba47cac6a2db2e9e81628b705b5ca2b973027bf5903bc2831e2960baf270c8
+      definition: 5bba47cac6a2db2e9e81628b705b5ca2b973027bf5903bc2831e2960baf270c8
+      context: d260f5f12ee41711e5d5a0f89a0640f3539d707282daf8be150bea9c7904cbea
+      market_comparisons: a7b284b3887e7f9b180168fe445563b735614ecdb56230bf678216cff987e0c6
+  - id: TER420
+    field_sha256:
+      id: 681d4b1ca46e16b3d0d28aaff364aaf8e902bc5b551c9925c7dc2c16fa9781db
+      name: df541c9606ed9e163b425e19dbc506a4aa33331f0a5c8784b2e80edc940f4816
+      short_description: 4767e082c803521e49f77259e5ebbc1dfe802a94b2f699b7d7c93d4ff476a685
+      definition: 67609c6fe2275a7f162c7641ad5201df422bf20dddd00f89538f36288f7c13fc
+      context: f4a5fd2b82e5f468b44d4cec281c63a9ea2a0789022682e6e02e7278fc19b1bb
+      market_comparisons: 375ab86843c91d8d7224f6f3a09fb2297d5451d4c48aeb6d92d91ab438b67c33
+  - id: TER421
+    field_sha256:
+      id: 4977a4920a0e86a40a426d87280079079684b44649a0b346a90d23afaa63521a
+      name: cfd8042f4e2d74bbd92e6178416bad6afe457367a2ba5087d3a309c79eb59e69
+      short_description: 734c9ce8b65da530a1df6e9c5a16420fbe5fb26ac57533470bded7c454c6064f
+      definition: efb73049a4d77e4426d3e645d596f7a49a710fa3ce91303f20d9da189bdaf1f1
+      context: e6dd148f01da2d513c069b62fd00eb043852ff4da4d3595e2610da350823db49
+      market_comparisons: e315e9f44c91fc7e55620cd1d6617a50691038c6464cec78984dbfa1b17dde40
+  - id: TER422
+    field_sha256:
+      id: c1081d9efaf0e9bdbfc7bd4e3ba86717ec9ed5b032e248a83f80c965ca5475a5
+      name: 8d134000bd51775e7ab320a2c1223987138b25a5af7c2aa491dff7621949aa0c
+      short_description: 75be9249fb027996afc11fa50bf2157ad6427417cfb38ec75a779ad2a27a1a4f
+      definition: 8f00b2b0bac002e26b203665ed6b5e1406370a192c11090f99a52a9d9f81c5b7
+      context: 6478b3a1a6be4c4dfdc5d077fb29e5323c7303684539048c6dde8b0a04bcd7db
+      market_comparisons: 323d092cabbfdb97d32cb658250e33271f811da2995fbaf0eae4b005fdac35a3
+  - id: TER423
+    field_sha256:
+      id: 307e2b0d72228d8811b06da47d6d6c8a8fbe77b802d977b3890542898881618e
+      name: 88b6f336e70450d9c4f17ac3b6598fa7bf641fc69031eb9530fbcc0b0a142963
+      short_description: 7419c34210d4cc1554d3a0ef0db5c1885a450212d6d66f9fe1c6d049bd9943c0
+      definition: 1e14a0a81bdf6a47880851b06e52df86fe68cd46f465e3a24b1ea52a503617d1
+      context: edf8b175ed9ae081ef2e9db18c8739be712685c42e9d5cea05782fa7ababd2cf
+      market_comparisons: d6fffde1635a1157c25d336f43da02ff538fc546b659dea65b9f80c39bd5974f
+  - id: TER424
+    field_sha256:
+      id: 9781d69f6a1461836f6c957beb5f86fc07854dfd08ceb8ac3af82e058e6eb13e
+      name: 3e26c8a707151cc86cc7ddfe4ab8f51a731c2c659558b6ed8698ebff73a112c5
+      short_description: 632c2139c9eee42b414103c404bae501da73014ee0d2129545ac72a33bfc9d3a
+      definition: 5ee0a79be6a0489a5612125af6f55fd6568d6c18d0c0374f1237246f9ea14026
+      context: d8dfe50fe2bb8b31e2ab97ce7e61ec20ee2bdab6b25fa8c35835c602357e5ed0
+      market_comparisons: 590f3c3f9c01c67935f446c8b522b6409d9adb912d9546f4ec70a60b68350ddf
+  - id: TER425
+    field_sha256:
+      id: c0e56bccd838a85f02dfe91c2de013073134f51fd8ec9249bbd290e8a45c3801
+      name: 3a66c8a733bc489114d8a57a65fae372d828b2171a4af875e9675d277177f714
+      short_description: ccc129dd66a2030d40644c0688a10458fddd9dfc673fa79576f141b9c30daedb
+      definition: ccc129dd66a2030d40644c0688a10458fddd9dfc673fa79576f141b9c30daedb
+      context: c35b9a4548c382436abcd8ceaf4d6ab102a419f281b382ec289fefdb7baab681
+      market_comparisons: a25cf62380d6a15a93eceeb40f96a90ac7d55ee5622da8daab846d9214cd2017
+  - id: TER426
+    field_sha256:
+      id: 8eadf9584047e28be0bee6202a6dbd813319c8fd3f57f8a4afc45e787d4e9a17
+      name: 90d639e886ab355855f23c278831ac7080aff50e1ffe3fe9d7913ededb8dba21
+      short_description: bfc6b30aa8d67fc5620ae73f95fd119a1696bd9d08a3e1a7d8abfde54bb920ec
+      definition: b31b5fd01876e177e93773b07f1de6969af57641e1ebc2858c0592f26f536cbb
+      context: dbae2b25bce3f33ec57c542593b33cdea50bc5cfcb0ec11c8893a0100d730a98
+      market_comparisons: 2978a04c2fdfb78628cda4049de3b2c4dd78bc5d6ee54bab44315d513119be33
+  - id: TER427
+    field_sha256:
+      id: aae9f3358209ae87ddf229c795ac3d1514266dab0061c25b66b701d80396a976
+      name: ecd896e43ce30cc4866381bd8f59c073fd24e052c9212d0643174a1ae9b4d277
+      short_description: ed0f801865a5353d87bd7fd36f0cb1aca9596f76aca98f92c4727662339c0651
+      definition: 32d286ecdbb82b35da64b1c50f3180a34959ecc6d290688c395ec81ce5096a44
+      context: 274407dc864eaf04087b4ff87fb60208c0c2485f78d682514dd1cdd1550bc02a
+      market_comparisons: e2fb2745976fdd314fbac8a73db16efe3eb5fc2e0651f29e4ce0265e50756e13
+  - id: TER428
+    field_sha256:
+      id: 9d69596ad6d51d5195eeda3739fcdae79e18ab20c9b100a75d180b1faa9acedd
+      name: d1394d98ed934a089c8f7ea8e0c5a4726287a03335189e313f0deeecef288b40
+      short_description: cc76f0d905ff8b9bde03471a814a305273c13e1e16fc3fa878be9e2bb5015185
+      definition: cc76f0d905ff8b9bde03471a814a305273c13e1e16fc3fa878be9e2bb5015185
+      context: 919860076db6b3750646c0540e3e682062bb08edc7dd90dfbda65e384225e04e
+      market_comparisons: c9c1f4450909e1c23c08721860e26075c33bdc04fa344a7fd8c940bd2cd5f6ae
+  - id: TER429
+    field_sha256:
+      id: 24d3c9738aa5eddc1f8be07228c2e5e2909ed45040f5fa252b1718d383f788a1
+      name: 9ce86d13482eda3bb951ffcb62ba7e75198bad105f546d26a810482eb94f6855
+      short_description: d6c30945365550f9127670a961587e883c18dfe128e46755972f083af7d12578
+      definition: d6c30945365550f9127670a961587e883c18dfe128e46755972f083af7d12578
+      context: 1ae7c7597ffec80f048453a45691112b3db0c10c61b7985f15e3a89144c41d24
+      market_comparisons: 6c22784346c9db4bbcdc5e97e0a828c665e233ac5eb0b17aad13f2fcd098570e
+  - id: TER430
+    field_sha256:
+      id: 32f92fb2e02002949492ac3fb784d25df0d85c411f895909525c7c5a33f8cb36
+      name: 8fda8d3a4a94fb7411895e24fb8037fdad589055b03b94d0ffd0b09a556dc31f
+      short_description: f1e9ca1701fc17219b0ae050e2d3f2326d0d7e5bb70543a43bf623e6796141ae
+      definition: f1e9ca1701fc17219b0ae050e2d3f2326d0d7e5bb70543a43bf623e6796141ae
+      context: 2ff8ef07d6afeaaf9ca008f5abe921afa504ad1b0bf6549ed6dca6ddf8bd0896
+      market_comparisons: 75899a66ef0d80b7df3e2b821b8365f2e7ab4a7d95232b0109314fa0a3f4b321
+  - id: TER431
+    field_sha256:
+      id: 381446c17a715c9e132da07b925174b5bb6e7bd9b031a9db420f7c63cb49dd0c
+      name: 1b9855456a2f9bdfa602485e5b0aca66612deb869dadaf2bea199ae8983c3c7a
+      short_description: ccbefb0eb6b510ac7626d233e2290401a0fd31f30b8d155a0eff51ccf5805ae5
+      definition: ccbefb0eb6b510ac7626d233e2290401a0fd31f30b8d155a0eff51ccf5805ae5
+      context: 45ca42801841f548b493a1fefd0b29cc44ac51c913307b3f19669377216275f4
+      market_comparisons: 629caff43c8d2da6cf518cccd2dbafad7e06d4d00d539fe5b7cdb957ad106afc
+  - id: TER432
+    field_sha256:
+      id: 38e964aa0821bb713af34a4d349823f227266c72ca440f5484f56a602a55d135
+      name: 74e15428956250613d35cec72f71bfcda27c35b19ae5fdef7a2aad3954300f57
+      short_description: 256f1aee47d89eb18459b2fd69cd7c15f4f43cd588b939aa98e0abf130038560
+      definition: 256f1aee47d89eb18459b2fd69cd7c15f4f43cd588b939aa98e0abf130038560
+      context: fe60cfc00b56c01606b70c6dcee4aa54a0e39a52a9f0bf3680a9d89b8386aab5
+      market_comparisons: 1002d661e878f733bf3e491aac70de33a92369b539f197b978efad158e458e0f
+  - id: TER433
+    field_sha256:
+      id: ee7224b7817b7f28945d8b654e936e08976fd1a743579c157e69e7a862baf811
+      name: 9c93d0386f093f001f10bf9136e74c4338b6d66dce2ee0feac4e57d908281842
+      short_description: af7d7d734b7e8ee0bdf8e017b6c974bf51e10a0520d454dccdc6d25bb5237fce
+      definition: af7d7d734b7e8ee0bdf8e017b6c974bf51e10a0520d454dccdc6d25bb5237fce
+      context: 8a9c5e309a2b48ea0cc3d9bc619284fba74deb0ea13c13056d2323383443db97
+      market_comparisons: 48821ce6d0a47766cc236efc6ab554316c4810e8f148c159482325ee08bb0690
+  - id: TER434
+    field_sha256:
+      id: ba67b74efd96e4eed3deea8b1b0a92275e280862f1d9fcc1a3482d32d3a8f8f9
+      name: a7e334a00fbe16e96a40c09d4a3fab8e6b253ec6d31df8093bc4083a05c247ca
+      short_description: ddce0d93ed9d470d648aceb8f2cb9971846085122968c853c174086000be8eaf
+      definition: ddce0d93ed9d470d648aceb8f2cb9971846085122968c853c174086000be8eaf
+      context: 5cd74569b43c02351b7359ce44b79f8e6671b9a694f97f017022be83a2f29f42
+      market_comparisons: 6d32824c19e46ac78c92e19edd3d421c4342ce5474f7c24e57bda325fa15f5f2
+  - id: TER435
+    field_sha256:
+      id: 1e670a269b5da97493f201b480b79a76e83a82eb451cc33957efed429b0a87df
+      name: c2232c8b732abd298f1c72aec3dbb43115a3064574328fff224ae0db9067f5bb
+      short_description: 04dfa5c679550c9a9f2d7b50f555d3b6c7f57772fc83e4381c9d07447d43e2a4
+      definition: 04dfa5c679550c9a9f2d7b50f555d3b6c7f57772fc83e4381c9d07447d43e2a4
+      context: 619483d0ba959fe4abfed2f4803aac9d84f1590f601962a8573ce114555e3062
+      market_comparisons: a3303a5b92153bbb854d56bad179fb20877e8f2f56c9110ae469152f4471aba7
+  - id: TER436
+    field_sha256:
+      id: 15d91c08ad4547b7895e91ca24b34e839e56a15c5f46846e1e5ff4a3c4002f76
+      name: a449b09063c25a2a172409effa8ee346f142ac1c67fbd45fcec1bf6e71fd53e3
+      short_description: 48ecf3de187b2ff2a635a0db15d48ad132503c843e79a821b44966529f7d0d50
+      definition: 48ecf3de187b2ff2a635a0db15d48ad132503c843e79a821b44966529f7d0d50
+      context: 741e2ece4755432a2bd2ebff4f75fec60e5f60d155c5c6eb4d320ea0bf328ddf
+      market_comparisons: e3538aadf1ae7533865cb10ee415b762ba2cfece0d37b53166149d8898c68466
+  - id: TER437
+    field_sha256:
+      id: b1c7df6a0e7912de3e9fdfa54d23b3ceb8a3356efe471c46c4870587e3e05bb2
+      name: e5363fd79fffcab6f8f5086cdf9c9e8df23132555fb678ff8011beff49df97e3
+      short_description: c683ce7ab9e0038ac82af2e01121952742b5c48e3aa2d33e93fb47b6492cb46c
+      definition: c683ce7ab9e0038ac82af2e01121952742b5c48e3aa2d33e93fb47b6492cb46c
+      context: 6df8a761b60b1d4e058bdede0c3a9dcd8f65cb09751adbcdab8446dfe87047e2
+      market_comparisons: ed3e79710f9423be1a1b90d52eafc8ca6399cf6c9874b686a99ace004c38e62a
+  - id: TER438
+    field_sha256:
+      id: 6f20373abbeb614f784349f3b86d9ba42f9d222af0d78b699bf2d418bf26cb9a
+      name: dcb3739fd2c56356397b3223da822a63839321f5416cb8dc6dd41d43cd0ab12b
+      short_description: 19428ca5874db564ebf7b32fb922e0b6b6ea252033bc6c9b123403f105359ba2
+      definition: 19428ca5874db564ebf7b32fb922e0b6b6ea252033bc6c9b123403f105359ba2
+      context: 0dc157d29307bcbe6aca82808917fe8f4e3c563a6fc98c410f8d226def5b4b9d
+      market_comparisons: 8174b2c9f1cdca753c6da4e2da5333de68bbcbfa045b67096f1e9491f3c1f2ab
+  - id: TER439
+    field_sha256:
+      id: 120fa96cf40d5cb77ebb4f02b94e845907f2306b058a5046e2bd08d959b24ca8
+      name: 58d96800bf856e17eda50b891470c037d8f3a7aadcb8ee262c2ab3618e2d0f68
+      short_description: afa030cff364eadf5511c88032230c1d9ddec01263767e8c05f9a6528ea582c4
+      definition: afa030cff364eadf5511c88032230c1d9ddec01263767e8c05f9a6528ea582c4
+      context: 90a1417a68f822c7ad705bd972545bc2229a63b8c07a1405952db72a2740d8d1
+      market_comparisons: ffb380ccffdcb4fc7840144e191e9a4cf909621c6b9a2a1fd74d155ef4ee35f0
+  - id: TER440
+    field_sha256:
+      id: 798c92bf60b6cca39d3626da77c9fc5ed672ca484c08f84c2a5e778b53cd0674
+      name: 84606a0d85c84a7b9f6febd4eeb36ba12a342c1fd706a23c9a8c4589fb0a4bef
+      short_description: 810f7fb30ec3d2b7daf03a02aa4e4ea21defe8064cbcef4a4dd4b8105dd3f698
+      definition: 810f7fb30ec3d2b7daf03a02aa4e4ea21defe8064cbcef4a4dd4b8105dd3f698
+      context: 8c94040992bdd9ef71b8598ba84839705f8d1b2bbae614c1dc30a14c028f0f6b
+      market_comparisons: 432e101d1db65f7bf10f879e7f9ac82d6bc37064c9df9d1d1285db361e5f0bbf
+  - id: TER441
+    field_sha256:
+      id: b987ceb980f3ebbda36c195eedd6073c680f4487213b22d45b711f588faf4f93
+      name: 3c2b4a064cf2d67583fd2733c0056bcea01c5a5ce50e45b30b3c9e0bbff631fb
+      short_description: 868e8a35075f9331c9aca62209809a8c9c21b0ad654b65bd66475d3697b6566c
+      definition: 868e8a35075f9331c9aca62209809a8c9c21b0ad654b65bd66475d3697b6566c
+      context: fd2f67e35eb82542670f27a65a197db3f1c303108526247820723ab357122ce0
+      market_comparisons: 920e268675a466733b1e0c13543b1fb75a746ca3802db9ed9b219b2876cbf6b2
+  - id: TER442
+    field_sha256:
+      id: 0a3a16c06401632acf4d7aed9ca245a0f0a7672b44dd9582211048a4af0fdf43
+      name: c196b5035ff7378aff2b36b5a0dbc16dc594304002c42356dd8a734e4df0fc2a
+      short_description: 01bd5d07de006352ebca686033cf5b950312f4a04ae717d0a002ac47c9d41e45
+      definition: 01bd5d07de006352ebca686033cf5b950312f4a04ae717d0a002ac47c9d41e45
+      context: a0d56c571275ac569f567822fcfb6e3b640c6816912adf46bf07415195881b1e
+      market_comparisons: 793aede08ce003212573c283bfdd461ee9260d09b9add2566191ffe1055271dc
+  - id: TER443
+    field_sha256:
+      id: efd8dac6c424854297970762736401077f772e4743d7b3f290f41b2a77da9d06
+      name: f649df6c075d5704a0942f807248572bb38d20608564789175e366e6c3a955f8
+      short_description: 86b1aedbee41d133698a0de33182aa81fe3cd3d003440c8d7603c938b434cfba
+      definition: 86b1aedbee41d133698a0de33182aa81fe3cd3d003440c8d7603c938b434cfba
+      context: b8ea9b79a3ba1f7bc8874a974b93c6c05a06aa1e7b2a921226e6e4ab569886e3
+      market_comparisons: e143d4889a7f95634a0e79704d9427468b7b598d9bc4b2dfeea9ba929ac97ade
+  - id: TER444
+    field_sha256:
+      id: 0dc6680b08195b705a9564da786fa14f7f715f12acb7bf3b32fc77d3e60a8d89
+      name: 863797ba7aa8bc9712f2b50504e050bcb9d44cc2c80664f89808cb01c03eef4f
+      short_description: a367869a82be40c5d6e2767a5bed3a7b7074c36135f4ac2de397b04b47fc720b
+      definition: a367869a82be40c5d6e2767a5bed3a7b7074c36135f4ac2de397b04b47fc720b
+      context: 823d0ea95cfbd32ba9913df1673af0707ae2ed4a0c3aede13cb234a5b5ba1f9c
+      market_comparisons: 594c3388cd833ec327fbaea390029a9def9a07d9dd91035549cb316fe048e9aa
+  - id: TER445
+    field_sha256:
+      id: aa9ec35bec0415deefe5414ebaf6238cd81a870e3ffac0a558ebf73b768a31c3
+      name: a1580db31645ccdffb5deddafd5802750af10eba125036497daa12e95dadc35c
+      short_description: c2da33eed266774187b6fa50171f12d4880e4fbbd4c3f0f094019ee6151a2856
+      definition: c2da33eed266774187b6fa50171f12d4880e4fbbd4c3f0f094019ee6151a2856
+      context: 3ed1c9f787c84d02baeda23f29eaba4c32aa9109a66ceaff179703562f9a46f3
+      market_comparisons: 700477cb47a5d2a14c291fea69ee351995eb64ad5882e68c4eab72ca9ecbf130
+  - id: TER446
+    field_sha256:
+      id: eef8dfc267effe1fc00456256e8a006f654a2b40763cdbe8535e917211a1f292
+      name: eb3cb9f1aa032f9a8d562c405e4fc1802a285efe704723f4cc8934a554c148e0
+      short_description: d62981fa48cb98e39458d12fd12f72b7366ea5fb129c246442a8b0ecd99b2a0f
+      definition: d62981fa48cb98e39458d12fd12f72b7366ea5fb129c246442a8b0ecd99b2a0f
+      context: 6061f22beba72c28bd17f449dfaecd1b6aa8d87667594ef0c634e585c9a0e7bd
+      market_comparisons: 5f686f69b310d4f74c61237ec840cf56ae253107b36882fe5a68d3f69f517862
+  - id: TER447
+    field_sha256:
+      id: 9957a7730c43f5a68b7f216c437bdecd8a778dca36b0a9c6cecfd39897ee8dc8
+      name: e7bfc75fc6d53b99a0a9a13e9dff72691539b3434fbaa5f7ed494d4a294e7d0c
+      short_description: c526a7f879cfc16fff9385495336dfb9be5e4f10830594730849ced5a643894e
+      definition: c526a7f879cfc16fff9385495336dfb9be5e4f10830594730849ced5a643894e
+      context: dca179ea110b20cc83b32a46b64f3297a2de1571f18c8b96c2e17db7ca32e0ba
+      market_comparisons: 4059369f69f5f3893fcc883c0b68714ef92a04d770d47293e470a4a0728fd9ba
+  - id: TER448
+    field_sha256:
+      id: 304bff5547c24a937c46f55acd24bfe7d0a2734e88a6b3a24b74cef1df6c2eca
+      name: 03f7451ecd65d2036d6a98514a8f8c7c39ee211627e570706c31993abed88945
+      short_description: 7afbee99bd7b04990f99a85a30c6d4a3e12f5d196cda33f3ec11eb50a71765ae
+      definition: 7afbee99bd7b04990f99a85a30c6d4a3e12f5d196cda33f3ec11eb50a71765ae
+      context: d8b7f5cf95a2a4cee56e5ff3900d9a5b574fd1ff978b606136fad16ac39b6a31
+      market_comparisons: 41fb23f1e0c11261730dbecd477811e73d1369aca3903956d0d092a38d3222e7
+  - id: TER449
+    field_sha256:
+      id: 83e3fde61690ba9043f35623acb8dff44109e9e26fb2b2ca9cea20ce63d2ebb9
+      name: 92a63472eb8d9a4d50f5a078404a7a2c0afa848cbd583e6309b8d540f3ef11f6
+      short_description: c576953e43aa5b0a4e196086579d17518db5ace2fffc04d187694488ea23f939
+      definition: c576953e43aa5b0a4e196086579d17518db5ace2fffc04d187694488ea23f939
+      context: a3c3deae3959ab680c1aece4198f1eb86b543858aa82c97b16e73dd0f7218c53
+      market_comparisons: f455408a9379f08f0d306fc39fb894515bde09a83e04e8a3cf7441259fc85077
+  - id: TER450
+    field_sha256:
+      id: 9fd74ef9a71bc3a55d278fda7bd2f2c8a92e4732da977a923ad6223eaf2925de
+      name: b012286d2c27befe17956e27f7be7fd0546695d008d1e653693436fd0ff1ae78
+      short_description: dfe3f2629229d7198339b8bbd4f06d669df3a094bbccb54dd2f905cee6f479c6
+      definition: dfe3f2629229d7198339b8bbd4f06d669df3a094bbccb54dd2f905cee6f479c6
+      context: 63fa81ea46bf8574c6db730b866b571bd57a440ea0a3198091cb38372c3fb0b2
+      market_comparisons: 9e2a1ce66c42e3847d60188f15632b3bc3f6423fb7f2e09b223723430e744986
+  - id: TER451
+    field_sha256:
+      id: 7f28ff766b702cd726bc5c0b0155acaaebc53fd17e655edde447e2ba53d185ff
+      name: d3a104f2089e14a7a7c567a77053a08185537ba4f3f745d6b720c766c2d1efa2
+      short_description: d114773407d14c28cae44e232ee350026373093af1adef2d7c5be2921073c511
+      definition: d114773407d14c28cae44e232ee350026373093af1adef2d7c5be2921073c511
+      context: b40cfeddced59440477abbfba1b9f5fd6a22c1f132db1f19303ce45eab1a0da2
+  - id: TER452
+    field_sha256:
+      id: ffe705971d6c4bc0abff403a90cbaf143fc7ac4c13b2c78e2baf3b00f8fc3bfb
+      name: ee4466da350dfae1d17d88693bacd8c3fa9b617e792280b5d61bf89a41b5861f
+      short_description: cd5f66bf59462351bf4f5284aa1038603962ab7f36f46a462986ce7f0f014372
+      definition: cd5f66bf59462351bf4f5284aa1038603962ab7f36f46a462986ce7f0f014372
+      context: 0ace7f9e58bd523447485a33e9f4a384fb952cedb00dea7a89d24f0cfe33d9fb
+  - id: TER453
+    field_sha256:
+      id: 28e18c454b6474cc41baad6e97976801ad7dd2358b6e126b06afcf2bc056fecb
+      name: a4daf0798b131177c197cfbd9cbd193d66215cb7f9d6071505c0befc8611ff66
+      short_description: 5ebdcf188a9a6725b6a949bfd5209c6281f8eaaca73ba575997a4776367b7218
+      definition: 5ebdcf188a9a6725b6a949bfd5209c6281f8eaaca73ba575997a4776367b7218
+      context: 2a48cc99461d36eccde063c17d9195dded76b64a2c2200316e25f02682a131b5
+  - id: TER454
+    field_sha256:
+      id: 93b3530b3af508b605c6fbfe5e141d33592df52ad7895a052a61583b811960d2
+      name: e3a3f7122c0485a98a51a76781dfd2add0e9a198037aa65072227bcf1a64c814
+      short_description: a4e0e22d65f9226e9e3c7cb8601d3907e45e712cab3d6dd246d19f2672a25e56
+      definition: a4e0e22d65f9226e9e3c7cb8601d3907e45e712cab3d6dd246d19f2672a25e56
+      context: db88de4dc6044176627b43546ddf8a0c88ad49e682e173cf09ba0cea4174e6f8
+  - id: TER455
+    field_sha256:
+      id: 0a1ace926e4f285e563e9f03ee1a84e86b180f3521d0b018c62ea74db5fd3e28
+      name: 3e7a437b8bbee8dfa092094a8abf257b8d01c66c3d2e00ffe60f6c69defa4191
+      short_description: 4f8222675bc3e6efec2c30bcbb4d6ea4d6fd019cfd5c935cd24a7f23b47392ab
+      definition: 4f8222675bc3e6efec2c30bcbb4d6ea4d6fd019cfd5c935cd24a7f23b47392ab
+      context: 58deaf7102c3ae41937a182432eea5ff41250b8b6df0ec22ab44674ad52f1fae
+  - id: TER456
+    field_sha256:
+      id: 6ce3e0160d2183e004e8c7b24342b88108bf72235612a3b253106f8f6939f0b9
+      name: 08c6b5e1ef11b29f9b27ec15b8d7c61c17f8daa3119eb81f57ae51f0af9c7889
+      short_description: c14f602df0b4d6b2105c3290a54b312882f02a91212ee177cc51a0e9717accd8
+      definition: b15dd4bfb77d9454f50d4d0fe99cc8b97ba717ec258aa26c2d3e02c09af03790
+      context: 2aa9407419ba9356b2cc8a71dae512e972047e1192fb7b3df18ada1f0a575f25
+  - id: TER457
+    field_sha256:
+      id: c0b0525f8a218dce73f4fe05e34557c2db3ae9672d73b20eee6b34f2b67e477b
+      name: 70111c6793ec60ceb57a22346bdcc4088c27ee54c0e305de26a0eb5bb46f3bea
+      short_description: ba2c9553640b369f194d0c367027d99d9772dfcc8c5090d62503a1e401d0a352
+      definition: ba2c9553640b369f194d0c367027d99d9772dfcc8c5090d62503a1e401d0a352
+      context: 396185a29035940db70720ccec6354110fbf93c5afc63598edf6842c16355be8
+  - id: TER458
+    field_sha256:
+      id: f6272eb042bf87657edda2e4f265ab7b6a3155e32b23ab0ee828beab92222b93
+      name: d5fddb140a6818c92db6b9f23de1227112f27edf910f1d8c0180e04b2e790719
+      short_description: 7fe79fc719c45f56d8d0053b81c3778975228aca4149d3ad69893a7edcc8d5fd
+      definition: 7fe79fc719c45f56d8d0053b81c3778975228aca4149d3ad69893a7edcc8d5fd
+      context: 481774694f4a6867cb5d721e7bb65edaf2b6d7214dcdbffb8d764ff8612a6881
+  - id: TER459
+    field_sha256:
+      id: d47164dc953875d6ed778cf3bd18672e80c36daee831729ac8af14aaa61cfcdd
+      name: 0e0e5e7f411c54de0beb4c31118ac1c919d6d7fc251182836e068c72ab384929
+      short_description: 46b5c55db7a7dfd5da51a0f25856787677782311b6c24e35172c0d10360bc814
+      definition: 9a6357c6e45d8c469776509ae455c01393520b4963755b41ce2629d4d01d5ef4
+      context: 0283971ca80b8aef9cc2639bac49a605e54e18e8370b39e5e22002f08de7a0e7
+  - id: TER460
+    field_sha256:
+      id: 0bc7ba773392c28fb599e2ccbe8283bc8ef5a0858fa10c2b5a4f0663e6baf3b4
+      name: 53f4b2b589ea154896398fba2aa7ab99a14c51d69e81d4337520d7cae6f7da80
+      short_description: 7c5ac03cfc4f799e93b29b31af71fadccb1d32003369c2dd6c0ce831cedd7edd
+      definition: 7c5ac03cfc4f799e93b29b31af71fadccb1d32003369c2dd6c0ce831cedd7edd
+      context: f10586eb334b7752b9d3867e37fb078f8abda2ff162a8448b1393117c3921336
+  - id: TER461
+    field_sha256:
+      id: 2e64503373607eb21792b2a18aa14dfe393fbe681c68d0600af8e51426b010ca
+      name: 9e21582645a37f5cc0d9324a0d82b4106f7bc4cffdbb309a31baf34e8932ce0f
+      short_description: 109e3be4f02bcfdfb3b61cbbba5fd6bc6257b5026a5bb77876dc7d0ab1baad88
+      definition: 109e3be4f02bcfdfb3b61cbbba5fd6bc6257b5026a5bb77876dc7d0ab1baad88
+      context: eed1401351752ae731f83fc710f527ebe690b779ae9582604cdc1fbf660696a1
+  - id: TER462
+    field_sha256:
+      id: 2b3af47e9c040b560231cda4190110ea1d0c95ef2e4df1da795b67bca566410d
+      name: 2f3fd23154228c564191fd5a724da00882eff9ef21809fe5dcd48d1cbc812ddd
+      short_description: 7d48c1569998bbe94c768400d01cc7509d877380e034c18a5a187a5483cd1c25
+      definition: 7d48c1569998bbe94c768400d01cc7509d877380e034c18a5a187a5483cd1c25
+      context: 6f5cc4423af2aab5259c951c44dd352d55e3bf5ebf1995b63203549005832766
+  - id: TER463
+    field_sha256:
+      id: a441b7936c6aa585d1f9c4d27c51e1385386822b039fed535b8a23bfa594b1fc
+      name: 68dfb34555a173100ced22731ab300931f5f9c538a4de2298fd2baed15667fc7
+      short_description: b9d8dd6524f2a912616518b7a9e002310a1226232eafad83a8464683805d9eef
+      definition: b9d8dd6524f2a912616518b7a9e002310a1226232eafad83a8464683805d9eef
+      context: 9c751be754230dec99d2001edf63f4270879887894537a77651ceb980e62b14e
+  - id: TER464
+    field_sha256:
+      id: 13e0f388c846501d5b2425b59bbf9f8dcea70879c8317c7236008478b68eaea9
+      name: fc54329b8210e0cc80afda3c643bd6d6277b30704cbebed325d4492adb506d77
+      short_description: 4a5ebd8224e79e397ce0bd79ffe5297a6930e84b77db4776bfcb097877bea760
+      definition: 4a5ebd8224e79e397ce0bd79ffe5297a6930e84b77db4776bfcb097877bea760
+      context: 30b5586f0b3942282fc3d434074ac61c56a5d0df6261075f48f57baefc827222
+  - id: TER465
+    field_sha256:
+      id: 0b7c07b4f3e9b933dab169dd81c950256ec0112d2ae2a1a1108e9baf19d07c9a
+      name: 39254ee3cbf5c059b54d0077f3f9c5397b248895316adeb47d90c9e90d103d30
+      short_description: 66d059823ac58987068f3b1afddc667abffa3cbdd39276d792a7d0af3b75dd82
+      definition: 66d059823ac58987068f3b1afddc667abffa3cbdd39276d792a7d0af3b75dd82
+      context: 83d6ba38d47300437a3383c5de3701b7a2af88647d5bbf5a9424927c31493a02
+  - id: TER466
+    field_sha256:
+      id: b4b3a9c732e060e77a1d11f1f289f71ce4ce85686559f688fea6f7f36b627e0d
+      name: cfde9432584b41495a5ab45163b0fc70f7e4003d12438487c4bd146cbcf59ddb
+      short_description: 6f704107e35530b3aeca3e1473baa01de3d47d11431c6f08deae4e31f83327b2
+      definition: ecee0dd906f3442bb30fbceaad3358c071e7175d91a99c9614ef36d61fafdecc
+      context: 2d65d473bb37050b50763068bfb5dc3161930f815bea2e1be069442f45dbd1c7
+  absent_nodes:
+  - cap-internal-supplies-reference-stewardship
+  - cap-merchandise-reference-stewardship
+  - cap-packaging-reference-stewardship
+  - cap-partner-agreement-reference-stewardship
+  - cap-service-reference-stewardship
+  absent_relations:
+  - REL-U1079-ba-internal-supplies-equipment-references-cap
+  - REL-U1079-ba-packaging-references-cap
+  - REL-U1079-ba-partner-agreement-references-cap
+  - REL-U1079-ba-product-references-cap
+  - REL-U1079-ba-service-references-cap
+  supersedes_requirements:
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: D12
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-internal-supplies-reference-stewardship
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-merchandise-reference-stewardship
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-packaging-reference-stewardship
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-partner-agreement-reference-stewardship
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-service-reference-stewardship
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-internal-supplies-equipment-references-cap
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-packaging-references-cap
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-partner-agreement-references-cap
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-product-references-cap
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-service-references-cap
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER354
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER355
+    fields:
+    - definition
+  - annex: business-sheet-pedagogy-U1125.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - definition
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-product-references
+    fields:
+    - definition
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-reference-maintenance
+    fields:
+    - definition
+    - finality
+    - market_comparisons
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: ba-service-references
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - definition
+    - finality
+  - annex: business-sheet-pedagogy-rollout-U1131.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - definition
+    - market_comparisons
+    - scope
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - definition
+    - short_description
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - definition
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D09
+    fields:
+    - definition
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: ba-product-references
+    fields:
+    - definition
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - definition
+    - finality
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: customer-credit-profile
+    fields:
+    - market_comparisons
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: internal-supplies-equipment-reference
+    fields:
+    - market_comparisons
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - definition
+    - finality
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: master-data-ingestion-finance
+    fields:
+    - definition
+    - finality
+    - market_comparisons
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: packaging-material-reference
+    fields:
+    - market_comparisons
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: packaging-specification
+    fields:
+    - market_comparisons
+    - scope
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - scope
+  - annex: credit-return-boundaries-U878.yaml
+    collection: nodes
+    id: ba-partner-agreement-references
+    fields:
+    - scope
+  - annex: directing-principles-integration-U1164.yaml
+    collection: principles
+    id: PRINCIPLE-REFERENCE-PROJECTIONS
+    fields:
+    - content_sha256
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: ba-reference-maintenance
+    fields:
+    - definition
+    - finality
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - market_comparisons
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER050
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER380
+    fields:
+    - context
+    - definition
+    - market_comparisons
+    - short_description
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER054
+    fields:
+    - definition
+    - short_description
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D09
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: D11
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: nodes
+    id: product-price-book
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER048
+    fields:
+    - context
+    - market_comparisons
+    - market_inspiration
+  - annex: intercompany-application-U1149.yaml
+    collection: terms
+    id: TER145
+    fields:
+    - context
+    - market_comparisons
+    - market_inspiration
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - definition
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: master-data-ingestion-commerce
+    fields:
+    - definition
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: master-data-ingestion-design
+    fields:
+    - definition
+    - scope
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D14
+    fields:
+    - market_comparisons
+    - scope
+  - annex: packaging-container-vocabulary-U899.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - scope
+  - annex: packaging-container-vocabulary-U899.yaml
+    collection: nodes
+    id: packaging-material-reference
+    fields:
+    - market_comparisons
+    - scope
+  - annex: packaging-container-vocabulary-U899.yaml
+    collection: nodes
+    id: packaging-specification
+    fields:
+    - market_comparisons
+    - scope
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: master-data-ingestion-commerce
+    fields:
+    - market_comparisons
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: master-data-ingestion-design
+    fields:
+    - market_comparisons
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: master-data-ingestion-finance
+    fields:
+    - market_comparisons
+    - scope
+  - annex: principle-description-application-U1160.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - pedagogical_description
+    - scope
+  - annex: principle-description-application-U1160.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - mastership
+    - pedagogical_description
+  - annex: principle-description-application-U1160.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - pedagogical_description
+  - annex: principle-description-application-U1160.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - context
+  - annex: principle-reading-focus-U1161.yaml
+    collection: principles
+    id: PRINCIPLE-ORCHESTRATION-DETAIL
+    fields:
+    - content_sha256
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - definition
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-internal-supplies-equipment-references
+    fields:
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-packaging-references
+    fields:
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-product-references
+    fields:
+    - definition
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - definition
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: internal-supplies-equipment-reference
+    fields:
+    - market_comparisons
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - definition
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: packaging-material-reference
+    fields:
+    - market_comparisons
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: packaging-specification
+    fields:
+    - market_comparisons
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: service-price-book
+    fields:
+    - market_comparisons
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - market_comparisons
+    - market_inspiration
+  - annex: season-context-application-U1155.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER052
+    fields:
+    - context
+    - market_inspiration
+  - annex: season-context-application-U1155.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - market_inspiration
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - market_inspiration
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER050
+    fields:
+    - market_comparisons
+    - market_inspiration
+  - annex: supply-definitions-boundaries-remediation-U1122.yaml
+    collection: terms
+    id: TER123
+    fields:
+    - market_comparisons
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - mastership
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: cap-internal-supplies-reference-stewardship
+    fields:
+    - exists
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: cap-merchandise-reference-stewardship
+    fields:
+    - exists
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: cap-packaging-reference-stewardship
+    fields:
+    - exists
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: cap-partner-agreement-reference-stewardship
+    fields:
+    - exists
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: cap-service-reference-stewardship
+    fields:
+    - exists
+  - annex: supply-domain-rename-U1121.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - mastership
+  - annex: supply-domain-rename-link-labels-U1121.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - scope
+  - annex: supply-domain-rename-link-labels-U1121.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - context
+    - market_comparisons
+  - annex: visibility-scope-U858.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - definition
+  required_catalog:
+  - collection: principles
+    id: PRINCIPLE-REFERENCE-PROJECTIONS
+    content_sha256: 4791a4adeb0f6002efef40e24251907c31a1ab666f736271d2266f65955fa56c
+  - collection: principles
+    id: PRINCIPLE-ORCHESTRATION-DETAIL
+    content_sha256: 63b2781fecfebefaef2e5868b24758995dbb517817c22478096f53d6af50f55e

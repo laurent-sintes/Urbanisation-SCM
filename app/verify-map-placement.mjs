@@ -24,6 +24,7 @@ const domains = ['domain-plan', 'domain-sourcing-procurement', 'domain-sales', d
   domainIds.has(id),
 );
 if (!logisticsSystem && domainIds.has(logisticsId)) domains.push(logisticsId);
+if (domainIds.has('domain-master-data')) domains.push('domain-master-data');
 assert.ok([...systems, ...domains].every((id) => model.nodes.some((node) => node.id === id)));
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
@@ -74,11 +75,18 @@ try {
         const sales = byId['domain-sales'];
         const orchestration = byId['supply-chain-orchestration'];
         const logistics = byId['domain-logistics-execution'];
+        const master = byId['domain-master-data'];
+        if (overview && master && orchestration) {
+          const scale = scope.getBoundingClientRect().width / scope.offsetWidth;
+          const expectedGap =
+            Number.parseFloat(getComputedStyle(scope.querySelector('.overview-domains-fixed')).rowGap) * scale;
+          if (Math.abs(master.top - orchestration.bottom - expectedGap) > 1) return false;
+        }
         const compact =
           Boolean(scope?.closest('.urbanisation-overview.is-narrow')) ||
           (scope?.matches('.zoom-width') && scope.clientWidth < 692);
         if (compact) {
-          const ordered = [plan, sourcing, sales, orchestration, logistics].filter(Boolean);
+          const ordered = [plan, sourcing, sales, orchestration, logistics, master].filter(Boolean);
           return ordered.every((box, index) => !index || ordered[index - 1].bottom <= box.top + 1);
         }
         return (
@@ -87,6 +95,7 @@ try {
           sourcing.right <= sales.left + 1 &&
           Math.max(sourcing.bottom, sales.bottom) <= orchestration.top + 1 &&
           (!logistics || orchestration.bottom <= logistics.top + 1) &&
+          (!master || (logistics || orchestration).bottom <= master.top + 1) &&
           Math.abs((plan || orchestration).left - sourcing.left) < 1 &&
           Math.abs((plan || orchestration).right - sales.right) < 1 &&
           (!logistics || Math.abs(logistics.right - orchestration.right) < 1)

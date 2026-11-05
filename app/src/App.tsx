@@ -92,6 +92,10 @@ export function App() {
   const softwareUpdate = useBuildUpdate();
   const { route, locationKey, navigationType, changeRoute: changeLocation } = useAtlasLocation();
   const { model, catalog, loading, error, notice, reload } = usePublication(route.version || undefined);
+  const currentOnly = catalog?.mode === 'current';
+  useEffect(() => {
+    if (currentOnly && route.version) changeLocation({ version: '' }, model, 0, true);
+  }, [currentOnly, route.version, changeLocation, model]);
   const workshop = useWorkshop(
     model,
     catalog?.releases.find((entry) => entry.version === model?.version)?.model_sha256,
@@ -586,7 +590,7 @@ export function App() {
   const links = selected && model ? relatedTo(model, selected.id) : [];
   const copyLink = async () => {
     try {
-      const pinned = { ...route, version: model?.version || route.version };
+      const pinned = { ...route, version: currentOnly ? '' : model?.version || route.version };
       const hash = routeHash(pinned, model);
       await navigator.clipboard.writeText(`${location.origin}${location.pathname}${hash}`);
       setAnnouncement(ui('app.lien_copie_vers_cette_publication'));
@@ -739,7 +743,8 @@ export function App() {
               <kbd>{ui('app.ctrl_k')}</kbd>
             </button>
           )}
-          {model && (
+          {model && currentOnly && <span className="publication-mode">{ui('app.modele_courant')}</span>}
+          {model && !currentOnly && (
             <DismissibleDetails className="publication-picker">
               <summary>
                 <span className="publication-mode">
@@ -932,7 +937,7 @@ export function App() {
                     </button>
                   </aside>
                 )}
-                {route.version && (
+                {!currentOnly && route.version && (
                   <aside className="publication-selection" aria-label={ui('app.publication_consultee')}>
                     <span>
                       <strong>
@@ -1420,9 +1425,11 @@ export function App() {
                 </div>
                 <footer className="workspace-footer">
                   {ui('app.cartographie_2')}{' '}
-                  {route.version
-                    ? ui('app.publication_fixe')
-                    : ui('app.publication_courante_actualisee_automatiquement')}
+                  {currentOnly
+                    ? ui('app.modele_courant')
+                    : route.version
+                      ? ui('app.publication_fixe')
+                      : ui('app.publication_courante_actualisee_automatiquement')}
                 </footer>
               </div>
             </>

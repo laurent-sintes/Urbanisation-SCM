@@ -123,7 +123,7 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertNotIn('ba-accounting-translation', nodes)
         from scripts.model_depth import responsibility_domains
         ancestry = responsibility_domains(self.model)
-        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan'}
+        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan', 'domain-master-data'}
         self.assertTrue(all(len(ancestry[n['id']]) == 1 and ancestry[n['id']] <= allowed
                             for n in nodes.values() if n['kind'] == 'capability'))
         self.assertIn('glossary:TER119', nodes['subdomain-financial-accounting']['fields']['scope'])
@@ -190,7 +190,7 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertIn('aucun paiement fournisseur', nodes['ba-financial-service-order-management']['fields']['scope'])
         from scripts.model_depth import responsibility_domains
         ancestry = responsibility_domains(self.model)
-        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan'}
+        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan', 'domain-master-data'}
         self.assertTrue(all(len(ancestry[n['id']]) == 1 and ancestry[n['id']] <= allowed
                             for n in nodes.values() if n['kind'] == 'capability'))
 

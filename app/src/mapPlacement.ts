@@ -36,10 +36,13 @@ export function operationsMapSlots(scopeId: string | undefined, ids: readonly st
   if (scopeId !== 'system-business-operations' || !ids.some((id) => Object.hasOwn(operationsDomains, id)))
     return undefined;
   let nextRow = 4;
-  return ids
+  const slots = ids
     .map((id, index) => ({
       index,
       ...(operationsDomains[id] || { row: nextRow++, column: 0, span: 2 }),
     }))
     .sort((a, b) => a.row - b.row || a.column - b.column);
+  // Removed domains must not leave empty CSS grid rows between their neighbours.
+  const rows = [...new Set(slots.map((slot) => slot.row))];
+  return slots.map((slot) => ({ ...slot, row: rows.indexOf(slot.row) }));
 }

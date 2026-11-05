@@ -1,5 +1,11 @@
 # Procédures de travail de l’agent
 
+## Parcours courant — 5 novembre 2026
+
+`modeles/project.yaml` désigne le modèle courant unique. Générer Atlas avec `pnpm build` ou `pnpm dev` ; ne plus créer de release métier pour rendre une modification visible. L’historique des publications reste une preuve, sans sélecteur dans l’application. Le registre `modeles/backlog/agreements.yaml` et les nouvelles captures d’accord restent distincts des artefacts du build.
+
+Un commit ou un push demandé ne lance pas de test local automatiquement. Sur GitHub, chaque push lance les contrôles ; sur `main`, le déploiement attend leur réussite. Pour une vérification locale explicitement lancée pendant le développement : `pnpm test:python`, `pnpm test:frontend`, `pnpm test:browser`, `pnpm test` ou `pnpm test:full`. Le runner commun est `scripts/project_tests.py`. Les procédures de release et de précontrôle décrites plus bas sont historiques dans la portée remplacée.
+
 Démarrage Atlas : suivre `skills/server-admin/SKILL.md`. Regrouper lancement et contrôle léger du catalogue servi dans un seul appel d’exécution ; réutiliser le contrôle d’identité du lanceur. Aucun téléchargement du modèle complet, parsing YAML, build ou audit pour un simple démarrage réussi. Lire les instructions manquantes en bloc et réutiliser celles déjà valables dans la session.
 
 Règles transférées d’AGENTS.md sous U772, sans changement de portée. Lire la section concernée avant inspection, capture d’accords, publication, réexamen ou accès à l’historique. Les chemins et commandes sont relatifs à la racine du dépôt. Les skills restent obligatoires pour leurs opérations respectives.
@@ -41,6 +47,12 @@ Historique : `modeles/release/index.json` conserve le catalogue. Le lecteur `scr
 Les recherches marché, les contributions utiles et les arbitrages courants restent suivis. Ne pas créer de copie « avant », de journal cumulatif des réflexions ni de rapport historique permanent. Les caches et préparations sont temporaires et ignorés. Le cache de parsing ne remplace ni contrôle d’intégrité ni accord métier.
 
 ## Solutions d’environnement éprouvées
+
+- **Test du lanceur — serveur démarré mais contrôle HTTP refusé dans le bac à sable Windows.** Si `app.test_launcher` échoue sur « Le serveur ne répond pas encore » alors que le serveur temporaire démarre, relancer uniquement `python -m unittest app.test_launcher` avec `sandbox_permissions: require_escalated`, après vérification de Python et définition de `TEMP`/`TMP` locaux. Ne pas toucher au serveur de développement ni au pare-feu. Solution confirmée le 2026-11-05 ; le lanceur conserve ses contrôles d’identité et nettoie son serveur de test.
+
+- **pnpm à la racine — enregistrement du projet refusé dans le store Windows restreint (`EPERM`, symlink).** Après création des commandes racine, initialiser une fois avec `pnpm install --offline` et `sandbox_permissions: require_escalated`. Cela crée le verrou et l’état de dépendances du projet, sans téléchargement ni modification des ACL. Les commandes `pnpm test:frontend` et `pnpm build` fonctionnent ensuite dans le parcours courant. Solution confirmée le 2026-11-05.
+
+- **Python lancé par Node — `LOCALAPPDATA` redirigé vers le profil du bac à sable.** Le lanceur `scripts/python-runtime.mjs` vérifie `python --version`, puis les chemins installés sous `LOCALAPPDATA` et `USERPROFILE/AppData/Local/Python/bin`. Le dossier de l’interpréteur fonctionnel est ajouté au seul environnement des sous-processus. Cela évite l’alias WindowsApps inaccessible sans changer le PATH système. Solution confirmée le 2026-11-05 pour les commandes de tests et de build.
 
 - **Biome sous Windows — fichier mappé en mémoire (erreur 1224).** Si `biome check --write` ne peut pas réécrire un fichier ouvert par un lecteur, utiliser `biome check` sans écriture pour obtenir le diff, l’appliquer avec `apply_patch`, puis rejouer le contrôle ciblé sans écriture. Solution confirmée le 2026-10-23 ; portée : formatage des sources frontend, sans fermer les applications de Laurent ni modifier les permissions.
 

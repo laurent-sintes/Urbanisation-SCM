@@ -1,4 +1,5 @@
 import hashlib
+from copy import deepcopy
 import json
 from pathlib import Path
 import tempfile
@@ -76,6 +77,49 @@ class ReaderContentTests(unittest.TestCase):
         self.assertEqual(root_type['label'], 'Renamed type')
         model['nodes'][0]['fields']['name'] = 'Renamed root instance'
         self.assertEqual(describe_metamodel(model, guide)['node_types'][0], root_type)
+
+    def test_carried_guide_keeps_only_overrides_of_unchanged_published_sources(self):
+        original = 'Original canonical paragraph.'
+        fingerprint = hashlib.sha256(original.encode()).hexdigest()
+        entries = [dict(collection='nodes', id=identifier, field_path=path,
+                        source_sha256=fingerprint, text='Frozen display text.')
+                   for identifier, path in [
+                       ('kept', ['fields', 'scope']), ('edited', ['fields', 'scope']),
+                       ('shortened', ['fields', 'examples', '1']), ('retired', ['fields', 'scope'])]]
+        response = {'association': {'scope': 'carried_frozen_methodology'}, 'guide': {
+            'version': 'old', 'reader_content': {'schema_version': 1, 'entries': entries}}}
+        model = {'version': 'new', 'nodes': [
+            {'id': 'kept', 'fields': {'scope': original}},
+            {'id': 'edited', 'fields': {'scope': 'New canonical public wording.'}},
+            {'id': 'shortened', 'fields': {'examples': [original]}},
+        ]}
+        before_model, before_guide = deepcopy(model), deepcopy(response)
+        projection = reading_projection(Path('.'), model, response)
+        self.assertEqual(len(projection['patches']), 1)
+        self.assertEqual(projection['patches'][0]['path'], ['nodes', '0', 'fields', 'scope'])
+        self.assertEqual(model, before_model)
+        self.assertEqual(response, before_guide)
+        for scope, version in [('associated', 'old'), ('carried_frozen_methodology', 'new')]:
+            with self.subTest(scope=scope, version=version):
+                strict = deepcopy(response)
+                strict['association']['scope'] = scope
+                strict['guide']['version'] = version
+                with self.assertRaisesRegex(ValueError, 'differs'):
+                    reading_projection(Path('.'), model, strict)
+
+    def test_inherited_bindings_still_reject_duplicate_and_unsafe_targets(self):
+        entry = dict(collection='nodes', id='retired', field_path=['fields', 'scope'],
+                     source_sha256=hashlib.sha256(b'old').hexdigest(), text='Old display text.')
+        model = {'version': 'new', 'nodes': []}
+        with self.assertRaisesRegex(ValueError, 'Duplicate'):
+            scoped_projection(model, {'entries': [entry, entry]}, inherited=True)
+        unsafe = {**entry, 'field_path': ['id']}
+        with self.assertRaisesRegex(ValueError, 'Invalid'):
+            scoped_projection(model, {'entries': [unsafe]}, inherited=True)
+        indexed = {**entry, 'id': 'present', 'field_path': ['fields', 'examples', '-1']}
+        with self.assertRaisesRegex(ValueError, 'Invalid reader content list index'):
+            scoped_projection({'nodes': [{'id': 'present', 'fields': {'examples': ['old']}}]},
+                              {'entries': [indexed]}, inherited=True)
 
     def test_legacy_text_and_vocabulary_are_frozen_compatibility_data(self):
         root = Path(__file__).resolve().parents[1] / 'app/content'

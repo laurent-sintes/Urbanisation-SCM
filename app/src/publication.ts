@@ -14,6 +14,7 @@ export interface ReleaseEntry {
   readonly guide_sha256?: string;
 }
 export interface PublicationCatalog {
+  readonly mode?: 'current';
   readonly current: string;
   /** Catalog ordering is authoritative: latest publication first. */
   readonly releases: readonly ReleaseEntry[];
@@ -97,7 +98,7 @@ export async function fetchJson(
 
 export function adaptCatalog(input: unknown): PublicationCatalog {
   if (!input || typeof input !== 'object') throw new Error(ui('publication.catalogue_des_publications_invalide'));
-  const raw = input as { current_version?: unknown; versions?: unknown };
+  const raw = input as { mode?: unknown; current_version?: unknown; versions?: unknown };
   if (typeof raw.current_version !== 'string' || !raw.current_version || !Array.isArray(raw.versions))
     throw new Error(ui('publication.catalogue_des_publications_invalide'));
   const entries = raw.versions.map((value) => {
@@ -113,7 +114,15 @@ export function adaptCatalog(input: unknown): PublicationCatalog {
     throw new Error(ui('publication.publication_dupliquee_dans_le_catalogue'));
   if (!entries.some((entry) => entry.version === raw.current_version))
     throw new Error(ui('publication.la_publication_courante_est_absente_du_catalogue'));
-  return Object.freeze({ current: raw.current_version, releases: Object.freeze(entries) });
+  if (raw.mode !== undefined && raw.mode !== 'current')
+    throw new Error(ui('publication.catalogue_des_publications_invalide'));
+  if (raw.mode === 'current' && entries.length !== 1)
+    throw new Error(ui('publication.catalogue_des_publications_invalide'));
+  return Object.freeze({
+    ...(raw.mode === 'current' ? { mode: 'current' as const } : {}),
+    current: raw.current_version,
+    releases: Object.freeze(entries),
+  });
 }
 
 /** Relative URLs work at localhost and below a GitHub Pages project path. */
@@ -164,7 +173,7 @@ export function createPublicationClient(fetcher: FetchLike = fetch) {
       try {
         nextCatalog = adaptCatalog(await fetchJson(staticUrl('data/index.json'), abort.signal, fetcher));
         if (!isLatest()) return;
-        const target = selection || nextCatalog.current;
+        const target = nextCatalog.mode === 'current' ? nextCatalog.current : selection || nextCatalog.current;
         if (!nextCatalog.releases.some((entry) => entry.version === target))
           throw new Error(ui('publication.la_publication_est_absente_du_catalogue', { target: target }));
         if (!force && state.model?.version === target && !state.notice) {
