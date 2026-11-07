@@ -118,17 +118,16 @@ try {
           const box = item.getBoundingClientRect();
           return { id: item.dataset.nodeId, x: box.left, y: box.top, right: box.right, bottom: box.bottom };
         });
-        return boxes.every((box) => box && box.right > box.x && box.bottom > box.y) ? boxes : null;
+        if (!boxes.every((box) => box && box.right > box.x && box.bottom > box.y)) return null;
+        const compact = document.querySelector('.urbanisation-overview')?.classList.contains('is-narrow');
+        return { boxes, compact };
       }, systems);
-      const boxes = await boxesHandle.jsonValue();
+      const { boxes, compact } = await boxesHandle.jsonValue();
       await boxesHandle.dispose();
       assert.deepEqual(
         boxes.map((box) => box.id),
         systems,
       );
-      const compact = await page
-        .locator('.urbanisation-overview')
-        .evaluate((element) => element.classList.contains('is-narrow'));
       if (compact) {
         assert.ok(boxes[0].bottom <= boxes[1].y + 1);
         assert.ok(boxes[logisticsSystem ? 3 : 1].bottom <= boxes[2].y + 1);
