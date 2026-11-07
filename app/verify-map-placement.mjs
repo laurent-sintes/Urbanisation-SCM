@@ -110,15 +110,18 @@ try {
     for (const depth of [0, 1, 2]) {
       await visit({ mapDepth: String(depth) });
       await page.locator('.urbanisation-overview[data-layout="fixed"]').waitFor();
-      const boxes = await page.locator('.overview-system').evaluateAll(
-        (items, ids) =>
-          ids.map((id) => {
-            const item = items.find((element) => element.dataset.nodeId === id);
-            const box = item.getBoundingClientRect();
-            return { id: item.dataset.nodeId, x: box.left, y: box.top, right: box.right, bottom: box.bottom };
-          }),
-        systems,
-      );
+      const boxesHandle = await page.waitForFunction((ids) => {
+        const items = [...document.querySelectorAll('.overview-system')];
+        const boxes = ids.map((id) => {
+          const item = items.find((element) => element.dataset.nodeId === id);
+          if (!item) return null;
+          const box = item.getBoundingClientRect();
+          return { id: item.dataset.nodeId, x: box.left, y: box.top, right: box.right, bottom: box.bottom };
+        });
+        return boxes.every((box) => box && box.right > box.x && box.bottom > box.y) ? boxes : null;
+      }, systems);
+      const boxes = await boxesHandle.jsonValue();
+      await boxesHandle.dispose();
       assert.deepEqual(
         boxes.map((box) => box.id),
         systems,

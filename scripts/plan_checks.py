@@ -55,8 +55,12 @@ def plan(paths):
                     modules.add('app:' + Path(path).stem)
             if 'launcher' in path:
                 flags.add('launcher')
+            if path == 'app/verify-map-placement.mjs':
+                # A placement-recipe edit exercises that recipe and representative
+                # navigation/hotspots. Product geometry still selects the full matrix.
+                flags.add('release_browser')
             if path in {'app/catalogue-geometry.mjs', 'app/recipe-output.mjs', 'app/verify-catalogue-page.mjs',
-                        'app/verify-flow-map.mjs', 'app/verify-map-placement.mjs',
+                        'app/verify-flow-map.mjs',
                         'app/verify-map-hotspot-matrix.mjs', 'app/verify-hotspot-depths.mjs'} or path.startswith('app/src/') and (
                 any(term in path.lower() for term in ('map', 'hotspot', 'reactflow', 'overview', 'adaptivelayout'))
                 or path in {'app/src/styles.css', 'app/src/reader.css'}

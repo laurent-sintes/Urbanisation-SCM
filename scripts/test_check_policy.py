@@ -112,8 +112,12 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['matrix'])
         self.assertTrue(plan(['app/src/components/MapPanel.tsx'])['matrix'])
         for recipe in ('catalogue-geometry.mjs', 'recipe-output.mjs', 'verify-catalogue-page.mjs', 'verify-flow-map.mjs',
-                       'verify-map-placement.mjs', 'verify-map-hotspot-matrix.mjs', 'verify-hotspot-depths.mjs'):
+                       'verify-map-hotspot-matrix.mjs', 'verify-hotspot-depths.mjs'):
             self.assertTrue(plan(['app/' + recipe])['matrix'])
+        placement = plan(['app/verify-map-placement.mjs'])
+        self.assertTrue(placement['browser'] and placement['release_browser'])
+        self.assertFalse(placement['matrix'])
+        self.assertTrue(plan(['app/verify-map-placement.mjs', 'app/src/mapPlacement.ts'])['matrix'])
         self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])
         self.assertFalse(plan(['app/src/components/glossary.css'])['matrix'])
         self.assertEqual(plan(['modeles/backlog/model.yaml'])['contract_profile'], 'current')
