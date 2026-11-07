@@ -200,7 +200,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Verify deployed content
-        if: steps.freshness.outputs.fresh == 'true'
+        # Private Beaumanoir Pages require SSO. deploy-pages verifies their
+        # authenticated deployment API; the follower binds its SHA to the artifact.
+        if: steps.freshness.outputs.fresh == 'true' && github.server_url == 'https://github.com'
         env:
           ATLAS_URL: ${{ steps.deployment.outputs.page_url }}
         run: python scripts/atlas_delivery.py --manifest .runtime/delivery/delivery.json --url "$ATLAS_URL" --attempts 6

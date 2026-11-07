@@ -22,6 +22,14 @@ Un commit local ne lance aucun test automatiquement. Chaque push sur GitHub déc
 
 Les descriptions plus anciennes de Backlog/Release ci-dessous conservent leur contexte historique ; ce parcours courant les remplace.
 
+## Deux dépôts et deux sites Atlas
+
+`origin` conserve le dépôt personnel en lecture et deux URL d’envoi : `https://github.com/laurent-sintes/Urbanisation-SCM.git` et `https://beaumanoir.ghe.com/solution-ai/Urbanisation-SCM.git`. `git push origin main:refs/heads/main` envoie donc le même commit aux deux dépôts. Le remote `beaumanoir` sert à vérifier ou reprendre séparément l’envoi vers l’entreprise. Après un envoi partiel, contrôler les deux références avant de reprendre uniquement celle en retard.
+
+Chaque dépôt lance sa CI au push puis déploie son Atlas sur `main` après réussite des contrôles : [Atlas personnel](https://laurent-sintes.github.io/Urbanisation-SCM/) et [Atlas Beaumanoir](https://solution-ai-urbanisation-scm.pages.beaumanoir.ghe.com/). Le dépôt et le site Beaumanoir sont privés. Le site requiert l’authentification d’entreprise ; sa vérification de déploiement repose sur les API authentifiées et l’artefact du build, sans requête HTTP anonyme au contenu protégé.
+
+Le parcours agent est décrit dans le [skill push](skills/push/SKILL.md). Les commandes de suivi sont `python scripts/follow_delivery.py --commit SHA --deploy` pour le personnel et la même commande avec `--target beaumanoir` pour l’entreprise. Aucun test local n’est déclenché par ces commandes.
+
 **[Ouvrir FLOW Atlas sur GitHub Pages](https://laurent-sintes.github.io/Urbanisation-SCM/)** — Explorer la cartographie métier en ligne.
 
 Ce dépôt réunit le modèle métier cible de Beaumanoir, les sources qui justifient ses choix et l’application FLOW Atlas. La cartographie décrit les capacités métier, leurs relations et les scénarios qui les mobilisent, avec un approfondissement de Supply Chain Management et de ses liens avec les domaines voisins.

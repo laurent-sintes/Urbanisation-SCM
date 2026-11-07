@@ -18,6 +18,10 @@ ALLOWED = {'https://github.com/laurent-sintes/Urbanisation-SCM.git',
            'https://github.com/laurent-sintes/Urbanisation-SCM',
            'git@github.com:laurent-sintes/Urbanisation-SCM.git',
            'ssh://git@github.com/laurent-sintes/Urbanisation-SCM.git'}
+ENTERPRISE_ALLOWED = {'https://beaumanoir.ghe.com/solution-ai/Urbanisation-SCM.git',
+                      'https://beaumanoir.ghe.com/solution-ai/Urbanisation-SCM',
+                      'git@beaumanoir.ghe.com:solution-ai/Urbanisation-SCM.git',
+                      'ssh://git@beaumanoir.ghe.com/solution-ai/Urbanisation-SCM.git'}
 
 
 def git(root, *args):
@@ -38,7 +42,11 @@ def context(root, *, base=None, working=False, offline=False):
         raise ValueError('Not the expected repository root')
     for mode in ([], ['--push']):
         urls = git(root, 'remote', 'get-url', '--all', *mode, 'origin').splitlines()
-        if len(urls) != 1 or urls[0] not in ALLOWED:
+        personal_only = len(urls) == 1 and urls[0] in ALLOWED
+        paired_push = (bool(mode) and len(urls) == 2
+                       and sum(url in ALLOWED for url in urls) == 1
+                       and sum(url in ENTERPRISE_ALLOWED for url in urls) == 1)
+        if not personal_only and not paired_push:
             raise ValueError('Unexpected or multiple origin destinations')
     branch = git(root, 'branch', '--show-current')
     if not branch:

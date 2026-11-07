@@ -10,6 +10,8 @@ Les accords métier restent distincts du build, des tests et du déploiement. `m
 
 ## Priorités et sources d’autorité
 
+**Double push — instruction de Laurent du 7 novembre 2026.** Urbanisation-SCM est synchronisé sur `github.com/laurent-sintes/Urbanisation-SCM` et le dépôt privé `beaumanoir.ghe.com/solution-ai/Urbanisation-SCM`. `origin` lit le dépôt personnel et possède une URL d’envoi par dépôt ; `beaumanoir` permet le contrôle séparé de l’entreprise. Un push doit vérifier les deux références et leurs CI. Atlas est déployé sur les deux Pages. Pour le site privé Beaumanoir, protégé par SSO, vérifier le SHA du déploiement authentifié et l’artefact de build ; ne pas annoncer une vérification des octets servis par HTTP anonyme. Cette règle remplace l’ancienne restriction à une seule destination d’envoi.
+
 Échanger en français et tutoyer Laurent. Lire les éléments concernés avant de les modifier. Préserver le travail existant. Une instruction récente prime dans sa portée ; un historique ne réactive pas une règle remplacée.
 
 | Besoin | Autorité |

@@ -35,6 +35,8 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertIn("github.ref == 'refs/heads/main'", deploy['if'])
         self.assertFalse(deploy['concurrency']['cancel-in-progress'])
         self.assertIn('git ls-remote origin refs/heads/main', deploy['steps'][1]['run'])
+        content_check = next(step for step in deploy['steps'] if step.get('name') == 'Verify deployed content')
+        self.assertIn("github.server_url == 'https://github.com'", content_check['if'])
 
     def test_all_existing_recipes_remain_in_parallel_runner(self):
         scripts = json.loads((ROOT / 'app/package.json').read_bytes())['scripts']

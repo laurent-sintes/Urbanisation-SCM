@@ -2,6 +2,8 @@
 
 ## Parcours courant — 5 novembre 2026
 
+Depuis le 7 novembre, le skill `push` envoie le même commit vers le GitHub personnel et Beaumanoir. `origin` possède deux URL d’envoi ; sa lecture reste personnelle, et `beaumanoir` permet le contrôle séparé. Suivre chaque déploiement avec `scripts/follow_delivery.py`, en ajoutant `--target beaumanoir` pour l’entreprise. Le site d’entreprise est privé : sa preuve associe SHA distant, workflow réussi, manifeste de build et déploiement Pages authentifié ; ce n’est pas une comparaison HTTP des octets servis derrière SSO.
+
 `modeles/project.yaml` désigne le modèle courant unique. Générer Atlas avec `pnpm build` ou `pnpm dev` ; ne plus créer de release métier pour rendre une modification visible. L’historique des publications reste une preuve, sans sélecteur dans l’application. Le registre `modeles/backlog/agreements.yaml` et les nouvelles captures d’accord restent distincts des artefacts du build.
 
 Un commit ou un push demandé ne lance pas de test local automatiquement. Sur GitHub, chaque push lance les contrôles ; sur `main`, le déploiement attend leur réussite. Pour une vérification locale explicitement lancée pendant le développement : `pnpm test:python`, `pnpm test:frontend`, `pnpm test:browser`, `pnpm test` ou `pnpm test:full`. Le runner commun est `scripts/project_tests.py`. Les procédures de release et de précontrôle décrites plus bas sont historiques dans la portée remplacée.

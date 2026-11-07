@@ -71,13 +71,14 @@ class PreflightPushTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve()
         self.urls = ['https://github.com/laurent-sintes/Urbanisation-SCM.git']
+        self.push_urls = None
         self.responses = {'branch': 'codex/test', 'upstream': 'origin/main', 'status': '', 'conflicts': '', 'behind': '0'}
 
     def git(self, root, *args):
         if args == ('rev-parse', '--show-toplevel'):
             return str(self.root)
         if args[:2] == ('remote', 'get-url'):
-            return '\n'.join(self.urls)
+            return '\n'.join(self.push_urls if '--push' in args and self.push_urls is not None else self.urls)
         if args == ('branch', '--show-current'):
             return self.responses['branch']
         if args == ('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}'):
@@ -106,6 +107,19 @@ class PreflightPushTests(unittest.TestCase):
             self.responses['status'] = ' M scripts/tool.py'
             with self.assertRaisesRegex(ValueError, 'working changes'):
                 context(self.root, offline=True)
+
+    def test_personal_fetch_and_paired_push_are_accepted(self):
+        self.push_urls = self.urls + ['https://beaumanoir.ghe.com/solution-ai/Urbanisation-SCM.git']
+        with patch('scripts.preflight_push.git', side_effect=self.git), patch('scripts.preflight_push.changed_paths', return_value=[]):
+            self.assertEqual(context(self.root, offline=True)['upstream'], 'origin/main')
+
+    def test_duplicate_or_foreign_push_destination_is_rejected(self):
+        for destinations in [self.urls * 2, self.urls + ['https://example.com/repo'],
+                             ['https://beaumanoir.ghe.com/solution-ai/Urbanisation-SCM.git']]:
+            self.push_urls = destinations
+            with patch('scripts.preflight_push.git', side_effect=self.git):
+                with self.assertRaisesRegex(ValueError, 'destinations'):
+                    context(self.root, offline=True)
 
     def test_detached_conflicted_and_diverged_branches_refuse_push(self):
         for key, value, message in [('branch', '', 'Detached'), ('conflicts', 'file', 'conflicts'), ('behind', '2', 'behind')]:
