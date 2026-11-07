@@ -251,13 +251,15 @@ application_catalog:
     publisher: Beaumanoir / FLOW
     kind: internal_product
     inventory_status: undetermined
-    scope: Orchestration de la supply chain dans la cible Beaumanoir.
-    note: Produit cible couvrant le périmètre Supply Chain Management ; composants et couverture détaillée à définir.
+    scope: Master Data et Supply Chain Management dans la cible Beaumanoir.
+    note: Produit cible couvrant les deux domaines Master Data et Supply Chain Management. La couverture détaillée et la réalisation
+      des capacités restent à établir.
     source_refs:
     - U1033
     - U1039
     - U1040
     - U1041
+    - U1172
     components:
     - id: flow-core-root
       name: Flow Core System
@@ -2668,11 +2670,12 @@ application_catalog:
     perspective: target
     product_id: product-flow-core
     presence: planned
-    note: Produit cible positionné sur Supply Chain Management, sans couverture détaillée présumée.
+    note: Produit cible positionné sur Master Data et Supply Chain Management, sans couverture réalisée présumée.
     source_refs:
     - U1033
     - U1039
     - U1040
+    - U1172
     component_states: []
     mappings:
     - id: appmap-flow-core-supply-orchestration
@@ -2683,6 +2686,14 @@ application_catalog:
       note: Périmètre cible donné par Laurent ; ne préjuge pas des capacités effectivement développées.
       source_refs:
       - U1040
+    - id: appmap-flow-core-master-data
+      component_id: flow-core-root
+      node_id: domain-master-data
+      role: planned_support
+      evidence_state: planned
+      note: Périmètre cible donné par Laurent en U1172. La présence du domaine ne prouve pas la réalisation de ses capacités.
+      source_refs:
+      - U1172
   - id: selection-socloz-beaumanoir-historique
     context_id: beaumanoir-historique
     perspective: as_is

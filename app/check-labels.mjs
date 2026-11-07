@@ -48,6 +48,8 @@ const keyboard =
   /^(Escape|Enter|Tab|Arrow(Left|Right|Up|Down)|Page(Up|Down)|Home|End|Backspace|Delete|Shift|Control|Alt|Meta|F\d+)$/;
 const technical = (value) =>
   keyboard.test(value) ||
+  // SVG serialization is technical markup. Any literal text between tags stays checked.
+  (/^</.test(value) && !/\p{L}/u.test(value.replace(/<[^>]*>/g, ''))) ||
   /^(?:\.{0,2}\/|https?:|(?:glossary|method|model|principle):|#[\w-]+$|(?:var|calc|rgba?|hsla?)\(|\([\w-]+:|[\w.-]+\.(?:json|ya?ml|pdf|js|ts|svg|png)$)/.test(
     value,
   );

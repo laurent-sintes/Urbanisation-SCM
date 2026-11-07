@@ -19,6 +19,7 @@ import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from
 import type { PublishedModel } from '../types';
 import { ui } from '../ui.ts';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
+import { ArchitectureSvgDownload } from './ArchitectureSvgDownload';
 import { CatalogueNavigator } from './CatalogueNavigator';
 import { HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
@@ -422,6 +423,7 @@ export function Overview({
           )}
         </h2>
         <div className="map-actions">
+          <ArchitectureSvgDownload model={model} />
           <MapDetailPicker
             labels={[ui('overview.systemes'), ui('overview.domaines'), ui('overview.sous_domaines')]}
             value={detail}

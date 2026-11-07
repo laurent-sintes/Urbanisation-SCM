@@ -1392,6 +1392,13 @@ export interface UiArguments {
   "flowMapPanel.le_plein_ecran_est_indisponible_dans_ce_navigateur": {  };
   "overview.le_plein_ecran_est_indisponible_dans_ce_navigateur": {  };
   "applicationCatalogPage.selection_unknown": {  };
+  "architectureSvg.title": {  };
+  "architectureSvg.focus": {  };
+  "architectureSvg.published": {  };
+  "architectureSvg.receipt": {  };
+  "architectureSvg.provenance": {  };
+  "architectureSvg.download": {  };
+  "architectureSvg.capability": {  };
   "model.node": {  };
   "categories.autres_capacites": {  };
   "dataSharing.partage_de_donnees_sur_une_relation_incompatible": { "id": unknown; };

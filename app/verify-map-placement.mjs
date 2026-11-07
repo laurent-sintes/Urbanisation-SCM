@@ -80,22 +80,22 @@ try {
           const scale = scope.getBoundingClientRect().width / scope.offsetWidth;
           const expectedGap =
             Number.parseFloat(getComputedStyle(scope.querySelector('.overview-domains-fixed')).rowGap) * scale;
-          if (Math.abs(master.top - orchestration.bottom - expectedGap) > 1) return false;
+          if (Math.abs(orchestration.top - master.bottom - expectedGap) > 1) return false;
         }
         const compact =
           Boolean(scope?.closest('.urbanisation-overview.is-narrow')) ||
           (scope?.matches('.zoom-width') && scope.clientWidth < 692);
         if (compact) {
-          const ordered = [plan, sourcing, sales, orchestration, logistics, master].filter(Boolean);
+          const ordered = [plan, sourcing, sales, master, orchestration, logistics].filter(Boolean);
           return ordered.every((box, index) => !index || ordered[index - 1].bottom <= box.top + 1);
         }
         return (
           (!plan || plan.bottom <= sourcing.top + 1) &&
           Math.abs(sourcing.top - sales.top) < 1 &&
           sourcing.right <= sales.left + 1 &&
-          Math.max(sourcing.bottom, sales.bottom) <= orchestration.top + 1 &&
+          Math.max(sourcing.bottom, sales.bottom) <= (master || orchestration).top + 1 &&
           (!logistics || orchestration.bottom <= logistics.top + 1) &&
-          (!master || (logistics || orchestration).bottom <= master.top + 1) &&
+          (!master || master.bottom <= orchestration.top + 1) &&
           Math.abs((plan || orchestration).left - sourcing.left) < 1 &&
           Math.abs((plan || orchestration).right - sales.right) < 1 &&
           (!logistics || Math.abs(logistics.right - orchestration.right) < 1)

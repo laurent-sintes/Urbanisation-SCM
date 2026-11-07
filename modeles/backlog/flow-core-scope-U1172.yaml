@@ -1,0 +1,47 @@
+id: FLOW-CORE-SCOPE-U1172
+date: '2026-11-05'
+status: applied_to_current_model
+source_refs:
+- U1172
+scope: Positionnement produit sur Master Data et Supply Chain Management. Les deux domaines et leurs responsabilités restent
+  distincts. Aucun montant ou déploiement adopté.
+publication_delivery:
+  state: applied
+  summary: Flow Core System couvre les deux domaines métier selon U1172.
+  source_refs:
+  - U1172
+  required_catalog:
+  - collection: application_products
+    id: product-flow-core
+    content_sha256: 59b2bceaab99c4321cc856b323d4462923b89d97fa7e97480afb8a798eb0678b
+  - collection: application_selections
+    id: selection-flow-core-target
+    content_sha256: 7a18eb20afcf7d19bc792e5cb8c3041c64d55b317e18c25c2e29483f665285ce
+  required_glossary:
+  - id: TER035
+    field_sha256:
+      context: ef83247420eeabea3b34008dc8f7f993cba770b31f63e34e08c97720bfc6d191
+  - id: TER390
+    field_sha256:
+      context: c88cf7d1c9afdcdc317efd70bcbc540c3813b2cf68a1eb91fa2cd89254787ea9
+  supersedes_requirements:
+  - annex: master-data-coherence-application-U1168.yaml
+    collection: terms
+    id: TER390
+    fields:
+    - context
+  - annex: principle-description-application-U1160.yaml
+    collection: terms
+    id: TER035
+    fields:
+    - context
+  - annex: supply-domain-rename-U1121.yaml
+    collection: application_products
+    id: product-flow-core
+    fields:
+    - content_sha256
+  - annex: supply-domain-rename-U1121.yaml
+    collection: application_selections
+    id: selection-flow-core-target
+    fields:
+    - content_sha256

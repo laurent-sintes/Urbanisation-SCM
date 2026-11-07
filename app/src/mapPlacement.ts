@@ -16,8 +16,9 @@ const operationsDomains: Record<string, Omit<MapSlot, 'index'>> = {
   'domain-plan': { row: 0, column: 0, span: 2 },
   'domain-sourcing-procurement': { row: 1, column: 0, span: 1 },
   'domain-sales': { row: 1, column: 1, span: 1 },
-  'supply-chain-orchestration': { row: 2, column: 0, span: 2 },
-  'domain-logistics-execution': { row: 3, column: 0, span: 2 },
+  'domain-master-data': { row: 2, column: 0, span: 2 },
+  'supply-chain-orchestration': { row: 3, column: 0, span: 2 },
+  'domain-logistics-execution': { row: 4, column: 0, span: 2 },
 };
 
 export function systemMapSlots(ids: readonly string[]): MapSlot[] | undefined {
@@ -35,7 +36,7 @@ export function systemMapSlots(ids: readonly string[]): MapSlot[] | undefined {
 export function operationsMapSlots(scopeId: string | undefined, ids: readonly string[]): MapSlot[] | undefined {
   if (scopeId !== 'system-business-operations' || !ids.some((id) => Object.hasOwn(operationsDomains, id)))
     return undefined;
-  let nextRow = 4;
+  let nextRow = 5;
   const slots = ids
     .map((id, index) => ({
       index,

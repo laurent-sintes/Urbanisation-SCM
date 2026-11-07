@@ -147,3 +147,8 @@ test('historical context labels remain available before the application catalog 
     'Nom de cette édition',
   );
 });
+
+test('serialized SVG markup remains technical but literal SVG text is rejected', () => {
+  assert.deepEqual(scanLabels('fixture.ts', 'const markup = `<rect width="10" height="20"/>`;'), []);
+  assert.ok(scanLabels('fixture.ts', 'const markup = `<text>Texte visible</text>`;').length);
+});

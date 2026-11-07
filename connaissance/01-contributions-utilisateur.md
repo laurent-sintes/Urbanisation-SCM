@@ -26289,3 +26289,11 @@ Date : 2026-11-05. Source : Laurent, demande de publication locale du modèle.
 Verbatim : « Release »
 
 Portée : préparer et activer une nouvelle publication du backlog courant dans FLOW Atlas, incluant Master Data, l’alignement du glossaire, la simplification d’Operational References et les corrections U1168/U1170. La demande remplace la restriction antérieure « sans release » pour ce lot. Elle ne vaut ni nouvel accord métier sur les champs proposés, ni autorisation de commit, push ou déploiement distant.
+
+## U1172
+
+Date : 2026-11-05. Source : Laurent, précision du périmètre projet dans l’étude économique FLOW.
+
+Verbatim : « Ce qui change en termes de périmètre projet, La plateforme Flow Core System, c'est maintenant Master Data + Supply Chain Management. Il faut mesurer cet impact partout. »
+
+Portée : la cible produit Flow Core System couvre désormais les deux domaines Master Data et Supply Chain Management, sans fusion des domaines. Aligner le positionnement applicatif, les cartes et les définitions. Mesurer séparément les conséquences dans l’étude économique sur les travaux, équipes, trois phases, offres Buy et coûts. Cette instruction ne démontre aucune réalisation installée, n’adopte aucun montant et ne demande ni commit ni push.
